@@ -1,0 +1,95 @@
+{
+  "schema": "er9.research.witnesses.v1",
+  "stage": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "executed_checks": [
+    {
+      "id": "W1",
+      "label": "executed by candidate",
+      "name": "Named-axis scale/translation round-trip, pyramid point alignment, and display-only intensity mapping arithmetic",
+      "purpose": "A small discriminating component check for the proposal's chosen `p = translation + scale * index` convention. It checks exact inverse recovery, a same-physical-point correspondence across two pyramid levels, and that computing a normalized display value does not assign to the source sample variable.",
+      "expected_behavior": "For z/y/x scales (2, 0.5, 0.25) and translations (10, 20, 30), index (3, 4, 8) maps to physical (16, 22, 32) and inverses exactly. Base index 10 at spacing .25 and coarse index 5 at spacing .5 share physical position 7.5 when translations match. Sample 50 mapped through [10, 110] yields display value .4 while sample remains 50.",
+      "code": "axes = [\n    {\"name\": \"z\", \"unit\": \"micrometer\", \"scale\": 2.0, \"translation\": 10.0},\n    {\"name\": \"y\", \"unit\": \"micrometer\", \"scale\": 0.5, \"translation\": 20.0},\n    {\"name\": \"x\", \"unit\": \"micrometer\", \"scale\": 0.25, \"translation\": 30.0},\n]\nindex = (3.0, 4.0, 8.0)\nphysical = tuple(a[\"translation\"] + a[\"scale\"] * i for a, i in zip(axes, index))\nrecovered = tuple((p - a[\"translation\"]) / a[\"scale\"] for a, p in zip(axes, physical))\n# Same physical point under two image pyramid levels: origin fixed, spacing doubled.\nbase_physical = 5.0 + 0.25 * 10.0\ncoarse_physical = 5.0 + 0.5 * 5.0\n# Display mapping is computed without assigning to source sample.\nsample = 50.0\nshown = min(1.0, max(0.0, (sample - 10.0) / (110.0 - 10.0)))\nassert physical == (16.0, 22.0, 32.0)\nassert recovered == index\nassert base_physical == coarse_physical == 7.5\nassert sample == 50.0 and shown == 0.4\nprint({\"physical_zyx\": physical, \"inverse_zyx\": recovered, \"pyramid_alignment\": (base_physical, coarse_physical), \"source_sample\": sample, \"display_value\": shown})",
+      "input": null,
+      "receipt": {
+        "execution_id": "exec-gdou89dq",
+        "code_sha256": "0a91c310e1cb717b1503a54522758e2cc0388a125aa946cced4c5e00134255ab",
+        "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "stdout": "{'physical_zyx': (16.0, 22.0, 32.0), 'inverse_zyx': (3.0, 4.0, 8.0), 'pyramid_alignment': (7.5, 7.5), 'source_sample': 50.0, 'display_value': 0.4}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "elapsed_seconds": 0.34722307199263014,
+        "limits": {
+          "wall_seconds": 5,
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "tasks": 16,
+          "network": "new empty namespace"
+        },
+        "stdout_sha256": "8ff9adcc6b6851823444e6778d9c2022bb946152ed805f3b73e0b9920f62a309",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "scope_limits": [
+        "Candidate-authored standard-library arithmetic only; no image or filesystem input and no installed image/viewer/database components.",
+        "Tests the proposed mapping algebra under supplied values; does not prove OME-NGFF reader conformance, napari coordinate behavior, the pixel-center convention, pyramid edge/corner alignment, or a full application.",
+        "The source sample variable remaining unchanged demonstrates this code path only; it is not evidence that any UI display control leaves source file bytes untouched."
+      ]
+    }
+  ],
+  "proposed_checks": [
+    {
+      "id": "P1",
+      "label": "proposed/UNEXECUTED",
+      "name": "3 GB source bounded-access benchmark",
+      "required_inputs": "Representative 3 GB tiled and strip OME-TIFF files plus local OME-Zarr fixture; target 8-core/16 GB workstation; exact reader/decode dependency lock.",
+      "method": "Measure process peak memory, chunk cache maximum, cold/warm slice latency, navigation latency, metadata/hash scan progress, and cancel latency with GPU disabled and enabled. Confirm no whole-array decode/full decoded copy; separately report source on-disk bytes and decoded cache bytes.",
+      "acceptance": "Agree latency thresholds with users before measurement; meet bounded-memory envelope without source rewrite; cancellation leaves usable project/source intact.",
+      "limits": "Not run. No component documentation or arithmetic check establishes this target."
+    },
+    {
+      "id": "P2",
+      "label": "proposed/UNEXECUTED",
+      "name": "Axis order, coordinate, pixel-center/corner, and multiscale overlay fixtures",
+      "required_inputs": "Asymmetric 2D/3D arrays with unique values, named-axis permutations, t/c selectors, anisotropic scale, nonzero origin, at least three scales, points/polygons/masks, and both OME-TIFF TiffData mappings and OME-NGFF transforms.",
+      "method": "Test pointer-to-source-index and physical conversion round-trips, all level overlays, pixel centers and voxel corners, axis permutation, and 2D/3D/time-wide scope. Include the #6068 3D ray sampling regression and a fixture specifically addressing the open #6320 center/corner report.",
+      "acceptance": "Exact values at selected samples; overlay alignment under documented tolerance; no lost axis/calibration fields; unsupported transforms fail visibly.",
+      "limits": "Not run. napari PR #6317 tests only its own narrower synthetic multiscale Labels sampling case."
+    },
+    {
+      "id": "P3",
+      "label": "proposed/UNEXECUTED",
+      "name": "Display immutability and derivative provenance",
+      "required_inputs": "Read-only source fixtures with integer and floating samples and expected checksums.",
+      "method": "Before/after SHA-256 and sample comparisons while changing channels, window/level/LUT/gamma; then separately crop and resample, compare output samples/dtype/calibration/operation record and verify annotation binding remains to source until explicit transform.",
+      "acceptance": "Display-only changes never alter source bytes/samples; crop/resample creates new asset ID and documented transform; exports state preserved/lost data.",
+      "limits": "Not run. W1's local variable check is not this file-backed test."
+    },
+    {
+      "id": "P4",
+      "label": "proposed/UNEXECUTED",
+      "name": "Crash recovery, bundle publish, and external relocation",
+      "required_inputs": "Application build and representative local filesystems/SMB share used by the group.",
+      "method": "Terminate the process during import-copy, annotation transaction, DB backup, zip creation, and publish. Reopen in a clean profile; test matching-hash relocation and same-name changed-content source; verify previous valid bundle survives a failed export.",
+      "acceptance": "Recover previous or complete committed state, never a silently half-registered image; source remains unmodified; publish/reopen/checksums agree on each qualified filesystem.",
+      "limits": "Not run. SQLite's documented assumptions do not qualify a network filesystem."
+    },
+    {
+      "id": "P5",
+      "label": "proposed/UNEXECUTED",
+      "name": "Annotation close/reopen/undo and export verification",
+      "required_inputs": "Integrated project and second workstation or clean user profile.",
+      "method": "Create point/polygon/mask at slice, volume, and acquisition scope; save, close, relocate/reopen; undo/redo; export CSV+sidecar, overlay and small crop; independently reopen outputs and compare hashes, coordinates, selectors, dtype, crop origin, and view flattening metadata.",
+      "acceptance": "Geometry and selectors persist; changed source hash requires explicit choice; users can determine exactly what each export preserves or omits.",
+      "limits": "Not run. No full application was built in this stage."
+    },
+    {
+      "id": "P6",
+      "label": "proposed/UNEXECUTED",
+      "name": "Keyboard and error accessibility acceptance",
+      "required_inputs": "UI prototype, keyboard-only test protocol, and participant feedback.",
+      "method": "Operate import, axis correction, channel/time/slice navigation, point/polygon/mask tools, styles, save/export, undo/redo without pointer; inspect focus, feedback, readable metadata and actionable unsupported-input messages.",
+      "acceptance": "All minimum actions keyboard-operable with visible focus and errors that identify source, axis/transform problem, and recovery choices.",
+      "limits": "Not run. API/layer support does not establish accessible integrated UI behavior."
+    }
+  ],
+  "evaluator_checks": []
+}

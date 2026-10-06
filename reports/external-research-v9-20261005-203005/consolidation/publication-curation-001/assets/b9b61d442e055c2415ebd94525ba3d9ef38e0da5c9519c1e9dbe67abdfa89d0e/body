@@ -1,0 +1,346 @@
+{
+  "schema": "er9.research.sources.v1",
+  "stage": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+  "created_utc": "2026-10-06",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-Zarr specification 0.5",
+      "url": "https://raw.githubusercontent.com/ome/ngff/0.5.0/0.5/index.bs",
+      "pin": {
+        "repository": "https://github.com/ome/ngff",
+        "tag": "0.5.0",
+        "path": "0.5/index.bs",
+        "git_blob": "474119e3e89c28e45dc84f47b9904b6e880cac1a"
+      },
+      "exact_locator": [
+        "Storage format",
+        "OME-Zarr Metadata / axes",
+        "coordinateTransformations",
+        "multiscales",
+        "omero metadata",
+        "labels metadata"
+      ],
+      "captures": [
+        {
+          "capture_id": "343bf4524c5242a8af3c38a301e2d1aa",
+          "capture_path": "public_captures/eb1db17835a6b01cfce3f23479575c63a300d7ee9ee4d3b0fb3ae55a4fe9a6a0.body",
+          "sha256": "eb1db17835a6b01cfce3f23479575c63a300d7ee9ee4d3b0fb3ae55a4fe9a6a0",
+          "observed_body_bytes": 36473,
+          "read_byte_range": "0-32768",
+          "body_complete_at_capture": true
+        }
+      ],
+      "applicability": "Primary storage/metadata specification at the explicit 0.5.0 tag. The multiscale transform restrictions and label-image details are used only for the corresponding NGFF features; they do not define the application-owned project schema or prove reader performance."
+    },
+    {
+      "id": "S2",
+      "title": "tifffile documentation",
+      "url": "https://www.cgohlke.com/docs/tifffile/",
+      "pin": {
+        "documented_tifffile_version": "2026.9.20",
+        "pin_kind": "version shown in captured primary documentation; rolling documentation URL, exact response SHA pins this capture",
+        "documented_zarr_requirement": ">=3.2.0"
+      },
+      "exact_locator": [
+        "tifffile overview: reading TIFF/BigTIFF/OME-TIFF and Zarr arrays from strips, tiles, pages, SubIFDs, series and pyramids",
+        "Requirements",
+        "Notes: TIFF limitations, OME-TIFF and format-specific caveats"
+      ],
+      "captures": [
+        {
+          "capture_id": "5bf592ae9fe3444d82594aef4c31543d",
+          "capture_path": "public_captures/1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a7.body",
+          "sha256": "1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a7",
+          "observed_body_bytes": 524288,
+          "server_content_length": 1139451,
+          "read_byte_range": "0-32768",
+          "capture_truncated": true,
+          "relevant_locators_in_read_range": ["overview", "Requirements", "Revisions", "Notes"]
+        }
+      ],
+      "applicability": "Independent TIFF reader precedent and candidate restricted adapter. Its documented features and caveats inform the allowlist; documentation does not prove bounded memory, format-by-format metadata fidelity, or compatibility with the proposed napari stack."
+    },
+    {
+      "id": "S3",
+      "title": "Bio-Formats 7.3.1 format documentation and support matrix",
+      "url": "https://bio-formats.readthedocs.io/en/v7.3.1/formats/index.html",
+      "pin": {
+        "documentation_version": "v7.3.1",
+        "support_matrix_url": "https://bio-formats.readthedocs.io/en/v7.3.1/supported-formats.html"
+      },
+      "exact_locator": [
+        "Formats page: >140 file formats; links to dataset structure, supported-format ratings, and supported metadata fields",
+        "Supported Formats page: separate pixel, metadata, export, multiple-image and pyramid ratings"
+      ],
+      "captures": [
+        {
+          "capture_id": "993d14dd108a4bd79890335e38ad2e6d",
+          "capture_path": "public_captures/00bbcd3550f9dd7d49eaca4e4b1f34984250039690cccc0af019dcae6df1bbf6.body",
+          "sha256": "00bbcd3550f9dd7d49eaca4e4b1f34984250039690cccc0af019dcae6df1bbf6",
+          "observed_body_bytes": 9682,
+          "read_byte_range": "0-9682",
+          "body_complete_at_capture": true
+        },
+        {
+          "capture_id": "78c004fa41ec420eb2d122a15ef11ab9",
+          "capture_path": "public_captures/89b490995bacd225a544166b0275233d6584c27e7f29eb36ef159597968c12fa.body",
+          "sha256": "89b490995bacd225a544166b0275233d6584c27e7f29eb36ef159597968c12fa",
+          "observed_body_bytes": 155032,
+          "read_byte_range": "0-32768",
+          "capture_truncated": true,
+          "relevant_locator_in_read_range": "Support matrix table begins in captured range"
+        }
+      ],
+      "applicability": "An optional future adapter/conversion lead and evidence for a per-format support matrix. Ratings are Bio-Formats' documentation and are not qualification results for this application."
+    },
+    {
+      "id": "S4",
+      "title": "napari v0.6.5 layer guide",
+      "url": "https://napari.org/0.6.5/guides/layers.html",
+      "pin": {
+        "napari_documentation_version": "0.6.5",
+        "page": "guides/layers.html"
+      },
+      "exact_locator": ["Layers at a glance: Image, Labels, Points and Shapes layer types and interaction roles"],
+      "captures": [
+        {
+          "capture_id": "ad989c947e5445b2824808b993c553bf",
+          "capture_path": "public_captures/c3bde7bc1af5163c779ca96aa1a64e5df833b6608f5b0561f49e6133046093ec.body",
+          "sha256": "c3bde7bc1af5163c779ca96aa1a64e5df833b6608f5b0561f49e6133046093ec",
+          "observed_body_bytes": 107718,
+          "read_byte_range": "0-32768",
+          "capture_truncated": true,
+          "page_embeds_version": "0.6.5"
+        }
+      ],
+      "applicability": "Viewer/layer precedent only. Does not supply the proposed durable project, source identity, cross-machine bundle, or export contract."
+    },
+    {
+      "id": "S5",
+      "title": "napari v0.6.5 Dask tutorial for large data",
+      "url": "https://napari.org/0.6.5/tutorials/processing/dask.html",
+      "pin": {
+        "napari_documentation_version": "0.6.5",
+        "page": "tutorials/processing/dask.html"
+      },
+      "exact_locator": [
+        "Make your life easier with dask-image",
+        "Side note regarding higher-dimensional datasets: reshape can cause many reads; per-channel arrays plus da.stack avoid one demonstrated pattern",
+        "A real example: high-resolution human brain imaging dataset: 3.69 GB unzipped TIFF collection"
+      ],
+      "captures": [
+        {
+          "capture_id": "770be6ae8074455e9cee4d558842b390",
+          "capture_path": "public_captures/383900d99a99ba9ea3d73a878ad0bf18d7b99eb8bd7f161510bd4ba3ca195eb5.body",
+          "sha256": "383900d99a99ba9ea3d73a878ad0bf18d7b99eb8bd7f161510bd4ba3ca195eb5",
+          "observed_body_bytes": 125865,
+          "read_byte_ranges": ["0-32768", "65000-77000"],
+          "capture_truncated_for_initial_delivery": true,
+          "additional_range_read_from_same_complete_capture": true
+        }
+      ],
+      "applicability": "Documented lazy-array implementation pattern and read-amplification counterexample. Dataset is a TIFF file collection; this is not proof of a 3 GB single-file application memory bound."
+    },
+    {
+      "id": "S6",
+      "title": "napari issue #9515: nD Zarr slicing over-fetch report",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515",
+      "pin": {
+        "repository": "napari/napari",
+        "issue": 9515,
+        "state_at_capture": "open",
+        "updated_at": "2026-10-01T19:03:06Z"
+      },
+      "exact_locator": ["Issue body: Bug Report, Steps to Reproduce, Expected Behavior, Environment"],
+      "captures": [
+        {
+          "capture_id": "17462e67936540828935fe5734622040",
+          "capture_path": "public_captures/54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6.body",
+          "sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+          "observed_body_bytes": 8505,
+          "read_byte_range": "0-8505",
+          "body_complete_at_capture": true
+        }
+      ],
+      "applicability": "Open user report, not independently reproduced here and not a fix chain. Used to justify testing direct Zarr vs Dask-wrapped slicing in the exact proposed stack; its environment differs from napari 0.6.5."
+    },
+    {
+      "id": "S7",
+      "title": "napari issue #7085: Split RGB loses affine",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085",
+      "pin": {
+        "repository": "napari/napari",
+        "issue": 7085,
+        "opened_at": "2024-07-08",
+        "closed_at": "2025-09-26"
+      },
+      "exact_locator": ["Issue body: RGB layer transformation disappears after Split RGB; reproduction steps and expected transform preservation"],
+      "captures": [
+        {
+          "capture_id": "f046f30c25084cdaa075de14a9e4e64a",
+          "capture_path": "public_captures/23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3.body",
+          "sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+          "observed_body_bytes": 5801,
+          "read_byte_range": "0-5801",
+          "body_complete_at_capture": true
+        }
+      ],
+      "applicability": "Failure report initiating the cited regression chain; supports the metadata-preservation lesson, not project persistence behavior."
+    },
+    {
+      "id": "S8",
+      "title": "napari issue #7085 comments",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085/comments?per_page=10",
+      "pin": {
+        "repository": "napari/napari",
+        "issue": 7085,
+        "capture_date": "2026-10-06"
+      },
+      "exact_locator": ["Reporter comment with parameterized test and observed failures", "Maintainer comment confirming metadata-loss cause and RGB-axis caveat", "Comment linking PR #8256 and identifying use of the shared test"],
+      "captures": [
+        {
+          "capture_id": "1473ea873ae446b2b87d07de7f390520",
+          "capture_path": "public_captures/aa8c06456dc0f2dce6ec65351ab69be0933d3daa2c19bfee6e31987ba5fb80fa.body",
+          "sha256": "aa8c06456dc0f2dce6ec65351ab69be0933d3daa2c19bfee6e31987ba5fb80fa",
+          "observed_body_bytes": 10370,
+          "read_byte_range": "0-10370",
+          "body_complete_at_capture": true
+        }
+      ],
+      "applicability": "Connects failure report to a concrete test proposal and maintainer response; comments alone do not prove fix until paired with PR patch and release evidence."
+    },
+    {
+      "id": "S9",
+      "title": "napari PR #8256: Handle affine layer metadata when splitting RGB images",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8256",
+      "pin": {
+        "repository": "napari/napari",
+        "pull_request": 8256,
+        "merged_at": "2025-09-26T15:29:02Z",
+        "head_commit": "a8ca945410834c48139d56219f487d11ded034ce",
+        "merge_commit": "afd1bb88f296726fe98bc0a94119a51bba6870c4"
+      },
+      "exact_locator": ["PR description: closes issue #7085; explains stack_to_images dropping affine/rotate/shear; changes split_rgb to use split_channels"],
+      "captures": [
+        {
+          "capture_id": "da493f8360e1466e98711ea4eef80814",
+          "capture_path": "public_captures/f3da8dda6f8000472cc754984e22fa504b7b112b5661610f8cc07b04e563fd36.body",
+          "sha256": "f3da8dda6f8000472cc754984e22fa504b7b112b5661610f8cc07b04e563fd36",
+          "observed_body_bytes": 20154,
+          "read_byte_range": "0-20154",
+          "body_complete_at_capture": true
+        }
+      ],
+      "applicability": "Fix history and merged status for napari, independent of the proposed application's behavior."
+    },
+    {
+      "id": "S10",
+      "title": "napari PR #8256 changed files and regression diff",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8256/files",
+      "pin": {
+        "repository": "napari/napari",
+        "pull_request": 8256,
+        "reviewed_file_revision": "a8ca945410834c48139d56219f487d11ded034ce"
+      },
+      "exact_locator": [
+        "src/napari/layers/utils/stack_utils.py: split_rgb now routes through split_channels and passes layer metadata",
+        "src/napari/layers/_tests/test_layer_actions.py: test_split_rgb parameterizes default, scale, translate and translated Affine; compares output affine_matrix with source"
+      ],
+      "captures": [
+        {
+          "capture_id": "778f7985f0304b4a9d783956637f3385",
+          "capture_path": "public_captures/60f975e2e37b63c5fb6a656f9ac86637c84ffaa77a6b967f2b503bf9389ebc44.body",
+          "sha256": "60f975e2e37b63c5fb6a656f9ac86637c84ffaa77a6b967f2b503bf9389ebc44",
+          "observed_body_bytes": 4178,
+          "read_byte_range": "0-4178",
+          "body_complete_at_capture": true
+        }
+      ],
+      "applicability": "Direct implementation and regression-test evidence. The merged regression cases do not establish rotation/shear, saving/reopening, resampling or export coverage."
+    },
+    {
+      "id": "S11",
+      "title": "napari PR #8256 commits and napari v0.6.5 release notes",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8256/commits",
+      "pin": {
+        "repository": "napari/napari",
+        "test_commit": "3f994d36130e5d673ce059a1a0d66fac9cca03b0",
+        "release_tag": "v0.6.5",
+        "release_published_at": "2025-10-02T02:18:34Z"
+      },
+      "exact_locator": [
+        "PR commits: commit 3f994d... message explicitly updates test_split_rgb to check scale, translate and affine using issue code",
+        "Release page: v0.6.5 Improvements and Bug Fixes both list PR #8256"
+      ],
+      "captures": [
+        {
+          "capture_id": "854608d5bcfe47f7a9b0c4c048526fad",
+          "capture_path": "public_captures/bdf217ec81537a98b705358f577b3e00311cc5cefbef71d3d19a1b176e0acfc2.body",
+          "sha256": "bdf217ec81537a98b705358f577b3e00311cc5cefbef71d3d19a1b176e0acfc2",
+          "observed_body_bytes": 20941,
+          "read_byte_range": "0-20941",
+          "body_complete_at_capture": true
+        },
+        {
+          "capture_id": "bfb7fa2e4173431ea6f4b78d2d0467f5",
+          "capture_path": "public_captures/5265faad007283ead9a033b7b24c7c70e38f00592ea6d4f9ac04e51eff2eb875.body",
+          "sha256": "5265faad007283ead9a033b7b24c7c70e38f00592ea6d4f9ac04e51eff2eb875",
+          "observed_body_bytes": 37044,
+          "read_byte_range": "0-32768",
+          "capture_truncated_for_initial_delivery": true,
+          "relevant_release_notes_in_read_range": "v0.6.5 PR #8256 entries"
+        }
+      ],
+      "applicability": "Release notes plus merge metadata establish release applicability; the release notes are not test execution output."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite Atomic Commit documentation",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": {
+        "document": "official SQLite documentation snapshot",
+        "captured_utc": "2026-10-06T04:53:51Z",
+        "snapshot_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "version_note": "unversioned documentation; snapshot hash pins evidence"
+      },
+      "exact_locator": ["Introduction: meaning of atomic commit and scope of rollback-mode explanation", "Single File Commit", "Rollback", "Things That Can Go Wrong / broken locking / incomplete disk flushes"],
+      "captures": [
+        {
+          "capture_id": "d495b6fa655e4ef8a2d3b478d2e2f4fa",
+          "capture_path": "public_captures/5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1.body",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "observed_body_bytes": 77968,
+          "read_byte_range": "0-32768",
+          "capture_truncated_for_initial_delivery": true,
+          "relevant_locators_in_read_range": ["Introduction", "Hardware Assumptions", "Single File Commit", "Rollback-journal steps"]
+        }
+      ],
+      "applicability": "Atomicity discussion for one SQLite database under stated storage/locking/flush assumptions. It does not guarantee whole-bundle atomicity or shared-filesystem durability."
+    },
+    {
+      "id": "S13",
+      "title": "SQLite Write-Ahead Logging documentation",
+      "url": "https://www.sqlite.org/wal.html",
+      "pin": {
+        "document": "official SQLite documentation snapshot",
+        "captured_utc": "2026-10-06T04:54:31Z",
+        "snapshot_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "version_note": "unversioned documentation; snapshot hash pins evidence"
+      },
+      "exact_locator": ["Overview: WAL does not work over a network filesystem", "The WAL file: sidecar is part of persistent state while open", "Checkpointing and concurrency"],
+      "captures": [
+        {
+          "capture_id": "13a75cb51f4d4d16800a160d08bc2b3b",
+          "capture_path": "public_captures/f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e.body",
+          "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+          "observed_body_bytes": 42143,
+          "read_byte_range": "0-32768",
+          "capture_truncated_for_initial_delivery": true,
+          "relevant_locators_in_read_range": ["Overview", "How WAL Works", "WAL file", "Read-only databases"]
+        }
+      ],
+      "applicability": "Primary evidence against placing a live WAL-mode SQLite project on a network filesystem. Does not evaluate the university share or bundle-copy protocol."
+    }
+  ]
+}

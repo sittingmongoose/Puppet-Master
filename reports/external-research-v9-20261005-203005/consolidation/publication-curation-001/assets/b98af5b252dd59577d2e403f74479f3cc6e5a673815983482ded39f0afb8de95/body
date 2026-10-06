@@ -1,0 +1,115 @@
+# Critique review — reproducible notebook and data workspace (ER9, stage `I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001`)
+
+Role: fresh source-grounded critic, treatment V01 (bounded executable checking).
+Inputs actually received: `inputs/brief.md`, `inputs/delivery_objective.md`, `inputs/output_contract.md`, `inputs/STAGE_CLOCK.json`.
+Required deliverable: this file, `out/critique/review.md`.
+
+## 0. Verdict summary
+
+**The frozen same-arm predecessor artifacts (research proposal + sources/witnesses/leads catalogs) were not attached to this stage: `inputs/prior/` exists as a directory but none of the canonical artifact names are present.** A claim-by-claim critique of a specific research proposal is therefore impossible this run, and inventing or reconstructing a proposal to critique — or reading another arm — is prohibited by the stage contract. This review therefore delivers what a next fresh same-family candidate can actually use without my private context:
+
+1. a precise obstruction record (P0) with the full probe log, so ops/next stage can re-attach or regenerate;
+2. a brief-derived review rubric with exact line references, i.e. the checklist any valid research proposal for this brief must satisfy;
+3. executed, discriminating anchor checks (V01) plus two pinned public primary sources that establish reusable, consequential facts for the brief's subject matter — including one real upstream behavior change (CPython `sum()`) that is a direct instance of the brief's central hazard ("why does a shared notebook produce a different result");
+4. explicit uncertainty inventory and proposed/UNEXECUTED validation.
+
+No prior claim was accepted or rejected, because no prior proposal text existed to verify; this is an obstruction finding, not a blanket rejection, and it must not be read as any judgment of the (unseen) research stage.
+
+## 1. Obstruction record (P0): missing frozen predecessor artifacts
+
+The stage contract states: "Ops must attach the exact complete frozen same-arm predecessor artifacts under `inputs/prior/` … Do not invent them or read another arm." Probe log (admitted `read_file` tool only; directories cannot be listed with admitted tools, so absence of *other* names cannot be proven — only the probed names are known absent):
+
+| # | path probed | result |
+|---|---|---|
+| 1 | `inputs/STAGE_CLOCK.json` | OK — 686 B, sha256 `aa6072581a70…b291932` |
+| 2 | `inputs/brief.md` | OK — 5830 B, sha256 `6e6749f350f7…77450a` |
+| 3 | `inputs/delivery_objective.md` | OK — 2275 B, sha256 `1aed159a7da6…33936650` |
+| 4 | `inputs/output_contract.md` | OK — 2062 B, sha256 `233c7ea2b016…caff22` |
+| 5 | `inputs/prior/proposal.md` | FileNotFoundError |
+| 6 | `inputs/prior/sources.json` | FileNotFoundError |
+| 7 | `inputs/prior/research/proposal.md` | FileNotFoundError |
+| 8 | `inputs/prior` (as file) | ValueError (path is not a regular file → directory-like and exists) |
+| 9 | `inputs/prior/out/research/proposal.md` | FileNotFoundError |
+| 10 | `inputs/prior/manifest.json` | FileNotFoundError |
+| 11 | `inputs/prior/witnesses.json` | FileNotFoundError |
+| 12 | `inputs/prior/leads.json` | FileNotFoundError |
+| 13 | `inputs/prior/research.md` | FileNotFoundError |
+| 14 | `../inputs/prior/proposal.md` | ValueError (sandbox rejects escape/outside path) |
+| 15 | `../out/research/proposal.md` | ValueError (same) |
+| 16 | mechanical `line_map(inputs/prior)` | ValueError (consistent with directory) |
+
+Consequence: no research proposal claims exist to verify, so Sections 4–6 supply verified anchors and a rubric instead. Resolution path for the next stage: (a) ops re-attaches the frozen artifacts under `inputs/prior/` with the four canonical names, then the rubric in §3 plus the anchor facts in §5 can be applied directly; or (b) if the research stage is regenerated fresh, §3 is the acceptance checklist and §5 the pre-verified source anchors to cite or re-verify at the same captures.
+
+## 2. Brief-derived review rubric (acceptance checklist for any research proposal under this brief)
+
+Each item cites `inputs/brief.md` (B-Ln) or `inputs/output_contract.md` (C-Ln). A next candidate can score a proposal item-by-item; "missing" here means the proposal failed to address it, not that the idea is wrong.
+
+- **R1 Architecture** — one coherent component choice or explicitly bounded alternatives (B-L19).
+- **R2 Minimum workflow** — all nine steps covered: create project; import/identify data without unnecessary copying; author notebook/transform; bounded preview; interactive run; clean replay; provenance comparison; save/reopen on another machine; export results + small reproducibility manifest (B-L9).
+- **R3 Record model** — the proposal must define: project record, environment binding, source-data identity, execution events, output association (B-L9).
+- **R4 Data contract** — schema assumptions, type conversions, row/order identity, error handling; no silent deletion of malformed records; no mutation of originals; preview sampling explicitly not proof of a full-dataset property (B-L5).
+- **R5 Notebook semantics** — displayed order vs execution order vs live kernel state vs saved-output provenance distinguished; "a saved output is not automatically reproducible"; clean-replay guarantee enumerated against nondeterminism, external services, unpinned packages, undeclared file access (B-L7).
+- **R6 Status & invalidation** — per-output states current/stale/failed/unverified; cancel + progress + errors; defined invalidation when an upstream cell, source dataset, or environment dependency changes; kernel restart or interrupted run must not silently leave outputs marked current (B-L7).
+- **R7 Envelope** — 5 GB tabular input through a bounded/streaming path where the operation allows; explicit different bound for unsupported global ops; framed as target-to-investigate, not verified result (B-L11).
+- **R8 Operational semantics** — schema evolution; caching + invalidation; large-result truncation; deterministic vs stable ordering; concurrency/file locking; recovery after interrupted save (B-L11).
+- **R9 Exchange & scope** — exchange via ordinary folders or portable bundles; credentials/private datasets/shared profiles declared out of scope (B-L11).
+- **R10 Untrusted execution boundary** — filesystem/network/resource permissions with usability trade-offs; checks only via the admitted isolated execution; source browsing kept separate from execution; no claim that an import blacklist supplies isolation (B-L13).
+- **R11 Support boundary** — a chosen Python support boundary and a defensible optional-SQL relationship; small team not required to build every kernel (B-L9).
+- **R12 Precedents** — ≥2 independently useful implementation precedents with the mechanism each contributes and an independence argument (B-L17).
+- **R13 Failure chain** — ≥1 consequential real issue followed through fix and regression test, with version/branch applicability and evidence limits; an issue title, API example, or merged patch alone must not be presented as release behavior (B-L17).
+- **R14 Interchange format** — standard document format investigated with the explicit caveat that adoption does not settle runtime behavior (B-L9).
+- **R15 Labeling discipline** — source facts / engineering inference / product choices / executed checks / proposed-UNEXECUTED kept separate; no invented receipts (C-L7).
+- **R16 Ideas kept visible** — ≥1 useful opportunity and ≥1 plausible alternative; rejected alternatives recorded without becoming requirements (B-L15, B-L19).
+- **R17 Catalogs** — sources.json records URL, pin, exact locator, capture identity, applicability; catalogs support but do not replace in-proposal citations (C-L5).
+- **R18 Witness scope honesty** — synthetic/tiny-data witnesses labeled as component checks that do not prove large-data or full-runtime correctness (B-L13).
+
+## 3. Executed checks and pinned sources (all executed by candidate this stage)
+
+### W1 — five stdlib anchor checks (isolated python_execute `exec-wdeqrxvt`, exit 0)
+code sha256 `f55de0d4bbf308f37c6ed108105ad43cc53394019af575b559f94729b0b65fd1`, stdout sha256 `687a9de25bf4234778e1b73c0261f4eb8671d95dafc4aef45fe38be71ba38c40`, 5 s wall / 256 MiB component limits, empty-network namespace. Scope limit: isolated component check; stdlib only; proves language/parser semantics anchors, not any product behavior.
+
+| id | independent expectation (derived before observation) | observed | match |
+|---|---|---|---|
+| C1 Unicode identity | Unicode canonical-equivalence theory: NFC `"café"` vs NFD `"cafe\u0301"` differ as code-point strings (4 vs 5), form 2 distinct dict keys, equal after NFC normalize | as expected | true |
+| C2 float-sum order | naive left-to-right IEEE-754: `sum([1e20,-1e20,3.14])`=3.14 vs reversed=0.0; ulp(1e20)=2^14 swallows 3.14 | **both orders 3.14** — discriminated, see W2/F-A | false (vs naive derivation) |
+| C3 CSV ragged rows | stdlib `csv.reader` validates no field count; `a,b / 1 / 2,3,4` parses to lengths [2,1,3] with no error | as expected | true |
+| C4 JSON NaN | Python `json` accepts/emits bare `NaN` by default (RFC 8259 forbids); `dumps({"v":nan})` = `{"v": NaN}` | as expected | true |
+| C5 DST fold | PEP 495: local 01:30 at US DST fallback maps to two instants; fold=0 → −4 h, fold=1 → −5 h | −14400 / −18000 s | true |
+
+### W2 — sum() discrimination re-run (`exec-2pefffz9`, exit 0)
+code sha256 `4bf6590a692e48c6623c6ca37c2da4ad210c5a3ff24fa84cd36de9eb63535316`, stdout sha256 `9a749f3a1beb830df6d3fb8706a24e3029cf335b313eada4e3d9edbed9a202da`. Observed on the sandbox runtime: `sys.version_info` = **3.14.4**; explicit naive loop over reversed input → `0.0`; builtin `sum(reversed(xs))` → `3.14`; `math.fsum` → `3.14`. This proves builtin `sum()` on this runtime is **not** naive left-to-right accumulation, exactly reproducing the compensated result.
+
+### F-A — pinned upstream chain: CPython issue 100425, "Improve accuracy of builtin sum() for float inputs"
+Capture: `https://api.github.com/repos/python/cpython/issues/100425`, HTTP 200, 8185 B, sha256 `9e89d888348afae7dbc8004aaa4e2a1e97906180791df3968381204e08bb2b79`, ETag `W/"9e89d888…"`, captured 2026-10-06T04:55:29Z. Verified locators: title as above; opened 2022-12-22, closed 2022-12-23 (`state_reason: completed`); body proposes "Arnold Neumaier's improved variation of compensated summation" and states that at that time "`sum()` makes no efforts to improve accuracy over a simple running total"; GitHub-linked PRs gh-100426, gh-100860, gh-101854, gh-107785, gh-107787.
+**Source facts:** the issue and linked PRs exist as captured; the pre-change body text asserts naive running-total behavior as of 2022-12-22; W2 proves compensated behavior on 3.14.4.
+**Engineering inference (labeled):** the change first shipped in the Python 3.12 line (closure in the 3.12 dev window). *Not* established here: which PR merged into which release, and a release-notes/NEWS pin for 3.12.0 — a merged patch and an issue do not establish release behavior (B-L17), so mark that link **proposed/UNEXECUTED**.
+**Affected dependency for the brief:** any environment binding that pins only package versions (or only "Python 3") does not make notebook outputs comparable across machines; identical notebook code yields different aggregates on ≤3.11-style vs ≥3.12-style runtimes. The manifest must pin the **CPython minor version**, and clean replay must treat interpreter-version mismatch as an invalidation event (R3/R6), not silently label outputs current.
+
+### F-B — pinned notebook format anchor: nbformat v4.5 JSON schema
+Capture: `https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json`, HTTP 200, 16104 B, sha256 `523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a`, ETag `5a268c84…`, branch `main` (moving pin) captured 2026-10-06T04:54:01Z. Verified locators: description "Jupyter Notebook v4.5 JSON schema"; `code_cell` requires `["id","cell_type","metadata","source","outputs","execution_count"]`; `execution_count` — "The code cell's prompt number. **Will be null if the cell has not been run**", type `["integer","null"]`; `outputs` is an array oneOf `execute_result | display_data | stream | error` (error requires `ename`, `evalue`, `traceback`); root `metadata.kernelspec` requires only `name`+`display_name`, `language_info` requires only `name`; cell `id` pattern `^[a-zA-Z0-9-_]+$`, 1–64 chars; cell `metadata.execution` stores iopub/shell message dates.
+**Consequences for the next candidate:** (i) outputs and per-cell execution evidence persist inside the `.ipynb` document itself, and "never executed" is representable (`execution_count: null`) — this supports distinguishing displayed order, execution order, and saved-output provenance (R5); (ii) the schema captures **no package versions, no dataset revisions, no kernel live state** — kernelspec has no version requirement — so adopting `.ipynb` satisfies R14's caveat: format adoption does not settle runtime behavior; staleness/invalidation and manifest layers must be product-level metadata keyed by the stable cell `id` (R6); (iii) `error` outputs are first-class, so "failed" is representable without external bookkeeping.
+**Limits:** a JSON schema constrains documents, not library behavior; `main` is a moving branch — the pin is the capture sha256 + date, and a tag-pinned capture (e.g. an nbformat release tag) is **proposed/UNEXECUTED**.
+
+### Preserved-valid-claims note
+Nothing from a prior proposal could be preserved or corrected because none was attached (§1). The rubric (§2) and anchors (§3, §4) are the preserved content of this stage; if a later stage regenerates research, these anchors should be re-cited with their capture identities rather than re-derived.
+
+## 4. Data-contract consequences of the executed anchors (for R4)
+
+- **String identity:** NFC/NFD pairs display identically but are distinct keys and distinct filenames (W1-C1). A join/dedup on names must declare normalization or it can silently split one entity in two; conversely normalizing on write mutates inputs. Pick and document one policy per column class.
+- **Row/order identity:** float aggregation is order-deterministic but not order-stable under naive accumulation, and **builtins changed semantics across interpreter versions** (W1-C2, W2, F-A). "Deterministic" replay therefore requires pinning interpreter version *and* defining row order; "stable" outputs (e.g., top-N with ties) additionally need explicit tie-breaking keys.
+- **Malformed records:** the default CSV parser silently accepts ragged rows (W1-C3) — "do not silently delete" needs an explicit contract validator; silence is the parser default, not an error.
+- **Interchange:** Python-emitted JSON may contain non-standard `NaN`/`Infinity` (W1-C4); strict parsers on the colleague's machine or in SQL engines reject the same bytes — an NDJSON contract must forbid or normalize these tokens for cross-machine reopen (R2 step 8).
+- **Timestamps:** naive local timestamps are lossy at DST fallback; two real instants share one wall-clock string (W1-C5). The contract should require an explicit zone/offset convention and treat ambiguous/local timestamps as a declared conversion, not an implicit cast.
+
+## 5. Uncertainty inventory and proposed/UNEXECUTED validation
+
+1. **Prior research proposal content** — entirely unverified/unknown (blocked, §1). Proposed: re-attach artifacts and re-run this critique; or regenerate research scored against §2.
+2. **First release of Neumaier `sum()`** — inferred 3.12 line; release-note/NEWS pin UNEXECUTED. Proposed: capture `docs.python.org` 3.12 whatsnew + one linked PR merge state, then the brief's R13 chain is complete end-to-end.
+3. **≤3.11 builtin-sum behavior** — supported by the issue body's "simple running total" statement and by W2's naive-loop equivalence (0.0), but not executed on a 3.11 runtime. Proposed: same check on a pinned 3.11 interpreter.
+4. **nbformat tag pin** — current capture is branch `main`; a tag/release capture is proposed/UNEXECUTED.
+5. **All rubric items §2** — no proposal was measured against them; they are criteria, not findings about any existing text.
+6. **Component-scope limit (applies to all executed work):** W1/W2 prove stdlib/interpreter semantics in a 256 MiB isolated sandbox; nothing here proves any notebook product, large-dataset behavior, or full-runtime correctness (B-L13). No 5 GB streaming benchmark was attempted — that is research-stage/proposed work, not critic-stage evidence.
+
+## 6. Resolution instructions for the next fresh same-family candidate
+
+You need no private context from this stage. (1) If `inputs/prior/` artifacts now exist, critique the proposal claim-by-claim: apply rubric §2, verify its source pins against captures of your own, and use §3's anchors as pre-verified checkpoints (re-fetch to refresh capture identity; note `main`/`main`-branch pins move). (2) If regenerating research: satisfy §2 fully; cite F-A (issue 100425 + capture sha256 `9e89d888…`) as the environment-pinning motivation and complete its release-notes link; cite F-B (schema capture sha256 `523e3578…`) for the format-vs-runtime boundary; reuse W1's four data-contract anchors with their receipt hashes. (3) Keep labels honest: separate source facts, inference, choices, executed checks, and proposed/UNEXECUTED work (C-L7); do not present this stage's component witnesses as application behavior.

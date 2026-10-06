@@ -1,0 +1,77 @@
+{
+  "catalog_schema": "er9.research.leads.v1",
+  "stage": "research",
+  "date": "2026-10-06",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "QuPath project identity model (stable entry IDs across file moves)",
+      "detail": "QuPath is the closest whole-product precedent for project-bundle identity and relocation, but the attempted docs URL 404'd at capture time (sources.json 'not_captured'). Claim that QuPath entries use stable IDs is UNVERIFIED here.",
+      "next_step": "Fetch qupath.readthedocs.io correct page (e.g. /en/stable/docs/intro or project section) and the qupath GitHub source for ProjectImageEntry; adopt/adjust bundle identity design if confirmed.",
+      "status": "open, adoption_deferred_or_unverified"
+    },
+    {
+      "id": "L2",
+      "title": "OME-NGFF (zarr multiscales) as derived-image/interop format",
+      "detail": "tifffile 2026 revisions mention updating zarr multiscale output to NGFF 0.4/0.5 (S1 Revisions). NGFF would make derived overviews and future exports readable by napari/OMERO without our reader.",
+      "next_step": "Pin the NGFF spec version; decide v1.x mask/overview storage; keep PNG receipt sidecar for honest view-state reporting.",
+      "status": "open, deferred"
+    },
+    {
+      "id": "L3",
+      "title": "dask scheduler for cancellation and progress",
+      "detail": "tifffile README shows dask.array.from_zarr over TIFF stores (S1); napari docs list a dask large-dataset tutorial (S8 nav). Scheduler-level cancellation could implement the cancel/progress obligation with less custom code.",
+      "next_step": "Prototype token-based cancel over the tile loop first; adopt dask only if overhead is acceptable on 8-core/16 GB.",
+      "status": "open, deferred"
+    },
+    {
+      "id": "L4",
+      "title": "SQLite (WAL) single-file project alternative",
+      "detail": "Rejected for v1 (proposal §6) but remains the bounded fallback if journal-replay recovery proves fragile on shared storage.",
+      "next_step": "If adopted later, keep annotations in SQLite and images external; measure blob-vs-sidecar performance.",
+      "status": "open, fallback"
+    },
+    {
+      "id": "L5",
+      "title": "napari PR #3155 setitem-interception undo",
+      "detail": "Unmerged proposal (S6) to wrap Labels.data.__setitem__ so all mutations enter the undo queue. Motivates our single-write-path rule; if our workspace later grows plugin/script APIs, this is the known hazard to design for.",
+      "next_step": "Keep annotation model write API closed; revisit if a scripting API is added.",
+      "status": "open, watch"
+    },
+    {
+      "id": "L6",
+      "title": "Deeper napari documentation capture (units, handedness, dask, contrast defaults)",
+      "detail": "S8 capture was truncated (512 KB of 1.7 MB); only nav/meta captured. napari's unit-aware rendering and handedness guides likely refine our physical-mapping section; auto contrast_limits behavior affects reopen-fidelity defaults (risk noted in proposal §14).",
+      "next_step": "Re-fetch with range requests or the RST sources in napari/docs; also tifffile CHANGES.rst for BigTIFF/Q-axis changelog provenance.",
+      "status": "open"
+    },
+    {
+      "id": "L7",
+      "title": "ITK/SimpleITK orientation conventions (LPS) for the physical mapping",
+      "detail": "Our orientation matrix needs a conventional basis to interop with registration tools later; ITK's LPS-vs-RAS distinction is the classic pitfall. Not yet sourced.",
+      "next_step": "Capture ITK software guide section on coordinate systems before implementing orientation export; until then physical mapping is scale+origin+orthogonal-axes only (proposal §8 keeps orientation explicit but unconstrained).",
+      "status": "open, unverified_dependency"
+    },
+    {
+      "id": "L8",
+      "title": "kerchunk/fsspec reference files for zero-copy foreign reads",
+      "detail": "tifffile README demonstrates write_fsspec reference JSON over TIFF/zarr (S1 Examples). Could let a bundle reference a colleague's large file by byte ranges without copying.",
+      "next_step": "Evaluate read-only reference bundles as an alternative to 'copy vs reference' import modes; verify hash-identity story first.",
+      "status": "open, deferred"
+    },
+    {
+      "id": "L9",
+      "title": "Zarr v3 spec details (chunk key grammar, optional chunk digests)",
+      "detail": "Not captured; no spec-level claims made in this proposal. If v3 digests exist as believed, per-chunk corruption detection would strengthen the mask store and cache.",
+      "next_step": "Fetch zarr.dev v3 core spec; only then cite digest behavior.",
+      "status": "open, unverified_dependency"
+    },
+    {
+      "id": "L10",
+      "title": "GPU-accelerated viewing path (vispy-style) beyond v1",
+      "detail": "Optional per brief (envelope has optional GPU). napari's vispy integration is the precedent; not needed for 3 GB tiled viewing if cache budget is respected.",
+      "next_step": "Revisit after W3 benchmarks; keep render path swappable.",
+      "status": "open, deferred"
+    }
+  ]
+}

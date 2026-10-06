@@ -1,0 +1,91 @@
+{
+  "schema": "research-witness-inventory.v1",
+  "as_of": "2026-10-06",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "execution_id": "exec-u48f3m4_",
+      "component_scope": "Isolated standard-library arithmetic check only; not an image reader, viewer, project, or full application check.",
+      "question": "Does the proposed column-vector affine example map index coordinates to the stated physical coordinates and invert back, and does the linear display window give the stated three values without changing its raw input list?",
+      "code": "A = [[0.0,-0.5,0.0,10.0],[0.25,0.0,0.0,20.0],[0.0,0.0,1.5,-3.0],[0.0,0.0,0.0,1.0]]\ni = [8.0,4.0,2.0,1.0]\np = [sum(row[j] * i[j] for j in range(4)) for row in A]\nback = [(p[1]-20.0)/0.25, (10.0-p[0])/0.5, (p[2]+3.0)/1.5, 1.0]\nraw = [0,1000,2000]\nbefore = raw[:]\nlo, hi = 500.0, 1500.0\ndisplay = [min(1.0,max(0.0,(v-lo)/(hi-lo))) for v in raw]\nassert p == [8.0,22.0,0.0,1.0]\nassert back == i\nassert display == [0.0,0.5,1.0]\nassert raw == before\nprint({'physical':p,'roundtrip':back,'display':display,'raw_unchanged':raw == before})",
+      "input": {
+        "affine": "4x4 column-vector; index [x,y,z,1]; matrix [[0,-0.5,0,10],[0.25,0,0,20],[0,0,1.5,-3],[0,0,0,1]]",
+        "index": [8, 4, 2, 1],
+        "samples": [0, 1000, 2000],
+        "window": [500, 1500]
+      },
+      "justified_expected_behavior": {
+        "physical": [8, 22, 0, 1],
+        "roundtrip": [8, 4, 2, 1],
+        "display": [0, 0.5, 1],
+        "raw_unchanged": true
+      },
+      "stdout": "{'physical': [8.0, 22.0, 0.0, 1.0], 'roundtrip': [8.0, 4.0, 2.0, 1.0], 'display': [0.0, 0.5, 1.0], 'raw_unchanged': True}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "receipt": {
+        "code_sha256": "aaaa8200acf0897e99e0936626cde167afeb6e04057513778147dddc57bb813e",
+        "data_sha256": "9ac916cb1bbf45ddab8d548fb1bc819bc8da3a9efe588eb7860aa0fa5d6ddc3b",
+        "stdout_sha256": "326c4a49d33fe9ba9020db8520a76470fa715bca9e3de22444f841e67dd1bbe0",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "elapsed_seconds": 0.3164736329927109,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "network": "new empty namespace"}
+      },
+      "limitations": [
+        "This checks only the authored arithmetic and input-list invariance; it does not establish a viewer's coordinate convention or that display settings leave a real source file unchanged.",
+        "No TIFF, OME-Zarr, package, project save, export, memory, responsiveness, UI or accessibility test was performed."
+      ]
+    },
+    {
+      "id": "W2",
+      "status": "external upstream regression test (not executed by candidate)",
+      "source_ids": ["S4", "S5", "S6", "S7", "S8", "S9", "S10"],
+      "test_locator": "Dask PR #12105 changed file dask/array/tests/test_array_core.py, test_zarr_chunk_shards_mismatch_warns; implementation commit d5b07164359d3377fd9d2d0e7eebd134f9a3c31a; Dask 2025.11.0 release ancestry verified.",
+      "mechanism_and_input": "The upstream test uses a one-dimensional array of length 24, Dask chunks of length 10, Zarr chunks of length 4 and shard length 12. It calls to_zarr(compute=False), checks rechunking to shard granularity, computes, and checks array equality against arange.",
+      "upstream_expected_behavior": "Writes are scheduled/rechunked on the shard boundary where shard metadata is available and readback equals the original array.",
+      "candidate_execution_receipt": null,
+      "limits": [
+        "This is external source evidence, not a candidate run and not evidence of full application behavior.",
+        "The test is a small 1D aligned-shard case. The issue's January 2026 follow-up reports a related 3D corruption result that is not diagnosed by this test or the available fix chain."
+      ]
+    },
+    {
+      "id": "P1",
+      "status": "proposed/UNEXECUTED",
+      "question": "Does the chosen import path read supported source tiles/planes within a bounded allocation and preserve source samples/metadata?",
+      "input_and_expected": "Representative supported OME-TIFF and OME-Zarr fixtures, including 2D/3D, time/channel, integer/float, scale/origin, codecs and edge chunks; unsupported axes, ambiguous metadata, oversized decode units and absent codecs must produce explicit review/rejection without mutating source or valid project state.",
+      "limitations": ["No implementation, fixtures or application test were run in this research."]
+    },
+    {
+      "id": "P2",
+      "status": "proposed/UNEXECUTED",
+      "question": "Can the selected reader/viewer browse a supported 3 GB source on an 8-core/16 GB workstation within bounded memory and responsive cancellation?",
+      "acceptance_targets": {"cache_bytes_max": 536870912, "decoded_read_bytes_max": 67108864, "process_peak_bytes_max": 6442450944, "cached_navigation_p95_ms_max": 200, "cold_plane_draw_ms_max": 2000, "cancel_checkpoint_latency_ms_max": 1000},
+      "expected_behavior": "No source-sized second allocation; no full-volume decode to show a plane; progress and cancellation work; measure actual RSS, read sizes, latency and hardware/software versions.",
+      "limitations": ["Targets are proposed engineering choices, not evidence that the component stack meets them."]
+    },
+    {
+      "id": "P3",
+      "status": "proposed/UNEXECUTED",
+      "question": "Do axes, coordinate frames, scoped annotations and exports round-trip without changing association?",
+      "input_and_expected": "Small 2D/3D fixtures with nonzero origins, anisotropic sampling, axis permutation and affine rotation/shear; test known forward/inverse coordinates, CSV, mask label store, sidecar, source digest and unsupported NGFF affine export behavior.",
+      "acceptance_target": "Known values and inverse coordinates within 1e-9 physical-unit error; export either preserves required frame in sidecar or requires explicit resampling.",
+      "limitations": ["Only W1 arithmetic is candidate-executed; integration is unexecuted."]
+    },
+    {
+      "id": "P4",
+      "status": "proposed/UNEXECUTED",
+      "question": "Do save, recovery, relocation and export failures preserve the last committed project and original bytes?",
+      "input_and_expected": "Fault injection around import staging, generation creation, journal append, CURRENT replacement, external path relocation/hash checks and multi-file export promotion on local filesystems and target shared storage; verify recovery, checksums, no partial promotion, original source hash and truthful export summary.",
+      "limitations": ["No application or shared-filesystem fault-injection run was performed."]
+    },
+    {
+      "id": "P5",
+      "status": "proposed/UNEXECUTED",
+      "question": "Does the end-to-end workflow stay keyboard-operable and preserve annotation scope/style/history across close and reopen?",
+      "input_and_expected": "Keyboard-only create/import/review/navigate/point/polygon/mask/undo-redo/save/close/reopen/export path with time-, slice-, volume- and acquisition-level records; inspect focus, shortcut feedback, metadata/error legibility and source/derived layer distinction.",
+      "limitations": ["No UI, accessibility or full workflow test was performed."]
+    }
+  ]
+}

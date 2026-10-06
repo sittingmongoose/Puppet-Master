@@ -1,0 +1,195 @@
+# Fieldbook — a local-first field observation tool with map bundles and bundle exchange
+**Research-stage proposal (H2 confirmation brief: offline field observations and map exchange).**
+Author: research-stage candidate. Date of captures: 2026-10-06 (UTC). Status: implementable proposal, not a built product. Every external claim carries a source pin `[Sxx]` resolvable in `sources.json`; every check is labeled **executed by candidate** (isolated component checks with scope limits) or **proposed/UNEXECUTED**.
+
+---
+
+## 0. Labeling conventions used throughout
+
+- **[FACT]** — external evidence from a pinned public source.
+- **[INFER]** — engineering inference by this candidate from cited mechanisms; not measured on the target workload.
+- **[CHOICE]** — a product decision this proposal makes where evidence underdetermines it; reversible.
+- **[UNSURE]** — recorded uncertainty, with a bounded alternative or a proposed validation in §11.
+- Checks: **EXECUTED (candidate)** = run by this candidate in the admitted isolation (synthetic inputs, stdlib-only); an isolated component check does not establish whole-application behavior. **PROPOSED/UNEXECUTED** = designed but not run at this stage.
+
+---
+
+## 1. Scope and product summary
+
+Fieldbook is a desktop/laptop application for a small environmental survey group. A **project bundle** is a portable directory containing: one SQLite database (observations, tracks, notes, revisions, audit log), a `media/` directory (photographs, content-hashed), one or more **map bundles** (single-file PMTiles archives of a bounded area), and a manifest with checksums. Field work happens fully offline; teams exchange copies of the bundle on removable media or shared drives after a survey and merge them with explicit conflict review. It is a research field tool — not emergency navigation, not a hosted service, no accounts. [CHOICE]
+
+The v1 target machine is a 4-core / 8 GB laptop; the 250,000-observation inspection target in the brief is an **engineering target to research, not a measured benchmark** (brief). Everything in §8 is therefore designed and instrumented but **UNEXECUTED** at this stage.
+
+## 2. What the evidence base supports (external facts, with pins)
+
+- **SQLite R-Tree** is a virtual-table range index for rectangles; bounding boxes are approximations and a refinement predicate is still needed; default `rtree` stores 32-bit float bounds (round outward — contained-within queries must expand slightly by ~0.000012%); `rtree_i32` stores 32-bit ints; since 3.24.0 auxiliary `+` columns may hold payload data; shadow tables must not be modified; `rtreecheck()` exists for integrity checks; you cannot modify an R-Tree while iterating a query over it (`SQLITE_LOCKED`). [FACT, S01]
+- **SQLite Session extension** records table changes into *changesets/patchsets* and applies them to a copy with the same schema; changesets can be *inverted* (undo) and concatenated; **conflicts are explicit**: applying invokes a mandatory `xConflict` callback with `SQLITE_CHANGESET_DATA` (row exists but modified columns' old values differ), `SQLITE_CHANGESET_NOTFOUND`/`CONFLICT` (missing row / pk collision on INSERT), `SQLITE_CHANGESET_CONSTRAINT`; the handler must return OMIT, REPLACE, or ABORT; the whole apply runs in a savepoint that rolls back on error; `apply_v2` can return *rebase* data for three-way flows. Limits: no virtual-table capture (so **not** the R-Tree itself — only ordinary tables), requires declared PRIMARY KEYs, rows with NULL PK values are silently not recorded, session is disabled by default (build with `SQLITE_ENABLE_SESSION` + `SQLITE_ENABLE_PREUPDATE_HOOK`; in the amalgamation since 3.13.0). [FACT, S02, S03]
+- **SQLite WAL** gives atomic commit with readers/writer concurrency; WAL mode is persistent; the `-wal` file is part of the database's persistent state — *if a database file is separated from its WAL file, committed transactions can be lost or the file corrupted*; `synchronous=NORMAL` in WAL means only checkpoints fsync (transactions may roll back after power loss); default journal mode is DELETE. [FACT, S04]
+- **PROJ 9.9 (stable docs)**: PROJ honors authority-defined axis order (ISO 19111); before v6 it did not; geographic CRSs in EPSG are commonly *latitude first* while internal PROJ pipeline order is lon/lat; WKT2 or SRIDs are preferred over PROJ strings because lossy conversions "can lead to erroneous transformations"; `projinfo` prints a CRS's axis specification; `proj.db` is resolved via `PROJ_DATA` (née `PROJ_LIB`) and is required for the library to function. [FACT, S05]
+- **pyproj 3.7.2 `Transformer.from_crs(..., always_xy=True)`** accepts/returns traditional GIS order (lon,lat / easting,northing) and is the documented way to pin axis order; `from_crs` also exposes `area_of_interest`, `accuracy`, `allow_ballpark`, `only_best` — i.e., transformation *selection* is a first-class, parameterizable choice. [FACT, S06]
+- **Real issue chain (axis order × domain boundary)**: pyproj PR #966 "Handle axis order with poles in transform_bounds" (merged 2021-10-02, "Continuation of #962", "Tests added") fixed pole-in-bounds detection that assumed lon/lat output order; the diff adds a `target_crs_lon_lat_order()` check against the CRS's first axis abbreviation and rewrites the pole/antimeridian bound logic for both axis orders, **and adds regression tests** `test_transform_bounds__north_pole` / `test_transform_bounds__south_pole` (default-order variants alongside the existing `_xy` variants) in `test/test_transformer.py`. Release applicability: the pyproj changelog **at tag 3.3.0** lists "ENH: Add support for transforming bounds at the poles … (pull #962)" plus inf-handling (#961), so the pole-bounds work shipped in **pyproj ≥ 3.3.0**; the pinned current stable is 3.7.2, which contains it. Earlier history shows the same class of problem repeatedly: `always_xy` was added in 2.2.0 (issue #225), and `ignore_axis_order` was removed from `CRS.is_exact_same` in 3.2.0 because it "was added by accident". **Lesson: axis-order and domain-edge bugs in mature projection stacks were found and fixed repeatedly after release; a field tool must not assume any single library call makes axis order safe — it must store, display, and check order explicitly.** [FACT, S07, S08, S09]
+- **QGIS Offline Editing plugin (QGIS 3.44 docs, §25.2.4)**: the doc's own opening admits "If several persons are working simultaneously on the same datasets, it is difficult to merge the edits by hand, even if people don't change the same features." The plugin copies datasource contents to SpatiaLite/GeoPackage, stores offline edits in dedicated tables, and synchronizes back on reconnection; list-typed fields are degraded to comma-joined strings in the offline copy; offline layers carry a visible indicator. **Lesson: coarse copy-edit-sync is workable and understandable, but the sync story and type fidelity are the weak points — which is exactly where a new tool must spend its design effort.** [FACT, S10, S11]
+- **PMTiles v3**: a single-file archive for tiled data — 127-byte header, root directory forced into the first 16 KiB (latency-optimized readers can prefetch it), optional leaf directories, JSON metadata that *SHOULD/MAY* carry `attribution`, `version` (semver), `type` (`baselayer`/`overlay`); supports vector tiles (incl. a "MapLibre Vector Tile" type), PNG/JPEG/WebP/AVIF, gzip/brotli/zstd. [FACT, S12]
+- **MBTiles 1.3**: tiles in a SQLite db; **TMS y-axis is flipped vs XYZ** ("the tile commonly referred to as 11/327/791 is inserted as zoom_level 11, tile_column 327, tile_row 1256, since 1256 is 2^11 − 1 − 791") — another concrete, shipped-spec axis-order trap. [FACT, S13]
+- **MapLibre GL JS + PMTiles**: the `pmtiles` JS library ships a plugin using `maplibregl.addProtocol("pmtiles", protocol.tile)` with `pmtiles://` source URLs (min/max zoom auto-derived); works for raster, vector and raster-dem sources. Pinned artifacts: `maplibre-gl@6.12.0` (BSD-3-Clause, gitHead `7976a989…`) and `pmtiles@4.5.0` (BSD-3-Clause) from the npm registry as captured. [FACT, S14, S15, S16]
+- **Map data licensing**: OpenStreetMap data is ODbL — credit "OpenStreetMap and its contributors", state the ODbL, and *share-alike applies if you alter or build upon the data*; the OSM copyright page also states plainly that OSMF **cannot provide free map API/tiles to third parties** (usage policies apply). Natural Earth is **public domain** ("No permission is needed… crediting is unnecessary"). The tile usage policy page itself could not be captured from this environment (3 attempts, connection errors — see `leads.json` L1); the design below therefore **does not rely on tile servers at all** and bundles data instead. [FACT, S17, S18; UNCERTAINTY U1]
+- **cr-sqlite** (CRDT extension for SQLite): offers automatic multi-master merge via `crsql_changes` (LWW/counter/MVR column CRDTs) but documents automatic conflict handling with **no manual-merge options** in v1, ~2.5× slower inserts, and a "stable = release tag, main may not be 100% stable" caveat. [FACT, S19]
+- **RFC 3339** defines the Internet date/time profile used for all stored timestamps, including the `-00:00` convention meaning "UTC known, local offset unknown" — directly usable for time provenance when a device clock is untrusted. [FACT, S20]
+
+## 3. Session walkthrough (the brief's typical session, mapped to the design)
+
+1. **Load project** → open bundle dir; verify manifest checksums; open SQLite db in WAL; run open-time sweep (§6.6). Offline indicator always visible; a network check never blocks the UI.
+2. **Inspect coordinate/reference metadata** → Project CRS panel shows, per import and per record class: CRS identity (WKT2 string + authority code if any), axis names/order, linear/angular units, vertical datum stance, time provenance. Anything unknown/ambiguous renders as an explicit amber "unresolved metadata" chip, never a silent default (§4.4).
+3. **Search/preview records** → FTS-style search on notes/attributes [CHOICE; FTS5 mechanics UNPINNED this stage — U2]; preview samples are labeled "preview of N of M records" — never a validity statement (§4.6).
+4. **Add/edit an observation offline** → form with provenance header; every save is one transaction appending a new revision row + audit entry; undo = apply inverse op (§7.3).
+5. **Reopen on another machine** → bundle is self-contained (db+media+maps); open sweep resolves journal/staging state; nothing needs the network.
+6. **Combine a colleague's copy** → export changeset(s) from your copy since the last common bundle state, import theirs with the merge engine (§6); conflicts park records and open a review queue; merge report is written into the bundle.
+7. **Export table + map overlay** → streaming CSV/GeoPackage export with the transform record embedded; overlay as GeoJSON (WGS84 or chosen CRS, transform provenance embedded). Originals are never mutated: exports read committed state only. [CHOICE]
+
+## 4. Coordinate and geometry contract
+
+### 4.1 The four coordinate identities (defined once, used everywhere)
+
+| Identity | Definition | Where it lives |
+|---|---|---|
+| **Stored source geometry** | Verbatim coordinates + CRS (WKT2 + authority code if resolvable) + axis order + units exactly as imported/recorded; immutable once committed. | `obs_geometry_src` table |
+| **Canonical geometry** | Single internal order (lon,lat degrees WGS84-equivalent) produced by a pinned, recorded transform; the only thing indexed (R-Tree), searched, and mapped. | `obs_geometry_canon` + `rtree_obs` |
+| **Displayed coordinates** | Always derived from canonical at render time; a pin is a *view*, never a storage location. | in-memory / renderer |
+| **Exported coordinates** | Re-derived at export time from **stored source geometry** by default (round-trip identity), or from canonical via a transform that is re-pinned in the export header. | export files + `export_log` |
+
+**Rule (trust boundary):** display consumes canonical; export by default consumes stored-source; any canonical→export transform is re-executed at export time and its identity (source CRS, target CRS, PROJ/pyproj version, chosen operation, `always_xy` stance, area-of-use check) is written next to the data. A displayed pin therefore never "vouches" for exported coordinates — the export's own transform record does. [CHOICE, grounded in the axis-order failure history S07–S09]
+
+**Geometry/edit identity:** `record_id` (UUIDv7, minted once, never reused — survives edits, merges and re-imports); `geometry_version` (monotonic per record); `edit_id` (one user gesture = one edit_id = one revision row). `record_id` is the merge key; source-system identifiers (`source_id` from imports) are *attributes with provenance*, not identity — two imports may legitimately carry the same external id (§4.5). [CHOICE]
+
+### 4.2 Support boundary (v1), stated as limits, not aspirations
+
+- **Geometries:** points and short linestring tracks; no polygons, no multipart, no coverages. [CHOICE]
+- **CRSs:** anything expressible as WKT2 that `projinfo`/pyproj can resolve in the bundled `proj.db`; if the CRS is *not* resolvable, the import proceeds only into a quarantine table with the raw values and metadata — no transform, no map display of that layer, and the project carries an "unresolved CRS" flag until resolved. [FACT on proj.db/S05 → INFER on design]
+- **Axis order:** internal canonical order is lon,lat always; every transform runs with `always_xy=True` and the CRS's own axis order is recorded per import from WKT2. [FACT S05/S06 → CHOICE]
+- **Altitude:** stored as an attribute with provenance ("recorded by device GPS", "manual entry", "from import column Z"); **v1 performs no vertical datum transformation** — an ellipsoidal-vs-orthometric mix is flagged, not silently reconciled. [CHOICE; bounded alternative: bundle a geoid grid later]
+- **Time:** RFC 3339 strings; `-00:00` records "offset unknown" explicitly (S20); each timestamp carries a provenance enum (device GPS fix time, manual entry, import column). [FACT+CHOICE]
+- **Transforms:** horizontal only, 2D; when PROJ offers multiple candidate operations (grids, ballpark), the app refuses to pick silently: it presents candidates with accuracy and area-of-use (available via pyproj's `Transformer` metadata, S06) and requires a bounded choice, defaulting to the non-ballpark, in-area candidate only if the user accepts. [FACT S06 → CHOICE]
+
+### 4.3 Transformation versioning and validation
+
+Every transform is recorded as a row in `transform_registry`: (transform_id, source_crs_wkt2, target_crs_wkt2, proj_version, proj_db_meta, pipeline_or_operation_id, always_xy, area_of_use_check_result, chosen_at_utc, chosen_by). Exports cite `transform_id`s. Validation at the point of transform: per-batch round-trip spot checks (inverse transform within tolerance) on a deterministic sample *plus* every record whose canonical location falls within a configurable margin of the source CRS's stated area-of-use boundary or a domain edge (poles, antimeridian, projection limit) — the exact regime where pyproj's released bugs lived (S07–S09). Round-trip failures quarantine the record; they never clamp. **PROPOSED/UNEXECUTED** as a product test; the mechanism (transform_bounds with densification and axis-order awareness) is the one that exists in pyproj ≥3.3.0. [INFER + FACT]
+
+### 4.4 Unknown/ambiguous metadata → bounded choice, not a guess
+
+Import runs a metadata decision procedure with exactly four outcomes per field: (a) **resolved** (authoritative value recorded); (b) **choice presented** (e.g., axis order of a bare "4326" column pair, out of ~two orderings; units; datum) — the UI blocks commitment of that layer until a choice is picked, and the choice + its evidence is stored; (c) **quarantine** (unresolvable: record stored raw, flagged); (d) **reject with report**. There is no undocumented default. The executed witness **W1** demonstrates why guessing is unsafe: for mid-latitude pairs both axis orderings are valid WGS84 points ~7,000–7,500 km apart, while a domain check does catch other swaps (e.g., latitude 151.2°); a plausibility filter is therefore *partial* evidence, never a decision. **EXECUTED (candidate)** `exec-5dph4xvo`; synthetic strings only, not a data validator.
+
+### 4.5 The named edge cases (investigated, each with bounded behavior)
+
+- **Observation near a coordinate/domain boundary** (pole, antimeridian, ±85.05° Web-Mercator limit, projection zone edge): canonicalization marks such records `boundary_margin`; the map view annotates them; exports re-verify with the axis-order-aware bounds routine (S07). No universal behavior is claimed: behavior is (split / keep raw / quarantine) *per record*, shown to the user where a decision exists. **EXECUTED (candidate)** W2 shows the antimeridian case concretely: naive longitude interpolation of a track segment from 179.95°E to 179.95°W places the interpolated pin ~5,738 km away (at lon 0 instead of ±180) and inflates the drawn path by ~946×. `exec-idue4uk0`.
+- **Tracks spanning a discontinuity**: import detects |Δlon|>180 between consecutive vertices and splits into segments at the antimeridian (rendered as two polylines); the original stored track is untouched; the split is recorded in provenance so export can re-join or export raw. Tracks that *legitimately* cross other discontinuities (e.g., a projection's false border) are flagged for review, not auto-split — only the antimeridian rule is automatic, because it is the one discontinuity with a global geometric definition. [CHOICE + W2 evidence]
+- **Incomplete coordinates** (missing lat or lon, empty strings, impossible values, missing Z): row goes to `quarantine` with the raw cell values, the parse error class, and full source context (file, row number, column names). Quarantine is a first-class table the UI surfaces with counts on every project open; it can be exported; it is never dropped by merge. [CHOICE]
+- **Conflicting identifiers**: `record_id` is the only identity. If two imports carry the same `source_id`, both survive; a duplicate *detection* view (same source_id, or spatially coincident within tolerance + same timestamp window + same taxon) *suggests* candidate duplicates and lets a human link/unlink them; linking is an edit (reversible), never an automatic overwrite. [CHOICE]
+
+### 4.6 Preview ≠ validation
+
+Sampling-based preview is for humans (§3.3). Commitment of an import requires a **full-pass structural validation** (every row parsed, every coordinate domain-checked, every transform round-trip-sampled) that produces an **import report**: counts per failure class, examples, and the disposition of every failed row (quarantined/rejected). The report is stored in the bundle. The UI language distinguishes "previewed" from "validated and committed" explicitly. This is a direct answer to the brief's requirement; it is design + proposed tests (**UNEXECUTED**), not a claim about any existing importer. [CHOICE]
+
+## 5. Project and data identity
+
+- `project_id`: UUIDv7 minted at project creation; copied verbatim with every bundle copy; two bundles with equal `project_id` are *the same project* (mergeable); unequal ids are different projects (no merge, only import). [CHOICE]
+- `bundle_state`: each bundle copy records the highest applied changeset sequence numbers it has *sent and received* (per device id). Device id: UUID minted per app install. This gives each pair of bundles a determinable common ancestor region without a full history exchange (changesets carry old values — S02 — so a recipient can detect divergence without storing all history). [INFER from S02/S03]
+- Media: photographs stored as files named by SHA-256, referenced from rows; the manifest lists them with size+hash; provenance (capture time from EXIF if present *as reported*, importing device, operator) is stored in the DB, not trusted from file metadata alone. [CHOICE; EXIF specifics UNPINNED — U3]
+
+## 6. Revision, merge and recovery contract
+
+### 6.1 Semantics
+
+- **Append/edit/delete:** every change appends a revision row (op, record_id, old values, new values, device_id, edit_id, RFC3339 time, transform refs if geometry changed). "Originals remain intact" is implemented literally: source geometry rows are immutable; edits create new canonical + provenance rows; deletes are tombstones (revision op=delete) — nothing is physically removed before an explicit compact command. [CHOICE, mirroring changeset old-value design S02]
+- **Undo:** per-session op log replayed inversely (changesets are invertible, S02); undo history is bounded and its bound is displayed. [INFER from S02 → CHOICE]
+
+### 6.2 Merge (two divergent bundle copies)
+
+Mechanism: each side exports changesets since the common bundle state; the receiving side applies the incoming changeset through a conflict handler implementing this policy — a deliberate, explicit adaptation of the SQLite session categories (DATA / NOTFOUND / CONFLICT / CONSTRAINT, S03):
+
+1. identical change on both sides → converge, apply once;
+2. disjoint fields of the same record → both apply (field-level, like session UPDATEs which carry per-field old/new, S02/S03);
+3. same field, different new values → **park** the record: apply *nothing* for it, insert into `merge_conflicts` with both candidates, devices, and old values;
+4. delete vs. any edit on the record → **park** the record (no provisional winner — see W3);
+5. insert/insert same record_id different content → **park** with both rows;
+6. constraint violations → park as CONSTRAINT class.
+
+Parked records keep their pre-merge state and are surfaced in a **conflict queue** with side-by-side values and a per-record resolution form (keep A / keep B / keep both as new records / manual edit). The merge writes a **merge report** (per-class counts, parked ids, handler decisions) into both bundles. No failed or parked record is hidden; provenance columns are never rewritten by the merge. [CHOICE; semantics demonstrated at sketch level by **EXECUTED (candidate)** witness W3 `exec-tqf46lvl`: 3 conflicts parked, 1 disjoint field applied, parked records byte-identical to their pre-merge state. Scope: pure-Python algorithm sketch of the *policy*, not the SQLite session implementation.]
+
+**Why not full CRDT auto-merge:** cr-sqlite demonstrates automatic CRDT merge is real, but v1 is "automatically handles merge conflicts. No options for manual merging" (S19) — exactly the silent-decision property this brief forbids. Deferred as an opportunity (§10) for non-geometric fields. [FACT S19 → CHOICE]
+
+### 6.3 Duplicate detection (cross-copy)
+
+At merge, records with equal `record_id` unify; *near-duplicates* (§4.5 heuristic) enter a review list, not the data. [CHOICE]
+
+### 6.4 Re-importing the same source / relocating media
+
+- Re-import: source files are hashed; identical (source_hash, declared CRS, declared axis order) → offered as **re-link** (updates `source_id` mapping, imports no rows) or as a new layer; differing content → new import with a warning that identities are new. No silent dedupe, no silent double-import. [CHOICE]
+- Media relocation: rows reference media by content hash, not path; a moved/renamed `media/` directory is repaired by re-scanning hashes; a *missing* hash is surfaced per record ("photo unavailable"), never silently nulled. [CHOICE]
+
+### 6.5 Interrupted save / import / merge → recoverable reopen
+
+- Save: single SQLite transaction (WAL) — a kill mid-save leaves the last committed revision consistent, uncommitted data discarded by SQLite recovery (S04). `synchronous=FULL` is the default for this app [CHOICE] (field laptops lose power; WAL+NORMAL's documented post-crash rollback of recent transactions, S04, is not acceptable for field data).
+- Import: rows land in a `staging` area with state `importing → validating → committed | quarantined`; an interrupted import leaves state `importing` and the open sweep shows "incomplete import (N rows) — resume or discard"; nothing staged is ever visible as committed.
+- Merge: apply runs inside one savepoint/transaction (session apply semantics, S03); a kill rolls back to pre-merge state; the merge report row records `interrupted` so the UI shows the attempt honestly.
+- Open-time sweep: checks journal recovery, staging orphans, parked conflicts, manifest hash mismatches (media tamper/partial copy), and reports all of them in one status panel. [DESIGN; fault-injection tests PROPOSED/UNEXECUTED, §11]
+
+### 6.6 Bundle exchange failure modes
+
+Checksums on manifest mismatch → open in read-only "verify" mode; partial copies are detectable (missing media hashes). Exchanging only the `.db` without `media/` or `-wal` is prevented by exporting bundles as a single `.fbox` container file (zip-like archive written atomically); WAL guidance followed: database and `-wal` travel together (S04). [INFER from S04 → CHOICE]
+
+## 7. Architecture (coherent single proposal; alternatives in §9)
+
+- **Storage:** one SQLite database per project (WAL, `synchronous=FULL`), tables: `observations`, `tracks`, `notes`, `obs_geometry_src`, `obs_geometry_canon`, `rtree_obs` (R-Tree, auxiliary `+` columns for light payload, S01), `revisions`, `changeset_log`, `quarantine`, `merge_conflicts`, `transform_registry`, `imports`, `export_log`, `media_refs`, `audit`. R-Tree holds canonical bboxes; attribute/detail queries hit ordinary tables via covering indexes; viewport queries join `rtree_obs`→`observations` (the documented two-step pattern, S01). The R-Tree is *derived state*: rebuildable from canonical at any time (cache invalidation = truncate + repopulate inside one transaction; also used after import/merge). `rtreecheck()` runs in the maintenance menu (S01). R-Tree limits respected: no writes while iterating (materialize ids first), shadow tables untouched. [FACT S01 → DESIGN]
+- **Merge:** SQLite session extension for changeset capture/apply (with the mandatory conflict handler implementing §6.2) on ordinary tables; geometry re-derivation of R-Tree after apply. Session limits handled: geometry stored in ordinary tables (not virtual), PKs declared NOT NULL so no session drop-outs (S02). Build flags `SQLITE_ENABLE_SESSION`/`SQLITE_ENABLE_PREUPDATE_HOOK` explicitly part of the build recipe (S02). [FACT → DESIGN]
+- **Map:** MapLibre GL JS (pinned `maplibre-gl@6.12.0`, BSD-3-Clause, S16) in the desktop shell; basemap + any raster/vector overlays from bundled PMTiles v3 files (S12) read via the `pmtiles` plugin protocol (`pmtiles@4.5.0`, S14/S15). Observation overlay is generated GeoJSON from canonical geometry — display only.
+- **Shell:** v1 targets laptops/desktops (Windows/macOS/Linux) with a small local web-tech UI. Tablet (iPad/Android) support is **explicitly out of v1 scope** [CHOICE; U4 — the same bundle opens read-only in QGIS as a stopgap, S10].
+- **Transforms:** pyproj/PROJ pinned pair (pyproj 3.7.2 docs stable; PROJ 9.9 stable docs, S05/S06); `proj.db` version recorded per project; PROJ data dir bundled with the app so offline behavior is deterministic (S05 notes `PROJ_DATA` search paths). Network-enabled grid downloads **disabled by default** (offline determinism + licensing). [CHOICE]
+- **Offline boundary:** everything except (a) acquiring new map bundles, (b) license-text updates, (c) optional grid acquisition, works with no network. The offline indicator reflects only map/network-dependent features. [CHOICE]
+
+## 8. 250,000-observation inspection on 4 cores / 8 GB (engineering target)
+
+All of the following is designed and *not yet benchmarked* (**PROPOSED/UNEXECUTED**):
+
+- **Bounded spatial access:** viewport queries hit `rtree_obs` with the bbox then fetch details page-wise (LIMIT/OFFSET or keyset on rowid); list views paginate at fixed page sizes; count queries are bounded to the viewport. R-Tree docs' guidance that the index narrows "millions to dozens" (S01) is the mechanism claim; the 250k number is expected to be comfortably inside this pattern, *unstated as fact*.
+- **Cache invalidation:** R-Tree and any rendered tile cache of observations are derived, rebuilt transactionally after import/merge/bulk edit; per-project `data_epoch` counter incremented on every committed write invalidates UI caches cheaply.
+- **Cancellation:** long ops (import validation, export, merge apply, R-Tree rebuild) run in a worker with progress + cancel; DB writes are chunked into bounded transactions so cancel never leaves partial *committed* state (staging pattern §6.5).
+- **Large export:** streaming write (constant memory), row-per-row transform with the export header written first; a cancelled export leaves a marked partial file that the UI refuses to present as complete.
+- **Memory:** 8 GB budget — SQLite page cache tuned down; media never loaded into memory (file refs); map tiles stream from PMTiles (random-access by design, S12).
+- **What stays usable offline:** everything in §7's offline boundary.
+
+## 9. Bounded alternatives (kept, not discarded)
+
+- **A1. GeoPackage-native container** instead of a custom SQLite bundle: interoperability win (QGIS reads/writes it; the QGIS offline plugin itself uses GeoPackage/SpatiaLite offline copies, S10/S11); cost: changeset/merge semantics and provenance tables would live as extension tables around a spec not designed for them, and the GPKG spec itself was **not captured this stage** (lead L2) — adoption deferred pending that investigation. [INFER]
+- **A2. cr-sqlite CRDT merge** (S19) for notes/attributes: automatic merge with no manual options today, 2.5× insert overhead — unsuitable for geometry in v1, plausible for free-text notes later. [FACT+INFER]
+- **A3. MBTiles** instead of PMTiles if a future source only ships MBTiles: supported (SQLite-based, S13), but adds the TMS/XYZ y-flip conversion and per-file SQLite management; PMTiles single-file + MapLibre protocol is the simpler bundle story (S12/S14/S15). [FACT+CHOICE]
+- **A4. QGIS-as-fieldbook**: use QGIS + Offline Editing plugin directly instead of building (S10/S11) — zero build cost, but merge of two offline copies is the documented weak point ("difficult to merge the edits by hand") and type fidelity (list→string degradation) is lossy; kept as the fallback if Fieldbook slips. [FACT]
+
+## 10. Opportunities (later, distinct from minimum requirements)
+
+Real-time collaborative sync (changeset streaming or CRDT lanes, A2); route guidance (out of scope — research tool); hosted sync service (contradicts local-first v1, revisit on demand); broader map sources (respecting per-source licenses — the OSM/NE investigation pattern generalizes, S17/S18); automated classification suggestions (never auto-committing labels). All optional adoption; none gates v1. [CHOICE]
+
+## 11. Validation plan (executed vs proposed)
+
+**EXECUTED by candidate (isolated, synthetic, stdlib-only; each is a component check, not product proof):**
+
+| W | Claim exercised | Result |
+|---|---|---|
+| W1 `exec-5dph4xvo` | Axis-order ambiguity: mid-latitude pairs have two valid readings ~7,186–7,493 km apart; a domain check catches some swaps (lat 151.2) but cannot be relied on → bounded import choice mandatory | PASS, exit 0 |
+| W2 `exec-idue4uk0` | Antimeridian track rule: naive interpolation displaces the midpoint pin 5,737.7 km and inflates the path 946.3×; wrap-aware split gives 12.1 km | PASS, exit 0 |
+| W3 `exec-tqf46lvl` | Merge parking policy: 3 overlapping cases (edit/edit, delete/edit, insert/insert) park records untouched; 1 disjoint field applies; no silent loss | PASS, exit 0 |
+
+Failed earlier attempts are recorded honestly in `witnesses.json` (data-format assumption; two logic bugs found and fixed by these checks — which is the checks doing their job).
+
+**PROPOSED / UNEXECUTED:** 250k-row import/viewport/export benchmark on target hardware; kill-during-save/import/merge fault-injection matrix; real SQLite session-extension merge matrix (requires a build with `SQLITE_ENABLE_SESSION`, S02); pyproj round-trip validation on real project CRSs including polar/pseudo-Mercator zones (regression suite modeled on S07's tests); PMTiles bundle integrity + offline render pass; merge-conflict UI usability test; license compliance review of an actual OSM-derived PMTiles build (attribution + share-alike obligations, S17); accessibility (keyboard-only editing, screen-reader provenance announcements).
+
+## 12. Uncertainty register
+
+- **U1 (material):** OSM tile usage policy text not captured (3 connection failures). Mitigation: design bundles tiles and never calls tile servers; policy compliance is moot for v1 but recorded as an open lead. [S17 covers the load-bearing fact: OSMF does not serve free third-party tiles.]
+- **U2:** FTS5 search mechanics assumed but not pinned this stage; bounded alternative: plain LIKE queries with indexes at 250k scale, FTS5 as an upgrade.
+- **U3:** EXIF GPS/time tag handling not pinned; v1 treats photo metadata as *reported* provenance, not authority.
+- **U4:** tablet story unresolved (v1 laptops/desktops only); read-only QGIS fallback noted.
+- **U5:** exact PROJ operation selection UX (candidates, accuracy display) is designed from pyproj's API surface (S06) but not user-tested.
+
+## 13. Source map
+
+`[S01]`–`[S20]` map one-to-one to entries in `sources.json` (URL, exact locator, capture identity, applicability). Full executed/proposed check inventory: `witnesses.json`. Deferred/open leads: `leads.json`.

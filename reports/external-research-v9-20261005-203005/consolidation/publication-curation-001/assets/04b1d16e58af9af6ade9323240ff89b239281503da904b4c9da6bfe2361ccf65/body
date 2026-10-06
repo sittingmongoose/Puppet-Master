@@ -1,0 +1,45 @@
+{
+  "leads_version": "research-stage/1.1-additive",
+  "base_catalog": {
+    "path": "inputs/seed/lead_inventory.json",
+    "sha256": "193efdef4b6adff977b69af28c090c9d579a6e824c23f1f1a95d306d083a4c5a",
+    "lead_ids": "All base leads remain defined there unless an update below supplies an enrichment-stage clarification."
+  },
+  "updates": [
+    {
+      "id": "L1",
+      "status": "unresolved",
+      "detail": "The source comparison is stronger than tag-date ordering alone: v1.0.0 tagged scanner source lacks the chunk_col_id > 0 guard; v1.1.0 tagged source has it, and the v1.1.0 tree contains test_12596.test with parallel and serial expectations [S23-S25]. The first 1.0.x bugfix release carrying the guard is still not identified.",
+      "next_step": "Inspect the exact v1.0.x release tags or run the same fixture on their corresponding binaries; do not infer first-fix release from v1.0.0 and v1.1.0 alone."
+    },
+    {
+      "id": "L2",
+      "status": "unresolved_transition",
+      "detail": "The conflict is now scoped: PR #6765's 2023 body says null_padding defaulted true, while the v1.1.0 CSVReaderOptions source declaration sets null_padding=false [S1, S26]. Current docs' printed null_padding=0 is an error diagnostic, not sufficient default evidence [S2]. The exact version/date and reason for the transition remain unknown.",
+      "next_step": "Inspect the option declaration/history at intervening release tags and verify omitted-option runtime behavior on the supported engine build."
+    }
+  ],
+  "leads": [
+    {
+      "id": "L12",
+      "title": "Projection-pushdown behavior release applicability",
+      "status": "unverified_for_selected_release",
+      "detail": "DuckDB's captured current guide says a cast error in an unprojected column may not be evaluated, but this source is duckdb-web@main and is not pinned to the engine release selected for LabBook [S2]. It supports a design concern, not a version-specific runtime claim.",
+      "next_step": "Test a typed invalid value in an omitted column on each supported engine release and retain a full-column validator regression check."
+    },
+    {
+      "id": "L13",
+      "title": "Persistence and quota policy for DuckDB reject tables",
+      "status": "product_binding_required",
+      "detail": "The current guide describes reject_scans and reject_errors as temporary tables and documents rejects_limit=0 as unlimited [S2]. The engine capture does not establish a portable, durable project ledger or a LabBook disk quota.",
+      "next_step": "Choose and implement the durable export format, crash recovery, and quota behavior; verify it after closing and reopening a project."
+    },
+    {
+      "id": "L14",
+      "title": "Marimo mutation semantics on a released runtime",
+      "status": "release_applicability_unresolved",
+      "detail": "The full guide documents that object and attribute mutations are not tracked, with `my_list.append(42)` as an example [S6]. The captured source is moving main documentation without a release tag or commit; LabBook does not adopt marimo's runtime in the selected design.",
+      "next_step": "If adopting marimo later, pin a release and verify mutation, deletion, and interrupt semantics against it; otherwise keep the mutation limitation in LabBook's own static-DAG contract."
+    }
+  ]
+}

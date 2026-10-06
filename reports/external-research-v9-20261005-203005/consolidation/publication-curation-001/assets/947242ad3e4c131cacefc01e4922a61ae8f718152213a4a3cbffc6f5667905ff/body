@@ -1,0 +1,109 @@
+{
+  "catalog_version": 2,
+  "catalog_kind": "enrichment source delta",
+  "base_catalog": {
+    "path": "inputs/seed/source_catalog.json",
+    "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b",
+    "merge_rule": "Use base sources S1-S16 unchanged, then append these unique IDs. Base-source review notes below qualify but do not rewrite the immutable catalog."
+  },
+  "sources": [
+    {
+      "id": "S17",
+      "title": "napari v0.9.2 GitHub release record",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+      "pin": "Release tag v0.9.2, published 2026-09-29; exact response body captured 2026-10-06. Tag target is resolved separately by S18.",
+      "locator": "Release notes: Highlights / Vispy update; RGB data can now be viewed in 3D, with an explicit caution that it may still have issues; EffVer Meso release.",
+      "capture": {
+        "capture_id": "4d4f2460c51a45c690a2b7f629908d47",
+        "sha256": "880744a834a20737b7d4ebbf48c0fa209d0e391585a1b1f2c1624c533c9975e2",
+        "captured_utc": "2026-10-06T00:21:50.691413Z",
+        "capture_path": "public_captures/880744a834a20737b7d4ebbf48c0fa209d0e391585a1b1f2c1624c533c9975e2.body",
+        "bytes": 29784,
+        "complete": true,
+        "status": 200
+      },
+      "key_facts": [
+        "The project published napari v0.9.2 on 2026-09-29.",
+        "The release notes scope RGB-in-3D capability to this release and include a caution about possible issues."
+      ],
+      "applicability": "Release anchor to qualify development-branch napari documentation; does not bind every S2-S4 documentation detail to this release."
+    },
+    {
+      "id": "S18",
+      "title": "napari v0.9.2 Git tag reference",
+      "url": "https://api.github.com/repos/napari/napari/git/ref/tags/v0.9.2",
+      "pin": "Exact tag ref refs/tags/v0.9.2 resolves to commit 595639295a153c84bcb127a9e07d801355440a35.",
+      "locator": "GitHub API ref object: object.sha and object.type.",
+      "capture": {
+        "capture_id": "bc52a0d863114ac2868d071b6d6e2d2d",
+        "sha256": "257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5",
+        "captured_utc": "2026-10-06T00:26:06.082770Z",
+        "capture_path": "public_captures/257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5.body",
+        "bytes": 335,
+        "complete": true,
+        "status": 200
+      },
+      "key_facts": [
+        "The v0.9.2 Git tag resolves to commit 595639295a153c84bcb127a9e07d801355440a35."
+      ],
+      "applicability": "Pins the napari application release independently of the moving napari/docs main captures S2-S4."
+    },
+    {
+      "id": "S19",
+      "title": "napari current stable documentation index",
+      "url": "https://napari.org/stable/",
+      "pin": "Stable-site index captured 2026-10-06; HTML metadata identifies docs version 0.9.2.",
+      "locator": "HTML docsearch:version and DOCUMENTATION_OPTIONS.theme_switcher_version_match.",
+      "capture": {
+        "capture_id": "4ea1bd73f78f4166a27fba88ae0b5029",
+        "sha256": "bea3ca2f2c5d75dc6198c95d208f0ac95dfd1a7cc48d3483d2fb61a1a8616d55",
+        "captured_utc": "2026-10-06T00:19:33.005984Z",
+        "capture_path": "public_captures/bea3ca2f2c5d75dc6198c95d208f0ac95dfd1a7cc48d3483d2fb61a1a8616d55.body",
+        "bytes": 61364,
+        "complete": true,
+        "status": 200
+      },
+      "key_facts": [
+        "The stable documentation site identifies its current docs version as 0.9.2."
+      ],
+      "applicability": "Version anchor only; does not establish byte identity between the stable page bodies and napari/docs main source captures."
+    },
+    {
+      "id": "S20",
+      "title": "napari stable Image documentation page (partial capture)",
+      "url": "https://napari.org/stable/howtos/layers/image.html",
+      "pin": "Stable URL retrieved 2026-10-06; page HTML says docsearch version 0.9.2, but response body capture is incomplete.",
+      "locator": "Only page header/title/version is used. No behavior claim is based on the incomplete body.",
+      "capture": {
+        "capture_id": "09930d0bbe8f4ddcacab4635758f5552",
+        "sha256": "49ea710161793617aa7fc21bc2ae08903e1184ce4f1804c98eda3bef0f56a45f",
+        "captured_utc": "2026-10-06T00:19:40.665716Z",
+        "capture_path": "public_captures/49ea710161793617aa7fc21bc2ae08903e1184ce4f1804c98eda3bef0f56a45f.body",
+        "captured_bytes": 524288,
+        "response_bytes_observed": 524289,
+        "content_length_header": 1701221,
+        "complete": false,
+        "truncated": true,
+        "status": 200
+      },
+      "key_facts": [
+        "The captured header identifies the stable Image page and documentation version 0.9.2."
+      ],
+      "applicability": "Explicitly incomplete. Not used to qualify detailed v0.9.2 contrast or image-layer behavior."
+    }
+  ],
+  "base_source_review": [
+    {
+      "id": "S1",
+      "note": "Re-read the complete attached inputs/source_context/0022.body at the exact S1 hash. In multiscales datasets, only scale and translation types are allowed; exactly one scale is required. General identity is a default, and path is a vector storage alternative, not a transform type. See enrichment.md §1."
+    },
+    {
+      "id": "S5",
+      "note": "The original response capture record notes 32768 of 32898 bytes delivered. The fixed attached inputs/source_context/0023.body is the full 32898-byte body with the cataloged full-response SHA; its final examples were read. See enrichment.md §§3-4."
+    },
+    {
+      "id": "S7-S10",
+      "note": "The issue title/body version discrepancy and the exact test -> fix -> changelog -> release parent/time sequence are recorded in enrichment.md §6. The seed S10 response SHA has a final-character typo; the attached 0013.body and source index give a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a."
+    }
+  ]
+}

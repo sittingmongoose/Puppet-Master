@@ -1,0 +1,99 @@
+# Critique review — Development brief B (reproducible notebook & data workspace)
+
+Stage: `I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001`, role: critique (fresh source-grounded).
+Author: admitted candidate model, native Goal, 2026-10-06. Clock allocation 750 s; all probes below ran inside it (final observed remaining ≈ 6.5 min at last fetch batch).
+
+---
+
+## 0. Primary stage finding: the frozen predecessor artifacts were NOT attached
+
+The stage contract says: "Ops must attach the exact complete frozen same-arm predecessor artifacts under `inputs/prior/` before this stage. Do not invent them or read another arm." **The attachment did not happen in this run.**
+
+Evidence (all reads via the boundary `read_file` tool, each returning `FileNotFoundError` unless noted):
+
+- Exact contract-mandated names mirrored under `inputs/prior/`: `proposal.md`, `sources.json`, `witnesses.json`, `leads.json` — all `FileNotFoundError`.
+- Structural variants: `inputs/prior/research/proposal.md`, `inputs/prior/out/research/proposal.md`, `inputs/prior/out/proposal.md`, `inputs/prior/research.md`, `inputs/prior/research_proposal.md`, `inputs/prior/sources.md`, `inputs/prior/proposal.json`, `inputs/prior/manifest.json`, `inputs/prior/artifacts.json`, `inputs/prior/bundle.json`, `inputs/prior/README.md` — all `FileNotFoundError`.
+- `inputs/prior` itself read as a file → `ValueError` (distinct from the missing-file error, consistent with an existing but unpopulated directory; `mechanical line_map`/`cache_source` on the directory also give `ValueError`).
+- The workspace `out/research/proposal.md` and `out/final/proposal.md` do not exist either — this critique stage's workspace has no prior-stage residue.
+
+Consequence and honest scope limit: **I could not line-review a frozen research proposal that does not exist.** Per the contract I did not fabricate one. Instead this review delivers what remains possible and useful to the next fresh same-family candidate without my private context:
+
+1. The missing-attachment finding above (resolution: ops must attach `inputs/prior/{proposal.md,sources.json,witnesses.json,leads.json}`; the next candidate then maps each cataloged pin against §2–§3 below — matches are preserved, mismatches become corrections).
+2. Independently captured and verified load-bearing facts any credible proposal for this brief must rest on (§2), with exact URL pins, locators, capture identities and applicability.
+3. One complete consequential issue→fix→regression-test chain with version/branch applicability and evidence limits (§3).
+4. Checkable requirements and demoted-claim demands to apply to the real proposal (§4), plus preserved-claims baseline, uncertainty, and leads (§5–§6).
+
+This is a disclosed gap, not hidden scope reduction: no proposal text, no source chain, no receipt was invented.
+
+---
+
+## 2. Verified source facts (independently captured this stage)
+
+Each entry: URL (pin), exact locator, capture identity (sha256 of the exact HTTP response bytes captured by the admitted `public_https_get` tool), applicability. Note the tool marks captures `PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN`; the byte captures are exact, the locators/semantics below are my reading of the delivered text (first 32 KiB unless noted).
+
+**S1. pandas `read_csv` defaults — pandas 2.2.3 versioned docs.**
+URL `https://pandas.pydata.org/pandas-docs/version/2.2/reference/api/pandas.read_csv.html` (page title: "pandas.read_csv — pandas 2.2.3 documentation"). Capture sha256 `8bb99275d7a13fb5c610b08cdff8f068be2a4c5902f74af5a8ddfad2cd075eb6`. Locators (signature block): `on_bad_lines='error'` is the **default**; streaming via `iterator`/`chunksize=None`; `encoding_errors='strict'`; `low_memory=True`. Applicability: malformed-record handling and bounded/streaming read design for CSV. The 2.2.3 signature also no longer contains `error_bad_lines`/`warn_bad_lines` (removed in the 2.x line) — same capture, signature block.
+
+**S2. PEP 751 — `pylock.toml` dependency-lock interchange.**
+URL `https://peps.python.org/pep-0751/`. Capture sha256 `a73937a1e942c22f3a4c623dd59d3a7008b7f85f1bbf293c50a966e7a1257ce0`. Locators: Status **Final**; resolution 31-Mar-2025 (discuss.python.org/t/77293/150); file MUST be `pylock.toml` or `pylock.<name>.toml`; scope statement: format "to enable **reproducible installation**"; on-page banner: canonical spec now maintained at packaging.python.org (`pylock.toml Specification`). Applicability: environment binding for the project record. Key boundary for any proposal: PEP 751 covers install-time resolution; it does **not** make runtime behavior deterministic — supporting the brief's "adopting a format does not settle runtime behavior."
+
+**S3. nbformat v4.5 JSON schema — pinned tag.**
+URL `https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.schema.json` (tag `v5.10.4`, commit `60b6151fedcbdc9f137fb2d223eeb10c935a8378`; tags verified at `https://api.github.com/repos/jupyter/nbformat/tags?per_page=5`, capture sha256 `a104c72122b259df97c8a28e6cad59a54a8e01eaf26a5d8c65d4bdb35134e055`; latest tag seen: `v5.11.1`, commit `75f819f5b60bc6ffc72145c364132efe5b3c4b35`). Schema capture sha256 `523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a` (complete, 16,104 bytes). Locators: description "Jupyter Notebook v4.5 JSON schema"; `code_cell` **required** fields `[id, cell_type, metadata, source, outputs, execution_count]`; `execution_count`: "The code cell's prompt number. Will be null if the cell has not been run."; cell `id` pattern `^[a-zA-Z0-9-_]+$`, maxLength 64 (stable cell IDs, nbformat 4.5); root `metadata.kernelspec` requires only `name` and `display_name`; output types `execute_result` (carries its own `execution_count`), `display_data`, `stream`, `error`. Applicability: displayed order vs execution order, output association, environment binding.
+  - Engineering inference (flagged, not schema-text): execution order is reconstructable only where `execution_count` is populated; kernel restarts reset prompt numbering, so counts can collide/gap across sessions — a staleness detector keyed only on `execution_count` is unsound.
+  - Schema-text fact with design consequence: the `.ipynb` document stores **no pinned dependency record** (`kernelspec` is name+display_name only) and **no kernel state**; environment binding and current-state must live outside the notebook file (e.g., a `pylock.toml`/lock-file sibling per S2 + a product-level run journal).
+
+**S4. nbclient execution semantics — docs version 0.11.**
+URL `https://nbclient.readthedocs.io/en/latest/client.html` (page meta `docsearch:version` "0.11", ReadTheDocs "latest" slug). Capture sha256 `b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a`. Locators: `NotebookClient(nb, timeout=…, kernel_name=…, resources={'metadata': {'path': …}})` then `execute()` populates cell outputs; **by default an error stops execution and raises `CellExecutionError`**, and "The saved notebook contains the output up until the failing cell"; `allow_errors` traitlet "default is False" continues past errors; per-cell `timeout` documented with default 30 s in this guide; `jupyter execute` CLI documented. Applicability: clean-replay semantics — a saved `.ipynb` can represent a **partial** run ending at the first error, so any "outputs are current" label requires replay-journal evidence, not just stored outputs.
+
+**S5. DuckDB documentation set — current version.**
+URL `https://duckdb.org/docs/stable/configuration/pragmas` → 308 → canonical `https://duckdb.org/docs/current/configuration/pragmas.html`; capture sha256 `fd0b77f4245988d27a8eac3b77790d6098300c07dc0ae2a43c9a77c64ac9e45d` (406,380 bytes captured; first 32 KiB delivered to me). Locators visible in delivered text: docs version selector shows **1.5 "current"**, 1.4 "LTS", older 1.3–0.10; PRAGMA/SET "can alter the internal state of the engine"; navigation confirms existence of `/docs/current/data/csv/reading_faulty_csv_files` and `/docs/current/connect/concurrency` pages (link targets seen; their **content was not captured**). Applicability: optional SQL execution relationship and larger-than-RAM processing. **Not verified this stage:** `memory_limit`/`temp_directory` option semantics (the option rows are further into the captured page than the delivered window) — recorded as lead L1, not as fact.
+
+**S6. GitHub search negative evidence.**
+`https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbformat+atomic+write&per_page=5` → `{"total_count":0}`; capture sha256 `c9938edecb99d754b2d039ac9eec320a94c769b6a6417921e2dcbef9e2fe01a0` (captured 2026-10-06T06:18:45Z). Applicability: a same-family proposal claiming "nbformat has a known atomic-write issue" must show a new search; this one found none. Also: a probe of ref `5.10.4` **without** the `v` prefix returns 404 "No commit found for the ref 5.10.4" (capture `7f5144e7fa788feb13d39708a6495d58451d298fb9fdeff73574776b77f83f08`) — pin-discipline example: the tag is `v5.10.4`.
+
+---
+
+## 3. Consequential issue→fix→regression-test chain (verified, with applicability limits)
+
+Found via live GitHub search this stage (capture sha256 `7e5a310f45ef65ece39acbd9f8a7cf0b2ed33d980b1167b3a05a06ebe8c6626b`, search "repo:pandas-dev/pandas on_bad_lines type:pr", 27 hits). Chain, most recent last:
+
+**C-a (historical root).** pandas issue #5686 (referenced by PR #45146, "ENH: Allow callable for on_bad_lines in read_csv when engine=\"python\"", merged 2022-01-08, milestone 1.4, "closes #5686", tests + whatsnew checked). Establishes that bad-line handling was being extended engine-by-engine — the same API behaves differently across `engine="c"` / `engine="python"`, a core data-contract hazard.
+
+**C-b (silent-skip hazard, released).** PR #50311 "DOC: Add to the io documentation of `on_bad_lines` to alert users of **silently skipped lines**", merged 2023-01-03, milestone "2.0" (milestone object shows `closed_at 2023-04-03T21:02:30Z`, i.e., the 2.0 release timestamp — indirect release evidence). Body: with a user-defined callable, "any bad line that isn't a 'line with too many fields' is **silently skipped**"; closes discussion issue #48020. Directly supports the brief's prohibition on silently deleting malformed records: even the safe-looking callable path silently drops rows unless the callable re-inserts them.
+
+**C-c (bad-line handling silently disabled; behavioral fix on main).** PR #68946 "BUG: python-engine read_csv ignored on_bad_lines with index_col=False (GH#49279)", merged 2026-09-17, **no milestone** (so: in `main`; release applicability unestablished; pandas 2.2.3 per S1 predates it and retains the buggy behavior). PR body: with `index_col=False` the python parser "skipped bad-line handling entirely, so `on_bad_lines=\"error\"` did not raise, `\"skip\"` did not skip, and a callable was never called; a row with more fields than expected was **truncated** instead"; condition dated to the original `index_col=False` commit (GH-2442); fix makes expected width `max(column count, first data row, header line)`; **deliberate default-behavior change** — ragged rows + `index_col=False` now raise `ParserError`; two existing tests (GH-46955, GH-46569) updated to the new behavior. Explicitly left open in the same body: `on_bad_lines="skip"` "does not refill `nrows`/`chunksize` after a dropped row" — i.e., on pandas `main` (as of capture), a chunked/bounded read of a dirty file yields short chunks after skips. Limits: PR-body self-report; merged ≠ released; I did not fetch the diff to enumerate the regression test files.
+
+**C-d (streaming-path memory blow-up; fix + regression test, unreleased).** PR #70406 "BUG: read_csv chunked read with skipped bad lines ran out of memory", labels Bug + **Regression**, milestone **3.1** (milestone still open), merged 2026-10-05 (one day before this critique). Body: `pd.read_csv(path, chunksize=N, on_bad_lines="skip")` (C engine) raised `ParserError: out of memory` on ordinary files "e.g. 300k rows with 2% bad rows at chunksize=100"; root cause: the parser recorded its rounded-up word-buffer capacity as a high-water mark and reserved from it, so capacity "roughly doubled every couple of reads until allocation failed"; fix records the largest request instead, bounded by input size; the mark's original overflow protection (GH-23509) is covered by `end_line` padding (GH-66657); **version applicability**: reachable only since the GH-40587 fix (#66944) "new in 3.1.0"; "pandas 3.0.6 never skipped bad lines in chunked reads, so it does not hit this"; body asserts fix, test, and whatsnew were written (test identity not independently verified — see U2). Limits: PR-body evidence; 3.1.0 not released as of capture.
+
+Why this chain matters to the brief: the proposed workspace's data contract (no silent drops, bounded preview, streaming path for ≥5 GB files) sits exactly on these three failure modes — silent skipping (C-b), silently disabled validation in a common configuration (C-c), and a memory blow-up on the skip+chunk path (C-d). Any proposal that says "use pandas chunked reads with on_bad_lines=skip for the preview" is, on today's evidence, recommending a path with a known unreleased OOM regression and a known short-chunk defect.
+
+---
+
+## 4. Checkable requirements to apply to the (future) same-arm proposal
+
+Since no frozen text exists to correct line-by-line, these are demoted-claim demands and verification obligations, phrased so the next candidate can apply them mechanically:
+
+- **R1 (execution-order claims).** Any statement like "the notebook records execution order" must be pinned to the nbformat v4.5 schema (S3): document order is the `cells` array; execution order is recoverable only via populated `execution_count` values; `null` means never run; stable cell `id` (4.5+) is the only reliable cross-run cell identity. Claims that Jupyter "guarantees" staleness detection are unsupported by these sources.
+- **R2 (environment binding).** The proposal must NOT claim `.ipynb` metadata pins the environment: `kernelspec` requires only name+display_name (S3). A defensible binding is an external lock file (e.g., `pylock.toml`, S2) **plus** a statement that install-time locks do not determine runtime behavior (S2 scope is installation reproducibility).
+- **R3 (clean-replay guarantee).** A clean replay can guarantee: same document order executed, per-cell outputs captured with execution counts, errors surfaced at the failing cell (nbclient default stops at first error and saved outputs represent only cells up to it, S4). It cannot guarantee: identical values under nondeterminism, external services, unpinned packages, undeclared file access. First-error-stopped or interrupted replays must be labeled failed/partial — never "current" (S4).
+- **R4 (malformed records / preview).** Default strictness must be preserved: pandas' default is `on_bad_lines='error'` (S1); any skip/callable path must surface dropped/short-chunk counts (C-b, C-c left-open chunk-refill gap). A bounded preview must be labeled as non-proof of full-dataset properties.
+- **R5 (5 GB streaming target).** Treat as proposed/UNEXECUTED unless the proposal ships an executed witness. Cite DuckDB docs only for version/config existence (S5), never as performance proof. A bounded alternative: validate the streaming path with a tiny-file witness (chunked `read_csv` on a synthetic file with seeded bad lines; assert per-chunk row accounting and explicit skip reporting), explicitly scoped as not establishing large-file behavior.
+- **R6 (version scoping).** C-c and C-d are `main`/3.1.0-unreleased facts (as of 2026-10-06); proposals citing them must scope claims accordingly, and 2.2.x retains both the C-c bug and pre-#66944 chunk behavior.
+
+---
+
+## 5. Preserved valid claims (baseline)
+
+No frozen proposal text existed to preserve. The following **verified facts stand as the supported-claims baseline** for the next candidate: S1–S6 and C-a–C-d above, with their pins and capture identities. Any future proposal statement consistent with them should be preserved without re-litigation; any statement in tension with them needs a fresh capture, not a re-assertion.
+
+## 6. Uncertainty and unresolved leads (for out/research or out/final follow-up)
+
+- **L1.** DuckDB `memory_limit` / `temp_directory` exact semantics and larger-than-memory (spilling) behavior: page captured (S5) but option rows not in the delivered window. Proposed/UNEXECUTED check: re-fetch and extract the option rows; then a tiny-file witness for spilling claims.
+- **L2.** Whether nbformat write is atomic / crash-safe: GitHub search "atomic write" in jupyter/nbformat returned 0 results (S6). Unknown ≠ fine; recovery-after-interrupted-save remains a product obligation to design for (temp-file + rename pattern), with no upstream guarantee cited.
+- **U1.** Release mapping for PR #50311 relies on the milestone `closed_at` timestamp (2.0), not a fetched release note. Strong but indirect.
+- **U2.** Regression-test existence for PR #70406 is PR-body-asserted; the diff/test files were not fetched.
+- **U3.** DuckDB "Reading Faulty CSV Files" page (existence verified, content not) is the likely home of an explicit reject/quarantine mechanism as an alternative to pandas for the strict-handling policy; unverified.
+
+## 7. Provenance statement
+
+All captures are exact-response-byte receipts from the admitted `public_https_get` tool (capture IDs in §2/§3); no Python witness was executed this stage (nothing here is labeled "executed by candidate" in the code sense); no evaluator-only evidence exists. No other-arm, evaluator, or campaign material was accessed. The predecessor-absence finding (§0) is the first-order correction: the next fresh candidate must receive `inputs/prior/` attachments before it can perform the line-level review this stage was designed for.

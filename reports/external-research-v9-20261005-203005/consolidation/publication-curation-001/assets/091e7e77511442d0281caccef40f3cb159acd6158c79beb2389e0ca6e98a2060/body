@@ -1,0 +1,120 @@
+# LabBook: a local-first notebook and data workspace
+
+## Revision basis
+
+This is the standalone revised proposal. It keeps the useful split between an open notebook document, a separate execution/provenance layer, and a tabular engine, while narrowing claims that the available evidence does not establish. Source IDs `[C####]` refer to captured public responses catalogued in `sources.json`; they identify capture bytes and do not imply that a mutable upstream branch is a release pin. `[F]` is a source fact, `[I]` an engineering inference, `[C]` a product choice, `[W]` an executed isolated component check, and `[V]` proposed validation not run.
+
+The fixed proposal (`inputs/seed/proposal.md`) was available. The attached prior critic and original side catalogs were not found at the expected `inputs/prior/<logical-role>/out/seed/` and `inputs/seed/` file paths during this turn; no critique wording or prior witness receipt is invented. The critique is therefore resolved against the source-backed issues independently identified here, and the missing artifacts are recorded in `leads.json`. The source capture index was readable and complete as an index. Its 404 entries remain explicit; a later successful DuckDB documentation capture is used where available.
+
+## 1. Decision
+
+**[C]** Build a local project shell around Python notebooks, a separately managed Python kernel process, and DuckDB for bounded tabular scans and the colleague's optional SQL. Store portable notebooks as nbformat documents, but keep execution events, environment locks, dataset identities, freshness state, and large outputs in LabBook sidecars. Use a clean replay in a fresh process and save it as a separate run artifact. Opening or previewing a project never executes notebook code.
+
+This is a research plan, not a claim that a complete notebook runtime or 5 GB performance target has been built. DuckDB, Python, and the isolation primitive need pinned versions and integration testing before any production guarantee.
+
+## 2. Evidence and precedent boundaries
+
+- **[F] Document/interchange precedent:** the captured nbformat v4.5 schema describes notebook structure and output variants; it represents displayed cell order in the cell array and has execution-count fields, but does not define a kernel's live state or whether an output is fresh [C0002, C0006]. The schema capture is from a moving `main` URL, so pin a released nbformat version and schema hash in implementation work; do not call this capture a release pin.
+- **[F] Reactive-computation precedent:** marimo describes a static reference/definition graph, dependency-ordered execution, and stale marking [C0003, C0015]. It is independent of the `.ipynb` format (the captured README describes Python-file notebooks). This is evidence that a graph-driven interface is a useful precedent, not proof that arbitrary Python notebook code can be statically analyzed soundly.
+- **[F] Tabular-engine precedent:** DuckDB documents CSV scanning and configurable error handling [C0001, C0009, C0024], and describes single-process read/write and multi-process read-only access plus file-lock considerations [C0026]. The CSV behavior and operational limits are version-specific; current documentation captures do not bind a package release.
+- **[F] Replay precedent:** papermill describes parameterized headless notebook execution and writing a separate output notebook [C0004]. This supports the separate-artifact workflow; it does not establish deterministic execution.
+
+The precedents contribute distinct mechanisms: document interoperability, graph-based freshness ideas, external-file SQL scans, and replay-as-a-new-artifact. The proposal owns their integration and semantics. It does not claim that these projects share a runtime or that their mechanisms compose without adapter work.
+
+## 3. DuckDB CSV failure chain and release applicability
+
+**[F]** DuckDB issue #12596 reports an extra row for a short-row CSV with `null_padding=true` when scanned single-threaded; its issue event history records a `reproduced` label [C0000, C0011]. PR #12679 changed the null-padding guard to also require `result.chunk_col_id > 0`, and added `test_12596.test` plus a three-row fixture. The regression test asserts two expected records in both normal and `parallel=false` scans [C0017, C0018]. The PR metadata identifies merge commit `2532c30fa649ac6296c7ab2b55976b4337ff46ce` on 2024-06-24 [C0017].
+
+**Version boundary, strengthened by targeted comparison:** the captured GitHub compare response for `v1.0.0...2532c30...` identifies the v1.0.0 commit as the merge base; this places the fix after that tag [C0027]. A second, complete compare response for `2532c30...v1.1.0` identifies the merge commit itself as the merge base, establishing that the fix is in the v1.1.0 tag's ancestry [C0028]. The first compare response is truncated after its metadata, and neither comparison executes DuckDB. This supports “not in v1.0.0; present in v1.1.0 source ancestry,” not a claim about a binary build, every 1.0.x patch release, or runtime correctness. The original issue reproduction and regression result remain maintainer/test evidence; this candidate did not run DuckDB.
+
+**[I]** A parallelism option can affect observed row shape on a real parser path. Record engine version and relevant scan options with each run; test row counts and reject behavior when upgrading. Do not infer that every transform is deterministic merely because this regression has a test.
+
+## 4. Project, environment, and provenance records
+
+**[C]** A project is an ordinary folder, optionally zipped as a portable bundle:
+
+```text
+project/
+  labbook.toml                 # project ID, schema version, policy
+  pyproject.toml + lock file   # Python constraints and resolved environment
+  notebooks/*.ipynb            # standard document, edited explicitly
+  datasets.yml                 # logical names, URIs, format, schema contract
+  scripts/  sql/
+  .labbook/events.jsonl        # append-only execution events
+  .labbook/runs/<run-id>/      # clean-run document, bounded outputs, manifest
+  .labbook/cache/              # disposable content-addressed results
+  .labbook/project.lock        # writer coordination
+```
+
+A dataset record contains source URI, format, byte length, SHA-256 content identity, declared schema and schema-contract revision. File size and modification time are quick change hints only; a full digest requires a streaming read. Register external files by reference and open read-only; a transform writes a new artifact. If hashing has not completed, identity is `pending/unverified`, never inferred from time metadata.
+
+An execution event records run ID, notebook content hash, cell IDs and actual event order, code hashes, Python executable/version, lockfile digest, platform/architecture, DuckDB version and scan settings, source identities and schema contracts, declared parameters, permission profile, start/end, status, and output hashes/locations. The exported small manifest references these immutable facts and summarizes row count, schema, ordering contract, and truncation. It excludes credentials and private dataset bytes.
+
+Use a project lock file that cannot be broken solely by age or PID: use an OS-supported advisory lock or atomic exclusive creation with a verifiable owner token and explicit recovery. Multiple readers may open a saved project; one writer owns a project mutation at a time. DuckDB's own access model is a useful warning, not a substitute for LabBook's cross-file locking [C0026].
+
+A write is staged to a temporary file, flushed, then atomically renamed on the same filesystem; update the event/manifest pointer last. On restart, validate checksums and ignore incomplete temporary records. If recovery cannot prove which notebook/output/event set committed together, mark affected outputs `unverified` and offer recovery choices. Atomic rename and fsync guarantees depend on filesystem/platform and must be validated; the design does not assume identical crash behavior on network filesystems.
+
+## 5. Dataset contract and bounded data path
+
+**[C]** Never mutate the original file and never discard a malformed row without an explicit recorded choice. At registration, the user accepts or declares names and types; inference is labeled provisional and pinned into the contract only after review. A schema change creates a proposed contract revision and a visible diff; it does not silently reinterpret old outputs.
+
+Conversions are explicit per column. The default on cast/parse failure is stop with file, record location, column, and reason, and retain a reject ledger containing raw record or a secure reference to it. An explicitly selected quarantine/continue mode writes rejects and counts to a separate ledger. Do not make `ignore_errors`-style skipping the default. DuckDB's CSV docs describe reject/error mechanisms and warn that projection can affect whether some cast errors are observed; a full contract validation must inspect all declared columns, independently of a later query projection [C0001, C0024]. Confirm those APIs and guarantees against the pinned engine before implementation.
+
+CSV and NDJSON record identity is source digest plus physical record/line and byte offset where available; columnar identity is source digest plus row-group and row position for the inspected version. Rewriting a dataset changes its digest and therefore its identity. Missing fields, explicit nulls, empty strings, Unicode and timestamp parsing remain distinct contract cases. Timestamps require an explicit format/time-zone policy. Heterogeneous values require an explicit variant/JSON policy or fail conversion.
+
+A preview is a bounded sample and is always labeled `sample`; its min/max/count or inferred type is never presented as a whole-file fact. Stable order means preserving an input order only through operators that guarantee it. It is not a cross-version promise. Reproducible comparison requires an explicit total sort key including a tie-breaker, or an order-insensitive result. Record the ordering policy in the output manifest.
+
+Use DuckDB scans for CSV, NDJSON/JSON and Parquet paths when the selected operator is streamable or spillable and supported by the pinned build. Keep the 5 GB / 16 GB target as **[V]**, not measured evidence. Preview, projection, filters and many aggregations are candidates for bounded execution; global sorts, large distincts, joins, and materialized Python objects may spill or exceed memory. Before launch, label the operation `streaming`, `spill-capable`, or `requires a configured bound`; set memory, temporary disk and elapsed-time limits. If no safe bound is available, refuse the operation with an actionable explanation. Truncate large notebook displays and retain the complete result as a separate content-addressed artifact only when explicitly saved.
+
+Cache keys include source content identity, transform/code hash, environment lock digest, engine version/settings, and declared parameters. Cache entries are disposable. Undeclared file reads or effects make a result ineligible for a reproducible cache hit.
+
+## 6. Notebook execution, freshness, and replay
+
+Keep four concepts separate: displayed cell order (document array), observed execution event order (event log), mutable live kernel state, and persisted output provenance. An execution counter is useful notebook metadata; it is not a complete execution history. If sidecar events are missing or do not match the saved document, the output is `unverified`.
+
+Python static dependency extraction is **best effort** because dynamic lookup, mutation, imports and arbitrary calls defeat complete static analysis. Show inferred edges and uncertainty. A user can declare dependencies or use explicit transform boundaries for reliable invalidation. If the graph cannot establish that an output is unaffected, conservatively mark it stale/unverified. This narrows the original “static DAG determines freshness” claim while retaining marimo's graph as a useful precedent [C0015].
+
+Visible output statuses:
+
+| Status | Rule |
+|---|---|
+| `current` | Saved output is linked to a completed event whose notebook/code, source identities, schema contracts, environment and declared parameters match the present project snapshot. |
+| `stale` | A known upstream edit or input/contract/environment change invalidates the output's recorded dependency set. |
+| `failed` | The producing event failed; retain its error output and traceback. |
+| `unverified` | Provenance is absent/inconsistent, dependency analysis is incomplete, the run was interrupted/cancelled, recovery was ambiguous, or sidecar data is missing. |
+
+A kernel restart does not alter a previously completed event or make its output false. It does clear confidence in any unsaved live state; outputs remain `current` only if their saved event still matches the project snapshot, otherwise stale/unverified. Cell edits invalidate the edited cell and known descendants; unknown dependencies trigger conservative invalidation. Dataset, schema, lockfile, interpreter or engine-setting changes invalidate affected descendants; inability to establish scope invalidates all. Cancel kills the run process tree and marks unfinished cells and their dependents `unverified`; old saved output remains visible with its previous event association. A late asynchronous invalidation must be checked against a monotonically increasing project generation before changing status.
+
+A clean replay creates a fresh process and environment from a committed lock, records progress and per-cell failures, and writes a separate run document/artifact. The original notebook is unchanged until the analyst explicitly adopts selected results. Cancellation is available throughout. Replays make no promise of byte identity: randomness, clock, locale, CPU/BLAS, external services, network, untracked files, package/build drift, and nondeterministic engine behavior can change results. State the strongest claim supported by the manifest: same declared inputs/environment; output equality only when the recorded output hashes actually match.
+
+The minimum path is project creation → source registration and hash → notebook/transform authoring → labeled bounded preview → interactive selected run → clean replay with cancel/progress → provenance/status comparison → explicit save → close and reopen on another machine → inspect/export results and manifest. A missing external file or incompatible environment on reopen is a clear unresolved-input status, not an empty dataset or a successful run.
+
+## 7. Runtime boundary and support policy
+
+Notebook code is untrusted. Run it in a separate OS-isolated process with project output writable, project code and source datasets read-only, temporary storage bounded, network disabled by default, and CPU/memory/wall-clock/process limits. Grant network or extra filesystem access per run only after displaying the effect on reproducibility; record the permission profile. Opening, importing, previewing or rendering a notebook never executes its code. A textual import blacklist is not isolation. The experiment executor reports OS isolation via Bubblewrap/systemd rather than AST filters [W1]; that is a scoped description of the experiment tool, not evidence that LabBook's production sandbox has been designed or audited. Choose and test a concrete OS boundary on each supported platform before claiming isolation.
+
+Support one execution language: Python. Use DuckDB SQL as an optional query surface over the same registered data, not a second general-purpose notebook kernel. Start with Python 3.11–3.13 after checking a current, dated lifecycle source; treat other versions as unsupported until CI covers them. The captured Python lifecycle pages are snapshots, not a permanent support policy [C0005, C0008, C0023]. Use a standard project lock (for the project) and optionally PEP 723 metadata for standalone Python scripts; PEP 723 describes inline script metadata and does not, by itself, specify a notebook dependency resolver or runtime [C0025]. Pin nbformat, Python, DuckDB, and their transitive/runtime dependencies in implementation records.
+
+## 8. Useful opportunity and alternative
+
+**Opportunity [C]:** provide a data-quality pane for schema drift and quarantined records, linking each rejected row to its input identity and parsing rule. This makes malformed data visible without changing source bytes.
+
+**Alternative [C]:** adopt marimo's Python-file notebook and reactive runtime more fully. Its DAG and stale-state model offers a clearer reactive mental model [C0003, C0015]. The cost is that `.ipynb` becomes an import/export boundary and Python static analysis still has limits. LabBook chooses standard notebook documents for the team's existing files, with explicit event provenance and conservative graph assistance.
+
+## 9. Validation plan and evidence status
+
+**[W] Executed here:** isolated Python component check `exec-zeiid_pq` exercised candidate-authored parsing of four tiny synthetic NDJSON lines: Unicode, explicit null, absent key, malformed row retained in a reject ledger, source hash unchanged, and a two-row preview labeled `sample`. Exit 0. Receipt records 5-second wall, 3-second CPU, 256 MiB memory, 16-task and isolated network-namespace limits. This check does not exercise DuckDB, notebook formats, multi-gigabyte data, the application, or a production sandbox. No independent status-state-machine or crash-recovery execution is claimed in this revision.
+
+**Prior proposal claims not carried as verified checks:** it names W1–W4 and receipts, but the separate original witness catalog/receipts were not located in the readable input paths. Treat those as claims recorded in the immutable proposal, not verified evidence here. The current witness catalog identifies that distinction.
+
+**[V] Proposed, unexecuted implementation validation:**
+
+1. Generate a 5 GB CSV, NDJSON and Parquet dataset with nulls, Unicode, timestamps, schema drift and malformed rows; measure streaming hash/preview/validation/filter/aggregate RSS and temp-disk use on the 8-core/16 GB target.
+2. Verify reject counts and raw-record recovery against full-column validation with projections both enabled and disabled; prove no source mutation.
+3. Test every status transition for edits, unknown dependencies, source/schema/lock change, kernel restart, failure, cancellation and interrupted saves; inject late invalidation races.
+4. Run the issue #12596 fixture and both parallel settings on the exact pinned DuckDB package; compare v1.0.0 and v1.1.0 only as a source-history test, not as a substitute for binary package tests.
+5. Move a project between clean machines with and without source files and dependencies; validate manifest verification and graceful `unverified` behavior.
+6. Kill the writer during notebook, event, output and manifest commits on each supported filesystem; verify recovery never advertises an uncommitted output as current.
+7. Exercise OS sandbox boundaries for file, network, process, memory and cancellation behavior on each target operating system. Do not use notebook import-blocking tests as the isolation proof.
+
+These validations are plans; none establishes full-product readiness now.

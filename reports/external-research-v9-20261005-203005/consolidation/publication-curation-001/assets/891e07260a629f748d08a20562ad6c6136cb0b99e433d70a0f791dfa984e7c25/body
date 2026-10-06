@@ -1,0 +1,96 @@
+{
+  "leads_version": "research-stage-1",
+  "note": "Unresolved evidence gaps, deferred checks, and optional opportunities. None blocks the proposal's core claims; items marked 'affects' list which claims have reduced strength until resolved.",
+  "leads": [
+    {
+      "id": "L1",
+      "kind": "evidence-gap",
+      "title": "Exact regression test added by duckdb PR #10777 not visually confirmed",
+      "detail": "The PR files API payload (capture aba307c5...) was truncated at the 32 KB window on the first changed file (data/csv/titanic.csv). The CSV test suite exists at the merge commit (S13) but the specific test filename was not identified.",
+      "resolution_path": "Fetch the full PR files payload or list test/sql/copy/csv at 55ce826 beyond 'data' (e.g. git trees API) and match issue-number/dialect-error test names; then fetch the raw test file to quote assertions.",
+      "affects": "Strength of the 'fix included a regression test' sub-claim in §4 (currently stated as plausible-but-not-verified). Issue→fix→recurrence chain itself is unaffected.",
+      "status": "open"
+    },
+    {
+      "id": "L2",
+      "kind": "evidence-gap",
+      "title": "duckdb-web markdown source paths 404",
+      "detail": "raw.githubusercontent.com/duckdb/duckdb-web/main/docs/data/csv/... returned 404; the repo layout evidently changed. Rendered pages were captured instead (S5, S6) with meta-description locators only.",
+      "resolution_path": "Locate the new docs source layout (repo contents API on duckdb-web default branch) and re-capture markdown for line-level locators of ignore_errors / store_rejects / null_padding semantics.",
+      "affects": "Locator precision for S5/S6 only; the documented feature existence is corroborated by S6's meta description and S9–S12 behavior reports.",
+      "status": "open"
+    },
+    {
+      "id": "L3",
+      "kind": "evidence-gap",
+      "title": "nbformat schema not captured at a release tag",
+      "detail": "raw URL at tag 5.10.4 404'd (tag naming or path mismatch). S1 is pinned to main + capture sha256; S2's changelog pins the cell-id mechanism to nbformat 5.1.0.",
+      "resolution_path": "List jupyter/nbformat tags via API and re-fetch the schema at a release tag (5.10.4 or 5.11.x).",
+      "affects": "Pin elegance for S1; no claim depends on main-only content.",
+      "status": "open"
+    },
+    {
+      "id": "L4",
+      "kind": "fetch-failure",
+      "title": "DVC docs fetch failed twice (boundary tool OSError)",
+      "detail": "dvc.org/doc/user-guide/data-management/cache could not be fetched; the data-versioning-by-checksum precedent (content-addressed cache) is therefore uncited and identity-by-digest remains a candidate product choice grounded in W2/W4 rather than in DVC.",
+      "resolution_path": "Retry later or substitute an alternative primary source (git-lfs docs, DVC GitHub README) if a data-versioning precedent citation is wanted.",
+      "affects": "Only breadth of §3 precedents (5 precedents already meet the ≥2 requirement); no core claim.",
+      "status": "open"
+    },
+    {
+      "id": "L5",
+      "kind": "verify-before-citing",
+      "title": "'Over a third of Jupyter notebooks on GitHub fail to reproduce' is a vendor-quoted statistic",
+      "detail": "Marimo's guide states this (S4); the underlying study is understood to be Pimentel et al. 2019 ('No Pain, No Gain?'), which was not fetched.",
+      "resolution_path": "Fetch the paper or its artifact before using the figure as a fact in user-facing material; otherwise attribute as 'marimo-cited community research'.",
+      "affects": "Framing rhetoric only; the hidden-state mechanism stands on S1/S4's structural arguments.",
+      "status": "open"
+    },
+    {
+      "id": "L6",
+      "kind": "deferred-check",
+      "title": "DuckDB ORDER BY tie behavior (stable vs deterministic) unverified in v1.5 docs",
+      "detail": "The design assumes sort ties are not a stable, contract-grade ordering unless an explicit content tie-break is added (W2 demonstrates the general hazard). No v1.5 docs statement on sort stability was captured.",
+      "resolution_path": "At integration: read v1.5 sorting docs (see the ICDE 2023 sorting paper link on why_duckdb, S8) and add an integration test asserting tie behavior on the envelope hardware.",
+      "affects": "§5.3 wording; mitigated by multiset digests and declared tie-breaks.",
+      "status": "open"
+    },
+    {
+      "id": "L7",
+      "kind": "deferred-check",
+      "title": "Out-of-core / spilling configuration page not located for v1.5",
+      "detail": "The guessed docs path for larger-than-memory workloads 404'd; S8 supports the engine's analytical design but the capture does not pin memory_limit/temp_directory semantics.",
+      "resolution_path": "Locate the v1.5 configuration docs page; then run validation V1.",
+      "affects": "§8's 5 GB target remains explicitly [PROPOSED/UNEXECUTED].",
+      "status": "open"
+    },
+    {
+      "id": "L8",
+      "kind": "scope-limitation",
+      "title": "Native Windows support (locking + sandbox)",
+      "detail": "flock and Bubblewrap are POSIX-centric; Windows without WSL2 is declared out of v1 scope (§15).",
+      "resolution_path": "Evaluate msvcrt locking + Job Objects, or formalize the WSL2 requirement, before any Windows release.",
+      "affects": "§10/§15 scope statement; already disclosed rather than hidden.",
+      "status": "open"
+    },
+    {
+      "id": "L9",
+      "kind": "opportunity",
+      "title": "Run-diff provenance view (O2) and lazy 'mark stale' runtime (O3)",
+      "detail": "Both are cheap follow-ons over data the design already produces (manifests, epochs, DAG). Scheduling, real-time collaboration, hosted service, and additional language kernels remain explicit non-obligations per the brief.",
+      "resolution_path": "Prototype run-diff on two manifests from the same notebook; add lazy-runtime as a project setting modeled on marimo's configuration (S3).",
+      "affects": "Nothing; opportunity tracking.",
+      "status": "deferred"
+    },
+    {
+      "id": "L10",
+      "kind": "verify-before-citing",
+      "title": "nbclient cancellation semantics under mid-run interrupt",
+      "detail": "S15 documents timeouts and error hooks but the capture does not pin what happens to partially written outputs when a run is cancelled; our state machine (W3) assumes cancelled outputs are never labeled current.",
+      "resolution_path": "V4 integration test on real nbclient; read nbclient source for cancellation handling before pinning app behavior.",
+      "affects": "§6 table row 'run cancelled' is design intent until V4.",
+      "status": "open"
+    }
+  ]
+}

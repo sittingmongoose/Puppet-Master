@@ -1,0 +1,68 @@
+{
+  "catalog_version": "research-stage-1",
+  "note": "Executed checks include code hash, input, justified expected behavior, stdout/stderr/exit, and scope limits. Proposed checks are explicitly UNEXECUTED. A capture-based evidence chain is listed as context, not as an executed check. No receipt here establishes full-application behavior.",
+  "witnesses": [
+    {
+      "id": "W1",
+      "kind": "executed by candidate",
+      "title": "Coordinate storage precision: float64-JSON exactness vs float32 lossiness and voxel-index stability",
+      "executor": "mcp__pm_execution__python_execute, execution_id exec-eahyg1ml, completed 2026-10-06T09:03:55Z",
+      "code_sha256": "8a297de9a4f47ced7d1acb851a1860168bb213f2699603ea51089cc5cad85825",
+      "input": "calibration-like values [0.3625, 2.9033, 1e-3, 1048576.5, 123456.789125] (0.3625 um pixel and 2.9033 um z-step appear in captured tifffile #334 metadata); axis-length scans of 3e9 (pathological single-axis 3 GB), 54772 (3 GB 2D slice), 1442 (3 GB volume), spacing 0.3625 um; float32 modeled via struct pack/unpack round-trip",
+      "justified_expected": "IEEE-754 float32 (24-bit significand) cannot represent decimal calibration constants exactly; CPython json uses shortest-repr round-trip so float64 values are recovered exactly. Index error = |round(f32(i*s)/s) - i| is 0 for realistic 3 GB extents and nonzero only at extreme coordinates (f32 half-ulp * extent / spacing).",
+      "stdout_sha256": "0b986fd007d7dbf82c5a913691e5f7302f2aeec6c26719952f2087b75fac59fc",
+      "stdout": "float64-JSON round-trip exact for all calibration values: True; f32 abs error: 0.3625 +1.192e-08, 2.9033 +4.692e-08, 0.001 +4.750e-11, 1048576.5 +0.000e+00, 123456.789125 -6.250e-05; max voxel-index error: single-axis 3 GB extent 177, 2D slice 54772 px 0, volume 1442^3 0",
+      "stderr": "",
+      "exit_code": 0,
+      "limits": ["stdlib-only isolated component check (execution sandbox limits: 5 s wall, 256 MB, no network)", "tests arithmetic/storage representation, not any real component or application", "single spacing value (0.3625 um) and one stage-scale value set; other calibrations scale linearly with the same argument", "177-voxel case requires a ~1e9-um coordinate on one axis, far beyond real stages; included as a bound, not a realistic failure"],
+      "conclusion_used": "persist all coordinates/scales as float64 (JSON); float32 nowhere in the persistence path; display may round, storage must not"
+    },
+    {
+      "id": "W2",
+      "kind": "proposed / UNEXECUTED",
+      "title": "3 GB bounded-access benchmark at pinned versions",
+      "plan": "Synthesize a ~3 GB chunked source (tifffile v2026.9.20 writable path), open through the tifffile-aszarr/zarr-v2 read path with a 1-2 GB LRU cache on an 8-core/16 GB envelope; measure open-to-first-pixel, random slice latency, peak RSS (must show no second full in-memory copy), and cancel responsiveness (cancel mid-prefetch must return control < 1 s).",
+      "blocking_evidence": "S3 documents the chunked read path but no public benchmark at this envelope was found this stage."
+    },
+    {
+      "id": "W3",
+      "kind": "proposed / UNEXECUTED",
+      "title": "Recoverability drills",
+      "plan": "kill -9 between fsync and os.replace during save -> reopen must load .bak; truncate project.json -> validate fails -> .bak loads; abort import mid-parse -> project must show only a quarantine entry; fail an export (read-only dir) -> previous export intact. Success criteria: last validated state always opens; no partial JSON ever parsed as valid.",
+      "relation_to_sources": "algorithm adopted from Chain A lessons (S5/S6): stage-publish + bounded retry + validate-on-load"
+    },
+    {
+      "id": "W4",
+      "kind": "proposed / UNEXECUTED",
+      "title": "Cross-tool NGFF 0.4 export round-trip",
+      "plan": "Export a derived overlay + labels as OME-Zarr 0.4 per S9; open in napari v0.9.2 (S1) and one non-napari reader; compare axes names/types/units and array hashes against the export manifest.",
+      "risk_if_skipped": "axes-vocabulary interop at these exact pins remains an assumption"
+    },
+    {
+      "id": "W5",
+      "kind": "proposed / UNEXECUTED",
+      "title": "Second-machine reopen equality",
+      "plan": "Save project on machine A; copy bundle/reference layout to machine B; reopen; diff every annotation coordinate and descriptor bit-exactly (float64 equality, W1 underpinning); re-link flow exercised with one moved source."
+    },
+    {
+      "id": "W6",
+      "kind": "proposed / UNEXECUTED",
+      "title": "Verify tifffile #334 regression test at tag",
+      "plan": "Clone cgohlke/tifffile at tag v2026.9.15 (or >=), locate the MMStack z-step_um string guard and its test in tests/test_tifffile.py; record commit sha. Blocked this stage by N3 (CHANGES.md/README.md raw fetches 404); Chain B is claimed only up to the maintainer's 'Fixed in v2026.9.15' comment (S8)."
+    },
+    {
+      "id": "C1",
+      "kind": "capture-based evidence chain (not an executed check)",
+      "title": "Chain A: zarr #3522 -> PR #4358 -> regression tests -> v3.4.0",
+      "evidence": "S5 (PR body, merge commit 6947dd8798925bddf1563e48f1478bb9ffa7e650), S6 (full diff incl. 4 regression tests in tests/test_store/test_local.py), S4 (release notes listing #4358/#4359)",
+      "limits": "proves LocalStore publish behavior only at zarr-python >= 3.4.0; retry tail is maintainer judgement (S5); Windows-root-cause analysis is reporter evidence, not vendor documentation"
+    },
+    {
+      "id": "C2",
+      "kind": "capture-based evidence chain, PARTIAL (not an executed check)",
+      "title": "Chain B: tifffile #334 string calibration regression -> maintainer fix statement -> v2026.9.15",
+      "evidence": "S7 item #334 (issue, repro, root cause, sample file), S8 (owner: 'Fixed in v2026.9.15'), N3 (fix commit/test unverifiable this stage)",
+      "limits": "chain stops at the maintainer's release statement; regression-test presence asserted nowhere and not claimed"
+    }
+  ]
+}

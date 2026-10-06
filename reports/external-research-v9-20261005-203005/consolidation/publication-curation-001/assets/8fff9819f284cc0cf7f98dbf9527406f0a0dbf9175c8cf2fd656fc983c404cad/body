@@ -1,0 +1,97 @@
+{
+  "dependency_catalog_version": 1,
+  "catalog_kind": "enrichment dependency delta",
+  "base_catalogs": [
+    {
+      "path": "inputs/seed/source_catalog.json",
+      "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b"
+    },
+    {
+      "path": "inputs/seed/witness_catalog.json",
+      "sha256": "5b5e0c0d9d8c52c3d8259fcb11bd51a29f1d6d468f953f721f03e38a2e37ca4a"
+    },
+    {
+      "path": "inputs/seed/lead_inventory.json",
+      "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751"
+    }
+  ],
+  "inherited_unresolved_dependencies": [
+    {
+      "id": "A1",
+      "from": "inputs/seed/lead_inventory.json",
+      "state": "unresolved; 3 GB real-file latency/RSS/cancellation benchmark V2 not executed"
+    },
+    {
+      "id": "A2",
+      "from": "inputs/seed/lead_inventory.json",
+      "state": "unresolved; shared NFS/SMB save interruption check V3 not executed"
+    },
+    {
+      "id": "A3",
+      "from": "inputs/seed/lead_inventory.json",
+      "state": "unresolved; instrument calibration fixtures V6 not executed"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "D1",
+      "question": "Does the candidate NGFF adapter enforce the exact 0.5 axis and per-dataset transform contract?",
+      "evidence_state": "Specification wording is verified in complete pinned S1; implementation/validator is not built or tested. The base proposal overstates allowed multiscale transform types.",
+      "why_it_matters": "Wrong axis rank, duplicated scale, transform ordering, or unrepresentable affine can move annotations physically while preserving plausible pixels.",
+      "source_ids": ["S1"],
+      "witness_ids": ["W4"],
+      "next_check_ids": ["V7"],
+      "status": "source semantics resolved; candidate implementation unresolved"
+    },
+    {
+      "id": "D2",
+      "question": "What sample-location and axis-direction convention does each accepted file format use for integer pixel coordinates?",
+      "evidence_state": "The inspected NGFF transform passage maps discrete data to physical coordinates but does not settle center-versus-corner semantics; QuPath S13 supplies only its own export origin statement. No cross-format fixture was run.",
+      "why_it_matters": "A half-sample offset or axis reversal changes point/polygon meaning after import, relocation, or export.",
+      "source_ids": ["S1", "S3", "S13"],
+      "witness_ids": [],
+      "next_check_ids": ["V11"],
+      "status": "unresolved"
+    },
+    {
+      "id": "D3",
+      "question": "Do the napari/docs@main image, unit, and Shapes statements match the exact napari version selected for an implementation?",
+      "evidence_state": "The docs captures S2-S4 are complete but moving-branch content. napari v0.9.2 is released and its tag is pinned by S17-S18; the stable documentation index reports 0.9.2 (S19), but the stable image body capture is truncated (S20), so detailed behavior is not release-qualified here.",
+      "why_it_matters": "Contrast defaults, lazy level selection, RGB interpretation, and annotation editing boundaries affect core project guarantees.",
+      "source_ids": ["S2", "S3", "S4", "S17", "S18", "S19", "S20"],
+      "witness_ids": [],
+      "next_check_ids": ["V8", "V9"],
+      "status": "partially qualified; detailed release behavior unresolved"
+    },
+    {
+      "id": "D4",
+      "question": "Can one pinned tifffile/Zarr adapter meet the proposal's OME-Zarr 0.4 and 0.5 support claim?",
+      "evidence_state": "NGFF 0.5 requires Zarr v3 (S1). tifffile 2026.5.2 CHANGES describe distinct 0.5/Zarr-v3 and 0.4/Zarr-format-2 fsspec changes; its 2026.9.20 README lists Zarr 3.4.0 and a minimum Zarr 3.2 for Zarr support (S5-S6). No v0.4 runtime fixture was read.",
+      "why_it_matters": "A version mismatch could turn a claimed import into an unsupported or misread project source.",
+      "source_ids": ["S1", "S5", "S6"],
+      "witness_ids": [],
+      "next_check_ids": ["V7", "V10"],
+      "status": "unresolved; require separate adapter/version fixtures"
+    },
+    {
+      "id": "D5",
+      "question": "How should project-level vector annotations and volume masks be represented and edited?",
+      "evidence_state": "S4 documents per-slice Shapes visibility, copy-to-slice coordinate mutation, no 3D Shapes editing, and absent 3D cuboids/spheroids. S1 specifies integer label arrays. No application schema or release-pinned interaction was executed.",
+      "why_it_matters": "A viewer's 2D shape editor is not equivalent to a volume-scoped filled region or segmentation mask.",
+      "source_ids": ["S1", "S4"],
+      "witness_ids": [],
+      "next_check_ids": ["V9"],
+      "status": "design boundary is source-backed; implementation unresolved"
+    },
+    {
+      "id": "D6",
+      "question": "Can the reader service enforce read-only access to original sources while supporting bounded TIFF region reads?",
+      "evidence_state": "S5 documents `return_as='zarr'` region access, examples opened with `mode='r'`, and a separate `mode='r+'` example that writes a selected region. No disposable-file mutation test was run in this stage.",
+      "why_it_matters": "The brief excludes in-place source changes, while the documented library interface includes an explicit writable path.",
+      "source_ids": ["S5"],
+      "witness_ids": ["W3", "W4"],
+      "next_check_ids": ["V10"],
+      "status": "source modes identified; adapter enforcement unresolved"
+    }
+  ]
+}

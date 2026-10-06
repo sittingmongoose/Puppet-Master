@@ -1,0 +1,59 @@
+{
+  "schema": "er9.candidate-lead-addendum.v1",
+  "mode": "additive; keeps the proposal's existing L1-L12 references intact",
+  "base_context": {
+    "proposal_path": "inputs/seed/proposal.md",
+    "proposal_sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+    "note": "The proposal names L1-L12. No prior lead catalog was located at inputs/seed/lead_catalog.json or inputs/seed/leads.json; this file does not claim to reproduce those records."
+  },
+  "leads": [
+    {
+      "id": "L13",
+      "title": "Verify distinct OME-Zarr 0.4 and 0.5 import branches",
+      "status": "open",
+      "source_refs": ["S1", "S6"],
+      "question": "Can the proposed reader stack parse and preserve 0.4/Zarr v2 and 0.5/Zarr v3 metadata with independently pinned adapters and fixtures?",
+      "next_evidence": "Exercise one store from each version branch, including axes, dimensions, chunk reads, and transform round trips; publish a tested compatibility table before advertising both."
+    },
+    {
+      "id": "L14",
+      "title": "Build release-specific TIFF dtype, codec, and segment support matrix",
+      "status": "open",
+      "source_refs": ["S5", "S8", "S9"],
+      "question": "Which sample types, bits-per-sample, compression codecs, and strip/tile layouts work together in the exact locked reader and codec builds?",
+      "next_evidence": "Run small exact-equality fixtures for packed integer, float, CCITT, and supported compressed segments; record unsupported combinations as an import error, not a silent conversion."
+    },
+    {
+      "id": "L15",
+      "title": "Maintain available per-instrument calibration regression fixtures",
+      "status": "open",
+      "source_refs": ["S7", "S8", "S9", "S10"],
+      "question": "Do team-owned representative images preserve calibration values and units across each reader upgrade?",
+      "next_evidence": "Use the group's files and assert the imported value-unit pair through the application. The historical TVIPS fixture referenced by the public test is not supplied here."
+    },
+    {
+      "id": "L16",
+      "title": "Make multiple-pyramid and axis correction decisions inspectable",
+      "status": "open",
+      "source_refs": ["S1", "S2"],
+      "question": "How should the UI explain named pyramid choices, the initial default, custom/missing axes, and layer-only transforms?",
+      "next_evidence": "Prototype with a multiscale store and ambiguous metadata; verify chosen level and correction survive reopen and export, while view transforms do not alter source bytes."
+    },
+    {
+      "id": "L17",
+      "title": "Measure bounded access on the target workstation envelope",
+      "status": "open",
+      "source_refs": ["S2", "S5"],
+      "question": "Does the exact reader path for the group's layouts stay within memory, latency, and cancel targets for a 3 GB source?",
+      "next_evidence": "Benchmark representative tiled, stripped, compressed, and pyramidal files on the 8-core/16 GB target; measure peak RSS, p95 visible-tile latency, and cancellation. Lazy-array documentation is not performance qualification."
+    },
+    {
+      "id": "L18",
+      "title": "Resolve exact release artifacts and dependency lock",
+      "status": "open",
+      "source_refs": ["S5", "S6"],
+      "question": "Which immutable tifffile 2026.9.20 artifact and dependency wheels are supported on the team's operating systems?",
+      "next_evidence": "Resolve release tag/commit and wheel hashes, lock compatible NumPy/imagecodecs/Zarr versions, and run the support matrix in L13-L14 against that exact environment."
+    }
+  ]
+}

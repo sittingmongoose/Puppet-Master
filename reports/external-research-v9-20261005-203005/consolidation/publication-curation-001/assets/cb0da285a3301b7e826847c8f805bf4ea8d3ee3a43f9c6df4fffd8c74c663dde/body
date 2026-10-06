@@ -1,0 +1,115 @@
+# Source-grounded critique — local biomedical image review workspace
+
+**Disposition:** Keep the proposal’s core architecture and support boundary, with the corrections below incorporated before final. Its most useful claims are already carefully bounded: NGFF gives a common named-axis/scale model but not a general affine; TIFF plane order must come from metadata; the napari label-refresh failure has a real fix-and-test chain; and no cited component proves the 3 GB, recovery, or interoperability targets. The remaining high-risk gaps are the identity model for directory-backed OME-Zarr, mapping canvas positions to stored indices, and exact annotation geometry conventions.
+
+## Reviewed frozen research artifacts
+
+The assigned brief is `TASK.md` SHA-256 `3f812924e88cb7b39501ec71f905a4819dcf1654ff56faf7184054fdb3dcfb65`. The supplied research proposal is SHA-256 `b05f026a87e73b223788f4c0a71d1339bf22b0dfe7a6dde045301db52e3d0dde`; source catalog `e5d028a5ec3fd2574a3c87dfa4e594cdc26f231df4e4250a8acf98ec84466ab1`; witness inventory `16577d20e2aeddc76e9ff56978ee196d72613d6717e18ba0c383a31ea82e11c8`; leads `5e5c8a72a0bf920b6be5ff4e3b35444b43164272b0392fdcacf95a75eba67bd7`; and capture errata `27fa78e613979c0a373afcd4624d75a0e0d0d4b8ed642867254f7adc6aa0ead2`. The frozen issue-search map is present at SHA-256 `d359659580993a7934e464d6aafa43ec80db35beae4d2cc8c98e5d83f9be1e63`; it is a captured GitHub search-page dump, not used here as primary evidence for design claims.
+
+## Claims to preserve, with their evidence limits
+
+| Finding | Independent verification and limit | Effect on the plan |
+|---|---|---|
+| **OME-NGFF 0.5.2 is a useful common model for axes and ordinary calibrated images.** The spec requires named axes matching array dimension order; its multiscale transform model uses scale and optional translation, applied in order. Three spatial axes use `zyx` ordering guidance. The label-image convention requires integer data and allows labels to point to their source image. [S1] | Verified in §§2.1, 2.3–2.4, 2.6 of the pinned 0.5.2 document. The source reference is optional; it is not a mandatory identity contract. The model does not encode arbitrary affine rotation/shear and does not prove reader interoperability or performance. | Preserve the app-owned affine and say explicitly when NGFF export cannot represent it. Keep point/polygon geometry, styles, provenance, and undo history in the project model; labels can be an interchange view. Require two independent readers in the interoperability spike. |
+| **OME-TIFF page sequence must be interpreted through OME-XML.** `DimensionOrder` and `TiffData` map IFDs to Z/C/T positions; multiple files can reference one another by UUID. [S2] | Verified in OME Model 6.2.2, “OME-XML metadata,” “DimensionOrder,” “TiffData element,” and “Multi-file OME-TIFF.” A TIFF page list alone is insufficient; the specification does not establish support for arbitrary vendor TIFFs, codecs, or multi-file cases. | Retain the single-file, unambiguous-series first boundary and metadata-only/unsupported path. Keep multi-file OME-TIFF deferred pending fixtures and relocation tests. |
+| **tifffile is a separate, useful TIFF-access precedent.** Its 2026.9.20 docs describe TIFF image access as NumPy or Zarr arrays from strips, tiles, pages, SubIFDs, series, and pyramids, and enumerate limitations. The documented environment includes Zarr 3.4.0 and imagecodecs 2026.8.16. The 2026.5.2 notes call out API changes, `return_as`, and `aszarr` deprecation. [S3] | This is a different implementation codebase and mechanism from napari’s rendering path. `TiffPage.segments()` documents decoded strip/tile iteration and an approximate `buffersize`; this is evidence for a possible bounded mechanism, not a guarantee of random-access latency, memory use, or cancellation. The docs’ series interface also permits singleton-dimension squeezing; the adapter must explicitly preserve axes. | Preserve tifffile as a candidate reader, but require an exact, version-locked access-mode spike and bounded decode-unit measurements. Make `squeeze=False` (or its exact equivalent for the pinned API) part of the adapter contract and test singleton axes. |
+| **The napari stale-label-display lesson has a real source-to-fix-to-test chain.** Issue #6079’s reproducer reports that Zarr label data changes while the canvas stays stale; toggling visibility refreshes the view. The issue discussion compares the stale slice with NumPy view behavior and discusses non-NumPy-backed data. Commit `658b080d62bd9c6f478f781163020cdcf5a44139` (25 Aug 2023, PR #6112) updates the current slice for non-NumPy-backed arrays and adds tests. The tests are present at tag `v0.4.19`; the sampled `v0.4.18` implementation is the pre-fix comparison. [S4–S8] | The patch’s parameterized tests cover paint, fill, and mouse painting for NumPy, Zarr, and TensorStore and assert rendered VisPy data. The issue body itself demonstrates Zarr; the broader backend claim comes from discussion, patch, and tests. Tests were inspected, not executed here. The inspected tags bound applicability to the sampled source trees; they do not establish the earliest fixed release or current napari behavior. They do not cover large file-backed data, project persistence, undo recovery, or coordinate/export correctness. | Preserve the lesson: compare the visible result with authoritative backing data for each supported backend. Do not treat a successful write or a historical fix as evidence that this application is correct. Keep napari `v0.4.19` as mechanism evidence only, never a deployment pin. |
+| **The other implementation precedent is independent and useful for interaction design.** napari shapes code models vertices, shape kinds, per-shape features/styles, and spatial transforms; stable docs identify napari 0.9.2 and describe multidimensional viewing and common annotation layers. [S9–S10] | The shapes source is historical and partly captured; the stable landing page is not an integration test or package lock. Neither establishes app persistence, accessibility, or compatibility with the TIFF/Zarr stack. | Preserve napari as a conditional canvas candidate with a native-canvas fallback and explicit compatibility spike. The tifffile reader and napari rendering sources contribute different mechanisms, while NGFF is the independent format contract. |
+| **Bio-Formats is a useful alternative lead, not a broad support promise.** Its stable 8.5.0 documentation says it supports over 140 formats and points to per-format read/write/support-strength tables. [S11] | Verified in the “Formats” page; no reader or converter was run. A format count does not establish equal support quality. | Keep the allowlisted Bio-Formats adapter/conversion route as an opportunity for excluded vendor inputs, gated on actual group formats, fixtures, and deployment/licensing review. |
+
+### Consequential napari chain: wording to retain
+
+Use this precise causal account in the final proposal: the reported Zarr labels were written correctly but the current rendered slice did not refresh; discussion identified that NumPy slices were views while Zarr/TensorStore slices were NumPy copies; the fix explicitly updates the visible slice for non-NumPy-backed data; and the `v0.4.19` test file checks rendered data after paint, fill, and mouse operations across NumPy, Zarr, and TensorStore. The fix commit and tagged test source establish presence of the repair and regression coverage, not that tests ran in this review or that the fix proves a full application’s persistence, performance, or coordinate contract. Keep the source-capture erratum for the patch in force (see C1).
+
+## Corrections and dependencies for the final author
+
+### C1 — Repair the source-catalog capture identities
+
+The frozen `sources.json` S5 patch capture object is truncated. Use erratum E1’s complete capture for commit `658b080d62bd9c6f478f781163020cdcf5a44139`: SHA-256 `7ebf2abacfc5a1514c96042a66ba79fc4c25eae54d362d34b0d96f4a552c3df6`, 12,661 bytes, capture id `c2d454c6e11e4b0a920fe7f46cab5c12`. I independently fetched the same patch URL and read the complete diff; the body hash matches E1.
+
+There is a second uncatalogued truncation in S3: the frozen tifffile capture path and digest omit the final hex digit `7`. The independently reacquired 2026.9.20 docs capture is SHA-256 `1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a7`, path `public_captures/1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a7.body`, capture id `0aed5e3bc86d42a5bf8fc3000786b48a`. It is a partial capture (524,288 bytes of 1,139,451), as disclosed in the original record. Add an erratum or correct the downstream catalog with this exact identity; do not present the partial body as the complete documentation.
+
+**Affected dependency:** meaningful citation integrity and source/version traceability for the two most consequential implementation claims. The proposal’s prose findings remain supported; the catalog identities need repair.
+
+### C2 — Define identity for directory-backed stores and detect source mutation
+
+The identity contract describes file length and a streaming SHA-256 of a “source file.” That is not a complete identity for the proposed OME-Zarr directory store: a Zarr dataset is a hierarchy containing metadata and chunk objects, and the napari issue’s own Zarr reproducer also uses a `.zarr` store path. Specify an identity for both single files and directory stores. For a directory store, a defensible product choice is a canonical, sorted tree manifest hashing each normalized relative path, length, and exact file bytes, then hashing that manifest; explicitly define symlink handling and which files count. Store format/store version with the identity. Paths, size, and modification time remain relocation hints.
+
+Also define what happens if an external source changes after its initial hash or while it is being read. A read-only application handle does not prevent another process or workstation from changing source bytes. Require a content check when importing/relinking, detect a change during an import before registering the asset, and either verify identity again at reopen/export or work from a verified project-owned copy. Make any costly full verification cancellable and visible. Do not bind new annotations silently to a changed source.
+
+**Affected dependencies:** import commit/abort, cross-machine reopen, relocation, external-reference mode, bundle completeness, and table/overlay source identity. The current single-file hash proposal remains useful for OME-TIFF; extend it rather than dropping it.
+
+### C3 — Complete the coordinate and annotation contract
+
+The index-to-physical matrix is a good start, but the brief also requires the relationship between user-visible coordinates and stored coordinates. Define the complete path: canvas/display coordinate → displayed plane and its fixed-axis selectors → continuous array index → declared sample-center/edge rule and quantization → physical coordinates. Specify screen/view transforms separately from annotation geometry so zoom, pan, projection, and display orientation cannot silently move saved annotations. State axis direction, axis permutation, coordinate frame ids, and transform composition order. A rectangular spatial affine is suitable if the schema keeps `t`/`c` selectors outside the spatial input vector; otherwise specify how non-spatial axes are excluded. If calibrated time is displayed or exported, give it a separate time-unit mapping.
+
+Define geometry payloads tightly enough for another implementation to reopen them: point coordinate dimensionality; polygon vertex order, closure, boundary convention, and rasterization; mask array axes/shape/transform, integer label IDs and label table; and the difference between per-plane, volume, and acquisition-wide annotation scope. Say whether polygons are continuous index-space geometry and how they map onto a raster mask. Make the CSV’s JSON vertex cell schema/versioned, and include enough frame and axis metadata to interpret it without the application. A flat rendered overlay must continue to be described as appearance, not a lossless annotation source.
+
+The proposal’s affine example is arithmetically correct. I independently checked it with a small isolated calculation (receipt `exec-f3ul7jj8`; executed by candidate). Code:
+
+```python
+def matvec(matrix, vector):
+    return [sum(a*b for a, b in zip(row, vector)) for row in matrix]
+
+spacing_zyx = [2.0, 0.5, 0.25]
+origin_xyz = [10.0, 20.0, 30.0]
+A = [
+    [0.0, 0.0, spacing_zyx[2], origin_xyz[0]],
+    [0.0, spacing_zyx[1], 0.0, origin_xyz[1]],
+    [spacing_zyx[0], 0.0, 0.0, origin_xyz[2]],
+    [0.0, 0.0, 0.0, 1.0],
+]
+idx = [2.0, 3.0, 4.0, 1.0]
+world = matvec(A, idx)
+back = [(world[2]-origin_xyz[2])/spacing_zyx[0],
+        (world[1]-origin_xyz[1])/spacing_zyx[1],
+        (world[0]-origin_xyz[0])/spacing_zyx[2]]
+print({"world_xyz": world[:3], "index_zyx_roundtrip": back})
+```
+
+The constants above are the complete input; no data file or application was used. Expected: world XYZ `[11, 21.5, 34]` and index ZYX round trip `[2, 3, 4]`. Observed stdout: `{'world_xyz': [11.0, 21.5, 34.0], 'index_zyx_roundtrip': [2.0, 3.0, 4.0]}`; stderr empty; exit 0. Code SHA-256 `54db65a2f3d8b3aa1433b30675ff15333b78c116edcc955d42c036b237434f5d`. **Limit:** arithmetic only for the stated convention; it does not check importer interpretation, coordinate UI, serialization, transforms, or an application. Preserve the predecessor W1 display-mapping check as an equally narrow witness: its three selected samples were unchanged in a Python list; it did not check application sample immutability.
+
+**Affected dependencies:** annotations, transforms, overlay/table exports, reopen on another machine, and the key user concern that transformed exports still refer to the same image.
+
+### C4 — Pin the actual TIFF axis/access behavior, not only package names
+
+The tifffile documentation is changing: in 2026.5.2 `TiffFile.series` became a callable sequence; the docs describe `return_as` and deprecate `aszarr`; `squeeze` can remove singleton dimensions. The final spike should name the exact pinned methods and options, preserve singleton axes, and test series selection against `DimensionOrder`/`TiffData` using multi-channel/time fixtures. The current `TiffPage.segments()` API documents strip/tile iteration and an approximate read buffer; it does not promise interruption within a compressed segment or a byte ceiling for a decode unit. The adapter must measure the largest decoded segment, worker count, total in-flight bytes, cache, array/display copies, and process RSS together. Define a global memory budget within 16 GB, not just a 512 MiB cache budget.
+
+Do not claim `tifffile + Zarr` satisfies the 3 GB target until compressed and uncompressed supported fixtures pass first-view, slice/channel, edit/refresh, cancellation, and reopen checks. A file’s compressed byte length is not its decoded working set. Reject or route an unsupported decode unit to an explicit conversion choice before registering an image.
+
+**Affected dependencies:** supported-format allowlist, singleton-axis fidelity, 3 GB target, cancel/progress behavior, and the proposed napari canvas integration. Keep the GUI release and full Python/Qt/NumPy/Zarr/tifffile/imagecodecs lockfile unresolved until the spike; the existing proposal correctly labels current pins as candidates.
+
+### C5 — Tighten view-state and export value semantics
+
+The saved fields (channel, window/level, LUT, projection/slice/time, display transform) are sensible, but specify whether window mapping clips before quantization, its rounding rule, per-channel vs composite behavior, handling for float NaN/±Inf, and any gamma/nonlinear LUT semantics. W1 checked only `[0,1000,65535]` under one linear 16-to-8-bit mapping; it does not distinguish clipping, special floating values, or multi-channel combinations. Explicitly keep these view operations from mutating source samples. For each export, record source content identity, original and output dtype, axis order, crop bounds, calibration/frame, display parameters if baked, and whether resampling or color conversion changed samples. The current descriptions of CSV, PNG overlay, label mask, and small crop are directionally sound; keep their limits visible in the UI and sidecar.
+
+**Affected dependencies:** reopenable view state, immutable source samples, and a user-verifiable statement of what each output preserves.
+
+### C6 — Clarify failure-state, durability, undo, and bundle acceptance
+
+Retain the staged-generation plus `CURRENT` pointer proposal as a design option, not a guarantee on a shared filesystem. State the minimum semantics required: previous valid generation survives until the new generation validates; incomplete import/export is visibly incomplete and never registered/published; metadata-only/unsupported inspection preserves raw source metadata and failure reason; recovery never silently overwrites a newer revision. Validate rename, flush, locking, stale-lock, and revision-conflict behavior on the actual network share and on local disks. If those guarantees fail on the share, use explicit save-copy/portable handoff and preserve both revisions.
+
+Add checks for undo/redo across save-close-reopen, not only during an open session. Exercise six-person bundle handoff as serial writers, exact-hash relocation, same-name/different-content conflict, project-owned portable copies, and disclosure of remaining external assets. Keep live collaboration/cloud, automatic segmentation, and registration in the optional leads; preserve the useful NGFF/Bio-Formats and label-precision leads even if adoption remains deferred.
+
+**Affected dependencies:** minimum workflow completion, interruption recovery, project exchange, no silent overwrite, and undo/redo after reopening. Atomic-save behavior is unverified until the actual filesystem test passes.
+
+## Validation status to carry into the final
+
+- **Verified external facts:** the standards and implementation claims in the table above, at the stated URLs, pins, and locators.
+- **Engineering inference:** these mechanisms are plausible ingredients, but they do not prove that the proposed reader/viewer integration has bounded memory, cancellation, persistence, accessibility, or interoperable exports.
+- **Product choices:** read-only source handling, external-reference default plus explicit portable copy, app-owned project/affine/annotation schema, support allowlist, revision conflict behavior, and recovery generations are proposals to implement and test.
+- **Executed by candidate:** R1 above; predecessor W1 `exec-tukp86p1` for the stated arithmetic/display-list check. Neither is application evidence. Napari tests were inspected only, not run.
+- **Proposed/UNEXECUTED:** predecessor W3–W7 and proposal validation items 1–6. Keep those labels until actual receipts exist. In particular there is no executed 3 GB memory/cancellation test, no NGFF two-reader interoperability test, no crash/recovery test, no external relocation check, and no exported-value round trip.
+
+## Public source identities used in this review
+
+- **S1 — OME-NGFF specification 0.5.2**, https://ngff.openmicroscopy.org/0.5/; §§2.1, 2.3–2.6 and version history; complete body SHA-256 `a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b`.
+- **S2 — OME Model OME-TIFF specification 6.2.2**, https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html; “OME-XML metadata,” “DimensionOrder,” “TiffData element,” “Multi-file OME-TIFF”; complete body SHA-256 `fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584`.
+- **S3 — tifffile documentation 2026.9.20**, https://www.cgohlke.com/docs/tifffile/; “Overview,” “Requirements,” “Revisions” (2026.5.2), “Notes,” `TiffPage.segments`, `TiffFile.series`; partial 524,288-byte capture SHA-256 `1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a7`, capture id `0aed5e3bc86d42a5bf8fc3000786b48a`.
+- **S4 — napari issue #6079**, https://github.com/napari/napari/issues/6079; issue reproducer/expected behavior; issue body capture SHA-256 `a4d0b18952e5f5a7dd81793f0c297cbe32463f1995a3df8617ee45f20fb1067f`. Discussion comments: https://api.github.com/repos/napari/napari/issues/6079/comments; SHA-256 `a067eada168b0d7e89b82c8316790b391371355604a3f796fc99289c5fcb5423`.
+- **S5 — napari commit 658b080d62bd9c6f478f781163020cdcf5a44139**, https://github.com/napari/napari/commit/658b080d62bd9c6f478f781163020cdcf5a44139.patch; implementation and added regression tests; full patch SHA-256 `7ebf2abacfc5a1514c96042a66ba79fc4c25eae54d362d34b0d96f4a552c3df6` (also the corrected E1 identity).
+- **S6–S8 — napari tags `v0.4.18` and `v0.4.19`**, sampled Labels source and the `v0.4.19` regression test `napari/_vispy/_tests/test_vispy_labels_layer.py`; test URL https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/_vispy/_tests/test_vispy_labels_layer.py; test SHA-256 `d0e1bb09bca290236b51608c1abff636746c0ea1800881ffadfb8c47a8249443`.
+- **S9 — napari Shapes source at `v0.4.19`**, https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/layers/shapes/shapes.py; partial capture, class/data/style/transform concepts only.
+- **S10 — napari stable documentation**, https://napari.org/stable/; overview and documentation version metadata 0.9.2; body SHA-256 `bea3ca2f2c5d75dc6198c95d208f0ac95dfd1a7cc48d3483d2fb61a1a8616d55`.
+- **S11 — Bio-Formats stable formats documentation 8.5.0**, https://bio-formats.readthedocs.io/en/stable/formats/; “Formats” and linked per-format support matrices; complete body SHA-256 `ec34959ff00583da266a9615767f9979b3939a250512ef48a8ed8e70a984505f`.
+

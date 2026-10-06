@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0",
+  "research_date": "2026-10-06",
+  "critical_unresolved_dependencies": [
+    {
+      "id": "U1",
+      "question": "Can one supported lockfile combine napari 0.9.2, tifffile 2026.9.20, Zarr 3.4.0, and an NGFF 0.5.2 reader/writer?",
+      "why_it_matters": "The current tifffile Zarr-store path is Zarr-3-era; the proposed ome-zarr-py 0.20.1 metadata says zarr>=3, but that does not establish full 0.5.2 interoperability or a resolved combined environment. Mixing the older Zarr-2 stack is not assumed safe.",
+      "evidence": ["S1", "S3", "S5", "S6", "S7", "S8"],
+      "bounded_decision": "Run PV-PINS-001. If it fails, ship the project/annotation core with the qualified OME-TIFF subset and defer native NGFF. Evaluate legacy conversion in a separate process and retain/hash the original."
+    },
+    {
+      "id": "U2",
+      "question": "Do actual 3 GB source layouts stay within the 16 GB workstation budget while preserving interactive reads and cancellation?",
+      "why_it_matters": "Lazy/Zarr interfaces show a possible access mechanism, not app-level peak RSS or latency. TIFF tiles, strips, codecs, decoded GUI buffers and optional GPU textures behave differently.",
+      "evidence": ["S3", "S6"],
+      "bounded_decision": "Run PV-MEM-001 over a published fixture/layout matrix. Initially qualify only layouts that pass the observed memory/latency gates; route or reject the rest without adding a valid image entry."
+    },
+    {
+      "id": "U3",
+      "question": "Which origin, voxel-center/corner, orientation, axis, and unit conventions do the group's instruments actually encode?",
+      "why_it_matters": "The app convention is explicit by design, but source metadata can be missing or ambiguous and NGFF's scale/translation fields do not encode every general affine.",
+      "evidence": ["S1", "S2"],
+      "bounded_decision": "Inventory representative acquisitions, compare against instrument documentation and asymmetric fiducial fixtures, preserve raw metadata, and require explicit override with old/new values and reason wherever mapping is uncertain."
+    },
+    {
+      "id": "U4",
+      "question": "What crash durability, rename, flush, lock and copy semantics does the actual campus shared storage provide to each workstation?",
+      "why_it_matters": "SQLite's transaction and WAL guarantees are scoped by filesystem/host assumptions; this proposal deliberately exchanges closed bundles rather than sharing a live database.",
+      "evidence": ["S10", "S11"],
+      "bounded_decision": "Run PV-RECOVERY-001 on the actual storage and sync client. If in-place publication cannot be qualified, use immutable versioned bundle directories, checksums, and a completion marker written last."
+    },
+    {
+      "id": "U5",
+      "question": "How much do full-file and chunk-tree identity checks cost on the lab's datasets and storage?",
+      "why_it_matters": "A content digest is stronger identity evidence than path/name, but hashing multi-gigabyte files and directory stores takes I/O and time.",
+      "evidence": ["S10"],
+      "bounded_decision": "Measure streaming SHA-256 time and cancellation/progress on real sizes. Keep an asset identity explicitly unverified until the complete digest is computed; never substitute path-only identity."
+    },
+    {
+      "id": "U6",
+      "question": "Which instrument metadata fields survive chosen readers, converters, OME-TIFF/NGFF writers, and the app sidecar?",
+      "why_it_matters": "Research provenance can include instrument-private metadata that is not representable in a target format; conversion can lose metadata or be lossy.",
+      "evidence": ["S3", "S14", "S15"],
+      "bounded_decision": "For every supported writer, compare the raw source metadata with independent output parsers and publish a retained/normalized/omitted field list. Keep source bytes or a verified copy and raw metadata capture."
+    },
+    {
+      "id": "U7",
+      "question": "Can exported tables, labels and derived images faithfully represent all required transforms and annotation scopes?",
+      "why_it_matters": "Standard image fields do not automatically carry the app's full affine, edit history, time/channel selection, or exact polygon semantics.",
+      "evidence": ["S1", "S3", "S13"],
+      "bounded_decision": "Run PV-EXPORT-001 and require a versioned sidecar wherever the target image format cannot encode the complete model. Clearly label rendered snapshots as display-only."
+    }
+  ],
+  "optional_leads": [
+    {
+      "id": "L1",
+      "topic": "Bundle-level collaboration and annotation conflict review",
+      "status": "deferred beyond minimum",
+      "lead": "After local save/reopen and versioned bundle exchange are reliable, add a review screen that compares annotation UUIDs and edit-event parents, identifies divergent edits, and lets a researcher choose/duplicate/merge them. Do not use a live shared SQLite database as the collaboration mechanism.",
+      "why_defer": "The immediate need is exchanging project bundles among six people. A merge protocol introduces conflict semantics and multi-user expectations that are not necessary to first prove cross-machine persistence.",
+      "revisit_when": "Researchers report repeated parallel edits to the same project and can supply representative conflict cases.",
+      "evidence": ["S10", "S11"]
+    },
+    {
+      "id": "L2",
+      "topic": "Remote chunk access and shared object storage",
+      "status": "opportunity for later investigation",
+      "lead": "NGFF/Zarr chunking and the current ome-zarr-py dependency on fsspec suggest a possible later adapter for remote or object-backed datasets. Preserve the same content IDs, transforms and read-only source rules if investigated.",
+      "why_defer": "Network retries, range-read support, authentication, caching, privacy, service availability and remote write semantics are outside the desktop/local-storage minimum. Existing component metadata does not establish a reliable remote app path.",
+      "revisit_when": "Local fixture-backed interoperability and memory behavior pass, and users identify a concrete remote-access need.",
+      "evidence": ["S1", "S7"]
+    },
+    {
+      "id": "L3",
+      "topic": "Automatic segmentation and registration",
+      "status": "optional research direction",
+      "lead": "A future assisted tool could create a derived label mask or registered image while keeping the original immutable and recording model/tool version, input digest, parameters, and review/acceptance events.",
+      "why_defer": "The group first needs reliable coordinates, provenance, and manual mask review. Automatic output would require separate scientific validation and confidence/error communication; registration adds an explicit geometric operation and annotation remapping.",
+      "revisit_when": "Manual annotation workflow is stable and the group supplies a defined target task, reference dataset, and independent quality protocol.",
+      "evidence": []
+    },
+    {
+      "id": "L4",
+      "topic": "Legacy OME-NGFF 0.4 / Zarr 2 conversion",
+      "status": "deferred compatibility path",
+      "lead": "Investigate a separately pinned Zarr-2-era conversion worker that reads NGFF 0.4 and stages an explicitly converted NGFF 0.5 or OME-TIFF asset. Preserve the original store, annotate conversion version/parameters, and verify axes/calibration/masks afterward.",
+      "why_defer": "OME-NGFF 0.4 and 0.5 target different Zarr major versions; current tifffile's Zarr-store path no longer supports Zarr 2. A same-environment combination is not justified by the collected sources.",
+      "revisit_when": "The group has real NGFF 0.4 projects and a separate-worker environment passes round-trip and metadata-retention tests.",
+      "evidence": ["S1", "S2", "S5"]
+    },
+    {
+      "id": "L5",
+      "topic": "Bio-Formats conversion as a controlled escape hatch",
+      "status": "optional alternative",
+      "lead": "Offer a user-invoked `bfconvert` path for explicitly tested otherwise-unsupported inputs, with selected series/planes/crops, output hash, transformation record, and metadata-loss disclosure.",
+      "why_defer": "Bio-Formats documentation gives useful conversion mechanisms but does not establish support for every instrument file, lossless conversion, or this app's bounded memory and coordinate behavior.",
+      "revisit_when": "A recurring lab source format is not covered by the small direct-reader allowlist and has a representative fixture and expected output.",
+      "evidence": ["S15"]
+    },
+    {
+      "id": "L6",
+      "topic": "Additional medical-image adapters such as ITK/SimpleITK",
+      "status": "unresearched alternative",
+      "lead": "If specific NIfTI or other named formats become a priority, compare an ITK/SimpleITK adapter against the same axis, origin, direction, streaming, metadata and export contract.",
+      "why_defer": "No ITK source review or compatibility test is included in this research; it is a candidate for investigation only, not a recommendation or support claim.",
+      "revisit_when": "Researchers identify the exact format and provide real fixtures plus a need the selected OME-TIFF/NGFF boundary cannot meet.",
+      "evidence": []
+    },
+    {
+      "id": "L7",
+      "topic": "Versioned annotation-style packs and plugin importers",
+      "status": "optional extension",
+      "lead": "Once the core style schema and importer contract are stable, allow curated style packs and separately qualified importer plugins with version, capabilities, and test-fixture declarations.",
+      "why_defer": "The first version can ship reusable styles and a small maintained import allowlist without taking on a plugin security or compatibility surface.",
+      "revisit_when": "The group has multiple stable project-specific styles or a contributor can maintain and test a named additional adapter.",
+      "evidence": ["S8"]
+    }
+  ],
+  "preservation_note": "Deferred items remain recorded as leads. None is represented as an implemented capability, a source-backed performance result, or a minimum requirement."
+}

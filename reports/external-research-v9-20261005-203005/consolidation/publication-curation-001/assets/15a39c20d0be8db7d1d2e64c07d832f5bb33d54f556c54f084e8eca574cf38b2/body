@@ -1,0 +1,86 @@
+{
+  "schema": "research-leads/v1",
+  "leads": [
+    {
+      "id": "L1",
+      "kind": "unresolved critical dependency",
+      "topic": "Dependency and GUI integration lock",
+      "status": "open; not built",
+      "evidence": ["S3", "S4", "S5"],
+      "detail": "ome-zarr-py v0.20.1 requires Python >=3.12 and is beta-classified; napari, tifffile, Dask, Zarr and a Qt 6 binding have not been resolved together. The proposal names source pins but not a tested lock.",
+      "next_step": "Resolve exact Python 3.12 environment and one Qt 6 binding, build on intended OSes, then smoke test TIFF/NGFF loading, slicing, annotation and packaging. Adjust pins based on evidence."
+    },
+    {
+      "id": "L2",
+      "kind": "unresolved critical validation",
+      "topic": "3 GB source, layout, codec and responsiveness envelope",
+      "status": "open; target unmeasured",
+      "evidence": ["S3", "S4", "P3"],
+      "detail": "A TIFF Zarr access path and NGFF Dask arrays establish a possible bounded-read mechanism, not resource bounds for the target source layouts or full viewer. TIFF strips/codecs can require large decodes; NGFF chunks and cache settings also matter.",
+      "next_step": "Qualify representative source layouts/codecs with process RSS, read volume, UI latency and cancellation. Decide support matrix and tune proposed 512 MiB cache, two workers and 64 MiB block limit."
+    },
+    {
+      "id": "L3",
+      "kind": "unresolved critical validation",
+      "topic": "Coordinate anchor, orientation and transform interoperability",
+      "status": "open; needs format-specific checks",
+      "evidence": ["S1", "S2", "S5", "P1"],
+      "detail": "The proposal requires explicit axis order, transform and physical anchor, but the source review and W1 do not establish every TIFF/NGFF sample convention, orientation/direction-cosine case, axis flip, arbitrary affine or cross-viewer round trip. NGFF 0.4's cited scale/translation model is bounded.",
+      "next_step": "Use small asymmetric fixtures with known physical coordinates for every admitted importer and exporter; preserve unknown calibration, and reject transforms that cannot be represented faithfully."
+    },
+    {
+      "id": "L4",
+      "kind": "unresolved critical validation",
+      "topic": "Atomic save and recovery on shared storage",
+      "status": "open; environment-specific",
+      "evidence": ["P5"],
+      "detail": "Ordinary shared storage may be SMB or a synchronization client with different rename, locking and durability behavior. The generation/commit scheme is a product design, not yet verified against the group's storage.",
+      "next_step": "Identify actual workstation OSes and shared-storage clients; inject failures at commit boundaries. If semantics are inadequate, require local working copies plus immutable versioned publication and retain single-writer behavior."
+    },
+    {
+      "id": "L5",
+      "kind": "unresolved critical validation",
+      "topic": "Identity hash cost, relocation and portable bundle policy",
+      "status": "open; workflow choice needed",
+      "evidence": ["P5", "P6"],
+      "detail": "Full SHA-256 gives content identity but can add substantial time for multi-gigabyte inputs; reference projects depend on external paths, while portable copies consume disk and copy time. The correct default depends on how the six researchers share files.",
+      "next_step": "Measure streaming hash and bundle copy duration on ordinary shared storage; decide default reference/copy choice, resumable copy behavior and user-visible unverified state. Never use path alone for source identity."
+    },
+    {
+      "id": "L6",
+      "kind": "unresolved critical validation",
+      "topic": "Annotation export and independent consumer fidelity",
+      "status": "open; output contract to qualify",
+      "evidence": ["S1", "S2", "P8"],
+      "detail": "OME-NGFF image-label supports integer segmentation labels and metadata, while points/polygons and app provenance need a separate table or richer private manifest. Consumer behavior for transforms, label links and styles has not been tested.",
+      "next_step": "Fix a versioned CSV schema and NGFF output profile, round-trip through an independent parser/viewer, and document which provenance/style/vector semantics are retained or lost."
+    },
+    {
+      "id": "L7",
+      "kind": "optional alternative",
+      "topic": "Explicit conversion for selected unsupported inputs",
+      "status": "deferred; not adopted for MVP",
+      "evidence": ["S1", "S7"],
+      "detail": "bioformats2raw v0.12.1 may convert selected Bio-Formats-readable sources to NGFF, or stage an image whose direct TIFF layout is unsuitable. Release notes show ongoing fixes but do not prove coverage or fidelity for this lab's images.",
+      "next_step": "Choose one representative otherwise-unsupported source; run a separately staged conversion; compare all pixels, axes, calibration and derived metadata; record tool/version/parameters and retain original."
+    },
+    {
+      "id": "L8",
+      "kind": "optional opportunity",
+      "topic": "Interoperable mask groups and multiscale datasets",
+      "status": "candidate post-MVP extension after validation",
+      "evidence": ["S1", "S4"],
+      "detail": "NGFF multiscales and integer image-label groups provide an opportunity for reusable multiresolution data and raster-mask exchange. This does not cover vector point/polygon annotation semantics or guarantee every client preserves metadata.",
+      "next_step": "After MVP export tests, assess external viewer round trips and whether writing a portable NGFF copy is valuable enough to justify disk and conversion cost."
+    },
+    {
+      "id": "L9",
+      "kind": "optional future work",
+      "topic": "Beyond-bundle collaboration, HCS, remote data and automation",
+      "status": "deferred",
+      "evidence": [],
+      "detail": "Two-person live merge, HCS plate collections, cloud/object storage, GPU-specific acceleration, auto-segmentation, registration and shared controlled vocabularies are not minimum obligations and carry distinct identity, conflict, privacy, validation and operational choices.",
+      "next_step": "Revisit only after the single-writer identity, transform, export and recovery contracts are stable; preserve annotation UUIDs and operation provenance to keep later migration feasible."
+    }
+  ]
+}

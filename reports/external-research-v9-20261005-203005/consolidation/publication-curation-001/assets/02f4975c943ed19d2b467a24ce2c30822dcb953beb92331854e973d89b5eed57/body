@@ -1,0 +1,110 @@
+{
+  "catalog_version": "1.0",
+  "checks": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "label": "Isolated component check only",
+      "question": "Can a small candidate-authored record transform preserve logical row ordinals, Unicode, and missing-versus-null distinctions; reject an invalid integer conversion; and detect a change in source bytes?",
+      "why_expected": "The authored code uses explicit field-presence checks, explicit integer conversion that raises with a source row ordinal, and SHA-256 over the supplied source bytes. These expectations follow directly from the code and synthetic input; they are not claims about DuckDB or a notebook product.",
+      "code": "import hashlib\nimport json\n\nraw = data[\"ndjson\"]\n\ndef parse_and_transform(source_text):\n    transformed = []\n    for ordinal, line in enumerate(source_text.splitlines(), start=1):\n        if not line:\n            continue\n        record = json.loads(line)\n        amount_present = \"amount\" in record\n        amount_value = record.get(\"amount\")\n        if amount_value is None:\n            amount = None\n        else:\n            try:\n                amount = int(amount_value)\n            except (TypeError, ValueError) as exc:\n                raise ValueError(f\"line {ordinal}: amount is not an integer\") from exc\n        transformed.append({\n            \"row_ordinal\": ordinal,\n            \"id\": record[\"id\"],\n            \"amount_present\": amount_present,\n            \"amount\": amount,\n            \"note_present\": \"note\" in record,\n            \"note\": record.get(\"note\"),\n            \"timestamp\": record[\"timestamp\"],\n        })\n    return transformed\n\nrows = parse_and_transform(raw)\nassert [row[\"row_ordinal\"] for row in rows] == [1, 2, 3]\nassert rows[0][\"note\"] == \"café ☕\"\nassert rows[1][\"note_present\"] and rows[1][\"note\"] is None\nassert not rows[2][\"note_present\"]\nassert rows[1][\"amount_present\"] and rows[1][\"amount\"] is None\nassert not rows[2][\"amount_present\"]\n\nbad_source = raw + data[\"bad_line\"] + \"\\n\"\ntry:\n    parse_and_transform(bad_source)\nexcept ValueError as exc:\n    error = str(exc)\nelse:\n    raise AssertionError(\"malformed conversion was silently accepted\")\n\nsource_digest = hashlib.sha256(raw.encode(\"utf-8\")).hexdigest()\nchanged_digest = hashlib.sha256((raw + \"\\n\").encode(\"utf-8\")).hexdigest()\nassert source_digest != changed_digest\n\nprint(json.dumps({\n    \"cache_key_changes_when_source_bytes_change\": source_digest != changed_digest,\n    \"conversion_error\": error,\n    \"row_ordinals\": [row[\"row_ordinal\"] for row in rows],\n    \"rows\": len(rows),\n    \"unicode_note\": rows[0][\"note\"],\n    \"missing_and_null_distinguished\": rows[1][\"note_present\"] and rows[1][\"note\"] is None and not rows[2][\"note_present\"],\n}, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\")))",
+      "input": {
+        "ndjson": "{\"id\":\"a\",\"amount\":\"2\",\"note\":\"café ☕\",\"timestamp\":\"2026-10-06T12:00:00Z\"}\n{\"id\":\"b\",\"amount\":null,\"note\":null,\"timestamp\":\"2026-10-06T12:01:00Z\"}\n{\"id\":\"c\",\"timestamp\":\"2026-10-06T12:02:00Z\"}\n",
+        "bad_line": "{\"id\":\"bad\",\"amount\":\"oops\",\"timestamp\":\"2026-10-06T12:03:00Z\"}"
+      },
+      "expected": {
+        "exit_code": 0,
+        "stdout": "{\"cache_key_changes_when_source_bytes_change\":true,\"conversion_error\":\"line 4: amount is not an integer\",\"missing_and_null_distinguished\":true,\"row_ordinals\":[1,2,3],\"rows\":3,\"unicode_note\":\"café ☕\"}\n",
+        "stderr": "",
+        "rationale": "Three valid input records preserve order; a missing field differs from an explicit null; Unicode survives; invalid conversion raises at logical line 4; different source bytes produce a different SHA-256."
+      },
+      "actual": {
+        "stdout": "{\"cache_key_changes_when_source_bytes_change\":true,\"conversion_error\":\"line 4: amount is not an integer\",\"missing_and_null_distinguished\":true,\"row_ordinals\":[1,2,3],\"rows\":3,\"unicode_note\":\"café ☕\"}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "elapsed_seconds": 0.34953521499119233
+      },
+      "execution_receipt": {
+        "schema": "er9.execution.result.v1",
+        "execution_id": "exec-p4fkvfal",
+        "execution_label": "executed by candidate",
+        "actor": "candidate",
+        "code_sha256": "4593de442c60b6e5440a3b8796a393a863ccf9f962adb861690fd4f71eb99588",
+        "data_sha256": "f6269dea5ec1d4019655d70040b172b02545f97e33d1e80074ee0b6ae72f08a5",
+        "stdout_sha256": "5fa2292d0f86f57d8181699acc12dfc1db285a14ec7295d2cd9ef958d1473b72",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+        "resource_profile_sha256": "ad89363c3ca6139be83b068611c806667356b9dc6009e03abb4f29054617b8fc",
+        "resource_placement": "actual component was in isolated sandbox; actual limits matched receipt; component memory.max 268435456 bytes; memory peak 12140544 bytes; memory.swap.max 0",
+        "limits": {
+          "wall_seconds": 5,
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "tasks": 16,
+          "stdout_and_stderr_cap_bytes_each": 32768,
+          "network": "new empty namespace"
+        },
+        "cleanup_confirmed": true,
+        "cleanup_classification": "collected_unit_absent",
+        "limitations_reported_by_runner": [
+          "isolated component check only",
+          "stderr excludes trusted bootstrap prefix; stderr-observed.bin retains wire bytes",
+          "arbitrary stdlib code; kernel isolation supplied by Bubblewrap/systemd, not AST filters",
+          "clock/randomness remain available; deterministic behavior must be candidate-authored",
+          "execution receipts do not prove semantic correctness or candidate consumption"
+        ]
+      },
+      "scope_limits": [
+        "Uses only three tiny synthetic NDJSON records and standard-library Python.",
+        "Does not use DuckDB, nbformat, ipykernel, nbclient, the proposed project code, a 5-GB file, or a production cache.",
+        "The printed source-digest comparison is not an implemented cache key or invalidation system.",
+        "It does not establish full-dataset validity, schema evolution correctness, or application behavior.",
+        "This was executed by candidate in the admitted isolated execution capability; it was not executed by an evaluator."
+      ]
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "P1",
+      "status": "proposed/UNEXECUTED",
+      "check": "Integration scan of full synthetic CSV, NDJSON, and Parquet files with malformed records, null/missing fields, Unicode, timezone timestamps, and schema evolution against the exact locked DuckDB release.",
+      "expected_evidence": "Full-scan errors and row locators; unchanged source hashes; explicit contract and schema outcomes; bounded RSS and scratch measurements."
+    },
+    {
+      "id": "P2",
+      "status": "proposed/UNEXECUTED",
+      "check": "Jupyter integration fixture executes cells out of display order, restarts kernel, edits upstream code, changes inputs and lock, then compares event ledger, clean replay, output statuses, and invalidation.",
+      "expected_evidence": "Actual event order differs from display order when requested; interactive outputs remain unverified; clean replay records a fresh kernel; affected outputs become stale after each upstream change."
+    },
+    {
+      "id": "P3",
+      "status": "proposed/UNEXECUTED",
+      "check": "Against the exact locked nbclient release, trigger cell timeout, SIGTERM, cgroup OOM, user interrupt, and process cancellation.",
+      "expected_evidence": "Run returns or is terminated within documented bounds; worker and children are cleaned up; failure/cancel is recorded; previous outputs remain stale."
+    },
+    {
+      "id": "P4",
+      "status": "proposed/UNEXECUTED",
+      "check": "Crash-injection at notebook save, artifact flush, manifest write, atomic publish, and event-store checkpoint; reopen and exchange the project folder.",
+      "expected_evidence": "No partial artifact is marked current; staged runs are recoverable or ignored; bundle hashes validate; concurrent writer receives lock feedback."
+    },
+    {
+      "id": "P5",
+      "status": "proposed/UNEXECUTED",
+      "check": "Benchmark representative 5-GB CSV, NDJSON, and Parquet scan/transform workloads on an 8-core/16-GB workstation, including one sort/group workload.",
+      "expected_evidence": "Exact engine/version, wall time, peak RSS, scratch bytes, selected operators, output limits, and clear behavior for spill or unsupported operation."
+    },
+    {
+      "id": "P6",
+      "status": "proposed/UNEXECUTED",
+      "check": "Sandbox adversarial checks for home/credential reads, network access, undeclared files, symlink traversal, child processes, CPU/memory/disk exhaustion, and termination on each claimed OS.",
+      "expected_evidence": "Denied access is observable; configured resource limits apply; the complete process tree exits; no unsupported OS is labelled isolated."
+    },
+    {
+      "id": "P7",
+      "status": "proposed/UNEXECUTED",
+      "check": "Portable reopen with an absent external dataset, identical relink, changed relink, changed environment, and stable-key versus non-total-order output comparison.",
+      "expected_evidence": "Matching digest restores verified input identity; changed digest invalidates; missing files are visible; value diffs use declared row keys or report order dependence."
+    }
+  ]
+}

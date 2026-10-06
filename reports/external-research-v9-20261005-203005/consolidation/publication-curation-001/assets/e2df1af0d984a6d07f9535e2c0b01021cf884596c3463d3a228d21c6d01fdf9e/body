@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0",
+  "stage": "research",
+  "as_of": "2026-10-06",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "OME-NGFF specification 0.4",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "Versioned OME-NGFF endpoint 0.4",
+      "exact_locator": ["§3.1 axes metadata", "§3.3 coordinateTransformations metadata", "§3.4 multiscales metadata", "array hierarchy example using .zgroup and .zattrs"],
+      "capture": {
+        "capture_id": "4f08f3d882fe4fa9b24e0ce0d005f097",
+        "body_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "bytes": 163120,
+        "http_status": 200,
+        "body_complete": true,
+        "captured_utc": "2026-10-06T01:21:21.373877+00:00"
+      },
+      "applicability": "Primary format contract for named axes, dimensions, transformations, and supported multiscale metadata. Version 0.4 permits only scale and translation at dataset level; it does not define the application's annotation schema or establish viewer behavior."
+    },
+    {
+      "source_id": "S02",
+      "title": "tifffile README, release 2026.9.20",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/a14e516c4fa3c0c9ede980ebb3111260347dd213/README.rst",
+      "pin": "Package version 2026.9.20; git commit a14e516c4fa3c0c9ede980ebb3111260347dd213",
+      "exact_locator": ["Image data can be read as NumPy or Zarr arrays from strips, tiles, pages, SubIFDs, series, and pyramidal levels", "Requirements", "Notes: TIFF implementation subset and OME-TIFF", "Examples: decode individual JPEG compressed tiles", "Examples: Use Zarr to read parts of tiled, pyramidal images", "Examples: Memory-map contiguous image data (limitation: compression/tiling)", "Examples: write OME-TIFF/pyramids and generator of tiles"],
+      "capture": {
+        "capture_id": "bf2e6dd9856f4956b2a1a339f2ebefa4",
+        "body_sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+        "bytes": 32898,
+        "http_status": 200,
+        "body_complete": true,
+        "captured_utc": "2026-10-06T01:26:13.123377+00:00",
+        "delivered_excerpt_bytes": 32768
+      },
+      "applicability": "Implementation precedent for TIFF metadata inspection, region/tile access, and explicit format limitations. The region examples do not prove bounded RSS, cancellation, support for every listed format, or application-level responsiveness. The README records Zarr 3.4.0 and imagecodecs 2026.8.16 among tested requirements."
+    },
+    {
+      "source_id": "S03",
+      "title": "Zarr-Python asynchronous API source, v3.4.0",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/292aeb4edcbbff50ec0ef7a49ff376e267904efc/src/zarr/api/asynchronous.py",
+      "pin": "Release tag v3.4.0 resolves to commit 292aeb4edcbbff50ec0ef7a49ff376e267904efc",
+      "exact_locator": ["open(..., zarr_format)", "open_group(..., zarr_format)", "create(..., zarr_format)", "open_group use_consolidated documentation for Zarr format 2"],
+      "capture": {
+        "capture_id": "19ec45de149e4034ac93f65908085ff3",
+        "body_sha256": "91beea146652f207a12cd889d00472a0e0135e008ada2db60aa145604cd80abd",
+        "bytes": 47840,
+        "http_status": 200,
+        "body_complete": true,
+        "captured_utc": "2026-10-06T01:27:59.937700+00:00",
+        "delivered_excerpt_bytes": 32768
+      },
+      "applicability": "Shows the pinned library API accepts explicit storage format 2 or 3, so a Zarr-Python 3 library can be directed to create/open the format-2 hierarchy required by the proposed NGFF 0.4 profile. API documentation is not an interoperability or codec test."
+    },
+    {
+      "source_id": "S04",
+      "title": "Zarr-Python arrays guide, v3.4.0",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/292aeb4edcbbff50ec0ef7a49ff376e267904efc/docs/user-guide/arrays.md",
+      "pin": "Release tag v3.4.0; commit 292aeb4edcbbff50ec0ef7a49ff376e267904efc",
+      "exact_locator": ["Reading and writing data", "Persistent arrays", "Compressors", "Sharding"],
+      "capture": {
+        "capture_id": "f340eac6b69d4d778b8279cccf191562",
+        "body_sha256": "34bc92f3a2edd0924e533630fe398a850ce5dabef2f465b140f3f144af93fe39",
+        "bytes": 30017,
+        "http_status": 200,
+        "body_complete": true,
+        "captured_utc": "2026-10-06T01:27:54.167566+00:00"
+      },
+      "applicability": "Shows chunked array slices, filesystem persistence, and available storage choices. It does not determine project chunk geometry, crash-safe application commits, network-share guarantees, or performance for microscopy arrays."
+    },
+    {
+      "source_id": "S05",
+      "title": "napari v0.9.2 release notes",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+      "pin": "Release v0.9.2; target commit 595639295a153c84bcb127a9e07d801355440a35",
+      "exact_locator": ["Release description: multidimensional viewer for browsing/annotating/analyzing large images", "Meso release migration note", "release date 2026-09-29"],
+      "capture": {
+        "capture_id": "812a0d120ef74e7fa1b621fb02c6628f",
+        "body_sha256": "2a9f007acf29c66522e42dd2ed1c7e5c2d1ece2bc9d8ddf86fb7ff0c2457f2b4",
+        "bytes": 29784,
+        "http_status": 200,
+        "body_complete": true,
+        "captured_utc": "2026-10-06T01:26:33.854147+00:00"
+      },
+      "applicability": "Evidence for a current candidate viewer version and its stated scope. The release announcement does not establish this application's lazy loading, persistence, calibration, or support performance."
+    },
+    {
+      "source_id": "S06",
+      "title": "napari issue #7102: multiscale 3D+t regression",
+      "url": "https://api.github.com/repos/napari/napari/issues/7102",
+      "pin": "napari issue #7102; report concerns napari 0.5.0",
+      "exact_locator": ["Issue body: 4D data displayed in 3D failure and reproduction", "Issue references prior change and dimension/slice mismatch", "closed status"],
+      "capture": {
+        "capture_id": "221ceccf0d7f44cdb9f4577f868490ee",
+        "body_sha256": "153d5ac6d2a0dd61b8b5dc0f6d54c71ee0bfa1c980f489351208732fa30c5850",
+        "bytes": 15414,
+        "http_status": 200,
+        "body_complete": true
+      },
+      "applicability": "Failure report establishing the user-observed regression context. It is not by itself evidence of a fix."
+    },
+    {
+      "source_id": "S07",
+      "title": "napari issue #7102 timeline",
+      "url": "https://api.github.com/repos/napari/napari/issues/7102/timeline",
+      "pin": "napari issue timeline for #7102",
+      "exact_locator": ["Cross-reference from issue to PR #7103", "PR #7103 merged 2024-07-22"],
+      "capture": {
+        "capture_id": "911bba76bedc42b7b03fcc9560b587cf",
+        "body_sha256": "86bcd97a7ccb2545676462d3812f75e929303379d01d8a082cb1a0e078f955aa",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "applicability": "Connects the reported issue to the merged repair PR; paired with the patch, commit, and release evidence below."
+    },
+    {
+      "source_id": "S08",
+      "title": "napari PR #7103 metadata",
+      "url": "https://api.github.com/repos/napari/napari/pulls/7103",
+      "pin": "PR #7103, merged into napari; milestone 0.5.1",
+      "exact_locator": ["Title: Account for displayed dimensions in multiscale translate adjustment", "merge status and merge commit", "PR body closes #7102 and notes further axis-order work may be needed"],
+      "capture": {
+        "capture_id": "b827bda138014ed29f326ad8404811a8",
+        "body_sha256": "2882071a31bfc639eaec5b94181a166eb5d0458502898894740eae71dc1e10a8",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "applicability": "Establishes the repair PR's stated purpose and merge/milestone metadata. The code and test are inspected in S09 rather than inferred from the PR title."
+    },
+    {
+      "source_id": "S09",
+      "title": "napari PR #7103 complete patch diff",
+      "url": "https://github.com/napari/napari/pull/7103.diff",
+      "pin": "Patch for merge commit 9563d59465b8adb20519602e591dbcc00e276f24",
+      "exact_locator": ["napari/_vispy/layers/base.py::_on_matrix_change", "napari/_vispy/_tests/test_vispy_image_layer.py::test_node_origin_is_consistent_with_multiscale"],
+      "capture": {
+        "capture_id": "3f4c7e686b944973b5ff64f825c4a3fd",
+        "body_sha256": "65fcdb37018ef94eada8f6120993d496fc459cb907ab91c6a64bf72d995f3065",
+        "bytes": 4805,
+        "http_status": 200,
+        "body_complete": true,
+        "captured_utc": "2026-10-06T01:29:31.322517+00:00"
+      },
+      "applicability": "Directly inspected fix selects displayed-dimension downsample factors before VisPy axis reversal and translation adjustment; added test compares full-resolution and low-resolution slice origins for ndim 3/4, ndisplay 2/3, and isotropic scales 1/2. This is a narrow discrete regression test, not universal coordinate validation."
+    },
+    {
+      "source_id": "S10",
+      "title": "napari merge commit for PR #7103",
+      "url": "https://api.github.com/repos/napari/napari/commits/9563d59465b8adb20519602e591dbcc00e276f24",
+      "pin": "Full commit 9563d59465b8adb20519602e591dbcc00e276f24",
+      "exact_locator": ["Commit message and files changed", "production change and regression test match S09"],
+      "capture": {
+        "capture_id": "4b57ebda2f8a4f67b979f3db5b9e766b",
+        "body_sha256": "b0008e0fe152f80bd86772c0deae278074e15c0752f78a3ac06f672401320397",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "applicability": "Pins the merged patch identity. It does not prove the fix's presence or behavior in later releases."
+    },
+    {
+      "source_id": "S11",
+      "title": "napari v0.5.1 release notes",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.5.1",
+      "pin": "napari v0.5.1 release",
+      "exact_locator": ["Published 2024-07-25", "bug fix list names PR #7103"],
+      "capture": {
+        "capture_id": "6ee3f80fe5ed474f9f7e220890254ab7",
+        "body_sha256": "7d53f6cecfda033d91bbf518c2b289bac4874fc9433eac55287166f337edf8a8",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "applicability": "Confirms the repair was included in the published 0.5.1 release. It does not establish current 0.9.2 behavior or test all axes/transforms."
+    }
+  ]
+}

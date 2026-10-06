@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "stage": "research",
+  "critical_unresolved": [
+    {
+      "id": "L1",
+      "lead": "Napari/Qt/Dask/Tifffile/Zarr integration and coordinate transforms",
+      "status": "open dependency",
+      "why_it_matters": "The cited docs establish separate mechanisms, not a mutually compatible package lock or that custom axis order/orientation remains exact from reader through viewer tools and export.",
+      "next_discriminating_step": "Build a minimal 2D and 5D adapter spike on the proposed pins; create point and polygon annotations through the viewer; inspect source voxel and physical coordinates after axis changes, save/reopen, crop and export.",
+      "bounded_alternative": "If the embedded viewer cannot preserve the app coordinate contract, use a small custom Qt/VisPy 2D slice canvas and keep napari for an optional internal prototype."
+    },
+    {
+      "id": "L2",
+      "lead": "Zarr sparse coordinate-index fix release applicability",
+      "status": "open adoption gate",
+      "evidence": "Issue #4174 -> PR #4356 -> merged code and regression tests at commit cd1e5b3aaabf969d5edef18b8d62bf98e3439beb. Captured latest release v3.4.0 predates the merge.",
+      "next_discriminating_step": "Check the first maintained Zarr release after the merge and run S7's huge sparse-index tests against the actual locked dependency. Keep v3.4.0 if app writes avoid that coordinate-selection path; otherwise do not ship until fixed release or reviewed commit pin is in use.",
+      "limits": "Issue affects a specific sparse selection route; it does not establish a failure in ordinary tiled image reads. PR test counts are project-reported and were not rerun here."
+    },
+    {
+      "id": "L3",
+      "lead": "TIFF codec, segment-size and cancellation behavior",
+      "status": "open support-matrix dependency",
+      "why_it_matters": "Tifffile supports a subset of TIFF and codec availability is dependency-sensitive. A single very large strip/tile can defeat a nominally lazy reader and cancellation may not interrupt a decoder mid-segment.",
+      "next_discriminating_step": "For each supported codec/layout fixture, measure decoded segment size, peak RSS and time-to-cancel. Add a hard segment-size gate and explicit proxy or unsupported behavior before adding that fixture to the support matrix.",
+      "bounded_alternative": "Use only tested tiled/segmented TIFF layouts or offer an explicit local lossless chunked proxy, leaving the original unchanged."
+    },
+    {
+      "id": "L4",
+      "lead": "Calibration/orientation interpretation across real instruments",
+      "status": "open source-format dependency",
+      "why_it_matters": "The proposed app affine is richer than OME-NGFF v0.5 scale/translation. TIFF/OME variants and vendor metadata may encode origin, axis direction or orientation differently or omit them.",
+      "next_discriminating_step": "Collect a small de-identified or synthetic fixture from every intended instrument; compare parsed axes, units and transforms to acquisition metadata and a known marker; preserve raw metadata and require an explicit override when ambiguous.",
+      "bounded_alternative": "Treat missing physical calibration as pixel units and unsupported orientations as metadata-only until explicitly mapped."
+    },
+    {
+      "id": "L5",
+      "lead": "Shared-storage bundle publication semantics",
+      "status": "open deployment dependency",
+      "why_it_matters": "SQLite transaction atomicity does not cover bundle members, and network/shared filesystems may differ in locks, flush and rename behavior.",
+      "next_discriminating_step": "Test clean close/copy/reopen, interrupted staging, rename and ready-marker recovery on the group’s actual shared storage. Keep projects local during edits and publish uniquely versioned closed bundles.",
+      "bounded_alternative": "If rename/lock behavior is unknown, use immutable versioned bundle directories and a manifest/ready marker written last; never use a shared live database."
+    },
+    {
+      "id": "L6",
+      "lead": "Full-source hashing time and concurrent mutation",
+      "status": "open UX and integrity dependency",
+      "why_it_matters": "A digest protects relocation and export binding, but reading every byte of a 3 GB image or Zarr tree takes time; a mutable source could change during hashing.",
+      "next_discriminating_step": "Measure streaming hashes on representative local/network paths; expose progress and cancellation; verify stable file identity before/after hashing; test tree-manifest behavior on partial/mutating Zarr stores.",
+      "bounded_alternative": "Allow metadata review while digest status is pending, but mark it unverified and do not bind a portable export or relocation until the digest completes."
+    }
+  ],
+  "optional_opportunities": [
+    {
+      "id": "O1",
+      "idea": "OME-NGFF image and label interchange",
+      "status": "useful after the v0.1 subset is verified",
+      "benefit": "A shared image/label layout can reduce application lock-in and carry axes, units, multiscales and label relationships.",
+      "constraint": "Use only conforming label groups; preserve a full affine and any richer annotation metadata in a sidecar when NGFF v0.5 cannot represent it."
+    },
+    {
+      "id": "O2",
+      "idea": "Reusable import profiles for instrument-specific axis/calibration corrections",
+      "status": "optional follow-up",
+      "benefit": "A researcher can apply a reviewed axis mapping repeatedly without silently editing acquisition metadata.",
+      "constraint": "Profile application must show the raw metadata and the exact override and remain scoped to matching format/instrument signatures."
+    },
+    {
+      "id": "O3",
+      "idea": "Explicit rechunked or pyramidal derived proxies",
+      "status": "optional follow-up",
+      "benefit": "Can make a giant-strip TIFF or slow source responsive while preserving original bytes and recording every conversion.",
+      "constraint": "Measure scratch disk, sample preservation, float/integer conversion and operation time; proxy must be visibly derived."
+    },
+    {
+      "id": "O4",
+      "idea": "GPU-assisted rendering",
+      "status": "deferred",
+      "benefit": "May improve display for large multi-channel volumes on workstations with a suitable GPU.",
+      "constraint": "Optional GPU availability is not a baseline; benchmark CPU behavior first and retain identical coordinates and sample/export results."
+    },
+    {
+      "id": "O5",
+      "idea": "Segmentation, registration and multi-user concurrent editing",
+      "status": "deferred opportunities, not minimum requirements",
+      "benefit": "Could reduce manual work or enable joint review later.",
+      "constraint": "Each adds distinct provenance, coordinate, error and conflict semantics. Require separate user need and validation; never make automatic outputs indistinguishable from researcher annotations."
+    },
+    {
+      "id": "O6",
+      "idea": "Bio-Formats or additional reader plugins",
+      "status": "deferred; not investigated as a supported component in this research",
+      "benefit": "Could extend the tested input matrix to other instrument formats.",
+      "constraint": "Adopt only behind the same metadata-preservation, bounded-read and explicit-unsupported contract; no universal compatibility claim."
+    }
+  ],
+  "alternatives_to_keep_visible": [
+    {
+      "id": "A1",
+      "choice": "Embedded napari canvas versus custom Qt/VisPy canvas",
+      "current_preference": "Prototype napari for layer editing and n-dimensional navigation; fall back to a custom 2D slice canvas if coordinate/memory acceptance checks fail.",
+      "tradeoff": "Napari offers documented image/label/point/shape layer mechanisms but has a large-volume 3D warning and does not supply project durability. A custom canvas gives direct transform control but adds interaction, rendering and accessibility work."
+    },
+    {
+      "id": "A2",
+      "choice": "External references versus portable source copies",
+      "current_preference": "Support both closed-bundle modes; use references for routine exchange and offer full copies when the user needs self-contained/offline portability.",
+      "tradeoff": "References save storage and time but require stable paths or verified relinking. Copies improve portability and consume potentially multiple gigabytes per project."
+    },
+    {
+      "id": "A3",
+      "choice": "Released Zarr v3.4.0 versus exact post-fix commit",
+      "current_preference": "Use the released pin only for access paths validated by the app; avoid the reported sparse coordinate write path. Evaluate exact merge SHA only in a prototype if that path is required.",
+      "tradeoff": "A released dependency is easier to support but the captured release predates the fix. A commit pin has code/test evidence but is not a maintained release pin and requires additional review and packaging work."
+    }
+  ]
+}

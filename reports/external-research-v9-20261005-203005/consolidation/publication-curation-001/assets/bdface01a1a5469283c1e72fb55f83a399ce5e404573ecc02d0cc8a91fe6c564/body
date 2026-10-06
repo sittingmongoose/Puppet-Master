@@ -1,0 +1,50 @@
+{
+  "schema": "er9.current-witness-catalog.v1",
+  "scope": "Evidence inventory for this revision. A successful synthetic check is component evidence only and does not qualify the product or large-data performance.",
+  "witnesses": [
+    {
+      "id": "W1-prior-proposal-claim",
+      "origin": "inputs/seed/proposal.md, section 13",
+      "reported_claim": "nbformat cell/order handling; earlier rev1 failure and rev2 pass",
+      "status": "UNVERIFIED_IN_THIS_REVISION",
+      "reason": "The original witnesses.json/receipt was not located in readable input paths. Preserve as a claim in the immutable proposal; do not treat as independently checked here."
+    },
+    {
+      "id": "W2-prior-proposal-claim",
+      "origin": "inputs/seed/proposal.md, section 13",
+      "reported_claim": "50,000-row synthetic NDJSON stream with malformed records, source identity and preview checks",
+      "status": "UNVERIFIED_IN_THIS_REVISION",
+      "reason": "The original witnesses.json/receipt was not located in readable input paths. This revision ran the much smaller W5 check below, which does not reproduce W2's scope."
+    },
+    {
+      "id": "W3-prior-proposal-claim",
+      "origin": "inputs/seed/proposal.md, section 13",
+      "reported_claim": "13-event invalidation state-machine scenario",
+      "status": "UNVERIFIED_IN_THIS_REVISION",
+      "reason": "The original witnesses.json/receipt was not located in readable input paths; no current execution of that state machine is claimed."
+    },
+    {
+      "id": "W4-prior-proposal-claim",
+      "origin": "inputs/seed/proposal.md, section 13",
+      "reported_claim": "clean replay equality, unseeded RNG difference and manifest shape",
+      "status": "UNVERIFIED_IN_THIS_REVISION",
+      "reason": "The original witnesses.json/receipt was not located in readable input paths; no current runtime replay is claimed."
+    },
+    {
+      "id": "W5",
+      "name": "Tiny NDJSON contract discrimination",
+      "status": "EXECUTED_COMPONENT_CHECK",
+      "executor": "experiment admitted isolated Python execution capability",
+      "execution_id": "exec-zeiid_pq",
+      "exit_code": 0,
+      "code_sha256": "4972fac38aa3419e1f7df58d4dfe06e8241bf69fa245384368b4a34bf6b5cc45",
+      "data_sha256": "6e391b4ad5a7ceda63e87da19233d96382b770ac964bdeb9e25a86337a3c82f8",
+      "stdout_sha256": "787af3b3dc03b37ead59053b5d8691a111461a6c92e73c76ce0e4bf6ac16d079",
+      "stdout_summary": {"source_sha256":"bf82aa4feb44fa16c1372e976a3a305d7f6e7e4c52ec92d9333d074b5634ae6d","parsed_rows":3,"rejects":[{"source_line":4,"raw":"{bad","reason":"JSONDecodeError"}],"preview_label":"sample","preview_rows":2,"ordering":"source-line stable"},
+      "assertions": ["UTF-8 Unicode survives parsing", "explicit null is distinct from absent key", "malformed record is ledgered with physical line and raw text", "source string hash is unchanged", "preview is bounded and marked sample"],
+      "limits": {"wall_seconds":5,"cpu_seconds":3,"memory_bytes":268435456,"tasks":16,"network":"new empty namespace"},
+      "limitations": ["tiny synthetic JSON only", "no DuckDB, notebook format, application runtime or 5 GB file", "does not verify schema conversion, crash recovery, production sandbox or full-data properties"]
+    }
+  ],
+  "not_executed": ["DuckDB #12596 fixture against package binaries", "5 GB bounded-memory target", "notebook replay/status integration", "cross-machine reopen", "crash recovery", "production OS isolation"]
+}

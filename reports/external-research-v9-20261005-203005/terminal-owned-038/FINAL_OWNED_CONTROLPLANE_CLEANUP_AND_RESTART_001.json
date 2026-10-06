@@ -1,0 +1,58 @@
+{
+  "observed_utc": "2026-10-06T12:49:31.919056+00:00",
+  "controlplane_units": [
+    {
+      "Id": "er9-203005-dispatcher.service",
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "ControlGroup": ""
+    },
+    {
+      "Id": "er9-203005-metadata-monitor.service",
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "ControlGroup": ""
+    }
+  ],
+  "own_dispatcher_and_monitor_stopped_after_terminal_native_tail": true,
+  "candidate_worker_quiet_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/FINAL_EXACT_OWNED_CANDIDATE_UNIT_CGROUP_QUIET_OBSERVATION_001.json",
+    "sha256": "d99810ef002bae7a8ebcabb48a7a06163200f254f0037af8282c467dba594a0d"
+  },
+  "historical36_blocker_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/FINAL_36_HISTORICAL_ALTERNATE_UNENTERED_BLOCKER_LEDGER_001.json",
+    "sha256": "863f18d2188496986d721bc900900f69573e0465cd17bfad08da202583f09a7d"
+  },
+  "DEC019_terminal_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/DEC019_ALL_TERMINAL_001/CHECKPOINT.json",
+    "sha256": "0267f5fb3f54965848597de66190f08679383db773430dcd44b1cf737a5e99bc"
+  },
+  "actual_active_candidates": 0,
+  "retained_candidate_resources": 0,
+  "current_executable_finite_roles": 0,
+  "historical_descriptor_statuses_unchanged": true,
+  "failed_unit_records_and_native_receipts_not_reset": true,
+  "sibling_or_root_services_changed": false,
+  "restart_command": [
+    "systemd-run",
+    "--user",
+    "--unit",
+    "er9-203005-dispatcher",
+    "--property=Restart=on-failure",
+    "--property=RestartSec=5",
+    "--property=MemoryMax=128M",
+    "--property=CPUQuota=25%",
+    "--working-directory=LAB_ROOT",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "LAB_ROOT/ops/dispatcher/dispatch.py",
+    "--lab",
+    "LAB_ROOT"
+  ],
+  "restart_scope": "Only new positively source-closed authorized work or explicit operational recovery; no automated reopening historical aliases or quality-driven repetition"
+}

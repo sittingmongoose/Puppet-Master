@@ -1,0 +1,173 @@
+# Reproducible notebook and data workspace — research proposal
+
+**Stage:** research proposal; public sources captured 6 October 2026. This is an architecture and validation plan, not a notebook product or a verified 5 GB benchmark.
+
+## Decision
+
+Build a local desktop workspace around ordinary project folders. Keep `.ipynb` as the notebook interchange document, support one Python/IPython kernel family, use Jupyter’s message protocol for live execution events, and use `nbclient` as the ordered clean-replay runner. Store project/data contracts and run provenance in versioned sidecars. Use DuckDB as the leading local tabular engine for CSV, newline-delimited JSON and Parquet, with explicit schemas and streaming/chunked reads. Offer optional `.sql` files in DuckDB’s dialect through the same engine and sandbox; do not ship a second SQL kernel.
+
+DuckDB is a **conditional** dependency: a real parallel CSV defect produced a duplicate valid row, and the fix is evidenced in a 2.0 development branch but not tied by this source chain to a stable release. Pin no production engine until the release candidate passes the project’s regression gate. Until then, affected CSV/mode combinations must run on a separately verified sequential path or be rejected with a precise diagnostic. A parser’s malformed-row handling alone cannot catch a syntactically valid duplicate.
+
+Python is untrusted. Clean and interactive execution must run in an OS sandbox with a declared mount and resource policy. Initial execution support should be Linux with a tested rootless OCI boundary. Other host operating systems may author, inspect and exchange projects, but execution stays disabled until a VM-backed boundary passes the same tests. If the sandbox cannot start, execution fails closed; an import blacklist is not isolation. This is a product choice and a deployment constraint, not a claim that containers defeat every kernel or host escape.
+
+## Precedents and what they contribute
+
+1. **Jupyter’s notebook document and kernel stack** is one independently useful precedent: `.ipynb` represents notebook cells and MIME outputs; stable cell IDs associate sidecars; the Jupyter messaging protocol carries request/reply and output events; `nbclient` already runs code cells in notebook order, saves an executed document and stops on the first error by default. These are document, transport and execution building blocks, not a runtime provenance product. The format leaves metadata extensible and does not by itself bind outputs to a particular source-data digest or environment. [J-FORMAT] [J-MSG] [J-NBCLIENT]
+2. **DuckDB** is an independent data-engine precedent: its 1.5 documentation describes direct CSV/JSON/Parquet reads, schema/type inference, and a workload tuning option that can permit result reordering to reduce memory pressure. It gives Python analysts and SQL users one embedded query engine over the same files. It also supplies a consequential warning: a parallel scanner defect can silently duplicate a valid row. [D-CSV] [D-JSON] [D-PARQUET] [D-TUNE] [D-ISSUE] [D-FIX] [D-TEST]
+3. **Frictionless Table Schema v1** contributes a portable JSON vocabulary for ordered fields, logical types, constraints, primary keys and physical missing-value markers. Use it as a schema-contract starting point or export format, not as proof of a parser, execution environment or full-data validation. [F-TABLE]
+
+Jupyter and DuckDB come from separate upstream projects and solve different layers; neither is a wrapper around the other. Frictionless is a third independent schema precedent. The comparison is useful because the product should compose these mechanisms, rather than expect any one source format or engine to settle runtime semantics.
+
+## Minimum workflow and project record
+
+A project is a folder that remains inspectable without the workspace application:
+
+```text
+study/
+  project.toml                 # project ID, contract/manifest versions, relative paths
+  pyproject.toml
+  uv.lock                      # exact resolved Python package versions
+  notebooks/*.ipynb
+  transforms/*.sql             # optional; DuckDB SQL dialect
+  transforms/*.py               # optional declared batch transforms
+  data/sources.json            # source IDs, path mapping, hashes, format and schema contracts
+  outputs/sha256/<digest>/...  # immutable named transform artifacts
+  .workspace/runs.sqlite       # local event/output association ledger
+  .workspace/exports/          # optional generated result bundle
+```
+
+`project.toml` has a stable project UUID and format version. Every dataset has a stable source UUID, a project-relative logical name, source format, parser options and a schema-contract digest. The project stores a relative link where data is included; when data stays outside the folder, the receiving machine relinks the logical name to a local file. Do not serialize private absolute paths into a portable bundle by default. Imports reference original files unless the user explicitly chooses a copy/bundle operation. Original datasets are mounted read-only and never rewritten by the workspace.
+
+On import, record file size and a streaming SHA-256. Hashing is a bounded-memory background operation and may take time for multi-gigabyte files. A size/mtime shortcut is only a change-detection hint, not proof of identical content. Until the full hash finishes, show identity as pending/unverified; a partial hash or preview cannot establish full-dataset identity. Rehash before a clean replay if the source changed or its identity is uncertain. Exchange/export can include a chosen source copy; otherwise export the manifest and clearly report missing/relink-required inputs.
+
+The manifest includes project and schema versions; notebook path and full file digest; cell IDs, source digests and display order; ordered execution events; interpreter and kernel versions; environment lock digest and immutable runtime image digest; OS/architecture; engine/version and configuration; source IDs, full hashes, parser settings and contract digests; transform/code digests; output artifact relative paths, size, digest and truncation metadata; run ID, outcome and timestamps. The SQLite ledger stores run and per-cell events, statuses and historical associations, not credentials or a shared user profile. The public `.ipynb` remains the portable document. A small JSON export manifest accompanies results for users who do not need the live local ledger.
+
+For Python dependencies, keep `pyproject.toml` as declared requirements and a checked-in `uv.lock` as the resolved versions. uv’s docs say the project lockfile records exact resolved versions across platform/Python markers; that supports package-version agreement, not hermeticity by itself. Build a runtime image from that lock and pin its image digest, interpreter build and engine. Reopen uses that image or an explicitly rebuilt image whose digest is compared. Without a lock/image digest, show environment mismatch or unverified. [UV-PROJECT]
+
+## Data contract and import/preview behavior
+
+The schema is an explicit, versioned contract attached to each source and derived table. It records:
+
+- field name and ordinal, logical type, nullable/required, optional key/uniqueness constraints, and the physical file format’s parser settings (encoding, delimiter, quote/escape, header, JSON-lines mode, Parquet options);
+- missing-field versus present-null semantics; permitted physical spellings for missing values; conversion rules; timezone assumptions and timestamp normalization; decimal precision/rounding/overflow policy; Unicode preservation policy; and policy for heterogeneous values;
+- an evolution rule: reorder is visible and normally compatible when addressed by name; additive fields require review and an explicit accept/ignore policy; rename, narrowing, incompatible timestamp or numeric conversion and newly invalid nulls fail until a versioned migration is accepted. A changed contract digest invalidates dependents.
+
+Frictionless Table Schema distinguishes a physical representation from a logical field type and applies `missingValues` to the physical representation. That is a useful reminder to define marker-to-null conversion before logical casting; it does not prescribe this product’s policy. [F-TABLE] Default to preserving strings exactly (no Unicode normalization), keeping a field’s missing state distinct from a present null where the source supports it, and making every lossy conversion explicit. Mixed/late-arriving values must not be forced into a type based only on an early preview; retain raw/string/union-like representation or report the conflict until the user selects an explicit conversion.
+
+The import pane displays format, parser options, declared/inferred schema and a small bounded preview (for example, a fixed first-N records plus an optional fixed-seed sample). It always labels the sample method and count and says **sample only**. Preview values cannot establish unique keys, absence of nulls, globally valid types, full row count or global distribution. Offer a separate full scan/profile that reports what it actually scanned. DuckDB auto-detection of CSV dialect and types is a useful starting suggestion, not the stored contract; freeze the selected parser settings after review. [D-CSV]
+
+Malformed rows default to fail with file, physical byte vicinity when available, logical-record ordinal, column and parser/type error. Do not silently drop rows. An explicitly chosen quarantine mode writes raw rejected record bytes/text and reason to a separate reject artifact, reports accepted/rejected counts and reconciles them to scanned records; the source is unchanged. A malformed CSV record ordinal is not necessarily a physical line number because CSV can contain quoted multiline fields. A full validation can check primary key uniqueness, null rules and conversions; a bounded preview cannot.
+
+A declared unique primary key, checked across the full dataset, is the preferred row identity. Without one, use `(source content digest, parser logical-record ordinal)` as a source-local locator, not a semantic key; it changes if bytes or parsing rules change. For Parquet use file digest plus row-group/row locator if the engine exposes it; otherwise do not promise durable row-level identity. Derived row order is **stable** only when the transform has a declared ordering with a unique tie-breaker. SQL without a suitable `ORDER BY` has unspecified output order even if one run happens to look stable. Preview and output views label truncation and ordering. The workload docs explicitly warn that DuckDB can reorder results without `ORDER BY` when `preserve_insertion_order=false`; this is a memory trade-off, not a default identity guarantee. [D-TUNE]
+
+## Execution, provenance and output states
+
+Displayed cell order is the list in `.ipynb`; actual execution order is a separate event sequence; current kernel state is process memory; a saved cell output is a fourth thing. `execution_count` is useful display metadata but cannot describe all prior runs or prove a clean run. Jupyter messages identify a request by `msg_id`, carry a `session`, and echo the originating request in `parent_header`; a kernel restart creates a new kernel session ID. Use those fields to associate IOPub streams/results/errors with the run request and cell, alongside an application-generated run ID and monotonic event sequence. [J-MSG]
+
+For every execution event persist: run ID; cell ID and code digest; submitted/display index; event sequence and start/end; request message ID and parent-header ID; kernel session ID and `execution_count`; engine/source/config/environment fingerprints; return/error/cancel state; and output MIME bundle/artifact digest. Store cell IDs in app-owned metadata or the external ledger without overwriting unknown user metadata. nbformat documents unique cell IDs in schema 4.5+; use them instead of list index as durable association. Unknown/new notebook metadata and outputs should be preserved on round trip. [J-FORMAT]
+
+Interactive “run selected” uses the active kernel and records actual message order and kernel session. It may depend on hidden variables created by earlier or out-of-order cells. Mark its saved outputs **unverified** until a clean replay; the UI may still show that they came from an interactive run. A kernel restart, disconnect/restart indication or interrupted cell invalidates all outputs depending on that kernel generation. It never promotes previous outputs to current just because they remain visible in the notebook.
+
+“Clean replay” starts a fresh sandboxed kernel, clears candidate output state in an in-memory copy, executes code cells top-to-bottom in display order, and records each event. Use `nbclient`’s first-error stop behavior; its documentation says the partial executed notebook can include outputs through the failing cell and traceback. Product policy should preserve the previous successful snapshot separately, label the new run failed, and avoid committing partial outputs as current. Do not enable allow-all-errors as the default replay policy. [J-NBCLIENT]
+
+The runner shows progress (cell `i/n`, current cell, elapsed time, output/error stream) and cancellation. Cancellation first requests interrupt, then terminates the whole sandbox/process group after a short bounded grace period. A canceled/failed run leaves the prior output generation available as history, marks attempted/currently dependent outputs failed or unverified, and cannot update the current generation pointer. On save, write a new immutable output generation and manifest to temporary paths, flush and atomically publish only a completed successful generation; crash recovery chooses the last verified committed generation.
+
+Use these states for visible saved outputs:
+
+| State | Meaning |
+|---|---|
+| **Current** | Output belongs to the latest completed successful clean run and its exact code, declared inputs, schema, engine and environment fingerprints match the open project. |
+| **Stale** | A dependency changed: code/cell source, referenced source digest, schema/parser contract, transform, lock/runtime, engine config, or output generation. |
+| **Failed** | The latest attempt for the associated work failed. Preserve the last successful value as historical and show the new error. |
+| **Unverified** | Imported output with no usable manifest, interactive-only output, unresolved/pending source identity, unsupported/unpinned environment, unknown dependency, kernel restart/interruption, or manifest mismatch that cannot be classified. |
+
+A product dependency graph is exact for declared transform inputs. SQL and registered transform files can record named table/file inputs and output artifact IDs. A content-addressed cache key includes transform source, normalized config, all input content and contract digests, engine/runtime image and lock, and relevant platform settings. Cache immutable outputs only for these declared transforms. Notebook Python is arbitrary code; do not pretend static analysis can find every read or side effect. Conservatively invalidate all outputs in that notebook when any code cell, declared source it can access, project script/config or environment changes. Any undeclared read is blocked by the sandbox, hence cannot create an invisible cache dependency. An explicit user may rerun to establish new provenance.
+
+A clean replay guarantees only that the product launched the recorded code in a fresh configured kernel, against the recorded content-identified declared inputs, lock/image and engine configuration, captured its events/results, and published them after a successful completion. Exact matching fingerprints make the output **current by provenance**, not a promise that a future execution produces equal bytes. Randomness, time, thread scheduling/order, GPU or architecture math, unpinned system libraries, declared-but-changing external services, Python package build variation, hidden inputs or nondeterministic algorithms can vary results. Network is disabled for replay; code requiring a remote service fails unless a future explicit, controlled extension exists. Same fingerprints with a different result indicate an unmodeled dependency or nondeterminism, not a causal diagnosis.
+
+## Large files, caching and exchange
+
+A 5 GB input on an 8-core/16 GB machine is a target, not a measured result. DuckDB’s docs identify out-of-memory risks on import/export much larger than memory and recommend disabling insertion-order preservation as one possible memory reduction, at the cost of order for queries without `ORDER BY`. Therefore make streaming/projection/filter/batched sinks the default path where the operation allows it; never implicitly materialize a full pandas DataFrame. Leave RAM for the UI, kernel and OS and configure an engine memory ceiling below available RAM with a project scratch/spill directory and disk quota. [D-TUNE]
+
+Projection/filter and bounded previews can stream. Global sort, distinct, join, large aggregation, full profile or conversion may spill, need disk proportional to intermediates, reorder rows, or exceed budget. Show estimated/actual resource use where available; stop on memory/disk limits with operation, limit, scratch path and retry choices. An explicitly selected full materialization has its own cap. Do not represent every operation as streaming-safe. Large result grids cap rows **and bytes**, label truncation, and link/export the complete immutable artifact separately. A content hash can be streamed but still costs full file I/O.
+
+Use a per-project lock for an active writer and baseline digests for edits. SQLite ledger transactions serialize writes; reject a second writer or offer read-only inspection. Before notebook save compare its last-read digest with disk; on conflict preserve both versions and require a merge rather than last-writer-wins. Keep run history append-only; prune only via user-visible retention. SQLite WAL documentation notes one writer at a time, same-host shared-memory requirements, no network-filesystem WAL, and that the `-wal` file can contain committed state. Therefore do not email/copy only the main database while it is open. Export a consistent closed/checkpointed or SQLite-backup snapshot, verify hashes and include the manifest; ordinary folder exchange is a snapshot workflow, not multi-machine concurrent editing. [SQLITE-WAL]
+
+Save notebook/manifest/output temp siblings; flush data; rename into place; preserve a last-known-good generation and recover or roll back if interrupted. Atomic rename and fsync guarantees vary across OS/filesystem, so validate local filesystems explicitly and declare network shares unsupported for concurrent writes unless separately tested. Keep caches and machine-specific environments out of export. Export a folder or portable archive containing project metadata, notebook/scripts/SQL, selected outputs, JSON reproducibility manifest and optionally selected data copies. Keep external-source link maps machine-local. Never bundle credentials, private account profiles or secrets.
+
+## Python/SQL support and execution boundary
+
+Support CPython 3.x within a declared, tested version window and IPython’s Python kernel. Support one kernel family, not arbitrary installable language kernels. The project-owned runner and lock choose the Python runtime; reject unknown kernel names with an actionable explanation or open the file read-only for inspection. An `.ipynb` standardizes document shape and output MIME bundles; it does not specify the execution runtime or provide output lineage. [J-FORMAT]
+
+SQL is optional and bounded to DuckDB SQL files/statements over registered project data and declared outputs. The analyst can write SQL and exchange `.sql` with their colleague; the colleague must use DuckDB-compatible SQL. SQL runs through the same pinned embedded engine and sandbox with read-only source mounts and writes only to approved output/scratch locations. No external DB connectors, credential forwarding, network SQL or separate SQL kernel in this experiment. For arbitrary SQL with untracked file reads, disable/reject it or mark it unverified; preferably allowlist registered sources and extract dependencies using the engine’s parsed plan. This latter parser/dependency facility requires an implementation check before reliance.
+
+Sandbox policy for both languages:
+
+- run each clean replay in a new container/process group; interactive kernel persists only for that project session;
+- rootless Linux OCI container, no network, no host home, credentials, sockets or devices; mount source files and approved project code read-only; mount only a dedicated per-run scratch/output staging area writable; no arbitrary host path escapes; no secret environment variables;
+- drop unnecessary capabilities, enable no-new-privileges, set user namespace and process tree restrictions, memory/CPU/PID limits, wall-clock and output-byte limits; bound filesystem spill and temporary disk;
+- capture stdout, stderr, MIME outputs and tracebacks with byte caps; kill all descendants on cancel/close. Fail execution if enforcement or cleanup checks fail.
+
+Podman’s v5.6.2 manual describes separate container filesystem/network/process tree and configurable capabilities, cgroups and CPU limits; those are mechanisms to test, not a security proof or a complete boundary on every host. Its documentation also notes a container receives network-related files based on host defaults, so policy must inspect effective mounts and config, not infer “no host leak” from a container label. [PODMAN]
+
+Python usability costs: filesystem and network access that notebooks often assume are denied, packages must be available in the locked runtime, write/export paths must be explicit, and some platform-native libraries may not match. Display “blocked by policy” with the attempted resource category. Do not prompt users to bypass isolation in the minimum product. A fully featured trusted-local mode is a separate product risk and is deferred. A VM is a stronger bounded alternative for higher threat models, with more startup and file-sharing friction. macOS/Windows execution remains a critical platform dependency until VM-backed mount, networking, cancellation and resource-limit tests pass.
+
+## Compare, access and support
+
+A provenance panel shows code cells, source files, transform edges, environment lock/image, exact engine configuration, output paths/digests, run ID/time, per-cell execution sequence, and statuses. A “compare runs” view distinguishes code/source/schema/engine/environment changes from output differences. Scalars compare directly; tables compare schema, row counts, null/missing counts and bounded cells plus streaming content digests. For unordered results compare canonicalized rows only if an explicit stable key/order exists; otherwise say order is unspecified and compare multiset/digests only where technically supported. Image/MIME output differences show side-by-side previews or digest-only when a safe renderer/diff is unavailable. Never call equal hashes a proof of semantic equality under unknown serialization.
+
+Status is never communicated by color alone: include text/icon and keyboard focus; announce progress and completion through an accessible status region; announce failures/errors distinctly and keep focusable cell-level error text with a copyable traceback. Test screen-reader announcement, keyboard navigation and zoom on a small representative UI. This proposal makes accessibility a validation requirement, not an assertion of conformance.
+
+Support matrix: Python notebooks and simple Python scripts; CSV, JSON Lines and Parquet through the pinned engine path; declared schema and registered local file sources; optional DuckDB SQL. Other file types, unknown encodings, unsupported nested/union values, format-specific encryption, remote/credentialed sources, arbitrary language kernels and notebooks with unsupported MIME/widget behavior are previewed/inspected when possible but execution/import is refused or explicitly limited with reason and safe conversion suggestion. Never silently coerce/drop malformed rows. A clean run with unknown/unpinned dependency, external side effect or unavailable source is failed/unverified, not reproducible.
+
+## Failure investigation and applicability
+
+DuckDB issue #25164 reports that its **parallel CSV reader** could duplicate a row in input using `\r\r\n` endings. The reporter says the issue reproduced on 1.4.4, 1.5.2 and 1.5.5 and sequential mode produced the expected result; this is an issue report, not our reproduction. The failure mechanism in PR #25232 is precise: when a buffer boundary splits the CRCRLF sequence, an early scanner counted the row and later parsing fell through into the next buffer, emitting that next row again. The PR adds an early return in `StringValueScanner::ProcessOverBufferValue`. [D-ISSUE] [D-FIX]
+
+The PR merged on 7 September 2026 to `v2.0-cyanoptera` at merge commit `59ae0c6fb3f29369cfd0df124c76e9232181ef86`. Its added `test_rrrn_parallel.test` generates 60 CRCRLF rows, compares parallel and sequential totals/IDs, checks no duplicate groups and another ending case. The regression test has `require notwindows`. This establishes the code/test on that development branch; it does not establish behavior on every OS or release. A v1.5.6 release exists, but this evidence chain does not establish whether it contains this fix. Do not say v1.5.6 is fixed or affected. Gate the chosen exact artifact with the regression case on supported OSes; if the case cannot be exercised or fails, keep the affected parallel CSV path disabled/rejected until an alternative is verified. [D-FIX] [D-TEST] [D-RELEASE]
+
+The useful design change is that field/type validation does not detect this failure: the duplicated row is itself valid. Add parser edge cases and end-to-end row identity/count reconciliation alongside malformed-row tests; do not promise “all parser errors are caught.”
+
+## Opportunities, alternatives and deferred discoveries
+
+**Opportunity:** give analysts one named data-source table that both notebook Python and SQL files use, avoiding needless copies while retaining a shared source digest and schema. Investigate exporting a Frictionless-style `schema.json`/small Data Package descriptor with the ordinary folder so another tabular tool can inspect inputs. This is a standards/interchange lane, not a requirement to run Python elsewhere. Notebook-aware Git diffs (for example, investigate nbdime) and percent-script notebook authoring (for example, investigate Jupytext) are useful later opportunities, but were not verified here.
+
+**Alternative:** Polars/Arrow streaming or DataFusion may suit a transform-first design and could reduce reliance on DuckDB’s current release path. No equivalent issue/release comparison was performed in this stage, so this is a lead, not an evidence-backed replacement recommendation. For relational authoring use DuckDB SQL files; for a strict notebook-only product, defer SQL entirely rather than adding a language kernel.
+
+The protected discovery lane deliberately covered standards/document protocol (nbformat and Frictionless), message/runtime control (Jupyter), data-engine scanning (DuckDB), environment lock behavior (uv), container boundaries (Podman) and portable event storage (SQLite), beyond notebook products. This was a prospective ~30% effort allocation; no elapsed-time split is claimed. Deferred: exact SQLite backup API mechanics; atomic replace durability on target operating systems; Windows/macOS container VM security; filesystem escape and network namespace validation; a Polars/Arrow/DataFusion comparison; Jupytext/nbdime; WCAG criteria; and full DuckDB docs/source review. They remain explicit research or validation work, not settled facts.
+
+## Validation plan (proposed/UNEXECUTED unless called out below)
+
+The small synthetic check in `witnesses.json` was **executed by the candidate** with the admitted isolated Python capability. It checked a candidate-authored three-record contract for Unicode preservation, timezone conversion, missing-vs-null distinction, source-order retention, repeat canonical digest and no input mutation. It is a component check only; it did not use DuckDB, read a file, exercise the notebook runtime, prove schema correctness generally or test a large input.
+
+Before any release, propose/UNEXECUTED:
+
+1. **Contract suite:** missing versus null and configured missing markers; Unicode unchanged; timestamps with/without zones and daylight-saving edges; decimal overflow/rounding; heterogeneous early/late values; extra/missing/reordered/renamed columns; quoted newlines and logical record ordinals; bad-row fail/quarantine with raw-byte preservation and count reconciliation; duplicate key detection full scan; source hash change invalidation.
+2. **Engine gate:** run DuckDB’s 60-row CRCRLF boundary reproducer, plus randomized small buffer-boundary CSV fixtures, in sequential and parallel modes on each supported OS and the exact packaged build. Compare record counts, primary IDs and duplicate groups. Record exact version/build, test exit and logs. Test CSV/JSONL/Parquet scan-filter-project and chunked output. Verify unsupported records fail or quarantine explicitly.
+3. **8-core/16 GB target:** use generated 5 GB CSV, JSONL and Parquet fixtures with bounded scans/preview/export; measure resident memory, elapsed time, CPU and scratch/disk. Repeat with global sort/distinct/join/aggregate and full profile to establish allowed bounds and disk-full error recovery. Target behavior is bounded memory when the chosen operation supports it, not a guarantee every global operation fits.
+4. **Notebook behavior:** execute cells out of display order interactively; verify event sequence and parent message association; save/reopen; restart the kernel and confirm stale/unverified state; clean replay in display order; upstream code/source/schema/lock edits invalidate the expected outputs; same-source changed-byte identity invalidates; imported notebook without manifest remains unverified; compare changed MIME/table results; test first error, timeout, cancellation and descendant cleanup.
+5. **Security/platform:** attempt access to host home/credentials/sockets and undeclared files, network access, process fork and resource exhaustion from candidate notebook code. Verify policy denial, kill on cancel/close, read-only input, writable scratch only, limits, captured-output cap and no fallback to host execution. Repeat on every supported OS/runtime; test sandbox-unavailable fail-closed behavior.
+6. **Save/recovery/exchange:** terminate during notebook/manifest/output writes and during export; recover last valid generation; test two writers, stale baseline and conflict preservation; reopen exported folders on a second clean machine with source relink, lock/image match and missing-source report. Verify the SQLite ledger snapshot includes committed state and no open-WAL copy assumption. Test power-loss-like interruption on supported local filesystems; do not generalize to network filesystems without evidence.
+7. **Usability/accessibility:** verify progress and error announcements, keyboard-only author/run/cancel/compare/export, text alongside color status, bounded preview label, truncated-result notice, provenance explanation and screen-reader focused traceback.
+
+No 5 GB performance, full application, hostile-code containment or cross-platform test was executed in this research stage.
+
+## Evidence key
+
+Capture hashes, exact locators, response details and applicability limits are in `sources.json`. The following are direct proposal citations:
+
+- **[J-FORMAT]** Jupyter, *The Jupyter Notebook Format*, nbformat docs 5.11 capture; cell schema, execution count/output, cell IDs from schema 4.5, metadata and forward-compatible fields. https://nbformat.readthedocs.io/en/latest/format_description.html
+- **[J-MSG]** Jupyter Client 8.10.0 docs, messaging specification 5.5; headers/session/parent-header routing, channels and process restart identity. https://jupyter-client.readthedocs.io/en/latest/messaging.html
+- **[J-NBCLIENT]** NBClient docs 0.11; ordered execution, timeout/path, first-error stop and partial saved output. https://nbclient.readthedocs.io/en/latest/client.html
+- **[D-CSV]** DuckDB docs current 1.5 capture, CSV overview and auto-detection; inference is configurable and must be frozen as a contract. https://duckdb.org/docs/current/data/csv/overview.html
+- **[D-JSON]** DuckDB docs current 1.5 capture, JSON overview/loading; JSON extension, inference and explicit reader configuration. https://duckdb.org/docs/current/data/json/loading_json.html
+- **[D-PARQUET]** DuckDB docs current 1.5 capture, Parquet read/write overview and `DESCRIBE` example. https://duckdb.org/docs/current/data/parquet/overview.html
+- **[D-TUNE]** DuckDB docs current 1.5 capture, workload tuning, order-preservation and out-of-memory guidance. https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads.html
+- **[D-ISSUE]** DuckDB issue #25164 (reported affected builds and failure details). https://github.com/duckdb/duckdb/issues/25164
+- **[D-FIX]** DuckDB PR #25232, merged to `v2.0-cyanoptera`, merge commit above; mechanism/fix. https://github.com/duckdb/duckdb/pull/25232
+- **[D-TEST]** PR #25232 changed-files response at head commit `f36d22edd4efa2d4f6dd3ff5059a2f8419ca729c`, regression `test/sql/copy/csv/parallel/test_rrrn_parallel.test`; test scope/platform exclusion. https://api.github.com/repos/duckdb/duckdb/pulls/25232/files?per_page=10
+- **[D-RELEASE]** DuckDB v1.5.6 release record; existence only, not proof of fix inclusion. https://github.com/duckdb/duckdb/releases/tag/v1.5.6
+- **[F-TABLE]** Frictionless Data Table Schema v1; logical/physical fields, constraints, missing-values and keys. https://specs.frictionlessdata.io/table-schema/
+- **[UV-PROJECT]** uv project structure docs captured 6 October 2026; `uv.lock` exact resolved versions, cross-platform markers and lockfile limits. https://docs.astral.sh/uv/concepts/projects/layout/
+- **[PODMAN]** Podman v5.6.2 `run` manual; container process/filesystem/network description and resource/capability controls. https://docs.podman.io/en/v5.6.2/markdown/podman-run.1.html
+- **[SQLITE-WAL]** SQLite Write-Ahead Logging documentation captured 6 October 2026; one-writer/same-host limitation and WAL file as persistent state. https://www.sqlite.org/wal.html

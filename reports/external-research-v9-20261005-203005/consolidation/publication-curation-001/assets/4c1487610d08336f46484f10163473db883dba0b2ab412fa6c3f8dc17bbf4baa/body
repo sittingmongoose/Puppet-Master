@@ -1,0 +1,83 @@
+{
+  "schema": "research-witness-inventory/v1",
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "executed by candidate",
+      "execution_id": "exec-1waqe8gn",
+      "scope": "Isolated Python arithmetic check of a diagonal scale/translation coordinate mapping, inverse mapping, and a simple clipped linear display mapping. This is not a reader, viewer, storage, export, or full-application test.",
+      "code_sha256": "12c3303fbae3ad1ea10d03a0090525e3b3b2ab0910451229bf3144dc94df6db1",
+      "input_sha256": "3a70ff341257ac8e83eefa9cfd9c3fa163ec57576889b75b7fd455dc17e76e37",
+      "code": "axes = ['z', 'y', 'x']\nindex = [2.0, 10.0, 20.0]\nscale = [0.75, 0.2, 0.2]\ntranslation = [10.0, -2.0, 1.0]\nworld = [i * s + t for i, s, t in zip(index, scale, translation)]\nroundtrip = [(w - t) / s for w, s, t in zip(world, scale, translation)]\nprint({'axes': axes, 'index': index, 'scale': scale, 'translation': translation, 'world': world, 'inverse_roundtrip': roundtrip, 'roundtrip_equal': roundtrip == index})\nsamples = [0, 100, 200, 300, 65535]\nwmin, wmax = 100, 300\ndisplay = [max(0.0, min(1.0, (v - wmin) / (wmax - wmin))) for v in samples]\nprint({'raw_samples_after_display_mapping': samples, 'display_values': display, 'source_samples_unchanged': samples == [0, 100, 200, 300, 65535]})",
+      "input": {"axes": ["z", "y", "x"], "index": [2.0, 10.0, 20.0], "scale": [0.75, 0.2, 0.2], "translation": [10.0, -2.0, 1.0], "samples": [0, 100, 200, 300, 65535], "window_min": 100, "window_max": 300},
+      "expected": "Under elementwise physical = index*scale + translation, world coordinates are [11.5, 0.0, 5.0] and inverse returns the exact input list. Clipped linear display values are [0.0, 0.0, 0.5, 1.0, 1.0], with raw sample list unchanged.",
+      "result": {"stdout": "{'axes': ['z', 'y', 'x'], 'index': [2.0, 10.0, 20.0], 'scale': [0.75, 0.2, 0.2], 'translation': [10.0, -2.0, 1.0], 'world': [11.5, 0.0, 5.0], 'inverse_roundtrip': [2.0, 10.0, 20.0], 'roundtrip_equal': True}\n{'raw_samples_after_display_mapping': [0, 100, 200, 300, 65535], 'display_values': [0.0, 0.0, 0.5, 1.0, 1.0], 'source_samples_unchanged': True}\n", "stderr": "", "exit_code": 0},
+      "limits": "The code performs elementary list arithmetic only. It does not test the OME-NGFF reader, an input format's sample anchor convention, axis permutations/flips, numerical precision across serialization, GUI display, raw image immutability, application exports, 3 GB access, concurrency, cancellation, or persistence."
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "P1",
+      "label": "proposed/UNEXECUTED",
+      "check": "Coordinate and calibration round trip using an asymmetric small volume with named z/y/x axes, anisotropic scales, nonzero translation, axis permutation and flip. Test supported import, annotation, save/reopen, CSV and mask export; require exact native index recovery and declared physical tolerance, and fail closed for unsupported transforms.",
+      "discriminates": "A correct explicit transform and axis mapping from row/column swaps, silently assumed orientation, sample-anchor offsets and lossy export.",
+      "limits": "Needs real reader and export code plus format-specific expected metadata."
+    },
+    {
+      "id": "P2",
+      "label": "proposed/UNEXECUTED",
+      "check": "Hash source bytes and record raw integer and floating samples, then change window/level, gamma, channel visibility and LUT. Require byte hash and original samples unchanged; separately test explicit resampling/cast as derived operation.",
+      "discriminates": "Display-only mapping from mutation or accidental replacement of source samples.",
+      "limits": "W1 checked only arithmetic; this needs application integration and real image files."
+    },
+    {
+      "id": "P3",
+      "label": "proposed/UNEXECUTED",
+      "check": "Benchmark 3 GB representative tiled and stripped OME-TIFF/BigTIFF plus chunked NGFF on an 8-core/16 GB machine. Measure peak RSS, bytes read, cache size, interaction latency and cancel time during pan, slice/time/channel changes; test codec and pathological block cases. Candidate initial targets are 512 MiB decoded cache, two workers, 64 MiB maximum direct decoded block and 4 GiB total process RSS, subject to tuning.",
+      "discriminates": "Bounded region/chunk access from a full decode, uncontrolled block/cache growth, and a cancellation path that cannot interrupt work.",
+      "limits": "Targets are product choices, not component guarantees. Include the actual filesystem, codecs, UI and workload."
+    },
+    {
+      "id": "P4",
+      "label": "proposed/UNEXECUTED",
+      "check": "Inject malformed metadata, missing OME-TIFF linked members, unsupported codecs, axis/shape mismatch, unknown axis and interrupted import. Check original unchanged, recoverable status/reason, raw metadata retention and continued access to other images.",
+      "discriminates": "Explicit safe failure and user correction from silent guesses, destructive partial import or whole-project failure.",
+      "limits": "Requires chosen parser profile and application error model."
+    },
+    {
+      "id": "P5",
+      "label": "proposed/UNEXECUTED",
+      "check": "Force termination at every project staging, checksum, manifest and commit step and during bundle copy/export. Verify reopen chooses the last complete generation, validates objects, and never advertises a partial export as complete. Repeat on each supported local and shared-storage filesystem.",
+      "discriminates": "Recoverable generation-based saves from corruption or reliance on unverified rename/durability semantics.",
+      "limits": "Filesystem behavior is environment-specific; test with the group's actual SMB/sync configuration."
+    },
+    {
+      "id": "P6",
+      "label": "proposed/UNEXECUTED",
+      "check": "Test file relocation by identical full hash and by same path/different hash; only explicit matching identity may rebind, and a mismatch must preserve prior annotation associations. Test portable bundle reopen at another path and workstation.",
+      "discriminates": "Path-based accidental rebinding from content identity and intentional relocation.",
+      "limits": "Requires final bundle/reference path schema."
+    },
+    {
+      "id": "P7",
+      "label": "proposed/UNEXECUTED",
+      "check": "For point, polygon and mask scopes (slice/time, volume, acquisition), exercise keyboard-only creation/navigation/styles, undo/redo and close/reopen. Test mask edge writes, overlapping edits, eviction, cancellation and backend-specific regression behavior including xarray/Dask/Zarr where those are used.",
+      "discriminates": "Persisted edit transactions and correct scope from viewer-only state, backend indexing errors and non-reversible edits.",
+      "limits": "The napari issue/test chain in S6 is precedent, not this app's result."
+    },
+    {
+      "id": "P8",
+      "label": "proposed/UNEXECUTED",
+      "check": "Compare crop export pixels/dtype/axes/calibration and adjusted origin against source region; round-trip annotation coordinates through a second parser; inspect label IDs/links/colors. Verify source SHA unchanged and export summary describes omitted TIFF/vendor metadata and vector-to-raster losses.",
+      "discriminates": "Correct identity-preserving crop and declared annotation/export semantics from off-by-one origin, lossy transform, or overclaimed interoperability.",
+      "limits": "Requires a second independent parser and selected output profile."
+    },
+    {
+      "id": "P9",
+      "label": "proposed/UNEXECUTED",
+      "check": "Build a locked Python 3.12 environment for pinned readers, napari and one Qt 6 binding; smoke test viewer loading, lazy slicing, drawing and supported OS packaging.",
+      "discriminates": "A compatible proposed pin set from a source-level combination with dependency conflicts or unusable GUI integration.",
+      "limits": "No dependency install, build, or application test was performed in this research stage."
+    }
+  ]
+}

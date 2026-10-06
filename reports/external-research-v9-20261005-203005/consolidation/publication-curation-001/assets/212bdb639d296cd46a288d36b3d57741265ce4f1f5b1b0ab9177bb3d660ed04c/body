@@ -1,0 +1,357 @@
+{
+  "schema": "er9.research.sources.v1",
+  "research_date": "2026-10-06",
+  "source_policy": "Independently discovered third-party primary documentation, source repositories, issue/PR records and standards only. Captures identify exact observed bytes; captured content does not prove semantic understanding beyond the recorded read scope.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "The Notebook file format",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "pin": "nbformat documentation 5.11",
+      "exact_locator": ["Top-level structure", "Code cells", "Code cell outputs", "Notebook metadata note"],
+      "capture_identity": {
+        "capture_id": "ff3f5dc4c7c54fd7b598e778c268c754",
+        "body_sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503",
+        "bytes": 51110,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:33:33.896816+00:00",
+        "path": "public_captures/f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503.body",
+        "read_scope": "Relevant article text was delivered in the initial capture response."
+      },
+      "applicability": "Jupyter notebook v4 interchange structure and optional metadata. Documents a portable document schema, not execution provenance or runtime guarantees."
+    },
+    {
+      "id": "S02",
+      "title": "Messaging in Jupyter",
+      "url": "https://jupyter-client.readthedocs.io/en/latest/messaging.html",
+      "pin": "jupyter_client documentation 8.10.0; Jupyter message specification 5.5 as stated by page",
+      "exact_locator": ["Versioning", "Message Header", "Parent header", "Status", "Execute request"],
+      "capture_identity": {
+        "capture_id": "b3990ec7d58740bca98e1ef94e2a42ee",
+        "body_sha256": "5e2f704fbf10ca644d597cd28bca4f03c85d0f5cf094029cd2dbfcc6bc44bd69",
+        "bytes": 177790,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:33:36.941644+00:00",
+        "path": "public_captures/5e2f704fbf10ca644d597cd28bca4f03c85d0f5cf094029cd2dbfcc6bc44bd69.body",
+        "read_scope": "Version/protocol and message/session/parent-header text delivered in the initial response."
+      },
+      "applicability": "Primary protocol source for relating requests, outputs, kernel status and session identity. Protocol version is independent of package release version."
+    },
+    {
+      "id": "S03",
+      "title": "Executing notebooks — NBClient",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": "NBClient documentation 0.11 / page identifies release 0.11.0",
+      "exact_locator": ["Executing notebooks", "Execution arguments", "Hooks before and after notebook/cell execution", "Handling errors and exceptions", "Widget state"],
+      "capture_identity": {
+        "capture_id": "375b6779f8514d3985d30a7c92897859",
+        "body_sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a",
+        "bytes": 36686,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "path": "public_captures/b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a.body",
+        "read_scope": "Execution, hooks, timeout/error handling and widget caveat inspected."
+      },
+      "applicability": "Independent Python notebook execution client precedent. Describes APIs/options; chosen package combination and cancellation behavior still require a pinned integration check."
+    },
+    {
+      "id": "S04",
+      "title": "CSV Overview — DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/overview.html",
+      "actual_url": "https://duckdb.org/docs/current/data/csv/overview",
+      "pin": "DuckDB documentation selector reported 1.5 current, captured 2026-10-06",
+      "exact_locator": ["Examples", "read_csv options", "explicit column schema"],
+      "capture_identity": {
+        "capture_id": "5dec5f4eb65f4ed98b00a4c9b87ba0f2",
+        "body_sha256": "074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d",
+        "bytes": 393173,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "path": "public_captures/074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d.body",
+        "read_scope": "Captured full response; relevant examples and schema-option entry inspected."
+      },
+      "applicability": "Primary docs for DuckDB CSV reader usage and schema overrides in the 1.5 documentation series. Current selector is mutable; cited body hash freezes this observation."
+    },
+    {
+      "id": "S05",
+      "title": "CSV Auto Detection — DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "pin": "DuckDB documentation selector reported 1.5 current, captured 2026-10-06",
+      "exact_locator": ["CSV files are not self-describing", "Sniffer", "Dialect detection", "Type detection", "Header detection", "Options to override auto-detection"],
+      "capture_identity": {
+        "capture_id": "57aa878467fe444698190ddd3d67dbac",
+        "body_sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+        "bytes": 372286,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "path": "public_captures/ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13.body",
+        "read_scope": "Page version and article description on auto-detection/sniffer were observed; large navigation dominates initial excerpt."
+      },
+      "applicability": "Primary DuckDB documentation for sampled CSV inference and explicit overrides. Sampling remains an inference aid, not proof of a full-file property."
+    },
+    {
+      "id": "S06",
+      "title": "Reading Faulty CSV Files — DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "pin": "DuckDB documentation selector reported 1.5 current, captured 2026-10-06",
+      "exact_locator": ["Reading Faulty CSV Files", "Structural Errors", "storing faulty lines/rejects"],
+      "capture_identity": {
+        "capture_id": "8984d63b8a8c4f0ab472296981d1ce12",
+        "body_sha256": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c",
+        "bytes": 376006,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:34:43.640974+00:00",
+        "path": "public_captures/58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c.body",
+        "read_scope": "Page title/version/description and captured article reference inspected; initial delivery shows the page summary and navigation, not the full article body."
+      },
+      "applicability": "DuckDB documents detailed CSV errors, skip options and storing faulty lines. Product contract must not silently skip; exact release behavior and reject completeness require testing."
+    },
+    {
+      "id": "S07",
+      "title": "Tuning Workloads — DuckDB",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads",
+      "pin": "DuckDB documentation selector reported 1.5 current, captured 2026-10-06",
+      "exact_locator": ["The preserve_insertion_order Option", "Parallelism", "Row Groups"],
+      "capture_identity": {
+        "capture_id": "0b5d75f6e79a4162b218ddcdbf36ad10",
+        "body_sha256": "8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b",
+        "bytes": 368625,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:34:35.273780+00:00",
+        "path": "public_captures/8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b.body",
+        "read_scope": "Captured page metadata explicitly describes larger-than-memory OOM risk and preserve_insertion_order=false permitting result reordering; article body not read in full."
+      },
+      "applicability": "Supports caution about memory and incidental order in documented import/export workloads. Does not establish a 5-GB throughput or memory guarantee."
+    },
+    {
+      "id": "S08",
+      "title": "Concurrency — DuckDB",
+      "url": "https://duckdb.org/docs/current/connect/concurrency",
+      "pin": "DuckDB documentation selector reported 1.5 current, captured 2026-10-06",
+      "exact_locator": ["Handling Concurrency", "Single Process", "Read-write mode", "Read-only mode"],
+      "capture_identity": {
+        "capture_id": "4cbc9cf8ed604943ac417ed9f0415e0c",
+        "body_sha256": "21e28d18cb785a5b71263a65c2ead890bfbffac8dcc63249c0e06d2a9c2c09c4",
+        "bytes": 353851,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:35:25.720730+00:00",
+        "path": "public_captures/21e28d18cb785a5b71263a65c2ead890bfbffac8dcc63249c0e06d2a9c2c09c4.body",
+        "read_scope": "Captured page metadata explicitly describes one read-write process, multiple writer threads in it, and read-only multiple-process mode; article body not read in full."
+      },
+      "applicability": "Guides the local single-writer/multiple-reader project policy. Not a guarantee for arbitrary network filesystem locking."
+    },
+    {
+      "id": "S09",
+      "title": "DuckDB issue #25824: late CSV values silently converted beyond the sniffer sample",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/25824",
+      "pin": "Issue #25824 state open; updated 2026-09-24; source version matrix reported in issue body",
+      "exact_locator": ["What happens?", "Gated exactly on the default sample", "Version matrix", "To Reproduce"],
+      "capture_identity": {
+        "capture_id": "fff34f9c42b3438ca84f90fecec91280",
+        "body_sha256": "2916d6e9e3ca08dd20b16c88baee5891a8e5876e68417c4ff72b70999f597d44",
+        "bytes": 11074,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:35:10.653809+00:00",
+        "path": "public_captures/2916d6e9e3ca08dd20b16c88baee5891a8e5876e68417c4ff72b70999f597d44.body",
+        "read_scope": "Complete issue API JSON/body observed."
+      },
+      "applicability": "Primary issue report with reproducible SQL, reported mechanism and author-supplied matrix: 1.1.3, 1.5.5, nightly and main @ 2bbfe6f236. Open at capture. Not independently reproduced; not evidence either way for 1.5.6, released after the issue's reported matrix."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB issue #1259: accept failure when casting",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/1259",
+      "pin": "DuckDB issue #1259, closed 2021-09-24",
+      "exact_locator": ["Issue body requesting failed casts to produce NULL"],
+      "capture_identity": {
+        "capture_id": "3073a4aed52b461f95c6d555b7f08279",
+        "body_sha256": "4471e46a40cffcb75ffd4982cd197760dc2869f08cbcc79fa353a498971ad96f",
+        "bytes": null,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "path": "public_captures/4471e46a40cffcb75ffd4982cd197760dc2869f08cbcc79fa353a498971ad96f.body",
+        "read_scope": "Complete issue body was inspected; exact response byte count was not retained in the stage notes."
+      },
+      "applicability": "Historical user issue motivating explicit null-on-cast-failure behavior. The user request and its fix are version-specific, not a current CSV reader guarantee."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB PR #2050: CSV Reader/Casting Framework Refactor & add support for TRY_CAST",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/2050",
+      "pin": "Merged 2021-07-28; merge commit 0cd04f9a5bedc920863e67c04952c48b335e3fde; PR head 792c571ab6b375a5c5502d407b2974f3b8d78a82",
+      "exact_locator": ["PR description", "Issue references #998 and #1259", "Merge metadata"],
+      "capture_identity": {
+        "capture_id": "15576bfaec4b425689a23d5393f47fa1",
+        "body_sha256": "188aa8e255a51326b52663e941e23e5ff60e7174ff78db12540ccf2de798887b",
+        "bytes": null,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "path": "public_captures/188aa8e255a51326b52663e941e23e5ff60e7174ff78db12540ccf2de798887b.body",
+        "read_scope": "PR description and merge metadata inspected; response byte count was not retained in stage notes."
+      },
+      "applicability": "Fix/change record for the historical cast failure path. Merge proves repository integration, not behavior in a release."
+    },
+    {
+      "id": "S12",
+      "title": "DuckDB PR #2050 file diff and regression test addition",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/2050/files?per_page=100",
+      "pin": "PR #2050 diff; head 792c571ab6b375a5c5502d407b2974f3b8d78a82",
+      "exact_locator": ["test/sql/cast/test_try_cast.test", "TRY_CAST failed conversion expectation", "CAST error expectation"],
+      "capture_identity": {
+        "capture_id": "29412fa120184cdd800d711581230acd",
+        "body_sha256": "afa762ac685910f4264277ecf7d1ad4e53245c745c58efbfabb17e73c2fc6315",
+        "bytes": 411932,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "path": "public_captures/afa762ac685910f4264277ecf7d1ad4e53245c745c58efbfabb17e73c2fc6315.body",
+        "read_scope": "Diff file list and the cast regression-test patch inspected."
+      },
+      "applicability": "Associated test evidence in the merged PR. It tests generic TRY_CAST null-on-error and ordinary CAST error behavior, not the modern sampled CSV late-cast issue."
+    },
+    {
+      "id": "S13",
+      "title": "DuckDB v0.3.0 release record",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v0.3.0",
+      "pin": "DuckDB release v0.3.0, published 2021-10-06",
+      "exact_locator": ["tag_name", "published_at", "release title"],
+      "capture_identity": {
+        "capture_id": "be36dd562a3944e4a1d50f6beb5b380a",
+        "body_sha256": "69534495a76d7a3269b67ab1b248256c339c2d9e0dbde15943fe77b712517c24",
+        "bytes": null,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "path": "public_captures/69534495a76d7a3269b67ab1b248256c339c2d9e0dbde15943fe77b712517c24.body",
+        "read_scope": "Release tag/title/date prefix inspected; response byte count not retained in stage notes."
+      },
+      "applicability": "Maps the v0.3.0 version name to an official release record. Historical release evidence only."
+    },
+    {
+      "id": "S14",
+      "title": "DuckDB v0.3.0 tagged TRY_CAST regression test source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/46a0fc50aa00ac019aee2157cf3382b85993f728/test/sql/cast/test_try_cast.test",
+      "pin": "Source at tag commit 46a0fc50aa00ac019aee2157cf3382b85993f728 (v0.3.0)",
+      "exact_locator": ["TRY_CAST turns a failed cast into NULL", "CAST throws an error"],
+      "capture_identity": {
+        "capture_id": "d48df3d696154508802d35c302a9b458",
+        "body_sha256": "32813c2a7ad9807f442f02a05c57644f00ae40f3b297fbc743b9ae0ca4dc1532",
+        "bytes": 741,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "path": "public_captures/32813c2a7ad9807f442f02a05c57644f00ae40f3b297fbc743b9ae0ca4dc1532.body",
+        "read_scope": "Complete short test file inspected."
+      },
+      "related_capture": {
+        "url": "https://api.github.com/repos/duckdb/duckdb/git/ref/tags/v0.3.0",
+        "capture_id": "2bf1fb7dab3e4a24b6d7aac3818c36d0",
+        "body_sha256": "7ba295df04483a32856d2db9ceda3c17a7cb6ec7472a12148c672341b94b86dc",
+        "bytes": null,
+        "complete": true,
+        "captured_utc": "2026-10-06",
+        "read_scope": "Complete tag-ref response inspected; it points to commit 46a0fc50aa00ac019aee2157cf3382b85993f728."
+      },
+      "applicability": "Shows that the regression test was present in the tagged release source. This historical chain does not establish current DuckDB conversion semantics."
+    },
+    {
+      "id": "S15",
+      "title": "DuckDB v1.5.6 Bugfix Release",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.6",
+      "pin": "DuckDB v1.5.6; published 2026-09-28; release tag target commit 069cc9f9b5be802405797faecc284961b07c70ef",
+      "exact_locator": ["tag_name", "target_commitish", "published_at", "release title"],
+      "capture_identity": {
+        "capture_id": "f2ee7558a99947128af2aee72bf66dbb",
+        "body_sha256": "92a4a45cc77a4f1dd60d69adebad5a32bb970deecba0e2dd70af37fb42ca6fa0",
+        "bytes": 53225,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:35:39.458918+00:00",
+        "path": "public_captures/92a4a45cc77a4f1dd60d69adebad5a32bb970deecba0e2dd70af37fb42ca6fa0.body",
+        "read_scope": "Release tag, published date and target commit inspected."
+      },
+      "applicability": "Identifies the proposed DuckDB runtime candidate and its release date. It was released after the version matrix in issue #25824; no implication that the issue is fixed or present in this release."
+    },
+    {
+      "id": "S16",
+      "title": "Isolate containers with a user namespace — Docker",
+      "url": "https://docs.docker.com/engine/security/userns-remap.md",
+      "pin": "Docker Engine security documentation captured 2026-10-06; source response has no engine version pin",
+      "exact_locator": ["userns-remap", "host identity mapping", "bind-mount permission complexity", "known limitations"],
+      "capture_identity": {
+        "capture_id": "5b4262977a8d49cc80b1a913d07c7865",
+        "body_sha256": "1266277454ecfac261a4a0d4b442d6945593ccc78c489fc1d6896f74e591eb8e",
+        "bytes": 12104,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:33:44.608162+00:00",
+        "path": "public_captures/1266277454ecfac261a4a0d4b442d6945593ccc78c489fc1d6896f74e591eb8e.body",
+        "read_scope": "Complete Markdown response inspected."
+      },
+      "applicability": "Primary Docker setup/security documentation. Linux namespace behavior and setup complexity do not settle macOS/Windows product support."
+    },
+    {
+      "id": "S17",
+      "title": "docker container run reference",
+      "url": "https://docs.docker.com/reference/cli/docker/container/run.md",
+      "pin": "Docker CLI reference captured 2026-10-06; current docs, no engine version pin",
+      "exact_locator": ["Options: --network, --read-only, --memory, --cpus, --pids-limit, --security-opt", "Escalate container privileges", "Mount volume read-only"],
+      "capture_identity": {
+        "capture_id": "d82d9655e05942f2a365b6906d424c73",
+        "body_sha256": "e958e92f26dd152276df505d27703d0a0356d9e09bc386ffcb5bb98873d33d5b",
+        "bytes": 72416,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:33:47.219366+00:00",
+        "path": "public_captures/e958e92f26dd152276df505d27703d0a0356d9e09bc386ffcb5bb98873d33d5b.body",
+        "read_scope": "Relevant flags, mount behavior, network options and privileged warning observed in the delivered section."
+      },
+      "applicability": "Documents runtime controls used as a candidate sandbox design surface. Availability of flags is not security validation."
+    },
+    {
+      "id": "S18",
+      "title": "Repeatable Installs — pip",
+      "url": "https://pip.pypa.io/en/stable/topics/repeatable-installs/",
+      "pin": "pip documentation v26.2.1",
+      "exact_locator": ["Pinning the package versions", "Hash-checking", "Using a wheelhouse"],
+      "capture_identity": {
+        "capture_id": "bb51dd7289844308bb9f6bf18fe5ace4",
+        "body_sha256": "105c68ea191b6620aa60110f4f202d0f5e0965a9d5691b93d68eef29798f50f6",
+        "bytes": 31384,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:35:58.971236+00:00",
+        "path": "public_captures/105c68ea191b6620aa60110f4f202d0f5e0965a9d5691b93d68eef29798f50f6.body",
+        "read_scope": "Complete response and relevant article text inspected."
+      },
+      "applicability": "Primary package installer documentation for version pins, artifact hashes and platform-specific compiled bundles. Does not guarantee deterministic behavior across all hosts."
+    },
+    {
+      "id": "S19",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "pin": "W3C Recommendation dated 2024-12-12; version URI https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "exact_locator": ["Success Criterion 4.1.3 Status Messages", "Keyboard Accessible", "Status of This Document"],
+      "capture_identity": {
+        "capture_id": "eac865652823441d8ef7f9f46dd50ac1",
+        "body_sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057",
+        "bytes": 512457,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:35:47.166039+00:00",
+        "path": "public_captures/6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057.body",
+        "read_scope": "Recommendation identity/status and contents outline delivered; relevant normative criterion body was not in the delivered excerpt."
+      },
+      "applicability": "Normative accessibility standard to validate against. This capture only establishes publication identity; use the cited SC anchor/version and supporting guide for criterion wording."
+    },
+    {
+      "id": "S20",
+      "title": "Understanding Success Criterion 4.1.3: Status Messages — W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "pin": "WCAG 2.2 Understanding document; captured 2026-10-06",
+      "exact_locator": ["In Brief", "Success Criterion", "Intent", "Status message examples"],
+      "capture_identity": {
+        "capture_id": "06f324b0386c41cab671b379bfb9fb27",
+        "body_sha256": "d5a085f7be8814e4f01520db08d41d09b62491f40dc0fb6fb4941ec762cf3746",
+        "bytes": 60299,
+        "complete": true,
+        "captured_utc": "2026-10-06T02:35:52.150868+00:00",
+        "path": "public_captures/d5a085f7be8814e4f01520db08d41d09b62491f40dc0fb6fb4941ec762cf3746.body",
+        "read_scope": "Relevant SC text, intent, progress/error examples and explicit informative/non-normative note delivered in initial section."
+      },
+      "applicability": "Informative WAI explanation of the status-message criterion, including progress/waiting/error examples; normative requirements remain in WCAG Recommendation S19."
+    }
+  ]
+}

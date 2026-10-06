@@ -1,0 +1,132 @@
+{
+  "schema": "er9.research.source-catalog.v1",
+  "stage": "I-12-FRESH-DELIVERY-R001-treatment-research-a001 (research role)",
+  "captured_utc_day": "2026-10-06",
+  "notes": [
+    "All captures are exact public HTTP response bodies taken via the stage's admitted public_https_get tool. 'pin' is the repo ref the URL resolved to at capture time; capture identity is the tool-reported sha256 of the exact response bytes.",
+    "The GitHub API resolved the requested repo iterative/dvc.org to treeverse/dvc.org (301 redirect observed in capture S4-listing); docs content was captured under the resolved location. Recorded honestly as an anomaly.",
+    "A source catalog locator supplements, and does not replace, inline citations in proposal.md."
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Jupyter Notebook v4.5 JSON schema (nbformat)",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "repo jupyter/nbformat, branch main (branch tip at capture time; no tag pinned)",
+      "locator": "whole file; key locators: properties.metadata.kernelspec; properties.metadata.language_info; definitions.code_cell.required [id, cell_type, metadata, source, outputs, execution_count]; definitions.code_cell.properties.execution_count (\"The code cell's prompt number. Will be null if the cell has not been run.\", integer|null); definitions.output oneOf execute_result|display_data|stream|error; definitions.cell_id pattern ^[a-zA-Z0-9-_]+$ maxLength 64; nbformat minimum 4, nbformat_minor minimum 5; code cell metadata.execution iopub/shell timestamps",
+      "capture_id": "3809a4697c954d788e09923c72645667",
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "bytes": 16104,
+      "complete": true,
+      "applicability": "Notebook document model: cells array order is display order; execution_count is the only per-cell execution ordinal recorded in the document; outputs are embedded in the cell, not addressed by global id; kernelspec/language_info are the recorded environment hints. Supports design claims about what an interchange format does and does not record. Does not by itself establish runtime behavior of any frontend or executor."
+    },
+    {
+      "id": "S2",
+      "title": "nbclient README",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/main/README.md",
+      "pin": "repo jupyter/nbclient, branch main (branch tip at capture time)",
+      "locator": "\"NBClient lets you execute notebooks\"; \"This library currently supports Python 3.10+ versions\"; \"NBClient extracted nbconvert's ExecutePreprocessor into its own library\"; \"jupyter_client ... provides the Python API for starting, managing and communicating with Jupyter kernels\"",
+      "capture_id": "9fc928a0264a40418b9c2c8e31d73f4e",
+      "sha256": "3a756e31c830e943c1303cab7b5e84723bd1b1edf2f1057759c90ff0b26ff1ee",
+      "bytes": 3163,
+      "complete": true,
+      "applicability": "Identifies nbclient as the programmatic notebook-execution layer and its Python support floor (3.10+). README statements; release-level behavior should be confirmed against the release notes of any version actually adopted."
+    },
+    {
+      "id": "S3",
+      "title": "nbclient source: nbclient/client.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/main/nbclient/client.py",
+      "pin": "repo jupyter/nbclient, branch main (branch tip at capture time)",
+      "locator": "captured bytes 0..32767 of 49883 (PARTIAL; only locators inside this range are cited): NotebookClient.allow_errors Bool(False) docstring \"If False (default), when a cell raises an error the execution is stopped and a CellExecutionError is raised\"; force_raise_errors; raises-exception cell tag semantics; timeout / interrupt_on_timeout / error_on_timeout; startup_timeout=60; raise_on_iopub_timeout (\"the currently executing cell will be skipped\"); skip_cells_with_tag=\"skip-execution\"; record_timing -> cell metadata.execution; kernel_name default from nb.metadata.kernelspec.name; DeadKernelError \"Kernel died\" raised by _async_check_alive; async_execute writes info_msg language_info into nb.metadata[\"language_info\"]; resources {'metadata': {'path': run_path}} sets kernel cwd; SIGINT/SIGTERM + atexit kernel cleanup in async_setup_kernel",
+      "capture_id": "b218d0a5bc104c769693be58f554dd21",
+      "sha256": "range 0..32768 sha256 46f1cd9cd7b6ef069d24f2a00092284612f18236cb7e7c4ce1da37b05a0911de (delivery range hash; full-body hash per tool: 25e055722990e9910443449514767cb69059971703c7b8b504540831b6683a58)",
+      "bytes": 32768,
+      "complete": false,
+      "applicability": "Executed-notebook semantics on the branch captured: default stop-on-first-error; timeout/interrupt options; dead-kernel detection; kernelspec used to select kernel; execution cwd configurable. PARTIAL capture: statements are limited to the captured byte range; the remainder of the file (execute_cell internals) was not captured. main-branch source; behavior of a chosen release must be checked at its tag before adoption."
+    },
+    {
+      "id": "S4",
+      "title": "DVC docs: dvc.yaml (stages, deps/outs, dvc.lock)",
+      "url": "https://raw.githubusercontent.com/treeverse/dvc.org/main/content/docs/user-guide/project-structure/dvcyaml-files.md",
+      "pin": "repo treeverse/dvc.org (GitHub API redirected the requested iterative/dvc.org here), branch main (branch tip at capture time)",
+      "locator": "\"## Stages\" (stages with cmd/deps/outs); \"DVC will check whether they have changed to decide whether the stage requires re-execution (see `dvc status`)\"; \"## dvc.lock file\" (\"Allow DVC to detect when stage definitions, or their dependencies have changed. Such conditions invalidate stages, requiring their reproduction\"); dvc.lock example with cmd \"jupyter nbconvert --execute featurize.ipynb\" and deps md5 d8b874c5..., outs with md5+size; \"Avoiding unexpected behavior\" details block (read/write exclusively declared deps/outs; completely rewrite outputs, do not append; deterministic code guidance); stage fields table (frozen, always_changed, persist: \"outputs are deleted when `dvc repro` starts\" by default); output subfields cache/remote/push; parameters as granular deps; foreach/matrix templating",
+      "capture_id": "72e5532cc2e34c1a8fd73d6df4ca4247",
+      "sha256": "5f1880889da66e66987bb9b8c455bd66d308df8214f740a2d3688a149c6cecd8",
+      "bytes": 28970,
+      "complete": true,
+      "applicability": "Precedent for dependency-hashed stage invalidation and a lockfile recording deps/outs/cmd/params; notably DVC's own lockfile example uses executed notebooks as stage commands, which supports the notebook-as-stage architecture. Docs repo org (treeverse vs iterative) is an observed anomaly; content applicability to the DVC tool was taken from the docs text itself, and the installed DVC release should be checked against a tagged docs version before depending on exact semantics."
+    },
+    {
+      "id": "S4-listing",
+      "title": "GitHub contents listing: dvc.org docs/user-guide/project-structure (redirect evidence)",
+      "url": "https://api.github.com/repos/iterative/dvc.org/contents/content/docs/user-guide/project-structure",
+      "pin": "api.github.com response; resolved repository treeverse/dvc.org, ref main",
+      "locator": "response JSON: file entries dvc-files.md, dvcyaml-files.md, dvc-files.md download_url pointing at raw.githubusercontent.com/treeverse/dvc.org/main/...",
+      "capture_id": "c88586af653e4cea9506b6ac32129c44",
+      "sha256": "41aedb6be5b6b9fea99f580873f5ab4023e28aabd4a353a9dcf10795dd536337",
+      "bytes": 6121,
+      "complete": true,
+      "applicability": "Establishes the exact doc path used for S4 and documents the iterative->treeverse org redirect (capture-identity anomaly note)."
+    },
+    {
+      "id": "S5",
+      "title": "GitHub issues search: duckdb CSV sniffer wrong type",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+CSV+sniffer+wrong+type&per_page=8",
+      "pin": "api.github.com search response at capture time (search index is volatile)",
+      "locator": "items: issue #25824 (open, created 2026-09-17, \"CSV reader silently rounds/truncates values past the sniffer's sample_size, although the sniffer itself rejects those same strings\", full reproduction, version matrix 1.1.3 / 1.5.5 / 1.6.0.dev214 / main@2bbfe6f236 all affected, references sibling #25786); issue #15777 (closed 2025-02-06, dateformat AUTO); #15576 (closed 2025-01-07, wrong delimiter sniff); #5378 (closed 2022-12-19, quote sniffing); PR #1015 (merged 2020-10-16T11:12:26Z, \"CSV Loader would wrongly assume column with all sample values null to be Bool\")",
+      "capture_id": "5510e817a8b04d1ba641263a865921a4",
+      "sha256": "02be09c96cd1ffc8bc8021244728e2818aed1827ea977422f594647986bd7818",
+      "bytes": 29323,
+      "complete": true,
+      "applicability": "Discovery record for the issue chain; #25824's body (authored by the issue reporter) documents the sniffer-vs-scanner strictness asymmetry with line-level code pointers and a self-contained reproduction. Search-index results and issue bodies are claims by their authors, verified further only where a PR/test was captured (S6) or docs corroborate (S7/S8). #25824 is OPEN: no fix is established."
+    },
+    {
+      "id": "S6",
+      "title": "DuckDB PR #1015 files (fix + regression tests)",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/1015/files",
+      "pin": "repo duckdb/duckdb, PR merge commit ref 921d87713fd5052f5feed541cfdb2723b05a7a9e, merged_at 2020-10-16T11:12:26Z",
+      "locator": "src/execution/operator/persistent/buffered_csv_reader.cpp patch: adds LogicalType::SQLNULL to type_candidates; sets d_type = LogicalType::VARCHAR when best_sql_types_candidate.size() == type_candidates.size() (candidate list never reduced by any sample value); regression tests in the same PR: test/sql/copy/csv/auto/test_auto_voter.test (added; read_csv_auto voter.tsv, expects count 5300), test/sql/copy/csv/auto/test_sample_size.test (modified: sparse-column file issue_811.csv changed from `statement error` to `statement ok` with expected typeof INTEGER/VARCHAR/DATE/VARCHAR), test/sql/copy/csv/auto/test_type_detection.test (int_bol.csv -> INTEGER/BOOLEAN), test data int_bol.csv and voter.tsv added",
+      "capture_id": "88e7d43dc60348b0b5ca0b2b4d944595",
+      "sha256": "9bb42216f94849dc13739fcb777eefd0d7e5a0c4f94a60792d352f06c595e674",
+      "bytes": 9335,
+      "complete": true,
+      "applicability": "Complete issue->fix->regression-test chain at the recorded ref. Version applicability limit: the fix predates DuckDB 1.0 and targets buffered_csv_reader.cpp, which per issue #25824's file references (csv_scanner/sniffer/type_detection.cpp) has since been rewritten; the exact patch is NOT on current main. What transfers is the mechanism class (an all-NULL sampled column has an unreduced candidate list and must default to VARCHAR), corroborated by S7's documented default auto_type_candidates including NULL and VARCHAR."
+    },
+    {
+      "id": "S7",
+      "title": "DuckDB docs (current): CSV Import overview",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/overview.md",
+      "pin": "repo duckdb/duckdb-web, branch main, path docs/current/data/csv/overview.md (\"current\" docs channel)",
+      "locator": "Parameters table: sample_size default 20480 (\"Number of sample lines for auto detection\"); all_varchar; auto_type_candidates default ['NULL','BOOLEAN','BIGINT','DOUBLE','TIME','DATE','TIMESTAMP','VARCHAR'] with \"The VARCHAR type is always included as a fallback option\"; columns= \"disables auto detection of the schema\"; strict_mode default true (\"throw an error upon encountering any issues ... reading structurally incorrect files can cause ambiguity\"); ignore_errors default false; store_rejects / rejects_scan / rejects_table / rejects_limit; null_padding; nullstr; encodings utf-8/utf-16/latin-1; parallel reader default true; compression auto (gzip/zstd); files_to_sniff default 10; union_by_name (\"Align columns from different files by column name instead of position. Using this option increases memory consumption\"); \"## Order Preservation\": \"The CSV reader respects the preserve_insertion_order configuration option ... When true (the default), the order of the rows ... is the same as the order of the corresponding lines read from the file(s). When false, there is no guarantee that the order is preserved.\"",
+      "capture_id": "2178d275e51b4a3ab1be42d272040009",
+      "sha256": "f0f8db09a36a783808d74b348334392d7d9595536909d3b92139b5f4671479b7",
+      "bytes": 14831,
+      "complete": true,
+      "applicability": "Documents the ingest knobs a data contract can pin (declared columns vs sniffer, sample size, strict mode, rejects) and an explicit order-preservation contract. 'current'-channel docs; exact defaults must be re-checked for the DuckDB version actually shipped."
+    },
+    {
+      "id": "S8",
+      "title": "DuckDB docs (current): Reading Faulty CSV Files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "pin": "repo duckdb/duckdb-web, branch main, path docs/current/data/csv/reading_faulty_csv_files.md",
+      "locator": "Structural error taxonomy: CAST, MISSING COLUMNS, TOO MANY COLUMNS, UNQUOTED VALUE, LINE SIZE OVER MAXIMUM (default 2,097,152 bytes in this page), INVALID ENCODING; default behavior \"the scanner will immediately stop the scanning process and throw the error\"; error message includes line number, original line, remediation (types=..., sample_size=-1, COPY from table); ignore_errors skips rows silently; \"One should note that the CSV Parser is affected by the projection pushdown optimization. Hence, if we were to select only the name column, both rows would be considered valid, as the casting error on the age would never occur.\"; store_rejects=true -> temporary tables reject_scans and reject_errors with columns line, line_byte_position, byte_position, column_idx, column_name, error_type, csv_line, error_message",
+      "capture_id": "bfe3046cf1a34faa912bc1adee0ffe9d",
+      "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad",
+      "bytes": 12080,
+      "complete": true,
+      "applicability": "Grounds the data-contract error-handling design: quarantine (rejects) instead of silent deletion; a documented pitfall where row validity is projection-dependent (projection pushdown), which is why the workspace's contract layer must not equate 'the query ran' with 'every row validated'. Minor discrepancy noted: max line default 2,097,152 bytes here vs 2,000,000 in S7's table; do not rely on the exact default."
+    },
+    {
+      "id": "S9",
+      "title": "pip docs: Requirements File Format",
+      "url": "https://raw.githubusercontent.com/pypa/pip/main/docs/html/reference/requirements-file-format.md",
+      "pin": "repo pypa/pip, branch main (branch tip at capture time)",
+      "locator": "\"Requirements files serve as a list of items to be installed by pip\"; note: \"the full syntax ... is only intended for consumption by pip, and other tools should take that into account before using it for their own purposes\"; per-requirement `--hash` option (Hash-checking mode); environment variable references ${VAR}",
+      "capture_id": "d62b1b8651444944a137bc658ccc911c",
+      "sha256": "fea8d69b449bc4b3f4ec80dc4429cb6886f6c43eb28424a66efdc87467a6f1ab",
+      "bytes": 4348,
+      "complete": true,
+      "applicability": "Supports the environment-binding design: a pinned requirements file with --hash entries is machine-checkable, but the format is pip-specific; a reproducibility manifest should record resolved versions + hashes, not merely unpinned requirement names."
+    }
+  ]
+}

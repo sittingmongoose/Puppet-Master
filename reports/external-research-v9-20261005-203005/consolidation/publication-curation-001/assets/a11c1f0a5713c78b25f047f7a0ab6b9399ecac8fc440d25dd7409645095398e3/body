@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "stage": "research",
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "executed by candidate",
+      "purpose": "Check the crop-origin translation arithmetic in the proposed zero-based voxel-center coordinate contract.",
+      "execution_id": "exec-h8lt0u30",
+      "code_sha256": "4e264b278603fcefd162380fcc159b8fa023a997d03c85083bab48df1eb81f1e",
+      "code": "import json\nfrom math import isclose\n\n# Contract check: zero-based voxel-center coordinates map by physical = origin + scale * index.\n# Crop offsets are in source (x, y) order; rebasing the origin should preserve point position.\ndata = {\n    \"origin_um\": [10.0, -3.0],\n    \"scale_um_per_pixel\": [0.25, 0.5],\n    \"source_point_xy\": [9.0, 7.0],\n    \"crop_start_xy\": [4.0, 3.0],\n}\no = data[\"origin_um\"]\ns = data[\"scale_um_per_pixel\"]\np = data[\"source_point_xy\"]\nc = data[\"crop_start_xy\"]\nphysical_before = [o[i] + s[i] * p[i] for i in range(2)]\norigin_after = [o[i] + s[i] * c[i] for i in range(2)]\npoint_after = [p[i] - c[i] for i in range(2)]\nphysical_after = [origin_after[i] + s[i] * point_after[i] for i in range(2)]\nexpected = [12.25, 0.5]\nassert all(isclose(a, b, rel_tol=0, abs_tol=1e-12) for a, b in zip(physical_before, expected))\nassert all(isclose(a, b, rel_tol=0, abs_tol=1e-12) for a, b in zip(physical_after, expected))\nprint(json.dumps({\"input\": data, \"physical_before_um\": physical_before, \"crop_origin_um\": origin_after, \"point_after_crop_xy\": point_after, \"physical_after_um\": physical_after, \"expected_um\": expected}, sort_keys=True))",
+      "input": {
+        "origin_um": [10.0, -3.0],
+        "scale_um_per_pixel": [0.25, 0.5],
+        "source_point_xy": [9.0, 7.0],
+        "crop_start_xy": [4.0, 3.0]
+      },
+      "justified_expected_behavior": "For physical = origin + scale * voxel_center_index, translating the cropped origin by scale*crop_start and subtracting crop_start from the point must preserve physical coordinates. Expected physical point is (12.25, 0.5) µm both before and after; cropped index is (5,4), cropped origin is (11,-1.5) µm.",
+      "stdout": "{\"crop_origin_um\": [11.0, -1.5], \"expected_um\": [12.25, 0.5], \"input\": {\"crop_start_xy\": [4.0, 3.0], \"origin_um\": [10.0, -3.0], \"scale_um_per_pixel\": [0.25, 0.5], \"source_point_xy\": [9.0, 7.0]}, \"physical_after_um\": [12.25, 0.5], \"physical_before_um\": [12.25, 0.5], \"point_after_crop_xy\": [5.0, 4.0]}\n",
+      "stdout_sha256": "801373d62601abc0b0a146f81c3a391cc70c08f8fffa1efe55e726cb2d2c4cbb",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "limits": {
+        "wall_seconds": 5,
+        "cpu_seconds": 3,
+        "memory_bytes": 268435456,
+        "tasks": 16,
+        "network": "new empty namespace",
+        "filesystem": "fresh empty execution filesystem"
+      },
+      "scope_limits": [
+        "Isolated arithmetic component check only.",
+        "Does not parse OME-NGFF or TIFF metadata, validate the proposed convention against an external file, or test a complete application.",
+        "Does not test rotation, axis permutations, resampling, floating point image values, exports or GUI behavior."
+      ]
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "P1",
+      "status": "proposed/UNEXECUTED",
+      "check": "Bounded access and process RSS for one tiled/segmented 3 GB TIFF and one 3 GB chunked image on an 8-core/16 GB workstation.",
+      "discriminating_input": "Known image fixtures with declared axis order, codecs and segment/chunk sizes; one deliberately oversized segment/chunk control.",
+      "expected_behavior": "No whole-source second allocation; measured process RSS growth no greater than the proposed 1 GiB gate; record cold/warm slice latency, maximum decoded segment, cancellation point and actual bytes read. Oversized control warns/refuses or enters an explicit proxy operation.",
+      "scope_limit": "No application performance claim until an integrated build and these measurements exist."
+    },
+    {
+      "id": "P2",
+      "status": "proposed/UNEXECUTED",
+      "check": "Coordinate contract round trip through actual OME-TIFF and OME-Zarr readers/writers.",
+      "discriminating_input": "Known marker coordinates across axis permutations, anisotropic spacing, unit changes, origin shifts, reflection/rotation and crop offsets.",
+      "expected_behavior": "All supported samples map to the same physical coordinates before/after crop; unknown/singular transforms are shown and rejected until explicit correction; exported sidecar and supported metadata agree.",
+      "scope_limit": "The isolated arithmetic witness W1 covers only a 2D scale-plus-translation case."
+    },
+    {
+      "id": "P3",
+      "status": "proposed/UNEXECUTED",
+      "check": "Interrupt import, annotation mask save, SQLite transaction, bundle creation and publication at injected failure points.",
+      "discriminating_input": "Crash at each stage plus a previously valid project/bundle.",
+      "expected_behavior": "Reopen returns the last committed state, validates reachable mask blobs, identifies incomplete imports/exports and preserves the previous ready bundle.",
+      "scope_limit": "SQLite documentation describes database transaction assumptions; it does not prove app-level multi-file or network-storage recovery."
+    },
+    {
+      "id": "P4",
+      "status": "proposed/UNEXECUTED",
+      "check": "Source identity, relocation and changed-file rejection.",
+      "discriminating_input": "Move a byte-identical source, then place different bytes at the prior pathname; mutate one key in a Zarr directory store.",
+      "expected_behavior": "Relink only the byte-identical content digest; changed content remains a distinct asset; directory manifest digest changes on metadata or chunk change.",
+      "scope_limit": "Proposed identity algorithm only; not exercised on production-sized files or concurrent modifications."
+    },
+    {
+      "id": "P5",
+      "status": "proposed/UNEXECUTED",
+      "check": "Display-only versus derived-operation integrity and export fidelity.",
+      "discriminating_input": "Integer and float samples, altered window/level/LUT, one crop, one resample and one mask/overlay.",
+      "expected_behavior": "Display edits leave original digest and samples unchanged; crop preserves specified raw dtype/sample values; resampling has new derived identity and exact operation record; overlay PNG is identified as rendered output; JSONL/CSV manifest lists transformations and losses.",
+      "scope_limit": "No component witness here establishes reader/writer or full-application behavior."
+    },
+    {
+      "id": "P6",
+      "status": "proposed/UNEXECUTED",
+      "check": "Sparse Zarr selection regression at the selected package pin.",
+      "discriminating_input": "S7's huge sparse-grid cases, including unsorted/duplicate coordinate selections and round-trip values.",
+      "expected_behavior": "If the app uses the coordinate-selection path, the selected maintained release must pass the cases without full-grid allocation; otherwise app mask edits must avoid that path.",
+      "scope_limit": "Merged-source test presence and PR-reported results do not establish that v3.4.0 contains the fix or that the app uses the path."
+    },
+    {
+      "id": "P7",
+      "status": "proposed/UNEXECUTED",
+      "check": "Keyboard/accessibility task run and shared-storage bundle behavior.",
+      "discriminating_input": "Keyboard-only create/navigate/annotate/undo/save/reopen/export tasks; target workstation OS and each shared-storage type.",
+      "expected_behavior": "All minimum actions reachable and status/errors readable; original/derived distinguishable without color; bundle verification and ready-marker/rename protocol recover without damaging previous bundle.",
+      "scope_limit": "Targets are product acceptance proposals; no accessibility or filesystem trial has been performed."
+    }
+  ]
+}

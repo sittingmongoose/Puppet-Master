@@ -1,0 +1,83 @@
+{
+  "catalog_version": 1,
+  "stage": "I-05-LUNA-S1-control-research-a001",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "kind": "isolated coordinate arithmetic check",
+      "tool": "pm_execution.python_execute",
+      "execution_id": "exec-tnjvxjx0",
+      "completed_utc": "2026-10-05T22:30:30.386822+00:00",
+      "code": "import json\n\ndef matvec(matrix, vector):\n    return [sum(a * b for a, b in zip(row, vector)) for row in matrix]\n\ndef inverse3(matrix):\n    work = [list(row) + [1.0 if i == j else 0.0 for j in range(3)] for i, row in enumerate(matrix)]\n    for col in range(3):\n        pivot = max(range(col, 3), key=lambda row: abs(work[row][col]))\n        if abs(work[pivot][col]) < 1e-15:\n            raise ValueError(\"singular matrix\")\n        work[col], work[pivot] = work[pivot], work[col]\n        divisor = work[col][col]\n        work[col] = [value / divisor for value in work[col]]\n        for row in range(3):\n            if row != col:\n                factor = work[row][col]\n                work[row] = [a - factor * b for a, b in zip(work[row], work[col])]\n    return [row[3:] for row in work]\n\naxes = data[\"axes\"]\nsample_index = data[\"sample_index_by_axis\"]\nassert axes == [\"t\", \"c\", \"z\", \"y\", \"x\"]\nassert all(axis in sample_index for axis in axes)\nindex_xyz = [sample_index[axis] for axis in (\"x\", \"y\", \"z\")]\nmatrix = data[\"index_xyz_to_physical_um_linear\"]\norigin = data[\"origin_xyz_um\"]\nphysical = [a + b for a, b in zip(origin, matvec(matrix, index_xyz))]\nindex_xyz_roundtrip = matvec(inverse3(matrix), [p - o for p, o in zip(physical, origin)])\nscreen_xy = [2 * index_xyz[1] + 100, -2 * index_xyz[0] + 500]\nindex_xy_from_screen = [(500 - screen_xy[1]) / 2, (screen_xy[0] - 100) / 2]\nassert index_xyz == [11, 7, 4]\nassert physical == [8.25, 22.75, 33.0]\nassert all(abs(a - b) < 1e-12 for a, b in zip(index_xyz_roundtrip, index_xyz))\nassert index_xy_from_screen == [11.0, 7.0]\nresult = {\n    \"array_axes\": axes,\n    \"stored_indices\": [sample_index[axis] for axis in axes],\n    \"index_xyz_center_coordinates\": index_xyz,\n    \"physical_xyz_um\": physical,\n    \"index_xyz_roundtrip\": index_xyz_roundtrip,\n    \"screen_xy_for_view_only\": screen_xy,\n    \"index_xy_recovered_from_screen\": index_xy_from_screen,\n    \"passed\": True,\n}\nprint(json.dumps(result, sort_keys=True))",
+      "input": {
+        "axes": ["t", "c", "z", "y", "x"],
+        "sample_index_by_axis": {"t": 2, "c": 1, "z": 4, "y": 7, "x": 11},
+        "index_xyz_to_physical_um_linear": [[0, -0.25, 0], [0.25, 0, 0], [0, 0, 0.75]],
+        "origin_xyz_um": [10, 20, 30]
+      },
+      "expected_behavior": "Named indices in t,c,z,y,x order map to sample-center index_xyz [11,7,4]. Applying physical = origin + M*index gives [8.25,22.75,33] um; inverse affine returns the original index; the stated view transform maps screen [114,478] back to index xy [11,7]. These expectations discriminate axis reversal and view/data-coordinate confusion under the proposal's convention.",
+      "receipt": {
+        "code_sha256": "5466920f323dfa9460f9a14be078f4b407904955509a95b7696fac4a388771eb",
+        "data_sha256": "8077f735bba638d37a74ea80d3cd76152a339152a9142ac470405dfe09b263b6",
+        "stdout": "{\"array_axes\": [\"t\", \"c\", \"z\", \"y\", \"x\"], \"index_xy_recovered_from_screen\": [11.0, 7.0], \"index_xyz_center_coordinates\": [11, 7, 4], \"index_xyz_roundtrip\": [11.0, 7.0, 4.0], \"passed\": true, \"physical_xyz_um\": [8.25, 22.75, 33.0], \"screen_xy_for_view_only\": [114, 478], \"stored_indices\": [2, 1, 4, 7, 11]}\n",
+        "stdout_sha256": "33018f30cdf848e4ac60e04e640090652958686aee9090ffc662d1ff52e2abe8",
+        "stderr": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "stream_bytes_each": 32768, "network": "new empty namespace"}
+      },
+      "scope_limits": [
+        "Candidate-authored standard-library arithmetic only; no NGFF/OME parser, napari layer, pointer event, file reader, SQLite project, application save/reopen, or export was executed.",
+        "The sample affine is a chosen discriminating example, not a calibration from an instrument.",
+        "The screen mapping is a small arithmetic example and does not validate a real viewer transform or device pixel ratio.",
+        "This witness is not evidence for full application behavior."
+      ]
+    },
+    {
+      "id": "W2",
+      "status": "proposed / UNEXECUTED",
+      "kind": "large-image bounded-access and responsiveness qualification",
+      "input_required": "Representative 3 GB tiled OME-TIFF and chunked OME-NGFF 0.4/Zarr v2 fixtures from the lab instrument inventory, with documented chunk/tile shapes and codecs; include an adversarial giant strip/tile.",
+      "procedure": "Run the proposed locked application build on an 8-core/16 GB workstation. Capture OS peak RSS, application cache and in-flight buffer accounting, source bytes read, CPU time, cold/warm slice latency, progress cadence, and cancellation acknowledgement while navigating, changing display state, and adding annotations. Compare selected slices against a reference decoder. Repeat with different chunk shapes and cold caches.",
+      "expected_behavior": "Target initial decoded cache cap 512 MiB, at most four concurrent reads and no admitted decoded chunk above 32 MiB; proposed UI targets are p95 warmed slice/edit <=250 ms, progress update <=250 ms, and cancellation acknowledgement <=1 s. Verify that reader and decompressor buffers fit the accounted budget. Reject or clearly degrade inputs whose tile/chunk granularity violates the budget. These are acceptance targets, not observed results.",
+      "scope_limits": ["No application or 3 GB fixture was run in this stage.", "Passing one fixture does not establish bounds for unsupported codecs, pathological chunk layouts, network latency, or every OS."]
+    },
+    {
+      "id": "W3",
+      "status": "proposed / UNEXECUTED",
+      "kind": "source immutability, crash recovery, and project reopen",
+      "input_required": "A source file and Zarr tree with recorded pre-import identities; test project on local disk; fault-injection points during copy, staged mask write, SQLite transaction, close, and export.",
+      "procedure": "Hash source assets before and after display edits, annotation edits, saves, close/reopen, and export. Terminate the process at each fault point, restart, inspect SQLite recovery and artifact references, and reopen the last complete revision. Repeat a copy to the target shared-storage type only after local behavior is established.",
+      "expected_behavior": "Original identity is unchanged. A committed project pointer refers only to a fully written/verified artifact. An interrupted staging operation leaves a recoverable prior revision and at most an explicitly detectable orphan temporary/final artifact. Incomplete exports are not published as complete. Record which guarantees fail on the target storage.",
+      "scope_limits": ["SQLite documentation supplies assumptions, not a guarantee for a target filesystem.", "No crash injection, recovery behavior, shared-storage behavior, or actual project implementation was executed."]
+    },
+    {
+      "id": "W4",
+      "status": "proposed / UNEXECUTED",
+      "kind": "identity, relocation, and axis/calibration refusal tests",
+      "input_required": "A source copied to a new path with identical bytes; a one-byte-changed copy; a Zarr tree with one changed object; fixtures with permuted axes, absent/conflicting units, nonzero origin, negative axis direction, and unsupported custom axes.",
+      "procedure": "Move and relink the identical asset, then attempt relinking changed content by its old filename. Exercise ambiguous import choices (explicit mapping, pixel-only, cancel); save, close, reopen, and compare source metadata snapshot and interpretation separately.",
+      "expected_behavior": "Only full content-identity matches automatically relink. A mismatch preserves project/annotations, marks the source changed/unavailable, and prevents a verified-against-original claim. Ambiguity blocks annotation until an explicit choice is saved; pixel-only mode exposes no physical coordinates. Source metadata remains byte-identifiable and unmodified.",
+      "scope_limits": ["Identity hashing and import decision UI are proposed, not implemented or executed.", "No real instrument metadata corpus was available in this stage."]
+    },
+    {
+      "id": "W5",
+      "status": "proposed / UNEXECUTED",
+      "kind": "transform retention through viewing, persistence, and export",
+      "input_required": "2D and 3D calibrated images with anisotropic spacing, nonzero origin, axis permutations, reflection, rotation and shear; a multichannel RGB case; exact known sample coordinates.",
+      "procedure": "Place points and polygons, navigate time/slice/channel, split/display channels, pan/zoom/rotate the view, save/reopen, then export annotation table, overlay, mask, and a small derived image. Compare stored indices and physical coordinates with an independent affine calculation. Read each output and manifest back.",
+      "expected_behavior": "Sample-index geometry and physical mapping remain stable through view operations, reopen, and export. Channel/time context remains named. NGFF-only standard metadata does not claim to preserve a general affine; rotation/shear is carried in a sidecar or an explicit resampled derivative and recorded operation. An output that omits required transform metadata is labeled incomplete/lossy.",
+      "scope_limits": ["The napari regression source (S5) covers only its listed RGB split cases.", "No viewer operation, project format, export, or downstream sidecar consumer was executed."]
+    },
+    {
+      "id": "W6",
+      "status": "proposed / UNEXECUTED",
+      "kind": "annotation table, overlay, derived-image, undo/redo, and accessibility acceptance",
+      "input_required": "Small synthetic test project with points, polygon, mask, two styles, multiple channels/time points, and a source known to contain distinctive sample values.",
+      "procedure": "Edit/undo/redo, save and reopen; export all three artifact types; read them back and compare geometry, grid, labels, data samples, manifest fields, and source hash. Run keyboard-only and screen-reader passes with metadata warnings and import errors.",
+      "expected_behavior": "Undo/redo restores exact annotation revisions; geometry and context survive persistence; unchanged derived pixels compare exactly; any crop/resampling/LUT/cast is declared; overlay identifies its source/view grid and does not claim to contain editable geometry alone. Controls, focus, warnings, and errors are operable and legible without color-only cues.",
+      "scope_limits": ["No application or exported artifact exists in this research stage.", "This is an acceptance procedure, not evidence of accessibility conformance or downstream tool interoperability."]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "note": "Witness inventory: executed and proposed checks. Executed receipts were produced by the admitted isolated python_execute sandbox (per-run limits: wall 5 s, cpu 3 s, 256 MiB, no network). Every executed check is an isolated component check on candidate-authored code; none establishes full-application behavior. Failed/superseded attempts are retained deliberately.",
+  "executed": [
+    {
+      "id": "W1a",
+      "label": "Transform-convention check, attempt 1",
+      "status": "executed by candidate - ERRORED, superseded by W1b",
+      "execution_id": "exec-h6i5pzpn",
+      "exit_code": 1,
+      "expected_behavior": "matrix/elementwise comparison",
+      "actual": "IndexError: candidate used a 3-row hom() accessor against 2x3 matrices",
+      "code_sha256": "8a810d0a76490c5c07de58edd970d8c4b842e2312d028a45b7cd6efa471c3e95",
+      "scope_limits": "candidate code bug; no claim drawn from this run"
+    },
+    {
+      "id": "W1b",
+      "label": "Transform-convention check, attempt 2 (2x3 affine composition)",
+      "status": "executed by candidate - EXPECTATION NOT MET, superseded by W1c",
+      "execution_id": "exec-4i6e0sil",
+      "exit_code": 0,
+      "code_sha256": "95f416b5d59196c15af3ee9a1cb9e33841ee8f4b864d1177a246ba77c026df06",
+      "stdout_sha256": "3be29c41cd533d44968c4fcf290778509d97d2dafd8bf2d744a1d418464d0f57",
+      "expected_behavior": "world = data*scale + translate should equal the composed matrix product",
+      "actual": "comparison printed False: the candidate's 2x3 multiply dropped the translation term of the left factor (inner-dimension misuse), so the 'matrix' column showed scale-only values. Numeric outputs for the wrong-convention delta (15.0 world units) and the reflection size rule are still individually valid but the headline equality was not demonstrated by this run.",
+      "scope_limits": "candidate code bug; superseded; retained for audit honesty"
+    },
+    {
+      "id": "W1c",
+      "label": "Transform-convention check (corrected 3x3 homogeneous)",
+      "status": "executed by candidate - PASSED",
+      "execution_id": "exec-5_edj2lb",
+      "exit_code": 0,
+      "code_sha256": "b3dd987d7dc512b82a519e10770cbc311a160915b9151427b7feb191e1fe938b",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "stdout_sha256": "64f7e124cb9f0804f1047fee26f7bb9e23b25bf8094e190f6860d16b387a87a9",
+      "stdout_summary": "For s=(0.5,0.25), t=(10,20) and 4 sample points incl. negatives: elementwise world=data*s+t matches homogeneous T@S exactly (True). Applying translation before scaling deviates by up to 15.0 world units on the sample points. With reflecting scale s=-1: position 40 maps to -40 (flip preserved), while a signed size would be -10 (invalid); |s| gives 10 (valid).",
+      "justified_expected_behavior": "Affine algebra: (T o S)(p) = S p + t with S diagonal; any implementation that commutes the two operations changes results on translated layers; napari PR #9339 (S2/S3) shows sizes/handles must use |scale| while positions keep sign.",
+      "scope_limits": "Pure-python micro-check of a formula, in an isolated sandbox. It validates the convention we will pin in project.json and test, NOT napari's code and not this project's future implementation."
+    },
+    {
+      "id": "W2",
+      "label": "Tile-cache budget simulation for a 3.0 GB uint16 source",
+      "status": "executed by candidate - PASSED (informative, not a proof)",
+      "execution_id": "exec-dp5d1p91",
+      "exit_code": 0,
+      "code_sha256": "5b7067f5cddabf63157b32fec0e74f510c9821c73bbccdbe282a05ead42e2014",
+      "stdout_sha256": "782ba9e3422a9f4b7d3c1d9d07dc63cf571608a05111219eebaf0b7788118f7c",
+      "stdout_summary": "60000x25000 uint16 = 3.00 GB source -> 59x25 = 1475 tiles of 1024x1024 (2.00 MiB each); a full second in-RAM copy would be 3.00 GB. LRU hit rates over 20000 tile requests with a seeded random-walk pan + 5% jump access pattern: 64 MiB cache 14.6%, 256 MiB 19.8%, 1024 MiB 43.0%.",
+      "justified_expected_behavior": "Bounded access keeps resident memory ~1 GiB instead of 3+ GB; the discriminating question was whether a small cache suffices - it does not under zoom-heavy patterns, so prefetch and pyramid-level selection are required (drives lead L4).",
+      "scope_limits": "Synthetic access trace; no real file I/O or codec work; single-level (no pyramid); hit-rate numbers are ordering evidence, not performance guarantees."
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "W3",
+      "label": "Axis/calibration readback through tifffile for OME-TIFF, ImageJ hyperstack, and plain multi-page TIFF fixtures",
+      "status": "proposed / UNEXECUTED",
+      "procedure": "Build 3 tiny fixtures; open with pinned tifffile 2026.9.20; assert series.axes strings, PhysicalSizeX/unit, imagej 'unit'/'spacing'; record raw metadata verbatim for the import dialog; also feed one deliberately mis-labeled file to confirm loud failure.",
+      "blocked_on": "no Python imaging stack in this stage's sandbox"
+    },
+    {
+      "id": "W4",
+      "label": "Interrupted-save / kill -9 recovery harness",
+      "status": "proposed / UNEXECUTED",
+      "procedure": "Start save, kill process mid-write (tmp file present, manifest not replaced); reopen; assert project loads at last committed manifest+segment state with zero annotation loss relative to that commit; repeat for export failure."
+    },
+    {
+      "id": "W5",
+      "label": "float32 vs float64 coordinate precision drift",
+      "status": "proposed / UNEXECUTED",
+      "procedure": "Round-trip a 4x4 float64 affine through float32; measure worst pixel-edge displacement across a 60000 px extent; acceptance: < 1e-3 px with float64 storage (expected to fail for float32 on large extents)."
+    },
+    {
+      "id": "W6",
+      "label": "NGFF 0.5 clause extraction and axes/units verification from pinned capture",
+      "status": "proposed / UNEXECUTED (one mechanical render_sections attempt errored with JSONDecodeError on capture a57e3bf8...; recorded as failed attempt)",
+      "procedure": "Extract the axes/coordinateTransformations sections from the already-captured spec bytes; then verify any NGFF-dependent claims in this proposal and correct them if needed. Until then S9 supports only the document's existence/title/identity."
+    },
+    {
+      "id": "W7",
+      "label": "GeoJSON export profile conformance test",
+      "status": "proposed / UNEXECUTED",
+      "procedure": "Pin RFC 7946 (lead L12); validator over exported FeatureCollection: coordinate order, polygon ring closure, CRS statement; compare against QuPath's documented mapping choices (S6: pixel units, top-left origin, ellipses become polygons)."
+    },
+    {
+      "id": "W8",
+      "label": "Cross-machine reopen simulation",
+      "status": "proposed / UNEXECUTED",
+      "procedure": "Copy project folder to a different root with sources moved; reopen; assert hash-based relocation dialog resolves all sources or lists unresolved ones with their original absolute paths; assert no silent path rewriting in project.json."
+    },
+    {
+      "id": "W9",
+      "label": "Verify a published napari release tag contains merge 19cba192",
+      "status": "proposed / UNEXECUTED",
+      "procedure": "Fetch napari releases pages beyond the first (S4 covered v0.9.2rc1/v0.9.2 only) or compare/v0.9.0...19cba192 to confirm which tag first ships the fix; until then 'shipped in milestone 0.9.0' rests on the milestone field alone."
+    }
+  ]
+}

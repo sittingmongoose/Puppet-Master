@@ -1,0 +1,101 @@
+{
+  "note": "Optional ideas, deferred opportunities, and unresolved leads. Nothing here is a minimum obligation of brief A. Each entry records why it is deferred and what evidence exists.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "OME-Zarr (NGFF 0.5) as an optional export/interchange target",
+      "kind": "opportunity",
+      "evidence": "S9 (spec captured, clause verification pending), S7 (tifffile writes NGFF 0.4/0.5 multiscale zarr stores, evidencing ecosystem adoption)",
+      "why_deferred": "Named-axes/units/coordinateTransformations clauses must be verified against the pinned spec before any exporter claims conformance (W6 UNEXECUTED). Minimum scope only needs the internal JSON project format.",
+      "next_step": "Verify axes/coordinateTransformations clauses from capture a57e3bf8...; prototype export of one 2D image + annotations."
+    },
+    {
+      "id": "L2",
+      "title": "Embed or reuse napari instead of building a viewer",
+      "kind": "alternative",
+      "evidence": "S1-S4: napari is a maintained BSD-3-Clause multi-dimensional viewer whose layer model (scale/translate/affine per layer, dims, points/shapes/labels layers) already implements much of the display contract; its bug history (S10) shows the coordinate corner cases are known and fixed in the open",
+      "why_deferred": "Brief asks for a plan a small team can implement and control; embedding a Qt-heavy framework trades control for capability. Kept as the fallback if the custom viewer stalls.",
+      "next_step": "Spike: open the project format in napari via a thin reader plugin; measure annotation round-trip fidelity."
+    },
+    {
+      "id": "L3",
+      "title": "Adopt QuPath for 2D brightfield/pathology-style review; exchange via GeoJSON",
+      "kind": "alternative",
+      "evidence": "S5, S6 (project.qpproj/entryID/data.qpdata structure; GeoJSON export with documented pixel-unit/top-left-origin contract)",
+      "why_deferred": "Java desktop stack oriented to whole-slide imaging; team needs volume+time+channel microscopy and a data contract they own. GeoJSON export/import remains the recommended interchange lingua franca for flat 2D annotations.",
+      "next_step": "If pathology-style use grows, pilot QuPath alongside; define GeoJSON profile (pixel units, top-left origin, source-image SHA-256 in properties)."
+    },
+    {
+      "id": "L4",
+      "title": "Pyramid generation (SubIFDs or multiscale zarr) for very large 2D images",
+      "kind": "opportunity",
+      "evidence": "S7 examples write pyramidal OME-TIFF with SubIFDs and read levels via series.levels; W2 shows single-level tile caches alone have modest hit rates (14.6-43%) under zoomy access patterns",
+      "why_deferred": "Resampling is a recorded data operation per the brief; generation cost and storage size need a real corpus before committing.",
+      "next_step": "Benchmark level-selection + prefetch against W2's trace before implementing."
+    },
+    {
+      "id": "L5",
+      "title": "Zarr v3 (sharding) instead of v2 for chunk stores",
+      "kind": "alternative",
+      "evidence": "S8 (v2 spec page itself states it is superseded by v3)",
+      "why_deferred": "v2 has the broadest reader support today (S7 stores, NGFF 0.4 baseline); v3 sharding helps when tiles are small/many. Decide when a real project exceeds ~10k chunks.",
+      "next_step": "Pin whichever format is chosen in project.json and never rewrite silently."
+    },
+    {
+      "id": "L6",
+      "title": "GPU-accelerated rendering (vispy-style) and 3D volume rendering",
+      "kind": "opportunity",
+      "evidence": "S1/S4 environment dumps show napari runs vispy on OpenGL/Metal incl. 3D textures; brief allows optional GPU only",
+      "why_deferred": "Minimum scope is 2D slice review; GPU paths double the testing matrix on 6 heterogeneous workstations.",
+      "next_step": "Keep the renderer behind the layer interface so a vispy backend can replace a Qt-raster backend without contract changes."
+    },
+    {
+      "id": "L7",
+      "title": "Object-storage / cloud backends for source data",
+      "kind": "alternative",
+      "evidence": "S8 storage section: a Zarr array can live in any key/value store, S3 named as an example",
+      "why_deferred": "Brief centers on ordinary shared storage; cloud adds credentials and failure modes. Recorded because the chunk-store interface makes this a drop-in later.",
+      "next_step": "Only after the local directory store is stable."
+    },
+    {
+      "id": "L8",
+      "title": "Automatic segmentation / ML-assisted annotation",
+      "kind": "opportunity (explicitly out of minimum scope)",
+      "evidence": "S6 index/TOC shows QuPath's StarDist/InstanSeg deep-learning pages exist; brief lists this as opportunity only",
+      "why_deferred": "Out of minimum scope per brief; annotations from ML should land in the same recorded-operations journal as manual edits if ever added.",
+      "next_step": "Design the operation journal so an external 'annotator' field can distinguish human vs derived masks."
+    },
+    {
+      "id": "L9",
+      "title": "fsspec ReferenceFileSystem / kerchunk-style virtual chunking of source TIFFs",
+      "kind": "opportunity",
+      "evidence": "S7 README: tifffile can write an fsspec ReferenceFileSystem JSON for TIFF files, giving zarr-style chunk access without rewriting the original",
+      "why_deferred": "Extra dependency and JSON refs must be regenerated if files move; try only if per-format chunk readers prove too costly.",
+      "next_step": "Compare against direct tiled-TIFF reads on the team's actual files."
+    },
+    {
+      "id": "L10",
+      "title": "OMERO or server-side project storage",
+      "kind": "alternative (out of scope)",
+      "evidence": "QuPath docs TOC includes an OMERO page (S6 navigation); brief limits collaboration to exchanged bundles",
+      "why_deferred": "Conflicts with 'ordinary shared storage' constraint; kept for completeness.",
+      "next_step": "None."
+    },
+    {
+      "id": "L11",
+      "title": "Re-locate current napari prose documentation (coordinate systems / transformations howto)",
+      "kind": "unresolved lead",
+      "evidence": "S11: 2026-10-06 attempts at napari.org/stable/howtos/layers/transformations.html, napari.org/stable/concepts.html, and napari/docs raw path all 404",
+      "why_deferred": "Chain evidence S1-S3 already covers the load-bearing claims from primary code/tests; narrative docs would improve onboarding wording only.",
+      "next_step": "Browse the napari/docs repo TOC via the GitHub contents API and repin the coordinate-systems page; then strengthen proposal section 3 wording with the documented data/world/canvas definitions."
+    },
+    {
+      "id": "L12",
+      "title": "GeoJSON RFC 7946 conformance check for the export profile",
+      "kind": "unresolved lead",
+      "evidence": "S6 documents QuPath's GeoJSON mapping but the IETF RFC itself was not fetched this session",
+      "why_deferred": "Export profile is a product choice; conformance testing belongs to implementation.",
+      "next_step": "Fetch RFC 7946, pin it, and write the export validator test (proposed check W7 in witnesses.json)."
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+# Critique review — frozen research proposal, brief A (local biomedical image review workspace)
+
+- Stage: fresh source-grounded critic (V01 control modifier — legacy workflow comparator).
+- Date of critique: 2026-10-05.
+- Inputs read in full: `inputs/prior/research/final/proposal.md` (sha256 `b50faea2…`), `inputs/prior/research/final/sources.json` (`b293a7aa…`), `inputs/prior/research/final/witnesses.json` (`5b5e0c0d…`), `inputs/prior/research/final/leads.json` (`e2aa1742…`), and the `inputs/prior/research/research/` copies (byte-identical to the final copies: proposal and sources sha256 match exactly; `research/` copy is the same frozen deliverable, not a divergent draft).
+- Method, and what this stage could and could not do:
+  - I re-fetched **all 16 pinned sources** (S1–S16) myself via public HTTPS and compared response-body sha256 against the frozen catalog. All 16 reproduced **byte-identically** on 2026-10-05 ~21:30–21:35 UTC. I additionally read specific byte ranges of the large captures (QuPath CHANGELOG) to verify the exact cited entries.
+  - Per the V01 modifier, **no code was executed in this stage** — not directly and not via shell/helper/external service. Where the proposal's executed checks (W1–W3) matter, I audited them by **manual arithmetic and internal consistency only**, and I label that explicitly. I did not re-run or falsify any receipt.
+  - Everything below is either (a) a quote or restatement of a public source I fetched, (b) manual arithmetic, or (c) clearly labeled engineering judgment.
+- Labels used in this review: **[VERIFIED]** = I reproduced the claim from the pinned source bytes myself; **[CORRECTION]** = claim is wrong or imprecise as written, with a fix; **[PRESERVED]** = supported claim the next candidate must keep; **[UNCERTAIN]** = cannot be resolved by reading alone; **[UNEXECUTED]** = proposed check, no receipt exists.
+
+---
+
+## 1. Verdict summary
+
+The proposal is substantially sound and its evidence chain is unusually strong: every load-bearing external claim I tested reproduced byte-for-byte, and the required issue→fix→regression-test→release chain (tifffile #319) is fully verified end-to-end, including parent-commit ordering that the proposal did not even cite. No finding overturns the architecture, the data contract, or the precedents.
+
+There is **one substantive correction** (F1: "tifffile writes NGFF 0.5 multiscales" overstates what the pinned sources show — this touches the §8.1 alternative and the §9.1 opportunity), **several minor corrections** (internal catalog inconsistency; an inexact issue-title quote; one mis-attributed fact; two wording precision issues), **one coverage gap** against the brief (the "visible distinction between original data and derived views" is designed as data/provenance machinery but has no explicit viewer-level rule), and **one honesty item** about the executed witnesses (their arithmetic checks out by hand, but their receipts are candidate-reported and unverifiable in this stage).
+
+A next candidate can resolve everything in this review by editing specific sentences and adding two source pins; no re-research is needed.
+
+---
+
+## 2. Independent verification log (critic's own fetches, 2026-10-05)
+
+For each catalog entry, the HTTP response body sha256 I obtained equaled the catalog's `capture.sha256` (byte-identical reproduction). This independently confirms both the catalog's capture integrity and the claims I read from those bytes.
+
+| Source | URL (pin) | Result |
+|---|---|---|
+| S1 NGFF 0.5 spec | `raw.githubusercontent.com/ome/ngff-spec@d9164040…/index.md` | sha `7ca44265…` reproduced; all cited clauses verified in text (see §3 below) |
+| S2 napari image.md | `napari/docs@main docs/howtos/layers/image.md` | sha `2897310c…` reproduced |
+| S3 napari units.md | `napari/docs@main docs/guides/units.md` | sha `ef71dd31…` reproduced |
+| S4 napari shapes.md | `napari/docs@main docs/howtos/layers/shapes.md` | sha `d1c391de…` reproduced |
+| S5 tifffile README | `cgohlke/tifffile@master README.rst` (v2026.9.20) | sha `cdd8ac84…` reproduced (32898 bytes; same ~130-byte tail beyond 32768 as cataloged) |
+| S6 tifffile CHANGES.rst | `cgohlke/tifffile@master CHANGES.rst` | sha `fd4abd60…` reproduced |
+| S7 issue #319 | `api.github.com …/issues/319` | sha `0b200363…` reproduced |
+| S8 fix commit edede600 | `api.github.com …/commits/edede600…` | sha `fb9c86d8…` reproduced |
+| S9 test commit 7d9eaedd | `api.github.com …/commits/7d9eaedd…` | sha `c7a90e96…` reproduced |
+| S10 commits window | `api.github.com …/commits?since=2026-02-26…&until=2026-03-06…` | sha `a5e2ca8b…` reproduced |
+| S11 issue #54 | `api.github.com …/issues/54` | sha `654ab708…` reproduced |
+| S12 QuPath CHANGELOG | `qupath/qupath@main CHANGELOG.md` | sha `c2ce5425…` reproduced; I read bytes 0–32000 and 65536–97536 and verified every cited entry (see §5) |
+| S13 QuPath exporting_annotations | `qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html` | sha `df12ec58…` reproduced |
+| S14 QuPath projects_structure | `qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html` | sha `d4369157…` reproduced |
+| S15 rename(2) | `man7.org/linux/man-pages/man2/rename.2.html` (man-pages 6.19, dated 2026-02-08) | sha `8772946a…` reproduced |
+| S16 QuPath docs index | `qupath.readthedocs.io/en/stable/` | sha `2e5b0725…` reproduced ("The latest release is QuPath 0.7.0") |
+
+**New confirmatory pins the next candidate should add to `sources.json`** (fetched by this critic; sha256 of exact response body):
+
+- **N1 — NGFF 0.4 storage clause.** `https://ngff.openmicroscopy.org/0.4/index.html`, page sha256 `ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269` (163120 bytes, fetched 2026-10-05; rendered "Final Community Group Report, 1 October 2026"). Section 2 "On-disk (or in-cloud) layout": "OME-Zarr is an implementation of the OME-NGFF specification using the Zarr format. Arrays MUST be defined and stored in a hierarchical organization as defined by the version 2 of the Zarr specification." This substantiates the Zarr-v2 half of proposal §3.1's closing claim (see F4).
+- **N2 — TVIPS test asset absent from public repo.** `https://api.github.com/repos/cgohlke/tifffile/contents/tests/data/tvips` → HTTP 404, body sha256 `e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2`. `SKIP_FILE`-gated test `test_issue_tvips_pixelsize` loads `_file('tvips/TVIPS_bin4.tif')`; the directory does not exist in the public repository. This independently confirms the proposal's §3.6 "limits" claim that the regression test cannot be re-run from the public repo alone.
+
+---
+
+## 3. Audit of the required issue→fix→regression-test→release chain (tifffile #319)
+
+Every element verified against bytes I fetched myself. **[VERIFIED] — chain stands.**
+
+1. **Failure.** Release 2026.2.24: issue body shows `PixelSizeX: 1.4208036661148072e-09` for tifffile 2026.2.24 vs `1.4208036661148071` for 2026.2.20, same file (`TVIPS_bin4.tif`, reporter-attached). Ratio of the two reported doubles is 1e9 to within float64 rounding (they differ only in the 16th significant digit), consistent with a division by 1e9 — i.e., nm silently reinterpreted as m with no unit-label change.
+2. **Issue.** #319, opened 2026-02-26 by `ericpre`, closed 2026-03-03 by `cgohlke`, `state_reason: completed`. Exact title: **"Breaking changes in parsing tags changed in release 2026.2.26"** (see F3 on the proposal's quote). Note the original issue itself is internally inconsistent about the release number (title says 2026.2.26; the reproduction outputs attribute the change to 2026.2.24); the proposal's attribution to 2026.2.24 is correct and is corroborated by the fix commit's version bump `2026.2.24 → 2026.3.3`.
+3. **Fix.** Commit `edede6002c817f056d75125ade0b20332d549cca` ("Update tifffile/tifffile.py", authored 2026-03-03T19:06:33Z): the `read_tvips_header` hunk replaces
+   `# convert nm to m` / `result['PhysicalPixelSize' + axis] /= 1e9` / `result['PixelSize' + axis] /= 1e9`
+   with
+   `# https://github.com/cgohlke/tifffile/issues/319` / `# do not convert nm to m` and the conversion lines commented out. Same commit bumps `__version__` to 2026.3.3 and embeds the revision list including "Do not convert TVIPS pixel sizes to m (#319)." and "Pass 5137 tests." Parent of this commit: `7d9eaedd` (the test commit). **Additional nuance the proposal should state (F7): this commit is not single-purpose** — it also adds CCITT read support and other changes, so the #319 linkage rests on the in-code comment, the changelog "(#319)" reference, and the test docstring, not on a dedicated commit.
+4. **Regression test.** Commit `7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938` ("Update tests/test_tifffile.py", authored 2026-03-03T18:56:28Z, parent `2798a136…`) adds `test_issue_tvips_pixelsize`, docstring "Test read TVIPS PixelSize is nm.", citing the issue URL, asserting `tvips['PixelSizeX'] == 1.4208036661148071` and `tvips['PhysicalPixelSizeY'] == 15600.0`, gated on `SKIP_FILE`; it also adds `PixelSizeX == 162.0779266357422` and `PhysicalPixelSizeY == 15600.0` to `test_read_tvips_tietz_16bit`. Exactly as the proposal states. Asset privacy confirmed by N2 above.
+5. **Release.** Commits listing shows the ordering `7d9eaedd` (18:56:28) → `edede600` (19:06:33) → `8c91499e` "Update CHANGES.rst" (19:08:41) → `503cb4eb` "Release v2026.3.3" (19:14:38); CHANGES.rst carries "Do not convert TVIPS pixel sizes to m (#319)." under 2026.3.3. **Applicability statement in the proposal (pin 2026.2.20–2026.3.2 affected; corrected semantics from v2026.3.3) is supported.** Parent-commit ordering is stronger evidence than the proposal claims — it verified the tests landed *before* the fix in the same maintenance burst.
+6. **Limits of the chain, as stated in the proposal — [PRESERVED], now better evidenced:** maintainer commits directly on master without PRs; generic commit messages; linkage carried by comment/changelog/test-docstring; test asset not publicly re-runnable (N2). The proposal also correctly declines to claim a commit→test chain for issue #54 (changelog entry "Try ImageJ series if OME series fails (#54)" under 2021.1.14 **[VERIFIED]**; issue #54 itself verified: opened 2021-01-14 by bryantChhun, image.sc link, mismatched series shapes (50,5,3,2048,2048) vs (510,2048,2048)).
+
+---
+
+## 4. Findings and corrections
+
+Severity: **[MAJOR]** = changes a recommendation or its citation basis; **[MINOR]** = fix the sentence/catalog; **[NIT]** = wording only.
+
+### F1 [MAJOR, CORRECTION] — "tifffile writes NGFF 0.5 multiscales as of 2026.5.2" overstates the pinned sources
+- **Where:** proposal §8.1 (Alternative A pros: "tifffile writes NGFF 0.5 multiscales as of 2026.5.2 [S5]"); also `leads.json` L1 ("tifffile can write NGFF 0.5 multiscales (S5/S6 2026.5.2 entry)") and implicitly §9.1's "near-zero schema cost" rationale.
+- **Evidence:** CHANGES.rst 2026.5.2 says "**Update ZarrTiffStore to zarr format 3 and multiscales to NGFF 0.5 (breaking)**" and "**Update multiscales zarr format 2 fsspec files to NGFF 0.4 (breaking)**" — i.e., the *Zarr store that tifffile exposes over a TIFF* presents NGFF-0.5-style multiscales metadata. The README's write capability list is: "Image data can be written to TIFF, BigTIFF, OME-TIFF, and ImageJ hyperstack compatible files" — **no OME-Zarr store writing**.
+- **Correction:** rewrite to: "tifffile's ZarrTiffStore exposes multiscales metadata conforming to NGFF 0.5 as of 2026.5.2 (breaking change); tifffile itself does not write standalone OME-Zarr filesets. Writing OME-Zarr 0.5 derived images therefore requires zarr-python writing the NGFF 0.5 group metadata directly (spec pinned at S1), or exporting derived rasters as OME-TIFF (tifffile-supported)."
+- **Affected dependencies:** §8.1 verdict (opportunity still viable — QuPath 0.6+ explicitly reads *and writes* OME-Zarr per CHANGELOG PR #1474 [VERIFIED], and the NGFF 0.5 spec is public — but the writer is zarr-python, not tifffile, which adds a dependency and schema-assembly work the original sentence waved away); §9.1 cost estimate; L1 wording. Does **not** affect the read-side support boundary C4 (reading OME-Zarr 0.4/0.5 via zarr remains independent of tifffile).
+
+### F2 [MINOR, CORRECTION] — header/catalog count inconsistency
+- **Where:** proposal line 6: "witnesses.json (W1–W3 executed, **V1–V5** proposed/UNEXECUTED)".
+- **Evidence:** `witnesses.json` contains **V1–V6** (V6 = per-instrument calibration fixture), and proposal §12 itself lists V1–V6.
+- **Correction:** change to "V1–V6". No dependency beyond the header.
+
+### F3 [MINOR, CORRECTION] — inexact issue-title quotation
+- **Where:** proposal §3.6 (line 105): 'filed issue #319 "Breaking changes in parsing tags changed in release **2026.2.26/24**"'.
+- **Evidence:** exact API title is "Breaking changes in parsing tags changed in release **2026.2.26**". The "/24" is the candidate's conflation of the title with the affected release number.
+- **Correction:** quote the exact title, and in the same sentence note (as this review's §3.2 does) that the *issue title* names 2026.2.26 while the *reproduction outputs and the fix commit's version bump* attribute the behavior change to 2026.2.24 — a real-world example of exactly the metadata-sloppiness the proposal warns about.
+- **Affected dependencies:** none beyond §3.6 wording; `sources.json` S7's title field is editorially annotated (parenthetical) and acceptable as long as it is not presented as a verbatim quote.
+
+### F4 [MINOR, CORRECTION] — mis-attributed fact: NGFF 0.4 / Zarr v2
+- **Where:** proposal §3.1 last bullet: "NGFF 0.5 uses Zarr v3 storage (`zarr.json`); **0.4 used Zarr v2 `.zattrs`**" — cited to [FACT S1].
+- **Evidence:** the S1 capture (the 0.5 document) supports the first half ("OME-Zarr is implemented using the Zarr format as defined by the version 3 of the Zarr specification"; `zarr.json`) but says nothing about 0.4. The second half is correct in substance — NGFF 0.4's own storage clause (N1): "Arrays MUST be defined and stored in a hierarchical organization as defined by the **version 2 of the Zarr specification**" — but the `.zattrs` file-name detail comes from the Zarr v2 spec, not from any captured source.
+- **Correction:** add N1 as a new source pin and cite it for the 0.4/Zarr-v2 half; either add a Zarr-v2-spec pin for `.zattrs` or drop the file-name detail (the design only needs "0.4 = Zarr v2 storage, 0.5 = Zarr v3 storage," both of which are now pinned).
+- **Affected dependencies:** C4 (support boundary names both NGFF variants) and §8.1; substance unchanged.
+
+### F5 [MINOR, WORDING] — "translation required after scale" can be misread as "translation required"
+- **Where:** proposal §1, executive summary item 1: "…applied in order, with `translation` required after `scale`".
+- **Evidence:** NGFF 0.5 (S1): datasets "MUST contain exactly one `scale`"; "**It MAY contain exactly one `translation`** … If `translation` is given it MUST be listed after `scale` to ensure that it is given in physical coordinates." Translation is optional; only its *placement* is mandatory. §3.1's body states this correctly.
+- **Correction:** reword the summary to "…with any `translation` required to come *after* `scale`". Design note for the next candidate: the project frame schema (§7.1) may keep `origin` as an always-present default-zero field, but interoperable NGFF export must not emit a mandatory translation.
+
+### F6 [NIT] — small wording items (no design impact)
+- S7 `key_facts` "value ratio exactly 1e9": the two reported doubles differ in the last digit; the ratio is 1e9 within float64 rounding of the division. Say "ratio 1e9 to float64 precision".
+- §3.2/§1 napari shape type names: docs use plural layer types "Lines, Rectangles, Ellipses, Polygons, Paths" (S4). Cosmetic.
+- §3.3 says release 2026.2.24 "refactored TVIPS tag parsing": the changelog entry for 2026.2.24 lists "Refactor TiffPages", CLI rewrites, OmeXml additions — it does not name TVIPS. The TVIPS-attribution rests on the issue reproduction, which is fine, but phrase it as inferred from the issue report, not from the changelog.
+
+### F7 [MINOR, EVIDENCE] — fix commit edede600 is not single-purpose
+- The same commit adds CCITT compression support, packints changes, imshow fixes and more (diff stat +126/−25 across `tifffile.py`). The proposal's §3.6 "limits" already says linkage is carried by comment/changelog/test; add the observation that the fix shares a commit with unrelated work, which is exactly why per-issue regression tests (V6 pattern) matter for single-maintainer projects.
+
+### F8 [POSITIVE, STRENGTHENING] — private-test-asset claim now independently confirmed
+- `tests/data/tvips` → 404 (N2). Add this pin; it upgrades §3.6's limit from "asset is a private test asset (per CHANGES 2019.3.8 'Separate public from private test files (WIP)' [VERIFIED in CHANGES.rst])" to a directly observed fact.
+
+### F9 [MINOR, PROCESS] — precedent independence is asserted, not argued
+- §1 says "four independent precedents" but never states *why* they are independent. One sentence suffices: they are four unrelated projects/specs (a community format spec, a viewer application, a single-maintainer reader library, a Java desktop application) whose mechanisms (geometry schema, display/data separation, bounded tile I/O + metadata precedence, project/relocation/export contract) were developed and tested independently of each other. Add it; the brief explicitly asks for the explanation.
+
+### F10 [MINOR, COVERAGE GAP vs brief] — "visible distinction between original data and derived views" has no viewer-level rule
+- The brief requires "a visible distinction between original data and derived views". The proposal covers this as *data* machinery (derived images live in `derived/<id>/` with `provenance.json`; every op is recorded; exports carry manifests) but never states a **UI rule** (e.g., derived views are titled/labeled "derived" and carry a persistent badge; the original view is badged with the source ID; switching between them is a visible mode change). Add an explicit, testable rule to §6/§7 and a proposed check (V7 below).
+
+### F11 [MINOR, PIN STABILITY] — moving pins reproduced today, but will not hold forever
+- S2–S4 (napari/docs@main), S5–S6 (tifffile master), S12 (QuPath main) are branch pins. All reproduced byte-identically on 2026-10-05, so the frozen claims are anchored. Next candidate should note in `sources.json` that content sha256 is the pin of record (already done for S2) and, for any *future* work, prefer release/tag pins over branch heads. No action needed on the frozen text beyond acknowledging this in one sentence.
+
+---
+
+## 5. Preserved supported claims (do not lose these when resolving)
+
+All of the following were verified by this critic against reproduced source bytes and must survive into the corrected proposal:
+
+- **NGFF 0.5 (S1):** axes `name` MUST be unique; `type` SHOULD be space/time/channel; `unit` SHOULD be UDUNITS-2 from the listed strings; 2–5 dims; stored order MUST match array order and MUST be ordered time → channel/custom → space; `zyx` SHOULD for anisotropic stacks. Transformations "applied sequentially and in order"; multiscale dataset transforms "MUST only be of type `translation` or `scale`", "exactly one `scale`", translation MAY and MUST follow scale; group-level transforms apply after dataset-level; dataset `path`s "MUST be ordered from largest … to smallest". `omero` (transitional): per-channel `color` (6 hex digits) and `window {start, end, min, max}`, `rdefs.defaultZ/defaultT`. `labels`: integer arrays (`uint8`…`int64`) with `image-label` colors/properties. Storage: Zarr v3 / `zarr.json`.
+- **napari (S2–S4):** "the values set in the contrast limits do not change the underlying values of the image, only the visualization of the colormap"; explicit contrast limits recommended for big data (auto min/max "can be very time consuming"); NumPy-like arrays (numpy/dask/xarray/zarr) and "napari will also wait until just before it displays data onto the screen to actually generate a NumPy array", demonstrated on >100 GB zarr lattice-lightsheet data; multiscale list-of-arrays with auto level selection and `locked_data_level`; `channel_axis` splitting with per-layer colormap/limits; per-layer `scale`/`units` (Pint, `'micrometer'/'um'/'µm'` aliasing), scale bar tied to world units falling back to pixels, units ≠ axis labels; shapes = list of N-D vertex arrays, five types, per-shape face/edge color/width/z-index, vertex insert/remove, cross-slice paste updates non-displayed coordinates, and in 3D "all of its non-displayed coordinates must match the coordinates of that view slice" with shapes-layer editing unavailable in 3D.
+- **tifffile (S5, S6):** read scope (TIFF/BigTIFF/OME-TIFF/…ImageJ/MMStack/NDTiff…SVS/SCN/BIF/NDPI/EER); reads "as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels"; memmap for contiguous ImageJ data; the `return_as='zarr'` tile-read example (`z['0'][2, 0, 128:384, 256:]`); OME-XML in the ImageDescription of the first IFD; ImageJ hyperstack Latin-1 ImageDescription with `spacing`/`unit`/`finterval`/`axes`; unimplemented list (OJPEG, chroma subsampling without JPEG, color-space transforms, samples with differing types, IPTC/ICC/XMP); vendor quirks (NDPI tag-65441 correction, Philips padded widths, ScanImage >2 GB recovery, MMStack "often corrupted or wrong", BIF tiles un-stitched); changelog entries 2026.3.3 (#319), 2026.5.2 (NGFF 0.5 store update + heavy breaking changes incl. `asxarray`, `mpp`, `coords`, `return_as` additions — supports L11), 2021.1.14 (#54), 2020.8.13 (metadata precedence, breaking), 2019.3.8 (private test files).
+- **QuPath (S12–S14, S16):** `project.qpproj` JSON with per-entry serverBuilder (reader library + URI) and unique entryID; per-entry `data/<entryID>/` with `data.qpdata` + thumbnail + `summary.json` "written at the same time as data.qpdata" for preview without opening the large file; documented duplicate-per-machine `.qpproj` pattern for shared drives; changelog entries v0.2.1 #512 ("Closing QuPath abnormally can result in broken data files") and #528 (AffineTransformImageServer pixel calibration), v0.2.2 #543/#568 (URI relocation), v0.3.x #648 (TileExporter downsample), v0.5.0 #1252 ("PathIO doesn't restore backup if writing ImageData fails"), v0.6.0 #1494/#1516 (export loses 8-bit / pixel size + channel colors), PR #1668 (self-contained projects no longer prompt to update URIs), v0.7.0 #1958 (B/C from lowest resolution), PR #1474 "Read and write OME-Zarr images", InstanSeg support (L9); export contract "coordinates in pixel units, taking the origin (0, 0) as the top left corner of the full-resolution image … may be different from how other software expects"; GeoJSON ellipses→polygons; labeled-image later-label-wins draw order; docs stable = 0.7.0.
+- **rename(2) (S15):** "If `newpath` already exists, it will be atomically replaced…"; "rename() guarantees to leave an instance of `newpath` in place" on failure; `EXDEV` "rename() does not work across different mount points, even if the same filesystem is mounted on both"; BUGS: "On NFS filesystems, you can not assume that if the operation failed, the file was not renamed."
+- **#319 chain (S7–S10):** fully as audited in §3 of this review, including values, commit SHAs, parent ordering, test assertions, changelog line, "Pass 5137 tests", and the private-asset limit (now with N2).
+
+---
+
+## 6. Plan-obligation audit against the brief
+
+Checked item by item; the proposal's obligation coverage is complete except where noted:
+
+- Minimum workflow table (§2) maps every brief step to a component and rule — **covered**.
+- ≥2 independently useful precedents with mechanisms — **covered** (four), independence explanation missing → F9.
+- Issue→fix→regression-test chain with commit/release applicability and limits — **covered and verified** (§3 above); limits honestly stated.
+- Atomic save/recovery options, source identity, relocation, bundle-vs-reference trade-off — **covered** (§4.6–4.8, §5 C5, §7.4–7.5), correctly grounded in S12/S14/S15.
+- Support boundary testable by a small team + explicit unsupported path that fails into the project — **covered** (C4, §7.6, §11).
+- 3 GB bounded-access target treated as an investigated engineering target, not a claimed property — **covered and honestly labeled** (A1 + V2, no performance claims made).
+- Display edits never touch samples; geometric/resampling ops are recorded operations — **covered** (§4.4, op recorder).
+- Opportunity + plausible alternative — **covered** (§9), opportunity's writer claim needs F1's correction.
+- Accessibility floor (keyboard operability, legible text feedback, contrast) — **covered** (§10), honestly scoped as a floor.
+- Separation of FACT / INFER / CHOICE / VALIDATION — **covered** and consistently applied.
+- Catalogs complete and honest — **covered**; F2 fixes the header count.
+- **Gap:** visible original-vs-derived distinction as a *user-visible* rule — F10.
+
+---
+
+## 7. Status of the executed witnesses (W1–W3) under this stage's constraints
+
+No execution tool was available to this critic (V01 modifier), and none was used. Assessment is therefore limited to:
+
+- **W1 (float32 vs float64, JSON round-trip) — [VERIFIED by manual arithmetic].** 104857.6 lies in [2¹⁶, 2¹⁷), so float32 ULP there is 2⁻⁷; the representable neighbor is 13421773/128 = 104857.6015625, error 0.0015625 px — exactly the reported stdout. The reported physical errors (0.00034765625 µm) are consistent with the same float32 px value carried through a float32-valued scale (0.065 µm/px is recoverable from 6815.744/104857.6). The qualitative conclusion — float32 insufficient at ~10⁵ px coordinates, binary64 JSON round-trips exactly — is sound and is a legitimate isolated component check.
+- **W2 (transform order) — [VERIFIED by manual arithmetic].** With t=(10,20), s=(2,4), p=(1,1): scale-after-translate gives (22, 84); translate-after-scale gives (12, 24). The printed 3×3 matrix is the column-vector convention consistent with the labels. Conclusion (order is observable → must be a schema constant) stands.
+- **W3 (temp + `os.replace`, hash identity) — [UNCERTAIN, plausible].** The qualitative claims (target intact after a failed save; orphan `.tmp` observed after a simulated mid-save crash; sha256 stable/byte-sensitive) are consistent with rename(2) semantics [S15, VERIFIED] and with the design's recovery sweep. The receipts (execution ids, code/stdout sha256) are candidate-reported and cannot be re-verified without the execution tool; the next stage should keep W3's scope limits as written (local filesystem only; no crash injection; NFS/EXDEV untested — V3/V5 remain the decisive checks).
+- None of W1–W3 claims application-level behavior, and the proposal says so. **[PRESERVED]** — keep the "component checks only" framing verbatim.
+
+---
+
+## 8. Uncertainty and proposed checks (all UNEXECUTED — none performed in this stage)
+
+- Keep V1–V6 exactly as cataloged; this review found no reason to weaken or narrow any of them. V2 (3 GB bounded-read benchmark) remains the single most load-bearing untested assumption (A1); V3 (kill-during-save on the actual NFS/SMB share) remains decisive for A2 because rename(2)'s BUGS section explicitly warns that NFS failure semantics differ [S15, VERIFIED]; V6 (per-instrument calibration fixtures mirroring `test_issue_tvips_pixelsize`) remains the direct institutionalization of the #319 lesson.
+- **New proposed check V7 [UNEXECUTED]** — original-vs-derived visible distinction: open a source view and a derived view; assert the UI presents a non-color-only, text-readable indicator distinguishing them (derived title/badge + provenance pointer), and that a screenshot/DOM dump of the derived view contains the derived identifier. Resolves F10.
+- **New proposed check V8 [UNEXECUTED]** — RFC 7946 conformance note (resolves L7's honest "UNVERIFIED against RFC text" flag): read RFC 7946 §4 and confirm positions are WGS84 longitude/latitude, then assert the exporter's manifest contains the explicit non-geographic-CRS notice when pixel coordinates are emitted in GeoJSON. Reading-level task; no execution needed once attempted.
+- **Optional upgrade for the chain:** fetch the GitHub user-attachment URL for `TVIPS_bin4.tif` from issue #319 and record its sha256, so V6's fixture can reference the exact bytes. Not required for the chain (N2 already establishes public unavailability); label UNEXECUTED until done.
+
+---
+
+## 9. Resolution checklist for the next candidate (concrete edits, no re-research needed)
+
+1. §8.1 + L1 + §9.1: apply F1's correction (ZarrTiffStore exposes NGFF-0.5 multiscales; standalone OME-Zarr writing belongs to zarr-python; QuPath PR #1474 read/write stays cited). Reassess one sentence of §9.1's cost claim accordingly.
+2. Line 6 header: "V1–V6" (F2).
+3. §3.6: quote the exact issue title and add the title-vs-body release-number discrepancy note (F3).
+4. §3.1 last bullet: cite N1 for the 0.4/Zarr-v2 half; drop or separately pin `.zattrs` (F4).
+5. §1 summary item 1: "any `translation` required to come after `scale`" (F5).
+6. §3.6 limits: add "fix commit bundles unrelated CCITT work" and the N2 404 observation (F7, F8).
+7. §1: one sentence arguing precedent independence (F9).
+8. §6/§7: add the explicit viewer rule for original-vs-derived distinction; add V7 (and optionally V8) to `witnesses.json` as proposed/UNEXECUTED (F10, §8).
+9. `sources.json`: add N1 (NGFF 0.4 page, sha `ca4780a3…`) and N2 (tvips contents 404, sha `e45906ce…`) with capture metadata from §2; keep S1–S16 unchanged — all reproduced byte-identically (F11 note optional).
+10. Nits (F6): "ratio 1e9 to float64 precision"; plural napari shape-type names; phrase the 2026.2.24 TVIPS-refactor attribution as inferred from the issue report.
+
+Everything else in the frozen proposal — architecture, data contract, support boundary, alternatives, accessibility floor, assumptions, and validation plan — is verified or legitimately labeled as inference/choice/proposed, and should be preserved.
+
+*End of critique. No code was executed in this stage (V01 control modifier); all verification above is public-source reading, byte comparison, and manual arithmetic.*

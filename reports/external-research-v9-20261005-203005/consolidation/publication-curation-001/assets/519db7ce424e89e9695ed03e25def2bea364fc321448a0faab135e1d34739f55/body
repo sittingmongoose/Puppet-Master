@@ -1,0 +1,255 @@
+# Fieldbook — a local-first notebook + versioned-data workspace
+## Research proposal for Development brief B (reproducible notebook & data workspace)
+
+Stage: research (frozen under `out/research/`, mirrored to `out/final/`). Date of capture: 2026-10-05.
+Author: admitted candidate model, native research stage.
+
+**Claim-class legend used throughout**
+
+- **[FACT S#]** — external fact from a captured public primary source; see `sources.json` for URL, pin, capture identity.
+- **[INFER]** — engineering inference by the candidate from source facts.
+- **[CHOICE]** — product decision this proposal makes (a defensible alternative may exist; alternatives are listed).
+- **[EXECUTED]** — check executed by the candidate in the admitted isolated sandbox (receipts in `witnesses.json`).
+- **[PROPOSED/UNEXECUTED]** — validation that has NOT been run; listed because it is required for confidence.
+
+---
+
+## 0. Executive summary
+
+Three analysts keep Python notebooks in shared folders; a colleague occasionally runs SQL over tabular files. The recurring failure is the one the brief names: *why does this shared notebook produce a different result here?* — which decomposes into three measurable questions: what **data identity** did it read, what **environment** did it run in, and which **saved outputs** are stale after a change.
+
+The proposal is a folder-first **project record** that binds five things: (1) notebooks stored in the standard nbformat 4.x document schema [FACT S3], (2) datasets registered by streamed content hash — never copied, never mutated, (3) a pinned environment lock, (4) an append-only **run journal** of execution events, and (5) saved outputs associated with cell id + run event + a *structural* provenance hash. A four-value status per visible output — **current / stale / failed / unverified** — is computed from those records; kernel restarts and interrupted runs force `unverified`, never silent `current` [EXECUTED W1].
+
+Two independent precedents carry the load. The **Jupyter stack** contributes the document model and programmatic execution (nbformat schema [S3], nbclient [S4,S5]) plus an explicit warning from jupyter-cache that caching is only sound under declared determinism preconditions [S6]. **DuckDB** contributes the data half: an embeddable engine that reads CSV/NDJSON/Parquet in place (no copy), processes beyond RAM under `memory_limit` [S20], documents **order preservation** as a configurable guarantee [S7], and — most load-bearing for the data contract — a **CSV reject-ledger mechanism** (error taxonomy + `reject_errors`/`reject_scans` tables) built precisely so malformed records are *recorded, not silently dropped* [S7,S8,S11]. A third precedent, **DVC**, contributes dependency-aware staleness by checksum (`changed deps`/`changed outs`, "update available") [S23]; a fourth, **bubblewrap**, contributes the OS sandbox mechanism with the honest caveat that "the level of protection … is entirely determined by the arguments passed" [S24].
+
+The issue chain followed in depth is DuckDB's family of *silent* CSV behaviors: a merged fix (PR #11512, rejects tables 2.0 [S11]), a merged refactor that documents a reproducibility hazard (reject counts once depended on unrelated query options — 34,968 vs 34,977 rows [S12]), and two *open* defects with pending fix PRs and regression tests (silent final-row drop under `buffer_size` [S13,S14]; ICU silently loading NULL where `store_rejects` records nothing [S15,S16]) — plus a documented projection-pushdown caveat that a rejected row can vanish from the rejects depending on the query projection [S7,S8]. Section 3 states precisely what is established and what is not.
+
+Executed checks are three small component witnesses (staleness classifier, streaming CSV scan with reject ledger, manifest atomic-save/recovery) — all passing at the end, with two instructive intermediate failures kept as receipts. Everything at 5 GB scale, real sandbox egress, and multi-machine reopen is **[PROPOSED/UNEXECUTED]**.
+
+---
+
+## 1. Scope, method, and what this is not
+
+- Started from the brief only; public sources discovered by candidate via HTTPS captures (URL, pin, capture sha256 in `sources.json`). Twenty-four sources captured 2026-10-05.
+- Investigated four independently useful precedents (mechanism + independence in §2); followed one consequential issue→fix→regression-test chain plus adjacent open defects (§3).
+- This is **not** a notebook product build: no full viewer, no hosted service, no collaboration. It is an architecture, a data contract, an execution-boundary plan, and scoped evidence.
+- Out of scope per brief: credentials, private datasets, shared account profiles, real-time collaboration, scheduling, broad language support.
+
+---
+
+## 2. Precedents and the mechanism each contributes
+
+### P1 — Jupyter document/execution stack (nbformat, nbclient, jupyter-cache)
+
+- **Mechanism contributed:** a *standard interchange schema* that separates code from outputs, and a programmatic clean-execution client.
+- nbformat v4.5 schema (captured at `jupyter/nbformat` main; latest release v5.11.1, 2026-08-17 [S3,S5-adjacent]): every code cell carries `id`, `source`, `outputs` (exactly four kinds: `execute_result`, `display_data`, `stream`, `error`) and `execution_count` — "The code cell's prompt number. **Will be null if the cell has not been run**." Cell metadata supports `execution` timestamps (iopub/shell message dates). [FACT S3]
+- nbclient (latest release v0.11.0, 2026-06-05 [S5]): "a client library for programmatic notebook execution"; extracted from nbconvert's `ExecutePreprocessor`; README states Python 3.10+ support tracking upstream sunsets. [FACT S4,S5]
+- jupyter-cache (README, captured from main): caches executed notebook outputs so they "are kept up to date, without having to re-execute"; **its stated preconditions are the reproducibility boundary in miniature**: "You use the same environment…; They run no non-deterministic code…; They do not depend on external resources… that change over time." Its own wish-list admits "a transparent and robust cache invalidation: imagine the user updating an external dependency or a Python module, or checking out a different git branch" as *not yet fully implemented*, and that rearranged cells must force re-execution while content edits must not. [FACT S6]
+- **Independence:** the document format does not imply any runtime behavior — adopting nbformat settles storage/interchange only; execution, staleness and provenance are our components (this separation is exactly the brief's "a standard document format … does not by itself settle runtime behavior"). nbclient gives a proven clean-replay pattern but has **no** stale/current status model — jupyter-cache adds caching but its invalidation story is aspirational. [INFER]
+
+### P2 — DuckDB as the embedded data engine
+
+- **Mechanism contributed:** in-process columnar engine that queries files *in place* (CSV / NDJSON / Parquet), executes out-of-core under a memory cap, and exposes a typed, configurable CSV reader with an explicit error-handling contract. Latest stable release v1.5.6 (2026-09-28) [FACT S19].
+- CSV parameters documented in current docs (pinned to duckdb-web commit `d6a1aad0`, 2026-09-21 [S7]): `store_rejects`, `rejects_scan`, `rejects_table`, `rejects_limit`, `strict_mode` (default true: "the parser will throw an error upon encountering any issues"), `null_padding`, `nullstr`, `encoding` (utf-8/utf-16/latin-1), `dateformat`/`timestampformat`, `sample_size` (sniffer reads a bounded sample; default 20,480 lines), `auto_type_candidates`. [FACT S7]
+- **Order preservation is a documented, configurable guarantee**: with `preserve_insertion_order = true` (the default), "the order of the rows in the result set returned by the CSV reader is the same as the order of the corresponding lines read from the file(s)"; when false, no guarantee. [FACT S7] — this is the stable-vs-deterministic ordering hook the brief asks for.
+- **Resource bound is a first-class setting**: `SET memory_limit = '10GB'` is a documented example in the configuration reference, alongside `threads`, `enable_progress_bar` ("printing of a progress bar during long-running queries"), `default_null_order = 'NULLS_LAST'`, `default_order = 'ASCENDING'`. [FACT S20 — 32 KB of a 69 KB page captured; settings beyond that byte range are NOT evidenced here]
+- **Restriction primitives exist in-process** (relevant to the execution boundary): `enable_external_access` ("Allow the database to access external state (through e.g., loading/installing modules, COPY TO/FROM, CSV readers… )"), `allowed_paths` / `allowed_directories`, `disabled_filesystems` ("e.g., LocalFileSystem"), `allow_unsigned_extensions`, `allow_persistent_secrets`. [FACT S20] These are engine-internal guards, **not** OS isolation [INFER].
+- **Independence:** DuckDB replaces neither the notebook runtime nor the provenance layer; it is swappable behind our registry/contract interfaces. A pyarrow-only or SQLite alternative remains possible (§8 alternatives).
+
+### P3 — DVC-style dependency-aware staleness
+
+- **Mechanism contributed:** *status* as a checksum comparison with dependency propagation: `dvc status` reports `changed deps` / `changed outs` with states *new / modified / deleted / not in cache*, `--with-deps` walks upstream, and import stages report "update available" when the source changed. [FACT S23]
+- **Independence:** needs no notebook runtime and no SQL engine; the checksum→status→propagate pattern is directly reusable for our cell/DAG invalidation, and our W1 witness re-derives it structurally [EXECUTED W1].
+
+### P4 — bubblewrap as the sandbox mechanism (execution boundary)
+
+- **Mechanism contributed:** unprivileged Linux sandbox from composeable kernel primitives — always a fresh mount namespace with a tmpfs root, `CLONE_NEWUSER`/`NEWPID`/`NEWIPC`/`NEWNET` (network namespace "with only a loopback device"), optional seccomp filters, and `PR_SET_NO_NEW_PRIVS`. [FACT S24]
+- **Its honesty is the design constraint:** "bubblewrap is not a complete, ready-made sandbox with a specific security policy … the level of protection between the sandboxed processes and the host system is **entirely determined by the arguments passed**"; and a concrete historical escape (CVE-2017-5226, terminal `TIOCSTI`) is documented. [FACT S24]
+- **Independence:** orthogonal to everything above; the same permission model can wrap any kernel process. gVisor was unreachable from this environment (fetch error) and is recorded as an alternative lead, not a source.
+
+---
+
+## 3. The issue → fix → regression-test chain (with version applicability and evidence limits)
+
+### 3.1 Chain A — "malformed records must be recorded, not silently dropped" (DuckDB CSV)
+
+**Merged fix.** PR #11512 "CSV Rejects Tables 2.0" by @pdet, **merged 2024-04-11T14:22:49Z** [FACT S11]. It registers six error types (`CAST`, `MISSING COLUMNS`, `TOO MANY COLUMNS`, `UNQUOTED VALUE`, `LINE SIZE OVER MAXIMUM`, `INVALID UNICODE`) into two temporary tables with published schemas — `reject_scans` (scan config incl. file path, delimiter, schema) and `reject_errors` (scan_id, file_id, **line**, line/byte positions, column, `error_type` enum, **the original csv_line**, error message) — plus parameters `store_rejects`, `rejects_scan`, `rejects_table`, `rejects_limit`. The PR body shows an worked example with expected `reject_errors` rows (multi-error lines produce multiple entries). **Version applicability:** the same mechanism (including `reject_scans`, `rejects_limit`) is already documented in the 0.10 docs snapshot [FACT S9] and in current docs [FACT S8]. The smallest release after the merge, v0.10.2 (published 2024-04-17), is explicitly a "**bug fix release** … no new features" in its notes [FACT S18]; PR #11512 does not appear in the captured (truncated) portion of those notes, so **which release binary first contained "Rejects Tables 2.0" is UNRESOLVED** — 1.0.0 (June 2024) is the engineering guess [INFER]; verifying by installing 0.10.x/1.0.0 binaries is [PROPOSED/UNEXECUTED]. Regression tests: the PR references reject tests under `data/csv/rejects/`; current docs' worked example matches `reject_errors` output — but I did not fetch the test files themselves (lead L1).
+
+**Merged refactor exposing a reproducibility hazard.** PR #25793 (merged 2026-09-17) migrated `read_csv` onto the multi-file wrapper and states: "**`ignore_errors` no longer depends on unrelated options** … Adding `filename=true` to a scan could then change which rows were rejected — on `data/csv/error/mismatch/*.csv` the row count moved **between 34968 and 34977** depending on the projection," and makes rejects `file_id` deterministic under parallelism [FACT S12]. This is source-confirmed evidence that *reject sets were query-dependent* — directly anti-reproducible. The docs' own caveat remains: "the CSV Parser is affected by the projection pushdown optimization … if we were to select only the name column, both rows would be considered valid" [FACT S7,S8]. Release applicability: merged after v1.5.6? No — after v1.5.6's release (2026-09-28 is *later*; the merge 2026-09-17 predates it) — whether v1.5.6 or a 2.0 build contains it is **UNRESOLVED** (lead L2); the docs caveat above is still in current docs, so treat projection-independence as NOT guaranteed in any pinned release until tested [INFER].
+
+**Open defects with pending fixes (not merged as of capture 2026-10-05):**
+- Issue #25825: `read_csv` with an explicit `buffer_size` can **silently drop the final row** — no error, no `reject_errors` entry (reproduced at 64 KiB–2 MiB buffers on multi-MB files); open fix PR #26195 adds `test/sql/copy/csv/test_buffer_size_final_row.test` whose data commit makes the test "fail with 'Expected 4 rows, but got 3' — the same silent drop" [FACT S13,S14].
+- Issue #26211: with ICU loaded (the default in CLI and Python client), the CSV reader **silently loads NULL** for unparsable `TIMESTAMPTZ`/`TIMETZ` values "even with `strict_mode = true` and `ignore_errors = false` … `store_rejects = true` records nothing"; open fix PR #26212 adds `test_csv_icu_tz_cast_error.test`. Its most instructive sentence about evidence limits: "The existing tests … expect these errors, but **pass in CI only because they run without ICU**" [FACT S15,S16]. Issue #26212's author verified on v1.5.5 and a v2.0.0-alpha nightly [FACT S15].
+- Issue #18980 (open): `csv_line` in `reject_errors` is truncated near 10,000 chars on v1.3.2 — the reject ledger itself can lose forensic detail [FACT S17].
+
+**Design lessons drawn (these justify concrete product rules):**
+1. A reject ledger must record **raw line bytes + physical ordinal + byte offsets** so quarantined rows are recoverable and re-checkable [FACT S8 → CHOICE in §5.3]; our W2 witness implements exactly this shape [EXECUTED W2].
+2. Reject/skip semantics must be **scan-wide and projection-independent** in our contract; where the engine cannot guarantee it (documented projection-pushdown caveat [S7,S8]), the project must run rejects in a fixed full-column scan and label the result accordingly [INFER].
+3. Regression tests must run under **feature permutations** (e.g., ICU loaded or not), or they green-light silent data loss — the #26211 case [FACT S16]. Product validation plan (§9) adopts permutation testing.
+4. Docs can mislead across versions (the 1.0 parameter table omits `store_rejects` entirely although the 0.10 faulty-CSV page documents it [FACT S9,S10]); pin behavior to **release binaries + tests**, not to docs pages [INFER].
+5. An embedded engine's error taxonomy changes across releases (0.10 named the error `INVALID UNICODE`; current docs renamed it `INVALID ENCODING` [FACT S8,S9]); the data contract must version the engine per project and treat reject *counts* as engine-versioned facts [CHOICE].
+
+---
+
+## 4. Architecture
+
+### 4.1 Project record (folder-first, portable) [CHOICE]
+
+```
+myproject/
+  project.json          # format version, project id, created, settings
+  notebooks/*.ipynb     # nbformat 4.5+ documents [S3]
+  transforms/*.py       # importable scripts (versioned like cells)
+  data/
+    registry.json       # logical dataset -> relative path, format, declared contract, identity
+    external/…          # referenced datasets live wherever they are; never copied
+    derived/…           # transform outputs (content-addressed names)
+  env/
+    lock.json           # pinned interpreter + packages + engine; sha256 of the lock file
+  runs/
+    journal.ndjson      # append-only, line-checksummed execution events
+  outputs/
+    <sha>/…             # saved cell/transform outputs, content-addressed, spillable
+  manifest.json         # reproducibility manifest (exported/verified on reopen)
+```
+
+Exchange = the folder itself, or a zip of it for a portable bundle; everything inside uses **relative paths** so a bundle reopens on another machine (W3 checks this) [EXECUTED W3]. Git can host it; large data stays outside git as hash-registered references (DVC-style [S23]).
+
+### 4.2 Source-data identity [CHOICE]
+
+- Identity = **streamed SHA-256 of file bytes** + byte length, recorded at registration and re-verified lazily (mtime/size shortcut, full hash on demand or before clean replay). A 5 GB file hashes in tens of seconds on commodity SSD [INFER — UNEXECUTED].
+- "Import without copying": registration stores a relative path reference; nothing is duplicated. Derived datasets are new files written under `data/derived/` with lineage `(parent identity, transform id)`; **originals are opened read-only by policy** and the project refuses to write into registered source paths [CHOICE].
+- Datasets too large/unavailable for hashing are recorded as *unverified external references* (path, size, mtime) and every run that uses them labels outputs `unverified` for data identity [CHOICE, follows from W1 rules].
+- Identity covers **bytes**, not semantics: same bytes + same engine version ⇒ same parsed relation (modulo engine bugs); different engine versions can parse differently (§3 lesson 5) — hence the lock pins the engine [INFER].
+
+### 4.3 Notebook document model and execution model [CHOICE, on P1]
+
+- Storage/interchange: nbformat 4.5+ [FACT S3]. The `execution_count` field is honored as the *kernel's* prompt number; **we do not infer execution order from displayed order**. Our run journal, not the .ipynb, is the authoritative execution record (the .ipynb stores outputs only as a view/interchange of the latest state).
+- Four distinct things kept separate (brief obligation): **displayed cell order** (document), **actual execution order** (journal: sequence of run events with kernel-reported counts), **current kernel state** (a live-process fact, identified by `kernel_epoch`), **output provenance** (per saved output: run event id, code structural hash, env lock hash, input dataset hashes, upstream closure hash).
+- **Clean replay** = new kernel process from the locked environment; cells execute in displayed order (the nbclient pattern [S4,S5]) with a pre-flight that (a) verifies referenced dataset hashes, (b) verifies the env lock, (c) refuses undeclared file writes outside the project; progress, per-cell status and cancel (kill process group) surfaced live.
+- **Status of each visible output** — the classifier rules implemented and tested in W1 [EXECUTED W1]:
+  - `current` — output bound to a completed run event of the *current kernel epoch* whose structural provenance hash equals the cell's recomputed hash (code + env lock + read datasets + upstream cell closure).
+  - `stale` — bound to a completed run, but recomputed provenance differs (upstream cell edited, dataset changed — including *transitively* via the closure — or env lock changed).
+  - `failed` — run completed with a captured error output (nbformat `error` output type [S3]); shown as a failure, never silently as current.
+  - `unverified` — no matching completed run event in the current epoch: after kernel restart, after interrupted/cancelled execution, or when the notebook file was edited/shared without our journal (a saved output from someone else's folder). **A kernel restart or interruption therefore can never label old outputs `current`** — the brief's hard requirement.
+- Invalidation effects [CHOICE]: editing a cell marks it and everything downstream `stale` (structural hash propagates — demonstrated transitively in W1); editing a source dataset marks all reading cells and their closures `stale`; editing `env/lock.json` marks every executed cell `stale`. Editing *markdown* content changes nothing (jupyter-cache's requirement that content edits not force re-execution [S6] — adopted).
+- Clean replay **guarantees**: with pinned inputs (hash-verified), pinned environment, and deterministic engine paths (documented order preservation [S7] plus declared sort keys), a replay re-derives the recorded outputs **byte-comparable for tabular results** and semantically comparable otherwise; the journal records what to compare. It does **not** guarantee: freedom from nondeterminism (randomness, clocks, hash seeds — seed pinning is offered as cell metadata), external services, network fetches, undeclared filesystem access, or library-level parallelism order. Same boundary as jupyter-cache's stated preconditions [S6], enforced where possible, *declared* where not [INFER].
+
+### 4.4 Data engine and the optional-SQL boundary [CHOICE]
+
+- Embedded **DuckDB** (pinned in `env/lock.json`; v1.5.6 is current stable [S19]) behind our registry: `read_csv`/`read_ndjson`/Parquet scans over registered relative paths — files are queried in place, satisfying "import without copying" and the >RAM requirement via the engine's documented `memory_limit`/streaming design [S7,S20; spill behavior beyond the captured page is INFER + UNEXECUTED].
+- **SQL relationship (the colleague's needs):** SQL is the *expression language of the data engine*, not a second kernel we maintain. Supported: DuckDB SQL over registered tabular datasets, run either inside notebooks or as standalone transform scripts. NOT supported (explicit boundary): other language kernels, a networked SQL server, arbitrary user DBMS connectivity. A small team does not build kernels; it embeds one engine and one authoring language [CHOICE, per brief].
+- Schema handling: for Parquet the schema is file-typed; for CSV the sniffer's inference from a bounded sample (default 20,480 lines [S7]) is recorded as a **hypothesis**; "Verify schema" runs a full scan producing a schema report (per column: declared type, null count, conversion-error count from the reject ledger). Preview UI is always labeled "sample of first N rows — not a dataset-wide property" [CHOICE; brief obligation].
+- Reject handling: default `strict_mode` (fail loudly); when the user opts into fault-tolerant import, we run `store_rejects` in a **dedicated full-column scan** and copy `reject_errors`-equivalent rows (line ordinal, byte offsets, raw line, error type) into the project's own quarantined-record ledger, bounded like `rejects_limit`, surfaced in the UI and manifest. Malformed records are never silently deleted; the ledger is first-class project data [CHOICE; mechanism per S8,S11; scan-independence risk per S7,S8,S12].
+- Row/order identity: physical ordinal (file order under documented order preservation [S7]) is the stable row identity for CSV/NDJSON; any sorted view must declare `(keys, tiebreaker = ordinal)` to be deterministic; engine defaults `default_null_order = NULLS_LAST`, `default_order = ASCENDING` are pinned in `project.json` [S20 → CHOICE].
+- Unicode/timestamps: CSV encodings limited to the engine's documented set (utf-8/utf-16/latin-1 [S7]); non-listed encodings must be converted *out of band* (docs themselves suggest `iconv` [S7,S10]) and the conversion recorded as a transform. Timestamps require a declared format per column (`timestampformat` [S7]); ambiguous values are rejects, not guesses. NDJSON is UTF-8 by spec, and its spec requires parsers to raise on unparsable lines and to *document/configure* any silent skipping of empty lines [FACT S2]. CSV quoting/line-break ambiguity is handled per RFC 4180's own admission that "there is no formal specification" and implementations differ [FACT S1] — hence format parameters are part of the dataset's declared contract and hashed into identity.
+
+### 4.5 Execution boundary for untrusted notebook code [CHOICE, on P4]
+
+- Two explicit profiles, labeled in the UI:
+  - **Local-trusted** (default for code the user just wrote): full user privileges — the Jupyter world's implicit norm, made explicit and visible.
+  - **Restricted** (default for *opened/shared* projects until the user promotes them): kernel runs as a subprocess under an OS sandbox — on Linux bubblewrap (fresh mount namespace, tmpfs root, `--ro-bind` of the project dir + read-only dataset paths, `--unshare-net` for network-off, seccomp allowlist, `PR_SET_NO_NEW_PRIVS`) [FACT S24]; macOS equivalent via Seatbelt profiles; resource limits via rlimits/cgroups. Exported env is scrubbed; no credentials injected.
+- The engine-internal guards (`enable_external_access=false`, `allowed_paths`, `disabled_filesystems` [S20]) are applied *in addition* for the SQL/data path — a second, non-OS layer, explicitly **not** treated as isolation [INFER].
+- **Usability trade-offs (stated, not hidden):** restricted mode breaks notebooks that need package downloads, cloud SDKs or fonts; the escape hatch is per-project, per-run permission grants (network on/off; extra writable dirs) that are **recorded in the run journal** so grants are part of provenance. Import blacklists are *not* isolation and are never claimed as such (brief obligation). bubblewrap's own caveat — protection depends on the argument policy we compose [S24] — means the sandbox profile is versioned, documented, and validated by an egress test suite [PROPOSED/UNEXECUTED V3].
+- Source browsing stays in the UI process; it never executes notebook content. Candidates' research checks (like the ones in this document) run only in the experiment's admitted isolated capability.
+
+### 4.6 Caching, truncation, concurrency, recovery [CHOICE]
+
+- **Cache key** = structural provenance hash (§4.3) + engine version. Derived outputs are content-addressed under `outputs/`; a cache hit still requires hash-verified inputs (W3 verifies manifest entries). Eviction: LRU with a disk quota; eviction never touches source data.
+- **Large results**: cell outputs are truncated for display at a bounded row/byte budget with an explicit `truncated` marker; the full result spills to `outputs/` and is hash-recorded, so "what you saw" is always distinguishable from "what was produced" [CHOICE].
+- **Concurrency**: one writer per project via an `O_EXCL` lock file carrying pid + boot-id (stale-lock detection and takeover); multi-reader safe. Journals are append-only so a reader never sees a torn state.
+- **Recovery after interrupted save**: every state file (manifest, registry, notebook) is written tmp → fsync → atomic rename; an interrupted save leaves the previous complete state plus an orphan tmp that reopen detects, reports, and sweeps — never a half-applied state [EXECUTED W3]. The run journal appends per-event with per-line checksums; a torn last line is discarded to the last good event and reported.
+- **Schema evolution**: dataset schema versions are recorded per registration/verification; a re-verified dataset whose schema differs produces a diff (added/removed/retyped columns) and, for retypes, requires an explicit accept before dependent runs can be marked current; the diff is part of the manifest [CHOICE].
+
+### 4.7 Python support boundary and environment binding [CHOICE, on facts]
+
+- Supported interpreters = **upstream non-EOL CPython minors at each release**, with EOL drops announced and locked *per project* (a project keeps running; new locks can't adopt EOL versions). Captured status at 2026-10-05: 3.14 (EOL 2030-10-31), 3.13 (2029-10-31), 3.12 (2028-10-31), 3.11 (2027-10-31) are in support; **3.10 reached EOL 2026-10-01 — four days before capture** [FACT S22, aggregator data keyed to PEPs 619/664/693/719/745; the captured devguide page corroborates structure (main = future 3.16, five-phase lifecycle per PEP 602) [FACT S21]]. This is a policy, not a list, precisely because the boundary moved mid-experiment.
+- The execution client we build on states "currently supports Python 3.10+" and drops minors as the Python org sunsets them [FACT S4] — our floor tracks max(our policy, dependency floors).
+- Environment binding: `env/lock.json` records interpreter version, resolved package set with hashes, DuckDB version, and the lock file's own sha256, which enters every provenance hash (W1) [EXECUTED W1].
+
+---
+
+## 5. Minimum workflow, end to end
+
+1. **Create project** — folder + `project.json` + empty registry/lock; nothing installed globally.
+2. **Import & identify data** — register CSV/NDJSON/Parquet by relative path; identity = streamed hash; no copy; optional read-only contract declaration (columns, types, date formats, null strings, encoding) [§4.2, §4.4].
+3. **Author notebook/transform** — nbformat document [S3]; transforms are plain Python scripts under `transforms/`.
+4. **Preview bounded sample** — first-N and/or sampled rows via the engine's bounded read; UI label: "sample, not dataset-wide" [§4.4].
+5. **Run selected work interactively** — kernel subprocess; execution events appended to the journal; progress + cancel; outputs written with run-event association.
+6. **Request clean replay** — pre-flight hash/lock checks → fresh kernel → displayed-order execution → journal records the run; each visible output then carries current/stale/failed/unverified [§4.3, EXECUTED W1].
+7. **Compare provenance** — per-output panel: run event id, code hash, env lock hash, dataset hashes (+ reject-ledger counts), diff against the saved outputs (bounded row diff with explicit truncation).
+8. **Save** — atomic manifest/notebook writes; journal fsync; outputs content-addressed [§4.6, EXECUTED W3].
+9. **Reopen on another machine** — bundle or folder; relative paths verified; orphan tmps swept; manifests re-verified; anything unverifiable labeled `unverified` (e.g., external dataset absent) [EXECUTED W3].
+10. **Export results + manifest** — results plus `manifest.json` (project record, env lock + hash, source identities, notebook execution counts, output digests, engine/interpreter versions) — a small, human-readable reproducibility manifest.
+
+---
+
+## 6. Feedback surfaces (brief obligations)
+
+- **Dependency/provenance view**: DAG of datasets → cells → outputs with per-edge identity hashes and per-node status color/text (not color-only: icon + text + tooltip for accessibility); click any output → its run event.
+- **Error/status feedback**: engine conversion errors are already unusually detailed (line number, original line, auto-detected parameters, suggested fixes [FACT S8]); we surface that verbatim plus our own context (which dataset hash, which cell, which contract declaration was violated).
+- **Saved vs current diff**: bounded, explicit-truncation row diff between saved output content and the replayed output, plus provenance-diff (which hash changed first in the DAG — "the first cause").
+
+---
+
+## 7. Opportunities and alternatives
+
+**Opportunities (useful, optional):**
+- **O1 — result-cache keyed on (dataset hash, declared contract, SQL/transform text, engine version)**: memoizes the colleague's repeated SQL over unchanged files; cheap because identity already exists. Mirrors DVC's "not in cache / up to date" statuses [S23].
+- **O2 — remote datasets via HTTP range reads** (Parquet footer + row-group stats first, full hash optional): previews without full download; *opt-in*, and outputs from unverified remote data are labeled `unverified` per §4.2.
+- **O3 — shareable report export** (notebook + manifest rendered to a static document): natural extension of the manifest; not an obligation.
+
+**Alternatives considered (and why rejected/deferred):**
+- **A1 — SQLite instead of DuckDB**: lighter, but weaker typed CSV/NDJSON readers and no documented reject-ledger or order-preservation story to anchor the data contract [INFER vs S7,S8]. Deferred as a pluggable engine behind the registry.
+- **A2 — pyarrow-only streaming (no SQL)**: full control, but re-implements joins/aggregation memory management that DuckDB provides out-of-core [INFER vs S20]. Kept as the fallback if embedding a C++ engine is unacceptable.
+- **A3 — pure-nbclient replay with no status model**: matches "saved output is reproducible" fallacy the brief warns against; rejected (jupyter-cache's own preconditions list shows why [S6]).
+- **A4 — import-blacklist "sandboxing"**: rejected outright; never claimed as isolation (brief + S24).
+- **A5 — hosted/collaborative service**: out of scope (brief); folder/bundle exchange covers the small team.
+
+---
+
+## 8. Unsupported-input behavior (explicit bounds)
+
+| Input | Behavior |
+|---|---|
+| CSV with malformed rows | default: error with full detail [S8]; opt-in: quarantine to ledger with ordinal/raw line; never silent [EXECUTED W2] |
+| Row longer than engine max / pathological widths | engine error (`max_line_size` [S7]); our guard also bounds preview memory |
+| Non-UTF-8/16/latin-1 encoding | declared out-of-band conversion; recorded as a transform [S7,S10] |
+| Ambiguous timestamps | reject with message; require declared `timestampformat` [S7, CHOICE] |
+| pandas-style whole-file load > RAM | size-guarded: refused with the declared bounded alternative (engine scan / chunked path); explicit different bound, per brief |
+| 5 GB CSV aggregate/scan | engine bounded path — **target** [PROPOSED/UNEXECUTED V1] |
+| Dataset changed since last hash | runs blocked until re-verified or re-registered; outputs go `stale` [EXECUTED W1] |
+| Missing dataset on reopen | registered outputs `unverified`; external refs stay `unverified` by definition [CHOICE] |
+| Two writers on one project | second writer refused with lock holder pid/boot-id [§4.6] |
+| Engine version drift | engine pinned per project; reject counts/schema reports are engine-versioned facts [§3.5, CHOICE] |
+
+---
+
+## 9. Validation plan — executed vs proposed
+
+**Executed by candidate (isolated sandbox; receipts + code hashes in `witnesses.json`):**
+- **W1 — staleness classifier** (14 checks, PASS after v1 fix): rules for current/stale/failed/unverified incl. transitive invalidation, kernel-restart, interrupted-run, external-edit binding. v1's 3 failures (output-chained provenance) are retained as a documented pitfall: provenance must hash **structure**, not outputs.
+- **W2 — streaming CSV scan** (9 checks, PASS after expectation recount): bounded-read parse, streamed SHA-256 identity, reject ledger (CAST/TOO MANY/MISSING with ordinal + raw line, ledger cap), stable identity across passes, and demonstration that naive per-chunk type inference yields conflicting hypotheses (why declared schemas are needed).
+- **W3 — manifest integrity** (9 checks, PASS first run): atomic save (tmp+fsync+rename), crash-before-rename leaves last complete state + orphan tmp detected, tamper detection names the file, relative-path reopen in a fresh directory verifies.
+
+**Proposed / UNEXECUTED (required before confidence):**
+- **V1** — 5 GB synthetic CSV through the pinned engine: peak RSS ≤ ~4 GB on the 8-core/16 GB envelope, hash-verified in/out, reject counts stable across projections (tests the [S12] hazard on our pin).
+- **V2** — engine permutation tests on our pinned release: rejects behavior with/without ICU and with/without `filename=true` (mirrors [S15,S16,S12]).
+- **V3** — sandbox egress suite: network deny, filesystem allowlist enforcement, resource limits, on all three OSes; versioned as the sandbox profile.
+- **V4** — crash/kill matrix: SIGKILL during save/replay on real kernels; torn-journal recovery.
+- **V5** — cross-machine bundle round-trip with a real kernel and pinned env.
+- **V6** — first-release attribution of PR #11512 by installing 0.10.x vs 1.0.0 binaries (closes the §3 UNRESOLVED).
+
+---
+
+## 10. Critical dependencies and risks
+
+- **DuckDB** (data contract anchor): fast-moving; CSV error semantics changed recently and more changes are pending [S12,S13,S15] — mitigate by pinning per project + permutation tests (V2). License MIT. [INFER on process]
+- **nbformat/nbclient** (document/execution): stable, but the format is interchange-only and nbclient has no status model — our journal/status layer is the differentiator and our responsibility. [INFER]
+- **OS sandbox availability**: bubblewrap is Linux; macOS/Windows need different primitives with weaker guarantees — the support boundary must say so per-OS rather than promise uniform isolation. [INFER vs S24]
+- **jupyter-cache**: instructive but its invalidation story is aspirational by its own README [S6]; we adopt its *preconditions* and build the invalidation ourselves. Maintenance status of the project is a lead (L5).
+- **endoflife.date** used as an aggregator for EOL dates [S22] — primary anchoring is the PEP set; a release process must re-verify at build time. [INFER]
+
+## 11. Leads (unresolved / optional)
+
+See `leads.json`. Headlines: L1 fetch reject regression-test files; L2 release applicability of PR #25793; L3 DuckDB temp-spill documentation beyond the captured config page; L4 gVisor as a stronger-isolation alternative (site unreachable in this environment); L5 jupyter-cache maintenance status; L6 whether `preserve_insertion_order` interacts with parallel CSV scans for multi-file reads (docs statement captured for the reader generally, multi-file caveat unverified).

@@ -1,0 +1,58 @@
+{
+  "inventory_version": "research-stage-1",
+  "conventions": {
+    "executed_by_candidate": "code authored and run by this candidate in the admitted isolated executor; receipt fields copied from the execution result; isolated component check only",
+    "executed_only_by_evaluator": "none provided at this stage",
+    "proposed": "designed but never run; labeled UNEXECUTED"
+  },
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "float32 vs float64 coordinate storage discriminator",
+      "status": "EXECUTED_BY_CANDIDATE",
+      "execution_id": "exec-jehhegi9",
+      "rationale": "The brief requires that origin/sampling/transform numbers survive reopen and export with enough precision. This check discriminates float32 vs float64 storage of physical coordinates at realistic magnitude (motorized-stage origin) with sub-diffraction offsets, and verifies JSON round-trip exactness of float64 via CPython's repr-based serializer.",
+      "code_sha256": "dd52ce32f12e6234cd50be7ad119516e762d50afd2ebc48d2e598ed45af795b5",
+      "input": "none (hardcoded scenario: origin 231000.0 um + offset 0.004 um; index 2^24+1)",
+      "expected_behavior_justification": "IEEE-754 binary32 has a 24-bit significand; at magnitude 231000 (~2^17.8) the ulp is 2^-6 um = 15.6 nm, so a 4 nm offset cannot be represented and must be rounded away; 2^24+1 exceeds the binary32 exact-integer range and must collapse to 2^24. CPython's json serializes float64 with repr() shortest-round-trip strings, so a float64 must round-trip exactly.",
+      "observed_stdout": "{\"true_position_um\": 231000.004, \"float32_value_um\": 231000.0, \"float32_abs_error_um\": 0.003999999986262992, \"float64_abs_error_um\": 0.0, \"index_true\": 16777217, \"index_in_float32\": 16777216.0, \"index_loss\": 1.0, \"json_roundtrip_float64_equal\": true}",
+      "stderr": "(empty, stderr_bytes 0)",
+      "exit_code": 0,
+      "completed_utc": "2026-10-06T09:38:33Z",
+      "stdout_sha256": "dbd65842a6448aaeb0c712f1cc07c101994246f71e885047eaca9fe40b9274f8",
+      "scope_limits": "Isolated arithmetic demonstration in the sandboxed executor; proves only the numeric rounding/serialization behavior of CPython float/struct/json. It does not establish that any application stores or exports coordinates this way, nor anything about GPU paths or non-CPython JSON implementations."
+    },
+    {
+      "id": "W2",
+      "label": "3 GB bounded-access benchmark",
+      "status": "PROPOSED_UNEXECUTED",
+      "design": "Generate a ~3 GB tiled BigTIFF (e.g. 40000x40000 uint16, 256px tiles) with tifffile; open via the Zarr facade; randomly access 500 visible tiles while a viewer thread cancels mid-scan; record peak RSS (must stay well under 16 GB envelope; target < ~1.5 GB working set), cold/warm tile latency (target < 100 ms warm), cancel response time.",
+      "would_discriminate": "Whether tifffile per-tile access meets the brief's 'no second full in-memory copy' target on the 8-core/16 GB envelope (assumption A1).",
+      "result": "UNEXECUTED"
+    },
+    {
+      "id": "W3",
+      "label": "Export verification round-trip",
+      "status": "PROPOSED_UNEXECUTED",
+      "design": "Import fixture image; annotate; export annotation table + small OME-TIFF; re-run verification: recompute source sha256, recompute voxel->physical mapping from export fields, compare transform_digest with project state; expect 'identical'. Then apply a recorded rotate/resample op and expect transform_digest change with source digest unchanged.",
+      "would_discriminate": "Whether exports honestly preserve the coordinate relationship claims of proposal section 8.",
+      "result": "UNEXECUTED"
+    },
+    {
+      "id": "W4",
+      "label": "Atomic save / crash recovery kill test",
+      "status": "PROPOSED_UNEXECUTED",
+      "design": "SIGKILL the app at randomized offsets during save across >=20 trials; after each, reopen and assert: manifest generation invariant holds, no partially written artifact is adopted, recovery-to-last-generation succeeds; also kill during import and assert no manifest entry was committed.",
+      "would_discriminate": "Whether the temp-file + fsync + os.replace + manifest-last recipe (proposal section 7) actually yields recoverable state, including on the team's shared-storage filesystem (assumption A2).",
+      "result": "UNEXECUTED"
+    },
+    {
+      "id": "W5",
+      "label": "Undo with reference-returning backend (localized napari #3203 lesson)",
+      "status": "PROPOSED_UNEXECUTED",
+      "design": "Unit test: fake array-like whose __getitem__ returns views (mimicking tensorstore reference semantics per napari PR #3203 body); perform edit through the project's edit-history component; assert undo restores the pre-edit values. This is the dedicated regression test whose absence in napari's fix PR is documented in the proposal F3 limits.",
+      "would_discriminate": "Whether our edit history stores copies of prior values rather than references, for non-NumPy backends.",
+      "result": "UNEXECUTED"
+    }
+  ]
+}

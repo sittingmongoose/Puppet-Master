@@ -1,0 +1,89 @@
+{
+  "schema": "er9.leads.v1",
+  "critical_unresolved": [
+    {
+      "id": "L1",
+      "topic": "DuckDB fixed-release applicability",
+      "status": "unresolved; release cannot be named from collected evidence",
+      "current_evidence": "Issue #24593 reproduces on v1.5.5; PR #24607 merged to main at 2756f0265561e29caea8750fb373e6fa1c9b79bf; tagged v1.5.6 optimizer source still has the old pass order and exact new test path is absent (sources S9-S13).",
+      "risk": "A pin could ship the optimizer issue or related column/CTE behavior; a main-branch fix is not proof of a released wheel containing it.",
+      "next_step": "Inspect candidate release tag and source, then run the focused upstream regression tests and motivating query against the exact source build and Python wheel. Use a tested later release or reviewed backport if needed."
+    },
+    {
+      "id": "L2",
+      "topic": "OS sandbox backend and supported platform matrix",
+      "status": "critical design dependency; proposed, not qualified",
+      "current_evidence": "Jupyter Server warns that server access grants arbitrary-code execution (S4); no sandbox implementation source or permission test was selected in this research.",
+      "risk": "A run controller cannot claim untrusted-code confinement or reliable process-tree cancellation until filesystem, network and resource controls are verified per OS.",
+      "next_step": "Select a first supported OS, threat model, and native/container backend; test denied paths/network, allowed mounts, environment-secret removal, resource quotas, escape attempts and descendant cancellation. Fail closed or require explicit trusted-code mode where unavailable."
+    },
+    {
+      "id": "L3",
+      "topic": "Exact reproducible environment packaging",
+      "status": "critical dependency; lock tool and supported wheel/platform set undecided",
+      "current_evidence": "Notebook/runtime precedents show execution and format mechanisms (S1-S3), but no package-lock manager or complete per-platform dependency closure was assessed.",
+      "risk": "A lock digest cannot make native libraries or unavailable packages portable, and an environment change affects output validity.",
+      "next_step": "Choose and pin a lock/sync tool, Python patch release, wheel hashes, native dependencies, and platform policy; test clean offline/online restore and missing wheel behavior on receiving machines."
+    },
+    {
+      "id": "L4",
+      "topic": "Stable row coordinates across readers and evolving files",
+      "status": "needs pinned-reader qualification",
+      "current_evidence": "Current DuckDB docs cover CSV inference, JSON loading and Parquet read/describe examples (S5-S7), not a universal stable physical-row coordinate contract for all formats.",
+      "risk": "Incorrect row identifiers or silently shifting schema/row order would make rejects and lineage misleading.",
+      "next_step": "Verify record ordinals and reader behavior for quoted CSV newlines, NDJSON lines, Parquet row groups, glob/multi-file scans and concurrent file replacement; label unavailable identities rather than infer them."
+    },
+    {
+      "id": "L5",
+      "topic": "5 GB operation envelope",
+      "status": "performance target only",
+      "current_evidence": "DuckDB documents spill support and operator-specific memory limits (S8), but no workload was executed in this research.",
+      "risk": "Some full sorts, multiple blockers, large aggregates or exports can exceed RAM or scratch even on the target workstation.",
+      "next_step": "Measure representative 5 GB fixtures under 8 cores/16 GB with a scratch quota and capture memory, spill, time and failure behavior. State unsupported operation/resource bounds in UI."
+    },
+    {
+      "id": "L6",
+      "topic": "Filesystem durability and lock semantics",
+      "status": "proposed protocol; filesystem-specific guarantees untested",
+      "current_evidence": "Atomic staged writes and pointer promotion are design choices in proposal; no implementation or crash-injection test ran.",
+      "risk": "Network shares or platform differences may weaken atomic rename, locking or fsync guarantees.",
+      "next_step": "Define supported local filesystems and test each save interruption point, pointer recovery and competing writers; fall back to read-only where guarantees do not hold."
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "O1",
+      "idea": "Opt-in typed DAG for declared pure Python/SQL transforms, with explicit inputs/outputs, source/schema/lock hashes, cache fingerprints and row lineage where defined.",
+      "value": "Explains downstream staleness and avoids rerunning independent pure transforms while arbitrary notebooks retain conservative sequential-state semantics.",
+      "status": "useful candidate; proposed/UNEXECUTED",
+      "validation": "Prototype a small transform and prove source, code, schema, environment and parameter changes invalidate exactly dependent artifacts; reject caching for undeclared side effects."
+    },
+    {
+      "id": "O2",
+      "idea": "Readable reproducibility manifest plus a result comparison view that groups changes by source, schema, environment, cell, output and ordering.",
+      "value": "Makes the central debugging question—why did a collaborator get a different result?—answerable without treating `.ipynb` saved outputs as proof.",
+      "status": "minimum product direction; accessible UI remains to validate",
+      "validation": "Analyst review with keyboard and screen reader; compare changed tabular outputs, exceptions, truncated large outputs and missing/unverified provenance."
+    }
+  ],
+  "alternatives_and_deferred": [
+    {
+      "id": "A1",
+      "alternative": "First milestone uses stock sequential Run All plus conservative notebook invalidation and no transform cache/DAG.",
+      "tradeoff": "Simpler state model and less UI, but reruns more work and gives coarser dependency explanations.",
+      "status": "plausible bounded alternative, preserved in proposal"
+    },
+    {
+      "id": "A2",
+      "alternative": "A reactive notebook front end could be explored after the first release.",
+      "tradeoff": "Potentially clearer cell dependency graphs, but must still handle ordinary `.ipynb` exchange, arbitrary Python side effects, environment/source identity, security and runtime provenance; no reactive framework was researched or selected here.",
+      "status": "optional lead only; not a minimum obligation"
+    },
+    {
+      "id": "A3",
+      "alternative": "Broader language kernels, hosted collaboration, scheduled runs, automatic scheduling and account/profile sharing.",
+      "tradeoff": "Would expand runtime/security/operational scope beyond the three-analyst local-first need.",
+      "status": "deferred/out of current scope"
+    }
+  ]
+}

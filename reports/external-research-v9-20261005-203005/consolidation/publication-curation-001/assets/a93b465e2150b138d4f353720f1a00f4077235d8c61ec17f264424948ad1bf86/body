@@ -1,0 +1,297 @@
+{
+  "catalog_version": "1.0",
+  "catalog_scope": "Public primary-source captures discovered for the independent research proposal; capture hashes identify captured response bodies, not semantic truth.",
+  "captured_on": "2026-10-05",
+  "sources": [
+    {
+      "id": "S01",
+      "name": "nbformat 5.10.4 format description",
+      "url": "https://nbformat.readthedocs.io/en/v5.10.4/format_description.html",
+      "pin": "nbformat documentation v5.10.4",
+      "locator": ["Notebook file format", "Top-level structure", "Code cells", "Code cell outputs"],
+      "facts_used": ["Notebook JSON records ordered cells, optional metadata, execution counts and saved output representations."],
+      "applicability": "Document format schema only; it does not specify current kernel state or an execution event ledger.",
+      "capture": {
+        "capture_id": "e9bf7716e2bb4c5e85570e1d45bb7bda",
+        "path": "public_captures/d09bb699e755c2d4d277028b2e92ced7cb441f12ac4b00872a1e5af1bb4e18cf.body",
+        "sha256": "d09bb699e755c2d4d277028b2e92ced7cb441f12ac4b00872a1e5af1bb4e18cf",
+        "body_complete": true,
+        "delivery_note": "Versioned documentation page captured; exact source capture identity retained."
+      }
+    },
+    {
+      "id": "S02",
+      "name": "nbclient NotebookClient implementation",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/nbclient/client.py",
+      "pin": "Git tag v0.10.2",
+      "locator": ["NotebookClient.async_execute", "async_execute_cell", "setup_kernel", "async_start_new_kernel", "timeout", "interrupt_on_timeout", "force_raise_errors", "cell hooks"],
+      "facts_used": ["Notebook cells are executed in notebook order through a managed Jupyter kernel; the client has progress hooks and timeout/error controls."],
+      "applicability": "Execution orchestration precedent only. It does not isolate untrusted code, capture all external file access, or prove clean replay determinism.",
+      "capture": {
+        "capture_id": "e0c06d94ab754acc88a3b17ceda25dc3",
+        "path": "public_captures/3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971.body",
+        "sha256": "3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971",
+        "captured_bytes": 49833,
+        "body_complete": true,
+        "delivery_note": "Raw source capture complete; initial semantic delivery was limited to 32,768 bytes."
+      }
+    },
+    {
+      "id": "S03",
+      "name": "Jupyter Client messaging protocol documentation",
+      "url": "https://jupyter-client.readthedocs.io/en/stable/messaging.html",
+      "pin": "Captured page identifies jupyter_client documentation 8.10.0 and message specification 5.5; stable URL is mutable.",
+      "locator": ["Versioning", "Introduction", "General Message Format", "Message Header", "Parent header"],
+      "facts_used": ["Jupyter messages carry session and message IDs; a restarted kernel has a new kernel session ID; parent headers associate side-effect output with a request."],
+      "applicability": "Protocol semantics useful for event correlation; not a complete notebook history or a security boundary.",
+      "capture": {
+        "capture_id": "36c57364d20a439d87137a5c58b60042",
+        "path": "public_captures/50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0.body",
+        "sha256": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0",
+        "captured_bytes": 177790,
+        "body_complete": true,
+        "delivery_note": "Full public response captured; first 32,768 bytes delivered for semantic inspection; page itself identifies docs version 8.10.0."
+      }
+    },
+    {
+      "id": "S04",
+      "name": "DuckDB CSV auto detection",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "pin": "DuckDB documentation 1.5 current selector on 2026-10-05; mutable documentation alias, not a binary pin.",
+      "locator": ["CSV Sniffer", "Dialect Detection", "Type Detection", "Overriding Detection"],
+      "facts_used": ["CSV auto-detection infers dialect/header/types and permits explicit overrides."],
+      "applicability": "Supports using inference as a preview aid and then persisting chosen settings; does not prove unseen rows follow an inferred schema.",
+      "capture": {
+        "capture_id": "113611bcecfe412091e3563bf1489d1e",
+        "path": "public_captures/ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13.body",
+        "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+        "captured_bytes": 372286,
+        "body_complete": true,
+        "delivery_note": "Full response captured; initial semantic delivery limited to 32,768 bytes. Page version selector identifies 1.5 current."
+      }
+    },
+    {
+      "id": "S05",
+      "name": "DuckDB faulty CSV handling",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "pin": "DuckDB documentation 1.5 current selector on 2026-10-05; mutable documentation alias, not a binary pin.",
+      "locator": ["CSV Error Messages", "Ignore Errors", "Store Rejects / faulty lines for inspection"],
+      "facts_used": ["The page describes parser diagnostics and mechanisms to retain faulty lines for later inspection."],
+      "applicability": "Mechanism precedent only. The proposal uses strict failure/quarantine by default and does not enable silent row skipping.",
+      "capture": {
+        "capture_id": "b2caaa7b05344e7498fcfad7377c0d26",
+        "path": "public_captures/58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c.body",
+        "sha256": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c",
+        "captured_bytes": 376006,
+        "body_complete": true,
+        "delivery_note": "Full response captured; initial 32,768-byte semantic delivery included the page description; selector identifies 1.5 current."
+      }
+    },
+    {
+      "id": "S06",
+      "name": "DuckDB v1.5.6 official release object",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.6",
+      "pin": "Release tag v1.5.6; published 2026-09-28. Release object says immutable=false and target_commitish=069cc9f9b5be802405797faecc284961b07c70ef.",
+      "locator": ["tag_name", "published_at", "target_commitish", "release assets and digests"],
+      "facts_used": ["A v1.5.6 bugfix release was published after the v2.0-branch fix merge."],
+      "applicability": "The release record does not state that PR #25232 is included. CLI asset digests are not Python wheel digests.",
+      "capture": {
+        "capture_id": "cd60c39152db4b4a98091820c3db0ada",
+        "path": "public_captures/1af16f4f49c7ac0f9c26a8ce3fa150eac75dc87562ca368c09ec96c7c7302872.body",
+        "sha256": "1af16f4f49c7ac0f9c26a8ce3fa150eac75dc87562ca368c09ec96c7c7302872",
+        "captured_bytes": 53225,
+        "body_complete": true,
+        "delivery_note": "Full JSON response captured; only initial 32,768 bytes delivered in the tool response. Release metadata reports immutable=false."
+      }
+    },
+    {
+      "id": "S07",
+      "name": "DuckDB issue #25164",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/25164",
+      "pin": "Issue #25164 as captured 2026-10-05; issue report is not itself a release guarantee.",
+      "locator": ["Issue description", "minimal reproduction", "affected versions and example large files"],
+      "facts_used": ["Issue reports parallel CSV duplicate rows with CRCRLF line endings, with reports on 1.4.4, 1.5.2 and 1.5.5; some large files had valid-looking duplicated rows."],
+      "applicability": "Reported affected behavior and reproduction. The issue also mentions a possible leading-LF symptom; the evidence does not show that symptom was fixed by the same patch.",
+      "capture": {
+        "capture_id": "715ad7bc339a4845bf73f86e3c7737f5",
+        "path": "public_captures/5486aac86d6778c4aa01c5f81e25f061420aa55983842f3c20cb496cffbb739c.body",
+        "sha256": "5486aac86d6778c4aa01c5f81e25f061420aa55983842f3c20cb496cffbb739c",
+        "body_complete": true,
+        "delivery_note": "Complete issue response captured and delivered."
+      }
+    },
+    {
+      "id": "S08",
+      "name": "DuckDB PR #25232 scanner fix",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232",
+      "pin": "Merged PR #25232; merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86; base branch v2.0-cyanoptera; merged 2026-09-07.",
+      "locator": ["PR description", "merge_commit_sha", "base.ref", "files changed / ProcessOverBufferValue fix"],
+      "facts_used": ["Patch checks the over-buffer CRCRLF path after the previous buffer already counted the row and returns before a fallthrough can count it again."],
+      "applicability": "Fix is evidenced on the v2.0-cyanoptera merge. It is not evidence that a later stable binary contains the patch.",
+      "capture": {
+        "capture_id": "cfee4cd308864addabf0c7bee1dd730f",
+        "path": "public_captures/5795ca684a8533f116ede63a7512cd0d28baa5bc90956741d3e5fa50a10cc5e2.body",
+        "sha256": "5795ca684a8533f116ede63a7512cd0d28baa5bc90956741d3e5fa50a10cc5e2",
+        "body_complete": true,
+        "delivery_note": "Complete PR response captured and delivered."
+      }
+    },
+    {
+      "id": "S09",
+      "name": "DuckDB issue #25164 regression test at merge commit",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "pin": "Git commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86 (PR #25232 merge commit).",
+      "locator": ["test_rrrn_parallel.test", "1024-byte boundary case", "60/60 row count assertions", "ID 39/40 uniqueness", "mid-buffer ending case"],
+      "facts_used": ["Regression test constructs a row terminator split across a 1024-byte boundary, asserts 60 parallel and sequential rows and no duplicate IDs, and checks another line-ending position."],
+      "applicability": "Source regression test evidence at the merge commit; this research did not execute DuckDB's test harness or infer release behavior from the test alone.",
+      "capture": {
+        "capture_id": "5ee73c0719fe43d1a77b2115ac7c85f7",
+        "path": "public_captures/86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f.body",
+        "sha256": "86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f",
+        "captured_bytes": 3714,
+        "body_complete": true,
+        "delivery_note": "Full raw regression test captured and delivered."
+      }
+    },
+    {
+      "id": "S10",
+      "name": "DuckDB PR #25325 proposed port to main",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25325",
+      "pin": "PR #25325 state as captured 2026-10-05; base main; closed with merged=false and merged_at=null.",
+      "locator": ["title / body: Port of #25232 to main", "state", "merged", "merged_at", "base.ref"],
+      "facts_used": ["The captured port PR is not merged, so it cannot establish that the patch landed on main."],
+      "applicability": "A state snapshot of this PR only; it does not rule out another main-branch fix or later state change.",
+      "capture": {
+        "capture_id": "bb177b49a0084748afc61429aebb1b66",
+        "path": "public_captures/c0272a615d196ed66c1b4caf29e15d58b9520a43bb9271f17b6476fd5a633bff.body",
+        "sha256": "c0272a615d196ed66c1b4caf29e15d58b9520a43bb9271f17b6476fd5a633bff",
+        "body_complete": true,
+        "delivery_note": "Complete PR response captured and delivered."
+      }
+    },
+    {
+      "id": "S11",
+      "name": "DuckDB v1.5.6 regression-test path check",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "pin": "Git tag v1.5.6, requested path test/sql/copy/csv/parallel/test_rrrn_parallel.test.",
+      "locator": ["HTTP response at exact tag/path"],
+      "facts_used": ["The exact regression-test path returns 404 at the captured v1.5.6 tag."],
+      "applicability": "Negative evidence for this exact path only; it does not prove there is no equivalent test under another name or another fix elsewhere.",
+      "capture": {
+        "capture_id": "5f6f924f873e4c0b8c6c0d768379699e",
+        "path": "public_captures/d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed.body",
+        "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+        "captured_bytes": 14,
+        "http_status": 404,
+        "body_complete": true,
+        "delivery_note": "Complete 404 response body captured."
+      }
+    },
+    {
+      "id": "S12",
+      "name": "DuckDB v1.5.6 scanner source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "pin": "Git tag v1.5.6; source path src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp.",
+      "locator": ["StringValueScanner::ProcessOverBufferValue", source lines 1417-1444, especially the else branch at lines 1437-1443],
+      "facts_used": ["The captured tag source has the older CR/LF carry handling at this branch and does not include the PR-added pre_carry_pos guard/early return."],
+      "applicability": "Source-level evidence that the merged hunk is absent from this captured tag file. It does not prove the built binary's behavior or exclude another implementation path.",
+      "capture": {
+        "capture_id": "f33e31641b094c4fbabb4793fbb52de3",
+        "path": "public_captures/0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18.body",
+        "sha256": "0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18",
+        "captured_bytes": 83185,
+        "body_complete": true,
+        "inspected_ranges": [
+          {"lines": "1390-1464", "range_sha256": "6b2e03f296703fe02037cd04027ffd026d46129ee6c6ec4b7902ab2929e60c94"},
+          {"lines": "1440-1539", "range_sha256": "ee04284a0696f3f3b7ad2b65d34a220ba1d9f4516224f3728bfbf15af427d45b"}
+        ],
+        "delivery_note": "Full raw source captured. Bounded reads inspected the relevant ProcessOverBufferValue region."
+      }
+    },
+    {
+      "id": "S13",
+      "name": "DuckDB JSON loading documentation",
+      "url": "https://duckdb.org/docs/current/data/json/loading_json",
+      "pin": "DuckDB documentation 1.5 current selector on 2026-10-05; mutable documentation alias, not a binary pin.",
+      "locator": ["read_json function", "automatic configuration/type deduction", "manual reader configuration"],
+      "facts_used": ["JSON reader attempts configuration and type inference and supports explicit configuration."],
+      "applicability": "Reader capability only. Product contract must preserve absent-field/null distinction and reject or retain incompatible values explicitly.",
+      "capture": {
+        "capture_id": "c1bbe396e0b043c3a21672dfabfc8d06",
+        "path": "public_captures/4f963de5ffe98e122232cd250b27a308f7e510ebd8f7e028227d6a39b8a1c8f1.body",
+        "sha256": "4f963de5ffe98e122232cd250b27a308f7e510ebd8f7e028227d6a39b8a1c8f1",
+        "captured_bytes": 399880,
+        "body_complete": true,
+        "delivery_note": "Full response captured; first 32,768 bytes delivered; page version selector identifies 1.5 current."
+      }
+    },
+    {
+      "id": "S14",
+      "name": "DuckDB Parquet read/write documentation",
+      "url": "https://duckdb.org/docs/current/data/parquet/overview",
+      "pin": "DuckDB documentation 1.5 current selector on 2026-10-05; mutable documentation alias, not a binary pin.",
+      "locator": ["Reading Parquet files", "DESCRIBE schema inspection", "multi-file reads"],
+      "facts_used": ["DuckDB documents direct Parquet file reads, schema inspection and multi-file scans."],
+      "applicability": "Format and query examples; does not establish this proposal's schema evolution rules or 5 GB performance.",
+      "capture": {
+        "capture_id": "91f8d14ae9e34cd895466ade36c018b7",
+        "path": "public_captures/69aabdf5127732a125d777a347a2f690745f067e2a36d7bbf5a7c5dab4d200ca.body",
+        "sha256": "69aabdf5127732a125d777a347a2f690745f067e2a36d7bbf5a7c5dab4d200ca",
+        "captured_bytes": 385364,
+        "body_complete": true,
+        "delivery_note": "Full response captured; initial 32,768 bytes delivered; page version selector identifies 1.5 current."
+      }
+    },
+    {
+      "id": "S15",
+      "name": "DuckDB memory management article",
+      "url": "https://duckdb.org/2024/07/09/memory-management",
+      "pin": "Dated 2024-07-09 DuckDB engineering article; no engine release pin claimed.",
+      "locator": ["Captured article byte ranges 257000-275000 and 275000-287000: streaming, operator spilling, temp-directory and out-of-memory discussion"],
+      "facts_used": ["Some scans/operators stream; some operators spill intermediates to disk; high-cardinality/sort/join operations can need more memory/temp storage or fail."],
+      "applicability": "Conceptual behavior description at article date; support is evolving and this is not a v1.5.6 performance guarantee.",
+      "capture": {
+        "capture_id": "3e9d9e6bc9b54b62b8f4bc28b320d312",
+        "path": "public_captures/df88c0b3cb88a0a1c14df3f7b7613c21cd7ff70a854e515fbd4006f735f8452d.body",
+        "sha256": "df88c0b3cb88a0a1c14df3f7b7613c21cd7ff70a854e515fbd4006f735f8452d",
+        "captured_bytes": 524288,
+        "body_complete": false,
+        "delivery_note": "Capture is partial/truncated at the bounded capture size; cited byte windows were read from the captured body."
+      }
+    },
+    {
+      "id": "S16",
+      "name": "DuckDB workload tuning documentation",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads.html",
+      "pin": "DuckDB documentation 1.5 current selector captured 2026-10-05; mutable documentation alias, not a binary pin.",
+      "locator": ["preserve_insertion_order setting", "larger-than-memory import/export guidance"],
+      "facts_used": ["The guide describes disabling insertion-order preservation as a potential memory trade-off for some larger-than-memory workloads, with order consequences."],
+      "applicability": "Guidance for product trade-off; verify behavior against the exact released engine and workload.",
+      "capture": {
+        "capture_id": "b77bb6f93df64a659b414a9840c8799e",
+        "path": "public_captures/8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b.body",
+        "sha256": "8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b",
+        "captured_bytes": 368625,
+        "body_complete": true,
+        "delivery_note": "Full response captured; semantic delivery was bounded; page selector identifies 1.5 current."
+      }
+    },
+    {
+      "id": "S17",
+      "name": "Bubblewrap README and sandbox limitations",
+      "url": "https://raw.githubusercontent.com/containers/bubblewrap/v0.10.0/README.md",
+      "pin": "Git tag v0.10.0.",
+      "locator": ["Sandbox security", "Sandboxing", "Limitations", "mount/network/PID/IPC namespace description"],
+      "facts_used": ["Bubblewrap constructs namespaces and mount layouts; caller-supplied arguments determine protection; mounted objects and policy omissions matter."],
+      "applicability": "An OS sandbox-building primitive, not a complete policy or a guarantee against kernel exploits/denial of service.",
+      "capture": {
+        "capture_id": "ee7698e0eb414eb0be4dc574f936b943",
+        "path": "public_captures/b5d1774fded9ae05cf6f6d9b6fc277cb6b59b138dd6ccada0372390ad89d39f3.body",
+        "sha256": "b5d1774fded9ae05cf6f6d9b6fc277cb6b59b138dd6ccada0372390ad89d39f3",
+        "captured_bytes": 11234,
+        "body_complete": true,
+        "delivery_note": "Complete pinned README captured and delivered."
+      }
+    }
+  ]
+}

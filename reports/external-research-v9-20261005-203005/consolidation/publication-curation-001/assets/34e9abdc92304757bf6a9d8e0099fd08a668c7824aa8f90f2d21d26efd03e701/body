@@ -1,0 +1,142 @@
+# Critique review — Development brief B (reproducible notebook and data workspace)
+
+Stage: I-04-FRESH-DELIVERY-R001 — fresh source-grounded critique stage (critique role).
+Written: 2026-10-06. Author: admitted candidate model, native critique Goal.
+Inputs read with boundary-verified hashes: `inputs/brief.md` (sha256 6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a), `inputs/delivery_objective.md` (1aed159a…36650), `inputs/output_contract.md` (233c7ea2…ff22), `inputs/STAGE_CLOCK.json` (5fff7e8f…a80de).
+
+## 0. Labeling legend used throughout
+
+- **[FACT]** — verified against a pinned public capture or a boundary-verified input file.
+- **[INFERENCE]** — engineering inference from facts; not itself observed.
+- **[CHOICE]** — product/design recommendation, not an external fact.
+- **[EXECUTED by candidate]** — run in the admitted isolated executor; receipt hashes given; scope-limited to a tiny synthetic component check.
+- **[PROPOSED/UNEXECUTED]** — recommended validation that has not been run in this stage.
+
+## 1. Stage condition: the frozen predecessor artifacts are absent
+
+The critique contract requires reading "the exact brief, complete frozen research proposal and supporting catalogs" attached under `inputs/prior/`. The directory `inputs/prior/` exists (a read attempt on it returns a boundary `ValueError` consistent with a directory, not `FileNotFoundError`), but **no predecessor artifact could be found under it**. All attempts below were made with the admitted read/mechanical tools this stage; no other arm, evaluator material, or private file was touched.
+
+Attempts (all returned boundary `FileNotFoundError` unless noted):
+
+1. `inputs/prior/proposal.md`
+2. `inputs/prior/sources.json`
+3. `inputs/prior/research/proposal.md`
+4. `inputs/prior/research/sources.json`
+5. `inputs/prior/out/research/proposal.md`
+6. `inputs/prior/out/final/proposal.md`
+7. `inputs/prior/out/proposal.md`
+8. `inputs/prior/research.md`
+9. `inputs/prior/candidate/proposal.md`
+10. `inputs/prior/research-R001/proposal.md`
+11. `inputs/prior/PROPOSAL.md`
+12. `inputs/prior/proposal/proposal.md`
+13. `inputs/prior/frozen/proposal.md`
+14. `inputs/prior/research_proposal.md`
+15. `inputs/prior/witnesses.json`
+16. `inputs/prior/leads.json`
+17. `inputs/prior/index.json`, `inputs/prior/manifest.json`, `inputs/prior/artifacts.json`, `inputs/prior/README.md`, and at workspace level `inputs/source_card.json`, `inputs/inventory.json`, `inputs/index.json`, `inputs/README.md`
+18. Mechanical `line_map` on `inputs/prior` and `cache_source` on `inputs/prior` — boundary `ValueError` (directory, not a file)
+19. Mechanical `line_map` on glob `inputs/prior/*` — boundary `FileNotFoundError` (no readable match)
+
+**[FACT]** No frozen research proposal, sources catalog, witnesses inventory, or leads file was attached where this stage expects it. Consequently:
+
+- **No supported corrections to prior claims are possible, and none are asserted.** This is absence of an object, not a blanket rejection; nothing was evaluated and rejected.
+- Per the boundary contract I did **not** invent a predecessor proposal, its claims, or a critique of imagined content, and I did not read another arm to recover the missing artifacts.
+- What follows is the maximum useful critique-stage content that does not depend on the missing object: (a) the plan-obligation checklist every Brief-B proposal must satisfy, derived from the brief itself; (b) independent verification of the domain's load-bearing public-source anchors, so the next fresh candidate inherits verified ground truth with pins; (c) one executed discriminating check on the brief's central data-contract pitfall; (d) a risk register of the claim classes most likely to be unsupported in this domain, with a verification protocol; (e) explicit resolution instructions.
+
+**[FACT — pipeline consequence]** The research→critique→final chain for this arm is running without a frozen research artifact at the critique stage. The final-stage author must either receive the artifacts late (ops attach) or re-derive research content fresh; this review is written to be sufficient orientation for either path without any private context.
+
+## 2. Plan-obligation checklist derived from the brief
+
+Each item is an obligation the brief places on the *final* proposal (`brief.md`, line references from the boundary-verified copy). The next candidate can use this as the acceptance checklist; failure modes observed in this domain are noted where I have verified anchors (§3–§4).
+
+| # | Obligation (brief line) | What must be shown | Verified anchor / known pitfall |
+|---|---|---|---|
+| O1 | Project = notebooks, scripts, configs, dataset *references*; import without unnecessary copying (L5) | Project record schema; reference (not copy) semantics | — |
+| O2 | Data contract: schema assumptions, type conversions, row/order identity, error handling; no silent deletion of malformed records; no mutation of originals (L5) | Declared contract incl. malformed-record policy | W-1 below shows sample-inferred types are unsound as a full-dataset contract |
+| O3 | Bounded preview ≠ proof of a full-dataset property (L5) | Explicit UI/manifest separation of sample-derived vs full-derived facts | W-1 executed check supports this obligation |
+| O4 | Distinguish displayed cell order, real execution order, kernel state, output provenance; saved output ≠ reproducible (L7) | Four distinct tracked states + provenance model | A1: nbformat `execution_count` null = "not run"; document has no env pin beyond `kernelspec.name` |
+| O5 | Clean-replay guarantee boundary: nondeterminism, external services, unpinned packages, undeclared file access stay outside the guarantee (L7) | Explicit in/out-of-guarantee list | A2: nbclient executes but does not pin environments by itself |
+| O6 | Request/cancel/progress/errors; per-output status current/stale/failed/unverified (L7) | Run-control + status model | A3: `enable_progress_bar` and `duckdb_settings()` exist on the SQL side |
+| O7 | Defined invalidation on edit of upstream cell / dataset / dependency; restart or interrupt must not silently label old outputs current (L7) | Invalidation rules keyed to something stable | A1: stable cell `id` (4.5+) is a usable key |
+| O8 | Minimum workflow end-to-end incl. manifest, cross-machine reopen, export (L9) | Workflow walkthrough mapped to components | — |
+| O9 | Python support boundary; defensible optional-SQL relationship; no per-language kernels (L9) | Versioned Python boundary; SQL as bounded engine integration | A3 supports a sandboxable embedded SQL engine choice |
+| O10 | 8-core/16 GB envelope; 5 GB input via bounded/streaming path where the operation allows; explicit different bound otherwise; target, not verified result (L11) | Streaming path per operation class + honest non-claims | DuckDB >RAM claims must not be asserted without measurement (§5) |
+| O11 | Schema evolution, cache invalidation, large-result truncation, deterministic vs stable ordering, locking, interrupted-save recovery (L11) | Each named and resolved | W-1 shows tie-order (stable) results are physical-order-dependent; only total-key sorts are machine-invariant |
+| O12 | Exchange via ordinary folders or portable bundles (L11) | Bundle layout + identity rules | — |
+| O13 | Untrusted-notebook execution boundary: fs/net/resource permissions; usability trade-offs; import blacklist ≠ isolation; browsing separate from execution (L13) | Permission model + explicit non-promises | A3: DuckDB has real settings (`allowed_directories/paths`, `enable_external_access`, unsigned-extension refusal) — engine-level allowlisting is *not* notebook isolation, but helps the SQL path |
+| O14 | ≥2 independently useful implementation precedents with mechanisms + independence (L17) | Precedent → mechanism → why independent | A1/A2/A3 provide three candidate mechanisms; the *proposal* must make the independence argument itself |
+| O15 | ≥1 consequential real issue followed through fix + regression test, with version/branch applicability and evidence limits; issue titles/patches alone don't establish release behavior (L17) | Issue → fix → regression test → release evidence chain | **Missing everywhere in this stage** — the largest evidence gap; see §5 |
+| O16 | Separate source facts / inference / choices / executed checks / proposed validation (L19, contract) | Labeled throughout | This review demonstrates the labels |
+| O17 | ≥1 useful opportunity + ≥1 plausible alternative (L19) | Named, not strawmen | — |
+| O18 | Exact source/pin references; catalog doesn't replace in-proposal citations (contract) | Pins with capture identity | §3 exemplifies the pin format |
+
+## 3. Anchor verification — executed by candidate (critique stage), public captures
+
+Capture format is exact HTTP response bytes; each item gives URL, pin, sha256 (capture identity), capture time, locator, the verified fact, and its limits. These are independently re-derived in this stage; no prior catalog was consulted.
+
+**A1 — Jupyter Notebook v4.5 JSON schema (nbformat).**
+URL `https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json`; pin: branch `main` at capture, sha256 `523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a`, complete 16,104 bytes, captured 2026-10-06T06:20:06Z, capture_id `4eab97fe…`.
+Verified facts (locators = JSON paths in the captured schema):
+- `definitions.code_cell.required` = `[id, cell_type, metadata, source, outputs, execution_count]`; `execution_count` described as "The code cell's prompt number. Will be null if the cell has not been run." → a consumer can distinguish "never executed" from executed cells from the document alone. [FACT]
+- `definitions.cell_id`: string, pattern `^[a-zA-Z0-9-_]+$`, maxLength 64 — stable per-cell identifiers exist in the format (nbformat minor ≥5), usable as invalidation/lineage keys (O7). [FACT]
+- Root metadata `kernelspec` requires only `name` and `display_name` — the format records *which* kernel spec, not a pinned environment (no package versions, no hashes). [FACT]
+- Output kinds are exactly `execute_result` (carries its own `execution_count`), `display_data`, `stream`, `error`; `error` carries ename/evalue/traceback. [FACT]
+Limits: this is the `main` branch capture — I first tried release tag `5.10.4` and got a captured `404: Not Found` (sha256 `d5558cd4…3512ed`), so the tag-name assumption was wrong and the pin is main@capture-time. A JSON schema constrains *documents*, not runtime behavior; "adoption of the format does not settle runtime behavior" (brief L9) is directly supported.
+
+**A2 — nbclient project self-description.**
+URL `https://raw.githubusercontent.com/jupyter/nbclient/main/README.md`; pin: branch `main` at capture, sha256 `3a756e31c830e943c1303cab7b5e84723bd1b1edf2f1057759c90ff0b26ff1ee`, complete 3,163 bytes, captured 2026-10-06T06:19:57Z, capture_id `722582c7…`.
+Verified facts:
+- nbclient is "a client library for programmatic notebook execution"; it "extracted nbconvert's `ExecutePreprocessor` into its own library". [FACT]
+- It states support for Python 3.10+, and is distinct from `jupyter_client`, which "provides the Python API for starting, managing and communicating with Jupyter kernels". [FACT]
+Limits: a README is project self-description, not release-pinned behavior; it does not establish timeout/`allow_errors` defaults or output-write-back semantics (those live in code and versioned docs). Independence from A1 holds at mechanism level: A1 is a storage/interchange format; A2 is an execution client over the kernel protocol. [INFERENCE]
+
+**A3 — DuckDB configuration documentation (current docs, labeled 1.5).**
+URL `https://duckdb.org/docs/current/configuration/overview` (server 308-redirects `.html`; canonical `…/docs/current/configuration/overview.html`); pin: docs "current" at capture (page itself labels version "1.5 current"; sidebar shows preview 2.0-dev, LTS 1.4), full-body sha256 `10fe42153907a1799262bae2b9dd54c5f431db4aa84e816ca2bd7043d066034a`, 422,061 bytes, captured 2026-10-06T06:20:07Z, capture_id `d868d692…`. Locators are byte windows in the captured body plus table entries.
+Verified facts (from the Global Configuration Options table and examples):
+- `access_mode`: `AUTOMATIC` / `READ_ONLY` / `READ_WRITE` — an engine-level read-only mode exists, relevant to "do not mutate original datasets" (O2). [FACT]
+- `allowed_directories` / `allowed_paths`: "List of directories/prefixes that are ALWAYS allowed to be queried - even when enable_external_access is false" — a real external-access permission model with allow-lists that survive a deny-by-default switch. [FACT]
+- `allow_unsigned_extensions` default `false`; `allow_community_extensions` default `true`; `allow_persistent_secrets` default `true` — extension and secrets postures are configurable and must be tightened for untrusted runs (O13; credentials are out of scope but must be kept *out*, not ignored). [FACT]
+- `enable_progress_bar` setting exists; `duckdb_settings()` table function exposes name/value/description/input_type/scope for every setting (observed for `threads`); `SET memory_limit='10GB'`, `SET threads TO 1`, `SET default_null_order='nulls_last'` appear as documented examples. [FACT] `default_null_order` matters directly to O11 (order determinism incl. null placement).
+Limits: docs pages are version-labeled but not build-pinned; the CSV/Parquet reader parameter tables (e.g., sniffer `sample_size`) were captured (CSV overview capture sha256 `710c72a4…26e25`, 393,313 bytes, same minute) but **not** mined to a locator in this stage's byte budget — any claim quoting them must be re-verified. The frequently-cited `preserve_insertion_order` setting was **not located in the captured bytes** during this stage; it is **unverified here** and must not be cited from this review.
+
+## 4. Executed discriminating check W-1 (tiny synthetic data; executed by candidate)
+
+Purpose: exercise the two brief rules most likely to be violated by a naive design — (i) a schema inferred from a bounded preview is not a full-dataset property (O2/O3), and (ii) sort results with tied keys depend on physical input order, so only total-key ordering is machine-invariant (O11).
+Executor receipt (isolated executor, candidate-authored code): execution_id `exec-dfu0s48m`, exit code 0, elapsed 0.37s, code sha256 `d432ec902a212d389bc1fca3e151f264a6bc6656cfd53f5edf2a4aa588a4f059`, stdout sha256 `c54d040334168fb6ee9b26b23c994b8446da9875039413faa842661530ae26b5`, limits 256 MiB / 5 s wall / no network namespace. No host secrets or private files involved; synthetic 8-row CSV only.
+Observed stdout (excerpt):
+- Schema inferred from the 5-row head sample: `{"id": "INTEGER", "amount": "INTEGER", "label": "VARCHAR"}`; schema over all 8 rows: `amount` is `VARCHAR`. **The sample-derived type for column `amount` is wrong.** [EXECUTED by candidate]
+- A stable sort with a tied key preserves physical input order (two different input orders yield two different outputs); adding a total key makes the result order-independent. Unicode label `góes-tö` round-trips through CSV unchanged. [EXECUTED by candidate]
+Scope limits (from the receipt itself): "isolated component check only"; kernel isolation was supplied by Bubblewrap/systemd, not AST filters — this receipt also concretely illustrates the brief's rule that an import blacklist is not an isolation mechanism. The check proves the *logical* pitfall on 8 synthetic rows; it proves nothing about 5 GB files, pandas/DuckDB behavior, or any full runtime.
+
+## 5. Risk register — claim classes most likely to be unsupported in Brief-B proposals
+
+For the next candidate to check before relying on them; none of these are asserted true or false here.
+
+1. **Issue→fix→regression chain (O15).** Nothing in this stage establishes one. This is the largest missing evidence class for the final proposal. Minimum acceptable evidence: issue URL + merged fix commit/PR + the regression test file + a release tag/notes placing the fix, plus explicit "limits of evidence" if only main-branch state is capturable. [FACT — that the gap exists in this stage]
+2. **Out-of-core / >RAM claims for any engine (O10).** A 5 GB CSV in 16 GB RAM must be framed as a target with a measured or explicitly bounded path. In particular, any statement of the form "DuckDB streams larger-than-memory queries by default" or claims quoting `preserve_insertion_order` (commonly said to default to true and to force buffering to keep insertion order for order-sensitive operators) must be re-verified against pinned docs — unverified in this stage (§3 A3 limits).
+3. **kernelspec as environment pin (O4/O5).** A1 shows the notebook format records only a kernelspec *name*. Claims that a saved notebook "records its environment" are unsupported without an external env lock (e.g., a hash-pinned env file) captured alongside.
+4. **nbclient replay defaults (O5/O6).** Timeout and `allow_errors`/`raise_on_iopub_timeout` defaults determine whether a clean replay stops, records errors, or silently continues. Verify in `nbclient/client.py` at a release tag before relying; README (A2) does not establish them.
+5. **CSV/JSON sniffer sample-based inference (O2/O3).** Engine-level auto-detection typically samples; the brief's rule and W-1 show why sampled inference must be labeled as such. Verify exact sampler parameters in the captured-but-unmined CSV docs before citing numbers.
+6. **"SQL kernel" framing (O9).** Building a Jupyter kernel per language is explicitly not required; a defensible shape is SQL as an embedded, sandboxed engine (A3 settings as the sandbox surface) rather than a second kernel. Claims that any specific SQL dialect coverage matches the colleague's engine remain assumptions unless evidenced.
+7. **File-locking and interrupted-save claims (O11).** Cross-platform locking behavior and atomic-save recovery claims need a concrete mechanism (e.g., temp-file + rename + journal) and a test, not an assertion.
+
+## 6. Preserved valid claims
+
+None can be preserved from a predecessor because none was attached (§1). This section is intentionally non-empty in meaning: had artifacts existed, valid claims would be listed here with their pins; their absence is an attachment failure to record, not evidence against any specific claim. **[FACT]**
+
+## 7. Uncertainty and affected dependencies
+
+- **Pipeline-level:** every downstream stage that expected critique-of-research inherits the gap in §1. The final proposal must carry its own source burden (O14/O15) and cannot inherit "already critiqued" status. [FACT/INFERENCE]
+- **Source-level:** A1/A2 are `main`-branch captures (tag fetch failed; docs sites are version-labeled but unpinned at byte level). Facts hold at capture identity; drift after 2026-10-06 is possible. DuckDB "current" was 1.5 at capture; version-sensitive settings (A3) should be re-checked at a tagged docs version before final citation.
+- **Engine-level:** DuckDB version drift can change defaults cited in A3 (e.g., community-extension or secrets posture). The proposal should pin the engine version in the environment lock, not rely on docs-stable defaults. [INFERENCE]
+- **Python boundary:** A2 supports 3.10+ for the replay client as of capture; the proposal's own Python support floor should be stated as a product choice (e.g., 3.11+) and not attributed to any captured source. [CHOICE]
+
+## 8. Resolution instructions for the next fresh candidate (self-contained)
+
+1. If the frozen research artifacts have now been attached under `inputs/prior/`, critique them against §2 (obligations O1–O18) and verify every consequential claim per §5's protocol; keep this review's §3 anchors as already-verified starting points (re-capture if pins are stale).
+2. If they are still absent, treat §2–§5 as the obligation baseline and do **not** fabricate a predecessor; carry the §1 evidence table forward unchanged.
+3. Required before final delivery regardless: one issue→fix→regression chain with release evidence (O15), pinned-tag (not `main`) captures for any cited code default (nbclient client.py; nbformat release), and an explicit non-claim that 5 GB/16 GB performance is unverified until measured (O10).
+4. Proposed/UNEXECUTED checks worth 5 minutes each: dump `duckdb_settings()` under a pinned DuckDB release to verify `preserve_insertion_order` and CSV sniffer parameters; fetch `nbclient/client.py` at a release tag for timeout/`allow_errors` defaults; re-fetch the nbformat schema at a correct release tag to replace the main-branch pin.
+
+All verifications in §3 were executed by the candidate in this critique stage via the admitted public-capture tooling; W-1 in §4 was executed in the admitted isolated executor. No execution receipts, source chains, defects, or corrections were invented; §5 items are explicitly unverified.

@@ -1,0 +1,78 @@
+{
+  "catalog_version": "research-stage/1.1-additive",
+  "captured_by": "candidate",
+  "capture_date_utc": "2026-10-06",
+  "base_catalog": {
+    "path": "inputs/seed/source_catalog.json",
+    "sha256": "99e732e12036f339697bc7a4cf59d439ad142413b3d452f2186957005b9caf7a",
+    "source_ids": "S1-S22 remain unchanged and are defined in that immutable catalog"
+  },
+  "notes": "Additive source overlay for enrichment.md. All new captures came from public HTTPS retrieval; raw source bytes are available under public_captures using the capture_path below. The two large scanner files were read in complete byte ranges. Hashes pin response bytes; tag-to-commit mappings for DuckDB v1.0.0 and v1.1.0 are cross-referenced to base sources S12 and S13. A 404 capture is evidence only that the exact documentation URL was unavailable, not that the documented feature did not exist.",
+  "sources": [
+    {
+      "id": "S23",
+      "title": "DuckDB v1.0.0 CSV string value scanner implementation",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.0.0/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "pin": "tag v1.0.0 -> commit 1f98600c2cf8722a6d2f2d805bb4af5e701319fc [S12]; response sha256:28faed5903c3a695a7955abf96a9633bf1b2b45004539ab0caed642d27994e51",
+      "locator": "complete source; StringValueScanner::FinalizeChunkProcess EOF branch pads when null_padding && number_of_rows < STANDARD_VECTOR_SIZE, without the later chunk_col_id > 0 guard",
+      "capture_id": "1967b4a21f69492396251a6ca02ef63b",
+      "capture_path": "public_captures/28faed5903c3a695a7955abf96a9633bf1b2b45004539ab0caed642d27994e51.body",
+      "captured_utc": "2026-10-06T00:19:30.639150Z",
+      "bytes": 56342,
+      "body_complete": true,
+      "applicability": "release-tag source comparison before the #12596 fix; static source inspection only"
+    },
+    {
+      "id": "S24",
+      "title": "DuckDB v1.1.0 CSV string value scanner implementation",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.1.0/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "pin": "tag v1.1.0 -> commit fa5c2fe15f3da5f32397b009196c0895fce60820 [S13]; response sha256:e526bcad1dc679b0f42858644e9d1c655a1df9bd7dcb6325d29b9797cb120a0b",
+      "locator": "complete 62,123-byte source read as ranges 0:32768 and 32768:62123; StringValueScanner::FinalizeChunkProcess adds result.chunk_col_id > 0 to the null-padding EOF condition",
+      "capture_id": "6660132a9b714c3a955a54f096c83e39",
+      "capture_path": "public_captures/e526bcad1dc679b0f42858644e9d1c655a1df9bd7dcb6325d29b9797cb120a0b.body",
+      "captured_utc": "2026-10-06T00:19:16.738298Z",
+      "bytes": 62123,
+      "body_complete": true,
+      "applicability": "release-tag source comparison after the #12596 fix; static source inspection only"
+    },
+    {
+      "id": "S25",
+      "title": "DuckDB v1.1.0 tagged SQLLogicTest for issue #12596",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.1.0/test/sql/copy/csv/test_12596.test",
+      "pin": "tag v1.1.0 -> commit fa5c2fe15f3da5f32397b009196c0895fce60820 [S13]; response sha256:3704cbdaf0d125509715679a305e4fe21cab3b989991911b1f0f70dfbeba3326",
+      "locator": "complete 850-byte test; expected two rows for parallel default, parallel=false with auto_detect=false, and parallel=false with autodetection",
+      "capture_id": "2f3ce9bd572e48dfb7eb88f290439a37",
+      "capture_path": "public_captures/3704cbdaf0d125509715679a305e4fe21cab3b989991911b1f0f70dfbeba3326.body",
+      "captured_utc": "2026-10-06T00:19:27.197235Z",
+      "bytes": 850,
+      "body_complete": true,
+      "applicability": "test presence in the release-tag source tree; test execution/result not captured"
+    },
+    {
+      "id": "S26",
+      "title": "DuckDB v1.1.0 CSV reader options declaration",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.1.0/src/include/duckdb/execution/operator/csv_scanner/csv_reader_options.hpp",
+      "pin": "tag v1.1.0 -> commit fa5c2fe15f3da5f32397b009196c0895fce60820 [S13]; response sha256:a0953cbd9de5e6624c4ceb12739c098f4e7540578d9952a662fee604190e7701",
+      "locator": "complete source; declarations set null_padding=false, ignore_errors=false, store_rejects=false, rejects_limit=0 (comment: no limit), and maximum_line_size=2097152 bytes",
+      "capture_id": "677058416e624237b9ea2671d6d30e64",
+      "capture_path": "public_captures/a0953cbd9de5e6624c4ceb12739c098f4e7540578d9952a662fee604190e7701.body",
+      "captured_utc": "2026-10-06T00:19:44.176688Z",
+      "bytes": 8170,
+      "body_complete": true,
+      "applicability": "v1.1.0 C++ option-structure defaults, not a runtime experiment"
+    },
+    {
+      "id": "S27",
+      "title": "DuckDB v1.1.0 tag documentation-path retrieval (404)",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.1.0/docs/data/csv/reading_faulty_csv_files.md",
+      "pin": "exact HTTP 404 response sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "locator": "404: Not Found (14-byte complete response); limits the attempt to attribute duckdb-web@main behavior to this tag; does not establish absence of documentation elsewhere or absence of runtime behavior",
+      "capture_id": "aa0ff584448f498a851c30dd0af09dbb",
+      "capture_path": "public_captures/d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed.body",
+      "captured_utc": "2026-10-06T00:19:10.133907Z",
+      "bytes": 14,
+      "body_complete": true,
+      "applicability": "negative evidence scoped to this URL and tag only"
+    }
+  ]
+}

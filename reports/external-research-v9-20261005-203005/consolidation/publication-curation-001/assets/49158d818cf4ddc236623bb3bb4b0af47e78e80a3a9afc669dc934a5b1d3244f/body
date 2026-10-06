@@ -1,0 +1,148 @@
+# Critique review — frozen research proposal, Brief B (reproducible notebook + data workspace)
+
+**Stage:** critique (fresh, same-arm ER9 I-12). **Date:** 2026-10-06. **Author:** admitted candidate model (critique role).
+**Reviewed artifact:** `inputs/prior/research/research/proposal.md` (sha256 `831ef828bdaf203125d2fc0dad29a7d84ea5d091633399cffe1aea80f92c2a81`, 130 lines), with `sources.json` (`c50c1717…`), `witnesses.json` (`784a2cde…`), `leads.json` (`754ea1b0…`) under `inputs/prior/research/research/`.
+
+**Labeling used here:** [CONFIRMED] = I independently re-fetched the primary source in this stage and the claim matches; [CORRECTION] = evidence-backed wording/precision fix, with affected dependency; [GAP] = unsupported or undersupported critical assumption, with bounded alternative; [PRESERVED] = valid claim kept; [NEW EVIDENCE] = this critique's capture that upgrades or extends the research. Nothing here is a blanket rejection; the proposal's source chain is substantially sound.
+
+---
+
+## 1. What this review did
+
+I read the complete frozen proposal and all three catalogs, then independently re-fetched the primary sources behind every consequential claim using the admitted public-capture tool (9 fetches, 2026-10-06T11:45–11:49Z). Four fetches returned byte-identical bodies to the research's captures (sha256 equal to the catalog's `capture_sha256`), five were new captures (issue APIs and one file-at-tag fetch the research had flagged as unverified). No code execution was used in this stage; the witness receipts are assessed for internal consistency and scope honesty only (their code bodies are hash-only and cannot be re-executed here — see GAP-5).
+
+New/independent capture identities (exact-response-body sha256, all captured 2026-10-06):
+
+| What | URL | sha256 (prefix, 64-hex in catalog of this stage's captures) |
+|---|---|---|
+| duckdb issue #25824 (API) | `api.github.com/repos/duckdb/duckdb/issues/25824` | `2916d6e9e3ca08dd20b16c88baee5891a8e5876e68417c4ff72b70999f597d44` |
+| duckdb PR #1015 (API) | `api.github.com/repos/duckdb/duckdb/pulls/1015` | `e88b6e8ca6d41a0d04e4cba2a4f530177b9dc7830978ffe5def71598aac766d8` |
+| duckdb PR #1015 files (API) | `api.github.com/repos/duckdb/duckdb/pulls/1015/files` | identical to research S6 `capture_sha256` (`9bb42216…`) |
+| duckdb release v0.2.4 (API) | `api.github.com/repos/duckdb/duckdb/releases/tags/v0.2.4` | identical to research S7 (`b3a7dc11…`) |
+| nbformat v4.5 schema (raw, `main`) | `raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json` | identical to research S1 (`523e3578…`) |
+| nbclient `client.html` (docs latest) | `nbclient.readthedocs.io/en/latest/client.html` | identical to research S2 (`b3cb019d…`; 36,686 bytes full body captured) |
+| PEP 723 page | `peps.python.org/pep-0723/` | identical to research S8 (`1bb79e58…`) |
+| duckdb issue #5378 (API) | `api.github.com/repos/duckdb/duckdb/issues/5378` | `ec5b64a124ded967164ffed3a5dd43e562d82b4aeb2a018b29c2709cd77afc27` |
+| duckdb issue #15576 (API) | `api.github.com/repos/duckdb/duckdb/issues/15576` | `49fa90c63dd7ebc824e18ff59bce336644f174ab5021b561f80dae8f7992fd15` |
+| duckdb issue #15777 (API) | `api.github.com/repos/duckdb/duckdb/issues/15777` | `05fb96debf6c0964227b7e85a9c095d81fa23b4c4d9f74fd9a2c39546082bfce` |
+| **file-at-tag v0.2.4** (NEW) | `raw.githubusercontent.com/duckdb/duckdb/v0.2.4/src/execution/operator/persistent/buffered_csv_reader.cpp` | `537e6767e34509abe397ce88204da0d5b52ecace4488c8ae0a539936b42a0a56` |
+
+Limits: raw fetches deliver at most the first 32,768 bytes to the reader (the tool captures the full body and records its sha256). Where I quote inside-file content below, the quoted text was within the delivered 32,768 bytes; I say so where it matters.
+
+---
+
+## 2. Verdict on the consequential claims
+
+| Proposal claim (location) | Verdict |
+|---|---|
+| #25824 open at capture, created 2026-09-17, silent rounding/truncation past the 20,480 default sample; sniffer `strict=true` (`type_detection.cpp:182`) vs scanner `strict=false` (`string_value_scanner.cpp:335`); `1.5` → `2` BIGINT; timestamp day-truncated; version matrix 1.1.3 / 1.5.5 / 1.6.0.dev214 / main@2bbfe6f236; `sample_size=-1` correct (§1, §3, S4) | **[CONFIRMED]** — API: `state:"open"`, `created_at:"2026-09-17T04:10:48Z"`, labels `["needs triage"]`, 2 comments (not examined; "maintainer-unconfirmed" remains fair). Body matches every technical detail, including the boundary table (20,479 leading rows triggers with a header; header counts toward the 20,480 sampled lines; without header the boundary is 20,480). |
+| #1015 title, merged 2020-10-16T11:12:26Z, patch adds `SQLNULL` candidate + VARCHAR fallback, three regression tests, 5,301-line `voter.tsv` fixture expecting COUNT 5300, `int_bol.csv` INTEGER/BOOLEAN (§3, S6) | **[CONFIRMED]** (with CORRECTION-1 on the commit label). Files API patch text matches the proposal's description verbatim; test files and fixtures match; PR stats `additions:5362, deletions:9, changed_files:7` consistent. |
+| Fix present in v0.2.4 is *merge-ordering inference*, disclosed as unverified inside the tag (§3, §17.4, S7) | **[NEW EVIDENCE — gap closed]** — the file at tag `v0.2.4` contains both fix markers in the delivered bytes (see §3, item 3). |
+| nbformat schema: `execution_count` "The code cell's prompt number. Will be null if the cell has not been run."; `id` required, pattern `^[a-zA-Z0-9-_]+$`, maxLength 64; code-cell required fields; four output types; `metadata.kernelspec` (P1, §6, §13, S1) | **[CONFIRMED]** byte-identical capture. Schema self-describes as "Jupyter Notebook v4.5 JSON schema" and requires `nbformat_minor ≥ 5`, so the proposal's "v4.5+" designation is supported, not just background knowledge. |
+| nbclient: per-cell `timeout` default 30 s; `allow_errors` default False; stop-on-first-error raises `CellExecutionError`; saved notebook keeps outputs up to the failing cell with full stack trace; kernel name defaults from notebook metadata; CLI `jupyter execute --allow-errors` (P1, §7, §13, S2) | **[CONFIRMED]** byte-identical capture; docs meta self-reports version 0.11, slug "latest", matching S2's disclosed pin limit. |
+| PEP 723: Status Final, Resolution 08-Jan-2024, `dependencies` (PEP 508) + `requires-python` (PEP 440), "Script runners MUST error if the specified dependencies cannot be provided", canonical spec moved to PyPA specs page (P3, §12, S8) | **[CONFIRMED]** byte-identical capture. |
+| #5378 closed 2022-12-19 with engine error text naming `SAMPLE_SIZE=20480, IGNORE_ERRORS=0, ALL_VARCHAR=0` (S5) | **[CONFIRMED]** — API `closed_at:"2022-12-19T12:29:02Z"`, reported on 0.6.0, error text present in body. This independently corroborates the 20,480 default that S3's parameter table did *not* cover (disclosed limit in S3/L2). |
+| #15576 closed 2025-01-07 with label "reproduced"; delimiter sniff flips with `ignore_errors=true` (S9) | **[CONFIRMED]** — `closed_at:"2025-01-07T14:26:58Z"`, label `reproduced`, reported v1.1.3, body matches. |
+| #15777 closed 2025-02-06 with label "reproduced"; explicit `dateformat='AUTO'` fails where implicit detection succeeds (S10) | **[CONFIRMED]** — `closed_at:"2025-02-06T07:21:59Z"`, label `reproduced`, error text "Set: AUTO Sniffed: %m/%d/%y" present. |
+| Witness internal consistency (W1–W3) | **[PRESERVED as recorded]** — counts/statuses/digests are internally consistent (e.g., W1's 998+1+1 = 1000 rows, 1 malformed; W3's stable==deterministic digest and differing unstable variant match the corrected expectations). Scope statements honestly restrict them to candidate-authored contract logic. I could not re-execute them (GAP-5). |
+
+---
+
+## 3. Corrections (evidence-backed; none changes a substantive conclusion)
+
+**CORRECTION-1 — PR #1015 commit mislabeled "merge commit". [CORRECTION]**
+The proposal §3 says "Patch … at merge commit `921d8771`" and sources.json S6 pin says "head merge commit 921d87713fd5052f5feed541cfdb2723b05a7a9e". The PR API shows `921d8771…` is the PR **head** sha (`head.sha`); the actual `merge_commit_sha` is **`625b56f021ea19bc3181a60756801d746b2d1968`** (`merged_at` 2020-10-16T11:12:26Z is confirmed). The patch content is unaffected — all files-API blob URLs reference the head tree at `921d8771…`, and the fix markers are verifiably present there and at tag v0.2.4 (item 3 below).
+*Required fix:* rewrite the citation as "PR head commit `921d8771…`, merged as `625b56f…`". *Affected dependencies:* proposal §3, sources.json S6 pin/locator; any final-stage manifest that pins the "merge commit" by that sha would pin the wrong object.
+
+**CORRECTION-2 — the #1015 fix touches a second source file. [CORRECTION, minor]**
+The proposal names only `src/execution/operator/persistent/buffered_csv_reader.cpp`. The files API shows 7 changed files; the auxiliary `src/include/duckdb/common/types/vector.hpp` (adds a `nullmask_all_set()` helper) is unmentioned. No claim depends on it, but the issue→fix chain should list the complete source-file set (2 source files, 3 tests, 2 fixtures). *Affected dependencies:* proposal §3, sources.json S6 locator.
+
+**CORRECTION-3 — v0.2.4 fix presence: upgrade from inference to file-at-tag fact. [NEW EVIDENCE]**
+The research's own §17.4/S7 disclosed that "#1015 fixed in v0.2.4" was merge-ordering inference only. I fetched `buffered_csv_reader.cpp` **at tag `v0.2.4`**: within the first 32,768 of 50,944 delivered bytes, the type-candidate ladder ends `… LogicalType::BOOLEAN, LogicalType::SQLNULL};` and final selection contains `if (best_sql_types_candidate.size() == type_candidates.size()) { d_type = LogicalType::VARCHAR; }` — both markers of the #1015 fix. The final proposal should state the fix as **verified at tag v0.2.4** (capture sha `537e6767…`, 2026-10-06), keeping the note that only the first 32,768 bytes were read and both markers fall inside that range. *Affected dependencies:* proposal §3 version-applicability sentence, §17.4; strengthens the precedent rather than weakening it.
+
+**CORRECTION-4 — two small docs-precision notes. [CORRECTION, minor]**
+(a) In the same captured nbclient page, the guide text says the `timeout` traitlet default is 30 s, while the CLI section's `--timeout` help reports `Default: None` (app-level default). The proposal cites the traitlet default, which is the relevant one for the replay engine — keep it, but do not generalize "30 s default" to the CLI entry point. (b) S2's limits note says the undelivered remainder "is CLI help tail"; in my capture the CLI help is inside the delivered 32,768 bytes and the remainder is page footer. Cosmetic, but correct it when re-pinning.
+
+---
+
+## 4. Preserved valid claims (the load-bearing structure stands)
+
+1. The **issue→fix→regression-test chain (#1015)** is real and now verified end-to-end including release presence: failure (all-NULL sample column sniffed BOOLEAN), fix (SQLNULL tail candidate + never-narrowed→VARCHAR fallback), three regression tests with exact assertions, fix confirmed at tag v0.2.4. This satisfies the brief's requirement with *stronger* evidence than the research itself claimed.
+2. The **#25824 counterexample** (open, un-fixed at capture) is confirmed in every particular and is a genuinely non-obvious mechanism — the sniffer/scanner **strictness asymmetry** (same cast, different `strict` flag) is exactly the kind of engine-internal pitfall the brief asked the research to reveal. The proposal's use of it (preview ≠ proof; contract-level conversion policy; V3 per-release probing) is sound and proportionate.
+3. The **two-precedent independence claim** (nbformat/nbclient = document+replay side; DuckDB = data side) holds: each precedent is faulted independently (#1015/#25824 on data, format/runtime separation on notebook), and P3 (PEP 723, Final) is a correctly characterized third mechanism.
+4. The **status model, invalidation effects, replay guarantee boundary, import-blacklist rejection, no-silent-delete/quarantine policy, atomic-save + event-log design, and the labeled [FACT]/[INFER]/[CHOICE]/[EXECUTED]/[PROPOSED] discipline** are internally coherent, match the executed witnesses' disclosed scope, and cover the brief's minimum workflow (all ten steps map to §4–§13; checklist below). The three disclosed failed witness attempts (exec-f38eq5jh, exec-1u1rvts9, exec-imb4pwer) are honesty positives, not defects.
+
+---
+
+## 5. Gaps and unsupported critical assumptions (each with a bounded alternative)
+
+**GAP-1 — the environment "lock" artifact is never specified. [GAP, critical path for replay]**
+§6/§7/§11 gate `current` status and replay on the "recorded environment binding"/"env lock"/"fully pinned", and the manifest (§11 step 10) lists "env lock" — but no mechanism for *producing* that artifact is given. PEP 723 (S8) **declares** dependencies; it is not a lock: it pins nothing transitively. The replay guarantee (§7) therefore rests on an artifact the proposal never defines.
+*Bounded alternative:* record at minimum (interpreter version + platform + resolved dependency set with versions, e.g. a resolver freeze) in the manifest, and treat any unresolvable or non-identical re-resolution as `unverified` (the proposal already has that downgrade hook). Investigating a standard lock format (e.g. the PyPA lockfile spec) is a legitimate lead, but no source for it was captured — carry it as **proposed/UNEXECUTED**, not as a sourced recommendation. *Affected dependencies:* §6 statuses, §7 guarantees, §11 steps 9–10, §15 V1.
+
+**GAP-2 — `rowid` defined via engine-ordinal assumes stable engine read order. [GAP]**
+§5 defines `rowid = (source version id, engine-ordinal at read time)`. For a parallel/streaming engine the read ordinal can vary run-to-run — the very hazard the proposal's own W3/L5 raise for ordering. As written, row identity silently inherits engine scheduling nondeterminism.
+*Bounded alternative:* anchor rowids to file coordinates (line number or byte offset) for file-backed sources, or explicitly bound rowid validity to one recorded engine version + options + threading configuration in the manifest. *Affected dependencies:* §5 row identity, §11 step 7 provenance diffing, manifests.
+
+**GAP-3 — sandbox grants whole-project rw, which includes the append-only event log and output store. [GAP, security-architecture tension]**
+§8 gives untrusted notebook code the project directory read-write, but `project/.ws/events.jsonl` and `.ws/outputs/` live inside it; a malicious cell could rewrite or forge the provenance trail the whole design depends on. The proposal keeps UI out of the sandbox but not the audit trail.
+*Bounded alternative:* host the event log/output store outside the sandbox-writable set (Run Service writes via a local socket/queue), or enforce append-only semantics at the service layer and verify log integrity (hash chain) on open. *Affected dependencies:* §8, §10, §6 status computation.
+
+**GAP-4 — NDJSON silent-conversion risk is first-class in the brief but only reached by a side mention. [GAP → new lead]**
+The issue body of #25824 (confirmed capture) references a sibling **read_json** defect, duckdb#25786, which the reporter says "became reachable at defaults only in 1.5.1". NDJSON is a named input format in the brief; the data contract's no-silent-conversion rule and V3's probe matrix should cover the JSON reader, not only CSV. The research did not follow #25786 — record it as a new unresolved lead (evidence: #25824 body, capture `2916d6e9…`), not as an established defect.
+
+**GAP-5 — witness receipts are hash-only; critique cannot re-execute them. [GAP, process]**
+`witnesses.json` records code_sha256/stdout_sha256 per run but not the code or data bodies, so independent re-execution is impossible in this stage. Their *described* behavior is internally consistent and their scope limits are honest; but the final deliverable should either archive the (tiny) witness code+data inline in the final catalogs or state explicitly that receipts are re-executable only by the original candidate. Do not present witness hashes as independent verification.
+
+**GAP-6 — V3 probe design must respect the header-count boundary. [GAP, validation detail]**
+The confirmed #25824 body shows the silent-rounding window opens at **20,479 leading data rows when a header line is present** (header counts toward the 20,480 sampled lines) and at 20,480 without a header. A V3 probe built naïvely at "20,480 data rows then the odd value" would miss the defect. Fold the exact boundary (and the `strict=true`-in-scanner minimal-fix hypothesis, which is reporter-proposed, not maintainer-accepted) into V3's design.
+
+Not gaps, checked and adequate: two-plus independently useful precedents with mechanisms and independence (P1/P2/P3); rejection of import blacklists (§8) matches the brief's prohibition; 5 GB handling is correctly labeled a design target with V2 proposed, not a result; unsupported-input behavior (malformed rows, missing data, unpinned env) is defined; rejected alternatives and opportunities are visible (§16, leads O1–O5, including the papermill pointer that I confirmed is genuinely in the captured nbclient page).
+
+---
+
+## 6. Brief-obligation coverage check (proposal vs brief B)
+
+| Brief obligation | Coverage |
+|---|---|
+| ≥2 independently useful precedents + mechanism + independence | §2 P1/P2 (+P3) — met |
+| Real issue → fix → regression test, version applicability, evidence limits | §3 #1015 chain + #25824 counterexample — met, now stronger (CORRECTION-3) |
+| Distinguish display order / execution order / kernel state / output provenance | §6 four notions + W2 — met |
+| Clean replay guarantee vs outside-guarantee | §7 — met (nondeterminism, network, unpinned, undeclared FS, hardware) |
+| Statuses current/stale/failed/unverified + invalidation effects + restart/interrupt rules | §6 — met |
+| Data contract: schema assumptions, conversions, row/order identity, errors, no silent delete/mutation | §5 — met (GAP-2 nuance) |
+| Preview ≠ full-dataset proof | §5, W1, §3 — met, engine-corroborated |
+| Import without copying; hashing; identity pending/mismatch | §5, §11 steps 2, 9 — met |
+| Envelope/5 GB bounded-vs-global ops; truncation; caching/invalidation; locking; interrupted save | §9, §10, W3, V2/V5 — met as targets (correctly UNEXECUTED) |
+| Untrusted-code boundary; no blacklist isolation; browsing separate from execution | §8 — met (GAP-3 tension) |
+| 10-step minimum workflow; manifest; reopen cross-machine | §11 — met |
+| Python boundary + optional SQL as engine capability, no new kernels | §12 — defensible; bounded alternative kept (§16) |
+| Interchange format investigated; format ≠ runtime | §13 — met with exact schema citations |
+| Opportunities + plausible alternative + rejected ideas | §16 — met |
+| Separation of FACT/INFER/CHOICE/EXECUTED/PROPOSED; catalogs | throughout + sources/witnesses/leads — met |
+
+Remaining brief items with thin (but present) treatment: dependency/provenance *views* and saved-vs-current diffing are named (§11 step 7, §5) without UI-level detail — acceptable at research stage, but the final proposal should specify at least the data the views consume (event log fields), which it already defines.
+
+---
+
+## 7. Required resolutions for the final author (actionable, in priority order)
+
+1. **Apply CORRECTION-1** (head vs merge commit) in §3 and S6; pin both shas.
+2. **Adopt CORRECTION-3**: state v0.2.4 fix presence as file-at-tag verified (capture `537e6767…`), and update §17.4 which currently calls it inference.
+3. **Resolve GAP-1** with a concrete env-lock artifact definition (resolver freeze minimum; standard lockfile as UNEXECUTED lead) — this is the largest unsupported dependency on the replay guarantee.
+4. **Resolve GAP-2** (file-anchored rowid or bounded-validity rowid) and **GAP-3** (protect the event log from sandbox-writable code, or add integrity verification).
+5. **Add GAP-4** (duckdb#25786 read_json lead) to leads.json and fold **GAP-6**'s boundary detail into V3.
+6. Address **GAP-5** by archiving witness code/data or explicitly downgrading receipts to "recorded by candidate, not re-executable here"; fix S2's delivery note and the timeout nuance (CORRECTION-4).
+7. Preserve: the #1015 chain (with corrections), the #25824 motivator, P1–P3, §5–§13 architecture and contract, W1–W3 scope statements, and the honest UNEXECUTED labeling of V1–V6 and the envelope target.
+
+---
+
+## 8. Limits of this review
+
+- I verified claims against the same public versions the research captured (same-day re-fetches; four byte-identical). #25824 may change state after my capture (2026-10-06T11:45Z); the proposal's "open at capture" phrasing already handles this correctly.
+- I did not examine the 2 comments on #25824 (no maintainer response is implied by the open state + "needs triage" label, but comment content is unverified), nor DuckDB's docs spill/out-of-core pages (research lead L2 stays open), nor any runtime behavior — no DuckDB/nbclient execution exists in this experiment.
+- Witness receipts were assessed for consistency and scope honesty only; re-execution was impossible (GAP-5).
+- My file-at-tag read of v0.2.4 covers the first 32,768 of 50,944 bytes; both fix markers are inside the delivered range, which is what the upgrade claim rests on.
+- Per the stage contract, correcting a finding does not by itself prove the replacement wording; every replacement above carries its own capture identity in §1/§3.
+
+**Bottom line:** the frozen research proposal is source-correct on every consequential claim I could test, discloses its limits honestly, and covers the brief; it needs the commit-label and file-set corrections (C1/C2), benefits from a newly verified release-presence fact (C3), and must close the environment-lock artifact gap (GAP-1) plus the two design tensions (GAP-2, GAP-3) before final adoption.

@@ -1,0 +1,123 @@
+{
+  "catalog": "ER9 confirmation-brief-H2 witness inventory (role: research)",
+  "captured_by": "candidate",
+  "date": "2026-10-06",
+  "labeling": "W1-W4 are EXECUTED BY CANDIDATE inside the admitted python_execute isolation (fresh empty filesystem, stdlib only, no network; receipts below). P1-P8 are PROPOSED/UNEXECUTED. No isolated component check establishes whole-application behavior.",
+  "executed": [
+    {
+      "id": "W1",
+      "title": "Synthetic EPSG:4326↔EPSG:3857 transform arithmetic: roundtrip, control value, pole domain artifact, axis-swap magnitude",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-rpsd2h3e",
+      "code_sha256": "bbcaa41874e468407b2dafdd8b5f602c277a3e29090ef4fc03e871ef03e20a7f",
+      "stdout_sha256": "6c908b545addbcc3d94752f6487909bb4e47d9c82b9025bf9e32d2f449db64e5",
+      "exit_code": 0,
+      "stderr": "empty",
+      "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "none"},
+      "input": "hardcoded control points [(0,0),(24.9384,60.1699),(-179.9,44.9),(1.0,52.0)], latitudes 85/89/89.999/90, axis-swap pair (1,52)/(52,1)",
+      "expected_justification": "Standard Web Mercator formulas (R=6378137) must roundtrip sub-microdegree; 1 degree of longitude at the equator must equal R*pi/180 = 111319.49079327357 m (independently matches the x-value quoted in proj4js issue #545, source S15); northings must grow toward the pole, and at exactly lat=90 the float formula returns a large finite artifact (~2.38e8 m) rather than raising — demonstrating that domain violation is NOT self-signaling; swapping lat/lon must misplace the point by thousands of km.",
+      "observed": "roundtrip errors 0 to 2e-9 m; control_1deg_lon_m = 111319.49079327357; northings: 85°→19,971,868.88; 89°→30,240,971.958; 89.999°→74,299,743.401; 90°→238,107,693.265 (finite artifact, no error); axis swap error ≈ 8,773.4 km",
+      "scope_limits": "formula-level arithmetic only; does not exercise PROJ, pyproj, proj4js, grids, or the application transform registry; not evidence about any real import/export path"
+    },
+    {
+      "id": "W2",
+      "title": "Toy revision/merge model: LWW silent loss vs. conflict-preserving merge; op-id idempotent union",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-dqcc557m",
+      "code_sha256": "93bbfc4cc799b8fc43c1b3b2b6131ef1d6e5bb44d019406365c3e25521b99df1",
+      "stdout_sha256": "66fa71c248a9936258694c7bbf803794b9846117399591526b09e05de7088ab8",
+      "exit_code": 0,
+      "stderr": "empty",
+      "input": "two concurrent ops (op-A1 laptop-A 09:00:00Z 'Arctic Tern'; op-B1 tablet-B 09:00:05Z 'Arctic Stern') both base_rev=1 on obs-1; ops delivered twice for idempotence check",
+      "expected_justification": "Last-writer-wins by wall clock must silently drop the older concurrent edit; a base_rev-based causal check must surface both values as a conflict record; union by op_id must collapse duplicate deliveries to the same op set.",
+      "observed": "lww_silently_lost_older_edit=true ('Arctic Tern' gone); surfaced_conflicts lists field 'species' with both values and both actors; idempotent_union=[op-A1,op-B1]; duplicate_op_copies_dropped=2",
+      "scope_limits": "toy model with 1 record, 2 ops, string fields; not the real journal implementation; does not prove app merge behavior, ordering under many ops, or geometry deltas"
+    },
+    {
+      "id": "W3",
+      "title": "R*Tree-style 32-bit outward rounding: contained-within exclusion at an exact edge and recovery via documented padding",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-i8h54xhr",
+      "code_sha256": "c8ab17fcce55d1ae88b93c1f33e7517b90e9ff502fe315936f3e7ed7ccb98cab",
+      "stdout_sha256": "b46d8fcd9cfafb51921c7d61098d19a863615e23b15f8f82eb327e106d65bc05",
+      "exit_code": 0,
+      "stderr": "empty",
+      "input": "entry box top edge 35.1 (float64 exact); stored edge simulated as smallest float32 >= 35.1; query edge 35.1 and padded 35.1*(1+1.2e-7)",
+      "expected_justification": "Mirrors sqlite.org/rtree.html section 3.4 (S1): stored upper bounds round up, so an entry exactly touching the query edge must be EXCLUDED by a naive contained-within comparison and INCLUDED with the documented 0.000012% padding; outward rounding must never shrink boxes.",
+      "observed": "entry_maxY_stored_rounded_up=35.10000228881836 > query 35.1 → naive_contained=false; padded_query=35.100004212 → padded_contained=true; stored_boxes_never_shrink=true",
+      "scope_limits": "float32 simulation via struct in the sandbox; NOT SQLite's actual R*Tree module; no SQLite library was executed; demonstrates the documented mechanism only"
+    },
+    {
+      "id": "W4",
+      "title": "Preview-sampling insufficiency at 250k rows with 1% corruption (scattered and clustered)",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-0kpdp8l5",
+      "code_sha256": "43311aa0742cff4cb2d69b3333b734fe3c59fc9552250634dd10123058077531",
+      "stdout_sha256": "78aeef29f7d677db9121adda13099910639db2476998fb461cb5780bbc6ac005",
+      "exit_code": 0,
+      "stderr": "empty",
+      "input": "N=250000 rows, 2500 corrupt; seed 20261006; 2000 Monte-Carlo trials per preview size; clustered variant with all corrupt rows in the last 2500",
+      "expected_justification": "Detection probability of a k-row preview under 1% scattered corruption is 1-(0.99)^k: ≈39.5% for k=50, ≈99.34% for k=500; corruption clustered outside the previewed region can be missed entirely by a positional preview.",
+      "observed": "theory 50→0.395 (sim 0.4025); theory 500→0.9934 (sim 0.9915); clustered_preview_first100_detects=false; clustered_preview_random500_detects=true",
+      "scope_limits": "synthetic uniform/clustered corruption model; not a study of real error distributions; motivates full-scan validators (P5) rather than measuring any real import"
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "P1",
+      "title": "Control-point transform suite vs. pinned PROJ CLI/pyproj",
+      "status": "proposed_unexecuted",
+      "plan": "Fixture of ≥20 points across EPSG:4326/3857/326xx + one national grid; compare app transform registry output against cs2cs/pyproj (pinned versions) to <1 mm; include axis-order and WKT2-vs-code identity cases from S7-S9/S15.",
+      "depends_on": "implementation + pinned PROJ build; grid licensing (L3)"
+    },
+    {
+      "id": "P2",
+      "title": "Crash-injection harness (save / import / merge)",
+      "status": "proposed_unexecuted",
+      "plan": "SIGKILL at randomized points inside save, import staging, and merge; reopen each artifact and assert: committed batches intact, drafts classified as uncommitted, staging artifacts resumable/discardable, counts reconcile.",
+      "depends_on": "implementation"
+    },
+    {
+      "id": "P3",
+      "title": "250k-observation performance harness on 4 cores / 8 GB",
+      "status": "proposed_unexecuted",
+      "plan": "Generate 250k synthetic observations + index; measure p95 viewport query latency, cold open time, search latency, export throughput, RSS; targets (UNMEASURED): p95 viewport < 150 ms, RSS < 1.5 GB; report hardware.",
+      "depends_on": "implementation; may force design change (e.g., precomputed zoom bands) if missed"
+    },
+    {
+      "id": "P4",
+      "title": "Upstream regression re-run at pinned transform-library versions",
+      "status": "proposed_unexecuted",
+      "plan": "Pin transform lib ≥ versions carrying issue-#575 fix (proj4js ≥ 2.20.9 per S9, if used display-side; PROJ/pyproj pinned likewise); run upstream suites incl. PR #576's tests; record results in CI.",
+      "depends_on": "dependency pinning"
+    },
+    {
+      "id": "P5",
+      "title": "Full-scan import validator suite",
+      "status": "proposed_unexecuted",
+      "plan": "Corpus fixtures with planted defects (bad axis order, out-of-domain values, mixed line endings, duplicated external ids, null coords); assert 100% row accounting (imported+flagged+rejected = total) and correct quarantine reasons.",
+      "depends_on": "implementation"
+    },
+    {
+      "id": "P6",
+      "title": "Merge property tests",
+      "status": "proposed_unexecuted",
+      "plan": "Randomized op interleavings across 2-5 devices; properties: idempotence by op_id, no lost non-conflicting edits, every same-field concurrency yields an inspectable conflict, tombstone/revive conflicts surface.",
+      "depends_on": "implementation"
+    },
+    {
+      "id": "P7",
+      "title": "Antimeridian track fixture",
+      "status": "proposed_unexecuted",
+      "plan": "Track crossing lon 180 (e.g., 179.5E → -179.5E at 45N per RFC 7946 §3.1.9 example); assert display split, export forms (raw vs cut), and bbox per §5.2; compare against an independent splitter.",
+      "depends_on": "implementation"
+    },
+    {
+      "id": "P8",
+      "title": "GeoPackage export conformance (bounded Alternative A as interop target)",
+      "status": "proposed_unexecuted",
+      "plan": "Export a project to GPKG, reopen in an independent GPKG reader (e.g., QGIS/ogr); verify srs declaration, geometry validity, and roundtrip of attributes; read requirement body text first (L9).",
+      "depends_on": "export adapter; GPKG requirement review"
+    }
+  ]
+}

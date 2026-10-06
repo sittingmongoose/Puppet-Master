@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "stage": "research",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF specification, version 0.5",
+      "url": "https://ngff.openmicroscopy.org/0.5/",
+      "pin": "OME-NGFF 0.5; site metadata revision d9164040dd61b3e4688494de1a58a69251b13f24; repository tag 0.5.2 resolves to commit 5cdf83b6806b5e500477c7af69dae9ed2adcf77d",
+      "exact_locator": [
+        "§2.1 axes: axis names, types, units and array order",
+        "§2.3 coordinateTransformations: scale/translation order and data-to-physical mapping",
+        "§2.4 multiscales image structure",
+        "§2.6 labels: label group, image relationship, axes and multiscale constraints"
+      ],
+      "capture_identity": {
+        "capture_id": "4bd8d7b59439478f90f138776a89ddd4",
+        "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+        "bytes": 158591,
+        "complete": true,
+        "format": "exact HTTP response body"
+      },
+      "applicability": "Normative format/metadata precedent for the explicitly selected v0.5 subset. Its documented image transforms are scale and translation; it does not establish the application's voxel-center convention or represent every affine/orientation choice proposed here."
+    },
+    {
+      "id": "S2",
+      "title": "tifffile release v2026.9.20",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/releases/latest",
+      "pin": "Release tag v2026.9.20, published 2026-09-21",
+      "exact_locator": "Release body describing supported TIFF-family formats, subset caveat, Zarr-backed segment access and codec dependencies",
+      "capture_identity": {
+        "capture_id": "0b5e8027c79f406ca416ebec66a2024c",
+        "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3",
+        "complete": true,
+        "format": "exact GitHub API response body"
+      },
+      "applicability": "Pins a practical TIFF reader candidate and its stated format/codec limits. Release notes do not guarantee support for every TIFF variant or bound memory for a file with a very large encoded segment."
+    },
+    {
+      "id": "S3",
+      "title": "tifffile implementation v2026.9.20",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/tifffile/tifffile.py",
+      "pin": "Git tag v2026.9.20",
+      "exact_locator": "Module documentation at file start: return_as='zarr', tile/page slicing examples, Dask from_zarr example, dependencies and supported-subset notes",
+      "capture_identity": {
+        "capture_id": "b40bfa8b473e4c2fafbefac91ecb4233",
+        "sha256": "d2067d45cf578bf5a74ee6b0356c434b16eed2179080f34b55049ef537aebfb3",
+        "bytes_captured": 524288,
+        "bytes_observed": 988932,
+        "complete": false,
+        "format": "captured source file prefix; body truncated by capture boundary"
+      },
+      "applicability": "The cited module documentation is within the captured prefix and supports a component-level lazy-access mechanism. The rest of the implementation file was not captured here; no full-reader or application behavior is inferred."
+    },
+    {
+      "id": "S4",
+      "title": "Zarr-Python issue #4174: coordinate selection out of memory",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/issues/4174",
+      "pin": "Issue #4174, reported against zarr 3.2.1; closed 2026-09-28",
+      "exact_locator": "Issue body: Description and Steps to reproduce; three coordinate points on shape (10,000,000, 13,854), chunks (1,1), np.bincount allocation report; basic and orthogonal selections marked OK",
+      "capture_identity": {
+        "capture_id": "03d21f3d36954497aaae135c38d8fb84",
+        "sha256": "57dadbdc7e952b9ba5e823457bebbf87ef7b982e45c94aa2354874a7128231b6",
+        "bytes": 5732,
+        "complete": true,
+        "format": "exact GitHub API response body"
+      },
+      "applicability": "A reported failure for a specific sparse coordinate-selection path and chunk grid. It does not establish that basic slices, all Zarr reads, or a biomedical viewer fail."
+    },
+    {
+      "id": "S5",
+      "title": "Zarr-Python pull request #4356 and merge metadata",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/pulls/4356",
+      "pin": "Merged 2026-09-28; merge commit cd1e5b3aaabf969d5edef18b8d62bf98e3439beb; PR head 7f14b7b35c71acd74eaa209f3d1571f5c774d2b8",
+      "exact_locator": "PR body and merge_commit_sha: fix description, issue reference, merge time, stated complexity/caveats and project-reported validation counts",
+      "capture_identity": {
+        "capture_id": "dc36d8fc80c44af0b2f0b8d2599ecd33",
+        "sha256": "a66daf6b71c50f09be6c1dba912445a46757e382251ce8c5d9eab11a3a5368b7",
+        "bytes": 19864,
+        "complete": true,
+        "format": "exact GitHub API response body"
+      },
+      "applicability": "Connects the reported issue to a merged fix. The PR's test-pass statement is reported project validation, not a test rerun by this research stage; compatibility with a later released version must be verified."
+    },
+    {
+      "id": "S6",
+      "title": "Zarr-Python sparse-indexing implementation at merge commit",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/cd1e5b3aaabf969d5edef18b8d62bf98e3439beb/src/zarr/core/indexing.py",
+      "pin": "Commit cd1e5b3aaabf969d5edef18b8d62bf98e3439beb",
+      "exact_locator": "sorted_run_ends, lines 746–760; IntArrayDimIndexer use of occupied chunk IDs and run ends, lines 836–838",
+      "capture_identity": {
+        "capture_id": "34c2a351ad144c5a8d0443019e0e22f3",
+        "sha256": "ff207b09640f098f93ca33f926f68ad4b8039daf6e29d6d6859165c33e8daf92",
+        "bytes": 70186,
+        "complete": true,
+        "format": "exact raw GitHub source response"
+      },
+      "applicability": "The pinned implementation shows the mechanism for the repaired indexer. It does not imply all legacy dense compatibility attributes are safe; the PR notes that accessing some such attributes can still materialize full-grid arrays."
+    },
+    {
+      "id": "S7",
+      "title": "Zarr-Python sparse-index regression tests at merge commit",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/cd1e5b3aaabf969d5edef18b8d62bf98e3439beb/tests/test_indexing.py",
+      "pin": "Commit cd1e5b3aaabf969d5edef18b8d62bf98e3439beb",
+      "exact_locator": "test_sparse_selections_on_arrays_with_many_chunks, lines 1406–1433; test_coordinate_indexer_many_chunks, lines 1436–1461; test_int_array_dim_indexer_many_chunks, lines 1464 onward",
+      "capture_identity": {
+        "capture_id": "d8d98f1f28344287a814de953c2f23c3",
+        "sha256": "0bb3edaa8872a16d411d836a4f5944ba5568309b08b00aa0fe90542184f2bb02",
+        "bytes": 105848,
+        "complete": true,
+        "format": "exact raw GitHub source response"
+      },
+      "applicability": "Regression coverage exists in the merged source for huge sparse chunk grids and selection-order cases. Presence of tests is not an independently executed test result in this stage."
+    },
+    {
+      "id": "S8",
+      "title": "Zarr-Python latest release captured for applicability check",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/releases/latest",
+      "pin": "Latest release at capture: v3.4.0, published 2026-09-15",
+      "exact_locator": "API fields tag_name, published_at and release body",
+      "capture_identity": {
+        "capture_id": "517a37d920b14629af0e6314eb2fa807",
+        "sha256": "abc8a6a14660744b3fbd5c66b52e297c2a6c9e1eec94865e9748939803cce08b",
+        "bytes": 12763,
+        "complete": true,
+        "format": "exact GitHub API response body"
+      },
+      "applicability": "The captured latest tag predates the 2026-09-28 merge. The fix is not established in v3.4.0; later release status must be checked before selecting a package."
+    },
+    {
+      "id": "S9",
+      "title": "napari layers guide, version 0.5.6",
+      "url": "https://napari.org/0.5.6/guides/layers.html",
+      "pin": "Versioned documentation 0.5.6",
+      "exact_locator": "Layers at a glance; Layer mode; 3D rendering of images; Scaling layers; Translating layers; layer types, n-dimensional browsing and large-volume warning",
+      "capture_identity": {
+        "capture_id": "4bc08befb8af447b8cdc693ea50eb67d",
+        "sha256": "b092c0c56f86038e268a4656e8b398d2a8b80b50ddd48cf0e94c73b73e643bd2",
+        "bytes": 91696,
+        "complete": true,
+        "format": "exact HTTPS response body"
+      },
+      "applicability": "A viewer-layer implementation precedent and a documented memory limitation. It does not establish custom project persistence, stable application coordinates, or performance on the proposed workstation."
+    },
+    {
+      "id": "S10",
+      "title": "napari Dask processing tutorial, version 0.5.6",
+      "url": "https://napari.org/0.5.6/tutorials/processing/dask.html",
+      "pin": "Versioned documentation 0.5.6",
+      "exact_locator": "Side note regarding higher-dimensional datasets; A real example: high-resolution human brain imaging dataset; Processing data with dask.array.map_blocks",
+      "capture_identity": {
+        "capture_id": "1f7ded06f28e4a58a16abece5bb78ac6",
+        "sha256": "c0e9259f2fa6d756acc16c7d24d428be50ca2f5579765daa69e142bf0bdfa40e",
+        "bytes": 110940,
+        "complete": true,
+        "format": "exact HTTPS response body"
+      },
+      "applicability": "Shows lazy viewing/on-demand processing for a multi-file TIFF collection and warns about reshape-related read amplification. The 3.69 GB example is a collection, not a single 3 GB image, and the docs provide no process-RSS or latency proof."
+    },
+    {
+      "id": "S11",
+      "title": "SQLite atomic commit documentation",
+      "url": "https://sqlite.org/atomiccommit.html",
+      "pin": "Documentation response captured 2026-10-06; exact body hash below",
+      "exact_locator": "§1 Introduction; §2 Hardware Assumptions; §3 Single File Commit; §9 Things That Can Go Wrong",
+      "capture_identity": {
+        "capture_id": "4252adf8b38e40e6bc867c493218ed0f",
+        "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "bytes": 77968,
+        "complete": true,
+        "format": "exact HTTPS response body"
+      },
+      "applicability": "Documents transaction atomicity and its filesystem/OS assumptions for SQLite rollback mode. It does not make a directory bundle or shared-storage rename atomic."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite write-ahead logging documentation",
+      "url": "https://sqlite.org/wal.html",
+      "pin": "Documentation response captured 2026-10-06; exact body hash below",
+      "exact_locator": "§1 Overview (network-filesystem limitation); §4 The WAL File (database/WAL copy relationship and close behavior)",
+      "capture_identity": {
+        "capture_id": "7ad60fa7efe84cc994bb8b6d60c6ade2",
+        "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "bytes": 42143,
+        "complete": true,
+        "format": "exact HTTPS response body"
+      },
+      "applicability": "Supports avoiding live WAL projects on shared/network filesystems and packaging only after a clean close/checkpoint. WAL is not selected for the proposed first release."
+    }
+  ]
+}

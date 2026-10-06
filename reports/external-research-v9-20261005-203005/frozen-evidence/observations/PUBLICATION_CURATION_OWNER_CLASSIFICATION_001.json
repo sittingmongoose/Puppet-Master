@@ -1,0 +1,29 @@
+{
+  "schema": "er9.owner-publication-curation-classification.v1",
+  "observed_utc": "2026-10-06T12:40:20.199839+00:00",
+  "authorized_scope": "Exact inventory pending refs only; opaque byte transfers and metadata classification; no scientific interpretation, private keys or raw native mixed-schema bodies. Publisher owns Git.",
+  "source_inventory": {
+    "path": "LAB_ROOT/consolidation/publication-inventory-001/PENDING_PUBLICATION_REFS.json",
+    "sha256": "0a0c897729e47960eeddec457c987d2d0fba9704843a6f4cd89f20bdc8ef80d5"
+  },
+  "classifiers": {
+    "actual_Task": "Eligible exact owner-authenticated launched/prepared Task and prompt text, with CURRENT/HISTORY/PREPARED distinctions; verify pin and length, no rewriting.",
+    "actual_tool_config": "Eligible actual candidate-facing tools/config source only after explicit field/type inspection for credentials/auth/session/private host values. Unknown mixed/private schema quarantined, with exact opaque locator/SHA and reason; do not substitute source-template as actual runtime config.",
+    "OPAQUE_AUTHORED_ARTIFACT": "Eligible frozen candidate-authored proposal/catalog/review/amendment/source-check code/map and exact current outputs; preserve original required/noncanonical/partial and SAME-CANDIDATE report provenance. Raw source capture bodies remain external NAS boundary even if captured by candidate; no private operational receipt/modelIO payload.",
+    "actual_stage": "Do not blanket publish full stage.json. Mixed coordinator stage may contain native configuration and private references; select exact safe existing owner projection/source-authenticated public stage definition or quarantine original with SHA/type reason. Actual candidate Task/tool/output bodies receive separate grants.",
+    "output_freeze": "Use existing credential-free inventory projection and exact original receipt locator/SHA; full receipt only after owner-safe field classification. No promotion from native status or artifact presence."
+  },
+  "always_external_or_excluded": [
+    "credentials/auth/SDK homes/session secrets",
+    "private phase2 alias keys or answer keys",
+    "native result payload/objectives/config mixed raw native body",
+    "protocol/modelIO traces and vendor/nested repositories",
+    "raw public source captures: external NAS manifest locator+SHA, not Git"
+  ],
+  "safe_positive_maps": {
+    "courier_selector": "LAB_ROOT/ops/frozen-exports/PUBLIC_SELECTION_059.json",
+    "audit_selector": "LAB_ROOT/audit/finish-publication-001/PUBLICATION_SELECTOR.json",
+    "coverage_correction": "LAB_ROOT/supervision/COVERAGE-004-COUNT-LABEL-CORRECTION-001.json"
+  },
+  "qualification": "No perfect blinding/firewall or all-version retention claim: inventory broad parse incident151 reconstructed/86 current and lost overwritten draft bytes retained as explicit limits. Extant eligible assets cannot remain pending at final completion; genuine exclusion/quarantine must state exact reason."
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "research-source-catalog/v1",
+  "evidence_policy": "Independently requested public primary sources only. Capture IDs and SHA-256 values identify captured response bodies. Public documentation and source code establish the described component behavior, not behavior of the proposed full application.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF specification 0.4",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "OME-NGFF specification v0.4; edition dated 2022-02-08",
+      "exact_locator": ["§2: OME-Zarr/NGFF representation", "§3.1: axes", "§3.3: coordinateTransformations", "§3.4: multiscales", "§3.5: omero display metadata", "§3.6–3.7: labels"],
+      "capture": {"id": "98bb9a66dfa944888ae6ca7f7ee0d19d", "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269", "kind": "public HTTPS response body"},
+      "applicability": "Normative reference for the cited NGFF 0.4 metadata fields, axis names and coordinate transformations; informs a bounded local Zarr v2 support choice and mask export.",
+      "limits": "This is a pinned older specification edition; it does not establish compatibility with newer writers/readers, correctness of an application importer, actual I/O performance, or broad consumer interoperability. Transitional display metadata is not treated as the app's complete view contract."
+    },
+    {
+      "id": "S2",
+      "title": "OME-TIFF specification, OME Model 6.2.2 documentation",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "pin": "OME Model documentation 6.2.2",
+      "exact_locator": ["OME-TIFF specification", "OME-XML metadata", "DimensionOrder and TiffData", "multi-file UUID references"],
+      "capture": {"id": "b12b1ae8f4b94973b19a22a6e478ad14", "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584", "kind": "public HTTPS response body"},
+      "applicability": "Supports retention and inspection of embedded OME-XML, explicit plane-order interpretation, and a conservative initial boundary around single-file OME-TIFF.",
+      "limits": "The documentation describes the format, not tifffile conformance for every file, vendor metadata coverage, or this application's multi-file resolution."
+    },
+    {
+      "id": "S3",
+      "title": "tifffile implementation and release documentation",
+      "url": "https://github.com/cgohlke/tifffile/releases/tag/2026.9.20",
+      "pin": "tifffile 2026.9.20",
+      "exact_locator": ["Release v2026.9.20", "README.rst: Usage / Zarr region access", "README.rst: supported and unsupported TIFF variants and codecs"],
+      "related_urls": ["https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/README.rst", "https://api.github.com/repos/cgohlke/tifffile/releases/latest"],
+      "captures": [
+        {"id": "1a2ffdf469e24abb8ca5059080c94793", "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3", "url": "https://api.github.com/repos/cgohlke/tifffile/releases/latest", "kind": "public release API response; identified v2026.9.20"},
+        {"id": "0014821dbd2f4b78a65411ecc13f27a2", "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/README.rst", "kind": "pinned public source documentation"}
+      ],
+      "applicability": "Independent TIFF storage implementation precedent. The pinned README documents Zarr-backed region access over pages/strips/tiles and an example slicing a subregion; supports a candidate bounded-read adapter for eligible TIFF layouts.",
+      "limits": "A documented API is not evidence that every compressed TIFF is bounded or decodable in the app. Layout and codec limits remain; a strip can force a large decode. The README notes Zarr version requirements. No 3 GB application benchmark was run."
+    },
+    {
+      "id": "S4",
+      "title": "ome-zarr-py reader implementation and release",
+      "url": "https://github.com/ome/ome-zarr-py/tree/v0.20.1",
+      "pin": "ome-zarr-py v0.20.1 (release dated 2026-10-05)",
+      "exact_locator": ["ome_zarr/reader.py: Multiscales parsing of axes, datasets and coordinateTransformations; loading resolution arrays", "ome_zarr/reader.py: Label parsing", "pyproject.toml: Python and dependency floors", "README.rst: project scope"],
+      "related_urls": ["https://raw.githubusercontent.com/ome/ome-zarr-py/v0.20.1/ome_zarr/reader.py", "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.20.1/pyproject.toml", "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.20.1/README.rst", "https://api.github.com/repos/ome/ome-zarr-py/releases/latest"],
+      "captures": [
+        {"id": "db36b81ad7da4a858c9b8caa3420f511", "sha256": "b034a4396014ba28b854889c0b62461ba04f7ff74d2c879423098404a2863360", "url": "https://api.github.com/repos/ome/ome-zarr-py/releases/latest", "kind": "public release API response; identified v0.20.1"},
+        {"id": "087392ad7a5b4268b86985aad5eb49f0", "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4", "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.20.1/ome_zarr/reader.py", "kind": "pinned public implementation source"},
+        {"id": "78abbc0e66854ed98af5fbe10db31c8a", "sha256": "d79b5825c98f8ebd6b56c6b08086465476565b26354f5eba45665cedec72f8ab", "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.20.1/pyproject.toml", "kind": "pinned public package metadata"},
+        {"id": "7997af2b6d1e486c8ead8502d8de003c", "sha256": "fa65523bc91d5493709bc9bc8a8e79fdb8a7588665deed39c6fd98e72c3ffa08", "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/v0.20.1/README.rst", "kind": "pinned public project documentation"}
+      ],
+      "applicability": "Independent NGFF semantic reader precedent; code parses multiscales, axes, transforms, channel display fields and labels and creates Dask-backed resolution arrays. Package metadata requires Python >=3.12, motivating the initial environment floor.",
+      "limits": "Release metadata marks the package beta. Reader code and Dask-backed arrays do not prove application-level lazy bounds, cancellation, mask editing, correct handling of every legal NGFF dataset, or interoperability with other writer versions."
+    },
+    {
+      "id": "S5",
+      "title": "napari 0.8.0 viewer/layer implementation and release",
+      "url": "https://github.com/napari/napari/tree/v0.8.0",
+      "pin": "napari v0.8.0; release commit 2d4c9fadbaf86e819a1b565c4dce983a22baab94",
+      "exact_locator": ["src/napari/layers/points/points.py: Points coordinate data, affine, scale, translate and units", "pyproject.toml: Python, Zarr and Qt-related dependency options", "v0.8.0 release notes: label painting backend change and Qt transition"],
+      "related_urls": ["https://raw.githubusercontent.com/napari/napari/v0.8.0/src/napari/layers/points/points.py", "https://raw.githubusercontent.com/napari/napari/v0.8.0/pyproject.toml", "https://api.github.com/repos/napari/napari/releases/tags/v0.8.0"],
+      "captures": [
+        {"id": "b046a93893ef4fbe952cba83f0d46962", "sha256": "328d393a31d70ac392772ac63e2c18cd72d0501510cb1861b65ef6a7a0df1860", "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.8.0", "kind": "public release API response"},
+        {"id": "dac310665b1347f68fb27bdcaa1f79bb", "sha256": "dbccd97a51dd951e41688ab54fa0c37492d6d97184dea778d8c3d81b12ffff18", "url": "https://raw.githubusercontent.com/napari/napari/v0.8.0/src/napari/layers/points/points.py", "kind": "pinned public implementation source"},
+        {"id": "129be55a321c4e3692f78b55e2aa953e", "sha256": "32f89677e8eced52f293cc05444455d6d3d6d9a34a44e40baf0f57d2625e7062", "url": "https://raw.githubusercontent.com/napari/napari/v0.8.0/pyproject.toml", "kind": "pinned public package metadata"}
+      ],
+      "applicability": "Viewer and layer implementation precedent for points/shapes/labels, transforms and interactive editing. The Points layer declares N-by-D data and transform-related properties. v0.8.0 is also the release containing the separately documented painting fix in S6.",
+      "limits": "Layer coordinate interfaces and a release do not establish a project persistence contract, correct axis handling for this app, accessibility, transaction safety, Qt dependency compatibility, or target performance. Exact integration has not been built."
+    },
+    {
+      "id": "S6",
+      "title": "napari issue #9047 to PR #8636 to released regression test",
+      "url": "https://github.com/napari/napari/issues/9047",
+      "pin": "Issue observed on 0.7.1rc4; fix merged as 63b1239ab53dedc4e40b934ee79fd18e4147dd83 for milestone/release v0.8.0",
+      "exact_locator": ["Issue #9047 reproduction and traceback", "maintainer issue comments identifying PR #8636 and reported confirmation", "PR #8636 description and changed label-painting path", "v0.8.0 src/napari/layers/labels/_tests/test_labels.py::test_paint_2d_xarray; related undo/redo tests for xarray, Dask, Zarr and TensorStore"],
+      "related_urls": ["https://api.github.com/repos/napari/napari/issues/9047", "https://api.github.com/repos/napari/napari/issues/9047/comments", "https://api.github.com/repos/napari/napari/pulls/8636", "https://api.github.com/repos/napari/napari/pulls/8636/files?per_page=100", "https://raw.githubusercontent.com/napari/napari/v0.8.0/src/napari/layers/labels/_tests/test_labels.py"],
+      "captures": [
+        {"id": "88cd8f70dd664024b796303686db4a86", "sha256": "ed8e20e22fb2fc163d1f3bc56ec009d6a5e380b9f60cab7da08e3d67592f03d4", "url": "https://api.github.com/repos/napari/napari/issues/9047", "kind": "public issue API response"},
+        {"id": "c9f9db37114948c0b7bde369bd5a1981", "sha256": "601a1f696f3d54c0ca390b9673a02b90404f9119bdab739136256cb143d9e837", "url": "https://api.github.com/repos/napari/napari/issues/9047/comments", "kind": "public issue-comment API response"},
+        {"id": "2aff0bf481a7432ca43961d11c96da79", "sha256": "7a6fbcdc466e8e1c502eae623c994fbff27b85d3baed098e1a06b437a1533aa8", "url": "https://api.github.com/repos/napari/napari/pulls/8636", "kind": "public pull request API response"},
+        {"id": "2c07b6f263b24bb58761e934072ed3a5", "sha256": "5d2d8b82acbf8a5e5680ae13d39a5bfeab9885bdf5cf3617c30a65ffaf38a193", "url": "https://api.github.com/repos/napari/napari/pulls/8636/files?per_page=100", "kind": "public changed-files API response"},
+        {"id": "cca6f3eaf05841c498ccc4fda2b9fb71", "sha256": "747f940863ee287434364540096be805ac77db033338667d6c36f2de8c5ab620", "url": "https://raw.githubusercontent.com/napari/napari/v0.8.0/src/napari/layers/labels/_tests/test_labels.py", "kind": "pinned public regression-test source"}
+      ],
+      "applicability": "Establishes a real issue/fix/test chain: xarray-backed label painting failed through a fancy-indexing path; the merged repair uses mask/bounding-region read-modify-write handling and the released test exercises paint on xarray-backed data. Supports a design requirement for bounded edits and regression tests per backend.",
+      "limits": "The trigger was a specific xarray case in a release candidate. The regression test is in-memory and its timeout is only an indirect memory signal. This chain does not validate disk-backed TIFF, 3 GB access, app crash persistence, every backend, or the proposed app. No broader performance conclusion is drawn."
+    },
+    {
+      "id": "S7",
+      "title": "bioformats2raw release",
+      "url": "https://github.com/glencoesoftware/bioformats2raw/releases/tag/v0.12.1",
+      "pin": "bioformats2raw v0.12.1, release dated 2026-06-30",
+      "exact_locator": ["v0.12.1 release notes, including changes to existing-resolution scaling, sharded chunk handling and Zarr Java dependency"],
+      "related_urls": ["https://api.github.com/repos/glencoesoftware/bioformats2raw/releases/latest"],
+      "capture": {"id": "2d77f553f547462f9d2b3ab7b8f53e25", "sha256": "5c0d2f0c17ee2100bcc05b414facf91ba5bb56ff6994ceb015930910514e67ca", "kind": "public release API response; identified v0.12.1"},
+      "applicability": "A plausible explicit conversion alternative for selected files readable by Bio-Formats; NGFF 0.4 documentation also names bioformats2raw as an image conversion tool.",
+      "limits": "A release is not a tested conversion of the group's inputs. Coverage, output schema version, calibration and sample fidelity for any selected input require validation. The plan does not adopt this tool in the minimum build."
+    }
+  ]
+}

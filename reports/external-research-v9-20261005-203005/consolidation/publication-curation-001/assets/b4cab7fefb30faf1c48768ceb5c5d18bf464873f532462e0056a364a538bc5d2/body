@@ -1,0 +1,291 @@
+{
+  "catalog_schema": "ws.research.sources/1",
+  "captured_utc_basis": "2026-10-06",
+  "capture_tool": "mcp__pm_boundary__public_https_get (capture_format: exact-http-response-body-bytes)",
+  "notes": [
+    "Each source records URL, pin, exact locator, capture identity (sha256/bytes/capture id) and applicability.",
+    "For paginated deliveries, facts were verified only within the delivered byte range; 'bytes_delivered < bytes_total' is recorded explicitly.",
+    "A source catalog does not replace the inline citations in out/research/proposal.md."
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Jupyter Notebook v4.5 JSON schema (nbformat.v4.schema.json, jupyter/nbformat main branch)",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "jupyter/nbformat@main, fetched 2026-10-06 (sha256 523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a); latest release at fetch time: v5.11.1 (S7-adjacent changelog S2)",
+      "capture": {"sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a", "bytes_total": 16104, "bytes_delivered": 16104, "complete": true, "captured_utc": "2026-10-06T00:23:25Z", "capture_id": "442329a2989b4984815f34b18a6f1241"},
+      "locators": [
+        "description: 'Jupyter Notebook v4.5 JSON schema.'; nbformat_minor minimum 5",
+        "definitions.cell_id: pattern ^[a-zA-Z0-9-_]+$, minLength 1, maxLength 64",
+        "definitions.code_cell: required ['id','cell_type','metadata','source','outputs','execution_count']; execution_count: 'The code cell's prompt number. Will be null if the cell has not been run.' (type integer|null)",
+        "definitions.misc.execution (code cell metadata): iopub/shell message timestamps (ISO 8601)"
+      ],
+      "facts_used": [
+        "Notebook format 4.5+ requires a per-cell id; code cells carry execution_count (integer|null) and outputs.",
+        "Cell-level 'execution' metadata exists for kernel message timestamps."
+      ],
+      "applicability": "Defines the interchange document the workspace reads/writes. Pin is branch-level (main); exact v5.11.1 tag content not separately fetched."
+    },
+    {
+      "id": "S2",
+      "title": "nbformat CHANGELOG.md (jupyter/nbformat main branch)",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "pin": "jupyter/nbformat@main, fetched 2026-10-06 (sha256 414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab)",
+      "capture": {"sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab", "bytes_total": 28394, "bytes_delivered": 28394, "complete": true, "captured_utc": "2026-10-06T00:24:24Z", "capture_id": "5dc4e6c1aecf427db776964622dab62e"},
+      "locators": [
+        "'## 5.11.1' (latest release listed; contributors window 2026-08-06..2026-08-17)",
+        "5.11.0 Merged PRs: 'Make security deprecated slow to nudge people #418'",
+        "5.5.0: 'validate() is a function that is core to the security model of Jupyter. Callers rely on it not mutating its argument...'",
+        "5.2.0: 'Only fix cell ID validation issues if asked'",
+        "5.1.3: 'Change id generation to be hash based to avoid problematic word combinations'",
+        "5.1.1: 'Changes convert.upgrade to upgrade minor 4.x versions to 4.5'",
+        "5.1.0: 'Implemented CellIds from JEP-62'"
+      ],
+      "facts_used": [
+        "Cell IDs shipped in nbformat 5.1.0 (JEP-62); id generation was switched to hash-based in 5.1.3.",
+        "The Jupyter notebook trust/signing feature is being deprecated (5.11.0 PR #418 'Make security deprecated slow...').",
+        "validate() is documented as core to the security model and must not mutate its argument."
+      ],
+      "applicability": "Release-history evidence at repo level; establishes what shipped in which version. Does not by itself prove behavior of any installed wheel."
+    },
+    {
+      "id": "S3",
+      "title": "JEP 62 — Cell ID Addition to Notebook Format (status: Implemented)",
+      "url": "https://raw.githubusercontent.com/jupyter/enhancement-proposals/master/62-cell-id/cell-id.md",
+      "pin": "jupyter/enhancement-proposals@master, fetched 2026-10-06 (sha256 7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992); JEP dated 2020-09-25",
+      "capture": {"sha256": "7f52a9c224fd11509db187187f6e1bd760a329ba836a3b40945b47bcde463992", "bytes_total": 20578, "bytes_delivered": 20578, "complete": true, "captured_utc": "2026-10-06T00:26:17Z", "capture_id": "f57cf83a12184ae78966140fa3bace4a"},
+      "locators": [
+        "Header: 'status: Implemented', PR #62, date 2020-09-25",
+        "'The id field in cells would always be required for any future nbformat versions (4.5+)'",
+        "Cons: 'Notebooks with the same source code can be generated with different cell ids, meaning they are not byte equal...'; 'Uniqueness across notebooks is not a goal.'",
+        "'Recommended Application / Usage of ID field' (ids persist once created; paste collision rules)"
+      ],
+      "facts_used": [
+        "Cell ids are required in nbformat 4.5+, unique within one notebook only, and persist for the life of a cell.",
+        "Regenerating a notebook can change all cell ids, breaking byte-equality — relevant caveat for diff/hash-based pipelines."
+      ],
+      "applicability": "Design basis for keying provenance by (notebook, cell id, code hash) instead of positional indexes, with the documented caveats."
+    },
+    {
+      "id": "S4",
+      "title": "nbformat PR #189 'Cell ID JEP Implementation' — changed files (GitHub API)",
+      "url": "https://api.github.com/repos/jupyter/nbformat/pulls/189/files?per_page=100",
+      "pin": "jupyter/nbformat PR 189 (merged 2020-12-01T00:37:40Z per S5), files list fetched 2026-10-06 (sha256 94b143da6b52d6eae09b5a2a634ea8aa76e1418d61cf5f9652964d565ac30b3c)",
+      "capture": {"sha256": "94b143da6b52d6eae09b5a2a634ea8aa76e1418d61cf5f9652964d565ac30b3c", "bytes_total": 71030, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:27:55Z", "capture_id": "5cf1c58b005d448080d204208b8b7d91"},
+      "locators": [
+        "nbformat/tests/test_validator.py patch adds test_non_unique_cell_ids and test_invalid_cell_id (pytest.raises(ValidationError))",
+        "Test fixtures added: nbformat/tests/invalid_cell_id.ipynb (id '$illegal_chars') and invalid_unique_cell_id.ipynb (duplicate id 'dup')",
+        "nbformat/v4/nbbase.py: nbformat_minor 4 -> 5; schema map adds (4,5); new_code_cell/new_markdown_cell/new_raw_cell get id=random_cell_id()",
+        "nbformat/v4/nbformat.v4.5.schema.json added"
+      ],
+      "facts_used": [
+        "The cell-ID implementation PR includes regression tests for invalid and duplicate cell ids, plus the 4.5 schema and upgrade path."
+      ],
+      "applicability": "Issue->fix->regression-test chain evidence. Only the first 32,768 of 71,030 bytes delivered; test files quoted above are within the delivered range; any files later in the JSON are unverified."
+    },
+    {
+      "id": "S5",
+      "title": "GitHub issue search: repo:jupyter/nbformat 'cell id' in title (GitHub Search API)",
+      "url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbformat+cell+id+in%3Atitle&per_page=5",
+      "pin": "fetched 2026-10-06 (sha256 88fd32ee263b6c466e49fe185091c971a76520cb5245750d6210e5a1011e434f)",
+      "capture": {"sha256": "88fd32ee263b6c466e49fe185091c971a76520cb5245750d6210e5a1011e434f", "bytes_total": 14773, "bytes_delivered": 14773, "complete": true, "captured_utc": "2026-10-06T00:26:19Z", "capture_id": "ff3d0e92db98426280880015d1054503"},
+      "locators": [
+        "PR #189 object: \"merged_at\":\"2020-12-01T00:37:40Z\"",
+        "PR #244 body: 'Adds a new kwarg to validate called repair ... Updates existing functionality to not mutate the notebook contents, but instead fail validation.'",
+        "Issue #231: generated notebooks change all cell ids per version, causing diff noise"
+      ],
+      "facts_used": [
+        "PR #189 merge timestamp (chain evidence).",
+        "PR #244 (merged 2022-01-21) changed validate() to not auto-mutate notebooks unless repair=True."
+      ],
+      "applicability": "Supports the no-silent-mutation principle adopted for the data contract and replay engine."
+    },
+    {
+      "id": "S6",
+      "title": "nbclient documentation — 'Executing notebooks' (readthedocs, latest)",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": "nbclient latest docs, page meta 'docsearch:version 0.11' (fetched 2026-10-06; sha256 b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a)",
+      "capture": {"sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a", "bytes_total": 36686, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:23:26Z", "capture_id": "c4a6c4e44b324d3d9c89e91faa6a9fb3"},
+      "locators": [
+        "NotebookClient execute() example: 'Load, Configure (timeout=600, kernel_name, resources metadata path), Execute, Save'",
+        "'The timeout traitlet defines the maximum time (in seconds) each notebook cell is allowed to run... The default is 30 s'",
+        "Hooks: on_notebook_start/complete/error; on_cell_start/execute/complete/executed/error",
+        "'An error during the notebook execution, by default, will stop the execution and raise a CellExecutionError'",
+        "'allow_errors (default is False)'",
+        "'jupyter execute notebook.ipynb' CLI section ('This library's command line tool is available by running jupyter execute'); '--allow-errors', '--timeout', '--startup_timeout' options"
+      ],
+      "facts_used": [
+        "nbclient provides programmatic clean replay of a notebook (fresh kernel, sequential execution, error modes), and a CLI (jupyter execute) for headless runs.",
+        "Defaults: per-cell timeout 30s, allow_errors=False; CellExecutionError stops the run."
+      ],
+      "applicability": "Mechanism precedent for the workspace's clean-replay runner. Facts verified within delivered 32,768-byte range; remainder of page unverified."
+    },
+    {
+      "id": "S7",
+      "title": "nbclient releases/latest (GitHub API)",
+      "url": "https://api.github.com/repos/jupyter/nbclient/releases/latest",
+      "pin": "fetched 2026-10-06 (sha256 dd3bf985645d53e350bc3613f35cc6f281894cf75116b1d304a49f331f6326d4)",
+      "capture": {"sha256": "dd3bf985645d53e350bc3613f35cc6f281894cf75116b1d304a49f331f6326d4", "bytes_total": 11468, "bytes_delivered": 11468, "complete": true, "captured_utc": "2026-10-06T00:26:19Z", "capture_id": "29d312ef03d840218859e4b3e061f8fa"},
+      "locators": ["\"tag_name\":\"v0.11.0\", \"published_at\":\"2026-06-05T07:52:44Z\""],
+      "facts_used": ["nbclient latest release at fetch time is v0.11.0 (2026-06-05)."],
+      "applicability": "Version pin for precedent P1."
+    },
+    {
+      "id": "S8",
+      "title": "DuckDB docs — CSV Import (current)",
+      "url": "https://duckdb.org/docs/current/data/csv/overview.html",
+      "pin": "DuckDB docs 'current' = version 1.5 at fetch time (version sidebar in delivered bytes), fetched 2026-10-06 (sha256 074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d)",
+      "capture": {"sha256": "074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d", "bytes_total": 393173, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:24:27Z", "capture_id": "71c1884624ce4781b6cfbc3f8ef63da5"},
+      "locators": [
+        "og:description (within delivered bytes): 'Read a CSV file from disk, auto-infer options: SELECT * FROM 'flights.csv'; Use the read_csv function with custom options... columns = {...}'",
+        "Sidenav (delivered): CSV overview / Auto Detection / Reading Faulty CSV Files / Tips"
+      ],
+      "facts_used": [
+        "DuckDB reads CSV/NDJSON/columnar files directly from disk with schema auto-detection and explicit column type overrides.",
+        "Docs ship a dedicated 'Reading Faulty CSV Files' section (see S9)."
+      ],
+      "applicability": "Precedent P2 (data engine). Page body beyond delivered bytes unverified; only quoted meta/sidenav facts used."
+    },
+    {
+      "id": "S9",
+      "title": "DuckDB docs — Reading Faulty CSV Files (current)",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files.html",
+      "pin": "DuckDB docs 'current' = version 1.5 at fetch time, fetched 2026-10-06 (sha256 58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c)",
+      "capture": {"sha256": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c", "bytes_total": 376006, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:26:20Z", "capture_id": "7077b0c822a2486c814431861c70e186"},
+      "locators": [
+        "og:description (within delivered bytes): 'DuckDB supports detailed error messages, the ability to skip faulty lines and the possibility of storing faulty lines in a temporary table to assist users with a data cleaning step.'"
+      ],
+      "facts_used": [
+        "DuckDB documents explicit handling of faulty CSV lines: skip them or store them in a table for cleaning — i.e., a quarantine pattern, not silent deletion."
+      ],
+      "applicability": "Directly supports the workspace quarantine (never silent delete) data-contract rule."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB docs — Combining Schemas (multiple files, current)",
+      "url": "https://duckdb.org/docs/current/data/multiple_files/combining_schemas.html",
+      "pin": "DuckDB docs 'current' = version 1.5 at fetch time, fetched 2026-10-06 (sha256 479a5ffe4289fbcb89027a5b8d16ca4e0501be61388f766c015439908532d0ac)",
+      "capture": {"sha256": "479a5ffe4289fbcb89027a5b8d16ca4e0501be61388f766c015439908532d0ac", "bytes_total": 356498, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:26:20Z", "capture_id": "17f9a8afd4074df4a8a33a3378c03ef9"},
+      "locators": [
+        "og:description (within delivered bytes): 'DuckDB offers two ways of unifying schemas of multiple files: by column position and by column name... By default, DuckDB reads the schema of the first file provided... union_by_name = true'"
+      ],
+      "facts_used": [
+        "Multi-file schema unification is a first-class, documented operation: by position (default, first file wins) or by name (union_by_name)."
+      ],
+      "applicability": "Precedent for the workspace's schema-evolution policy across shards/partitions."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB docs — Pragmas / configuration (current)",
+      "url": "https://duckdb.org/docs/current/configuration/pragmas.html",
+      "pin": "DuckDB docs 'current' = version 1.5 at fetch time, fetched 2026-10-06 (sha256 df149be9f59051f0eb7f67a0fbade211dd107ffd1d4250e91421f20a7e994d05)",
+      "capture": {"sha256": "df149be9f59051f0eb7f67a0fbade211dd107ffd1d4250e91421f20a7e994d05", "bytes_total": 406370, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:26:20Z", "capture_id": "50c890da880a4047bfce6714f0e55524"},
+      "locators": [
+        "og:description (within delivered bytes): 'PRAGMA statements can be issued... assign a value to an option can also be issued using the SET statement and the value... retrieved using SELECT current_setting(option_name). For DuckDB's built in configuration options, see the Configuration Reference.'"
+      ],
+      "facts_used": [
+        "Engine configuration (e.g., memory settings) is settable per instance via SET/PRAGMA and readable via current_setting — usable for recording an explicit execution bound in the manifest."
+      ],
+      "applicability": "Mechanism for declaring the explicit bound under which large/unsupported operations run. Full configuration reference beyond delivered bytes."
+    },
+    {
+      "id": "S12",
+      "title": "DuckDB blog — Announcing DuckDB 0.6.0 (2022-11-14, author Mark Raasveldt)",
+      "url": "https://duckdb.org/2022/11/14/announcing-duckdb-060.html",
+      "pin": "published 2022-11-14 (article:published_time in delivered bytes), fetched 2026-10-06 (sha256 cec328706d91e5a6f83000037001ef9657006cc922970bf03c829796e4517331; capture truncated at 524,288 bytes, body_complete=false)",
+      "capture": {"sha256": "cec328706d91e5a6f83000037001ef9657006cc922970bf03c829796e4517331", "bytes_total": null, "bytes_delivered": 524288, "complete": false, "captured_utc": "2026-10-06T00:27:55Z", "capture_id": "9d1964521b1d444f9662d515afbe6b98"},
+      "locators": [
+        "og:description (delivered bytes): '...The new release contains many improvements to the storage system, general performance improvements, memory management improvements and new features.'"
+      ],
+      "facts_used": [
+        "The 0.6.0 release announcement lists 'memory management improvements' among its headline changes."
+      ],
+      "applicability": "Weak, deliberately narrow fact: release history shows memory-management work in the engine's lineage. The commonly cited 'fully out-of-core operators' claim is NOT verified in the delivered bytes and is treated as an open lead (see leads.json L2)."
+    },
+    {
+      "id": "S13",
+      "title": "marimo README (marimo-team/marimo main)",
+      "url": "https://raw.githubusercontent.com/marimo-team/marimo/main/README.md",
+      "pin": "marimo-team/marimo@main, fetched 2026-10-06 (sha256 d017b1b939242ce844b38a20e9d53b7af277c48743cce6bcfca815634e760eca)",
+      "capture": {"sha256": "d017b1b939242ce844b38a20e9d53b7af277c48743cce6bcfca815634e760eca", "bytes_total": 16847, "bytes_delivered": 16847, "complete": true, "captured_utc": "2026-10-06T00:26:21Z", "capture_id": "f35681288448480c83e250b68c76aa5a"},
+      "locators": [
+        "'A reactive Python notebook that's reproducible, git-friendly...': run a cell and dependent cells run 'or marks them as stale'",
+        "'Notebooks are executed in a deterministic order, based on variable references instead of cells' positions on the page.'",
+        "'marimo runs only those cells that need to be run by statically analyzing your code.'",
+        "'marimo can even serialize package requirements in notebook files, and auto install them in isolated venv sandboxes.'",
+        "Runtime can be configured lazy: 'marking affected cells as stale instead of automatically running them'"
+      ],
+      "facts_used": [
+        "marimo derives a cell dependency graph by static analysis, executes in deterministic order derived from variable references (not display position), and marks affected cells stale instead of always re-running."
+      ],
+      "applicability": "Opportunity precedent (P3): the staleness-propagation model adopted (W3) mirrors this, but our edges come from recorded runtime events, not static analysis."
+    },
+    {
+      "id": "S14",
+      "title": "Python docs — Sorting Techniques HOWTO (3.14.8)",
+      "url": "https://docs.python.org/3/howto/sorting.html",
+      "pin": "Python 3.14.8 documentation, fetched 2026-10-06 (sha256 b246250ea6b99fa0d5a13cb436bf52080917f462c00f29528766b209ad5a4f18)",
+      "capture": {"sha256": "b246250ea6b99fa0d5a13cb436bf52080917f462c00f29528766b209ad5a4f18", "bytes_total": 63989, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:24:27Z", "capture_id": "b7b53735ccb94ad3b26e340d41408948"},
+      "locators": [
+        "'Sort Stability and Complex Sorts' section (within delivered bytes): 'Sorts are guaranteed to be stable. That means that when multiple records have the same key, their original order is preserved.'"
+      ],
+      "facts_used": [
+        "Python list.sort()/sorted() are stable: equal keys preserve input order — the distinction between deterministic total order and stable order is a documented language property."
+      ],
+      "applicability": "Supports the workspace rule: preserve source row order as row identity; sorting by a key alone is not a deterministic total order unless a tiebreaker is declared."
+    },
+    {
+      "id": "S15",
+      "title": "PEP 723 — Inline script metadata (Final)",
+      "url": "https://peps.python.org/pep-0723/",
+      "pin": "PEP 723, Status: Final (page states Final; resolution 2024-01-08), fetched 2026-10-06 (sha256 1bb79e5880add2424221e259128a0a8ceeb8f047a159d8a03d8a26b823f22c78)",
+      "capture": {"sha256": "1bb79e5880add2424221e259128a0a8ceeb8f047a159d8a03d8a26b823f22c78", "bytes_total": 73655, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:24:27Z", "capture_id": "44331e772d88460a8e3360f6445da98a"},
+      "locators": [
+        "Specification (within delivered bytes): '# /// script' TOML block with top-level 'dependencies' (PEP 508) and 'requires-python' (PEP 440)",
+        "'Script runners MUST error if the specified dependencies cannot be provided. Script runners SHOULD error if no version of Python that satisfies the specified requires-python can be provided.'",
+        "Banner: canonical spec maintained on the PyPA specs page"
+      ],
+      "facts_used": [
+        "A standard, adopted format exists for binding dependencies and a Python floor to a single-file script, with a MUST-error rule when dependencies cannot be provided."
+      ],
+      "applicability": "Environment-binding mechanism for standalone transform scripts inside the project; the MUST-error rule is adopted verbatim for replay."
+    },
+    {
+      "id": "S16",
+      "title": "pandas 3.0.6 docs — pandas.errors.DtypeWarning",
+      "url": "https://pandas.pydata.org/docs/reference/api/pandas.errors.DtypeWarning.html",
+      "pin": "pandas 3.0.6 documentation (page meta 'docsearch:version 3.0.6'), fetched 2026-10-06 (sha256 33b46ad9944c740169cdb7e7c71a16da3786cbf65f372170ede3bf8440d7ed9c)",
+      "capture": {"sha256": "33b46ad9944c740169cdb7e7c71a16da3786cbf65f372170ede3bf8440d7ed9c", "bytes_total": 35102, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:23:26Z", "capture_id": "c5cc7eca920c4edf8e12d85a65a4c4cf"},
+      "locators": [
+        "'Notes' section (within delivered bytes): 'This warning is issued when dealing with larger files because the dtype checking happens per chunk read.' and 'the CSV file is read with mixed types in a single column which will be an object type'",
+        "Doc example: same literal '1' read as str at iloc[262140] and as int at iloc[262150]; recommended fix: explicit dtype={'a': str}"
+      ],
+      "facts_used": [
+        "Chunked readers may assign different runtime types to the same literal in one column; type inference is a sampling artifact and a documented source of 'same notebook, different result'."
+      ],
+      "applicability": "Concrete documented pitfall motivating declared schemas over inference."
+    },
+    {
+      "id": "S17",
+      "title": "Python Developer's Guide — Status of Python versions",
+      "url": "https://devguide.python.org/versions/",
+      "pin": "fetched 2026-10-06 (sha256 4f149cdef9239c62ac9e6067db3cbf1d2a33594149dc1c1c201b2dbf0541748c; article modified 2026-05-27 per meta)",
+      "capture": {"sha256": "4f149cdef9239c62ac9e6067db3cbf1d2a33594149dc1c1c201b2dbf0541748c", "bytes_total": 125357, "bytes_delivered": 32768, "complete": false, "captured_utc": "2026-10-06T00:24:27Z", "capture_id": "b3883bd609e542768452dd677cee632b"},
+      "locators": [
+        "Intro paragraph (within delivered bytes): 'The main branch is currently the future Python 3.16...'"
+      ],
+      "facts_used": [
+        "CPython development is active toward 3.16; the version table itself was beyond the delivered byte range and specific EOL dates are NOT verified here (lead L7)."
+      ],
+      "applicability": "Context only for the Python support-floor choice; exact support windows remain unverified."
+    }
+  ],
+  "attempted_but_unresolved": [
+    {
+      "id": "X1",
+      "target": "DVC documentation (dvc.org/doc/command-reference/status, dvc.org/doc/user-guide/data-management/cache; raw.githubusercontent.com/iterative/dvc.org paths)",
+      "outcome": "Transport errors ('boundary failure: OSError') on both dvc.org attempts; 404 on guessed raw paths. No DVC source captured.",
+      "consequence": "DVC is NOT used as a cited precedent anywhere in the proposal. Its mechanism class (content-addressed dataset identity) appears only as engineering inference in leads.json L1 and is fully re-derivable from this proposal's own hash-identity design."
+    }
+  ]
+}

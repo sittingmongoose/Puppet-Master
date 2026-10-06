@@ -1,0 +1,114 @@
+{
+  "schema": "er9.research.leads.v1",
+  "research_date": "2026-10-06",
+  "leads": [
+    {
+      "id": "L01",
+      "kind": "critical unresolved dependency",
+      "topic": "DuckDB 1.5.6 CSV late-value conversion behavior",
+      "status": "open; not reproduced in this stage",
+      "question": "Does the #25824 strictness mismatch reproduce on DuckDB v1.5.6, and is there a later fix/release with a regression test?",
+      "why_it_matters": "The reported issue silently changes values outside the sniffing sample. It is a data-integrity blocker for auto-detected CSV schemas. The author matrix names 1.1.3, 1.5.5, nightly and main, but not v1.5.6.",
+      "next_step": "Run the issue's self-contained file generation/query on the exact supported wheel/CLI and platform; test within/beyond-sample values for integer, decimal, leading zero, separator and timestamp cases; inspect exact source/fix/test/release chain before raising the support pin.",
+      "source_ids": ["S05", "S06", "S09", "S15"],
+      "url": "https://github.com/duckdb/duckdb/issues/25824",
+      "priority": "release gate"
+    },
+    {
+      "id": "L02",
+      "kind": "critical proposed validation",
+      "topic": "5 GB bounded/streaming path on 8-core/16-GB workstations",
+      "status": "target only; no benchmark executed",
+      "question": "Which format and selected operations fit the intended memory and scratch limits in DuckDB 1.5.6, and which operations require explicit caps/spill?",
+      "why_it_matters": "The docs describe OOM cases larger than available memory and an order-preservation trade-off; they do not establish a 5 GB guarantee.",
+      "next_step": "Benchmark 5 GB CSV, JSON Lines and Parquet scans/exports under measured RSS/temp-disk quotas. Separately test sort, join, group and high-cardinality outputs; record row counts, hashes, time, spill and failure behavior.",
+      "source_ids": ["S04", "S07", "S15"],
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads",
+      "priority": "high"
+    },
+    {
+      "id": "L03",
+      "kind": "critical implementation dependency",
+      "topic": "Rootless sandbox portability and security",
+      "status": "Linux control surface researched; host matrix unresolved",
+      "question": "Which supported runtime supplies equivalent network/filesystem/identity/resource restrictions on Linux, macOS and Windows, and what bind-mount semantics preserve user ownership?",
+      "why_it_matters": "The notebook is untrusted and must run outside the host workspace with restricted mounts. Docker docs describe setup complexity and do not prove that one container recipe is secure or portable.",
+      "next_step": "Prototype least-privilege rootless run profiles per intended host OS; test denied host/home/credential/network access, resource quotas, cancellation and writable output mount; commission security review before treating clean replay as isolated.",
+      "source_ids": ["S16", "S17"],
+      "url": "https://docs.docker.com/engine/security/userns-remap.md",
+      "priority": "release gate"
+    },
+    {
+      "id": "L04",
+      "kind": "critical environment choice",
+      "topic": "Exact Python/Jupyter lock and portable rebuild",
+      "status": "boundary proposed; lock tooling/platform artifacts unselected",
+      "question": "Which supported lock generator/installer records the interpreter, all transitive wheels, hashes, markers and native libraries for the chosen OS/architecture matrix?",
+      "why_it_matters": "Exact dependency binding is required for provenance. pip documents version pins and hashes, while compiled wheel bundles can be platform-specific; a single lock/bundle may not serve all team machines.",
+      "next_step": "Choose one lock format, pin exact Python/Jupyter/DuckDB packages and hashes, build/install offline per supported platform, and compare manifest and replay outputs. Keep the environment lock separate from host-specific image digest where needed.",
+      "source_ids": ["S03", "S15", "S18"],
+      "url": "https://pip.pypa.io/en/stable/topics/repeatable-installs/",
+      "priority": "high"
+    },
+    {
+      "id": "L05",
+      "kind": "unresolved input semantics",
+      "topic": "Parquet row position identity and stable ordering",
+      "status": "proposed, not verified against DuckDB API",
+      "question": "Can the selected Parquet reader expose a reliable physical row-group/row ordinal across the scan and output path, or should stable identity be assigned during a sequential import snapshot?",
+      "why_it_matters": "A row locator must distinguish source identity from query order. No SQL result order is guaranteed without a total order key, and re-written Parquet files need not preserve physical layout.",
+      "next_step": "Create fixtures with multiple row groups/files, equal sort keys and rewritten row groups; compare reader order and IDs. Document source-snapshot locator guarantees separately from semantic/business keys.",
+      "source_ids": ["S07", "S08"],
+      "url": "https://duckdb.org/docs/current/data/parquet/overview",
+      "priority": "medium"
+    },
+    {
+      "id": "L06",
+      "kind": "unresolved usability/security dependency",
+      "topic": "Rich notebook output rendering and saved HTML/widgets",
+      "status": "not validated",
+      "question": "Which output MIME types and widgets can the selected local frontend render without executing active content or hiding the provenance state?",
+      "why_it_matters": "The notebook interchange format allows rich MIME output; code execution and browser rendering have different trust boundaries. Saved JS/widget output should not be treated as a replayed result.",
+      "next_step": "Test plain text, images, HTML, JavaScript and widget output in the chosen notebook UI; make active content inert by default and show artifact source/status. Verify output size caps and accessible error rendering.",
+      "source_ids": ["S01", "S03"],
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "priority": "medium"
+    },
+    {
+      "id": "L07",
+      "kind": "plausible component alternative",
+      "topic": "Polars streaming/lazy transforms beside DuckDB SQL",
+      "status": "not researched or benchmarked",
+      "question": "Would one Python-native lazy/streaming engine reduce complexity for the three analysts while retaining practical SQL exchange for the colleague?",
+      "why_it_matters": "Using two engines may introduce different null, cast, ordering and memory semantics; replacing DuckDB trades its integrated SQL path for another transform API.",
+      "next_step": "Compare exact CSV/JSON/Parquet contract behavior, streaming scope, spill, ordering, Python interop, pinning and cross-machine artifacts on representative workloads. Keep the first implementation to one engine until evidence supports a split.",
+      "source_ids": [],
+      "url": "https://docs.pola.rs/user-guide/lazy/streaming/",
+      "priority": "optional"
+    },
+    {
+      "id": "L08",
+      "kind": "useful future opportunity",
+      "topic": "Declared reusable transform graph / dataset versioning integration",
+      "status": "optional; no external component selected",
+      "question": "Do analysts benefit from promoting deterministic recipes into typed input/output nodes with reusable content-addressed cache entries and lineage?",
+      "why_it_matters": "A declared graph gives safer invalidation and caching than inferring Python dependencies. A dedicated dataset versioning tool could complement portable folders but may add repository/storage requirements.",
+      "next_step": "Observe pilot users' repeated transform patterns first; then compare a small project-owned graph with a DVC-style data-versioning layer and ordinary Git folder exchange. No scheduling or hosted service is needed for this opportunity.",
+      "source_ids": [],
+      "url": "https://dvc.org/doc/user-guide/data-management",
+      "priority": "optional"
+    },
+    {
+      "id": "L09",
+      "kind": "unresolved SQL support boundary",
+      "topic": "Colleague's SQL dialect and output handoff",
+      "status": "not clarified by research brief",
+      "question": "Is the colleague able to use DuckDB SQL over the exchanged tabular files, or do their existing queries rely on a server-specific dialect/functions?",
+      "why_it_matters": "The proposal offers a local SQL engine, not dialect translation or a remote database. Translation can silently change semantics and would expand implementation substantially.",
+      "next_step": "Collect a small sanitized set of their query patterns during product discovery; define the accepted DuckDB SQL subset and explicit unsupported-query messages. Export conventional CSV/Parquet and `.sql` source for other systems.",
+      "source_ids": ["S04", "S08"],
+      "url": "https://duckdb.org/docs/current/sql/introduction",
+      "priority": "medium"
+    }
+  ]
+}

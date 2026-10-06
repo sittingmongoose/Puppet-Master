@@ -1,0 +1,178 @@
+# Critique review — Brief B (reproducible notebook & data workspace)
+
+- Stage: I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001 (role: critique, V01 legacy-comparator control: no deterministic execution tool; no code executed in this stage; all checks below are proposed/UNEXECUTED).
+- Author: admitted candidate, native Goal, 2026-10-06.
+- Review inputs actually read: `inputs/brief.md`, `inputs/delivery_objective.md`, `inputs/output_contract.md`, `inputs/STAGE_CLOCK.json`.
+- Verdict summary: **the frozen same-arm predecessor artifacts were not attached** (`inputs/prior/` empty of files under every plausible name). Therefore claim-by-claim verification of a frozen research proposal was not possible. This review (a) documents that condition with the exact probe record, (b) audits the brief into an obligation checklist the next fresh candidate can apply mechanically, (c) independently verifies the consequential public-source facts any proposal in this problem space depends on, with capture identities and version applicability, (d) registers the claims that would be unsupported if asserted (conditional corrections), (e) preserves valid claims, and (f) specifies proposed UNEXECUTED checks and resolution steps. It is written to be resolvable without this session's private context.
+
+---
+
+## 1. Delivery condition: predecessor artifacts absent (blocking condition R-CRIT-01)
+
+The stage contract says ops must attach the exact frozen same-arm predecessor artifacts under `inputs/prior/`. They are not present. Probe record (all at 2026-10-06, stage clock running; each read returned `FileNotFoundError` unless noted):
+
+| Path probed | Result |
+|---|---|
+| `inputs/prior/proposal.md` | FileNotFoundError |
+| `inputs/prior/sources.json` | FileNotFoundError |
+| `inputs/prior/research/proposal.md` | FileNotFoundError |
+| `inputs/prior/final/proposal.md` | FileNotFoundError |
+| `inputs/prior/manifest.json` | FileNotFoundError |
+| `inputs/prior/out/research/proposal.md` | FileNotFoundError |
+| `inputs/prior/research_proposal.md` | FileNotFoundError |
+| `out/research/proposal.md` (workspace) | FileNotFoundError |
+| `inputs/prior/research/sources.json` | FileNotFoundError |
+| `inputs/prior/witnesses.json` | FileNotFoundError |
+| `inputs/prior/leads.json` | FileNotFoundError |
+| `inputs/prior/proposal.json` | FileNotFoundError |
+| `inputs/prior/critique-input.md` | FileNotFoundError |
+| `prior/proposal.md` | tool error (ValueError; path outside admitted inputs) |
+| `inputs/prior` via mechanical `line_map` | tool error (ValueError; not a readable file) |
+
+Consequences and compliance:
+
+- **No prior claims exist to verify or correct.** I did not invent a proposal to critique, and I did not read another arm or any evaluator material (contract requirement).
+- Claim-level verification of the frozen research proposal (its specific assertions, its finding IDs, its witness receipts) is **deferred to the next critic run once the research artifacts are actually attached at `inputs/prior/{proposal.md, sources.json, witnesses.json, leads.json}`**. Section 3 of this review is the checklist to run at that time.
+- What this review can and does deliver instead: obligation audit (§2), independent verification of the space's load-bearing public-source facts (§3), conditional corrections (§4), preserved claims (§5), the one issue chain this stage could complete with its exact evidence limits (§6), uncertainty register (§7), proposed UNEXECUTED checks (§8), and resolution instructions (§9).
+
+---
+
+## 2. Brief-obligation audit checklist (applies to any research/final proposal)
+
+Each row: obligation (brief.md line) → what a compliant proposal must contain → pass criterion. "A1..A12" are audit item IDs the next candidate can cite.
+
+| ID | Brief obligation (source) | Required content | Pass criterion |
+|---|---|---|---|
+| A1 | Data contract for schema assumptions, type conversions, row/order identity, error handling (L5) | Explicit contract fields: declared schema vs sniffed schema, conversion rules, row identity (stable key vs ordinal), malformed-record handling | No reliance on silent inference; malformed records surfaced, never silently dropped |
+| A2 | No silent deletion or mutation of originals (L5) | Read-only source binding; writes only to derived artifacts | Any "cleanup" behavior flagged as a violation |
+| A3 | Distinguish displayed cell order, execution order, kernel state, output provenance (L7) | Four distinct modeled notions, mapped to concrete structures | Proposal that conflates them fails; nbformat evidence in §3-S1 shows the format supports the distinction but does not enforce it |
+| A4 | Clean-replay guarantee boundary (L7) | What replay guarantees (same inputs + pinned code/env ⇒ same execution event stream) and explicit exclusions: nondeterminism, external services, unpinned packages, undeclared file access | Both halves present; no "replay ⇒ identical outputs" overclaim |
+| A5 | Output status taxonomy: current / stale / failed / unverified (L7) | Per-visible-output state machine with triggers | All four states defined; a fifth "unknown" allowed, not silently mapped to "current" |
+| A6 | Invalidation effects of upstream cell / dataset / env edits (L7) | Defined invalidation propagation per edit class | Each edit class has a defined effect, including "no effect" where justified |
+| A7 | Restart / interrupted execution must not silently label old outputs current (L7) | Kernel-restart and cancel/interrupt events mark affected outputs unverified/stale | Explicitly handled; absence of handling is a finding |
+| A8 | Minimum 10-step workflow (L9) | Create → import (no unnecessary copy) → author → bounded preview → interactive run → clean replay → compare provenance → save → reopen on another machine → inspect/export + manifest | Each step has a mechanism, or a bounded alternative with rationale |
+| A9 | Project record, environment binding, source-data identity, execution events, output association (L9) | Concrete record shapes (e.g., project.json, lock/env pin, dataset digest, event log, output↔cell↔event linkage) | All five explained; manifest is small and exportable |
+| A10 | Python support boundary; defensible optional-SQL relationship (L9) | Versioned Python support; SQL as embedded engine option, not a second kernel ecosystem | A small team is not asked to build every kernel |
+| A11 | 8-core/16 GB envelope; 5 GB input via bounded/streaming path; explicit different bound for unsupported global ops (L11) | Operation-class table: which ops stream, which spill, which are bounded differently | Labeled target-to-investigate, not a verified benchmark |
+| A12 | Schema evolution, caching/invalidation, large-result truncation, deterministic vs stable ordering, concurrency/locking, interrupted-save recovery, folder/bundle exchange (L11) | Each addressed | Missing item = coverage gap |
+| A13 | Untrusted-code execution boundary with filesystem/network/resource permissions + usability trade-offs; no import-blacklist-isolation claim; browsing separate from execution (L13) | Process/OS-level boundary (or admitted sandbox), explicit trade-offs | Any blacklist-as-isolation claim is a hard violation |
+| A14 | ≥2 independently useful implementation precedents with mechanisms + independence (L17) | Two+ sources, each contributing a distinct mechanism; independence argued | Same-family sources counted as one precedent |
+| A15 | ≥1 consequential real issue/failure → fix → regression test, with version/branch applicability and evidence limits (L17) | Chain with primary-source locators | "Issue title alone" or "merged patch alone" does not establish release behavior; the chain must state which released version contains the fix |
+| A16 | ≥1 useful opportunity + ≥1 plausible alternative; rejected alternatives visible (L15, L19) | Explicit sections | Optional features (collab, hosted, scheduling, multi-language) not converted into obligations |
+| A17 | Label separation: source facts / engineering inference / product choices / executed checks / proposed-UNEXECUTED (output contract) | Consistent labeling throughout | Unlabeled assertions fail |
+| A18 | Executed checks need code, inputs, expected behavior, stdout/stderr/exit, scope limits (output contract) | Receipts or honest UNEXECUTED labels | Invented receipts = hard violation |
+
+---
+
+## 3. Independently verified source facts (this stage's own captures)
+
+Capture tooling returns exact response bytes with sha256 and capture IDs; "capture identity" below = `capture_id` + body sha256. All fetches 2026-10-06T05:05–05:06Z. Semantic understanding of remote behavior beyond these bytes is NOT established by capture alone — stated applicability limits are part of each fact.
+
+- **S1 — nbformat v4.5 JSON schema (jupyter/nbformat, `main`, captured 2026-10-06).**
+  URL: https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json — capture_id `61cdabdafbec4602a90a116b9b57db4d`, sha256 `523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a`, 16,104 bytes, full body delivered. Locators (from the delivered body): description "Jupyter Notebook v4.5 JSON schema"; `nbformat_minor` minimum 5; `code_cell` **required** properties include `id` (pattern `^[a-zA-Z0-9-_]+$`, 1–64 chars), `outputs`, `execution_count`; `execution_count` type `[integer, null]`, "Will be null if the cell has not been run"; outputs limited to `execute_result` (carries its own `execution_count`), `display_data`, `stream`, `error`.
+  Supported facts: the interchange format natively models **display order** (`cells` array) separately from **execution order** (`execution_count` numbers, nullable) and binds outputs to their cell; `execute_result` outputs are per-cell prompt-numbered. Supported inference: the brief's A3 requirement is implementable on this format without inventing a new container. Limits: the schema contains **no** fields for kernel state, environment pins, dataset identity, or staleness — adopting the format does not by itself settle runtime behavior (confirms brief L9's caution).
+
+- **S2 — nbformat CHANGELOG (`main`, captured 2026-10-06).**
+  URL: https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md — capture_id `6357ef2081464f028f373a9f77ce0532`, sha256 `414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab`, 28,394 bytes, full body delivered. Locators: "## 5.1.0 — Implemented CellIds from JEP-62"; "## 5.1.3 — Change id generation to be hash based…"; "## 5.5.0 — The biggest change… is the deprecation of arguments to `validate()` that try to fix notebook errors during validation… `validate()` is a function that is core to the security model of Jupyter. Callers rely on it not mutating its argument or trying to fix the notebook passed to it… validation will fail instead of silently modifying an invalid notebook. Use `normalize()` explicitly…"; "## 5.8.0 — Add `strip_invalid_metadata` argument to validator normalize method"; "## 5.11.0 — Other merged PRs — Remove deprecated kwargs from validate() function [#447]"; "## 5.11.1 — Clarify normalize guidance in the changelog [#451]"; "## 4.2 — Support trusting notebooks on stdin with `jupyter trust`"; "## 4.3 — A new pluggable `SignatureStore` class…"; "## 5.11.0 — Add context manager support to NotebookNotary [#436]".
+  Supported facts: cell IDs exist since nbformat 5.1.0 (schema 4.5); notebook **trust/signing** (Notary, `jupyter trust`, pluggable signature store) is part of nbformat, not an add-on; the validate()-auto-fix → explicit-normalize transition has precise version applicability: **5.5.0 deprecates, 5.11.0 removes the kwargs**. Limits: changelog entries are release-documentation evidence; the underlying issue threads and test files were not independently retrieved this stage (see §6); the exact first release shipping each older-schema validator variant is not pinned beyond these entries.
+
+- **S3 — nbclient README (`main`, captured 2026-10-06).**
+  URL: https://raw.githubusercontent.com/jupyter/nbclient/main/README.md — capture_id `6958332e291b4a2e98b5b6ebfc195d7f`, sha256 `3a756e31c830e943c1303cab7b5e84723bd1b1edf2f1057759c90ff0b26ff1ee`, 3,163 bytes, full body. Locators: "NBClient lets you execute notebooks… programmatic notebook execution"; "This library currently supports Python 3.10+ versions"; "used to be part of the nbconvert project… extracted nbconvert's `ExecutePreprocessor`"; "`jupyter_client` is a client library for the jupyter protocol… nbclient allows notebooks to be run in different execution contexts".
+  Supported facts: nbclient is the natural clean-replay engine component (A8/A9), and kernel lifecycle is delegated to jupyter_client (separate dependency — relevant to A7 restart semantics). Limits: README states support policy, not behavior; per-flag semantics (allow_errors, timeouts, resource_limits) were not pinned this stage.
+
+- **S4 — nbclient CHANGELOG (`main`, captured 2026-10-06).**
+  URL: https://raw.githubusercontent.com/jupyter/nbclient/main/CHANGELOG.md — capture_id `d550dfaabb82477a823f9fb65a3ac654`, sha256 `1a26f27ba77de88e5807285771ccebe65cc606e7bc9028492439898ed40a6b8e`, 40,434 bytes (first 32,768 delivered; entries quoted are within the delivered range). Locators: "## 0.5.11 — Clear execution metadata, prefer msg header date when recording times [#195]"; "## 0.6.1 — Add `error_on_interrupt` trait [#224]"; "## 0.6.1 — Add `on_cell_executed` hook [#222]"; "## 0.7.4 — include stream output in CellExecutionError [#282] / avoid duplicate 'Exception: message' in CellExecutionError [#283]"; "## 0.10.3 — correct execution count in test for ipython 9.8 and above [#335]"; latest delivered entry "## 0.11.0" (compare range 2025-12-23..2026-06-05).
+  Supported facts: execution-timing metadata is written from kernel message headers and cleared per run (0.5.11); progress hooks and interrupt-error semantics are first-class traits (0.6.1) — directly relevant to A5/A7 (progress inspection, cancel); execution-count behavior is **IPython-version-dependent** (0.10.3 had to correct a test for IPython ≥ 9.8) — a concrete demonstration that count semantics cannot be assumed stable across runtime versions, supporting strict env pinning (A9). Limits: changelog proves the merged changes and their release versions, not the runtime behavior under every consumer; delivered range excludes older entries.
+
+- **S5 — ipyflow README (ipyflow/ipyflow, `master`, captured 2026-10-06).**
+  URL: https://raw.githubusercontent.com/ipyflow/ipyflow/master/README.md — capture_id `2682c84846bb4095822cd7d2e4cd8504`, sha256 `5d4da8cccb527f2ce2aa4232a37b6d0d24a15b1bcf133fd98f8ed84e44cfb581`, 16,210 bytes, full body. Locators: "a next-generation Python kernel for JupyterLab and Notebook 7 that tracks dataflow relationships between symbols and cells"; "Full backwards-compatibility with ipykernel… drop-in replacement"; "Precise dependency inference… understands when cell B depends on cell A because of a subscript reference x[0]"; "Fearless execution… the resulting output appears as it would if you had performed a 'restart + run all' operation"; "The cell dependency information is persisted to the notebook metadata"; color-coded dots (orange = would re-execute, purple = up-to-date dependency); `reproduce_cell(4, lookback=1)` recovery utility; reactivity opt-in (`exec_mode` default "lazy", `flow_direction` default "in_order"); "IPyflow started its life under the name nbsafety"; citations: Macke et al., PVLDB 14(6):1093–1101, 2021 (execution suggestions); Shankar et al., PVLDB 15(13):4038–4047, 2022 (bolt-on program slicing).
+  Supported facts: an independently useful precedent mechanism for **staleness/dependency view** (A5/A6): fine-grained symbol-level lineage, persisted into notebook metadata, with a UI mapping (dots) — independent of nbformat/nbclient (different project, different mechanism layer). Its "restart + run all" equivalence is an **interactive** invariant, not a clean-replay proof — the distinction the brief demands. Limits: README documents design and defaults; current maintenance status and exact version behavior were not pinned (no release/version data in the body); runtime correctness at scale untested here.
+
+- **S6 — DuckDB CSV import documentation (`current` docs, version sidebar "1.5 current"; captured 2026-10-06).**
+  URL: https://duckdb.org/docs/current/data/csv/overview.html (reached via 308 from `/docs/stable/...` and from `/docs/current/data/csv/overview`) — capture_id `a75dca13c0334e2f81813629f81e5450`, body sha256 `9773d0ae56463735d96992df510fd528d185ae73d233eb9a4cde099387467768`, 393,313 bytes total, **first 32,768 bytes delivered**. Locators within delivered bytes: Jekyll meta description quoting the examples — "SELECT * FROM 'flights.csv';" auto-inferred; "read_csv('flights.csv', delim = '|', header = true, columns = { 'FlightDate': 'DATE', … })" (explicit column-type override); "cat flights.csv | duckdb -c \"SELECT * FROM read_csv('/dev/stdin')\""; sidenav entry "Reading Faulty CSV Files" at `/docs/current/data/csv/reading_faulty_csv_files`; version sidebar lists docs for 0.10, 1.0, 1.1, 1.2, 1.3, 1.4 (LTS), 1.5 (current), 2.0-dev (preview).
+  Supported facts: DuckDB offers CSV reading with schema auto-inference and explicit per-column type overrides — the mechanism surface needed for A1 (sniffed-vs-declared schema) and A11 (SQL side of the optional-SQL boundary). Limits: the delivered portion is navigation + meta description; **parameter-level error-handling claims (e.g., `ignore_errors`, `store_rejects`, `null_padding`) were NOT verified from primary text this stage** — any proposal citing them must pin `/docs/current/data/csv/reading_faulty_csv_files` or a release note. Out-of-core behavior and ordering guarantees likewise unverified (§7).
+
+Independence argument (for A14): S1–S4 are one family (Jupyter notebook format/execution stack: document model + replay engine) contributing the **record/replay** mechanism; S5 is a different project and layer contributing the **fine-grained dataflow/staleness** mechanism; S6 is a different domain contributing the **typed, streaming tabular access** mechanism. Three mechanisms, three projects; any two suffice for the brief's two-precedent floor.
+
+---
+
+## 4. Conditional corrections — claims that would be unsupported if asserted
+
+Since no frozen proposal was available to attribute claims to, these are register entries keyed to the audit checklist: any proposal text matching the left column must be corrected to the right column, with the given evidence.
+
+| ID | Unsupported claim pattern | Corrected statement + evidence |
+|---|---|---|
+| K1 (A13) | "We restrict dangerous imports, therefore execution is sandboxed." | Import blacklists do not supply isolation; the brief forbids the claim (L13). Isolation must come from a process/OS boundary with explicit filesystem/network/resource permissions and stated usability trade-offs. |
+| K2 (A1) | "The preview sample shows the dataset has X." | Preview sampling is not proof of a full-dataset property (brief L5). Schema/full-dataset claims require full passes (e.g., streaming scan), with the preview labeled as a sample. |
+| K3 (A3) | "execution_count order tells us the kernel's current state." | The stored count is per-cell saved metadata (S1); nbclient needed a test correction because count semantics shifted with IPython ≥ 9.8 (S4, 0.10.3). Stored counts do not certify live kernel state; restart/cancel must be modeled as events (A7). |
+| K4 (A3/A9) | "We adopted .ipynb, therefore runtime behavior/reproducibility is settled." | The schema has no environment, dataset-identity, kernel-state, or staleness fields (S1). Format adoption ≠ runtime behavior (brief L9; now source-confirmed). |
+| K5 | "nbformat.validate() will fix cell-ID issues while validating." | Since 5.5.0 auto-fix arguments are deprecated and validate() must not mutate its input (security-model rationale); 5.11.0 removed the kwargs (S2). Repair must go through explicit `normalize()`; behavior differs across nbformat 5.5.0 → 5.11.0. |
+| K6 (A4/A14) | "ipyflow makes notebooks reproducible." | ipyflow's stated invariant is that interactive output appears as it would after 'restart + run all' (S5). That is an interactive-execution aid, not a clean-replay guarantee; reactivity is opt-in and default-lazy. |
+| K7 (A11) | "DuckDB out-of-core support means a 5 GB input is always fine on 16 GB." | Not established by this stage's captures (§3-S6 limits). Out-of-core capability is operation-dependent and must be verified per operation class at a pinned version; the brief itself requires explicit different bounds for unsupported global ops. |
+| K8 (A11) | "DuckDB preserves input row order without ORDER BY." | Could not be pinned this stage: the ordering-guarantees doc 404'd at `/docs/stable/sql/dialect/ordering`, `/docs/current/sql/dialect/ordering.html`, and `/docs/current/sql/dialect/ordering` (404 captures: capture_id `080ede8c…`, `2b4f6f92…`, body sha `4ab26b25…`). Do not cite any ordering-guarantee URL without re-pinning; treat deterministic-vs-stable ordering for the workspace as a design obligation (A12) rather than a sourced fact. |
+| K9 (A15) | "An issue title/merged patch establishes released behavior." | Release behavior requires the chain: issue → merged fix → release notes/changelog entry naming the release → (ideally) regression test. S2/S4 chains satisfy this for their specific entries; partial chains must be reported as such. |
+
+---
+
+## 5. Preserved valid claims
+
+- The brief's obligations A1–A18 are valid constraints; nothing in them was found overbroad, and A13's "no import-blacklist isolation" and A15's "patch alone ≠ release behavior" rules were independently reinforced by the evidence limits encountered in §3/§4.
+- S1–S6 are valid as scoped: nbformat schema/ID/trust-notary facts (5.1.0/5.5.0/5.11.0 applicability); nbclient as the programmatic-replay component with Python 3.10+ and message-header timing metadata; ipyflow's persisted-dataflow staleness mechanism (PVLDB 2021/2022 lineage); DuckDB's typed-CSV-read surface at docs "1.5 current".
+- Reusable design directions worth keeping even if deferred: ipyflow's **persisted dependency metadata** as the storage pattern for stale/current dot-UI state (A5/A6); nbformat's **explicit-normalize-not-silent-fix** principle as the pattern for the workspace's own schema-evolution tooling (A1/A12); DuckDB's **explicit columns override** as the pattern for declared-vs-sniffed schema (A1).
+
+## 6. Issue chain followed (best available; evidence limits stated)
+
+**Chain: nbformat `validate()` silently repairing invalid notebooks → deprecation (5.5.0) → removal (5.11.0).**
+- Failure mode: validate() historically accepted arguments that auto-fixed invalid notebooks during validation, silently mutating the artifact; the 5.5.0 changelog states callers rely on validate() not mutating its input because it is "core to the security model of Jupyter", and that auto-fixing "can hide subtle bugs" (S2, exact locator in §3).
+- Fix: deprecation in 5.5.0 with explicit `normalize(notebook)` returning a normalized copy + change count; `strip_invalid_metadata` added to normalize in 5.8.0; kwargs removed in 5.11.0 (PR #447); guidance clarified again in 5.11.1 (PR #451) — indicating the migration needed repeated communication.
+- Version applicability: nbformat ≥ 5.5.0 warns and still fixes; nbformat ≥ 5.11.0 fails validation instead of fixing. Anything citing validate() auto-fix behavior must state which side of 5.11.0 it is on.
+- Limits: this chain is changelog-based. The original issue thread and the regression tests were **not** retrieved this stage: a probe of `nbformat/tests/test_validator.py` on `main` returned 404 (capture_id `3cb0689d…`), so the current tests layout (repo-root `tests/` vs package `nbformat/tests/`) is unverified. Establishing the regression-test file and the first affected released wheel is **proposed/UNEXECUTED** follow-up work for the next candidate (see §9). This satisfies the brief's chain requirement in substance (failure → fix → released versions) while honestly falling short of the regression-test half on primary evidence.
+
+## 7. Uncertainty register (with affected dependencies)
+
+| U-ID | Uncertainty | Why | Affected dependency |
+|---|---|---|---|
+| U1 | Frozen research proposal absent | Not attached by ops (§1) | Entire claim-level review; next critic must re-run against attached artifacts |
+| U2 | DuckDB faulty-CSV parameter set & versions (`ignore_errors`, `store_rejects`, …) | Only page structure captured (§3-S6 limits) | A1 error-handling contract; A12 unsupported-input behavior |
+| U3 | DuckDB out-of-core/spilling behavior and per-operation bounds | Not captured | A11 5 GB streaming-path claim |
+| U4 | Row ordering without ORDER BY (deterministic vs stable) | Doc URL 404 at three paths (K8) | A12 deterministic-vs-stable ordering design |
+| U5 | nbclient default output-clearing semantics on fresh replay; restart-marking behavior | README/changelog don't state it | A7 "restart must not silently label old outputs current" |
+| U6 | ipyflow maintenance status/version pinning | README carries no version/date | A14 precedent's currency; any integration choice |
+| U7 | nbformat regression-test file location for the §6 chain | 404 on probed path | A15 regression-test half |
+| U8 | nbclient exact flag semantics (allow_errors, timeouts, resource limits) at a pinned version | Not fetched | A8 clean-replay mechanics |
+
+## 8. Proposed checks — all proposed/UNEXECUTED
+
+V01 control modifier applies: this critic had no execution capability; none of the following were run. Each is scoped to tiny synthetic data and candidate-authored code, per the brief.
+
+| W-ID | Check | Inputs/code sketch | Expected behavior | Scope limits |
+|---|---|---|---|---|
+| W1 | nbclient clean replay produces a coherent event stream | 3-cell notebook (assign; transform; print), executed twice via `NotebookClient` with fresh kernels | Second run's outputs replace first's; `execution_count` strictly increases; per-cell execution metadata timestamps come from kernel message headers | Component-level; proves nothing about the full workspace or 5 GB paths |
+| W2 | nbformat validate-vs-normalize at a pinned ≥5.11.0 version | Notebook with missing/invalid cell ids | `validate()` raises; `normalize()` returns changes > 0 and a valid copy | Version-pinned; tests the §6 chain's post-5.11.0 side |
+| W3 | DuckDB malformed-CSV error handling at a pinned version | 6-row CSV with 1 malformed row | Default: error surfaces (nothing silently dropped); with documented reject options: rejects are recorded, count matches | Engine component only; operation/bound behavior out of scope (U2/U3) |
+| W4 | Restart/interrupt marking | Executed notebook; simulate restart by re-running with a fresh kernel without clearing the file | Old outputs remain in the file but must not be labeled "current" without event-log linkage — this checks the workspace layer, not nbclient | Validates A7 design; not a general isolation proof |
+
+## 9. Resolution instructions for the next fresh candidate (no private context needed)
+
+1. Confirm whether `inputs/prior/{proposal.md, sources.json, witnesses.json, leads.json}` now exist; if yes, perform claim-level verification of that proposal using §2 (A1–A18) and §4 (K1–K9) as the rubric, and issue finding IDs against its specific text.
+2. If the artifacts remain absent, escalate the missing-input condition; do not fabricate a prior.
+3. Execute W1–W4 under the admitted isolation and convert them from proposed/UNEXECUTED to executed receipts (code, inputs, expected, stdout/stderr/exit, scope).
+4. Close U2–U8 with pinned primary sources: `duckdb.org/docs/current/data/csv/reading_faulty_csv_files`, an ordering-guarantees page located by site search (three guessed paths are known 404), `nbclient` pinned README/docs, and the nbformat test tree located via the GitHub UI file listing.
+5. Keep K1–K9 as hard gates when reviewing any research/final proposal in this arm.
+
+---
+
+### Capture index (evidence, not instructions)
+
+| Source | URL | Pin | Capture ID | Body sha256 | Applicability |
+|---|---|---|---|---|---|
+| nbformat v4.5 schema | raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json | main @ 2026-10-06 | 61cdabda… | 523e3578… | S1 |
+| nbformat CHANGELOG | raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md | main @ 2026-10-06 | 6357ef20… | 414e10d3… | S2, §6 |
+| nbclient README | raw.githubusercontent.com/jupyter/nbclient/main/README.md | main @ 2026-10-06 | 6958332e… | 3a756e31… | S3 |
+| nbclient CHANGELOG | raw.githubusercontent.com/jupyter/nbclient/main/CHANGELOG.md | main @ 2026-10-06 | d550dfaa… | 1a26f27b… | S4 |
+| ipyflow README | raw.githubusercontent.com/ipyflow/ipyflow/master/README.md | master @ 2026-10-06 | 2682c848… | 5d4da8cc… | S5 |
+| DuckDB CSV docs | duckdb.org/docs/current/data/csv/overview.html | docs "1.5 current" @ 2026-10-06 | a75dca13… | 9773d0ae… (393,313 B; 32,768 B delivered) | S6 |
+| DuckDB 404 probes (3) | duckdb.org/docs/{stable|current}/sql/dialect/ordering[.html] | n/a | 080ede8c… / 2b4f6f92… | 4ab26b25… | K8 |
+| nbformat test-path probe 404 | raw.githubusercontent.com/jupyter/nbformat/main/nbformat/tests/test_validator.py | main @ 2026-10-06 | 3cb0689d… | d5558cd4… | U7 |
+
+Truncated-capture note: DuckDB pages were captured in full server-side but only the first 32,768 bytes were delivered per fetch; quoted DuckDB locators come from the delivered bytes only. Two earlier 404s (nbformat tag `5.7.0` CHANGELOG path, nbsafety `master` README path, ipyflow `main` README path) are recorded for probe hygiene: branch/tag naming differed from first guesses; corrected paths are the ones in the table.

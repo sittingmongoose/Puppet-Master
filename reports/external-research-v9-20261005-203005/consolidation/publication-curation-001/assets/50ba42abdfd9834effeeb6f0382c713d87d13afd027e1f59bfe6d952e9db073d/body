@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "discovery_method": {
+    "modifier": "Protected a roughly 30% discovery lane across different mechanism families and product promises before deepening the strongest viewer/storage leads; this was a prospective allocation, not a time-tracked measurement.",
+    "what_was_explored": [
+      {"family":"multidimensional storage/metadata","source_ids":["S1","S2","S19"],"finding":"NGFF axes/transforms/labels and OME-TIFF IFD mappings are concrete format contracts; v0.4 remains a legacy alternative."},
+      {"family":"transaction and recovery","source_ids":["S12","S13"],"finding":"SQLite atomic commit has storage assumptions; WAL is unsuitable as a live shared-network-filesystem database."},
+      {"family":"undo mechanism","source_ids":["S14"],"finding":"Qt offers command-based undo/redo and compression primitives; app persistence remains to implement and test."},
+      {"family":"provenance opportunity","source_ids":["S15"],"finding":"PROV-O offers entity/activity/agent vocabulary for future interoperability; a smaller native provenance model is enough initially."},
+      {"family":"accessibility","source_ids":["S16"],"finding":"Keyboard, focus and contrast are useful review targets; native desktop validation is still needed."},
+      {"family":"partial-region image access","source_ids":["S17","S18"],"finding":"libvips provides a distinct region-demand/cache mechanism for 2D images, but its width/height/bands model is less natural for Z/T microscopy."},
+      {"family":"viewer defect history","source_ids":["S4","S5","S6","S7","S8","S9"],"finding":"A negative-layer-scale point/shape graphics failure can be traced through implementation and regression tests into napari v0.9.0; scope is limited to those paths."}
+    ],
+    "measurement_limit":"No elapsed-time or measured percentage claim is made. Items below are leads, alternatives or unresolved dependencies, not verified application behavior."
+  },
+  "leads": [
+    {
+      "id":"L1","status":"useful alternative; defer pending measurements","subject":"libvips region-based reading for large 2D tiled slides","source_ids":["S17","S18"],"applicability":"The region/demand-driven evaluation and cache may help a 2D slide path if selected TIFF reads exceed the memory budget.","limit":"Its common image model is width/height/bands and does not by itself preserve arbitrary biomedical Z/T/channel semantics or OME calibration.","next_step":"Benchmark one representative tiled slide against the chosen adapter; keep it behind the same asset/axis interface if adopted."
+    },
+    {
+      "id":"L2","status":"deferred compatibility option","subject":"OME-NGFF v0.4 / Zarr v2","source_ids":["S19"],"applicability":"Legacy projects may use this earlier NGFF generation; axes and transformations remain relevant.","limit":"Initial proposal targets v0.5/Zarr v3 and does not claim v0.4 migration compatibility.","next_step":"Collect real group fixtures and decide whether to add a read-only adapter or require explicit conversion."
+    },
+    {
+      "id":"L3","status":"optional future interoperability","subject":"PROV-O serialization of project lineage","source_ids":["S15"],"applicability":"Could map source assets, metadata corrections, resampling/export activities, and responsible agents to provenance concepts.","limit":"No RDF/JSON-LD export prototype or biomedical profile was researched; a native versioned provenance record is the v1 choice.","next_step":"Revisit if collaborators need provenance graph exchange across tools."
+    },
+    {
+      "id":"L4","status":"validation reference only","subject":"WCAG 2.2 keyboard, focus and contrast criteria","source_ids":["S16"],"applicability":"Supports concrete accessibility reviews for keyboard operation, visible focus and legible status/error feedback.","limit":"WCAG is a web-content recommendation; it does not certify a native Qt desktop application.","next_step":"Test supported OS keyboard traversal, screen reader behavior, scaling and contrast with representative users."
+    },
+    {
+      "id":"L5","status":"critical unresolved dependency","subject":"Combined napari/tifffile/Zarr/Dask/Qt package compatibility and tifffile array API","source_ids":["S3","S10","S11"],"applicability":"The proposal pins napari v0.9.0 and tifffile v2026.9.20 as candidates.","limit":"No common lockfile/build was created, and current tifffile API deprecation/addition details are not adopted as an assumption.","next_step":"Resolve an exact environment lock; test metadata and partial-read adapters against representative fixtures before committing to the UI substrate."
+    },
+    {
+      "id":"L6","status":"uninvestigated unsupported-format route","subject":"Bio-Formats or another conversion service for proprietary microscope formats","source_ids":["S2"],"applicability":"An external conversion pathway may expand access while keeping the app's own reader boundary small.","limit":"No Bio-Formats documentation/release behavior was investigated here; no compatibility promise or exact converter pin is made.","next_step":"Select only actual lab formats, inspect primary documentation and licensing/deployment constraints, then test converted axes, calibration and lineage."
+    },
+    {
+      "id":"L7","status":"deferred product opportunity","subject":"Concurrent collaboration, cloud sync, automated segmentation and registration","source_ids":["S12","S13"],"applicability":"Could later support joint review, shared annotation suggestions, or analysis automation.","limit":"Ordinary bundle exchange is the current need; SQLite WAL's documented same-host limitation does not support a shared live database, and no merge/conflict or algorithm evidence was researched.","next_step":"Defer until local identity, coordinate and recovery contract is validated; design explicit conflict/provenance semantics before any collaboration feature."
+    },
+    {
+      "id":"L8","status":"proposed product boundary","subject":"GPU rendering/compute","source_ids":["S3"],"applicability":"Optional GPU may help viewport rendering on some workstations.","limit":"No GPU benchmark or compute kernel was investigated; do not make GPU a requirement or infer faster import from rendering support.","next_step":"Profile CPU-first viewport and chunk pipeline; add GPU acceleration only for a measured bottleneck."
+    },
+    {
+      "id":"L9","status":"conversion alternative","subject":"Materialize difficult sources into derived OME-Zarr","source_ids":["S1","S2","S10"],"applicability":"A chunked, portable derivative could simplify bounded access and exchange across supported consumers.","limit":"Costs time and disk, can change encoding/layout, and must not replace or be labeled as the original. No conversion benchmark is available.","next_step":"Prototype as an explicit, cancellable operation with source/output hashes, axis/calibration comparison and a retained original."
+    },
+    {
+      "id":"L10","status":"critical validation item","subject":"Shared-storage snapshot publication semantics","source_ids":["S12","S13"],"applicability":"Closed snapshots and immutable version directories fit ordinary bundle exchange better than a live shared DB.","limit":"Actual rename, flush, locking and durability behavior depends on the lab's shared-storage product and mount configuration.","next_step":"Identify deployed storage types and inject interrupted publish/copy/reopen failures on each; retain the previous verified snapshot."
+    }
+  ]
+}

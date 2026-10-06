@@ -1,0 +1,81 @@
+{
+  "schema": "er9.witnesses.v1",
+  "executed_checks": [
+    {
+      "id": "W1",
+      "label": "executed by candidate in admitted isolated Python execution",
+      "purpose": "Small discriminating check of a candidate-authored row conversion/reject policy and content-fingerprint invalidation pattern.",
+      "expected_behavior": "Four tiny synthetic CSV data records should yield two converted rows; preserve Zoë and the empty string; map only the explicit \\N sentinel to null; retain the invalid decimal and short row as separate rejects with source-hash plus logical ordinal IDs. A source change should alter dependent fingerprints but not the independent branch; changing the environment should alter dependent nodes.",
+      "input": {
+        "csv": "id,name,amount,day\n1,Zoë,3.5,2025-01-01\n2,,\\N,2025-01-02\n3,雪,oops,2025-01-03\n4,short\n"
+      },
+      "code": "import csv, hashlib, io, json\nfrom decimal import Decimal, InvalidOperation\n\ntext = data['csv']\nraw = text.encode('utf-8')\nsource_id = hashlib.sha256(raw).hexdigest()\nreader = csv.reader(io.StringIO(text, newline=''))\nheader = next(reader)\nrows, rejects = [], []\nfor ordinal, fields in enumerate(reader, start=1):\n    rid = f\"{source_id}:{ordinal}\"\n    if len(fields) != len(header):\n        rejects.append({'ordinal': ordinal, 'row_id': rid, 'kind': 'field_count', 'raw': fields})\n        continue\n    record = dict(zip(header, fields))\n    try:\n        amount = None if record['amount'] == r'\\N' else Decimal(record['amount'])\n    except InvalidOperation:\n        rejects.append({'ordinal': ordinal, 'row_id': rid, 'kind': 'cast', 'field': 'amount', 'raw': record['amount']})\n        continue\n    rows.append({'ordinal': ordinal, 'row_id': rid, 'name': record['name'], 'amount': None if amount is None else str(amount)})\n\ndef fp(code, parents=(), env='py-pin-A', schema='schema-A'):\n    material = {'code': code, 'parents': list(parents), 'env': env, 'schema': schema}\n    return hashlib.sha256(json.dumps(material, sort_keys=True, ensure_ascii=False).encode()).hexdigest()\n\ndef graph(source, env='py-pin-A', code='clean'):\n    a = fp(code, [source], env=env)\n    b = fp('render', [a], env=env)\n    independent = fp('independent', ['fixed-input'], env=env)\n    return a, b, independent\n\nbase = graph(source_id)\nsource_changed = graph(hashlib.sha256((text + '#change').encode()).hexdigest())\nenv_changed = graph(source_id, env='py-pin-B')\nassert len(rows) == 2 and len(rejects) == 2\nassert rows[0]['name'] == 'Zoë' and rows[1]['name'] == '' and rows[1]['amount'] is None\nassert rows[0]['row_id'].endswith(':1') and rows[1]['row_id'].endswith(':2')\nassert [r['kind'] for r in rejects] == ['cast', 'field_count']\nassert base[0] != source_changed[0] and base[1] != source_changed[1] and base[2] == source_changed[2]\nassert base[0] != env_changed[0] and base[1] != env_changed[1]\nprint(json.dumps({'source_sha256': source_id, 'valid_rows': rows, 'rejects': rejects, 'source_change_invalidates_dependent_nodes': True, 'unrelated_node_unchanged': True, 'environment_change_invalidates_nodes': True}, ensure_ascii=False, sort_keys=True))",
+      "receipt": {
+        "execution_id": "exec-m8d6315m",
+        "execution_label": "executed by candidate",
+        "code_sha256": "9d0d584bceb05b1354159e1073ae329636e670172d3a0f4a01df3c0fc9c10551",
+        "input_sha256": "6b0e8f1be044962a740dde2c92c70e15ab4350bd1790e24d58a52418f98e99b7",
+        "exit_code": 0,
+        "stdout": "{\"environment_change_invalidates_nodes\": true, \"rejects\": [{\"field\": \"amount\", \"kind\": \"cast\", \"ordinal\": 3, \"raw\": \"oops\", \"row_id\": \"46849b36506024d60e8276335443f2890f47b890f16fa80c51c18e3a5ca6d6aa:3\"}, {\"kind\": \"field_count\", \"ordinal\": 4, \"raw\": [\"4\", \"short\"], \"row_id\": \"46849b36506024d60e8276335443f2890f47b890f16fa80c51c18e3a5ca6d6aa:4\"}], \"source_change_invalidates_dependent_nodes\": true, \"source_sha256\": \"46849b36506024d60e8276335443f2890f47b890f16fa80c51c18e3a5ca6d6aa\", \"unrelated_node_unchanged\": true, \"valid_rows\": [{\"amount\": \"3.5\", \"name\": \"Zoë\", \"ordinal\": 1, \"row_id\": \"46849b36506024d60e8276335443f2890f47b890f16fa80c51c18e3a5ca6d6aa:1\"}, {\"amount\": null, \"name\": \"\", \"ordinal\": 2, \"row_id\": \"46849b36506024d60e8276335443f2890f47b890f16fa80c51c18e3a5ca6d6aa:2\"}]}\n",
+        "stderr": "",
+        "stdout_sha256": "583af5a289dcabdd574290ba450cc7ccfdddfe6448c193a03b0e86a2fad2757a",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "elapsed_seconds": 0.35008531699713785,
+        "limits": {
+          "wall_seconds": 5,
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "tasks": 16,
+          "stdout_stderr_cap_each_bytes": 32768,
+          "network": "new empty namespace"
+        },
+        "runner_limitations": [
+          "Isolated component check only; not application behavior.",
+          "Fresh empty filesystem, no network/credentials/case files; stdlib arithmetic, arrays, strings, JSON and small functions.",
+          "Runner isolation is Bubblewrap/systemd boundary; this check itself did not attempt filesystem/network permission tests.",
+          "Clock/randomness remain available.",
+          "Receipt establishes code/input/exit and captured streams, not semantic correctness or large-data performance."
+        ]
+      },
+      "result_summary": "Passed the stated assertions. Two rows were converted, including Unicode and empty string, one explicit null was represented as null, and cast/field-count problems were retained as rejects. Source changes altered dependent nodes while an unrelated node remained unchanged; environment changes altered dependent nodes.",
+      "scope_limits": "Synthetic four-record CSV; Python csv/Decimal/hashlib/json only. The source string was hashed in memory; no real source file, DuckDB reader, notebook kernel, environment lock, project cache, 5 GB input, full execution DAG, output store, restart/cancel logic, sandbox permission policy, or cross-machine replay was tested. This does not prove correctness of the proposed product."
+    }
+  ],
+  "proposed_validation": [
+    {
+      "id": "P1",
+      "status": "proposed/UNEXECUTED",
+      "check": "Format contract matrix for CSV, NDJSON and Parquet: dialect/quoted newlines, invalid encoding, null versus missing versus empty, Unicode normalization behavior, timestamp zones/formats, decimal precision, heterogeneous values, duplicate/missing/added columns and malformed records. Verify original byte hashes are unchanged and rejects preserve locators."
+    },
+    {
+      "id": "P2",
+      "status": "proposed/UNEXECUTED",
+      "check": "Exact DuckDB release gate: run issue #24593 query and upstream PR #24607 focused statistics/count/join/CTE regression tests against the candidate source build and packaged Python wheel; record version, test command/result and query plan. Do not infer inclusion from main or release notes alone."
+    },
+    {
+      "id": "P3",
+      "status": "proposed/UNEXECUTED",
+      "check": "Kernel workflow integration: execute cells out of displayed order, edit an upstream cell, restart kernel, interrupt selected work and cancel a clean run. Verify event order and every current/stale/failed/unverified label against code/source/environment/output digests; partial run never promotes outputs."
+    },
+    {
+      "id": "P4",
+      "status": "proposed/UNEXECUTED",
+      "check": "5 GB representative files on an 8-core/16 GB workstation: projected scan, filter, grouping, join, sort/window and known unsupported/multi-blocking operations. Measure peak RSS, spill/scratch use, wall time, result ordering and failure messaging; exercise output row/byte caps and streaming export. This is a target, not a result."
+    },
+    {
+      "id": "P5",
+      "status": "proposed/UNEXECUTED",
+      "check": "Crash injection after each write/flush/hash/rename/current-pointer step and two-writer conflicts on each supported filesystem. Reopen must retain previous committed state and offer incomplete-run recovery without silently promoting it."
+    },
+    {
+      "id": "P6",
+      "status": "proposed/UNEXECUTED",
+      "check": "OS isolation qualification: attempt access to ungranted home/private files, inherited environment secrets, network, package installation and sibling project paths; verify only read-only grants plus scratch/output writes succeed, resource quotas apply, and cancellation kills descendants. Repeat separately for each supported OS backend."
+    },
+    {
+      "id": "P7",
+      "status": "proposed/UNEXECUTED",
+      "check": "Cross-machine replay and accessibility: same locked environment and source digest replay twice; compare code/input/output artifacts; repeat across OS/architecture to expose limits. Keyboard/screen-reader status announcements, color-independent states, large-output diff and truncation labels are checked with analysts."
+    }
+  ]
+}

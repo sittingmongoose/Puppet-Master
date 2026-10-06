@@ -1,0 +1,76 @@
+{
+  "leads_version": "research-stage-1",
+  "note": "Optional ideas, unresolved leads, and deferred alternatives. None are minimum obligations. Useful supported content is preserved even where adoption is deferred.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "Locate napari's rendered coordinate-systems / transforms documentation",
+      "status": "UNRESOLVED",
+      "detail": "https://napari.org/stable/deep_dives/coordinate_systems.html and /stable/howtos/layers/transforms.html returned 404 this session. The docs were restructured; the correct stable URL should be found and cited, since a rendered doc (with version pin) is a cleaner anchor for the data->world transform model than tests alone. Candidate search paths: napari.org sitemap, the napari/docs repository tree.",
+      "impact_if_resolved": "Strengthens proposal F2 from code-pinned evidence to doc-pinned evidence."
+    },
+    {
+      "id": "L2",
+      "title": "scikit-image coordinate conventions page (row/col vs x/y)",
+      "status": "UNRESOLVED",
+      "detail": "https://scikit-image.org/docs/stable/user_guide/coordinate_conventions.html returned 404; the page exists under some path (likely under user_guide or as part of the numpy-images tutorial). It documents the (row, col) vs (x, y) convention mismatch that causes axis-order annotation bugs. Axis ambiguity is currently evidenced indirectly by the tifffile 'QYX' axes example (S1) and NGFF explicit axis declarations (S7).",
+      "impact_if_resolved": "Adds a canonical citation for the axis-order correction dialog design (C2)."
+    },
+    {
+      "id": "L3",
+      "title": "Extract NGFF 0.4 section 3.3 coordinateTransformations JSON schema text",
+      "status": "DEFERRED",
+      "detail": "The full 0.4 spec HTML (163120 bytes) is captured; the delivered byte range covered TOC and sections 1-2.1. Sections 3.3 (coordinateTransformations) and 3.4 (multiscales) contain the exact scale/translation JSON schema our manifest borrows; they should be extracted from the existing capture before finalizing the manifest schema.",
+      "impact_if_resolved": "Exact schema field names for the data contract (currently borrowed by name from TOC evidence)."
+    },
+    {
+      "id": "L4",
+      "title": "Authoritative source for atomic rename/fsync save pattern",
+      "status": "UNRESOLVED",
+      "detail": "The temp-file + fsync + os.replace + manifest-last recipe is engineering inference (standard practice), not captured from a public source this session. Candidates: zarr v3 spec storage semantics, SQLite atomiccommit documentation, POSIX rename(2) man page. Also unresolved: crash-ordering guarantees on network shared storage (NFS/SMB), which could weaken assumption A2; generation-counter auditing is the planned mitigation.",
+      "impact_if_resolved": "Upgrades proposal section 7 from [INFER] to source-backed; may change the recovery design on network shares."
+    },
+    {
+      "id": "L5",
+      "title": "OME-Zarr (NGFF) as derived-image store",
+      "status": "OPPORTUNITY_DEFERRED",
+      "detail": "Adopting OME-Zarr for derived outputs would make them ecosystem-readable (napari/ome-zarr-py) and reuse the same chunked random-access path as sources. Deferred because v1 does not require it; tifffile already emits NGFF 0.4/0.5 multiscale zarr (see S1 Revisions 2026.5.2).",
+      "impact_if_resolved": "Becomes the C7 storage backend in a later increment."
+    },
+    {
+      "id": "L6",
+      "title": "GeoJSON (RFC 7946) as an interchange flavor for annotation tables",
+      "status": "OPPORTUNITY_DEFERRED",
+      "detail": "RFC 7946 defines point/polygon JSON with an explicit coordinate reference frame; a GeoJSON flavor of our annotation export would ease GIS-adjacent reuse. Not fetched this session. Caution: GeoJSON is WGS84-centric by spec, so physical-microscope coordinates must ride in custom properties, not primary positions.",
+      "impact_if_resolved": "Optional extra export format alongside CSV+JSON."
+    },
+    {
+      "id": "L7",
+      "title": "napari 3D interactivity and annotation UX precedents",
+      "status": "OPPORTUNITY_DEFERRED",
+      "detail": "napari 0.4.11 release notes (S6) document 3D label painting/erasing/picking (#3037, #3074, #3108) and plane/clipping rendering (#3023, #3140). Useful UX precedents when volume annotation is added; not required for the minimum workflow.",
+      "impact_if_resolved": "Informs keyboard-first volume navigation and 3D edit semantics."
+    },
+    {
+      "id": "L8",
+      "title": "Macro recording / provenance-from-actions",
+      "status": "OPPORTUNITY_DEFERRED",
+      "detail": "napari issue #2579 (S2) outlines recording model events as replayable scripts. The ops.jsonl journal (C7) already records data operations; extending it to user actions would give reproducible derived-image pipelines. Memory-cost warning in #2579 applies.",
+      "impact_if_resolved": "Strengthens provenance and reproducibility of derived images."
+    },
+    {
+      "id": "L9",
+      "title": "Whole-slide and DICOM inputs beyond the v1 boundary",
+      "status": "UNSUPPORTED_BY_DESIGN",
+      "detail": "tifffile lists many slide formats (SVS, NDPI, BIF, ...) it can read; DICOM is a separate standard. Kept out of the v1 support boundary (proposal section 9) to keep the test surface small for a 6-person team; revisit only if the group's instruments require it. Unsupported inputs fail closed at import per the failure contract.",
+      "impact_if_resolved": "Would extend C1/C2 with new metadata normalizers and fixtures."
+    },
+    {
+      "id": "L10",
+      "title": "QuPath annotation/project format as a third precedent",
+      "status": "NOT_INVESTIGATED",
+      "detail": "QuPath is a desktop bioimage annotation application with a documented project/JSON annotation format that likely overlaps with this brief. Not fetched this session (time budget); it would be an independent application-layer precedent alongside napari. No claims about QuPath behavior are made in the proposal.",
+      "impact_if_resolved": "Potential additional precedent for annotation export semantics and project relocation."
+    }
+  ]
+}

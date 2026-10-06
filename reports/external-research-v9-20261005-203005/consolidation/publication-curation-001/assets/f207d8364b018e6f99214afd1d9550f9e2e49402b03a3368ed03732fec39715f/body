@@ -1,0 +1,129 @@
+# Independent source-grounded critique
+
+**Reviewed stage:** I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001  
+**Critique stage:** I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001  
+**Date:** 2026-10-06  
+**Inputs reviewed:** brief SHA-256 `27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628`; proposal SHA-256 `73311336653655d99624e4f6a54091a074583019205c8007c153cd9f5cc0ffcd`; sources SHA-256 `6ccffa38f2198d2d671bec1107444f6cc995aaaf3edbd23c535a2bba2eeb6887`; witnesses SHA-256 `9338d52d7047ec4af15d5835196f09cd4c81ea3a1fac0c83518937484ee39e43`; leads SHA-256 `8a7ae206ee9762796c7066ddb4e2dfca80aecb05a778fa4aefec6e0ab6ccf4f0`.
+
+## Disposition
+
+Retain the proposal’s reader / project-database / viewer-adapter architecture as a bounded prototype direction. The document correctly separates source samples from display state, makes calibration and provenance explicit, limits initial formats, gives a useful recovery model, and marks whole-application behavior as unverified. Its OME/TIFF, tifffile, napari, SQLite, and Bio-Formats claims are mostly scoped appropriately.
+
+Three design contracts need to be made explicit before implementation: (1) a stable content identity for directory stores such as OME-Zarr; (2) bounded, transactional storage and undo for potentially large masks; and (3) one precise coordinate convention spanning sample centers, pixel edges, pyramid levels, viewer coordinates, and exported geometry. The proposal already identifies the center/corner risk; the open napari issue makes that a release gate. SQLite transactions also cover the database, not the database plus image/mask/export files, so recovery needs a cross-file operation protocol.
+
+This is a correction review, not a claim that the components have been integrated or qualified. I performed no code execution or application test. The inherited witness W1 is labeled **executed by candidate** in the research catalog; its receipt checks supplied arithmetic only. Research checks P1–P6 remain **proposed/UNEXECUTED**. No evaluator check is present.
+
+## Independently checked evidence and preserved claims
+
+The following pins were requested or rechecked against the cited public endpoints. Capture IDs and response-body SHA-256 values identify the exact bytes inspected in this critique.
+
+| Ref. | Public source and pin | Exact locator and capture identity | Review applicability |
+|---|---|---|---|
+| E1 | [OME-NGFF 0.4 Final Community Group Report](https://ngff.openmicroscopy.org/0.4/), edition URL; report dated 2026-10-01 | §§2.1, 3.1, 3.3–3.7; capture `f0f7968c5ed64bbeb1873102055eef81`, body SHA-256 `ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269` | Confirms the cited Zarr v2 layout, 2–5 axes, axis ordering, sequential coordinate transforms, multiscale scale/translation restrictions, and integer image-label representation. It does not specify this application's vector annotations, project database, or performance. |
+| E2 | [OME-TIFF Specification, OME Data Model and File Formats 6.2.2](https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html), documentation version 6.2.2 | “DimensionOrder,” “The TiffData element,” “Multi-file OME-TIFF”; capture `46b43cf83d8b415083f19d1dbd0b4322`, body SHA-256 `fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584` | Confirms default IFD plane rasterization and that explicit TiffData mappings can specify another order; OME-TIFF datasets can span files with UUID references. It does not establish tifffile behavior on every producer's metadata. |
+| E3 | [tifffile README](https://raw.githubusercontent.com/cgohlke/tifffile/v2024.9.20/README.rst), tag `v2024.9.20` | Requirements, OME-TIFF notes, “Use Zarr to read parts of tiled, pyramidal images,” Dask example; capture `659083c268164b938a001bba8e931faf`, body SHA-256 `23a5e524f02385a291f1d9b65a3e432f8a0f504df186d4adb6c2336e225721c6` | Confirms `aszarr=True`, selected array-region access, and a Dask-chunk example. Names tested Zarr 2.18.3, NumPy 2.1.1, Imagecodecs 2024.6.1, and tested Python versions; says Imagecodecs is required for several compressed segment codecs and excludes multi-file pyramidal OME-TIFF. Examples do not prove a 3 GB workload or application memory bound. |
+| E4 | [napari Shapes implementation](https://raw.githubusercontent.com/napari/napari/v0.5.6/napari/layers/shapes/shapes.py), tag `v0.5.6` | `Shapes` class docstring and initializer parameters; capture `37c60048b2e94d6e9a83d01dd47de6ec`, body SHA-256 `a2cbf1a542beff08d29e7118b62cc6df3f82c8e928a40ffb861d6ea9076faed1` | Supports using Shapes as an interaction precedent: vertices, polygon/path modes, features, transforms, and units are present. The `cache` parameter says caching for out-of-core shape data currently applies only to Dask arrays. This source does not establish application persistence, durable undo, mask storage, or calibrated coordinate round trips. |
+| E5 | [napari issue #6068](https://api.github.com/repos/napari/napari/issues/6068), issue record captured 2026-10-06 | Body/reproduction and reported napari 0.4.18 environment; capture `b2924e3afc6a44afa79ae3163a6c5948`, body SHA-256 `9e627ab4137fee647f024445b2a86545e16bd9b2b9813f8ab065f58faead00a7` | Confirms a report that 3D multiscale Labels ray sampling generated out-of-range indices while the lowest-resolution image was displayed. Evidence establishes the reported setup, not frequency or all configurations. |
+| E6 | [napari fix commit patch](https://github.com/napari/napari/commit/e2baaa7b3ff8a0bd7d6e3c8db5ab39ff6746bb7d.patch), commit `e2baaa7b3ff8a0bd7d6e3c8db5ab39ff6746bb7d` | Commit message links/closes #6068; changes 3D data level, ray sample coordinates, level-specific bounding box; adds `test_3D_multiscale_labels_in_3D` with expected values; capture `6c64e248e66b480e8690cd8bf630c181`, body SHA-256 `f7a5b89587e7e69c45b2452811399b86de51a16dd2eac15d3cb1e4bf97819eb4` | Verifies the failure-to-fix-to-regression-test chain. The regression is synthetic and narrowly tests napari's 3D Labels ray-value path. |
+| E7 | [napari v0.4.19 release record](https://api.github.com/repos/napari/napari/releases/tags/v0.4.19), tag `v0.4.19`, release target `bd47bf0ecbfc74f1efa82343dbdfcbefd3f0bded` | Bug-fix entry for PR #6317; capture `2fa5a5501d824267aec513d1999008c2`, body SHA-256 `fc164f41cce2b1e630e03140acd4113458a6494d0664a0c1dee5cb38e61e93fd` | Confirms the fix was listed by napari 0.4.19. This is release-note applicability, not a claim of universal absence of related bugs. |
+| E8 | [napari issue #6320](https://api.github.com/repos/napari/napari/issues/6320), issue record captured 2026-10-06 | Body and `state=open`; capture `6697c6fa888943ddb8f5b8b8a4c270df`, body SHA-256 `b61597288227cbc106f47fe737b6ad8dbc02e534a745a01a8a2977c97d31fcef` | Separately reports center-versus-corner shifts between multiscale levels; it is not fixed by #6317. The issue record is a risk report, not proof that every center convention or viewer version fails. |
+| E9 | [SQLite Atomic Commit In SQLite](https://www.sqlite.org/atomiccommit.html), mutable official page captured 2026-10-06 | Introduction, rollback-mode scope, hardware assumptions, failure caveats; capture `90742ee8442d4c75825c510310fe00b6`, body SHA-256 `5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1` | Confirms the article describes rollback-journal mode and depends on locking, flush, and filesystem assumptions. It is not an application-specific or network-share guarantee. |
+| E10 | [Bio-Formats Supported Formats](https://bio-formats.readthedocs.io/en/v7.3.1/supported-formats.html), documentation release v7.3.1 | Supported-formats table and ratings legend; capture `b8322a70c2a143388fbd97f061850edd`, body SHA-256 `89b490995bacd225a544166b0275233d6584c27e7f29eb36ef159597968c12fa` | Confirms a broad reader inventory with per-format ratings. It is an appropriate adapter lead, not evidence of compatibility with the lab's exact files. |
+
+### Claims to preserve
+
+- The distinction among standard-format semantics (OME-TIFF/OME-NGFF), a chunk-capable reader (tifffile), a geometry-editing UI precedent (napari), and transactional project persistence (SQLite) is useful. These are independently useful mechanisms with separate responsibilities; none proves end-to-end application behavior.
+- The proposal correctly says OME-TIFF page number alone cannot determine semantic Z/C/T placement. E2 gives a default mapping from `DimensionOrder`, while explicit `TiffData` fields can remap IFDs. Its fixtures should retain `TiffData` permutations and incomplete/ambiguous mapping cases.
+- The tifffile selected-read example is a valid bounded-access lead. The exact tagged README also shows that decoder dependencies and supported structures constrain it. The proposal appropriately treats 3 GB access as an unverified workstation target.
+- The #6068 chain is established: the issue report identifies the failure in napari 0.4.18; commit `e2baaa7b3ff8a0bd7d6e3c8db5ab39ff6746bb7d` describes and implements the fix, adds a 3D multiscale Labels regression test with expected ray-sampled values, and says it closes #6068; v0.4.19 lists PR #6317. Keep the proposal's narrow limitation: this does not validate the app's display-to-annotation mapping, physical calibration, exports, arbitrary pyramid transforms, or GPU paths.
+- #6320 remains separately relevant. Its report says center/corner shifts appear when changing multiscale levels and states that #6317 fixes a separate get-value exception. Keep it as an unresolved test lead. No #6320 fix or regression test is established here.
+- SQLite recovery, local single-writer operation, closed-bundle exchange, explicit source identity, read-only import, display-only intensity mapping, recorded derived transforms, and export sidecars are sound proposed choices when tested on the group's real filesystems. The proposal already avoids promising active shared-database editing.
+- The Bio-Formats alternative, NGFF integer-mask exchange, and later chunk-backed shared reads are useful leads. Their deferral is justified; preserve them with the stated qualification steps.
+
+## Corrections and consequential dependencies
+
+### C1 — Define one coordinate contract at every boundary (release-blocking)
+
+**External evidence.** E1 §3.3 says coordinate transformations are applied sequentially. E1 §3.4 restricts NGFF 0.4 multiscale dataset transforms to scale and optional translation; translation is listed after scale. E4 exposes napari layer transforms and units, which are viewer mechanisms. E8 reports the center/corner pyramid shift that the proposal already calls unresolved.
+
+**Correction / inference.** The proposal's `p = translation + scale × index` is a coherent product convention and matches the restricted NGFF scale-then-translation form when its axis ordering and units are matched. It is not enough to specify that index 0 is a sample center. The contract should also say where continuous polygon edges and pixel/voxel boundaries fall (for example, center-based sample indices with cell boundaries at half-integers), how screen coordinates invert into named array axes, which transform applies at each pyramid level, and how orientation/axis reversal is represented. Avoid conflating array `(row,column)` with physical `(x,y)`; the proposal already correctly warns about this.
+
+**Required plan update.** Preserve raw metadata and the proposed correction separately. For each supported dataset record ordered axes, units, per-level scale/translation, origin state, and any accepted orientation/axis permutation in an explicit source-to-physical transform. Refuse or require correction when the reader cannot establish the transform; do not silently flatten a rotation, flip, oblique orientation, or axis mapping into a positive scale. State whether time is stored as frame index or elapsed time and keep channel as a selector. Ensure exports identify the same source or derivative space and transform ID used by annotations.
+
+**Proposed validation — UNEXECUTED.** Add asymmetric 2D/3D fixtures with unique voxel values, nonzero translations, anisotropic scales, reversed/permuted axes, and at least three pyramid levels. Test center points and half-integer edges through viewer→source index→physical→export→reopen, including level switches, slice/time scope, and corners. Retain the separate #6068 regression behavior. W1 validates only arithmetic for positive diagonal scales and does not validate any of these paths.
+
+**Affected dependencies:** proposal §§“Data identity, transforms, and export meaning,” “Bounded support,” workflow steps 3–6, validation gates 1/3/6, witness W1/P2.
+
+### C2 — Give OME-Zarr an explicit directory identity (release-blocking for the selected input boundary)
+
+**External evidence.** E1 §2.1 represents an image as a Zarr group with metadata and nested chunk files. E3 and E2 support the proposal's narrower single-file TIFF path and its distinction from multi-file OME-TIFF.
+
+**Correction / inference.** `SHA-256` and byte length identify a byte stream, but the proposal's OME-Zarr asset is a directory tree. The phrase “content SHA-256” needs a defined input for that tree. Relocation by path/filename/size plus an undefined tree hash cannot prove the same store. This is distinct from the TIFF file hash already described. Directory contents can include metadata and many independently stored chunks, so copying or hashing must account for the whole accepted store.
+
+**Required plan update.** Define a deterministic store-manifest digest over normalized relative paths, object lengths, and per-object byte hashes, with explicit handling for path normalization, symlinks, missing/extra objects, and metadata files. Preserve the manifest itself and selected group/series/array identity in the asset record. Alternatively, use per-object hashes plus a canonical manifest ID and call that the store identity; do not label an unspecified procedure a content SHA-256. Keep the path as a locator separate from content identity. For TIFF, retain the file hash plus selected series/OME image identity. Mark identity pending while a cancellable digest runs; changed content requires explicit rebind/fork/cancel as the proposal intends.
+
+**Proposed validation — UNEXECUTED.** Copy a small Zarr tree, compare canonical identity, relocate it with identical bytes, then change one chunk, one metadata file, remove a chunk, and add an unrelated file. Verify which edits invalidate the identity and which are treated as outside the selected store according to the chosen contract. Cancel hashing midway and confirm no final asset or export claims verified identity.
+
+**Affected dependencies:** proposal §§“Create project and import,” “Data identity, transforms, and export meaning,” “Atomic save, recovery, and portability,” validation gates 1/5/6, lead L5 if a virtual reference is retained.
+
+### C3 — Specify bounded mask storage and undo as first-class data (critical missing contract)
+
+**External evidence.** E1 §3.7 describes `image-label` as an integer-valued segmentation image with multiscale metadata and image association. E4 documents vector Shapes interactions but does not define persisted masks. E5–E7 show that even viewer mask value sampling in one 3D multiscale path required a versioned fix and targeted regression.
+
+**Correction / inference.** The proposal promises raster masks, a 3 GB source target, responsive edits, undo/redo, and transactional command history, but does not decide where mask voxels live or how an edit is bounded. Storing an acquisition-sized mask or each undo snapshot as a SQLite blob could grow the database and force large copies/writes. Treating a napari Labels layer as the persistent mask format would leave storage, source association, and durability implicit. NGFF image-label is an optional interchange representation, not the proposed project's complete edit/undo contract.
+
+**Required plan update.** Choose a bounded representation before mask implementation: for example, chunked sidecar label arrays with copy-on-write changed chunks and a command log of old/new chunk references, or sparse/run-length patches for a restricted mask workflow. State supported mask dtype/labels, spatial and time/channel scope, chunk geometry, cache limit, large-edit memory and disk behavior, and how style/label IDs map to exported labels. Make a successful edit and its undo record recoverable as one logical operation. Keep point/polygon records in the relational model. If this decision is deferred from the first increment, say that the minimum mask obligation is not yet delivered and keep the mask editing path out of a release claim.
+
+**Proposed validation — UNEXECUTED.** Apply and undo a small paint across chunk boundaries in a multichannel 3D/time fixture; reopen and redo; interrupt writes before and after chunk replacement; inspect peak memory, disk growth, and source immutability. Verify export in a second OME-Zarr reader and compare selected voxels/axes/transform. The standard's integer mask schema alone is not this test.
+
+**Affected dependencies:** proposal §§“Annotate,” “Export,” “Atomic save, recovery, and portability,” validation gates 2–6, witness P3/P4/P5, lead L3.
+
+### C4 — Make cross-file recovery a state machine, not a SQLite claim
+
+**External evidence.** E9 explicitly scopes its atomic-commit explanation to rollback-journal mode and lists filesystem/OS assumptions. It does not make a transaction spanning SQLite, Zarr chunks, copied source files, ZIP output, and a completion marker atomic.
+
+**Correction / inference.** The proposal's staged-copy, temp export, manifest, and `COMPLETE` marker are sensible. The remaining failure window is between a filesystem object being copied/published and the corresponding SQLite/manifest record being committed. A SQLite transaction cannot roll back an already renamed directory or export. The current wording calls failures recoverable but does not give the next implementation enough commit/reconciliation rules.
+
+**Required plan update.** Define import/export/bundle states such as `staging → verified → committed`, with durable operation IDs and expected hashes. Specify the order of file flush/close, content verification, final-name publication, database commit, and completion marker. On restart, reconcile: retain the prior committed project, promote only fully verified staged work, quarantine incomplete/orphan data for recovery, and never register a partial asset as usable. Keep old bundle generations until a clean-profile reopen passes. Continue to qualify the exact local and shared-storage filesystems; use local working copies and closed bundle exchange if locking or rename semantics fail.
+
+**Proposed validation — UNEXECUTED.** Inject termination at each boundary above for import, changed mask chunks, export, and bundle publishing. Test `PRAGMA integrity_check`, backup/restore, and source/output hashes on each group workstation OS and actual shared-storage route. Preserve the previous bundle after every failed publication. No SQLite documentation or source-backed component witness qualifies this behavior.
+
+**Affected dependencies:** proposal §§“Create project and import,” “Export,” “Atomic save, recovery, and portability,” validation gate 5, witness P4/P5, lead L7.
+
+### C5 — Convert candidate pins into an explicit, tested dependency lock
+
+**External evidence.** E3's v2024.9.20 README lists Zarr 2.18.3, NumPy 2.1.1, and Imagecodecs 2024.6.1 in the versions tested by that revision; it says Imagecodecs is required for several compressed segment codecs. E4 is a source pin at napari v0.5.6, not evidence that the proposed adapter works with the proposed reader stack. The v0.4.19 fix chain is historical mechanism evidence, not the proposal's recommended napari pin.
+
+**Correction / inference.** The proposal explicitly labels its versions as a spike, and says it has no complete tested dependency set; preserve that caveat. To make the spike reproducible, lock the decoder dependencies used for each claimed codec, not only `tifffile` and `zarr`. The proposed Deflate/LZW matrix should state which exact imagecodecs/stdlib path is used and qualify each version/platform combination. Do not treat “listed format” or “tested requirement” as qualification of the six workstations.
+
+**Required plan update.** Keep a provisional exact lock for each reader/UI spike (Python, tifffile, zarr v2, NumPy, imagecodecs, Qt/napari and OS packaging). If a codec cannot be pinned and fixture-tested, exclude it in v1. In the napari adapter spike, verify which backing array class provides bounded image reads and what cache path is active; the Shapes `cache` docstring alone does not establish image-layer caching. Keep the custom-canvas option as a bounded alternative against predeclared coordinate and edit-round-trip gates.
+
+**Proposed validation — UNEXECUTED.** Clean-install the lock on supported workstation platforms; read codec fixtures by selected region and compare values/metadata with known expectations. Record import, cancel, and cache behavior. This does not prove 3 GB responsiveness until the separate target-machine benchmark passes.
+
+**Affected dependencies:** proposal §§“Recommendation,” “Component choices,” “Bounded support,” validation gates 1–2 and 6.
+
+### C6 — Tighten crop/export truth conditions
+
+The proposal is right to distinguish table+sidecar, a rendered overlay, and a derived crop. Preserve its statement that PNG records one flattened view, and that a direct crop preserves only selected samples plus metadata intentionally written by the exporter. Add one implementation dependency: pin the writer used for the OME-TIFF derivative and enumerate which original metadata is copied, normalized, regenerated, or omitted. A matching sample array alone does not preserve acquisition provenance. The proposed hash/coordinate/independent-reopen check is appropriate and remains **UNEXECUTED**.
+
+**Affected dependencies:** proposal workflow step 6, “Data identity, transforms, and export meaning,” validation gate 6, witness P5.
+
+## Brief obligation coverage
+
+| Brief obligation | Review result and dependency |
+|---|---|
+| Project with several sources; non-destructive local import; provenance and original metadata | Addressed as a proposed product contract. Preserve it. Clarify directory-store hashing under C2 and cross-file state under C4. |
+| Multidimensional data, channels, time, integer/float samples, calibration, explicit axes and units | Covered by the candidate support matrix and metadata UI. The proposed subset is appropriately narrower than universal compatibility. Axis direction/orientation and viewer/edge coordinate details need C1. TIFF series/IFD mapping fixtures are essential under E2. |
+| Window/level and visible channels do not rewrite samples; geometry/resampling is a separate operation | Correctly separated as ViewState versus derived asset/operation. The source-byte immutability check is proposed/UNEXECUTED. Preserve it and include writer/read-only mode in the locked stack. |
+| Points, polygons, masks; slice/time, volume, acquisition scopes; styles; undo/redo across reopen | Vector/scope/style/command semantics are proposed. Mask persistence and bounded undo remain incomplete under C3. Keep P5 as an integrated app test. |
+| Save, close, reopen elsewhere; relocation and portable/reference bundle trade-off | Addressed with local DB, hashes, bundle choice, and clean-profile validation. Directory content identity and DB/filesystem reconciliation remain dependencies C2/C4. |
+| Annotation table or overlay plus small derived image; exact export meaning | CSV+sidecar, flattened PNG overlay, and crop distinctions are clear. Pin writer and verify metadata retention under C6. |
+| 3 GB image on 8-core/16 GB workstation, bounded reads, cache, progress, cancellation | Properly stated as an engineering target, not a result. Tifffile selected reads justify a spike; they do not establish application performance. Run P1 on representative tiled and strip files with a locked stack. |
+| Partial import, interrupted save, failed export recover without destroying project | The staging/rollback direction is sound. Require crash-point protocol and recovery reconciliation under C4; no such behavior has been executed. |
+| Ambiguous axes/calibration visibly retained with explicit correction or refusal | Addressed, with raw metadata retention and correction states. Ensure accepted corrections are recorded as separate provenance and transform entries under C1. |
+| Keyboard navigation, reusable annotation styles, legible feedback/accessibility | Explicit product requirements and proposed keyboard-only gate are present. Keep accessibility as an acceptance test; layer APIs alone do not establish keyboard access. |
+| Optional ideas and alternatives separated from obligations | NGFF mask exchange, Bio-Formats adapter, remote chunk access, segmentation, registration, and multiuser work are distinguished from v1. Preserve the alternatives with their stated limits. |
+
+## Resolution instructions for the next candidate
+
+Carry forward the valid architecture and source-supported precedents. Update the proposal at the named sections so the four critical contracts are explicit: coordinate/edge semantics, directory-store identity, bounded mask persistence/undo, and cross-file crash recovery. Keep all unsupported behavior labeled as a choice or **proposed/UNEXECUTED** until a discriminating test exists. Preserve the exact input-reader boundary and optional Bio-Formats lead; do not turn its broad rating table into a support claim. Keep the #6068 fix chain and #6320 unresolved risk separate. No component-source finding qualifies the full desktop application's behavior.

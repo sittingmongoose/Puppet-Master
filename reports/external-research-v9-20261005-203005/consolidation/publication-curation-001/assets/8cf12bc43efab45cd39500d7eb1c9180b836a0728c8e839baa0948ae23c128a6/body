@@ -1,0 +1,103 @@
+{
+  "catalog_version": "1.0",
+  "research_date": "2026-10-06",
+  "catalog_errata": [
+    {
+      "source_id": "S18",
+      "field": "capture_identity.path",
+      "recorded_value": "public_captures/5c6a534a8111426e9579f18a0f3e394d.body",
+      "correction": "public_captures/5c6a534a81111800ff37455f8c547bbb67f304b9d0cb02543c7185266dbef218.body",
+      "basis": "The capture receipt and S18 pin give capture_id 948ed0716451426e9579f18a0f3e394d and exact response-body SHA-256 5c6a534a81111800ff37455f8c547bbb67f304b9d0cb02543c7185266dbef218."
+    },
+    {
+      "source_id": "S19",
+      "field": "capture_identity.sha256",
+      "recorded_value": "e6b7e27936c81380a6e3f1dc213090ca6e1ca0f9e3a067bbd6b6800e25646da4.body",
+      "correction": "e6b7e27936c81380a6e3f1dc213090ca6e1ca0f9e3a067bbd6b6800e25646da4",
+      "basis": "The capture receipt and S19 pin give capture_id 88e0c5eae12f44d497dbc3b25c88a23b, response-body SHA-256 e6b7e27936c81380a6e3f1dc213090ca6e1ca0f9e3a067bbd6b6800e25646da4, and the recorded path already has the correct .body suffix."
+    }
+  ],
+  "note": "The admitted writer reported FileExistsError when asked to replace the already-created sources.json. Its pins and capture IDs retain the correct hashes, but the two capture fields above are erroneous. Corrections are disclosed here; sources.json was not silently represented as rewritten.",
+  "leads": [
+    {
+      "id": "L1",
+      "priority": "critical unresolved dependency",
+      "topic": "Exact Jupyter, Python, DuckDB, and lock-tool release compatibility",
+      "known": "Captured documentation describes mechanisms, and the nbclient failure chain establishes one behavior in release 0.5.0, but no tested integrated version matrix was established in this research.",
+      "next_evidence": "Choose exact Python patch, JupyterLab, ipykernel, nbformat, jupyter_client, nbclient, DuckDB, and uv versions; lock them and run workflow plus failure fixtures on that bundle.",
+      "bounded_alternative": "Support one explicitly tested lock at a time; if a lock cannot be installed exactly on a target platform, mark that platform unsupported/unverified instead of silently resolving a new environment."
+    },
+    {
+      "id": "L2",
+      "priority": "critical unresolved dependency",
+      "topic": "OS sandbox implementation and escape resistance",
+      "known": "The proposal selects Linux-first OS-level isolation as an engineering choice. No product sandbox implementation or adversarial isolation check was executed.",
+      "next_evidence": "Review the chosen namespace/container backend and test filesystem, network, child process, symlink, device, CPU, memory, disk, and cancellation limits. Test every OS before advertising isolation there.",
+      "bounded_alternative": "Disable secure execution where the boundary cannot be established; use a verified VM/container runner or defer non-Linux support. Any trusted-local escape hatch must be visibly unverified."
+    },
+    {
+      "id": "L3",
+      "priority": "critical unresolved dependency",
+      "topic": "5-GB workload and 8-core/16-GB resource envelope",
+      "known": "DuckDB documents spill-to-disk and operator limitations, but the target workload was not benchmarked and some operator combinations may exceed memory.",
+      "next_evidence": "Measure representative CSV, NDJSON, and Parquet scans and transforms on the target workstation; record exact operators, peak RSS, scratch, wall time, and failure mode.",
+      "bounded_alternative": "Guarantee only bounded preview and selected streaming/projection paths; reject or require explicit lower-size caps for unsupported global operations."
+    },
+    {
+      "id": "L4",
+      "priority": "critical unresolved dependency",
+      "topic": "Kernel death behavior in the chosen current nbclient release",
+      "known": "Issue 88, PR 90, source, test, and the 0.5.0 tag establish a kernel-liveness poll and a SIGTERM regression test in that release. This does not establish behavior in the current documented version or every cgroup OOM path.",
+      "next_evidence": "Inspect the exact locked release and execute kernel death, cgroup OOM, interrupt, timeout, and outer worker termination fixtures.",
+      "bounded_alternative": "Supervise and terminate the worker process group independently of notebook-library liveness; mark any missing result failed and leave old output stale."
+    },
+    {
+      "id": "L5",
+      "priority": "critical unresolved dependency",
+      "topic": "Source identity and mutable external files",
+      "known": "A full streaming digest identifies bytes read, but hashing a 5-GB file costs I/O and before/after hashing cannot prove an externally mutable file did not change and revert between checks.",
+      "next_evidence": "Benchmark chunked hashing and test mutation during a run; decide whether a read-only snapshot, file lock, filesystem snapshot, or digest recheck is required for a Current label.",
+      "bounded_alternative": "Permit references with rehash and label concurrent-change/race cases unverified; offer managed immutable snapshots for stronger exchange guarantees."
+    },
+    {
+      "id": "L6",
+      "priority": "critical unresolved dependency",
+      "topic": "NDJSON missing-versus-null preservation and source row identity",
+      "known": "DuckDB JSON docs state missing keys become NULL in the described loading path. A synthetic standard-library witness can distinguish presence, but does not demonstrate that the selected engine path retains it.",
+      "next_evidence": "Test absent, explicit null, duplicate keys, malformed lines, and timestamps against the exact selected reader; verify row locators and raw-value/reject retention.",
+      "bounded_alternative": "Add presence bits or preserve raw JSON alongside normalized columns; if the distinction cannot be retained, state explicit coalescing in the contract."
+    },
+    {
+      "id": "L7",
+      "priority": "important implementation dependency",
+      "topic": "Portable locking, atomic save, and recovery behavior",
+      "known": "The proposal chooses transactional SQLite events and staged atomic publication for local single-writer use; file locking and rename semantics differ by filesystem/platform and were not tested.",
+      "next_evidence": "Crash-inject every save/publish stage and test lock contention, recovery, bundle export/import, network shares, and supported local filesystems.",
+      "bounded_alternative": "Support only tested local filesystems for active projects; export a checkpointed portable bundle and use version control for collaboration instead of simultaneous writers."
+    },
+    {
+      "id": "L8",
+      "priority": "important environment interoperability lead",
+      "topic": "uv.lock to pylock.toml exchange and cross-machine runtime portability",
+      "known": "uv documents lock/sync behavior and PyPA defines pylock.toml package/environment data. Neither standard alone pins OS libraries, notebook state, runtime grants, or architecture-specific behavior.",
+      "next_evidence": "Try export and import with a second compatible installer on two machines and compare resolved artifacts, environment markers, and run status.",
+      "bounded_alternative": "Keep uv.lock primary; export pylock.toml as optional metadata only after round-trip validation, and label OS/architecture mismatches unverified."
+    },
+    {
+      "id": "L9",
+      "priority": "optional opportunity",
+      "topic": "Portable tabular artifacts and downstream SQL handoff",
+      "known": "Parquet is documented as a file scan/output format and SQL result order can be requested explicitly; a small manifest can accompany artifacts.",
+      "next_evidence": "Prototype export with schema, stable row key, engine version, digest, and truncation/count status; verify the colleague's SQL workflow consumes it.",
+      "bounded_alternative": "Keep export to ordinary CSV/Parquet plus manifest; avoid requiring hosted collaboration, an account system, or a server database."
+    },
+    {
+      "id": "L10",
+      "priority": "optional alternative",
+      "topic": "Python-first lazy engine such as Polars",
+      "known": "Not investigated as a source precedent in this stage; it could suit Python transforms but would add a separate SQL and memory-behavior decision.",
+      "next_evidence": "Compare out-of-core coverage, malformed-row reporting, streaming guarantees, and colleague SQL handoff on the same contract fixtures.",
+      "bounded_alternative": "Retain DuckDB for the minimum SQL/data path; revisit only if the team's Python API requirements outweigh the second-engine cost."
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "inventory_version": "research-stage-1",
+  "executor": "experiment-admitted isolated Python executor (mcp python_execute); systemd/Bubblewrap isolated, empty network namespace, no host secrets",
+  "global_scope_limits": [
+    "Every witness is an isolated component check on tiny synthetic data; none establishes full application behavior, large-dataset performance, or real kernel/runtime behavior.",
+    "Code and inputs are candidate-authored; data parameter was empty for all runs (data_sha256 74234e98... is the empty-input digest).",
+    "Receipts record code_sha256, stdout/stderr sha256, exit code, and resource limits; they do not prove semantic correctness."
+  ],
+  "witnesses": [
+    {
+      "id": "W1",
+      "title": "Preview sampling is a hypothesis, not proof of a full-dataset property",
+      "status": "executed by candidate — PASS",
+      "execution_id": "exec-lhb85rd5",
+      "code_sha256": "19a71b15351e6dd486375e338b2c1d769f3a924da2e80def9ce470b30abcb93c",
+      "stdout_sha256": "90d1ddb972153682c3250baf8ddd7a86b1aeba6d377577591e8c10bf10dbb916",
+      "exit_code": 0,
+      "expected_behavior": "Type inference over a 20-row bounded preview of a 103-value column returns INTEGER; a full-scan reconciliation finds 100 INTEGER, 2 TEXT, 1 NULL; declared-INTEGER violations are quarantined with row numbers and source line numbers; kept + quarantined == total (no silent deletion).",
+      "observed": "Exactly as expected: naive_preview_inferred_type=INTEGER; full kinds INTEGER=100/TEXT=2/NULL=1; 2 rows quarantined (values '2024-01-15', 'N/A', source lines 102–103); kept=101, total=103; invariant true.",
+      "justification": "Justifies §5.1/§5.7: schema from a sample must be stored as hypothesis and reconciled by a bounded full pass; previews cannot back full-dataset claims.",
+      "scope_limits": "Pure-Python toy inference; does not model DuckDB's sniffer or parallel chunk inference. Demonstrates the trap class, not any engine's behavior."
+    },
+    {
+      "id": "W2",
+      "title": "Deterministic vs stable ordering; sequence + multiset identity",
+      "status": "executed by candidate — PASS",
+      "execution_id": "exec-15rdc9md",
+      "code_sha256": "17d94f315d686db0f5472850ddc3e600fe1602d725227e5e6bf404784aa78aae",
+      "stdout_sha256": "1c70c45022e84deff3ad01132a2af242a3f6581fdd3486e6125c414ad2e8e5dc",
+      "exit_code": 0,
+      "expected_behavior": "Sorting 4 rows by a non-unique key (stable sort) yields different sequences for permuted inputs (sequence digests differ); adding a full-content tie-break yields identical sequences and digests across permutations; a sorted-canonical multiset digest is identical across permutations.",
+      "observed": "key-only orders [2,4,1,3] vs [4,2,1,3] with differing digests; deterministic orders both [2,4,3,1] with equal digest 354ab11e7ae54744; multiset digest b7cd27fb587c0d04 equal across permutations.",
+      "justification": "Justifies §5.3 identity scheme (sequence_digest + order-insensitive multiset digest) and the rule that stable order is input-order dependent, so saved-vs-current comparison must declare tie-breaks or use the multiset digest.",
+      "scope_limits": "Python list sort only; does not establish DuckDB ORDER BY tie behavior (lead L6)."
+    },
+    {
+      "id": "W3",
+      "title": "Notebook output freshness state machine (epoch, DAG, interrupted runs)",
+      "status": "executed by candidate — PASS on corrected rerun (first attempt FAILED)",
+      "attempts": [
+        {
+          "execution_id": "exec-x8rt9so3",
+          "code_sha256": "f88de459d9db805a8ec835123e4d72b0ffe62ec15bba542f698fc8e201afe97f",
+          "exit_code": 1,
+          "outcome": "AssertionError: dependency lookup used variable names against the outputs table keyed by cell ids, so every dependent was mislabeled 'unverified'; one expectation was wrong (an edited-but-not-rerun cell is correctly 'stale', not 'current'). Recorded per the no-invented-receipts rule."
+        },
+        {
+          "execution_id": "exec-9l7v0rcz",
+          "code_sha256": "e8e5aabaaf4f0320657c32e0071a50e1ee65abe8899f2286effb6fb7a5a6a619",
+          "stdout_sha256": "9c301961efcb5de2af05806010b927a1e7da1708b62e7519eb93f5c18f952202",
+          "exit_code": 0,
+          "outcome": "PASS: after clean run all current; after edit of c1 (not rerun) c1/c2/c3 all stale; after kernel restart (epoch 2) c2/c3 unverified (c1 still stale); after interrupted replay c2 failed, c3 unverified, c1 stale. No transition ever returns 'current' without a fresh successful run in the current epoch."
+        }
+      ],
+      "expected_behavior": "Display order (c3,c1,c2) independent of dependency order (c1→c2→c3); output provenance {run_id, epoch, cell_source_hash, status} + variable→cell ref resolution determines current/stale/failed/unverified; kernel restart and interrupted runs never leave outputs labeled current.",
+      "justification": "Justifies §6 table and the brief's hard rules on restart/interrupt semantics.",
+      "scope_limits": "Hand-declared refs/defs (marimo derives them by static analysis — S3); no real kernel, no nbclient integration (that is V4)."
+    },
+    {
+      "id": "W4",
+      "title": "Bounded/streaming malformed-record handling + atomic-save recovery",
+      "status": "executed by candidate — PASS",
+      "execution_id": "exec-iv76_h6q",
+      "code_sha256": "55b1fa3a080f2f17085bfe3b6ad6b01467483566492d502bcff4d4aa9f48caf5",
+      "stdout_sha256": "085673b6ce5b3a5c4647ea094d1db125ab12fe5e709dfd4d343d6e0578f4816e",
+      "exit_code": 0,
+      "expected_behavior": "500 synthetic NDJSON records streamed in 5 chunks with O(1) per-column state; 1 unparseable line + 2 missing-required-field lines quarantined with line numbers and reasons (never silently dropped); kept(497)+quarantined(3)==total(500); streamed mean equals in-memory reference; an interrupted save (tmp written, commit marker unmoved) leaves the previously committed manifest readable, and completing the marker swap publishes v2.",
+      "observed": "All as expected; quarantine entries carry line numbers 200/400/450 with parse/missing-field reasons; recovery.before_marker_fix='committed' with old mean 24.5 served.",
+      "justification": "Justifies §5.4 (quarantine policy + invariant), §8 (bounded path mechanics), §11.8 (atomic save + interrupted-save recovery).",
+      "scope_limits": "Chunked stdlib processing, not DuckDB; 'streaming' here means O(1) state per chunk, not engine out-of-core paging (V1 covers the engine target, UNEXECUTED)."
+    }
+  ],
+  "proposed_not_executed": [
+    {"id": "V1", "title": "5 GB streaming target through DuckDB (memory_limit + temp dir)", "reason_not_run": "No DuckDB dependency and no large-file generation in the admitted isolation; requires app-level harness.", "success_criteria": "Completes; peak RSS < 12 GB; row counts match chunked reference; wall time recorded."},
+    {"id": "V2", "title": "SIGKILL during real app save; recovery audit", "success_criteria": "Prior committed state readable; partial run flagged; no torn document."},
+    {"id": "V3", "title": "Cross-machine reopen + clean replay + manifest diff", "success_criteria": "Empty manifest diff for declared-deterministic operations."},
+    {"id": "V4", "title": "Epoch/state transitions against real nbclient runs incl. interrupt", "success_criteria": "Observed statuses match the §6 table."},
+    {"id": "V5", "title": "Sandbox boundary checks (sockets, out-of-allowlist reads)", "success_criteria": "Both denied with auditable errors under the sandbox profile."}
+  ]
+}

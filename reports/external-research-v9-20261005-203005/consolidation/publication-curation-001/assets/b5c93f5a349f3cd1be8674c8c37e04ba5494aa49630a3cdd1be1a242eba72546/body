@@ -1,0 +1,115 @@
+{
+  "catalog_version": "1.0",
+  "scope": "Open evidence questions, optional opportunities and deferred alternatives identified during brief-only research. Leads are not implementation facts or approval gates for later stages.",
+  "unresolved": [
+    {
+      "id": "L01",
+      "topic": "DuckDB v1.5.6 CSV behavior for issue #25164",
+      "status": "open; critical for CSV support",
+      "evidence": ["S07", "S08", "S09", "S10", "S11", "S12"],
+      "known": "The issue reports duplicate rows on parallel CRCRLF input; PR #25232 merged its guard and regression on v2.0-cyanoptera. The captured v1.5.6 source path lacks that hunk and its exact test path is 404. PR #25325 port to main was captured closed/unmerged.",
+      "unknown": "No v1.5.6 binary/wheel was executed, and release notes/tree state do not prove whether an equivalent fix or backport exists elsewhere in the build.",
+      "next_evidence": "Run the upstream and expanded regression fixture against each exact distributed artifact and record artifact SHA, source build metadata, counts/distinct IDs and reject behavior.",
+      "proposal_effect": "Keep CSV CRCRLF preflight rejection until exact artifact passes; if broader CSV behavior remains suspect, use a separately qualified streaming reader or defer CSV import for that file."
+    },
+    {
+      "id": "L02",
+      "topic": "Resolved Python/Jupyter runtime lock",
+      "status": "open; critical for clean replay",
+      "evidence": ["S01", "S02", "S03"],
+      "known": "The proposal selects nbformat 5.10.4 and nbclient 0.10.2 as exact starting pins. Kernel protocol facts are sourced from captured jupyter_client 8.10.0 docs.",
+      "unknown": "A compatible complete Python minor, jupyter_client, ipykernel, pyzmq, traitlets, DuckDB binding, extension set and transitive hash-locked environment has not been resolved or run together.",
+      "next_evidence": "Build and freeze one lock and immutable runner image; execute a real notebook twice in clean kernels and preserve lock/image/wheel digests.",
+      "proposal_effect": "Other machines cannot clean-replay until the exact locked environment is available; do not treat package names without versions/hashes as a reproducibility pin."
+    },
+    {
+      "id": "L03",
+      "topic": "Linux sandbox availability and strength",
+      "status": "open; critical for execution support",
+      "evidence": ["S17"],
+      "known": "Bubblewrap provides namespace and mount construction; the caller must define the policy and account for limitations.",
+      "unknown": "User namespace policy, seccomp profile, cgroup/resource controller availability, distribution configuration, escape resistance and usability on target workstations are untested.",
+      "next_evidence": "Review exact invocation/policy with security engineering and test mounts, no-network behavior, resource caps, cancellation and cleanup on supported Linux distributions.",
+      "proposal_effect": "Fail closed where required isolation cannot be established; evaluate a local VM backend for macOS/Windows later."
+    },
+    {
+      "id": "L04",
+      "topic": "5 GB input and operation-specific memory behavior",
+      "status": "open; performance target",
+      "evidence": ["S15", "S16"],
+      "known": "DuckDB documents streaming and spill mechanisms with operation-specific memory/temp-disk limits; insertion-order behavior has a memory trade-off.",
+      "unknown": "Actual peak RSS, spill volume, time, correctness and cancellation behavior for the chosen binary on the 8-core/16 GB workstation are unmeasured.",
+      "next_evidence": "Generate representative 5 GB data and test stream-friendly and global operators with configured memory and temp quotas.",
+      "proposal_effect": "Advertise only measured operation classes; explain memory/temp exhaustion and preserve explicit unsupported-operation behavior."
+    },
+    {
+      "id": "L05",
+      "topic": "Schema evolution and row/order stability in actual engine adapters",
+      "status": "open; data-contract verification",
+      "evidence": ["S04", "S05", "S13", "S14", "S16"],
+      "known": "Reader inference and schema inspection exist; docs do not settle this product's missing-vs-null, multi-file evolution, row identity and conversion semantics.",
+      "unknown": "Exact behavior for heterogeneous JSON values, missing Parquet fields, duplicate field names, malformed rows, timestamp offsets and ordering has not been checked against a pinned engine.",
+      "next_evidence": "Run contract fixtures across all formats and inspect raw reject artifacts and output identity/order.",
+      "proposal_effect": "Require explicit source contracts, preserve presence information, and do not infer stable ordering from scan order."
+    },
+    {
+      "id": "L06",
+      "topic": "Cross-machine portable project binding",
+      "status": "open; workflow validation",
+      "evidence": ["S01", "S06", "S17"],
+      "known": "The proposed layout uses ordinary folders/bundles and records external paths and hashes.",
+      "unknown": "Atomic rename/locking, case-sensitive paths, symlinks, environment transfer, missing external sources and output revalidation on real platforms remain untested.",
+      "next_evidence": "Export and reopen under a different path/machine, including with missing source/environment; crash-inject the save protocol on supported filesystems.",
+      "proposal_effect": "Treat external data and unavailable exact environments as unresolved dependencies and show saved outputs as unverified."
+    }
+  ],
+  "optional_opportunities": [
+    {
+      "id": "O01",
+      "idea": "Schema drift review before promotion",
+      "value": "Compare imported file schemas and sampled values to the approved contract; show added/missing/changed fields, full-scan coverage and quarantined records before rerunning dependent notebooks.",
+      "status": "useful product opportunity; proposed, not implemented"
+    },
+    {
+      "id": "O02",
+      "idea": "Portable content-addressed lineage snapshot",
+      "value": "Export a small manifest plus hashes and dependency edges alongside ordinary project folders or bundles, with optional inclusion of copied data and result artifacts.",
+      "status": "follow-up research: investigate DVC or similar mechanisms and compatibility; no DVC source was selected or used as evidence in this stage"
+    },
+    {
+      "id": "O03",
+      "idea": "Reproducibility diff that explains changed inputs before changed outputs",
+      "value": "Group differences by notebook source, source-data hash/schema, lock/environment, engine/parser and output artifact so analysts can diagnose a changed result without reading a raw event log.",
+      "status": "product opportunity derived from the brief; needs accessibility/usability research"
+    }
+  ],
+  "alternatives_to_keep_visible": [
+    {
+      "id": "A01",
+      "option": "Use JupyterLab/Notebook as the complete UI and add a local provenance manager",
+      "tradeoff": "Reduces editor/viewer implementation; integration work for current/stale labels, artifact association, project exchange and the reviewed execution policy remains. Research exact versions and integration APIs before selection."
+    },
+    {
+      "id": "A02",
+      "option": "Use a separate CSV reader or a DuckDB build containing the fix",
+      "tradeoff": "Could preserve CSV support if the v1.5.6 gate fails; reader semantics, schema behavior, performance and packaging need independent source research and exact binary checks. The v2.0-branch patch is not by itself a stable release candidate."
+    },
+    {
+      "id": "A03",
+      "option": "Use a local VM/microVM execution adapter on platforms without bubblewrap",
+      "tradeoff": "Potentially broader OS coverage and stronger image/environment control; startup, disk use, file mounts and interactive-kernel usability add cost. No VM implementation was selected or tested here."
+    },
+    {
+      "id": "A04",
+      "option": "Use an Arrow/Polars-first data stack",
+      "tradeoff": "Could change CSV and streaming behavior; investigate exact APIs, spill/global-operation behavior, SQL fit and pinned issue history before changing the selected engine. No claim about these projects is made by this proposal."
+    }
+  ],
+  "deferred_by_scope": [
+    "Real-time collaboration and simultaneous shared kernel state",
+    "Hosted service or account-backed project sync",
+    "Automatic scheduling and background job service",
+    "Broad notebook language/kernel support",
+    "Credential sharing, private datasets and shared account profiles"
+  ]
+}

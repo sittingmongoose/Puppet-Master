@@ -1,0 +1,53 @@
+{
+  "schema": "er9.candidate-witness-catalog.addendum.v1",
+  "catalog_role": "enrichment addendum for the frozen proposal",
+  "base_proposal": {
+    "path": "inputs/seed/proposal.md",
+    "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7"
+  },
+  "inheritance_status": "Earlier witness catalog was not located at inputs/seed/witnesses.json or out/final/witnesses.json during this run. W4 is supplemental and does not reproduce earlier W1-W3 records.",
+  "entries": [
+    {
+      "id": "W4",
+      "title": "Ordered NGFF-style axis transform composition example",
+      "kind": "candidate-authored isolated component check",
+      "status": "EXECUTED",
+      "receipt": {
+        "execution_id": "exec-ovin1uk1",
+        "exit_code": 0,
+        "elapsed_seconds": 0.35607748600887135,
+        "code_sha256": "441d1f6c395be8c1bb34049d84605212f26f802f27207d3a19ed1eb1accc6d1a",
+        "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "stdout_sha256": "22ef267c78e567f86729dedd8cc1221a51ad774ab715fd7b65a4751dca2f44af",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934b2bbcfb142b??"
+      },
+      "source_refs": ["E01"],
+      "case": {
+        "axes": [
+          {"name": "t", "type": "time", "unit": "millisecond"},
+          {"name": "c", "type": "channel"},
+          {"name": "z", "type": "space", "unit": "micrometer"},
+          {"name": "y", "type": "space", "unit": "micrometer"},
+          {"name": "x", "type": "space", "unit": "micrometer"}
+        ],
+        "input_tczyx": [2.0, 1.0, 4.0, 8.0, 6.0],
+        "dataset_transforms": [
+          {"type": "scale", "scale": [1.0, 1.0, 0.5, 0.5, 0.5]},
+          {"type": "translation", "translation": [0.0, 0.0, 10.0, 20.0, 30.0]}
+        ],
+        "group_transforms": [
+          {"type": "scale", "scale": [0.1, 1.0, 1.0, 1.0, 1.0]}
+        ]
+      },
+      "code": "axes = [\n    {\"name\": \"t\", \"type\": \"time\", \"unit\": \"millisecond\"},\n    {\"name\": \"c\", \"type\": \"channel\"},\n    {\"name\": \"z\", \"type\": \"space\", \"unit\": \"micrometer\"},\n    {\"name\": \"y\", \"type\": \"space\", \"unit\": \"micrometer\"},\n    {\"name\": \"x\", \"type\": \"space\", \"unit\": \"micrometer\"},\n]\ndataset_transforms = [\n    {\"type\": \"scale\", \"scale\": [1.0, 1.0, 0.5, 0.5, 0.5]},\n    {\"type\": \"translation\", \"translation\": [0.0, 0.0, 10.0, 20.0, 30.0]},\n]\ngroup_transforms = [{\"type\": \"scale\", \"scale\": [0.1, 1.0, 1.0, 1.0, 1.0]}]\np = [2.0, 1.0, 4.0, 8.0, 6.0]\ndef apply(point, transforms):\n    q = list(point)\n    for tr in transforms:\n        k = \"scale\" if tr[\"type\"] == \"scale\" else \"translation\"\n        if tr[\"type\"] == \"scale\":\n            q = [x * a for x, a in zip(q, tr[k], strict=True)]\n        else:\n            q = [x + a for x, a in zip(q, tr[k], strict=True)]\n    return q\nordered = apply(p, dataset_transforms + group_transforms)\nreversed_all = apply(p, list(reversed(dataset_transforms + group_transforms)))\nassert len(axes) == len(p) == len(ordered)\nassert ordered == [0.2, 1.0, 12.0, 24.0, 33.0]\nassert reversed_all == [0.2, 1.0, 7.0, 14.0, 18.0]\nassert ordered != reversed_all\nprint({\"axes_count\": len(axes), \"input_tczyx\": p, \"dataset_then_group\": ordered, \"reversed_chain\": reversed_all})",
+      "observed_stdout": "{'axes_count': 5, 'input_tczyx': [2.0, 1.0, 4.0, 8.0, 6.0], 'dataset_then_group': [0.2, 1.0, 12.0, 24.0, 33.0], 'reversed_chain': [0.2, 1.0, 7.0, 14.0, 18.0]}\n",
+      "observed_stderr": "",
+      "interpretation": "The authored function follows the chosen scale-as-multiply and translation-as-add convention in dataset-then-group order. The result distinguishes that ordering from reversing the operations and confirms equal vector lengths for this five-axis case.",
+      "limitations": [
+        "Arithmetic check only; it does not parse NGFF metadata or execute tifffile, Zarr, napari, or the proposed application.",
+        "Does not establish that the chosen transform convention is implemented by any external application.",
+        "Execution receipt is an isolated component receipt, not application qualification or a scored diagnostic PASS."
+      ]
+    }
+  ]
+}

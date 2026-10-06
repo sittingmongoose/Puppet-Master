@@ -1,0 +1,130 @@
+# Research proposal — local-first reproducible notebook + data workspace (Brief B)
+
+**Stage:** research (fixed12, ER9). **Date:** 2026-10-06. **Author:** admitted candidate model.
+**Evidence labels used throughout:** [FACT] = stated by a captured public source (catalog: `sources.json`, cites `[S#]`); [INFER] = engineering inference from facts; [CHOICE] = product decision this proposal makes; [EXECUTED] = run by candidate in the admitted isolated executor (catalog: `witnesses.json`); [PROPOSED/UNEXECUTED] = validation plan not yet run.
+
+---
+
+## 1. Executive summary
+
+A small-team workspace that combines Python notebooks with versioned tabular data preparation should be built as **three independent mechanisms**: (1) a **notebook document + replay engine** modeled on the Jupyter `nbformat`/`nbclient` pair; (2) an **embedded columnar data engine** (DuckDB-class) that streams larger-than-RAM inputs and records *sample-based inference as a labeled hypothesis, never as fact*; (3) an **append-only execution event log + content-addressed output store** that makes "why does this output differ?" answerable by comparing events, not by trusting displayed cells.
+
+The research found a directly on-brief real failure history in DuckDB's CSV sniffer — including one fixed defect with regression tests (duckdb#1015) and one still-open defect (duckdb#25824) where a value **past** the 20,480-row sample window is silently rounded or truncated even though the same value *inside* the window would have widened the column type. This is the concrete engine-level proof of the brief's rule: *a bounded preview must never be presented as proof of a full-dataset property* — not even by mature engines.
+
+## 2. Implementation precedents and the mechanism each contributes
+
+### P1 — Jupyter `nbformat` + `nbclient` (notebook document and replay)
+- **Mechanism contributed:** a standard, versioned interchange format for notebooks that *already encodes* execution provenance per cell: every code cell carries `execution_count` ("The code cell's prompt number. Will be null if the cell has not been run."), an `id` (v4.5+, required), `source`, `outputs` (four types: `execute_result`, `display_data`, `stream`, `error`), and notebook-level `metadata.kernelspec` naming the kernel used when saved [S1]. `nbclient` contributes the clean-replay semantics: per-cell timeout (default 30 s), `allow_errors` **default False** — replay stops at the first error, raises `CellExecutionError`, and the saved notebook keeps outputs up to and including the failing cell with a full stack trace; the kernel name defaults to the notebook's saved `kernelspec` metadata, overridable [S2].
+- **Independence:** this precedent covers the *document/runtime* side only. It says nothing about datasets, larger-than-RAM inputs, or data typing. It also proves the brief's point that adopting a format ≠ settling runtime behavior: the `.ipynb` schema fixes storage, while replay policy (stop vs continue, timeouts, error capture) lives in a separate executor with its own defaults [S1][S2].
+
+### P2 — DuckDB CSV reader/sniffer (data engine and bounded-sampling pitfalls)
+- **Mechanism contributed:** an embedded, in-process SQL engine that reads CSV/NDJSON/Parquet columnar inputs with a bounded **sniffing window** (`SAMPLE_SIZE`; DuckDB's own conversion-error output in a closed issue shows `SAMPLE_SIZE=20480` as the runtime default [S5]), enabling schema inference without scanning a 5 GB file, plus a documented `sample_size=-1` full-scan escape hatch and `all_varchar` conservative mode discussed in issue reports [S4].
+- **Independence:** this precedent covers the *data* side only — no notebooks, no cell model. The two precedents are independently useful and independently faulted (see §3), which is exactly why the architecture must join them with an explicit contract rather than assuming either is sound.
+
+### P3 (secondary) — PEP 723 inline script metadata
+- **Mechanism contributed:** a **Final** standard for embedding `dependencies` (PEP 508 strings) and `requires-python` in a single file's comment block; script runners *MUST error* if the declared dependencies cannot be provided [S8]. Useful as the environment-binding format for per-notebook/per-transform dependency declarations (§12). Canonical spec has moved to the PyPA specs page — pin that, not the historical PEP text, for future edits [S8].
+
+## 3. Real issue/fix/regression-test chain (followed end to end)
+
+**Failure:** duckdb PR/issue #1015 — "CSV Loader would wrongly assume column with all sample values null to be Bool." A CSV column whose *sampled* values are all NULL was auto-typed as BOOLEAN (NULL matches every type candidate), producing a wrong schema and wrong query results on real files (the PR adds a 5,301-line `voter.tsv` fixture where this bit) [FACT, S6].
+**Fix (merged 2020-10-16T11:12:26Z):** the sniffer's type-candidate ladder gains `LogicalType::SQLNULL` as the last candidate, and final type selection adds: if a column's candidate list was never narrowed (`best_sql_types_candidate.size() == type_candidates.size()`, i.e. no non-null sample value ever constrained it), fall back to `LogicalType::VARCHAR` instead of the Boolean tail. Patch in `src/execution/operator/persistent/buffered_csv_reader.cpp` at merge commit `921d8771` [FACT, S6].
+**Regression tests (same PR):** `test/sql/copy/csv/auto/test_auto_voter.test` (new: `read_csv_auto` over the real voter file must count 5300 rows); `test/sql/copy/csv/auto/test_sample_size.test` (modified: a previously `statement error` sparse-column file becomes `statement ok` with asserted `typeof` outcomes INTEGER/VARCHAR/DATE/VARCHAR); `test/sql/copy/csv/auto/test_type_detection.test` (added case `int_bol.csv` asserting `INTEGER`/`BOOLEAN`) [FACT, S6].
+**Version applicability:** merge predates release tag `v0.2.4` (published 2021-02-02T06:35:32Z) [FACT, S7]. **Limit of evidence:** I verified the merge timestamp and the release timestamp, not the file contents inside the v0.2.4 tag artifact, so "fixed in v0.2.4" is *merge-ordering inference*; the fix is certain at merge commit `921d8771` and historical for everything after [INFER, disclosed].
+**Still-open counterexample (as of capture):** duckdb#25824 (opened 2026-09-17, state open): values past the sample window are **silently converted** by the scanner with `strict=false` casts while the sniffer itself would have rejected them (`strict=true`) — e.g. 20,479 rows of `1` then `1.5` reads back as BIGINT `2` (rounded); a timestamp in a DATE column is silently day-truncated. Reporter's matrix: 1.1.3, 1.5.5, 1.6.0.dev214 nightly, and `main@2bbfe6f236` all behave the same; `sample_size=-1` returns the correct value [FACT-as-reported, S4 — reporter-claimed, maintainer-unconfirmed, open at capture time]. Two more closed, `reproduced`-labeled sniff failures corroborate the class: #15576 (wrong delimiter from a single bad row; `ignore_errors=true` changes the sniff), #15777 (explicitly user-set `dateformat='AUTO'` fails where implicit auto-detection succeeds) [FACT-as-reported, S9][S10].
+**Design consequence:** any engine-side inference the Workspace shows must be *versioned, labeled, and re-checkable*; the product must never present a sniffed schema as the dataset's schema (§5), and error/asymmetry behavior of the underlying engine must be pinned and tested per engine release (§15).
+
+## 4. Architecture and project record [CHOICE, informed by §2]
+
+```
+project/
+  project.json            # id, schema_version, created, datasets[], env binding ref
+  notebooks/*.ipynb       # nbformat v4.5+ documents [S1]; product metadata in cell/nb metadata blocks
+  transforms/*.py         # scripts with PEP 723 blocks [S8]
+  data/                   # imported datasets: originals read-only; optional derived caches
+  .ws/
+    events.jsonl          # append-only execution event log
+    outputs/              # content-addressed output blobs (sha256-keyed)
+    locks/                # advisory lock files
+    manifest.state.json   # atomically replaced run/manifest state (tmp+rename)
+```
+Components: **UI** (browse/catalog/preview/edit — no code execution), **Project Service** (catalog, locks, atomic state), **Data Engine adapter** (embedded DuckDB-class process; SQL or relational API), **Run Service** (sandboxed kernel processes, one per notebook session + headless replay workers), **Event Log** and **Output Store**. Everything is ordinary folders; exchange = copy the folder or a zip bundle with the same layout (no hidden server state) [CHOICE].
+
+## 5. Data contract
+
+- **Identity without copying:** import registers the source by `{path, byte size, sha256}` [CHOICE]. Hashing a 5 GB file is a one-time linear read done at import or lazily at first replay; until hashed the dataset is flagged `identity=pending` and replays are labeled `unverified`. Originals are opened read-only; the product never mutates them [CHOICE].
+- **Schema assumptions:** the contract separates three layers: (a) *declared* schema (user- or import-supplied column types — authoritative), (b) *inferred* schema (engine sniff over a bounded window — always displayed with a "sample-based hypothesis, not proof" badge; engine, version, window size, and options recorded) [FACT motivators S4][S6][CHOICE]. Reading with a declared schema re-validates; mismatch = contract error naming column/line, never silent re-typing.
+- **Type conversions:** lossless-first policy: keep text; typed views are explicit casts. No silent rounding/truncation — the exact failure class of [S4]. Non-strict-cast divergences between sniffer and scanner (the #25824 asymmetry) are the reason conversions must be defined at *our* contract layer, not inherited from engine defaults [FACT → CHOICE].
+- **Missing/nulls/Unicode/timestamps:** empty, quoted-empty, and sentinel nulls are distinct import options recorded per dataset; NULL-heavy columns must fall back to a permissive type, never BOOLEAN-by-accident (the fixed #1015 class [S6]); text is UTF-8, preserved verbatim; timestamps keep their declared format string in the contract.
+- **Malformed records:** never silently deleted. Policy per dataset: `strict` (abort with line number), `quarantine` (bad rows + reason written to a sidecar under `data/<name>.rejects/`, count surfaced in previews and manifests), mirroring the usefulness of engine `ignore_errors`/`store_rejects` knobs discussed in [S4][S9] but owned by our layer.
+- **Row/order identity:** every retained row gets a stable `rowid` = (source version id, engine-ordinal at read time). Ordering is declared per result: `input` (file order), `stable` (input-order ties preserved), or `deterministic` (sort keys plus full explicit tie-break; recorded in the manifest). [EXECUTED W3]: key-only ordering coincides with a full tie-break only by implementation luck (CPython's documented stable sort), while a plausible unstable engine tie-order yields a different content digest — so the manifest must record the ordering mode, and `deterministic` results must carry the full key list.
+- **Schema evolution:** dataset versions are append-only (`datasets[]` entries keyed by content hash). A re-import producing a new hash creates a new version and, by the invalidation rules (§6), marks dependents stale; column-level diffs (added/dropped/retyped) are computed version-to-version and shown in the provenance view [CHOICE].
+- **Caching/invalidation:** derived caches are content-addressed by `(input version hash, transform hash, options)`; cache hit requires exact input-version match, so drift invalidates automatically [CHOICE].
+
+## 6. Provenance and output status model
+
+Four distinct notions, never conflated [CHOICE, validated by W2]:
+1. **Displayed cell order** — the `cells[]` array in the `.ipynb` [S1].
+2. **Actual execution order** — reconstructed from the append-only event log (`run_id`, `cell_id`, `execution_count`, start/end, exit status, input hashes). These routinely diverge in interactive use [EXECUTED W2].
+3. **Current kernel state** — ephemeral; lives only in a live kernel process. On restart/close, nothing may be labeled `current` on its basis [CHOICE].
+4. **Saved-output provenance** — each saved output references the event that produced it (cell id, execution_count, run id, code hash at run time, input dataset version hashes, env stamp). The `.ipynb` `execution_count` alone is insufficient (it does not encode code-vs-output drift or kernel lifetime) [FACT S1 + INFER; W2].
+
+**Per-output status:** `current` (produced by the latest completed replay, or interactive run with matching code hash, live kernel, and unchanged inputs+env), `stale` (any of: cell source edited since the producing event; upstream cell, dataset version, or env binding changed; kernel restarted/closed since), `failed` (producing event ended in error — full traceback preserved per nbformat `error` output [S1] and nbclient behavior [S2]), `unverified` (never executed, or identity of an input is `pending`). [EXECUTED W2] computes exactly these from an nbformat-shaped document plus events.
+
+**Defined invalidation effects:** edit of cell C → C's outputs and all downstream cells' outputs → `stale`; dataset re-import (new content hash) → every output depending on that dataset (transitively) → `stale`; environment binding change (any pinned dependency or Python version) → all outputs of affected notebooks → `unverified` until re-run; kernel restart or interrupted run → old outputs may **not** be re-labeled `current`; an interrupted replay marks cells it had reached `failed/partial` and downstream `stale` [CHOICE].
+
+## 7. Clean replay: guarantee boundary
+
+The product **guarantees** for a clean replay: execution of the exact cell sources (hashed) in declared order, against exactly the recorded dataset versions (hash-verified), inside the recorded environment binding, with per-cell timeout, stop-on-first-error policy (defaulting like nbclient's `allow_errors=False` [S2], user-overridable), full error capture, cancellation at cell boundaries, and per-output status after the run.
+
+The product **explicitly does not guarantee** (labeled `outside-guarantee` in the manifest): wall-clock/absolute-time effects and language-level nondeterminism (random, set/dict iteration, parallel scheduling) — mitigated by seeded-random lint hints, never eliminated; external services (network is default-deny in the sandbox, §8); unpinned packages (replay refuses or downgrades results to `unverified` if the env is not fully pinned); undeclared filesystem access (sandbox denies; attempts surface as errors, informing the user to declare inputs); hardware/GPU variation. A replay producing byte-identical outputs for deterministic content (tables, text) upgrades those outputs to `current`; plot/figure mtime-like fields are normalized before comparison [CHOICE/INFER].
+
+## 8. Execution boundary (notebook code is untrusted)
+
+[CHOICE] Each notebook session or replay runs in a fresh OS-sandboxed process: Linux namespace/seccomp or OCI-container isolation; default-deny filesystem except (a) the project directory rw, (b) declared dataset files **ro**, (c) engine scratch dir rw; network default-deny with per-run opt-in prompt; rlimits for CPU/memory/wall (mirroring the practical envelope of the experiment's own executor, which enforces wall/CPU/memory/stream caps and an empty network namespace). Cancellation = sandbox SIGTERM/kill + event-log close-out. Source browsing and catalog UI run in a separate process from execution, so viewing a malicious notebook never executes it. **The import-blacklist idea is rejected and warned against:** module-name filtering cannot supply isolation (dynamic imports, C extensions, subprocesses, ctypes bypass it); isolation must come from the OS boundary — this matches the isolated executor's own stated design ("kernel isolation supplied by Bubblewrap/systemd, not AST filters"). Usability trade-off: strict FS denial surfaces as user-visible permission prompts (declare this file/dataset), which is the intended friction; a permissive "trusted local folder" mode exists but labels all outputs `unverified` for sharing purposes. [INFER/CHOICE; no single public source captured for the sandbox stack itself — disclosed as an unsupported-critical-dependency in §17.]
+
+## 9. Large data, envelope, truncation
+
+Target envelope: 8 cores / 16 GB RAM. [CHOICE] Data operations are classified at authoring time: *bounded* (projections, filters, grouped aggregates, previews, per-file hashing) run streaming through the embedded engine and must handle a 5 GB CSV/NDJSON/Parquet input within RAM; *global* (full sort without spill config, cross-join, `distinct` on all columns) get an explicit different bound: engine spill-to-disk is enabled with a declared scratch budget, and the UI shows the op class before running. This is a design target to validate, not a verified result [PROPOSED/UNEXECUTED §15]. Result truncation: cell displays are capped (rows/bytes) with a "truncated, full result → output store (hashed file)" link; the manifest records full-result hashes so saved-vs-current comparison never depends on truncated views [CHOICE].
+
+## 10. Concurrency, locking, interrupted-save recovery
+
+[CHOICE] One advisory lock per notebook (`.ws/locks/<notebook>.lock` with pid/host/mtime; stale-lock steal with user confirmation); datasets are read-only shared, so concurrent readers are safe; one writer per project state file using **atomic tmp+rename**, with orphan `.tmp` files garbage-collected on open [EXECUTED W3: direct overwrite of state during a simulated mid-write crash left an unreadable corrupt file; tmp+rename preserved the previous good state]. The event log is append-only JSONL, so a crash loses at most the tail; on reopen, runs without a completion event are marked `interrupted` and their outputs `failed/partial`, never `current`.
+
+## 11. Minimum workflow (all ten steps)
+
+1. **Create project** — folder + `project.json` (schema above). 2. **Import data** — register path, hash, size; no copy; preview allowed pre-hash with `identity=pending`. 3. **Author** — notebook (`.ipynb` [S1]) and/or transform script with PEP 723 deps [S8]. 4. **Preview** — bounded sample, engine+window recorded, badge "sample-based, not full-dataset proof" [S4-motivated; W1]. 5. **Run interactively** — sandboxed kernel; events appended; per-cell status updates; cancellable. 6. **Clean replay** — fresh sandboxed kernel, stop-on-first-error default [S2], progress/cancel UI, per-output statuses. 7. **Compare provenance** — side-by-side of two runs/events: code hash, input versions, env stamp, result digests; saved-vs-current diff on shared columns. 8. **Save** — nbformat write + manifest update, atomic [W3]. 9. **Reopen/share** — open folder/bundle elsewhere; verify dataset hashes; missing data → `identity=missing`, outputs `unverified`. 10. **Export** — results + `manifest.json` (project id, notebook+cell hashes, run events summary, dataset version hashes, env lock, engine versions, ordering declarations, output digests).
+
+## 12. Python support boundary and optional SQL
+
+[CHOICE] Python is the supported notebook language: any CPython the team pins in the env binding (recommend ≥3.11; PEP 723 `requires-python` carries the declaration [S8]) via a standard Python kernel process. The team must not need new language kernels: other languages are out of scope; the *SQL colleague* is served not by a SQL notebook kernel but by the **embedded data engine**: datasets in the catalog are directly queryable (engine table functions / SQL), and an optional SQL cell type routes through the same sandbox, catalog, event log, and status model. SQL is thus an engine capability with its own version pin and defect history (§3), never a second notebook runtime [CHOICE, bounded alternative in §16].
+
+## 13. Standard interchange format
+
+`.ipynb` (nbformat v4.5+) is adopted for storage/exchange: required cell fields, `execution_count` nullability, stable cell `id`s, typed outputs, and `metadata` extensibility are all specified by the schema [S1]. **Adopting it settles only the document**, not runtime behavior: replay policy, error defaults, and status semantics live in the Run Service (contrast nbclient's defaults [S2]) — product metadata rides in schema-tolerant `metadata` objects rather than a format fork [FACT → CHOICE].
+
+## 14. Executed checks (by candidate, admitted isolated executor; details in `witnesses.json`)
+
+- **W1 — preview ≠ full-dataset schema** [EXECUTED]: 1,000-row synthetic CSV, integral preview → full scan finds a decimal and a malformed value. Preview inferred INT; full scan FLOAT + 1 malformed row *counted, not dropped*. Supports the labeled-hypothesis rule. (First attempt `exec-f38eq5jh` had a mis-stated expected label and `pass:false`; corrected rerun `exec-l1btde9f`, exit 0, pass — both disclosed.)
+- **W2 — order/provenance/status model** [EXECUTED]: nbformat-v4.5-shaped notebook with divergent display vs execution order, an edited cell, a never-run cell, and an error cell; analyzer produced exactly the intended statuses (stale/stale/stale/unverified/failed) and detected order divergence (`exec-i439qo2k`, exit 0).
+- **W3 — ordering + interrupted-save recovery** [EXECUTED]: stable sort == explicit tie-break on CPython (coincidence of stability), plausible unstable tie order → different content digest; direct overwrite corrupted state in a simulated mid-write crash, tmp+rename preserved it (`exec-rsruoqw3`, exit 0; earlier attempts `exec-1u1rvts9` — check itself crashed on the corrupt file, which *is* the hazard — and `exec-imb4pwer` — recovery half passed, ordering expectation mis-stated — disclosed).
+- **Scope limits for all three:** tiny synthetic data, candidate-authored stdlib code, isolated component checks (256 MB / 5 s caps, empty network namespace). They validate contract logic only — not a large dataset, not DuckDB, not nbclient, not any full runtime.
+
+## 15. Proposed validation (UNEXECUTED)
+
+V1: end-to-end replay determinism on two machines for a seeded project (byte-diff of exported manifest, table outputs equal after declared normalization). V2: 5 GB synthetic CSV through the engine: preview window < 60 s, streaming aggregate under 16 GB, spill path for a global sort with declared budget (envelope target — not yet run). V3: engine pinning tests per DuckDB release against the #25824 class (probe file with a decimal past the window; assert loud failure or typed losslessness, else block that engine version). V4: sandbox conformance suite (network deny, FS escape attempts, cancellation latency, rlimit enforcement). V5: kill-during-save fuzz (hundreds of randomized interruptions; assert reopen always yields either previous or new complete state, orphan-tmp GC). V6: cross-machine bundle open with a deliberately truncated dataset → `identity=mismatch`, all outputs `unverified`.
+
+## 16. Opportunities and alternatives
+
+**Opportunities:** PEP 723-style dependency blocks per notebook/transform [S8]; content-addressed dataset+output cache enabling safe "compare provenance" UX; optional SQL cells over the shared catalog (small team, no new kernels); portable zip bundles for the folder-exchange workflow.
+**Plausible alternative (bounded):** skip the embedded engine and expose DuckDB only as a Python dependency inside user code — smaller build, but loses catalog-wide identity, cross-notebook SQL for the colleague, and engine-level pinning tests; kept as fallback if engine integration stalls [CHOICE].
+**Rejected/deferred:** real-time collaboration (CRDT merge of `.ipynb` conflicts is a research project; folders+locks suffice at 3 analysts), hosted service and scheduling (contradicts local-first), broad language kernels (obligation rejected), forking the notebook format (schema metadata suffices [S1]).
+
+## 17. Critical dependencies, uncertainties, unsupported design points
+
+1. **Engine behavior at sample boundaries is version-sensitive and partly open:** #25824 unfixed at capture; reporter-claimed version matrix not independently reproduced [S4]. Mitigation: V3 per-release probe; engine version pin in manifests; bounded alternative = force `all_varchar` + explicit typed views at our layer.
+2. **Sandbox stack portability** (Linux namespace/OCI story is solid; macOS/Windows weaker) — unsupported-critical design dependency; bounded alternative: ship Linux-first, "permissive+unverified" mode elsewhere [INFER].
+3. **nbclient/nbformat drift:** evidence captured from docs `latest` (self-reported 0.11) and schema `main`; tag-pinned fetch attempt (nbformat `5.10.4`) 404'd — recorded in `sources.json`; behavior defaults may change between versions; re-pin per release [S1][S2].
+4. **#1015 fix presence in v0.2.4** is merge-ordering inference, not verified inside the tag [S6][S7].
+5. **Replay determinism vs engine parallelism:** stable/deterministic ordering guarantees must be tested per engine release (W3 shows why a priori claims fail).
+
+Sources catalog: `sources.json`; witness receipts: `witnesses.json`; open leads: `leads.json`.

@@ -1,0 +1,116 @@
+{
+  "catalog": "ER9 confirmation-brief-H2 unresolved and optional leads (role: research)",
+  "captured_by": "candidate",
+  "date": "2026-10-06",
+  "note": "Leads are preserved honestly: unresolved dependencies that could change the design, and optional adoptions that must not be presented as shipped requirements.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "OSM Tile Usage Policy page unreachable from this environment",
+      "status": "fetch_failed",
+      "detail": "https://operations.osmfoundation.org/policies/tiles/ and the osmfoundation.org wiki equivalent both failed at the network layer (boundary OSError, attempts 2026-10-06).",
+      "consequence": "Tile-policy specifics (bulk-download rules, quotas) are evidenced only indirectly via the captured OSM copyright page (S5: 'we cannot provide a free-of-charge map API or map tiles for third-parties').",
+      "next_step": "Fetch from an environment with access before any tile-related distribution decision."
+    },
+    {
+      "id": "L2",
+      "title": "ODbL share-alike scope for rendered tile databases",
+      "status": "unresolved",
+      "detail": "S5 captures the ODbL summary (attribution + share-alike for altered data). Whether rendering OSM-derived data into a bundled PMTiles/MBTiles archive constitutes a 'derived database' triggering share-alike needs the full ODbL text and OSMF attribution guidelines (linked from S5, not captured).",
+      "consequence": "If share-alike applies to tile bundles, OSM-derived basemaps inherit redistribution obligations; Natural Earth (S4) avoids this entirely.",
+      "next_step": "Legal review with ODbL 1.0 full text + OSMF Licence/Attribution Guidelines; v1 ships Natural Earth-only basemap."
+    },
+    {
+      "id": "L3",
+      "title": "PROJ library license and per-grid transformation-data licenses",
+      "status": "unresolved",
+      "detail": "EPSG dataset terms captured (S6: no-profit distribution forbidden; acknowledgment required; enumerated modifications only). PROJ's MIT-style code license and the varied licenses of bundled transformation grids (e.g., geoid/shift grids) were not captured.",
+      "consequence": "Determines which CRS/transformation sets can ship inside the app bundle, especially in any paid channel.",
+      "next_step": "Capture PROJ LICENSE and proj-data grid READMEs; inventory needed grids for target regions; legal review for commercial distribution."
+    },
+    {
+      "id": "L4",
+      "title": "PROJ 'axis order' documentation moved (404)",
+      "status": "unresolved",
+      "detail": "proj.org/usage/axis_order.html redirects to a 404 on current stable docs (S18); raw rst path also 404.",
+      "consequence": "PROJ's authoritative current statement on axis order is not yet pinned; axis-order hazards are instead evidenced by the proj4js chain (S7-S9) and RFC 7946 (S3).",
+      "next_step": "Locate the current PROJ docs page (likely restructured under operations/ or FAQ) and pin it."
+    },
+    {
+      "id": "L5",
+      "title": "Renderer selection: MapLibre GL JS vs Leaflet (offline specifics)",
+      "status": "unresolved",
+      "detail": "MapLibre LngLat page captured but only navigation chrome read (S14); style-spec, offline storage behavior, and PMTiles plugin integration not yet evidenced. Leaflet not captured at all.",
+      "consequence": "Renderer choice affects vector vs raster basemap, PMTiles integration path, and accessibility of map interactions; correctness does not depend on it (display-only layer).",
+      "next_step": "Capture MapLibre style spec + PMTiles protocol docs; prototype offline rendering from a bundled archive."
+    },
+    {
+      "id": "L6",
+      "title": "Tablet delivery path (WebView/PWA + local file access)",
+      "status": "unresolved",
+      "detail": "Brief requires tablets; v1 architecture targets laptops. Serving PMTiles and SQLite from a WebView (file:// CORS / range-request behavior, or a loopback HTTP service) is unproven here.",
+      "consequence": "If WebView file access is restricted, tablets need a thin native shell or embedded server (extra surface, security review).",
+      "next_step": "Spike: load a bundled PMTiles in Android/iOS WebView; document fallback."
+    },
+    {
+      "id": "L7",
+      "title": "Automerge (CRDT) at 250k-record scale",
+      "status": "optional_lead",
+      "detail": "Automerge README captured (S12) with the project's own claim of ~10x memory reduction in v3; no independent benchmark captured; behavior with hundreds of thousands of records and binary media is unknown.",
+      "consequence": "CRDT adoption stays an optional merge-layer improvement (proposal section 11); the explicit-conflict flow does not depend on it.",
+      "next_step": "Benchmark automerge document with 250k small records before any adoption decision."
+    },
+    {
+      "id": "L8",
+      "title": "Vertical datum transformations (geoid models) offline",
+      "status": "unresolved",
+      "detail": "v1 stores altitude with an explicit datum label (ellipsoidal per RFC 7946 §4 or 'unknown'); EXIF altitude is sea-level-referenced per S13 (GPSAltitudeRef) — mixing ellipsoidal and orthometric heights silently is a known trap. Geoid grid availability/licensing offline not investigated (ties to L3).",
+      "next_step": "Survey needed geoid models + licenses before promising any altitude conversion; until then, labels only."
+    },
+    {
+      "id": "L9",
+      "title": "GeoPackage requirement body text (axis-order rules, rtree extension requirements)",
+      "status": "unresolved",
+      "detail": "GPKG v1.4 captured partially (S10: identity, TOC, abstract read; 524KB of ~1.46MB); requirement-level text (e.g., coordinate axis conventions, gpkg_extensions rtree registration) not yet read.",
+      "consequence": "Alternative A (GPKG as container) and the P8 conformance suite need the requirement text before commitment.",
+      "next_step": "Read remaining spec capture in byte ranges; extract requirements for spatial_ref_sys, geometry_columns, rtree extension."
+    },
+    {
+      "id": "L10",
+      "title": "Performance benchmark methodology for the 250k target",
+      "status": "proposed_unexecuted",
+      "detail": "P3 defines the harness; no numbers exist. Real-data variance (track density, media counts) unmodeled.",
+      "consequence": "All performance statements in proposal.md remain research targets, not claims.",
+      "next_step": "Run P3 on target-class hardware; publish methodology + raw results."
+    },
+    {
+      "id": "L11",
+      "title": "Full-text search availability in bundled SQLite builds",
+      "status": "unresolved",
+      "detail": "FTS5 assumed available for table search; compile-flag availability in the specific bundled SQLite (like SQLITE_ENABLE_RTREE in S1) must be verified per build.",
+      "next_step": "Verify FTS5 in chosen build; fallback: LIKE with normalized columns + trigram index."
+    },
+    {
+      "id": "L12",
+      "title": "Ink & Switch 'local-first' essay full capture",
+      "status": "pointer_only",
+      "detail": "Only the redirect stub captured (S16 → /essay/local-first); useful for framing and further sync-pattern precedents.",
+      "next_step": "Capture the essay at its current URL when revisiting merge UX."
+    },
+    {
+      "id": "L13",
+      "title": "Photo GPS quality and spoofing/absence handling",
+      "status": "optional_lead",
+      "detail": "S13 lists harvestable provenance tags (DOP, positioning error, processing method, UTC timestamp) and required hemisphere refs; GPSDateStamp/GPSTimeStamp may be absent or inconsistent with the device clock; tags are user-writable. v1 treats photo locations as suggestions with visible confidence fields, never auto-placing records.",
+      "next_step": "Define confidence display rules; consider capture-time cross-checks."
+    },
+    {
+      "id": "L14",
+      "title": "proj4js issue #545 release attribution",
+      "status": "unresolved",
+      "detail": "WKT2-vs-EPSG-code divergence (S15) closed 2026-03-01, but the fixing PR/release was not identified in captured releases (v2.20.8 notes list only build-tool fixes).",
+      "consequence": "If proj4js is used display-side, verify the fix is in the pinned version before relying on WKT2 inputs there; core transforms use PROJ regardless.",
+      "next_step": "Trace closing event of #545 to a PR and release tag."
+    }
+  ]
+}

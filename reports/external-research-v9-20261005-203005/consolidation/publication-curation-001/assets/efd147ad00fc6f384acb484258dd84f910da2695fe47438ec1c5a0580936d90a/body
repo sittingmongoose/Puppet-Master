@@ -1,0 +1,105 @@
+{
+  "catalog_version": 1,
+  "stage": "I-05-LUNA-S1-control-research-a001",
+  "leads": [
+    {
+      "id": "L1",
+      "category": "unresolved critical dependency",
+      "status": "must resolve before implementation qualification",
+      "lead": "Lock and qualify the napari 0.6.5, Python, Qt, tifffile 2025.5.10, Zarr 2.18.7, Dask, and codec combination across the lab workstation operating systems.",
+      "why_it_matters": "Captured package metadata makes the proposed pins plausible but does not establish a working integrated build, long-term support, or a distributable environment.",
+      "next_evidence": "Resolve one reproducible lock, record exact transitive versions, then build and smoke-test the viewer and readers on each OS.",
+      "source_ids": ["S3", "S4", "S8"]
+    },
+    {
+      "id": "L2",
+      "category": "unresolved critical dependency",
+      "status": "must validate against lab data",
+      "lead": "Inventory microscope exports, exact codecs, OME-TIFF series patterns, NGFF axis names, chunk/tile sizes, and ambiguous or malformed metadata before fixing the supported matrix.",
+      "why_it_matters": "The chosen format subset is a product boundary proposal; neither a specification nor a component's broad format list demonstrates compatibility with these instruments.",
+      "next_evidence": "Assemble representative, legally shareable fixtures and document expected metadata and reader behavior, including refusal cases.",
+      "source_ids": ["S1", "S2", "S3"]
+    },
+    {
+      "id": "L3",
+      "category": "unresolved critical performance assumption",
+      "status": "must measure before claiming 3 GB support",
+      "lead": "Bounded tile/chunk reads, decompressor buffers, slice read amplification, cache policy, progress, and cancellation on the target 8-core/16 GB machine.",
+      "why_it_matters": "Lazy/chunked access is a useful mechanism, but the cited napari issue reports a version-specific over-fetching path and the project has no performance measurement yet.",
+      "next_evidence": "Execute witness W2 with exact fixtures and pinned application build; record cold/warm RSS, throughput, latency, cancellation, and adversarial tile behavior.",
+      "source_ids": ["S3", "S4", "S9"]
+    },
+    {
+      "id": "L4",
+      "category": "unresolved critical storage assumption",
+      "status": "must qualify target shared storage",
+      "lead": "Verify SQLite journal recovery, file locking, flush, and same-filesystem rename behavior on the actual shared storage. Keep live editing local unless these semantics are established.",
+      "why_it_matters": "SQLite's atomic commit account depends on filesystem/VFS assumptions; ordinary shared storage may not provide the same behavior as a local filesystem.",
+      "next_evidence": "Fault-injection and close-copy-reopen tests using each actual shared-storage backend; document the tested topology and backup procedure.",
+      "source_ids": ["S10"]
+    },
+    {
+      "id": "L5",
+      "category": "unresolved interoperability dependency",
+      "status": "must decide before promising transform-complete export",
+      "lead": "Determine whether downstream consumers can use the application sidecar that carries full affine transforms and provenance, or whether selected exports must be explicitly resampled.",
+      "why_it_matters": "OME-NGFF 0.4's documented standard transformation vocabulary is scale/translation oriented; sidecar-aware consumers cannot be assumed.",
+      "next_evidence": "Ask researchers to name receiving tools and test round-trips with a translated/scaled image and a rotated/sheared image. Document standard-only loss.",
+      "source_ids": ["S1"]
+    },
+    {
+      "id": "L6",
+      "category": "useful opportunity / deferred",
+      "status": "optional after core project format",
+      "lead": "Export integer masks as NGFF image-label groups with a source-image link when the project's grid and transform are representable or accompanied by the exact app sidecar.",
+      "why_it_matters": "The specification provides a concrete mask-interchange mechanism. It does not replace vector annotations, undo history, full app transforms, or project provenance.",
+      "next_evidence": "Implement an export-only prototype and test in two independent NGFF readers, including grid, label values, and transform interpretation.",
+      "source_ids": ["S1"]
+    },
+    {
+      "id": "L7",
+      "category": "plausible alternative / needs research",
+      "status": "deferred until instrument inventory demonstrates need",
+      "lead": "Evaluate a Bio-Formats or vendor reader/conversion adapter for a specific unsupported instrument format; retain its input as immutable original and record conversion as derived data.",
+      "why_it_matters": "A separately qualified adapter could widen useful access without making every parser part of the core. No current Bio-Formats release, supported-format claim, or integration was researched in this stage.",
+      "next_evidence": "For one named instrument and fixture, inspect primary docs/tests/version history, compare metadata mapping and failure behavior, and compare embedded reader work with researcher-directed conversion to NGFF.",
+      "source_ids": []
+    },
+    {
+      "id": "L8",
+      "category": "optional future workflow",
+      "status": "deferred",
+      "lead": "Bundle comparison or annotation conflict review when six researchers begin editing copies of the same project.",
+      "why_it_matters": "MVP assumes each researcher works on a local copy and exchanges closed bundles; it does not provide merge semantics or simultaneous editing.",
+      "next_evidence": "Observe real exchange patterns and define conflict identity, ownership, and duplicate-annotation resolution before choosing merge behavior.",
+      "source_ids": []
+    },
+    {
+      "id": "L9",
+      "category": "optional infrastructure",
+      "status": "deferred",
+      "lead": "Cloud sync, remote project storage, and live collaboration.",
+      "why_it_matters": "These change identity, locking, recovery, privacy, and concurrent-edit assumptions. They are not required by ordinary shared-storage bundle exchange.",
+      "next_evidence": "Revisit only with a defined access model, supported backend, and explicit conflict/recovery requirements.",
+      "source_ids": []
+    },
+    {
+      "id": "L10",
+      "category": "optional research features",
+      "status": "deferred",
+      "lead": "GPU acceleration, automatic segmentation, and image registration.",
+      "why_it_matters": "They can be useful, but would add execution, provenance, hardware, and quality-validation burdens beyond the minimum annotation workflow.",
+      "next_evidence": "Require a named research use case, reproducible operation record, and comparison against a manual/reference workflow before adoption.",
+      "source_ids": []
+    },
+    {
+      "id": "L11",
+      "category": "optional format expansion",
+      "status": "deferred pending fixtures and measured demand",
+      "lead": "Pyramidal or multi-file OME-TIFF, plate/HCS layouts, mosaics/stage coordinates, proprietary formats, custom axes, and broader sample-type/codec support.",
+      "why_it_matters": "Adding these cases expands axis, identity, calibration, and reader failure modes; no universal compatibility claim is warranted.",
+      "next_evidence": "Promote one case at a time from the instrument inventory with primary format documentation, exact reader pin, fixtures, and refusal/round-trip tests.",
+      "source_ids": ["S1", "S2", "S3"]
+    }
+  ]
+}

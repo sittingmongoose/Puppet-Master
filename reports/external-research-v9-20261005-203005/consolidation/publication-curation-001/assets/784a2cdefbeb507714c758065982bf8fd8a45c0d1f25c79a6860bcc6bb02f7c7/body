@@ -1,0 +1,84 @@
+{
+  "catalog_schema": "er9.research.witnesses.v1",
+  "actor_label": "executed by candidate",
+  "executor": "admitted isolated execution capability (python_execute): stdlib-only candidate-authored code, 256 MB memory cap, 5 s wall cap, empty network namespace; receipts carry code_sha256/exit/stdout sha256 per run",
+  "scope_statement": "All witnesses are tiny synthetic-data, isolated component checks. They validate candidate-authored contract logic ONLY. They do not prove behavior of DuckDB, nbclient, nbformat, any full runtime, or any dataset larger than the synthetic fixtures.",
+  "witnesses": [
+    {
+      "id": "W1",
+      "claim": "A bounded preview's inferred schema can diverge from the full-dataset truth, and malformed rows must be counted (quarantined), never silently dropped — previews must be UI-labeled as hypotheses.",
+      "final_run": {
+        "execution_id": "exec-l1btde9f",
+        "label": "executed by candidate",
+        "code_sha256": "bdf82dd228c6b6cb9393ba190db946d27ac8bbbe9d76128e7e7e48f344c949e3",
+        "data": "1000 synthetic rows; 'amount' integral except decimal '1.5' at row 800 and non-numeric 'N/A' at row 900; preview = first 50 rows",
+        "expected_justification": "A 50-row head sample contains only integers, so a common inference policy labels the column INT; the full scan contains a FLOAT and one non-numeric value, so truth is FLOAT with 1 malformed row detected",
+        "exit_code": 0,
+        "stdout_sha256": "0b57f375260748b7b36c739bdc6fb662013553ba42c54740911a33d02bb4d53f",
+        "stderr": "(empty)",
+        "observed": "preview_amount=INT (INT:50); full_amount=FLOAT (INT:998, FLOAT:1, STR:1); malformed_rows_full=1",
+        "pass": true
+      },
+      "disclosed_attempts": [
+        {
+          "execution_id": "exec-f38eq5jh",
+          "outcome": "pass:false — check ran correctly but the candidate's expected label was mis-stated ('STR/MALFORMED' vs the verdict function's FLOAT precedence); logic and observation identical to final run; rerun with corrected expectation."
+        }
+      ],
+      "scope_limits": "Synthetic 1000-row CSV; inference function is candidate-authored, not an engine sniffer; corroborated externally by duckdb#25824 (S4) for a real engine."
+    },
+    {
+      "id": "W2",
+      "claim": "Displayed cell order, actual execution order, kernel lifetime, and saved-output provenance are separable, and the status model (current/stale/failed/unverified) is computable from an nbformat-v4.5-shaped document plus an event log and saved-vs-current code hashes.",
+      "final_run": {
+        "execution_id": "exec-i439qo2k",
+        "label": "executed by candidate",
+        "code_sha256": "941f78e7e6fa37f1022dc136df730b4635ad99fce99d22cb95baecb44e42f8d7",
+        "data": "5-cell nbformat-shaped notebook: out-of-order execution (load=1, agg=2, clean=3, err=4) vs display order (load, clean, agg, plot, err); 'clean' edited after its last run (hash drift); 'plot' execution_count null, no outputs; 'err' has an error output; kernel not alive",
+        "expected_justification": "Edited cell and cells whose run depended on a now-dead kernel state cannot be 'current'; a never-executed cell is 'unverified'; a cell whose producing event errored is 'failed'; execution order must be recoverable as different from display order",
+        "exit_code": 0,
+        "stdout_sha256": "88afa75a94ff805108de0460c50b52eca74644c163764ccb6f36ae5f1d78b7e3",
+        "stderr": "(empty)",
+        "observed": "statuses {load: stale, clean: stale, agg: stale, plot: unverified, err: failed}; display_order [load, clean, agg, plot, err] != execution_order [load, agg, clean, err]",
+        "pass": true
+      },
+      "disclosed_attempts": [],
+      "scope_limits": "Document structure is candidate-built to the captured schema shape (S1), not produced by real kernels; status rules are the proposal's own model, exercised once."
+    },
+    {
+      "id": "W3",
+      "claim": "(a) Row ordering by key alone does not pin a reproducible order: a stable sort coincides with a full tie-break only by implementation luck, while a plausible unstable engine tie-order yields different content; manifests must declare ordering mode + explicit tie-break. (b) Atomic tmp+rename save survives a simulated mid-write crash; direct overwrite corrupts state.",
+      "final_run": {
+        "execution_id": "exec-rsruoqw3",
+        "label": "executed by candidate",
+        "code_sha256": "be7381feb88bf432ee8895f0a3f40381d673e57d3069990584754df0b0d112ee",
+        "data": "4 rows with duplicate keys {a,b}; digests over three orderings; project/nb1.state.json written, corrupted via interrupted direct overwrite, then atomically rewritten",
+        "expected_justification": "CPython sort is stable so stable==deterministic digests here (the coincidence is the point); an unstable variant must differ; a crash mid non-atomic overwrite must leave unreadable state; tmp+rename must leave the prior good state readable",
+        "exit_code": 0,
+        "stdout_sha256": "fd238e4d1d4ec385c0e8846ff988914f9e5292dfc758c747f3d8b4ec75a9faec",
+        "stderr": "(empty)",
+        "observed": "digests {stable: 385f7bd538e1da51, deterministic: 385f7bd538e1da51, unstable_variant: 1c0c4c2cbde7b566}; direct_readable_after_crash=false (JSONDecodeError); atomic_ok=true",
+        "pass": true
+      },
+      "disclosed_attempts": [
+        {
+          "execution_id": "exec-1u1rvts9",
+          "outcome": "exit 1 — the check itself crashed with JSONDecodeError when reading the deliberately corrupted non-atomic save (the hazard manifesting); rerun restructured to classify corrupt as not-survived."
+        },
+        {
+          "execution_id": "exec-imb4pwer",
+          "outcome": "exit 0 — recovery half passed (corrupt vs atomic intact); ordering half judged pass:false because the expectation required stable != deterministic, which is false under CPython's stable sort; rerun with corrected, justified expectation."
+        }
+      ],
+      "scope_limits": "Single-process stdlib; 'unstable_variant' is a constructed plausible ordering, not an observed engine output; no real parallel engine exercised (V2/V3 would)."
+    }
+  ],
+  "proposed_only": [
+    { "id": "V1", "text": "Cross-machine clean-replay byte-determinism check (manifest + table outputs)", "status": "PROPOSED/UNEXECUTED" },
+    { "id": "V2", "text": "5 GB CSV streaming/spill envelope benchmark (preview <60 s; aggregate <16 GB RSS; global sort with declared scratch budget)", "status": "PROPOSED/UNEXECUTED" },
+    { "id": "V3", "text": "Per-engine-release probe of the #25824 class (decimal/timestamp past sample window) to gate engine version pins", "status": "PROPOSED/UNEXECUTED" },
+    { "id": "V4", "text": "Sandbox conformance suite (network deny, FS escape, cancellation latency, rlimits)", "status": "PROPOSED/UNEXECUTED" },
+    { "id": "V5", "text": "Kill-during-save fuzz; reopen must yield previous-or-new complete state", "status": "PROPOSED/UNEXECUTED" },
+    { "id": "V6", "text": "Bundle open with truncated dataset -> identity=mismatch, outputs unverified", "status": "PROPOSED/UNEXECUTED" }
+  ]
+}

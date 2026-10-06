@@ -1,0 +1,184 @@
+{
+  "schema": "seed.dependencies.v1",
+  "stage": "SEED-DEV-B-base-s001",
+  "brief_source": {"path": "inputs/brief.md", "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"},
+  "obligations": [
+    {"id": "B01", "brief_lines": [3], "text": "Local-first notebook/data project for three Python analysts and a SQL colleague; explain result differences, provenance and stale outputs."},
+    {"id": "B02", "brief_lines": [5], "text": "CSV, NDJSON and columnar data; large inputs; schema and bounded preview; nulls/Unicode/timestamps/heterogeneous values; sample is not full-data proof; explicit contract; preserve malformed/source data."},
+    {"id": "B03", "brief_lines": [7], "text": "Distinguish display order, execution order, live kernel state and saved output provenance; clean replay limits; request/cancel/progress/errors/status; invalidation; restart/interruption handling."},
+    {"id": "B04", "brief_lines": [9], "text": "Cover create/import/author/preview/interactive run/clean replay/compare/save/reopen/export; project/environment/data/event/output records; bounded Python and optional SQL; assess standard format."},
+    {"id": "B05", "brief_lines": [11], "text": "Investigate 8-core/16-GB envelope and 5-GB streaming target; schema evolution, caching, truncation, ordering, concurrency, interrupted-save recovery and folder/bundle exchange."},
+    {"id": "B06", "brief_lines": [13], "text": "Untrusted code isolation and trade-offs; candidate check only in admitted isolated execution; browsing separate; no import-blacklist claim; synthetic check is limited."},
+    {"id": "B07", "brief_lines": [15], "text": "Clear provenance, accessible status/errors and saved/current output diffs; optional ideas stay optional."},
+    {"id": "B08", "brief_lines": [17], "text": "At least two independent implementation precedents and a real failure/fix/regression chain with release scope and evidence limits."},
+    {"id": "B09", "brief_lines": [19], "text": "Standalone proposal with source pins, dependencies, unsupported behavior, realistic validation, fact/inference/choice/check separation, opportunity and alternative; no whole-product build."}
+  ],
+  "dependencies": [
+    {
+      "id": "D01",
+      "kind": "source_fact_and_product_choice",
+      "claim": "Jupyter nbclient is the Python notebook execution precedent: v0.10.2 walks notebook cells in stored list order and executes through a kernel lifecycle. The notebook v4.5 schema stores displayed cell order, code outputs and nullable execution_count but no event history/data identity/environment lock. Choose .ipynb as interchange and use separate project provenance records.",
+      "source_bindings": [
+        {"source_id": "nbclient-0102-client", "pin": "nbclient 0.10.2, commit 5a68cb361412d540e23fbc444cda75ede73c16d1", "capture_sha256": "3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971"},
+        {"source_id": "nbformat-5104-v45-schema", "pin": "nbformat v5.10.4, notebook schema v4.5", "capture_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"}
+      ],
+      "brief_obligations": ["B03", "B04", "B08"],
+      "limits": "This evidence describes a runtime and file schema, not a complete interactive application, dependency graph, or guarantee that arbitrary notebooks replay identically."
+    },
+    {
+      "id": "D02",
+      "kind": "source_fact_and_component_choice",
+      "claim": "DuckDB v1.4.1 is an independent data-engine precedent. The pinned read_csv implementation registers multi-file CSV functions and explicit parser controls; DuckDB's Python interface can run SQL, so Python plus this engine can serve the current team's SQL use without a second language kernel. Choose it as the first engine to prototype, subject to compatibility/performance/security validation.",
+      "source_bindings": [
+        {"source_id": "duckdb-141-tag-ref", "pin": "DuckDB v1.4.1, commit b390a7c3760bd95926fe8aefde20d04b349b472e", "capture_sha256": "65ee83da3ee77d81871c6b792c94d0eaf9bc68dc79d87c8f74cb923f6f32c1da"},
+        {"source_id": "duckdb-141-read-csv-code", "pin": "DuckDB commit b390a7c3760bd95926fe8aefde20d04b349b472e, src/function/table/read_csv.cpp", "capture_sha256": "9fb39cad210f45f0d63036321ca193d129ef48eaf5977cbbe6380f21760bdd2a"},
+        {"source_id": "duckdb-lts-python-sql", "pin": "DuckDB 1.4 LTS documentation, capture SHA 9987c41760e33c692d849058e30b310e50c09c0a3b4ad4453fc03cede3e195b1", "capture_sha256": "9987c41760e33c692d849058e30b310e50c09c0a3b4ad4453fc03cede3e195b1"}
+      ],
+      "brief_obligations": ["B01", "B04", "B08"],
+      "limits": "The repositories/mechanisms are distinct; this does not claim no transitive dependencies or validate a packaged combination. DuckDB v1.4.1 is a research pin, not a final release recommendation."
+    },
+    {
+      "id": "D03",
+      "kind": "source_fact_and_contract_choice",
+      "claim": "DuckDB 1.4 LTS CSV auto-detection samples 20,480 rows by default (with -1 for full-file detection in documented modes); compressed/nonseekable sources may sample only an initial segment. Documentation pages disagree on candidate-type ordering. Treat sampled schema as provisional, make parser/type/date/null rules part of a versioned contract, label preview evidence, and require a full-input check before claiming whole-file validity.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-csv-overview", "pin": "DuckDB 1.4 LTS page, capture SHA eb3a6949223516edb7828f859432f46c8671402fa37c92a8c2e2c34541f2cf49", "capture_sha256": "eb3a6949223516edb7828f859432f46c8671402fa37c92a8c2e2c34541f2cf49"},
+        {"source_id": "duckdb-lts-csv-auto-detection", "pin": "DuckDB 1.4 LTS page, capture SHA b74fe88b88257c0eadf870c44864337fcf4587d9454d408895ace37973b92a2e", "capture_sha256": "b74fe88b88257c0eadf870c44864337fcf4587d9454d408895ace37973b92a2e"}
+      ],
+      "brief_obligations": ["B02", "B05"],
+      "limits": "The LTS docs are mutable web pages captured on 2026-10-05. The candidate-type disagreement is documented rather than resolved; exact behavior should be checked against the selected engine binary."
+    },
+    {
+      "id": "D04",
+      "kind": "source_fact_and_error_policy_choice",
+      "claim": "DuckDB's faulty-CSV guide documents that ignore_errors can skip conversion failures and projection pushdown can avoid parsing an unselected malformed field. Reject diagnostics are temporary tables. Therefore normal contract validation defaults to strict failure across all declared fields; quarantine is an explicit, durable new artifact with row diagnostics, never silent source mutation/deletion.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-csv-faulty", "pin": "DuckDB 1.4 LTS page, capture SHA e2d0a66662d031a1c88138dcaee150f7755ce82311cad6b8a8e5a93d67bcc0b7", "capture_sha256": "e2d0a66662d031a1c88138dcaee150f7755ce82311cad6b8a8e5a93d67bcc0b7"},
+        {"source_id": "duckdb-lts-csv-overview", "pin": "DuckDB 1.4 LTS page, capture SHA eb3a6949223516edb7828f859432f46c8671402fa37c92a8c2e2c34541f2cf49", "capture_sha256": "eb3a6949223516edb7828f859432f46c8671402fa37c92a8c2e2c34541f2cf49"}
+      ],
+      "brief_obligations": ["B02", "B03", "B09"],
+      "limits": "The selected engine behavior and exact reject record retention require executable validation; documented temporary reject tables alone do not establish a durable product workflow."
+    },
+    {
+      "id": "D05",
+      "kind": "source_fact_and_contract_choice",
+      "claim": "DuckDB 1.4 LTS JSON loading documents NDJSON support, missing object keys becoming NULL, parse errors failing by default, and sample_size 20,480 by default. Record absent-versus-explicit-null semantics in the dataset contract and let users inspect sampled schema without treating it as a full-file fact.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-json-loading", "pin": "DuckDB 1.4 LTS page, capture SHA e4695995839d3ffd1568a3a51af0727b4cf95dac74827576e43aeda1c8a15ddc", "capture_sha256": "e4695995839d3ffd1568a3a51af0727b4cf95dac74827576e43aeda1c8a15ddc"}
+      ],
+      "brief_obligations": ["B02", "B05"],
+      "limits": "Conversion and null mapping can vary with selected options and engine release; preserve original bytes and test exact mappings before presenting normalized values as lossless."
+    },
+    {
+      "id": "D06",
+      "kind": "source_fact_and_identity_choice",
+      "claim": "DuckDB 1.4 LTS documents order preservation for some operations and no general guarantee for joins, grouping, sampling or ORDER BY ties. Use an explicit unique key for logical row identity; absent one, expose source-hash plus physical locator only as an unchanged-file locator. Require ORDER BY with a unique tie-breaker for promised stable result order.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-order-preservation", "pin": "DuckDB 1.4 LTS page, capture SHA ed48c9a70bd481a0077ed1a2b029193da99585a0ac770541e585962b331ea3d3", "capture_sha256": "ed48c9a70bd481a0077ed1a2b029193da99585a0ac770541e585962b331ea3d3"},
+        {"source_id": "duckdb-lts-parquet", "pin": "DuckDB 1.4 LTS page, capture SHA 0fbacd3d82f1a1e9fa696c91fb0a5127f85605961c0866e9fb1cae74e273cefb", "capture_sha256": "0fbacd3d82f1a1e9fa696c91fb0a5127f85605961c0866e9fb1cae74e273cefb"}
+      ],
+      "brief_obligations": ["B02", "B05"],
+      "limits": "Physical locators are useful only relative to identical source bytes and parse settings; they are not stable business identities after file rewrite/repartition."
+    },
+    {
+      "id": "D07",
+      "kind": "source_fact_and_performance_choice",
+      "claim": "DuckDB docs describe file readers, pushdown, and spill-to-disk support for selected blocking operations, while configuration defaults permit memory use at 80% of RAM and use one thread per core. Choose a bounded reader/export path, modest managed worker budget and temporary-disk quota; the 5 GB input target remains a benchmark obligation, not an established result.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-parquet", "pin": "DuckDB 1.4 LTS page, capture SHA 0fbacd3d82f1a1e9fa696c91fb0a5127f85605961c0866e9fb1cae74e273cefb", "capture_sha256": "0fbacd3d82f1a1e9fa696c91fb0a5127f85605961c0866e9fb1cae74e273cefb"},
+        {"source_id": "duckdb-lts-performance-environment", "pin": "DuckDB 1.4 LTS page, capture SHA f959d93f5dc98ddab1c7806667c163df5c31e95efacb19355c591b1aa5c22366", "capture_sha256": "f959d93f5dc98ddab1c7806667c163df5c31e95efacb19355c591b1aa5c22366"},
+        {"source_id": "duckdb-lts-config", "pin": "DuckDB 1.4 LTS page, capture SHA ac3ecfef55ce4112ead4e27680ea695db49d4ce9402b016503a66815e5f0ea2f", "capture_sha256": "ac3ecfef55ce4112ead4e27680ea695db49d4ce9402b016503a66815e5f0ea2f"}
+      ],
+      "brief_obligations": ["B05", "B09"],
+      "limits": "No benchmark was run. CSV, NDJSON, join cardinality, sort volume, storage speed and output materialization can change memory, temporary disk and latency materially."
+    },
+    {
+      "id": "D08",
+      "kind": "source_fact_and_security_choice",
+      "claim": "DuckDB 1.4 LTS configuration documents external access and known-extension autoload enabled by default. Since notebook code is untrusted, execute it in an OS-enforced worker with no ambient secrets, restricted mounts/network/resources and locked extension policy; do not treat import filtering or engine defaults as isolation.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-config", "pin": "DuckDB 1.4 LTS page, capture SHA ac3ecfef55ce4112ead4e27680ea695db49d4ce9402b016503a66815e5f0ea2f", "capture_sha256": "ac3ecfef55ce4112ead4e27680ea695db49d4ce9402b016503a66815e5f0ea2f"}
+      ],
+      "brief_obligations": ["B06"],
+      "limits": "The proposal names an enforcement design, not a proven cross-platform sandbox. Linux worker controls and Windows/macOS equivalents need implementation and attack testing."
+    },
+    {
+      "id": "D09",
+      "kind": "source_fact_and_product_choice",
+      "claim": "nbclient PR #282 reports a duplicated error display that hid the useful stdout/stderr context; patch, release implementation and test show streams were incorporated into CellExecutionError and asserted by v0.7.4. Carry stdout/stderr and tracebacks as separate execution-event evidence, make truncation explicit and cap UI rendering while retaining quota-managed full logs.",
+      "source_bindings": [
+        {"source_id": "nbclient-pr-282-report", "pin": "PR #282, merge commit 314c12ed3621e31a8b3f0713fd8ac41d3931bddc", "capture_sha256": "6122fc4b5c004051db58ee0319242513d56236c16321480b67accaa872975f5f"},
+        {"source_id": "nbclient-pr-282-patch", "pin": "PR #282 patch, merge commit 314c12ed3621e31a8b3f0713fd8ac41d3931bddc", "capture_sha256": "35868bd41930f11f1cca3f26f69a06f4eb0c537763490d90cb961c88f2a98a58"},
+        {"source_id": "nbclient-074-tag-object", "pin": "nbclient v0.7.4, tag object 8be9cb42f1d2c8b72028299e49a5a1083b5d2a87 -> commit d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b", "capture_sha256": "ec6adadd8f71cd1f89c67bfb900626557a2b0008175abaa3c62b6b9173320371"},
+        {"source_id": "nbclient-074-exceptions", "pin": "nbclient v0.7.4 commit d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b", "capture_sha256": "a31d8b2e8476de8fd6baa65fa40e45931fee5491d50f0307868acb42c9a72b72"},
+        {"source_id": "nbclient-074-tests", "pin": "nbclient v0.7.4 commit d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b, test_force_raise_errors", "capture_sha256": "59694b5e995a6f48b5a34280060e2ef549de51e47837f2869403fa447d816be2"},
+        {"source_id": "nbclient-0102-changelog", "pin": "nbclient v0.10.2 changelog at commit 5a68cb361412d540e23fbc444cda75ede73c16d1", "capture_sha256": "c49dcd17b4aa1d6cbd1125143763de8b3000c5569b42bf6aaa9e9d99f52b6f7d"}
+      ],
+      "brief_obligations": ["B03", "B07", "B08"],
+      "limits": "Release test supports the reported case, not all kernels/error encodings. Its Unicode assertion is skipped on Windows. PR discussion explicitly warns stream output can be arbitrarily large."
+    },
+    {
+      "id": "D10",
+      "kind": "engineering_inference_and_product_choice",
+      "claim": "Choose an append-only event ledger plus output records outside the notebook: run/cell identity, selected order, observed execution order, kernel restart/cancel/failure, source/contract/environment pins, permission profile, output hashes and truncation state. Current status requires a successful complete clean run and matching declared dependencies. Legacy output and interactive state without a captured dependency basis are unverified; edits, source/environment changes, restart or interrupted run invalidate affected results conservatively.",
+      "source_bindings": [
+        {"source_id": "nbformat-5104-v45-schema", "pin": "nbformat v5.10.4 notebook v4.5 schema", "capture_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"},
+        {"source_id": "nbclient-0102-client", "pin": "nbclient 0.10.2 commit 5a68cb361412d540e23fbc444cda75ede73c16d1", "capture_sha256": "3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971"}
+      ],
+      "brief_obligations": ["B01", "B03", "B04", "B05", "B07"],
+      "limits": "This is a product policy inferred from state the cited formats/runtime expose or omit. It is not a feature supplied by Jupyter or demonstrated by the toy witness. Static notebook dependency analysis remains approximate; use conservative invalidation."
+    },
+    {
+      "id": "D11",
+      "kind": "engineering_inference_and_product_choice",
+      "claim": "Use a portable folder manifest with relative input references, full content SHA-256 for clean replay, fast size/mtime hints for browsing, explicit relink-and-rehash after moving, lockfile/runtime/engine pins, and optional bundles containing selected inputs and immutable derived outputs. Preserve source bytes; represent schema evolution as a new contract revision and fail incompatible changes pending user decision.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-csv-auto-detection", "pin": "DuckDB 1.4 LTS capture SHA 33d987b5adecc5174291055310f49b3cdaf4d904bd5c4664eb53bed1a73b69b2", "capture_sha256": "b74fe88b88257c0eadf870c44864337fcf4587d9454d408895ace37973b92a2e"},
+        {"source_id": "duckdb-lts-json-loading", "pin": "DuckDB 1.4 LTS capture SHA e4695995839d3ffd1568a3a51af0727b4cf95dac74827576e43aeda1c8a15ddc", "capture_sha256": "e4695995839d3ffd1568a3a51af0727b4cf95dac74827576e43aeda1c8a15ddc"}
+      ],
+      "brief_obligations": ["B02", "B04", "B05"],
+      "limits": "Full hashing adds I/O for large files. Fast stat-based identity alone is explicitly insufficient for a verified replay. Portable bundles can be large and must make data inclusion opt-in."
+    },
+    {
+      "id": "D12",
+      "kind": "engineering_inference_and_validation_choice",
+      "claim": "Use bounded previews and bounded table rendering; stream eligible transforms to disk-backed results; place explicit estimates/limits on global operations and avoid full-result dataframe conversion by default. Benchmark 5 GB source behavior under 8 cores/16 GB and record RSS, temp-disk, latency and correctness separately from documentation claims.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-performance-environment", "pin": "DuckDB 1.4 LTS capture SHA f959d93f5dc98ddab1c7806667c163df5c31e95efacb19355c591b1aa5c22366", "capture_sha256": "f959d93f5dc98ddab1c7806667c163df5c31e95efacb19355c591b1aa5c22366"},
+        {"source_id": "duckdb-lts-python-sql", "pin": "DuckDB 1.4 LTS capture SHA 9987c41760e33c692d849058e30b310e50c09c0a3b4ad4453fc03cede3e195b1", "capture_sha256": "9987c41760e33c692d849058e30b310e50c09c0a3b4ad4453fc03cede3e195b1"}
+      ],
+      "brief_obligations": ["B02", "B05", "B09"],
+      "limits": "Performance and memory claims remain proposed validation; no large-data check was executed in this seed."
+    },
+    {
+      "id": "D13",
+      "kind": "product_choice_and_opportunity",
+      "claim": "Prefer a conventional folder-first project and Git-readable manifests as the base workflow; offer content-addressed generated artifacts and reviewable saved/current output diffs. Keep hosted collaboration, scheduling and additional kernels optional. A plausible alternative is project-owned Parquet import/materialization for portable snapshots; it trades extra storage and import time for controlled representation and simpler relinking.",
+      "source_bindings": [
+        {"source_id": "nbformat-5104-v45-schema", "pin": "nbformat v5.10.4, notebook v4.5 schema", "capture_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"},
+        {"source_id": "duckdb-lts-parquet", "pin": "DuckDB 1.4 LTS capture SHA 0fbacd3d82f1a1e9fa696c91fb0a5127f85605961c0866e9fb1cae74e273cefb", "capture_sha256": "0fbacd3d82f1a1e9fa696c91fb0a5127f85605961c0866e9fb1cae74e273cefb"}
+      ],
+      "brief_obligations": ["B04", "B05", "B07", "B09"],
+      "limits": "These are product direction and opportunity, not sourced claims about Git collaboration or a built bundle implementation."
+    },
+    {
+      "id": "D14",
+      "kind": "executed_candidate_check",
+      "claim": "One tiny synthetic candidate-authored Python check computed downstream invalidation closure in a four-node toy graph and confirmed canonical JSON provenance keys change when source or environment pins change. Receipt: execution_id exec-lhht3mfx, exit 0, code SHA-256 ab34c8fb1e7b8e5a6a3c7c5a8b13a3983f0e6d591fa2541dcac22418fa67086c. This checks only the stated toy model.",
+      "source_bindings": [],
+      "brief_obligations": ["B03", "B06", "B09"],
+      "limits": "It did not read case files or source code, exercise nbclient/DuckDB, test a product, validate large data, or establish semantic correctness. Full adapter receipt and authored code are in witnesses.json."
+    },
+    {
+      "id": "D15",
+      "kind": "proposed_unexecuted_validation",
+      "claim": "Before implementation acceptance, test the complete workflow, explicit schema and malformed-row handling, invalidation/replay, cancel/restart/interrupted save, project relink/bundle, concurrency/locking, OS sandbox enforcement, and the 5 GB target on the stated workstation with measured resource/correctness evidence.",
+      "source_bindings": [
+        {"source_id": "duckdb-lts-csv-faulty", "pin": "DuckDB 1.4 LTS capture SHA e2d0a66662d031a1c88138dcaee150f7755ce82311cad6b8a8e5a93d67bcc0b7", "capture_sha256": "e2d0a66662d031a1c88138dcaee150f7755ce82311cad6b8a8e5a93d67bcc0b7"},
+        {"source_id": "nbclient-074-tests", "pin": "nbclient v0.7.4 commit d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b", "capture_sha256": "59694b5e995a6f48b5a34280060e2ef549de51e47837f2869403fa447d816be2"}
+      ],
+      "brief_obligations": ["B02", "B03", "B04", "B05", "B06", "B07", "B09"],
+      "status": "UNEXECUTED; plan only"
+    }
+  ]
+}

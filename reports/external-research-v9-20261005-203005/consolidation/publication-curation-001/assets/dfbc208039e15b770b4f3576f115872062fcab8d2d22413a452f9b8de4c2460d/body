@@ -1,0 +1,300 @@
+{
+  "catalog": "ER9 confirmation-brief-H2 research sources (role: research)",
+  "captured_by": "candidate",
+  "capture_date": "2026-10-06",
+  "method": "public HTTPS GET via admitted boundary tool; exact-response-body captures with server-side sha256 recorded by the harness",
+  "note": "A source catalog record does not replace the citations in proposal.md; locators below are the exact sections/fields relied on.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "The SQLite R*Tree Module (SQLite documentation)",
+      "url": "https://www.sqlite.org/rtree.html",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:24:18.467854+00:00",
+      "capture_id": "a9ea8d5e2bcf42f298c7f36095c18f5d",
+      "sha256": "de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55",
+      "bytes_observed": 41813,
+      "content_type": "text/html; charset=utf-8",
+      "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+      "locators": [
+        "section 3.4 'Roundoff Error': coordinates stored as 32-bit floats; lower bounds rounded down, upper bounds rounded up; contained-within queries should expand boxes by 0.000012%",
+        "section 3.5: writes during an R*Tree scan fail with SQLITE_LOCKED",
+        "section 4 'Key Point': an R*Tree 'does not normally provide the exact answer but merely reduces the set of potential answers'",
+        "section 4.1: auxiliary columns since SQLite 3.24.0 (2018-06-04)",
+        "section 2: R*Tree requires SQLITE_ENABLE_RTREE compile flag",
+        "section 3: min/max columns rigidly 32-bit float (rtree) or 32-bit int (rtree_i32)"
+      ],
+      "applicability": "spatial index design, viewport query padding, index/truth separation (proposal sections 5.5, 8, 13.1)"
+    },
+    {
+      "id": "S2",
+      "title": "Write-Ahead Logging (SQLite documentation)",
+      "url": "https://www.sqlite.org/wal.html",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:25:01.114504+00:00",
+      "capture_id": "b245ae30718144afbf96c1e8d58921a9",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes_observed": 42143,
+      "content_type": "text/html; charset=utf-8",
+      "locators": [
+        "section 4 'The WAL File': 'If a database file is separated from its WAL file, then transactions that were previously committed to the database might be lost, or the database file might become corrupted'",
+        "section 1: WAL does not work over a network filesystem; readers do not block writers",
+        "section 3.3: WAL journal mode is persistent across reopen",
+        "sections 2.1/2.3: checkpointing moves WAL content into the DB; with synchronous=NORMAL the checkpoint is the only sync point",
+        "section 5: read-only WAL databases constraints (SQLite >= 3.22.0)"
+      ],
+      "applicability": "recovery contract, bundle copy/relocation procedure, offline durability (proposal sections 7, 8)"
+    },
+    {
+      "id": "S3",
+      "title": "RFC 7946: The GeoJSON Format (IETF, Standards Track, August 2016)",
+      "url": "https://www.rfc-editor.org/rfc/rfc7946.txt",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:24:20.373333+00:00",
+      "capture_id": "97c7f5ff9f744bfc8e1ac27d0891e22b",
+      "sha256": "cb52f07b9cc6c841750d75850988fe8f32c7b7f0e1f7420f2069d5b5ded124f8",
+      "bytes_observed": 49143,
+      "content_type": "text/plain;charset=utf-8",
+      "locators": [
+        "section 3.1.1 Position: 'The first two elements are longitude and latitude, or easting and northing, precisely in that order'",
+        "section 4 Coordinate Reference System: WGS 84 datum, decimal degrees, equivalent to urn:ogc:def:crs:OGC::CRS84; optional third element 'SHALL be the height in meters above or below the WGS 84 reference ellipsoid'; alternative CRSs removed vs. GeoJSON 2008",
+        "section 3.1.9 Antimeridian Cutting: crossing geometries SHOULD be cut in two (MultiLineString/MultiPolygon example)",
+        "section 5.2 The Antimeridian: antimeridian-spanning bbox convention [177.0, -20.0, -178.0, -16.0]",
+        "section 3.1.10: number of digits MUST NOT be interpreted as uncertainty",
+        "section 3.2: Feature geometry may be JSON null for unlocated features"
+      ],
+      "applicability": "canonical coordinate order/datum, export contract, antimeridian handling, incomplete-coordinate export (proposal sections 3, 5)"
+    },
+    {
+      "id": "S4",
+      "title": "Natural Earth — Terms of Use",
+      "url": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:24:21.713625+00:00",
+      "capture_id": "14fa07558fe04241bedf754eb1cdcf7c",
+      "sha256": "f6395c11803cf7aa141848b68f89ee99b84944fb56169cd27c01b51e51cb6dbc",
+      "bytes_observed": 38013,
+      "content_type": "text/html; charset=UTF-8",
+      "locators": [
+        "page body 'Terms of Use': 'All versions of Natural Earth raster + vector map data found on this website are in the public domain'",
+        "'No permission is needed to use Natural Earth. Crediting the authors is unnecessary.'"
+      ],
+      "applicability": "selected bundled basemap source license (proposal section 9)"
+    },
+    {
+      "id": "S5",
+      "title": "OpenStreetMap — Copyright and License",
+      "url": "https://www.openstreetmap.org/copyright",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:25:01.955003+00:00",
+      "capture_id": "630b55b404814d3b9731951ba96e20b3",
+      "sha256": "4a5bd77082944cb44a2877497838876cc8afe0987db6a0b169218db9bcd84a1d",
+      "bytes_observed": 21314,
+      "content_type": "text/html; charset=utf-8",
+      "locators": [
+        "'OpenStreetMap licensing' section: data licensed under ODbL; credit + make ODbL availability clear; 'If you alter or build upon our data, you may distribute the result only under the same license'",
+        "'Additional services' section: 'Although OpenStreetMap is open data, we cannot provide a free-of-charge map API or map tiles for third-parties' with links to API/Tile/Nominatim usage policies"
+      ],
+      "applicability": "OSM-derived basemap licensing constraints; establishes that server tiles cannot be bundled (proposal section 9); full ODbL text not captured (lead L2)"
+    },
+    {
+      "id": "S6",
+      "title": "EPSG Dataset Terms of Use (IOGP GeoRepository; dataset v13.104 shown on page)",
+      "url": "https://epsg.org/terms-of-use.html",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:25:02.432507+00:00",
+      "capture_id": "7c4b5371b3404f82b3d16c705573aa59",
+      "sha256": "427788800c8346dfb3520b56c0773e91f55feab56c7c523fd590d47d0831d0de",
+      "bytes_observed": 46396,
+      "content_type": "text/html; charset=UTF-8",
+      "locators": [
+        "terms revised 8 April 2016, item 2: 'The EPSG Facilities are published by IOGP at no charge. Distribution for profit is forbidden.'",
+        "item 6.iii/iv: ownership of the EPSG Dataset must be acknowledged in any publication or transmission",
+        "item 6.v-vii: subsets may be extracted; only enumerated parameter modifications permitted; modified data must not be attributed to the EPSG Dataset",
+        "'Table 1: Permitted modifications of data' (ellipsoid parameter equivalences, projection method variant swaps)"
+      ],
+      "applicability": "CRS registry bundling feasibility and constraints (proposal sections 9, 15); legal review flagged as lead L3"
+    },
+    {
+      "id": "S7",
+      "title": "proj4js issue #575 — 'forward(...,true) does not respect vertical axis'",
+      "url": "https://github.com/proj4js/proj4js/issues/575",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:25:32.631191+00:00",
+      "capture_id": "edf667677d1c4ea78dd1fbbebb989eb3",
+      "sha256": "c36afa9085cf32a112e4d9ff32a442dd0eb180142e1cdf20b65c96a3440779f9",
+      "bytes_observed": 4328,
+      "content_type": "application/json; charset=utf-8",
+      "locators": [
+        "JSON fields: number=575, state=closed, created_at=2026-05-14T01:57:50Z, closed_at=2026-05-17T08:18:00Z, user=rotu, closed_by=ahocevar",
+        "body: enu→ned repro expecting [10,20,30] → [20,10,-30]; Z not negated even with enforceAxis"
+      ],
+      "applicability": "issue/fix/regression chain part 1 (proposal section 13.2); axis-order hazard evidence"
+    },
+    {
+      "id": "S8",
+      "title": "proj4js PR #576 — 'Fix enforceAxis for z and arbitrary orders' (file diffs)",
+      "url": "https://github.com/proj4js/proj4js/pull/576/files",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:25:33.328223+00:00",
+      "capture_id": "9fa03099554342959f43e5c7406468e1",
+      "sha256": "a9fb563a6de188af6baade6ddcd2b0138a6e231ed958fe0c13091aeee412328c",
+      "bytes_observed": 14188,
+      "content_type": "application/json; charset=utf-8",
+      "locators": [
+        "files changed: lib/Proj.js, lib/adjust_axis.js (rewritten as adjustAxisToEnu/adjustAxisFromEnu with e/w/n/s/u/d sign cases), lib/core.js, lib/transform.js, test/proj4.test.mjs (+29 lines)",
+        "head commit c5bb8e14be92d3479f091393aa3bf9694f97fa86",
+        "tests added: 'should respect the vertical axis when enforceAxis is true'; 'should handle non-trivial axis reordering with enforceAxis' (enu→ned, neu→uen, uen→uen roundtrip)"
+      ],
+      "applicability": "issue/fix/regression chain part 2 (proposal section 13.2); design of single-choke-point axis policy"
+    },
+    {
+      "id": "S9",
+      "title": "proj4js releases (v2.22.0, v2.21.0, v2.20.9, v2.20.8, v2.20.7)",
+      "url": "https://api.github.com/repos/proj4js/proj4js/releases?per_page=5",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:25:33.606765+00:00",
+      "capture_id": "72c567af1e3f461eaa6580867604fe92",
+      "sha256": "67580af975ecf35096699f40e887bee5667fcdaf417b05ae1e098b011730fc56",
+      "bytes_observed": 22258,
+      "content_type": "application/json; charset=utf-8",
+      "locators": [
+        "v2.22.0 (published 2026-08-31T07:32:32Z) notes include PR #598 'Preserve z when enforceAxis=true for omerc and robin' and PR #599 aliases",
+        "v2.20.9 (published 2026-06-08T08:51:37Z) summary: 'Fix enforceAxis for z and arbitrary axis orders' (PR #576)",
+        "v2.20.8 (published 2026-04-06T09:09:16Z) predates the fix"
+      ],
+      "applicability": "release/branch applicability assessment: fix ships in >= 2.20.9 only; bug class recurred in 2.22.0 (proposal sections 13.2, 14.3 P4)"
+    },
+    {
+      "id": "S10",
+      "title": "OGC GeoPackage Encoding Standard, v1.4 (OGC 12-128r19), geopackage.org",
+      "url": "https://www.geopackage.org/spec/",
+      "status": "captured-partial",
+      "captured_utc": "2026-10-06T03:26:48.025651+00:00",
+      "capture_id": "3ec546649a7e44b7bd51ea00e111171a",
+      "sha256": "97037ee88b22f9a8899e4e35b67b036a6379064c551f07b5edc17d60c25be2e0",
+      "bytes_observed": 524288,
+      "content_length_header": 1496441,
+      "content_type": "text/html; charset=utf-8",
+      "last_modified": "Mon, 25 Nov 2024 18:18:30 GMT",
+      "locators_read": [
+        "document identity block: OGC 12-128r19, Version 1.4, editor Jeff Yutzler",
+        "Abstract: GeoPackage is 'a platform-independent SQLite database file', 'particularly useful on mobile devices like cell phones and tablets in communications environments with limited connectivity and bandwidth'",
+        "Table of Contents: section 1.1.1 SQLite Container; 1.1.2 Spatial Reference Systems; Annex C.1 gpkg_spatial_ref_sys; Annex C.3 gpkg_geometry_columns; Annex F.3 'R-tree Spatial Indexes' (registered extension); Annex F.10 'WKT for Coordinate Reference Systems'"
+      ],
+      "limitations": "requirement body text beyond TOC/abstract not read; see lead L9",
+      "applicability": "bounded Alternative A and export target (proposal section 12)"
+    },
+    {
+      "id": "S11",
+      "title": "PMTiles Version 3 Specification (protomaps/PMTiles)",
+      "url": "https://raw.githubusercontent.com/protomaps/PMTiles/main/spec/v3/spec.md",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:26:48.684827+00:00",
+      "capture_id": "4263da3110e14e6ea5a3de5f0ee7ca93",
+      "sha256": "2caa91c973f7959b175ee00d09a41998693ef59388ad9c26543a537c0269a49e",
+      "bytes_observed": 19284,
+      "content_type": "text/plain; charset=utf-8",
+      "locators": [
+        "section 1: 'PMTiles is a single-file archive format for tiled data'",
+        "section 3.2: 127-byte header fields; root directory MUST fit in first 16,384 bytes",
+        "section 5: JSON metadata keys incl. 'attribution' ('An attribution to be displayed when the map is shown to a user')",
+        "section 3.2 Tile Type: MVT, PNG, JPEG, WebP, AVIF, MapLibre vector tile"
+      ],
+      "applicability": "bundled map-area packaging with in-file attribution (proposal sections 9, 13.4)"
+    },
+    {
+      "id": "S12",
+      "title": "Automerge repository README",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/main/README.md",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:26:48.251232+00:00",
+      "capture_id": "1e69f30415e94b82a29cd40fd32dbe35",
+      "sha256": "09f34f7a71708a1a0db593301525c34499a9838198de24add914c0e7773dd9eb",
+      "bytes_observed": 8670,
+      "content_type": "text/plain; charset=utf-8",
+      "locators": [
+        "intro: 'Automerge is a library which provides fast implementations of several different CRDTs, a compact compression format ... and a sync protocol'; 'Automerge aims to be PostgreSQL for your local-first app'",
+        "Status section: Automerge 3 'achieved around a 10x reduction in memory usage' (project's own claim)"
+      ],
+      "applicability": "optional CRDT adoption precedent (proposal sections 11, 13.5)"
+    },
+    {
+      "id": "S13",
+      "title": "ExifTool GPS Tags reference",
+      "url": "https://exiftool.org/TagNames/GPS.html",
+      "status": "captured",
+      "captured_utc": "2026-10-06T03:26:05.967067+00:00",
+      "capture_id": "75a3561d0a99471eb6be6aad9feebacb",
+      "sha256": "3807e3d0b03d9c0abb3e750ebf014e82b54b629672aa54d1e2715f2de59c452e",
+      "bytes_observed": 7960,
+      "content_type": "text/html",
+      "locators": [
+        "guidance paragraph: set GPSLatitude + GPSLatitudeRef + GPSLongitude + GPSLongitudeRef (+ GPSAltitude/GPSAltitudeRef if known)",
+        "tags: 0x0001 GPSLatitudeRef ('N'/'S'); 0x0003 GPSLongitudeRef ('E'/'W'); 0x0005 GPSAltitudeRef (0=Above, 1=Below Sea Level); 0x0007 GPSTimeStamp (UTC); 0x000a GPSMeasureMode (2D/3D); 0x000b GPSDOP; 0x001b GPSProcessingMethod (GPS/CELLID/WLAN/MANUAL); 0x001f GPSHPositioningError"
+      ],
+      "applicability": "photo provenance harvest and altitude/time labels (proposal sections 3.2, 9)"
+    },
+    {
+      "id": "S14",
+      "title": "MapLibre GL JS API — LngLat class page",
+      "url": "https://maplibre.org/maplibre-gl-js/docs/API/classes/LngLat/",
+      "status": "captured-partial",
+      "captured_utc": "2026-10-06T03:26:05.202789+00:00",
+      "capture_id": "892697e173de4fd4b769854633723dfd",
+      "sha256": "7c5eb18bf976bb40f31feb8b01cd6ebe62919091eb2f45464595a5030eec8cc2",
+      "bytes_observed": 162872,
+      "content_type": "text/html; charset=utf-8",
+      "limitations": "only navigation chrome read (first 32KB window); substantive class text not read — do not quote; renderer choice remains lead L5",
+      "applicability": "confirms renderer documentation exists; no claims rest on its text"
+    },
+    {
+      "id": "S15",
+      "title": "GitHub issues search: repo:proj4js/proj4js 'axis order' (supporting context)",
+      "url": "https://api.github.com/search/issues?q=repo%3Aproj4js%2Fproj4js+axis+order&per_page=10",
+      "status": "captured-partial",
+      "captured_utc": "2026-10-06T03:25:02.967592+00:00",
+      "capture_id": "870d629c063341a4bb1d2c93da893424",
+      "sha256": "6f3169974eaefd896f70f30b99b4959f24cc3943376e2f5b65cee5598cc15ecd",
+      "bytes_observed": 39336,
+      "content_type": "application/json; charset=utf-8",
+      "locators": [
+        "issue #370 (open, 2020): WKT2 'GEOGCRS' string fails to parse",
+        "issue #393 (open, 2021): WKT2 PROJCRS from QGIS throws string exception",
+        "issue #545 (closed 2026-03-01): EPSG:4326→3857 via EPSG code vs WKT2 give different northing (111319.49079327357, 6766432.49 vs 6800125.45)",
+        "issue #588 (closed 2026-07-23): WKT2 GEODCRS with Cartesian CS parsed as longlat",
+        "PR #599 (merged 2026-08-06): latlong/latlon/lonlat aliases with regression test vs PROJ 9.5.1 values"
+      ],
+      "applicability": "evidence that CRS-metadata identity and parsing are recurring failure sources (proposal sections 4.3, 12B)"
+    },
+    {
+      "id": "S16",
+      "title": "Ink & Switch — local-first software (redirect stub)",
+      "url": "https://www.inkandswitch.com/local-first/",
+      "status": "captured-pointer-only",
+      "captured_utc": "2026-10-06T03:27:30.816644+00:00",
+      "capture_id": "bbb3549fd58c4d65b9aaacd63d00c609",
+      "sha256": "603cc18f2c60466528e10ce505933710be634ae847a93dbb6fce9af4e8d9cb63",
+      "bytes_observed": 152,
+      "locators": ["meta refresh to /essay/local-first"],
+      "limitations": "essay body not captured; cited only as pointer (lead L12); no claims rest on its text",
+      "applicability": "framing reference behind Automerge (S12)"
+    },
+    {
+      "id": "S17",
+      "title": "OSM Tile Usage Policy (operations.osmfoundation.org) — FETCH FAILED",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "status": "fetch_failed",
+      "detail": "two attempts returned boundary OSError (network-layer); osmfoundation.org wiki page also failed",
+      "consequence": "tile-policy specifics rest on the captured OSM copyright page (S5) which states OSM cannot provide free tiles/APIs to third parties and links this policy; see lead L1"
+    },
+    {
+      "id": "S18",
+      "title": "PROJ documentation 'axis order' page — MOVED/404",
+      "url": "https://proj.org/usage/axis_order.html",
+      "status": "fetch_failed",
+      "detail": "302 to /en/stable/usage/axis_order.html then 404 (capture fc4462b9b7f94fe2879e90b417a0bbca, sha256 ce80721bbca6c1c8495ac838121089ec30212ba2dd5b4408f6f3a0579574a2d1, 2522 bytes, 404 page); raw docs/source/usage/axis_order.rst also 404 (capture e37b5e778f9d4898a32401dc15a36d42, 14 bytes)",
+      "consequence": "PROJ axis-order behavior is evidenced via the proj4js chain (S7-S9) and RFC 7946 (S3) instead; locating the current PROJ page is lead L4"
+    }
+  ]
+}

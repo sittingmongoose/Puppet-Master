@@ -1,0 +1,352 @@
+{
+  "schema": "er9.source-catalog.v1",
+  "catalog_created_utc": "2026-10-06",
+  "source_policy": "Independently requested public primary sources only. Captures are byte evidence; applicability is bounded in each card. No campaign, evaluator, other-arm or prior-candidate material was used.",
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://nbformat.readthedocs.io/en/stable/format_description.html",
+      "title": "Jupyter Notebook Format Description",
+      "publisher": "Project Jupyter / nbformat",
+      "pin": "Stable documentation banner: nbformat 5.11; notebook document format v4. Mutable stable URL, pinned here by exact captured response SHA-256.",
+      "exact_locator": "Top-Level Structure; Code Cells; Code Cell Outputs; format v4 schema link",
+      "capture": {
+        "capture_id": "393537d9992842248c97f38aba067def",
+        "sha256": "9d0e6f1b78a4e6fe3516709b179fd81ab37ccf05fac5a0d9dce85df12b465d84",
+        "path": "public_captures/9d0e6f1b78a4e6fe3516709b179fd81ab37ccf05fac5a0d9dce85df12b465d84.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Defines document structure and saved cell outputs/counters. It does not define execution order, kernel state, replay or provenance. The live stable documentation is not an immutable software release pin."
+    },
+    {
+      "id": "S02",
+      "url": "https://jupyter-client.readthedocs.io/en/stable/messaging.html",
+      "title": "Messaging in Jupyter",
+      "publisher": "Project Jupyter / jupyter_client",
+      "pin": "Documentation banner jupyter_client 8.10.0; message protocol 5.5; exact captured response SHA-256.",
+      "exact_locator": "Introduction; Message Header; Parent header; status/control/heartbeat; execution messages",
+      "capture": {
+        "capture_id": "67ded51fd59e4ae399c43385959649d0",
+        "sha256": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0",
+        "path": "public_captures/50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06T02:27:34Z",
+        "body_complete": true
+      },
+      "applicability": "Kernel/session IDs and parent request headers support event association. They do not capture all process side effects or explain all mutable kernel state."
+    },
+    {
+      "id": "S03",
+      "url": "https://nbclient.readthedocs.io/en/stable/client.html",
+      "title": "Executing notebooks",
+      "publisher": "Project Jupyter / nbclient",
+      "pin": "Stable documentation banner nbclient 0.11; exact captured response SHA-256.",
+      "exact_locator": "Using the Python API; execution arguments/timeout; hooks; execution until first error; execute and save all errors",
+      "capture": {
+        "capture_id": "e3e1e3afa0ea48eea6ff909c6b859da9",
+        "sha256": "f4bc1460415ea1abac5667099a71ef422272697401d96527d9b97c03897a85a2",
+        "path": "public_captures/f4bc1460415ea1abac5667099a71ef422272697401d96527d9b97c03897a85a2.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true,
+        "delivered_text_complete": false
+      },
+      "applicability": "Execution client controls and hooks for notebook execution. The docs do not provide this proposal's clean-state, sandbox, provenance or output-status guarantees. Captured body was complete; tool delivery of page text ended at its output cap."
+    },
+    {
+      "id": "S04",
+      "url": "https://jupyter-server.readthedocs.io/en/stable/operators/security.html",
+      "title": "Security in Jupyter Server",
+      "publisher": "Project Jupyter / Jupyter Server",
+      "pin": "Stable documentation banner Jupyter Server 2.21; exact captured response SHA-256.",
+      "exact_locator": "Security in Jupyter Server; access to server and arbitrary code execution; authentication/trust discussion",
+      "capture": {
+        "capture_id": "7e7622c3e9df4d63b661871a769512d4",
+        "sha256": "55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b",
+        "path": "public_captures/55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Establishes that server access enables arbitrary code execution and that access control is not an OS process sandbox. Does not prescribe the proposed OCI policy."
+    },
+    {
+      "id": "S05",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "title": "CSV Auto Detection",
+      "publisher": "DuckDB",
+      "pin": "Documentation version selector showed DuckDB 1.5 current on capture date 2026-10-06; mutable current URL pinned by response SHA-256.",
+      "exact_locator": "Sample Size; Type Detection; Overriding Type Detection; Dates and Timestamps",
+      "capture": {
+        "capture_id": "18c0c4e95aa547b6b53a7d58c3f87f65",
+        "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+        "path": "public_captures/ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Documents sample_size default 20,480, sampling behavior and explicit type/all-varchar controls. Sampling is inference, not evidence of a full-file property. It does not guarantee strict cast semantics."
+    },
+    {
+      "id": "S06",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads",
+      "title": "How to Tune Workloads",
+      "publisher": "DuckDB",
+      "pin": "Documentation version selector showed DuckDB 1.5 current on capture date 2026-10-06; exact response SHA-256.",
+      "exact_locator": "Larger-than-Memory Workloads (Out-of-Core Processing); Spilling to Disk; Limitations; preserve_insertion_order option",
+      "capture": {
+        "capture_id": "a31fc637808143fe8b6f23d98507a680",
+        "sha256": "8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b",
+        "path": "public_captures/8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Describes out-of-core paths and named limitations; not a benchmark or a 5 GB/16 GB performance guarantee."
+    },
+    {
+      "id": "S07",
+      "url": "https://duckdb.org/docs/current/operations_manual/non-deterministic_behavior",
+      "title": "Non-Deterministic Behavior",
+      "publisher": "DuckDB",
+      "pin": "Documentation version selector showed DuckDB 1.5 current on capture date 2026-10-06; exact response SHA-256.",
+      "exact_locator": "Set Semantics; Working Around Non-Determinism",
+      "capture": {
+        "capture_id": "1b04639623c545e1bcd081d2f2fa9c1b",
+        "sha256": "6d8de8e153b3e79d6c1476cae13dc79c524f4ee9b3d1594573a9e85a7a5a2a82",
+        "path": "public_captures/6d8de8e153b3e79d6c1476cae13dc79c524f4ee9b3d1594573a9e85a7a5a2a82.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Documents unordered SQL result variation and sources of nondeterminism. Supports explicit ordering requirements; it is not a claim every query varies."
+    },
+    {
+      "id": "S08",
+      "url": "https://duckdb.org/docs/current/data/json/loading_json",
+      "title": "Loading JSON",
+      "publisher": "DuckDB",
+      "pin": "Documentation version selector showed DuckDB 1.5 current; mutable current URL pinned by exact response SHA-256 captured 2026-10-06.",
+      "exact_locator": "read_json / automatic configuration and type deduction; options for manually configuring the JSON reader",
+      "capture": {
+        "capture_id": "3334088c031740b0899c54eb038d3a82",
+        "sha256": "4f963de5ffe98e122232cd250b27a308f7e510ebd8f7e028227d6a39b8a1c8f1",
+        "path": "public_captures/4f963de5ffe98e122232cd250b27a308f7e510ebd8f7e028227d6a39b8a1c8f1.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06T02:33:37Z",
+        "body_complete": true,
+        "delivered_text_complete": false
+      },
+      "applicability": "Documents an auto-detecting JSON reader and manual options. Page response captured completely; only first 32 KiB of the HTML was delivered directly. No behavior beyond inspected material is relied on."
+    },
+    {
+      "id": "S09",
+      "url": "https://duckdb.org/docs/current/data/parquet/overview",
+      "title": "Reading and Writing Parquet Files",
+      "publisher": "DuckDB",
+      "pin": "Documentation version selector showed DuckDB 1.5 current; mutable current URL pinned by response SHA-256 captured 2026-10-06.",
+      "exact_locator": "Reading a single Parquet file; DESCRIBE; reading multiple files and directory paths",
+      "capture": {
+        "capture_id": "02478f5e36aa4ad3b57c6401680abb18",
+        "sha256": "69aabdf5127732a125d777a347a2f690745f067e2a36d7bbf5a7c5dab4d200ca",
+        "path": "public_captures/69aabdf5127732a125d777a347a2f690745f067e2a36d7bbf5a7c5dab4d200ca.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06T02:33:44Z",
+        "body_complete": true,
+        "delivered_text_complete": false
+      },
+      "applicability": "Supports the proposed Parquet reader and schema-inspection path. It does not establish stable row ordinal or the proposal's multi-file schema policy."
+    },
+    {
+      "id": "S10",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/22103",
+      "title": "read_json_auto regression in v1.5.2: timestamp format mismatch when JSON has mixed ISO 8601 formats across fields",
+      "publisher": "DuckDB GitHub issue tracker",
+      "pin": "Issue #22103; issue reports DuckDB v1.5.2 failure versus v1.5.1; opened 2026-04-16, closed 2026-05-12; exact API response capture.",
+      "exact_locator": "Issue description: What happens; To Reproduce; Root cause; Workaround; version/client fields",
+      "capture": {
+        "capture_id": "1c2563ad4773434c810e9d1506b338cc",
+        "sha256": "a55800130289dec3b743ad36f53d531552a8e628dfae63c7a89b7706215666a5",
+        "path": "public_captures/a55800130289dec3b743ad36f53d531552a8e628dfae63c7a89b7706215666a5.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06T02:35:14Z",
+        "body_complete": true
+      },
+      "applicability": "Reporter-supplied reproduction and version comparison. Issue carries reproduced label, but subsequent discussion disputes the exact original minimal example; use as reported failure, not independent confirmation."
+    },
+    {
+      "id": "S11",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/22103/comments",
+      "title": "Comments on DuckDB issue #22103",
+      "publisher": "DuckDB GitHub issue tracker",
+      "pin": "Comments API capture fetched 2026-10-06; exact response SHA-256.",
+      "exact_locator": "Comments by benfleis, contributor diagnosis and closure note; comment IDs 4259279845, 4266251227 and 4432494467",
+      "capture": {
+        "capture_id": "f57a4105ddc945e380cf8441fc9c3b67",
+        "sha256": "8099ddc11a8fc1ffe30fcc6d76454bc69a31a9e7f21e31497bbe0d52357078ae",
+        "path": "public_captures/8099ddc11a8fc1ffe30fcc6d76454bc69a31a9e7f21e31497bbe0d52357078ae.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Establishes limits on reproduction and separates cross-column mismatch from within-column variation. Comments are project discussion, not a release test."
+    },
+    {
+      "id": "S12",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/22559",
+      "title": "Allow json ts format variation across columns - issue 22103",
+      "publisher": "DuckDB GitHub pull requests",
+      "pin": "PR #22559; merged 2026-05-12 into v1.5-variegata; merge commit 252f338be17cb7f2caade6a42cfa1b5fdb6e59e3; API response capture.",
+      "exact_locator": "PR state, base.ref, merge_commit_sha, merged_at, title/body",
+      "capture": {
+        "capture_id": "d8ea998cc42140cea41bb7452305b23a",
+        "sha256": "bab0e3e3f45327ce040c856e676507953608a66da2d56f9a520358d436128397",
+        "path": "public_captures/bab0e3e3f45327ce040c856e676507953608a66da2d56f9a520358d436128397.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Merged implementation and branch applicability, not by itself proof of a particular release's full behavior."
+    },
+    {
+      "id": "S13",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/22559/files",
+      "title": "Changed files and regression test for DuckDB PR #22559",
+      "publisher": "DuckDB GitHub pull requests",
+      "pin": "Files API for PR #22559 and merge commit 252f338be17cb7f2caade6a42cfa1b5fdb6e59e3; exact response capture.",
+      "exact_locator": "Patch for timestamp-format binding; test/sql/json/table/read_json_dates.test; new test with four timestamp columns and differing formats; timezone rejection cases",
+      "capture": {
+        "capture_id": "266e8570b5304675beff780e79e8ee42",
+        "sha256": "1b7b32ee7d48004da93f0bb8ada21d210a8ce94116b898c19c3b37da12e94001",
+        "path": "public_captures/1b7b32ee7d48004da93f0bb8ada21d210a8ce94116b898c19c3b37da12e94001.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Patch and regression case demonstrate the targeted cross-column mechanism. Does not show arbitrary within-column mixed formats or all timestamp cases are handled."
+    },
+    {
+      "id": "S14",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.3",
+      "title": "DuckDB v1.5.3 Bugfix Release",
+      "publisher": "DuckDB GitHub releases",
+      "pin": "Release tag v1.5.3; published 2026-05-20; target commit 14eca11bd9d4a0de2ea0f078be588a9c1c5b279c; exact capture SHA-256.",
+      "exact_locator": "Release tag, published_at and target_commitish metadata",
+      "capture": {
+        "capture_id": "81c1430336184bc88d5fe7762669c5df",
+        "sha256": "62279a080f5a42da478d1345d141a47c53ddf6dea2b9a9c6d30f90470562d8f9",
+        "path": "public_captures/62279a080f5a42da478d1345d141a47c53ddf6dea2b9a9c6d30f90470562d8f9.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true,
+        "delivered_text_complete": false
+      },
+      "applicability": "Establishes release identity/date/target commit. Release metadata alone does not prove PR behavior; use with PR and compare evidence."
+    },
+    {
+      "id": "S15",
+      "url": "https://api.github.com/repos/duckdb/duckdb/compare/252f338be17cb7f2caade6a42cfa1b5fdb6e59e3...14eca11bd9d4a0de2ea0f078be588a9c1c5b279c",
+      "title": "Compare DuckDB PR merge commit to v1.5.3 release commit",
+      "publisher": "DuckDB GitHub comparison API",
+      "pin": "Exact comparison commits: PR merge 252f338be17cb7f2caade6a42cfa1b5fdb6e59e3...release target 14eca11bd9d4a0de2ea0f078be588a9c1c5b279c; captured response SHA-256.",
+      "exact_locator": "Top-level status/ahead_by/behind_by and base/head commit metadata",
+      "capture": {
+        "capture_id": "6e764a9603c149b18a06a7a75ddac581",
+        "sha256": "71e11b635f526bd593c1a4cd6a8242107e2632aa2543224508042e9ce8bf82be",
+        "path": "public_captures/71e11b635f526bd593c1a4cd6a8242107e2632aa2543224508042e9ce8bf82be.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": false,
+        "delivered_top_level_comparison_fields": true
+      },
+      "applicability": "Captured compare header reports release commit ahead of PR merge with zero commits behind. GitHub response exceeded capture/delivery limit; rely only on the intact comparison fields, not omitted file/commit details."
+    },
+    {
+      "id": "S16",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/25824",
+      "title": "CSV reader silently rounds/truncates values past the sniffer's sample_size",
+      "publisher": "DuckDB GitHub issue tracker",
+      "pin": "Issue #25824; open and updated 2026-09-24; reporter's environment/version matrix includes 1.1.3, released 1.5.5, 1.6.0.dev214 and main @ 2bbfe6f236; exact API response capture.",
+      "exact_locator": "Issue description: sample_size boundary, four silent cases, reproduction script, tested version matrix, current state",
+      "capture": {
+        "capture_id": "bf5fd8a3a35f4c3db432ff6cd0462d44",
+        "sha256": "2916d6e9e3ca08dd20b16c88baee5891a8e5876e68417c4ff72b70999f597d44",
+        "path": "public_captures/2916d6e9ca3f?",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06T02:33:34Z",
+        "body_complete": true
+      },
+      "applicability": "A detailed open issue report with candidate-authored reproduction and version claims, not independently reproduced here. It is sufficient to justify strict ingest and release-specific regression checks, not to assert universal behavior or a confirmed fix."
+    },
+    {
+      "id": "S17",
+      "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "title": "Locking and syncing",
+      "publisher": "Astral / uv documentation",
+      "pin": "Mutable current docs; source page last-update label August 5, 2026; exact captured response SHA-256.",
+      "exact_locator": "Automatic lock and sync; checking/creating lockfile; frozen and locked modes; upgrading locked versions; editable project note",
+      "capture": {
+        "capture_id": "01a0083d4f8e4abea2bd5d556cd6c1b0",
+        "sha256": "4bd4a89338543bf671bd036a52bc666a295986c7c72ea175d95d1c2ac228e0cf",
+        "path": "public_captures/4bd4a89338543bf671bd036a52bc666a295986c7c72ea175d95d1c2ac228e0cf.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06",
+        "body_complete": true
+      },
+      "applicability": "Supports a Python package lock/sync workflow. It does not pin Python patch, OS libraries, editable source contents or the notebook execution image. Current documentation is not an uv release pin."
+    },
+    {
+      "id": "S18",
+      "url": "https://docs.docker.com/engine/containers/resource_constraints.md",
+      "title": "Resource constraints",
+      "publisher": "Docker documentation",
+      "pin": "Documentation updated 2026-08-16; exact Markdown response SHA-256, retrieved 2026-10-06.",
+      "exact_locator": "Memory hard/soft limits; CPU CFS scheduler; runtime flags and cgroup caveats",
+      "capture": {
+        "capture_id": "d86ebbb0ce8d4e8dadec40ab187305d7",
+        "sha256": "fb1353cba2a630cafa9c5c9ec04b2bb2ac230c2f26901db4e0103ad88b474be9",
+        "path": "public_captures/fb1353cba2a630cafa9c5c9ec04b2bb2ac230c2f26901db4e0103ad88b474be9.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06T02:34:04Z",
+        "body_complete": true
+      },
+      "applicability": "Documents Docker runtime CPU and memory constraints and host-kernel dependence. These are mechanisms to validate, not proof that a specific workstation profile is safe."
+    },
+    {
+      "id": "S19",
+      "url": "https://docs.docker.com/engine/network/drivers/none.md",
+      "title": "None network driver",
+      "publisher": "Docker documentation",
+      "pin": "Documentation updated 2026-10-05; exact Markdown response SHA-256 captured 2026-10-06.",
+      "exact_locator": "Use --network none; loopback-only behavior",
+      "capture": {
+        "capture_id": "accd86aaf73b4d5db718fad7667c4f52",
+        "sha256": "65c60f33f35c1b77f88c6eda96cfcbced5907ff51ac40b9f4fc27ccdc3cb923c",
+        "path": "public_captures/65c60f33f35c1b77f88c6eda96cfcbced5907ff51ac40b9f4fc27ccdc3cb923c.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06T02:34:07Z",
+        "body_complete": true
+      },
+      "applicability": "Documents one container runtime's network isolation option. Does not prove filesystem or kernel isolation and does not cover other runtimes/host platforms."
+    },
+    {
+      "id": "S20",
+      "url": "https://docs.docker.com/engine/security/seccomp.md",
+      "title": "Seccomp security profiles for Docker",
+      "publisher": "Docker documentation",
+      "pin": "Documentation updated 2026-10-05; exact Markdown response SHA-256 captured 2026-10-06.",
+      "exact_locator": "Default seccomp profile; allowlist behavior; default profile described as moderately protective; kernel support requirements",
+      "capture": {
+        "capture_id": "f6473c41bfd14688b9ec0004d5d3dc17",
+        "sha256": "5150a20aa071c9351ca60d666a5d0d3f3330cf4a4db6b7e2e2c243cb4e950602",
+        "path": "public_captures/5150a20aa071c9351ca60d666a5d0d3f3330cf4a4db6b7e2e2c243cb4e950602.body",
+        "format": "exact-http-response-body-bytes",
+        "captured_utc": "2026-10-06T02:35:52Z",
+        "body_complete": true
+      },
+      "applicability": "Documents a Linux syscall filter as one defense-in-depth layer and explicitly describes the default as moderately protective. Does not establish a complete sandbox or escape-proof boundary."
+    }
+  ]
+}

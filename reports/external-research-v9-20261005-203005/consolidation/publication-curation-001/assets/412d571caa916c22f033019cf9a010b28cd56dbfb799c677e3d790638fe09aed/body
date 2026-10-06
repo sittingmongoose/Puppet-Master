@@ -1,0 +1,51 @@
+{
+  "leads_catalog_version": 2,
+  "catalog_kind": "enrichment lead delta",
+  "base_catalog": {
+    "path": "inputs/seed/lead_inventory.json",
+    "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751",
+    "merge_rule": "Retain L1-L12 and inherited unresolved dependencies A1-A3; append the unique lead IDs below."
+  },
+  "note": "These are follow-up leads and optional engineering questions, not newly asserted minimum requirements or executed capabilities.",
+  "leads": [
+    {
+      "id": "L13",
+      "title": "Bind napari documentation claims to a product release",
+      "detail": "The detailed Image, Units, and Shapes evidence is napari/docs@main (S2-S4); the current stable docs index and released v0.9.2 are version anchors only (S17-S20). Check the exact app tag/source and release behavior before deciding to depend on any individual docs default or limitation.",
+      "status": "open qualification; V8-V9 unexecuted",
+      "source_ids": ["S2", "S3", "S4", "S17", "S18", "S19", "S20"]
+    },
+    {
+      "id": "L14",
+      "title": "Separate OME-Zarr 0.4 and 0.5 support paths",
+      "detail": "NGFF 0.5 uses Zarr v3; tifffile 2026.5.2 changed its store API and distinguishes NGFF 0.5 from NGFF 0.4 fsspec multiscale files. Verify a reader and dependency stack for each format/version instead of inheriting a single broad support claim.",
+      "status": "implementation lead; support unverified",
+      "source_ids": ["S1", "S5", "S6"],
+      "dependency_ids": ["D4"]
+    },
+    {
+      "id": "L15",
+      "title": "Specify pixel center/corner and axis direction conventions",
+      "detail": "The reviewed NGFF coordinate passage defines transforms between data and physical spaces but does not settle the pixel sample-location convention. Preserve raw metadata and build asymmetric fixtures across each reader/exporter before claiming coordinate equality.",
+      "status": "unresolved; V11 unexecuted",
+      "source_ids": ["S1", "S3", "S13"],
+      "dependency_ids": ["D2"]
+    },
+    {
+      "id": "L16",
+      "title": "Keep vector geometry distinct from volumetric label images",
+      "detail": "napari Shapes documents variable-length N×D vectors and slice-match rendering, with 3D editing/cuboid/spheroid limits; NGFF labels have a separate integer-array contract. The project may use both, but should not encode a 3D mask as if it were an ordinary polygon row.",
+      "status": "schema qualification; V9 unexecuted",
+      "source_ids": ["S1", "S4"],
+      "dependency_ids": ["D5"]
+    },
+    {
+      "id": "L17",
+      "title": "Reader capability matrix by format feature and codec",
+      "detail": "tifffile has positive region-read paths and explicit TIFF/format-specific negatives; some vendor cases parse but do not stitch or have unreliable metadata. Record read, decode, stitch, write, calibration, and dependency support separately. Absence from a format list alone is not a negative capability finding.",
+      "status": "support-boundary lead; real-file matrix unverified",
+      "source_ids": ["S5", "S6"],
+      "dependency_ids": ["D4", "D6"]
+    }
+  ]
+}

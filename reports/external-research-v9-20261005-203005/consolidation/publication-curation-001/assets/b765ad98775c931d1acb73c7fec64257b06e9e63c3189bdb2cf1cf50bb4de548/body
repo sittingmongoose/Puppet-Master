@@ -1,0 +1,74 @@
+{
+  "schema_version": "er9.research.witnesses.v1",
+  "evidence_date": "2026-10-06",
+  "checks": [
+    {
+      "id": "W1",
+      "label": "executed by candidate",
+      "name": "in-memory provenance fingerprint and invalidation component",
+      "execution_id": "exec-p630zvna",
+      "code_sha256": "b630ada8ea964c728c536a43a89b85a3ca788d9ab624e027d1682ee88ac9c9e2",
+      "input": {
+        "passed_as_tool_data": false,
+        "synthetic_values_embedded_in_code": {
+          "source_text": "id,name\n1,Ada\n2,Zoë\n",
+          "cells": {"load": "rows = read_registered_source()", "summary": "count = len(rows)"},
+          "dependencies": {"load": [], "summary": ["load"]},
+          "environment": "python=3.12; duckdb=1.5.6",
+          "mutations_checked": ["upstream cell source edit", "source content edit adding 3,李", "environment change to duckdb=1.5.7"]
+        },
+        "tool_data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      },
+      "expected_behavior_and_justification": "The same cell graph, source-byte hash and environment must produce the same fingerprint. Changing a dependency's source, declared source bytes, or environment must change the downstream fingerprint. This is a discriminating check of the candidate-proposed hash-key component.",
+      "stdout": "{\"environment_edit_invalidates_downstream\": true, \"same_inputs_reuse_fingerprint\": true, \"scope\": \"candidate-authored in-memory fingerprint component only; no notebook, DuckDB, filesystem, sandbox, or application execution\", \"source_edit_invalidates_downstream\": true, \"upstream_edit_invalidates_downstream\": true}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "elapsed_seconds": 0.36953027799609117,
+      "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "network": "new empty namespace"},
+      "scope_limits": ["In-memory stdlib component only; no application, notebook, Jupyter kernel, DuckDB, real files, large data, OS sandbox policy, or persistence was exercised.", "Passing the component check does not prove fingerprint completeness, semantic correctness, deterministic notebook execution or large-data behavior."],
+      "receipt_summary": {"stdout_sha256": "0bda6e0b755b0bbd41a6c727ba6685eb20ab9c4f055d90bc71666a36f72a517d", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_bytes": 0, "cleanup_confirmed": true}
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "P1",
+      "name": "DuckDB issue #25164 release qualification",
+      "status": "proposed/UNEXECUTED",
+      "procedure": "Port pinned test/sql/copy/csv/parallel/test_rrrn_parallel.test as a small generated fixture and run on the exact packaged DuckDB release on each supported OS. Compare row count, distinct IDs, boundary IDs 39/40, and parallel=true/false. The v1.5.6 result is unknown here.",
+      "success_criterion": "No missing/duplicate rows; parallel and sequential counts/IDs agree for the fixture, with any changed engine pin and regression version recorded.",
+      "source_ids": ["DB12", "DB13", "DB14", "DB15", "DB16", "DB17"]
+    },
+    {
+      "id": "P2",
+      "name": "5 GB bounded/streaming data and result behavior",
+      "status": "proposed/UNEXECUTED",
+      "procedure": "Generate known 5 GB CSV, NDJSON and Parquet fixtures; measure RSS, temp disk, CPU and elapsed time for bounded projection/filter and Parquet conversion, then grouping, join, sort/window and non-spillable aggregate paths under declared memory/disk quotas.",
+      "success_criterion": "Supported paths stay within declared budgets with row/schema/hash checks; unsupported/global paths fail visibly without publishing a partial result. The 8-core/16 GB target is not yet measured.",
+      "source_ids": ["DB6", "DB8", "DB10"]
+    },
+    {
+      "id": "P3",
+      "name": "Notebook replay/status and portability integration",
+      "status": "proposed/UNEXECUTED",
+      "procedure": "Exercise out-of-order interactive runs, clean replay, upstream/data/environment edits, kernel restart, first-cell failure, cancellation, save interruption and reopen with missing or changed sources/packages. Compare stored event/output hashes and accessible status transitions.",
+      "success_criterion": "No stale/partial/interactive output is labeled current; successful clean outputs match declared hashes; errors, missing dependencies and cancellation remain visible.",
+      "source_ids": ["NB1", "NB2", "NB3"]
+    },
+    {
+      "id": "P4",
+      "name": "Data contract, crash recovery and lock validation",
+      "status": "proposed/UNEXECUTED",
+      "procedure": "Use CSV malformed/missing/null/Unicode/timezone/late-type-drift fixtures, NDJSON absent-vs-null and mixed values, and Parquet schema-evolution fixtures. Terminate writes at every staging/manifest boundary; open competing project writers and modify files externally.",
+      "success_criterion": "No original mutation or silent row drop; schema drift is explicit; last complete save recovers; lock/conflict behavior prevents last-writer-wins.",
+      "source_ids": ["DB2", "DB3", "DB4", "DB5", "DB6", "DB7", "DB11"]
+    },
+    {
+      "id": "P5",
+      "name": "Sandbox and accessible status validation",
+      "status": "proposed/UNEXECUTED",
+      "procedure": "On every supported OS, attempt arbitrary host-file/environment/network access and resource exhaustion from Python and SQL workers; test interrupt/kill. Run keyboard/screen-reader checks for status, progress, truncation, errors and result diffs.",
+      "success_criterion": "Declared filesystem/network/resource boundary is enforced and cancellation works; otherwise disable execution on that OS. Status and errors are perceivable without color or pointer input.",
+      "source_ids": ["NB2", "NB3"]
+    }
+  ]
+}

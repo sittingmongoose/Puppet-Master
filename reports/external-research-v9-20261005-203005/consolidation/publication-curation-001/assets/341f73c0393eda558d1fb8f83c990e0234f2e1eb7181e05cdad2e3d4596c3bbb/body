@@ -1,0 +1,63 @@
+{
+  "catalog_version": "research-stage-1",
+  "note": "Unresolved or optional leads preserved for later stages/adoption. Each entry states what would change if pursued. None is a minimum obligation of Brief A.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "Verify tifffile #334 fix commit + regression test at tag >= v2026.9.15",
+      "why": "Completes Chain B to the same standard as Chain A; would let the proposal cite an exact commit sha for the string-calibration guard.",
+      "how": "git clone cgohlke/tifffile; checkout v2026.9.15; inspect series_mmstack and tests/test_tifffile.py; also fetch CHANGES.md via a working path (tag-prefixed raw fetch 404'd this stage, witness N3)."
+    },
+    {
+      "id": "L2",
+      "title": "QuPath project/annotation model as a fourth precedent",
+      "why": "Its project-folder + annotation-JSON structure is the closest whole-product analogue to the proposed project store; would inform bundle/relocation defaults.",
+      "status": "docs URL https://qupath.readthedocs.io/en/stable/docs/starting/projects.html returned 404 this stage (N1); correct current docs path not located under time budget."
+    },
+    {
+      "id": "L3",
+      "title": "NGFF 0.5 coordinateTransformations (affine) + 'omero' display metadata details",
+      "why": "0.4 supports scale/translation-style calibration; 0.5 adds richer transforms relevant if the lab needs rotated/staged acquisitions. Sections 3.3-3.5 of the captured 0.4 page were located via TOC but body text not delivered this stage.",
+      "how": "read the captured S9 body at bytes >= 96768, then the 0.5 spec at the same site; adopt only if a real acquisition needs off-axis orientation."
+    },
+    {
+      "id": "L4",
+      "title": "SimpleITK/ITK LPS vs RAS and direction-cosine conventions",
+      "why": "If the lab ever mixes modality data (CT/MRI), a world-frame convention decision becomes necessary; today's microscopy scope (index+physical only) defers it.",
+      "status": "attempted page 404 this stage (N2); retry at the versioned SimpleITK docs URL."
+    },
+    {
+      "id": "L5",
+      "title": "napari guides: axis-names, units, handedness, performance, threading (content fetch)",
+      "why": "URLs confirmed in captured docs TOC (S2) at the 0.9.2 pin; fetching bodies would strengthen the coordinate-frame documentation and threading model for ArraySource.",
+      "how": "https://napari.org/stable/guides/axis-names.html, .../units.html, .../handedness.html, .../performance.html, .../threading.html"
+    },
+    {
+      "id": "L6",
+      "title": "napari Dask large-dataset tutorial as cache-design input",
+      "why": "S2 TOC confirms a dedicated tutorial ('Using Dask and napari to process & view large datasets'); relevant to W2 cache sizing and prefetch policy.",
+      "how": "https://napari.org/stable/tutorials/dask.html"
+    },
+    {
+      "id": "L7",
+      "title": "zarr-python #4204/#4219 hardening fixes (path prefix, malformed chunk keys)",
+      "why": "Both listed in the captured v3.4.0 notes (S4); relevant to relocation (path-prefix handling) and to strict project validation on load."
+    },
+    {
+      "id": "L8",
+      "title": "tifffile #261: OME plane Position metadata not persisted on write",
+      "why": "Captured (S7): PositionX/Y/Z passed to imwrite were not saved. If stage-position metadata ever becomes a requirement, this write-path gap must be retested at the pinned version."
+    },
+    {
+      "id": "L9",
+      "title": "Deferred opportunities (explicitly optional): collaboration beyond shared bundles, cloud/object-store backends (NGFF is cloud-ready per S9), automatic segmentation, registration",
+      "why": "Brief requires these to stay separate from minimum obligations; NGFF 0.4's chunk-addressable layout (S9) is the natural on-ramp if any are later justified.",
+      "decision": "not in v1; revisit after W2-W5 validation"
+    },
+    {
+      "id": "L10",
+      "title": "SQLite single-file project container",
+      "why": "Bounded alternative to JSON+bak atomic saves (stronger transactions); rejected for v1 because diff/merge of a binary container over ordinary shared storage is worse for the lab's exchange pattern. Re-evaluate if W3 drills show .bak recovery insufficient."
+    }
+  ]
+}

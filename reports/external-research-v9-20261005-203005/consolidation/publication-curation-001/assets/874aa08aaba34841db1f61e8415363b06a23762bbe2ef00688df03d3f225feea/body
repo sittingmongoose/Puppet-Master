@@ -1,0 +1,75 @@
+{
+  "schema": "er9.candidate-dependency-binding-addendum.v1",
+  "scope": "Evidence-backed candidate bindings and unresolved version choices for the proposed reader path. This is not a tested application lock file.",
+  "bindings": [
+    {
+      "id": "D1",
+      "name": "tifffile",
+      "candidate_version": "2026.9.20",
+      "binding_status": "proposed release pin; exact tag commit and wheel hashes unresolved",
+      "source_refs": ["S5", "S6"],
+      "reason": "README capture declares version 2026.9.20; source code must be tested against this release rather than moving master. The v2026.5.2 API and Zarr/NGFF branch changes make older call patterns unsafe to assume."
+    },
+    {
+      "id": "D2",
+      "name": "numpy",
+      "candidate_version": "2.5.3",
+      "binding_status": "documented tifffile 2026.9.20 test environment; proposed baseline, not application qualification",
+      "source_refs": ["S5"],
+      "reason": "Listed as a tested requirement for the captured tifffile revision."
+    },
+    {
+      "id": "D3",
+      "name": "imagecodecs",
+      "candidate_version": "2026.8.16",
+      "binding_status": "documented tested requirement; required for compressed segment codecs used by the reader",
+      "source_refs": ["S5", "S6"],
+      "reason": "The README names this version and says it is required for encoding or decoding LZW, JPEG, and other compressed segments. Availability of the package does not imply support for every codec/layout combination."
+    },
+    {
+      "id": "D4",
+      "name": "zarr",
+      "candidate_version": "3.4.0",
+      "binding_status": "documented optional requirement for the captured tifffile environment; candidate for NGFF 0.5/Zarr v3 path",
+      "source_refs": ["S1", "S5", "S6"],
+      "reason": "README says Zarr is required only for Zarr stores and lists 3.4.0. NGFF 0.5 uses Zarr v3. NGFF 0.4/Zarr v2 is a separate branch and has not been qualified with this binding."
+    },
+    {
+      "id": "D5",
+      "name": "xarray",
+      "candidate_version": "2026.7.0",
+      "binding_status": "optional; only needed if the implementation adopts the xarray API",
+      "source_refs": ["S5"],
+      "reason": "Listed by tifffile as an optional dependency for xarray DataArray reading. The proposal does not require xarray as its annotation or frame-model authority."
+    },
+    {
+      "id": "D6",
+      "name": "OME-NGFF specification",
+      "candidate_version": "0.5",
+      "binding_status": "interchange/schema target, not a runtime package dependency",
+      "source_refs": ["S1"],
+      "reason": "The data contract pin is the released 0.5 specification revision d9164040dd61b3e4688494de1a58a69251b13f24."
+    },
+    {
+      "id": "D7",
+      "name": "napari",
+      "candidate_version": null,
+      "binding_status": "not bound as a runtime dependency",
+      "source_refs": ["S2"],
+      "reason": "The base proposal chooses a custom Qt/VisPy canvas and uses napari as a pattern source. The captured main-branch documentation is not a release pin."
+    },
+    {
+      "id": "D8",
+      "name": "PySide6 / Qt / VisPy",
+      "candidate_version": null,
+      "binding_status": "base architecture choice; version compatibility not qualified by this source context",
+      "source_refs": [],
+      "reason": "No source in this enrichment establishes a compatible release matrix for these UI packages; resolve and test those pins separately."
+    }
+  ],
+  "unresolved_compatibility": [
+    "No evidence here proves one Zarr installation reads both NGFF 0.4 and 0.5 stores; test and pin those branches separately.",
+    "No exact wheel hashes or release commit for tifffile 2026.9.20 were captured; this catalog is not a reproducible lock file.",
+    "The 8-core/16 GB and 3 GB bounded-read target has no runtime or performance result in this Goal."
+  ]
+}

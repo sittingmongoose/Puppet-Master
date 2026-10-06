@@ -1,0 +1,98 @@
+{
+  "catalog_schema": "er9.research.witnesses.v1",
+  "stage": "research",
+  "date": "2026-10-06",
+  "witnesses": [
+    {
+      "id": "W1",
+      "kind": "executed_by_candidate",
+      "title": "float32 storage drift for calibration values and large-index annotation coordinates",
+      "claim": "Persisting pixel sizes or voxel-index coordinates in binary float32 loses exactness (relative error ~5.3e-8 on 0.0645 µm; absolute 0.25-voxel drift at coordinate 2^24+0.25), while IEEE-754 float64 round-trips these decimal values exactly. This discriminates the data-contract requirement that all persisted calibration/geometry be float64.",
+      "execution": {
+        "tool": "mcp__pm_execution__python_execute",
+        "execution_id": "exec-0dds09qa",
+        "executed_utc": "2026-10-06T05:28:47Z",
+        "code_sha256": "b415cb6070d2ce75af33bdc8f59a208855138239f7990aedf45af3719f40432f",
+        "stdout_sha256": "fa8d0b4ebabafa4aaca92f74ca8e2369cc714335a68ddd3e42b444c7ff5e16f4",
+        "exit_code": 0,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "none"}
+      },
+      "input_summary": "struct-based float32/float64 pack-unpack of {0.0645, 0.1, 2**24+0.25, 1e-7}",
+      "expected_behavior_justification": "IEEE-754 binary32 has 24-bit significand: decimal 0.0645 and 0.1 are not representable; at magnitude 2^24 the binary32 spacing is 2.0 so +0.25 is lost. binary64 (53-bit significand) exactly round-trips these short decimals via Python repr/struct.",
+      "observed_stdout_key_values": {
+        "0.0645_as_float32": 0.06449999660253525,
+        "0.0645_rel_error": 5.2673872154629806e-08,
+        "16777216.25_as_float32": 16777216.0,
+        "16777216.25_abs_error": 0.25,
+        "float64_roundtrip_0.0645_exact": true
+      },
+      "stderr": "checks complete, exit 0",
+      "scope_limits": "Isolated stdlib mechanism check in a throwaway sandbox (no numpy, no tifffile, no GUI, no filesystem persistence). Establishes the numeric contract motivation ONLY; it does not establish behavior of any reader, viewer, or the planned application."
+    },
+    {
+      "id": "W2",
+      "kind": "executed_by_candidate",
+      "title": "interrupted save leaves original intact; temp+fsync+os.replace completes atomically (POSIX user-space)",
+      "claim": "Writing a new project state to a temp file and renaming it over the manifest (os.replace) yields: (a) a writer killed mid-write leaves the previous manifest fully valid and the truncated temp parseable-rejected; (b) a completed temp write + fsync + rename swaps in the new state and removes the temp. This discriminates the atomic-save/recovery design from naive in-place overwrite.",
+      "execution": {
+        "tool": "mcp__pm_execution__python_execute",
+        "execution_id": "exec-0dds09qa",
+        "executed_utc": "2026-10-06T05:28:47Z",
+        "code_sha256": "b415cb6070d2ce75af33bdc8f59a208855138239f7990aedf45af3719f40432f",
+        "stdout_sha256": "fa8d0b4ebabafa4aaca92f74ca8e2369cc714335a68ddd3e42b444c7ff5e16f4",
+        "exit_code": 0
+      },
+      "input_summary": "tempdir scenario: valid project.json (v1); simulate death mid-write into project.json.tmp-1 (truncated JSON); assert original loads and temp raises JSONDecodeError; then full temp write + fsync + os.replace; assert v2 loads and temp is gone",
+      "expected_behavior_justification": "POSIX rename over an existing path is atomic with respect to path lookup; a partially written temp file never becomes the target. json.load failure on truncated bytes shows the journal/recovery layer must reject, not salvage, corrupt temps.",
+      "observed_stdout_key_values": {
+        "interrupted_save_original_intact": {"version": 1, "annotations": 7},
+        "interrupted_save_tmp_rejected": "JSONDecodeError",
+        "atomic_save_result": {"version": 2, "annotations": 9},
+        "temp_file_removed_by_replace": true
+      },
+      "stderr": "checks complete, exit 0",
+      "scope_limits": "Single-process, user-space simulation on a POSIX sandbox filesystem. Does NOT test: power loss / kernel page-cache loss, directory-entry fsync, concurrent writers, network filesystems (NFS/SMB rename semantics), or the planned application's actual save code. OS-level kill test is proposed as W6."
+    },
+    {
+      "id": "W3",
+      "kind": "proposed_unexecuted",
+      "title": "3 GB OME-TIFF bounded-access benchmark on the 16 GB envelope",
+      "claim_to_test": "Scripted 10-minute viewport tour over a 3 GB tiled OME-TIFF keeps peak RSS below ~3 GB with no second full in-memory copy, p95 tile-load latency imperceptible (<100 ms warm cache) and cancel responding <200 ms.",
+      "method_sketch": "tifffile return_as='zarr' + dask chunk views; tracemalloc/RSS sampling; seeded synthetic OME-TIFF; also a negative control calling whole-file asarray() to show the failure mode.",
+      "status": "UNEXECUTED (requires numpy/tifffile environment and a representative file; the isolated stdlib sandbox cannot run it)."
+    },
+    {
+      "id": "W4",
+      "kind": "proposed_unexecuted",
+      "title": "bundle close/reopen + relocation on a second machine",
+      "claim_to_test": "Project moved to another path/machine reopens; sources relink by sha256+size; geometry bit-identical (float64); missing source renders as reference_missing with annotations intact; hash-mismatch file is NOT silently adopted.",
+      "status": "UNEXECUTED."
+    },
+    {
+      "id": "W5",
+      "kind": "proposed_unexecuted",
+      "title": "display-edit isolation and float64 manifest round-trip",
+      "claim_to_test": "Changing window/level/gamma/colormap leaves sample arrays and annotation geometry byte-identical on disk; manifest JSON round-trips float64 exactly (extends W1's numbers into the real writer).",
+      "status": "UNEXECUTED."
+    },
+    {
+      "id": "W6",
+      "kind": "proposed_unexecuted",
+      "title": "OS-level kill-during-save dirty-shutdown test",
+      "claim_to_test": "SIGKILL during manifest save and during journal append always leaves a loadable project (manifest or .bak + journal replay); includes directory-fsync step that W2's user-space scope could not cover.",
+      "status": "UNEXECUTED."
+    },
+    {
+      "id": "W7",
+      "kind": "proposed_unexecuted",
+      "title": "Q/Modulo-axis corpus test (axis-ambiguity consequence)",
+      "claim_to_test": "tifffile-reported axes strings containing 'Q' (or OME Modulo annotations) trigger the explicit map/exclude dialog; annotations cannot attach to an unmapped axis; raw axes/Modulo XML retained verbatim. Grounded in S1 (QYX example) and S4 (Modulo note).",
+      "status": "UNEXECUTED (needs instrument-produced modulo/spectral files)."
+    },
+    {
+      "id": "NOTE-scope",
+      "kind": "scope_statement",
+      "text": "W1/W2 are isolated component/mechanism checks executed by the research candidate. Per the output contract they do not establish full-application behavior; W3-W7 remain required before any performance or recovery claim is made to users."
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "schema": "er9.candidate-lead-catalog.v1",
+  "status": "authentic unscored candidate revision",
+  "purpose": "Preserve supported conditions and useful investigation paths without turning optional directions into minimum product obligations.",
+  "inheritance_note": "The original leads.json was unavailable at the checked inputs/seed paths. The proposal and completed critique preserve only a few legacy lead references. Known mappings are retained as stated; missing IDs are not reconstructed or renumbered by guess.",
+  "legacy_records": [
+    {
+      "legacy_id": "L2",
+      "title": "napari plugin as a bounded fallback",
+      "recovered_from": "inputs/seed/proposal.md §§8.2 and 12; discussed in critique",
+      "known_content": "Reuse napari viewer mechanisms if custom canvas work overruns; project persistence and frame/identity/export contracts still need separate design.",
+      "disposition": "preserved as optional fallback",
+      "sources": ["SRC-NAPARI-IMAGE", "SRC-NAPARI-UNITS", "SRC-NAPARI-SHAPES"],
+      "condition": "Re-evaluate against an immutable napari release and plugin behavior; captured docs are from moving main and do not pin a runtime."
+    },
+    {
+      "legacy_id": "L3",
+      "title": "QuPath as a platform fallback",
+      "recovered_from": "inputs/seed/proposal.md §9; discussed in critique",
+      "known_content": "Keep as a pragmatic alternative if whole-slide and broad slide-format support becomes more important than the proposed Python volume/time-series focus.",
+      "disposition": "preserved as optional alternative",
+      "sources": ["SRC-QUPROJECT", "SRC-QUEXPORT"],
+      "condition": "Compare its current pinned release against the actual team's time-series, volume, and annotation workflow; stable docs captures alone do not establish fit."
+    },
+    {
+      "legacy_id": "L9",
+      "title": "Full accessibility audit",
+      "recovered_from": "inputs/seed/proposal.md §10",
+      "known_content": "A complete WCAG audit is a later validation activity; the proposal separately states keyboard operation and legible, non-color-only feedback as product requirements.",
+      "disposition": "preserved as validation follow-up; baseline accessibility remains in minimum scope",
+      "sources": [],
+      "condition": "Define applicable WCAG version/conformance scope and test with keyboard, screen reader, focus order, contrast, and error feedback."
+    },
+    {
+      "legacy_id": "L9-L10",
+      "title": "Deferred directions named in the proposal",
+      "recovered_from": "inputs/seed/proposal.md §11",
+      "known_content": "Cloud sync, concurrent multi-writer editing, and automatic segmentation/registration are listed as out of scope under a combined L9-L10 reference.",
+      "disposition": "preserved as optional investigations, with individual legacy-ID mapping unresolved",
+      "sources": [],
+      "condition": "Do not treat these as minimum requirements; investigate only when users identify a concrete workflow and privacy/storage model."
+    },
+    {
+      "legacy_ids": ["L1", "L4", "L5", "L6", "L7", "L8", "L11", "L12"],
+      "title": "Original records not recoverable from accessible artifacts",
+      "recovered_from": "No details in the accessible proposal/critique paths",
+      "disposition": "unresolved; no substitute content invented"
+    }
+  ],
+  "current_leads": [
+    {
+      "lead_id": "LEAD-NGFF-DERIVED-EXCHANGE",
+      "category": "optional opportunity",
+      "question": "Can versioned OME-Zarr 0.4/0.5 derived images and raster label arrays provide useful exchange while the project retains vector annotations and provenance?",
+      "why_keep": "NGFF supplies versioned axes and constrained transforms; it could make derived data interoperable when the frame is expressible in that subset.",
+      "sources": ["SRC-NGFF-04", "SRC-NGFF-05"],
+      "next_step": "Round-trip representative derived images and labels through pinned readers; include only fixtures whose coordinate transforms and calibration survive unchanged.",
+      "status": "deferred; no reader/export interoperability check executed"
+    },
+    {
+      "lead_id": "LEAD-NGFF-ZARR-READER-MATRIX",
+      "category": "support-boundary investigation",
+      "question": "Does the pinned Zarr-Python release read the intended NGFF 0.4 format-2 and 0.5 format-3 stores, codecs, axes, and transforms correctly?",
+      "why_keep": "The 0.4 and 0.5 specifications target different Zarr storage generations; Zarr-Python 3 documents both formats but also API migration changes.",
+      "sources": ["SRC-NGFF-04", "SRC-NGFF-05", "SRC-ZARR-PY-34"],
+      "next_step": "Build tiny known-answer stores for each spec version, then qualify each supported codec and transform case on the resolved package lock.",
+      "status": "required before enabling either profile; unexecuted"
+    },
+    {
+      "lead_id": "LEAD-TIFF-LAYOUT-FIXTURES",
+      "category": "support-boundary investigation",
+      "question": "Which TIFF strip, tile, page, SubIFD, compression, and mmap arrangements meet bounded-memory and cancellation targets?",
+      "why_keep": "tifffile documents several distinct access mechanisms and limitations; those mechanisms do not show that all layouts are bounded at viewport granularity.",
+      "sources": ["SRC-TIFF-README"],
+      "next_step": "Measure separate representative fixtures under the 3 GB workload and exclude layouts that exceed the memory/latency envelope.",
+      "status": "required before claiming large-data support; unexecuted"
+    },
+    {
+      "lead_id": "LEAD-TIFF-MICROMANAGER-54",
+      "category": "instrument fixture lead",
+      "question": "What series shape, axes, and calibration cases occur in current Micro-Manager OME-TIFF inputs?",
+      "why_keep": "Issue 54 describes a series/dimensionality problem and supplies a realistic test direction, but no verified repair chain.",
+      "sources": ["SRC-TIFF-54", "SRC-TIFF-README"],
+      "next_step": "Collect non-sensitive representative files with permission and write known-answer series/axis fixtures; keep unsupported layouts explicit.",
+      "status": "lead only; no current behavior inferred"
+    },
+    {
+      "lead_id": "LEAD-TVIPS-CALIBRATION",
+      "category": "instrument fixture lead",
+      "question": "Do the lab's TVIPS files preserve raw calibration values and units across the exact selected reader version?",
+      "why_keep": "Issue 319 has a bounded issue/test/code/release history but lacks the referenced fixture bytes and a test-run receipt in the supplied evidence.",
+      "sources": ["SRC-TIFF-319", "SRC-TIFF-TEST", "SRC-TIFF-FIX", "SRC-TIFF-RELEASE"],
+      "next_step": "Use an actual lab fixture or obtain the referenced fixture under a reproducible license; assert source-native values and units against the pinned reader.",
+      "status": "required calibration validation; unexecuted"
+    },
+    {
+      "lead_id": "LEAD-BUNDLE-RELOCATION",
+      "category": "workflow validation",
+      "question": "What balance of external references and copied image bytes works for six workstations exchanging bundles through shared storage?",
+      "why_keep": "Project relocation patterns and explicit URI/path behavior are documented precedents; project JSON without referenced image bytes is not self-contained.",
+      "sources": ["SRC-QUPROJECT"],
+      "next_step": "Test reference-only and fully included bundles across two clean workstation paths; record missing-source resolution and identity verification steps.",
+      "status": "required workflow decision; unexecuted"
+    },
+    {
+      "lead_id": "LEAD-SHARED-FILESYSTEM-SAVE",
+      "category": "platform qualification",
+      "question": "Can save and recovery be qualified on the team's actual shared filesystem?",
+      "why_keep": "The cited Linux rename documentation warns about NFS ambiguity and covers one-path replacement, not a multi-file transaction; SMB and other platforms are unresolved.",
+      "sources": ["SRC-RENAME"],
+      "next_step": "Keep direct saves disabled until fault-injection tests target the exact filesystem/client configuration; close-before-copy remains the initial exchange model.",
+      "status": "unexecuted; platform-specific"
+    },
+    {
+      "lead_id": "LEAD-ACCESSIBILITY-AUDIT",
+      "category": "validation follow-up",
+      "question": "Does the implemented workflow remain usable through keyboard, assistive technology, and legible status/error feedback?",
+      "why_keep": "The brief sets keyboard operability and legible metadata/error feedback as minimum obligations; a full conformance audit is a separate follow-up.",
+      "sources": [],
+      "next_step": "Perform keyboard-only and assistive-technology walkthroughs, focus checks, and a documented contrast/conformance review.",
+      "status": "baseline requirements included; audit unexecuted"
+    },
+    {
+      "lead_id": "LEAD-AUTOMATION-COLLAB-CLOUD",
+      "category": "optional future research",
+      "question": "Would segmentation, registration, concurrent collaboration, or cloud services solve a demonstrated lab need after local project exchange is reliable?",
+      "why_keep": "These directions are explicitly outside the minimum workflow and can add substantial validation, provenance, and storage requirements.",
+      "sources": [],
+      "next_step": "Defer until users supply a concrete task, error model, data governance constraints, and comparison to manual/local workflows.",
+      "status": "deferred optional ideas"
+    }
+  ]
+}

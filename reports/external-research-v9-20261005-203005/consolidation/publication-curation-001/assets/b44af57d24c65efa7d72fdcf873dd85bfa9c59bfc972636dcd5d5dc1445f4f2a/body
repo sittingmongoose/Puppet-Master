@@ -1,0 +1,193 @@
+{
+  "stage": "research",
+  "as_of": "2026-10-06",
+  "pin_policy": "For mutable documentation pages, pin is the SHA-256 of the exact captured response body. Git tags, release identifiers, PR merge commits, and branch applicability are also recorded where applicable. A capture pin identifies evidence bytes; it does not make a mutable upstream branch immutable.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "nbformat: Jupyter Notebook Format description",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "upstream_pin": "nbformat docs latest; page identifies nbformat 5.11",
+      "pin": "sha256:f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503",
+      "locator": "Format description: notebook dictionary, cells, code cell outputs and execution_count; JSON schema references.",
+      "captures": [{"capture_id":"c89a937e34e34eca8674f1532814cf38","captured_on":"2026-10-06","path":"public_captures/f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503.body","sha256":"f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503","format":"exact HTTP response body bytes"}],
+      "applicability": "Standard notebook interchange structure and saved output fields. It does not encode complete kernel history or prove output provenance."
+    },
+    {
+      "id": "S02",
+      "title": "nbclient: Executing notebooks",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "upstream_pin": "nbclient docs latest; captured docs identify 0.11 series",
+      "pin": "sha256:b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a",
+      "locator": "NotebookClient execution, timeout/error behavior, output saving, notebook/cell execution hooks.",
+      "captures": [{"capture_id":"edb01526448141fdb45e43f4d6980540","captured_on":"2026-10-06","path":"public_captures/b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a.body","sha256":"b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a","format":"exact HTTP response body bytes"}],
+      "applicability": "Supports a candidate clean replay and progress capture. Execution controls do not supply an OS security boundary."
+    },
+    {
+      "id": "S03",
+      "title": "nbclient v0.11.0 release",
+      "url": "https://api.github.com/repos/jupyter/nbclient/releases/tags/v0.11.0",
+      "upstream_pin": "GitHub release tag v0.11.0; published 2026-06-05",
+      "pin": "sha256:dd3bf985645d53e350bc3613f35cc6f281894cf75116b1d304a49f331f6326d4",
+      "locator": "Release metadata and release notes for tag v0.11.0.",
+      "captures": [{"capture_id":"42e37b2ea86b484e973c2d447f12a442","captured_on":"2026-10-06","path":"public_captures/dd3bf985645d53e350bc3613f35cc6f281894cf75116b1d304a49f331f6326d4.body","sha256":"dd3bf985645d53e350bc3613f35cc6f281894cf75116b1d304a49f331f6326d4","format":"exact HTTP response body bytes"}],
+      "applicability": "Establishes an available candidate version to pin, not compatibility with the proposed UI or local sandbox."
+    },
+    {
+      "id": "S04",
+      "title": "Jupyter Server: Security in a Jupyter environment",
+      "url": "https://raw.githubusercontent.com/jupyter-server/jupyter_server/main/docs/source/operators/security.rst",
+      "upstream_pin": "jupyter_server main documentation at capture; mutable branch",
+      "pin": "sha256:0b0e3cc7cde9cdd68654a673e17f468a9aabd877f894cfbee4660081b04a5430",
+      "locator": "Security documentation: arbitrary code execution, access controls, notebook trust and server deployment.",
+      "captures": [{"capture_id":"5f412321e3ba4edf876d5854abc0ddf","captured_on":"2026-10-06","path":"public_captures/0b0e3cc7cde9cdd68654a673e17f468a9aabd877f894cfbee4660081b04a5430.body","sha256":"0b0e3cc7cde9cdd68654a673e17f468a9aabd877f894cfbee4660081b04a5430","format":"exact HTTP response body bytes"}],
+      "applicability": "Supports treating notebook code as untrusted and separating server authentication/trust from OS isolation. Main branch is mutable; exact captured body is pinned."
+    },
+    {
+      "id": "S05",
+      "title": "DuckDB CSV auto detection",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/auto_detection.md",
+      "upstream_pin": "duckdb-web main documentation; mutable branch; docs current at capture",
+      "pin": "sha256:705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa",
+      "locator": "CSV auto detection: dialect/type/header inference, 20,480-row default sample, seekable and non-seekable input sampling, explicit overrides.",
+      "captures": [{"capture_id":"6dd72762e63a46f88f33b94bdc8a2979","captured_on":"2026-10-06","path":"public_captures/705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa.body","sha256":"705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa","format":"exact HTTP response body bytes"}],
+      "applicability": "Inference is a preview aid, not a full-file guarantee."
+    },
+    {
+      "id": "S06",
+      "title": "DuckDB Reading Faulty CSV Files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "upstream_pin": "duckdb-web main documentation; mutable branch",
+      "pin": "sha256:12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad",
+      "locator": "Faulty CSV: strict errors, ignore_errors/reject tables, and projection pushdown can avoid evaluating an invalid unselected column.",
+      "captures": [{"capture_id":"35e1287dac29482988cdbf3a855eb7aa","captured_on":"2026-10-06","path":"public_captures/12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad.body","sha256":"12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad","format":"exact HTTP response body bytes"}],
+      "applicability": "Direct basis for no silent row skipping and for full-schema validation that evaluates every contracted field."
+    },
+    {
+      "id": "S07",
+      "title": "DuckDB Loading JSON",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/json/loading_json.md",
+      "upstream_pin": "duckdb-web main documentation; mutable branch",
+      "pin": "sha256:d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642",
+      "locator": "JSON loading: newline-delimited mode, type inference sample_size, maximum_object_size, missing keys as NULL, columns and union_by_name options.",
+      "captures": [{"capture_id":"8f3cb52fd8164e00a44883a85c4937bf","captured_on":"2026-10-06","path":"public_captures/d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642.body","sha256":"d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642","format":"exact HTTP response body bytes"}],
+      "applicability": "Supports explicit NDJSON mode and distinguishes missing-key semantics where presence matters."
+    },
+    {
+      "id": "S08",
+      "title": "DuckDB Parquet Overview",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/parquet/overview.md",
+      "upstream_pin": "duckdb-web main documentation; mutable branch",
+      "pin": "sha256:3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd",
+      "locator": "Parquet overview: direct reads, DESCRIBE, filter/projection pushdown, filename/file_row_number, union_by_name and extension caveat.",
+      "captures": [{"capture_id":"8220378046d74363b9cf301cc17c1068","captured_on":"2026-10-06","path":"public_captures/3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd.body","sha256":"3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd","format":"exact HTTP response body bytes"}],
+      "applicability": "Supports direct columnar reads and pushdown; row-number and cross-file identity are opt-in/schema dependent, not universal identities."
+    },
+    {
+      "id": "S09",
+      "title": "DuckDB environment and memory performance guide",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/guides/performance/environment.md",
+      "upstream_pin": "duckdb-web main documentation; mutable branch",
+      "pin": "sha256:d9bb57d8a566cd1a92454255243298d406caa07969995acde56b38301345bc10",
+      "locator": "Memory settings and larger-than-memory query section: operator-dependent spilling; grouping/joining/sorting/window examples and thread guidance.",
+      "captures": [{"capture_id":"fb7d447d432d45f69032ee35c45e35f3","captured_on":"2026-10-06","path":"public_captures/d9bb57d8a566cd1a92454255243298d406caa07969995acde56b38301345bc10.body","sha256":"d9bb57d8a566cd1a92454255243298d406caa07969995acde56b38301345bc10","format":"exact HTTP response body bytes"}],
+      "applicability": "Makes a 5 GB out-of-core target plausible for some workloads but not a verified workstation benchmark or universal operator guarantee."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB ORDER BY clause",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/sql/query_syntax/orderby.md",
+      "upstream_pin": "duckdb-web main documentation; mutable branch",
+      "pin": "sha256:a8a9be8c25dc84dfac8bb75cfde2ba42228b2bede4f047e4662a1f6239f43a02",
+      "locator": "ORDER BY semantics, null ordering, text collation/order behavior, and ORDER BY ALL.",
+      "captures": [{"capture_id":"5ead1f90db9f44229e81b3a72282bb2f","captured_on":"2026-10-06","path":"public_captures/a8a9be8c25dc84dfac8bb75cfde2ba42228b2bede4f047e4662a1f6239f43a02.body","sha256":"a8a9be8c25dc84dfac8d75cfde2ba42228b2bede4f047e4662a1f6239f43a02","format":"exact HTTP response body bytes"}],
+      "applicability": "Supports explicit ordering policy. A complete unique tie-breaker remains a product/data requirement."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB concurrency",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/connect/concurrency.md",
+      "upstream_pin": "duckdb-web main documentation; mutable branch",
+      "pin": "sha256:f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f",
+      "locator": "Concurrency: one read-write process, read-only processes, same-process parallelism, multi-process write qualifications and network-share caveats.",
+      "captures": [{"capture_id":"afd82348e8ab484ebdc12a1ca579680d","captured_on":"2026-10-06","path":"public_captures/f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f.body","sha256":"f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f","format":"exact HTTP response body bytes"}],
+      "applicability": "Supports a single project writer and caution about shared writable DB files; exact behavior on team filesystems needs validation."
+    },
+    {
+      "id": "S12",
+      "title": "DuckDB issue #22103: JSON timestamp inference regression report and discussion",
+      "url": "https://github.com/duckdb/duckdb/issues/22103",
+      "upstream_pin": "Issue #22103 as captured 2026-10-06; issue discussion is mutable",
+      "pin": "sha256:738e41f7db60febc6f3a85351e84af162bb3a793814317b136e986a9315cc849",
+      "locator": "Issue body and comments: reported 1.5.2 JSON timestamp parse failure, 1.5.1 comparison, maintainer discussion questioning initial exact reproduction and later identifying the related varying-format defect.",
+      "captures": [
+        {"capture_id":"01e8f99cc51b4519b01977098a54c9dc","captured_on":"2026-10-06","path":"public_captures/738e41f7db60febc6f3a85351e84af162bb3a793814317b136e986a9315cc849.body","sha256":"738e41f7db60febc6f3a85351e84af162bb3a793814317b136e986a9315cc849","format":"exact HTTP response body bytes"},
+        {"capture_id":"0da26e945d864c8bad526d2cf794ff41","captured_on":"2026-10-06","path":"public_captures/8099ddc11a8fc1ffe30fcc6d76454bc69a31a9e7f21e31497bbe0d52357078ae.body","sha256":"8099ddc11a8fc1ffe30fcc6d76454bc69a31a9e7f21e31497bbe0d52357078ae","url":"https://api.github.com/repos/duckdb/duckdb/issues/22103/comments","format":"exact HTTP response body bytes"}
+      ],
+      "applicability": "Establishes the issue report and discussion context, not that every original report input reproducibly failed. Cross-check with the merged PR and release notes."
+    },
+    {
+      "id": "S13",
+      "title": "DuckDB PR #22559: Allow JSON timestamp format variation across columns",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/22559",
+      "upstream_pin": "Merged PR #22559; merge commit 252f338be17cb7f2caade6a42cfa1b5fdb6e59e3; target branch v1.5-variegata",
+      "pin": "sha256:3b2628e9a9dc81736970cd1c8b15e80f0a2321db74f8cb006eaa4f1a238672e6",
+      "locator": "PR metadata/title/merge state and linked diff. Patch changes JSON timestamp format inference and adds `test/sql/json/table/read_json_dates.test` cases for cross-column variation and explicit-format rejection.",
+      "captures": [
+        {"capture_id":"03c5a799f0ca4259988135c657ba2d36","captured_on":"2026-10-06","path":"public_captures/3b2628e9a9dc81736970cd1c8b15e80f0a2321db74f8cb006eaa4f1a238672e6.body","sha256":"3b2628e9a9dc81736970cd1c8b15e80f0a2321db74f8cb006eaa4f1a238672e6","format":"exact HTTP response body bytes"},
+        {"capture_id":"54d1f256dfab458a9b77ab90c02d7be8","captured_on":"2026-10-06","path":"public_captures/4cbe464e0b259c864ab680ea1a0ef252c6dd00fa645d20bda2dc439933a80354.body","sha256":"4cbe464e0b259c864ab680ea1a0ef252c6dd00fa645d20bda2dc439933a80354","url":"https://github.com/duckdb/duckdb/pull/22559.diff","format":"exact HTTP response body bytes"}
+      ],
+      "applicability": "Merged fix and regression-test evidence. Branch is v1.5-variegata; release applicability comes from S14, not the PR alone."
+    },
+    {
+      "id": "S14",
+      "title": "DuckDB v1.5.3 release notes",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.3",
+      "upstream_pin": "DuckDB release tag v1.5.3; published 2026-05-20",
+      "pin": "sha256:c5b85a667e3c99ed373fef1b60801b6002771d9eefb557a35c06007542af1267",
+      "locator": "v1.5.3 release body lists ‘Allow json ts format variation across columns’, PR #22559.",
+      "captures": [{"capture_id":"10790caee946457fbfb7a2bc5d8c248f","captured_on":"2026-10-06","path":"public_captures/c5b85a667e3c99ed373fef1b60801b6002771d9eefb557a35c06007542af1267.body","sha256":"c5b85a667e3c99ed373fef1b60801b6002771d9eefb557a35c06007542af1267","format":"exact HTTP response body bytes"}],
+      "applicability": "Establishes the fix is included in v1.5.3. Does not imply all JSON timestamp errors are fixed."
+    },
+    {
+      "id": "S15",
+      "title": "uv: Project lock and sync behavior",
+      "url": "https://raw.githubusercontent.com/astral-sh/uv/main/docs/concepts/projects/sync.md",
+      "upstream_pin": "uv main documentation; mutable branch",
+      "pin": "sha256:5c6a534a81111800ff37455f8c547bbb67f304b9d0cb02543c7185266dbef218",
+      "locator": "Lock/sync behavior including `uv run --locked`, exact sync, and lock export formats.",
+      "captures": [{"capture_id":"8919aa0992e54340a97620b763a565f2","captured_on":"2026-10-06","path":"public_captures/5c6a534a81111800ff37455f8c547bbb67f304b9d0cb02543c7185266dbef218.body","sha256":"5c6a534a81111800ff37455f8c547bbb67f304b9d0cb02543c7185266dbef218","format":"exact HTTP response body bytes"}],
+      "applicability": "Supports dependency-resolution locking and stale-lock failure. Does not freeze OS, native system libraries, arbitrary file access, or architecture."
+    },
+    {
+      "id": "S16",
+      "title": "marimo: Reactivity guide",
+      "url": "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/guides/reactivity.md",
+      "upstream_pin": "marimo main documentation; mutable branch",
+      "pin": "sha256:e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f",
+      "locator": "Reactivity guide: static variable dependency graph, descendant execution, layout versus execution order, mutation limitation, unique global variable names.",
+      "captures": [{"capture_id":"304453eac95b4ac59e8204d27a143f93","captured_on":"2026-10-06","path":"public_captures/e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f.body","sha256":"e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f","format":"exact HTTP response body bytes"}],
+      "applicability": "Independent reactive execution precedent and possible future alternative. Static graph has stated limits and changes the notebook programming model."
+    },
+    {
+      "id": "S17",
+      "title": "Jupyter Client PR #1145: asyncio socket poll wakeup proposal",
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/1145",
+      "upstream_pin": "PR #1145 as captured 2026-10-06; base main at 978361b3785dcd9cba6c733f4555e833e88fc0df; PR open and unmerged at capture",
+      "pin": "sha256:084847ceda4c4c793fbba596114fbfc99c27534f6407ff9d1bbf1f724bbd86a5",
+      "locator": "PR status/body describing edge-triggered socket wakeup and linked issue context.",
+      "captures": [{"capture_id":"cd45b4dc3fb8419ab8046c95c0573bc8","captured_on":"2026-10-06","path":"public_captures/084847ceda4c4c793fbba596114fbfc99c27534f6407ff9d1bbf1f724bbd86a5.body","sha256":"084847ceda4c4c793fbba596114fbfc99c27534f6407ff9d1bbf1f724bbd86a5","format":"exact HTTP response body bytes"}],
+      "applicability": "A proposed mitigation only. Open/unmerged status means no release fix claim; retain as a timeout/widget compatibility lead."
+    },
+    {
+      "id": "S18",
+      "title": "Jupyter Client PR #1145 diff and regression test",
+      "url": "https://github.com/jupyter/jupyter_client/pull/1145.diff",
+      "upstream_pin": "PR #1145 diff at capture; unmerged change from PR head",
+      "pin": "sha256:35a26111758474198e11c84df83bc6449b26fb67465f0e0068b7c028694c4c54",
+      "locator": "Patch and test `test_send_wakes_pending_poll`, asserting an asyncio socket poll is woken before timeout.",
+      "captures": [{"capture_id":"","captured_on":"2026-10-06","path":"public_captures/35a26111758474198e11c84df83bc6449b26fb67465f0e0068b7c028694c4c54.body","sha256":"35a26111758474198e11c84df83bc6449b26fb67465f0e0068b7c028694c4c54","format":"exact HTTP response body bytes"}],
+      "applicability": "Test exists in the proposed patch but is not evidence of a released regression fix. Capture ID was not retained in the working notes; body hash and capture path identify the bytes."
+    }
+  ]
+}

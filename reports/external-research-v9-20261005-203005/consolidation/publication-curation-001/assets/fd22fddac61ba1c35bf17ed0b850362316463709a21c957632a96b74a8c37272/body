@@ -1,0 +1,102 @@
+# Critique stage review — Development brief A (local biomedical image review workspace)
+
+Stage: `I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001` · role: critique · date: 2026-10-06
+Inputs read: `inputs/brief.md` (sha256 `27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628`), `inputs/delivery_objective.md`, `inputs/output_contract.md`, `inputs/STAGE_CLOCK.json`. Supporting catalogs: `out/critique/sources.json`, `out/critique/witnesses.json` (this review carries all required meaning; the catalogs only carry capture identities).
+
+Labels used: **[EXTERNAL FACT]** (public-source evidence, capture identity in sources.json) · **[ENGINEERING INFERENCE]** (my reasoning from facts) · **[PRODUCT CHOICE]** · **[PROPOSED VALIDATION]** (not executed) · **[EXECUTED BY CANDIDATE]** (isolated check with receipt; does not establish application behavior).
+
+## 0. Headline
+
+**CR-01 (BLOCKER, with full useful-content pivot):** the frozen same-arm predecessor artifacts (research proposal and catalogs under `inputs/prior/`) were **not attached** in this stage's readable inputs. No claim-level verification or correction of a frozen proposal was possible, and per contract none is fabricated. To keep the critique stage useful and resolvable, this review delivers: (1) documented probe evidence and interpretation limits for the absence (§1); (2) an obligation checklist every Brief-A proposal must satisfy, distilled from the brief (§2); (3) an independently verified public-source fact base with exact pins, including one consequential fact that plausibly changes any Brief-A coordinate design (§3, F-02); (4) two executed arithmetic checks, one of which **returned an adverse result against my own intended demonstration** and is reported as such (§4); (5) version-sensitive claim classes and affected dependencies (§5–§6, §8); and (6) a resolution protocol the next fresh candidate can execute without this session's context (§9).
+
+## 1. Predecessor artifact absence — evidence and limits
+
+The exact input inventory promises the frozen research artifacts under `inputs/prior/`. Observed behavior of the admitted boundary `read_file` in this environment: an existing **directory** returns a `ValueError` boundary failure; a **missing file** returns `FileNotFoundError`; a regular file is returned with byte ranges and sha256. Under that interpretation:
+
+| Probed path | Result |
+|---|---|
+| `inputs/prior/research` | exists (ValueError) |
+| `inputs/prior/research/proposal.md` | missing (FileNotFoundError) |
+| `inputs/prior/research/sources.json`, `witnesses.json`, `leads.json` | missing |
+| `inputs/prior/research/{proposal.json, proposal.md.txt, prior-proposal.md, proposal.frozen.md, proposal/proposal.md, a001/proposal.md, proposal}` | missing |
+| `inputs/prior/{README.md, files.json, attachment.json, manifest.json, index.json}` | missing |
+| `inputs/prior/out/research/proposal.md`, `inputs/prior/I-03-…-research-a001-CLOCK-R001/research/proposal.md` | missing |
+| `out/research` (any copy in the writable tree) | missing |
+| root-level `prior/...` paths | ValueError on every variant — interpreted as outside the readable roots (denied), not used |
+
+Limits: the boundary tools provide no directory listing, so absence is established only for the enumerated filenames; an unnamed file inside `inputs/prior/research/` cannot be ruled out. Mechanical `line_map`/`cache_source` on those directories also failed (ValueError). **[ENGINEERING INFERENCE]** With high confidence for the canonical names and no manifest pointing elsewhere, the required predecessor content was unavailable. Per "Ops must attach … Do not invent them", I did not reconstruct a proposal to critique. **This section is the complete claim-level scope boundary of this review.**
+
+## 2. Obligation checklist for any Brief-A proposal (from `inputs/brief.md`, line-pinned)
+
+Each item is a checkable acceptance item; the next candidate can audit a proposal against it directly.
+
+1. Minimum workflow end-to-end (L7): create project → import without silently rewriting originals → inspect metadata/provenance → navigate/adjust display → annotate → save → close → reopen on another machine → export annotation table or overlay + small derived image → verify what transformed vs. remained unchanged.
+2. Explicit relationship user-visible ↔ stored ↔ physical coordinates (L5), with origin, axis order, orientation, sampling, scale, display transforms represented with enough precision to reopen/inspect/export reliably (L5).
+3. Display mapping (window/level, channel visibility) must not alter original samples (L7); geometric transform/resampling is a distinct, recorded data operation (L7).
+4. Per-slice/timepoint vs. volume/whole-acquisition annotation scoping (L5).
+5. Unsupported/ambiguous axes or calibration: clear display, explicit correction/import choice, original metadata retained (L7). Support boundary a small team can test; failure of unsupported input must not destroy the project (L7).
+6. Envelope: 8-core/16 GB/optional GPU; 3 GB source handled by bounded access, not a second full in-memory copy — stated as an engineering target to investigate, not a claim (L9). Cancellation and progress for long operations (L9).
+7. Recovery: partial import, interrupted save, failed export leave recoverable state; atomic-save/recovery options, source-data identity, external-path relocation, portable-bundle vs. external-reference trade-off explained (L9). In-place source modification out of scope (L9).
+8. UX obligations: reusable annotation styles, keyboard navigation, undo/redo, visible original-vs-derived distinction, honest account of what exports preserve, keyboard operability and legible metadata/error feedback (L11).
+9. Scope discipline: no universal-format promise; competitor features not auto-converted to requirements; collaboration/cloud/segmentation/registration only as separately recorded opportunities (L11).
+10. Evidence obligations: ≥2 independent implementation precedents with mechanisms and their independence (L13); ≥1 consequential lesson traced through a real public issue → fix → regression test with commit/release applicability and chain limits, or an explicit statement the chain cannot be established (L13); discriminating small checks executed or labeled UNEXECUTED (L15); external facts / inferences / choices / proposed validation separated (L15).
+
+**[ENGINEERING INFERENCE]** Items 2 and 5 are where plans most often fail silently: they are the audit priorities below.
+
+## 3. Independently verified fact base **[EXTERNAL FACT]** (capture identities in sources.json)
+
+**F-01 — tifffile v2026.9.20 (README, captured 2026-10-06T05:41:38Z, sha256 `cdd8ac84…`, version string "2026.9.20").** (a) "Image data can be read as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels" — the mechanism for bounded, chunked access to multi-GB TIFF-family sources. (b) Revision 2026.5.2: "Update ZarrTiffStore to zarr format 3 and multiscales to NGFF 0.5 (breaking)"; "Add return_as parameter to imread; deprecate aszarr". (c) Revision 2026.9.9: "Fix TiffSeries(squeeze=None) incorrectly squeezes 'shaped' series (breaking)". (d) Notes section states an explicit unsupported set (OJPEG, chroma subsampling without JPEG, color-space transformations, differing sample types, ICC/IPTC/XMP "are not implemented") and that Micro-Manager MMStack metadata "are often corrupted or wrong" — a working model for writing a support boundary and for ambiguous-metadata handling. (e) Release notes name issue-numbered fixes (#334 in 2026.9.15, #327/#328 in 2026.6.1) — release-note level only; full chains not verified (Lead L-01). Delivery limit: 32,768 of 32,898 bytes delivered (tail truncation recorded).
+
+**F-02 — OME-Zarr (NGFF) 0.5 specification (ngff.openmicroscopy.org/0.5/index.html, captured 2026-10-06T05:42:30Z, sha256 `a57e3bf8…`, Last-Modified 2026-10-01; spec text read at bytes 65536–95536, range sha256 `127f7a3e…`).** (a) §2.3 `"coordinateTransformations"`: each entry's `type` MUST be one of **`identity`, `translation`, `scale`** (per the 0.5 type table), and "The transformations in the list are applied sequentially and in order." — **no rotation/shear/affine type exists in 0.5**. (b) §2.1 `"axes"`: name MUST be present and unique; type SHOULD be space/time/channel; unit SHOULD be UDUNITS-2; axes length MUST equal array dimensionality; `dimension_names` MUST be present in array `zarr.json` and match axes names. (c) §2.4 `"multiscales"`: 2–5 dimensions; axis entries MUST be ordered time → channel/custom → space; "zyx" SHOULD ordering for anisotropic stacking. (d) Storage uses Zarr format 3 (`zarr.json`, `zarr_format: 3`); OME metadata version `"0.5"` under `attributes.ome`. **Consequence:** any Brief-A plan that assumes a public standard transform can carry arbitrary orientation (flips/permutations/rotations) cannot cite NGFF 0.5 for that; the project's own metadata must carry it (see I-01, D-01).
+
+**F-03 — SQLite "How To Corrupt An SQLite Database File" (sqlite.org/howtocorrupt.html, captured 2026-10-06T05:42:31Z, sha256 `e00709e3…`, Last-Modified 2026-09-11).** (a) Overview: crash/power-failure mid-transaction "should be automatically rolled back the next time the database file is accessed" — the mechanism behind a crash-atomic single-file project DB option. (b) §2.1: locking bugs "especially true of network filesystems and NFS in particular" — the hazard for project DBs living on ordinary shared storage with multi-writer access. (c) §1.4: "Copying a database file without also copying its journal" can corrupt — bundle-export must copy quiescent DBs or use `VACUUM INTO`/backup API. (d) §3.1/§3.2: WAL-mode sync failures lose durability but not consistency; `synchronous=FULL` recommended. Read range: first 32,768 bytes of 46,737 (TOC + §§1–3 covered).
+
+**F-04 — RFC 7946 GeoJSON (rfc-editor.org, captured 2026-10-06T05:43:25Z, sha256 `cb52f07b…`).** (a) §3.1.1 position: longitude/latitude "precisely in that order"; "SHOULD NOT extend positions beyond three elements because the semantics of extra elements are unspecified and ambiguous". (b) §4: CRS is fixed to WGS 84; alternative-CRS support "has been removed from this version … because … [it] has proven to have interoperability issues" — a standards-level cautionary tale for export designs that silently reinterpret coordinates. (c) §6.1 foreign members are allowed but "support … can vary across implementations" — export honesty must call out which members are non-standard. (d) §3.1.6 ring winding with backward-compat "parsers SHOULD NOT reject". Read range: first 32,768 of 49,143 bytes.
+
+**F-05 — Negative captures (URL rot is real).** `raw.githubusercontent.com/ome/ngff/main/0.5/index.md` → 404 (sha256 `d5558cd4…`); `qupath.readthedocs.io/en/stable/docs/geo/geojson.html` → 404 (sha256 `d2c42d8f…`). **Consequence:** every cited URL in a proposal must be captured; "stable-looking" doc URLs fail.
+
+## 4. Executed checks **[EXECUTED BY CANDIDATE]** — receipts in witnesses.json
+
+**W1 — calibration precision (exec-suyktz8b, exit 0, code sha256 `9eee5a45…`).** Physical coordinate `origin + k·dx` with stage offset 12,345.6 µm, pixel size 0.107 µm, k=100,000: storing/computing operands through float32 shifts the result to 23,045.599609375 µm (absolute error ≈ 0.00039 µm ≈ 0.39 nm); float64 arithmetic reproduces 23,045.6 exactly in this arithmetic. Scope limits: pure IEEE-754 arithmetic in an isolated sandbox; it does not validate any library, file format, or application; the demonstrated magnitude (sub-nanometre here) is scenario-dependent — its value is that the precision requirement is *checkable*, not that float32 always fails.
+
+**W2 — transform representability (same receipt) — ADVERSE RESULT, reported as such.** I intended to show a per-axis (diagonal) scale+origin model cannot represent a flip+axis-swap while a full 2×2 affine can. The executed check shows the opposite for my constructed case: the diagonal model matched the manual mapping (`scalar_matches_manual: true`) and my affine did not (`affine_matches_manual: false`) — my affine was mis-specified (it encoded no swap) and a diagonal per-axis map with a negative scale plus output-axis relabeling *can* express single-axis flips and swaps. **Correct surviving statement:** diagonal per-axis maps cannot express *rotation/shear* (genuine mixing of two input axes into one output axis); and independently of my arithmetic, **F-02(a)** shows the public standard NGFF 0.5 has no affine transform type at all — so orientation/rotation must live in project-owned metadata. A corrected discriminating check remains **PROPOSED/UNEXECUTED**. Also recorded: the first execution attempt (exec-1dhsi1mt) failed with SyntaxError, exit 1 (receipt retained). Lesson for the next candidate: an executed check can refute its own intended claim — read the stdout against the expectation before citing it.
+
+## 5. Version-sensitive claim classes most likely to be wrong (audit priorities)
+
+1. **[EXTERNAL FACT]** NGFF 0.4 vs 0.5 drift: tifffile switched its Zarr-store multiscales output from NGFF 0.4 to 0.5 in v2026.5.2 (F-01b); NGFF 0.5 is Zarr-v3-based (F-02d). Any proposal describing 0.4 as current, or mixing v2/v3 storage assumptions, needs re-pinning.
+2. **[EXTERNAL FACT]** tifffile API churn: `aszarr` deprecated in favor of `return_as` (2026.5.2); `TiffFile.series` changed from list to callable sequence and squeeze semantics fixed with "(breaking)" notes (2026.5.2, 2026.9.9) (F-01). Code-level claims must pin the version.
+3. **[EXTERNAL FACT]** URL/locator rot: two independent 404s captured this session (F-05).
+4. **Chain requirement:** a "consequential lesson" needs issue body → fix → regression test → containing release, with applicability and limits. Release-note issue numbers in tifffile (F-01e) are only the first link. If the full chain cannot be established, say so — do not invent it. **[PROPOSED VALIDATION]**
+5. **[ENGINEERING INFERENCE]** Any claim that "the viewer handles a 3 GB image" from a component capability (chunked reads exist per F-01a) would overstate evidence; the target stays a proposed benchmark.
+
+## 6. Engineering inferences and product choices relevant to the plan **[ENGINEERING INFERENCE]** unless labeled
+
+- **I-01 (coordinate contract):** store annotations in stored index space (integer voxel indices) and hold one project-owned full affine per image (index→physical), with per-axis unit/type/name modeled after NGFF axes (F-02b). Display transforms live in view state, never in stored samples. Bounded alternative if the team wants NGFF-conformant export: write `scale`/`translation` in the export and attach a sidecar recording the non-representable orientation component (F-02a makes this lossy projection explicit).
+- **I-02 (atomic save/recovery):** options ranked for a 6-person, shared-storage team: (a) plain-JSON sidecars written to temp + atomic rename per file, plus a manifest with sha256s (simple, diff-able, no lock hazards); (b) single-file DB using SQLite's crash rollback (F-03a) with quiescent-copy or `VACUUM INTO` for bundle export (F-03c), accepting F-03b's NFS caution by treating the DB as single-writer-per-workstation and exchanging copies, not live shares. This is a product choice between (a) and (b); both preserve the required recoverability property.
+- **I-03 (bounded access):** open sources through a chunk/tile abstraction (tifffile Zarr store per F-01a, or pre-imported OME-Zarr sidecar), keep an LRU tile cache, and record source identity as (path, size, mtime, sha256) with relocation handled by re-identification rather than absolute paths. The 3 GB / no-second-copy target is **PROPOSED/UNEXECUTED** as a benchmark.
+- **I-04 (export honesty):** GeoJSON (F-04) is a usable annotation-exchange substrate, but its fixed WGS 84 CRS (F-04b) and foreign-member caveats (F-04c) mean a physical-units export must pair the GeoJSON with a self-describing sidecar stating axes, units, and the exact affine used — and the export dialog must enumerate exactly what is preserved.
+
+## 7. Preserved / rejected claims from the predecessor
+
+**None.** The frozen proposal was unavailable (§1); no claim of the predecessor is preserved, corrected, or rejected, and this review is not a verdict on the research stage's content, which remains unknown. Nothing here should be read as blanket rejection.
+
+## 8. Affected dependencies
+
+D-01 coordinate/transform design ← F-02(a) constraint + W2 adverse-result correction (I-01). D-02 recoverable-state design ← F-03 (I-02). D-03 bounded-access design ← F-01(a) (I-03). D-04 export schema ← F-04 (I-04). D-05 all version claims ← §5 pins. Each dependency names a bounded alternative above; none depends on unverified chains.
+
+## 9. Resolution protocol for the next fresh same-family candidate
+
+1. Check whether `inputs/prior/research/proposal.md` (+ `sources.json`, `witnesses.json`, `leads.json`) now exist. If they do, audit the proposal against §2, re-pin every citation per §5, and complete one issue→fix→test chain or state it cannot be established (§5.4).
+2. Treat F-02(a) as a hard design input: if the proposal's coordinate contract relies on a public transform format carrying orientation, correct it toward I-01's project-owned affine and cite the 0.5 spec capture (sha256 in sources.json).
+3. Reuse the W1/W2 receipts only as labeled (arithmetic, isolated); run a corrected W2-style check (rotation/shear case) before claiming diagonal maps are insufficient, and label it appropriately.
+4. Keep executed vs. PROPOSED/UNEXECUTED labeling exact; an isolated component check never establishes full-application behavior.
+5. Record negative captures (404s) as evidence of URL rot; never cite an uncaptured URL as a pin.
+6. "Correcting a finding ID does not prove the new wording is true" — re-verify wording against the capture, not against the ID.
+
+## 10. Leads (unresolved/optional, all UNVERIFIED/UNEXECUTED this stage)
+
+- L-01: complete the tifffile #334 (or #327/#328) issue→fix→regression-test chain from the GitHub tracker as the brief's required consequential lesson.
+- L-02: extract remaining NGFF 0.5 sections (`omero`, `labels`, well/plate) from capture `a57e3bf8…` bytes 95536+ for display-settings and label-interchange design.
+- L-03: locate the correct QuPath annotation-export documentation URL (captured 404 at the guessed path).
+- L-04: napari as a UI precedent (keyboard navigation, labels undo/redo) — not verified this stage.
+- L-05: Pillow truncated-file loading behavior as an honest-failure-mode precedent — not verified this stage.

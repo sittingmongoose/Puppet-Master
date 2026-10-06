@@ -1,0 +1,121 @@
+# Critique review — brief A (local biomedical image review workspace)
+
+Stage: fresh source-grounded critic. Scope artifact: this file only (`out/critique/review.md`).
+Reviewed object: the frozen same-arm research predecessor that this stage is required to read from `inputs/prior/`.
+Session date: 2026-10-05 (all capture timestamps UTC as recorded by tool receipts).
+
+---
+
+## 1. Review-object availability: NO FROZEN PREDECESSOR WAS DELIVERED
+
+This critic stage must "read the exact brief, complete frozen research proposal and supporting catalogs" and critique them. The frozen predecessor was not present at any point during this session. This section is precise so the next author can verify the situation without private context.
+
+Probes (boundary `read_file`, all `FileNotFoundError` unless noted), repeated between 2026-10-05T23:48Z and 23:56Z:
+
+- `inputs/prior/proposal.md`, `inputs/prior/sources.json`, `inputs/prior/witnesses.json`, `inputs/prior/leads.json`
+- Layout variants: `inputs/prior/manifest.json`, `inputs/prior/index.json`, `inputs/prior/research.md`, `inputs/prior.md`, `inputs/prior.json`
+- Directory variants: `inputs/prior/research/`, `inputs/prior/final/`, `inputs/prior/out/research/`, `inputs/prior/out/final/`, `inputs/prior/candidate/`, `inputs/prior/0/`, `inputs/prior/frozen/`, `inputs/prior/critique/` (each probed for the expected file)
+- In-arm freezes that would have been produced by an earlier stage of this same arm: `out/research/proposal.md`, `out/research/sources.json`, `out/research/witnesses.json`, `out/research/leads.json`, `out/final/proposal.md` — all absent
+- `prior/proposal.md` returns a boundary `ValueError` (placeholder present, not readable as content)
+- The only readable input is `inputs/brief.md` (sha256 `27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628`, 5,324 bytes, 15 lines), which matches the assigned brief verbatim.
+
+Per the stage contract ("They are not present until their actual output freezes exist. Never invent a missing predecessor"), I do not fabricate a research proposal, its claims, or a claim-by-claim verdict. A critique of an unread document would be invention, and correcting invented findings would prove nothing.
+
+**Resolution instruction for the next fresh author:** if a freeze exists at grading time under `inputs/prior/` (any of the standard names `proposal.md`, `sources.json`, `witnesses.json`, `leads.json`, or a stage subdirectory), this file's §2–§5 are the verification kit to run against it; §6 is the corrections checklist the proposal must satisfy, and any violated item becomes a supported correction with the pin cited. If no freeze exists, the same checklist is the minimum bar the final proposal must clear.
+
+Because a scored deliverable must still be useful now, the remainder of this review is the part of a critique that does not depend on reading the predecessor: independently verified external anchors (§3), candidate-executed discriminating checks (§4), the corrections checklist derived from those anchors (§6), and uncertainty/leads (§7). Every external claim below carries a capture receipt (§3); every executed check carries a receipt (§4). Nothing here is a claim about any full application's behavior.
+
+---
+
+## 2. Verification method and independence statement
+
+- Eligible sources: product documentation, open-source implementation, public issue/fix history, and standards, fetched as exact HTTP response bodies with pinned IP, capture id, sha256 and timestamp. Captures live under `public_captures/` and are readable by the next author (paths in §3).
+- No other arm's material, no evaluator material, and no private data were inspected. No packages were installed; the execution sandbox is the provided isolated python tool.
+- Component-level checks (§4) verify arithmetic/serialization semantics only; they do not establish any application-level behavior, and are labeled as such.
+
+---
+
+## 3. Independently verified anchors (external facts, with pins)
+
+| # | Source (pin) | Capture (sha256, UTC) | Verified content relevant to brief A |
+|---|---|---|---|
+| S1 | OME-NGFF `latest` landing → 0.5 | `6506d5a9…47e02f`, 23:48:33 | "latest" resolves to spec **0.5**; 0.6 and 0.9.dev2 exist in the sidebar |
+| S2 | NGFF 0.5 spec, `specifications/0.5/index.html` (129,734 B) | `be0fae25…99e31ab`, 23:48:57 | Storage = **Zarr v3** (`zarr.json`, `zarr_format:3`); axes (2–5 dims, t before c/custom before space, zyx SHOULD); `dimension_names` MUST be in array metadata; labels arrays integer-only |
+| S3 | NGFF 0.5 §coordinateTransformations (same capture as S2) | same | Types limited to **identity / translation / scale**; applied **sequentially in list order**; per-dataset exactly one `scale` REQUIRED; optional `translation` MUST come **after** scale; group-level transforms applied **after** per-dataset ones; vector length MUST equal axes count |
+| S4 | tifffile PyPI JSON (313,690 B) | `775c238a…5fdaf`, 23:49:52 | Latest **2026.9.20**; README revision log shows breaking changes **2026.5.2** (zarr format 3 + NGFF 0.5 store; `TiffFile.series` list→callable; `aszarr` deprecated → `return_as='zarr'`; `kind=` replaces `ome/imagej/shaped` kwargs; requires `zarr>=3.2.0`), and **2026.9.9** (`TiffSeries(squeeze=None)` squeeze fix, "breaking") |
+| S5 | OME-XML minimum spec, ome-model 6.2.2 (6,987 B) | `fd294999…a83215`, 23:49:53 | `Pixels` requires `DimensionOrder` (e.g. XYZCT) + SizeX/Y/Z/C/T + Type; **units added January 2015** (older OME-XML is unitless) |
+| S6 | zarr PyPI JSON (186,948 B) | `0d61dcae…44ed6a`, 23:50:28 | Latest **3.4.0**; `requires_python >=3.12`; `numpy>=2`; numcodecs>=0.14 |
+| S7 | Zarr v3 core spec index (178,625 B) | `8b48ac36…f3a0ea09`, 23:50:13 | Current v3 core spec page; note `v3.0.html` is a JS-redirect stub (`291f23a1…49ff0a`) — cite the index page |
+| S8 | rename(2), Linux man-pages 6.19 (23,571 B, complete) | `8772946a…b8e6e57`, 23:50:50 | Atomic replacement guarantee; on failure an instance of newpath remains; **EXDEV** across mount points; **BUGS (NFS): "you can not assume that if the operation failed, the file was not renamed"** |
+| S9 | SQLite "Atomic Commit In SQLite" (77,968 B) | `5a5be7b6…d856ea1`, 23:51:05 | Rollback-journal mechanism; commit instant = journal deletion; explicit hardware assumptions (sector writes not atomic; fsync trusted; deletion assumed atomic); rollback mode only (WAL differs) |
+| S10 | RFC 7946 GeoJSON (49,143 B, full text) | `cb52f07b…24f8`, 23:52:45 | CRS is **WGS84 lon/lat only**; alternative-CRS member **removed in this version**; positions fixed order; foreign members allowed but with "no normative processing model"; winding right-hand rule; §11.2 coordinate precision |
+| S11 | napari stable docs landing (61,364 B) | `bea3ca29…6d55`, 23:48:33 | Stable docs self-report **0.9.2**; napari.org path `howtos/layers/transforms.html` returned **404** (GitHub Pages 404, capture `b6205073…368`, 23:50:27) — older doc-tree URLs are stale |
+
+Applicability: S2/S3 govern any claim about NGFF-based storage or export; S3+S4+W1 (§4) together make transform-order a testable correctness item; S4/S6 govern any Python library version claims; S5 governs OME-TIFF calibration parsing claims; S8/S9 govern atomic-save/recovery claims; S10 governs annotation-export honesty; S11 is a caution against stale citation rather than a design source.
+
+---
+
+## 4. Candidate-executed discriminating checks (isolated component checks)
+
+Receipts: `mcp__pm_execution__python_execute`, sandbox `/work`, exit 0, wall 0.17 s. Scope limits: stdlib-only, single component semantics; does not establish NGFF library behavior or any application behavior.
+
+### W1 — NGFF-style transform composition order (receipt exec-wekc6v6a, `code_sha256 ad3f081e…e96ae23`)
+- Code: sequential application of scale/translation lists to x=(3,5); scale=(0.5,2.0), translation=(10,20).
+- Expected (from S3): scale-then-translation ≠ translation-then-scale.
+- stdout: `scale->translation: [11.5, 30.0]`; `translation->scale: [6.5, 50.0]`; `orders differ: True`.
+- Discriminates: whether stored coordinates + calibration reproduce the same physical point after a save/load round trip. Any proposal that stores user-visible coordinates without pinning the applied order fails this check.
+
+### W2 — exact float64 round-trip through JSON (same receipt)
+- Code: `json.loads(json.dumps(v)) == v` (plus struct bit compare for the min subnormal) on 0.1, 1e308, min subnormal, max double, π.
+- stdout: all `exact: True`; subnormal `bit-exact: True`.
+- Supports (component-level, CPython `json` only): storing annotation coordinates as JSON doubles loses no precision. Does NOT generalize to other serializers, NaN handling, or decimal-format consumers; NaN/Inf must be excluded at the schema level (JSON does not define them).
+
+### W3 — proposed, UNEXECUTED (no full zarr/napari stack in sandbox; installing is out of scope)
+- Reopen test: write a two-level OME-Zarr (NGFF 0.5, zarr v3) via one writer and read calibration through an independent reader; assert per-axes scale equality to 1 ulp. (Proposed validation, not evidence.)
+- Atomic-save fault drill: kill -9 between temp-file write and `os.replace` on an NFS-mounted path; verify which state survives. S8's NFS BUGS note predicts failure reporting cannot be trusted there; this drill is the check.
+- Window/level non-destructiveness: hash the source array before/after adjusting display mapping; assert digest unchanged. Trivial in principle but belongs in the acceptance suite.
+
+---
+
+## 5. Load-bearing discoveries that would change the plan (source-backed)
+
+1. **Transform order is normative and discriminable (S3, W1).** The physical coordinate of a stored annotation depends on the order in which scale and translation compose; the two orders differ (11.5 vs 6.5 on the same input). A proposal that does not name a single canonical order (and test it) has a defect class, not a detail.
+2. **"latest OME-Zarr" is now Zarr-v3-based NGFF 0.5 (S1–S2), while the huge installed base of tools/records is 0.4 on Zarr v2.** Choosing "whatever latest says" silently selects a format with a different on-disk layout (`zarr.json` vs `.zarray`/`.zattrs`) and a much smaller reader ecosystem. The support boundary must pin one write version and state a read policy for the other.
+3. **Python imaging-stack versions moved (S4, S6).** tifffile 2026.5.2 broke the series API, deprecated `aszarr`, and moved its zarr bridge to zarr-format-3/NGFF-0.5; zarr 3.4.0 requires Python ≥3.12 and numpy ≥2. Any proposal citing pre-2026 tifffile/zarr API names or claiming wide interpreter compatibility is stale as of capture.
+4. **Atomic save on "ordinary shared storage" has a documented NFS failure mode (S8).** rename-based save is atomic locally, but on NFS a reported failure does not imply "nothing happened". Recovery logic must therefore detect (hash/compare), not just assume, which state won — this is a correction-grade point against any proposal that claims rename atomicity unconditionally.
+5. **GeoJSON cannot carry calibration in-band (S10).** Positions are WGS84 lon/lat; the alternative-CRS member was removed; foreign members exist but have "no normative processing model". So an "export to GeoJSON preserves calibration" claim is wrong unless calibration goes into foreign members with an explicitly documented, non-interoperable convention — exactly the "honest account of what the exported file preserves" the brief demands.
+6. **OME-XML units are younger than the format (S5).** Files predating the January-2015 units change can carry unitless physical sizes; an importer must surface "unit missing" as an explicit choice rather than silently assuming micrometers.
+
+---
+
+## 6. Corrections checklist (checkable criteria for the predecessor/final proposal)
+
+Each item is phrased so the next author can resolve it mechanically against the frozen text. "Supported correction" = the frozen proposal fails the item and the pin above refutes its specific wording.
+
+- C1. States a single canonical composition order for stored-coordinate → physical-coordinate mapping, and an executed or explicitly UNEXECUTED check for it (S3, W1).
+- C2. Pins one OME-Zarr/NGFF write version (0.4-on-Zarr-v2 vs 0.5-on-Zarr-v3) and states its read policy for the other; does not say "NGFF" without a version (S1–S2).
+- C3. All Python library claims carry version pins compatible with capture-era reality: tifffile ≥2026.5.2 API names (or explicitly pinned older line), zarr 3.4.0's Python ≥3.12/numpy ≥2 constraints (S4, S6).
+- C4. Atomic-save design acknowledges the rename(2) NFS caveat and specifies detection-on-recovery, not assumption (S8).
+- C5. Annotation export honesty: if GeoJSON is offered, calibration/pixel space can only travel via foreign members and must be labeled non-interoperable; the claim "annotations still refer to the same image" is tied to stored source identity (hash + path + calibration snapshot), not to the export format (S10).
+- C6. Unsupported/ambiguous calibration: explicit import-time choice with original metadata retained; unitless OME-XML handled as the documented legacy case (S5).
+- C7. The 3 GB bounded-access target is labeled an engineering target with a proposed measurement (e.g., peak-RSS during tile walk), not asserted from component docs (S4's README documents the mechanisms — memmap, zarr/tile reads — but proves no application budget).
+- C8. Two precedents are independent (different projects/mechanisms), and any issue→fix→regression chain includes commit/release applicability; chains that cannot be established are declared, not implied.
+- C9. Executed vs proposed/UNEXECUTED labels are used exactly as the contract requires; no component check is presented as application behavior.
+- C10. Minimum obligations vs optional ideas are separated (undo/redo, styles, keyboard nav in minimum; cloud/segmentation/registration deferred), with deferred leads preserved.
+
+---
+
+## 7. Uncertainty and leads (preserved, not adopted)
+
+- Uncertain: whether the graded environment delivers `inputs/prior/` after this stage begins; if it does, this review's §1 must be superseded by a claim-by-claim critique built with §3–§6 as the toolkit. I could not verify any predecessor claims, and I do not claim to have.
+- Uncertain: exact napari 0.9.x documentation URLs (S11 shows an old path 404s); any napari citation needs a same-day capture of the exact page used.
+- Lead (deferred, useful): the tifffile README's Zarr-interface examples (S4) suggest a tile-server-free bounded-access design for OME-TIFF sources; worth a W3-style measurement in the final plan.
+- Lead (deferred): SQLite rollback-journal semantics (S9) as a single-file project-store recovery mechanism; WAL vs rollback mode changes the recovery story and must not be conflated.
+- Proposed check left UNEXECUTED: full two-reader OME-Zarr calibration equality (W3-1) — requires a real environment with the writer/reader stack installed.
+
+---
+
+## 8. Verdict
+
+- On the reviewed object: **not reviewable — the frozen predecessor was never delivered** (§1). No verdict is issued about any claim I did not read, and no repair history or source chain is invented anywhere in this review.
+- On the domain: §3/§4/§5 are verified now and carry receipts; §6 is the actionable corrections checklist; a later author can resolve this review by running the frozen proposal against C1–C10 with the pinned captures.

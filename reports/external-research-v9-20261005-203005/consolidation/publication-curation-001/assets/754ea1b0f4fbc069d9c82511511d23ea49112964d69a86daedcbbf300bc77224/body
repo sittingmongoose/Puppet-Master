@@ -1,0 +1,68 @@
+{
+  "catalog_schema": "er9.research.leads.v1",
+  "note": "Unresolved or optional follow-ups. Nothing here is a delivered guarantee; each entry states what evidence would be needed.",
+  "unresolved": [
+    {
+      "id": "L1",
+      "topic": "duckdb#25824 resolution",
+      "detail": "Open at capture (2026-10-06): silent rounding/truncation past the 20,480-row sniff window; sniffer/scanner strictness asymmetry. Re-check issue state and any fix PR + regression tests before final design freeze; if fixed, record fixed-in version and add to V3 probe matrix.",
+      "evidence_needed": "issue timeline events, linked PR files (patch + test), first release tag containing the fix (file-at-tag fetch, closing the S7-style inference gap)."
+    },
+    {
+      "id": "L2",
+      "topic": "DuckDB out-of-core guarantees",
+      "detail": "The CSV docs page (S3) was captured but only navigation chrome read. The 'larger than memory' / spill behavior and current sample_size option table should be captured from docs/current/data/csv/auto_detection and the memory-limit docs to cite precisely.",
+      "evidence_needed": "targeted re-fetch + section-level quotes with pins to a DuckDB release."
+    },
+    {
+      "id": "L3",
+      "topic": "Sandbox stack selection and portability",
+      "detail": "Proposal chooses OS-level isolation (namespaces/seccomp/OCI) and explicitly rejects import blacklists, but no primary source for the sandbox stack was captured in this stage; macOS/Windows story is unresolved (bounded alternative: Linux-first, permissive+unverified mode elsewhere).",
+      "evidence_needed": "bubblewrap/Firejail/OCI runtime docs; Jupyter kernel-gateway or similar isolation guidance; platform capability matrix."
+    },
+    {
+      "id": "L4",
+      "topic": "nbclient/nbformat release pins",
+      "detail": "Evidence is docs-'latest' and schema-main; the tag-5.10.4 schema fetch 404'd (S1b). Pin exact PyPI releases and their docs before implementation; confirm allow_errors/timeout defaults are unchanged in the pinned release.",
+      "evidence_needed": "nbclient changelog (docs changelog.html) and nbformat release notes at chosen pins."
+    },
+    {
+      "id": "L5",
+      "topic": "Determinism of the embedded engine under parallelism",
+      "detail": "W3 shows key-only ordering is engine-dependent; DuckDB's actual tie-order guarantees (e.g., ORDER BY stability across threads) were not established from primary sources.",
+      "evidence_needed": "engine docs on ORDER BY/order preservation; a V2-class empirical check at >1 thread."
+    }
+  ],
+  "optional_opportunities": [
+    {
+      "id": "O1",
+      "topic": "Content-addressed dataset/output cache (DVC-style)",
+      "detail": "Design idea only in this proposal (cache key = input version hash + transform hash). DVC's documented cache model would be the precedent to study if promoted.",
+      "evidence_needed": "DVC cache documentation capture."
+    },
+    {
+      "id": "O2",
+      "topic": "Parameterized/orchestrated execution (papermill/Ploomber)",
+      "detail": "nbclient docs themselves point to papermill for parameterized CLI execution (captured in S2). Could become the headless replay runner; not investigated beyond that mention.",
+      "evidence_needed": "papermill docs + a real issue/fix chain if adopted."
+    },
+    {
+      "id": "O3",
+      "topic": "Arrow/Parquet as interchange for derived results",
+      "detail": "Portable typed columnar outputs would strengthen cross-machine result comparison; unexplored in this stage.",
+      "evidence_needed": "Arrow spec/docs capture; schema-evolution semantics."
+    },
+    {
+      "id": "O4",
+      "topic": "Real-time collaboration (CRDT on notebook model)",
+      "detail": "Explicitly deferred/rejected for the 3-analyst scope; conflicts on .ipynb cell arrays are the hard part.",
+      "evidence_needed": "if ever revisited: research on CRDT list semantics over nbformat documents."
+    },
+    {
+      "id": "O5",
+      "topic": "SQL cells over the shared catalog",
+      "detail": "Bounded optional feature (proposal section 12); requires engine-adapter work plus the V3 pin-gating to be safe.",
+      "evidence_needed": "engine relational/SQL API docs at a pinned version."
+    }
+  ]
+}

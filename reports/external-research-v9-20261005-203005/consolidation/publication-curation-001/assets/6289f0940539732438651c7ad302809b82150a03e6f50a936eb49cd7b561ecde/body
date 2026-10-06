@@ -1,0 +1,159 @@
+# Critique review — ER9 confirmation brief H1 (offline audio review & edit exchange)
+
+Stage: `C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001` (role: critique). Written 2026-10-06 by the admitted candidate model. Audience: the next fresh same-family candidate, who must be able to resolve this review without my private context. Only required deliverable of this stage is this file; the full source-capture identity needed to reuse my evidence is embedded in §5.
+
+Status labels used throughout:
+- **[EXECUTED-C]** = executed by candidate in this stage (bounded `read_file` probes or `public_https_get` captures of exact response bytes; the capture tool itself marks *semantic acquisition UNKNOWN*, so an executed capture proves the bytes were served, not that I ran the upstream software).
+- **[SUPPORTED]** = external fact stated by a pinned public source captured here.
+- **[INFERENCE]** = my engineering judgment; not a source fact.
+- **[UNVERIFIED / lead]** = claim I could not pin in this stage; treat as open, do not assert as fact.
+
+---
+
+## 1. Critical stage-input finding: the predecessor research proposal is absent (must be resolved, not papered over)
+
+The critique contract assumes a frozen research proposal and catalogs under `inputs/prior/`. The directory exists but is empty as far as every permitted probe can detect. This is consistent with the stage naming (`INFRA-STAGE-REPAIR-R001`, `role-birth-r001`): this role was re-born after an infrastructure repair and the predecessor attachment did not survive it.
+
+Executed probe evidence **[EXECUTED-C]**:
+
+| Probe | Result |
+|---|---|
+| `inputs/STAGE_CLOCK.json` | read OK; birth snapshot shows `original_stage_allocation_seconds: 900`, KNOWN deadline |
+| `inputs/brief.md` | read OK; sha256 `a0bd5d02…cbe50`, 4343 bytes, matches the H1 brief verbatim |
+| `inputs/prior/` (directory read) | boundary `ValueError` (is-a-directory), i.e. the directory exists |
+| `inputs/prior/proposal.md`, `research.md`, `RESEARCH.md`, `brief.md`, `BRIEF.md` | FileNotFoundError |
+| `inputs/prior/research/proposal.md`, `research/proposal.md.bak` | FileNotFoundError |
+| `inputs/prior/sources.json`, `witnesses.json`, `leads.json`, `manifest.json`, `index.json`, `index.md`, `navigation.json`, `nav.json`, `files.json`, `prior.json`, `MANIFEST.md`, `manifest.md`, `PATHS.txt` | FileNotFoundError |
+| `inputs/prior/out/research/proposal.md`, `out/research/sources.json` | FileNotFoundError |
+| `inputs/prior/a001/…`, `R001/…`, `r001/…`, `research-R001/…`, `research-r001/…` | FileNotFoundError |
+| `out/research/proposal.md`, `out/final/proposal.md` (workspace) | FileNotFoundError |
+
+That is ~28 distinct plausible paths plus the directory itself, all probed with the bounded reader. I did **not** invent a predecessor to critique, per the source-separation contract ("Do not invent missing predecessors"). I also did not inspect any other arm.
+
+**Consequence for the next candidate.** There is no frozen proposal to correct claim-by-claim. What a critique can still legitimately deliver — and what this file delivers — is (a) the documented input-integrity finding above, (b) independent verification of the load-bearing public-source claims any H1 proposal must rest on (§2), (c) an explicit list of unsupported assumptions that proposals of this kind tend to make and that my captures do or do not support (§3), and (d) an obligations checklist so the final proposal can be resolved against this review (§4). If a later stage does receive the research artifacts, §2–§3 remain valid as independently verified context; only §1 changes.
+
+---
+
+## 2. Independently verified source facts, with pins, scope and design consequences
+
+All captures are exact HTTP response bodies obtained via `public_https_get` on 2026-10-06 (UTC timestamps in §5). Capture identity = sha256 of the body bytes; bytes are stored by the harness under `public_captures/<sha256>.body`.
+
+### F1. libsndfile's supported-format matrix is pinned and versioned — usable as the honest I/O boundary backbone **[SUPPORTED, EXECUTED-C]**
+Source: `https://libsndfile.github.io/libsndfile/formats.html` (capture sha256 `80e0e3844e962a4fc70954036f036ad42cf5e0b0c586aed8da4ec0e60255487b`, page footer states "The libsndfile version: 1.2.2", `Last-Modified: Tue, 01 Sep 2026`).
+Facts read directly from the table: WAV, AIFF/AIFC, AU/SND, RAW, W64, CAF, SD2, FLAC and others are supported; per-encoding read/write for unsigned/signed 8-bit PCM, 16/24/32-bit PCM, 32-bit float, 64-bit double, µ-law, A-law, IMA ADPCM, MS ADPCM, GSM 6.10 (coverage varies per container). Text below the table: FLAC and Ogg/Vorbis read/write **from version 1.0.18**; Ogg/Opus **from 1.0.29**; **MP3 read/write from version 1.1.0**.
+Consequence: a proposal can give a concrete supported input boundary (WAV/AIFF/FLAC/Opus/MP3 + the listed PCM encodings, via libsndfile ≥ 1.1.0 for MP3) instead of hand-waving "every codec". Equally important: **MP4/M4A/AAC are not listed on this page** — do not claim them; that is exactly the brief's "practical supported input/output boundary".
+Limit: the page is vendor documentation of *intent*; it does not prove any particular installed build has these features (MP3 additionally depends on build-time mpg123/LAME, see F4). The visible table does **not** mention RF64 — see C2.
+
+### F2. libsamplerate's streaming contract is pinned — this is the frame-exact cue-mapping foundation **[SUPPORTED, EXECUTED-C]**
+Source: `https://raw.githubusercontent.com/libsndfile/libsamplerate/master/docs/api_full.md` (capture sha256 `0731920a8b1ce535a8222e794677cf342ba3ffac36e3522dfcda47340f592a33`, repo path `docs/api_full.md`, branch `master`).
+Facts read directly: `src_process(state, SRC_DATA*)` is the streaming API, callable repeatedly; `SRC_DATA` fields `data_in/data_out`, `input_frames/output_frames` (caller-filled), `input_frames_used/output_frames_gen` (library-filled per call), `end_of_input` (0 while more input remains, 1 otherwise), `src_ratio = output_rate / input_rate`; **`data_in` and `data_out` may not overlap** (error otherwise); `src_reset` "should be called whenever a sample rate converter is to be used on two separate, unrelated pieces of audio"; `src_clone` copies converter state so conversion can later resume at a specific stream location with identical output; `src_set_ratio` bypasses the library's **smooth transition** between successive ratios and gives a step change.
+Consequences (design-level, my inferences from these pinned facts):
+1. A per-clip resampler must use `input_frames_used`/`output_frames_gen` as the only truth for position bookkeeping; a proposal that computes clip-local offsets by arithmetic alone (in×ratio) is asserting behavior the library does not promise per call.
+2. Resampler state must never straddle a clip join: `src_reset` at every new (source, region) pair, per the vendor's own instruction — otherwise tail samples of one region prime the next and exported cue positions drift by filter length.
+3. Ratio changes at edit boundaries require `src_set_ratio` (documented step) or a fresh state; relying on `SRC_DATA.src_ratio` alone produces an undocumented glide across the boundary.
+4. `src_clone` gives a clean primitive for scrub/preview-vs-export determinism: export can replay from a cloned state to guarantee the same samples as preview.
+
+### F3. The vendor's own quality documentation is explicitly unfinished — quality claims about SRC converters are NOT source-supported **[SUPPORTED, EXECUTED-C]**
+Source: `https://raw.githubusercontent.com/libsndfile/libsamplerate/master/docs/quality.md` (capture sha256 `137f9c66d3570fb59c45c7cb13603877e361d913c8b5c3919a571198450554ce`). The document opens "**This document not yet complete.**" and later contains a literal placeholder ("Shibatch / **More Coming Soon.**"). It does define a reusable measurement methodology (windowed sine input, worst-case SNR across ratios, −3 dB bandwidth bracketing, speed on large files).
+Consequence: any proposal sentence of the form "SRC_SINC_BEST_QUALITY achieves ~145 dB SNR" is unsupported by this capture and must be either re-pinned to a real measurement or restated as a *proposed* validation ("we will measure worst-case SNR with the vendor's windowed-sine method"). The methodology itself is the useful part to carry forward.
+
+### F4. Followed real public issue chain: MP3 support — issue → merged PR → release (with causal limits) **[SUPPORTED, EXECUTED-C]**
+Chain, each hop pinned:
+1. **Issue** `libsndfile/libsndfile#258` "Add MP3 support", opened 2017-05-06 by maintainer `erikd`: "The MP3 patents have now fully expired so libsndfile can now add support. The best bet would be https://www.mpg123.de which is LGPL…" (capture sha256 `fff5d9b2cd2fbb4dd0c38f3da7cfe7ed75769f4d678426a5f8909a26dafd8993`, issue JSON; 69 comments, closed 2022-05-04).
+2. **Fix/implementation** PR `libsndfile/libsndfile#499` "MPEG Encode/Decode Support" by `arthurt`: body states decode via **libmpg123**, encode via **LAME**, `SF_FORMAT_MPEG_LAYER(I,II,III)` subformats plus `SF_FORMAT_MP3`, new `SFC_GET/SET_BITRATE_MODE` commands; decoding status lists Layers I/II/III, ID3v1/v2 reading and **seeking**; "Future Possible Todos: Add WAV support (WAVE_FORMAT_MPEG1 and WAVE_FORMAT_MPEGLAYER3)". Merged `merged_at: 2021-03-25T17:26:15Z`, milestone **v1.1.0** (same capture).
+3. **Code existence pin**: most recent commit touching `src/mpeg.c` is `e09e5dd043fcb32f380a0bc2a66390378058d254` "mpeg: Move dataoffset check from codec to format init" (author date 2021-10-21) (capture sha256 `e41f75d8754e5ed09e66f8fa9346ce1db916041b1453bd492da8b493714103c9`).
+4. **Release applicability**: the pinned formats page (F1) states "From version 1.1.0, libsndfile can read and write MP3" — consistent with the PR milestone.
+**Causal limits (explicit):** this is a *feature-gap closure* (enhancement issue), not a regression bug; the brief's "issue or failure" wording covers it, but I label it honestly. I verified merge metadata and a code-path commit, but I did **not** open the PR diff commit-by-commit nor run the upstream tests, so "the merge made 1.1.0 support complete" is supported only at the level of milestone+docs concordance, and MP3 availability still depends on the build including mpg123/LAME (PR body). Also note PR body lists WAV-embedded MPEG as *future* work — so "MP3-in-WAV works" must not be claimed.
+**Design consequence (inference):** for lossy imports the proposal must define provenance against the *decoded PCM at import time* (e.g., fingerprint of the decoded frames), because the compressed stream, its decoder, and the samples are three different things; the brief's "a numerical time calculation is not evidence the audio content was assembled correctly" applies with full force to lossy sources.
+
+### F5. Cue-point round-tripping has a real upstream test surface in libsndfile **[SUPPORTED (listing), EXECUTED-C]**
+Source: `https://api.github.com/repos/libsndfile/libsndfile/contents/tests` (capture sha256 `770f533142700a34d3e612717ef5c55b93636a4d3a78fea5f99e873765b1cc22`, listing truncated at 32 KB by the capture cap — the alphabetically early portion is complete and includes, among others: `tests/cue_test.c` (blob sha `d2fdae4bb4f777746b5b683a771ae1bd0c8f71f4`, 3121 bytes), `chunk_test.c`, `channel_test.c`, `checksum_test.c`, `command_test.c`, `largefile_test.c`, `locale_test.c`, `lossy_comp_test.c`).
+Consequence: WAV cue-chunk read/write is a *tested* libsndfile surface, so exporting a cue table as WAV cue points (in addition to CSV) is on supported ground. **Limit:** I did not open `cue_test.c`; what exactly it asserts is **[UNVERIFIED / lead]** — do not cite its assertions, only its existence.
+
+### F6. A real, measured, still-open upstream defect showing exactly the "silent cue shift" hazard the brief warns about **[SUPPORTED as documented claim; severity is my inference]**
+Source: audacity/audacity PR `#11963` "Add video playback" (captured via GitHub search API, capture sha256 `5e2e9fb8b803ec261d9ba3bc31fe4abb0351c03701d8263a47ba2aded26fb1c0`, truncated; the PR object — open, created 2026-09-05, updated 2026-09-11 — and its body were in the captured bytes). The body states, verbatim in substance: `FFmpegImportFileHandle::Import` converts `AVStream::start_time` "as though its time base were always microseconds. On MPEG-TS this leaves picture and sound about 153 ms apart, and about 21 ms on AAC. Correcting it changes where every AAC, MPEG-TS and LAME MP3 import lands on the timeline," and the author deliberately left it out of scope, measured and documented in `tools/videosync/README.md`.
+**Causal limits:** this is a contributor's disclosure inside an open PR (open as of capture date), not an upstream-accepted fix with a merged regression test — so it does NOT satisfy a "followed through fix + regression test" chain on its own; I am offering F4 as the completed chain and F6 as the consequential hazard evidence. It is also about Audacity's FFmpeg import path, which is a *different component* from libsndfile (F4) — the two do not corroborate each other numerically.
+**Design consequence (strong, and the reason I include it):** "where does t=0 of an imported file sit" is a real, recurring, silently-wrong class of bug in shipping editors. A proposal must (a) define project time as anchored to the first sample of the decoded stream, (b) record in per-source metadata any container start offset it chose to ignore, and (c) treat any import library's start-time semantics as untrusted until measured. A single successful import example proves nothing here — the Audacity disclosure shows a defect that survived years of production use.
+
+### F7. Precedent 1 (implementation): libsamplerate as the bounded resampling component **[SUPPORTED docs; selection is my product choice]**
+Lessons carried into the plan from F2/F3: state-per-region discipline, `end_of_input` flush protocol, frame-count bookkeeping over arithmetic, cloned-state determinism, and quality-by-measurement. Its license and small API surface also make it embeddable offline. Selection as the resampler is my engineering choice among alternatives (SoX rate, libresample, ffmpeg swresample) — I did not pin those alternatives in this stage; the choice is defensible via the pinned API contract but the comparison is **[UNVERIFIED / lead]**.
+
+### F8. Precedent 2 (application): Audacity's editor as a workflow precedent — but only the pinned slice **[PARTIAL]**
+What is pinned here: the audacity/audacity GitHub tracker is active (search returned 12 hits for label/sample-rate queries; captures `5e2e9fb8…` and `b9beffba…` truncated slice), and the PR #11963 disclosure (F6). What is **NOT** pinned: the `.aup3`/SQLite project format, autosave/recovery design, and "check dependencies" missing-media flow — my attempt to fetch the Audacity support documentation failed (404 on `support.audacityteam.org/basics/projects-and-mixing/audacity-projects`, capture sha256 `b7bd2e38a98c12607b8769694072c0c9669b92e63f946e0622388fddbecc96f7`). Any final proposal that leans on "Audacity does X" must fetch a real source for X first; until then treat Audacity internals as leads (L1–L3 in §6).
+
+---
+
+## 3. Corrections and unsupported assumptions to avoid (actionable for the next candidate)
+
+- **C1.** Do not state SRC converter quality numbers from memory or from tutorials; the vendor doc is explicitly incomplete (F3). Restate as proposed measurement.
+- **C2.** Do not claim "libsndfile supports RF64 / >4 GB WAV" from the captured formats page — RF64 does not appear there. A two-hour 48 kHz/24-bit stereo mix ≈ 2.1 GB fits WAV's classic 4 GiB field envelope, but the boundary claim needs the actual format/API doc (lead L4). Arithmetic about file size is not evidence of format support — same discipline the brief demands for audio content.
+- **C3.** Do not claim "MP3 import is sample-exact" or cite MP3 seeking guarantees beyond the PR body's status list (F4). Lossy decode ⇒ provenance anchors to decoded PCM.
+- **C4.** Do not cite Audacity `.aup3`/SQLite, autosave, or dependency-tracking as fact without a fresh fetch (F8). If the final proposal wants those lessons, fetch the doc/source first; otherwise present the analogous design (sidecar manifest + atomic save + import fingerprinting) as this project's own choice.
+- **C5.** Do not let resampler state straddle edit boundaries, and do not change ratios without `src_set_ratio` semantics; per-call `input_frames_used`/`output_frames_gen` are the only frame-exact bookkeeping (F2). This is where "cues silently refer to different content" would come from in practice.
+- **C6.** Tooling note: the GitHub search API returned HTTP 422 ("cannot be searched") for `repo:libsndfile/libsndfile` while list endpoints worked fine, and search worked for `repo:audacity/audacity` (captures `502628f8…`, `5e2e9fb8…`). Don't build evidence-gathering on assumptions of uniform API behavior; prefer list endpoints.
+- **C7.** None of my captures were executed builds/tests. "libsndfile can read MP3" is a documentation-level claim; running it is part of the *proposed* validation (§5), not something I performed.
+
+---
+
+## 4. Obligations checklist for the final H1 proposal (resolve against this list)
+
+The final standalone proposal must still cover, per the brief, at minimum:
+1. Minimum workflow end-to-end (import metadata inspection → listen/scrub → named regions + transcript cues → trim → join with optional transition → preview gain → save/close/reopen → export review mix + cue table; originals untouched).
+2. Data contract that **separates nondestructive edits / display-only settings / rendered audio operations**, and pins source identity (content hash + original metadata retained verbatim, ambiguity exposed when absent/contradictory/unsupported).
+3. Explicit timeline algebra: source sample position ↔ clip-local position ↔ project time ↔ displayed timecode ↔ exported cue position, with integer-sample rounding rules, half-open `[start, end)` boundary semantics, channel mapping policy, and defined cue meaning at edit boundaries. F2 and F6 are the pinned evidence for getting this wrong by default.
+4. Resource plan for 2 h sources on 8 GB RAM: bounded waveform tiles with content-hash cache identity + invalidation on source/edit change, seek behavior, streaming buffers, progress + cancel for indexing/rendering, and cancelled-render-must-not-be-labeled-complete state machine; recovery of interrupted import/save/render without overwriting originals or exchanged bundles.
+5. Honest I/O boundary from F1 (and C2's RF64 caution), MP3 via ≥1.1.0 with build-dependency caveat (F4), no MP4/AAC claims.
+6. Accessibility/keyboard UX, undo/redo, solo/mute, current-edit indication, provenance inspector; transcription/noise-reduction/simultaneous-editing/cloud as optional opportunities only.
+7. Validation plan labeled EXECUTED vs PROPOSED/UNEXECUTED; tiny array/timing checks only in admitted isolation and labeled as non-probative of the whole editor.
+8. At least one opportunity (e.g., cue provenance panel driven by the import fingerprint registry) and one plausible alternative architecture (e.g., single-file SQLite project vs. sidecar-folder project) — my captures support the *problem statements* for both but neither specific design choice.
+
+---
+
+## 5. Executed vs proposed — disclosure
+
+**Executed by candidate in this stage:**
+- File probes listed in §1 (`read_file`, bounded). Scope limit: proves absence of files at probed paths in this sandbox at probe time; cannot prove a file doesn't exist under an unprobed name.
+- HTTP captures listed below (`public_https_get`, exact response bodies; the tool marks *semantic acquisition UNKNOWN* per capture; none of the upstream software was built or run; two captures were truncated at the 32 KB cap and I marked which).
+
+| # | URL | capture sha256 (body) | captured_utc | note |
+|---|---|---|---|---|
+| 1 | `https://raw.githubusercontent.com/libsndfile/libsamplerate/master/docs/misc.md` | `d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed` | 2026-10-06T08:19:05Z | 404: Not Found (path retired; docs are .md at other names) |
+| 2 | `https://libsndfile.github.io/libsndfile/formats.html` | `80e0e3844e962a4fc70954036f036ad42cf5e0b0c586aed8da4ec0e60255487b` | 2026-10-06T08:19:06Z | complete; footer "version: 1.2.2" |
+| 3 | `https://api.github.com/repos/libsndfile/libsamplerate/contents/docs` | `4868936b82bf29c69dd61adeaaf39452d459fe263204330d692824d656f5fb1f` | 2026-10-06T08:19:22Z | complete |
+| 4 | `https://api.github.com/search/issues?q=repo:libsndfile/libsndfile+rf64+in:title` | `502628f89bc579d19df54f4b73e0aae64d39552e7815bc63584625244d70b628` | 2026-10-06T08:19:22Z | HTTP 422 validation failure (see C6) |
+| 5 | `https://raw.githubusercontent.com/libsndfile/libsamplerate/master/docs/api_full.md` | `0731920a8b1ce535a8222e794677cf342ba3ffac36e3522dfcda47340f592a33` | 2026-10-06T08:19:47Z | complete |
+| 6 | `https://raw.githubusercontent.com/libsndfile/libsamplerate/master/docs/quality.md` | `137f9c66d3570fb59c45c7cb13603877e361d913c8b5c3919a571198450554ce` | 2026-10-06T08:19:47Z | complete; "not yet complete" text |
+| 7 | `https://api.github.com/repos/libsndfile/libsamplerate/issues?state=closed&per_page=30&sort=updated` | `8bebb723a82efbc4cb0c79ddd916343d6a257f172dc19373afe95d3e21af8dda` | 2026-10-06T08:19:47Z | truncated at 32 KB; visible slice = build/CI PRs, no audio bug selected |
+| 8 | `https://api.github.com/repos/libsndfile/libsndfile/issues?state=closed&per_page=5&sort=comments&direction=desc` | `fff5d9b2cd2fbb4dd0c38f3da7cfe7ed75769f4d678426a5f8909a26dafd8993` | 2026-10-06T08:20:29Z | complete; carries #258 and PR #499 metadata |
+| 9 | `https://api.github.com/search/issues?q=repo:audacity/audacity+label+position+sample+rate&per_page=10` | `5e2e9fb8b803ec261d9ba3bc31fe4abb0351c03701d8263a47ba2aded26fb1c0` | 2026-10-06T08:20:29Z | truncated at 32 KB; PR #11963 body in captured bytes |
+| 10 | `https://api.github.com/repos/libsndfile/libsndfile/commits?path=src/mpeg.c&per_page=1` | `e41f75d8754e5ed09e66f8fa9346ce1db916041b1453bd492da8b493714103c9` | 2026-10-06T08:21:09Z | complete; commit `e09e5dd0…` |
+| 11 | `https://api.github.com/repos/libsndfile/libsndfile/contents/tests` | `770f533142700a34d3e612717ef5c55b93636a4d3a78fea5f99e873765b1cc22` | 2026-10-06T08:21:09Z | truncated at 32 KB; `cue_test.c` entry fully visible |
+| 12 | `https://support.audacityteam.org/basics/projects-and-mixing/audacity-projects` | `b7bd2e38a98c12607b8769694072c0c9669b92e63f946e0622388fddbecc96f7` | 2026-10-06T08:21:14Z | HTTP 404 page (GitBook) — Audacity doc NOT obtained |
+
+**Executed only by evaluator:** nothing — no evaluator-provided receipts were present in this stage's inputs.
+
+**Proposed / UNEXECUTED (all validation below is proposed, none performed):**
+- Building or running libsndfile/libsamplerate to confirm F1/F4 behavior on actual files (MP3 decode, cue chunk round-trip).
+- Reading `tests/cue_test.c` contents (only its existence is pinned, F5).
+- RF64 / large-file boundary verification (lead L4).
+- Audacity project-format sources for the missing-media/recovery lessons (leads L1–L3).
+- Any memory/latency targets for 2 h projects (waveform tiling, cache sizes) — proposals only.
+- The candidate-authored tiny audio-array/timing checks permitted by the brief: none were needed or run in this critique stage.
+
+---
+
+## 6. Open leads (optional; would strengthen the final proposal)
+
+- **L1** Audacity project-format documentation (correct current slug on `support.audacityteam.org` or `audacity/audacity` source tree) — for save/recovery/missing-media precedent.
+- **L2** Audacity autosave/`aup3` design discussion or source — same purpose.
+- **L3** Audacity issue #1023/PR #11963 final outcome (video PR was open at capture) — re-check whether the MPEG-TS/AAC start_time defect (F6) got a fix + regression test upstream.
+- **L4** libsndfile RF64/WAV64 support and the WAV 4 GiB boundary — pin from `sndfile.h`/API docs before claiming.
+- **L5** libsndfile `tests/cue_test.c` contents — what cue semantics are actually asserted.
+- **L6** Alternative resamplers (SoX `rate`, ffmpeg `swresample`) for the bounded-alternatives section.
+- **L7** WAVEFORMATEXTENSIBLE channel-mask reference (not fetched in this stage) for the channel-mapping section.
+
+---
+
+## 7. Bottom line for the next candidate
+
+No frozen research artifact existed to critique (§1, executed evidence) — resolve that first, by writing the final proposal from the brief plus this review's verified base. The verified base is: libsndfile's versioned format matrix (F1), libsamplerate's exact streaming/state contract (F2) with its unfinished quality doc (F3), one completed public issue→merge→release chain with explicit causal limits (F4, MP3), a pinned upstream test surface for cue chunks (F5), and one consequential open defect disclosure proving the silent-offset hazard class (F6). Everything in §3 marked C1–C7 is where well-meaning proposals typically overclaim; everything in §5's second half is unexecuted and must stay labeled as proposed until actually run.

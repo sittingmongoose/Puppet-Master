@@ -1,0 +1,62 @@
+{
+  "schema": "er9.research.witnesses.v1",
+  "witnesses": [
+    {
+      "id": "W01",
+      "status": "executed by candidate",
+      "execution_capability": "pm_execution.python_execute (isolated component check)",
+      "purpose": "Small synthetic check of the proposed amount conversion/reject and dependency-fingerprint rules.",
+      "justified_expected_behavior": [
+        "Three synthetic rows are retained in order, with amount states value, explicit null, and missing kept distinct.",
+        "A malformed decimal amount is preserved with row ID and raw row in one reject record; it is not silently removed from accounting.",
+        "An identical source/cell/environment fingerprint matches the saved record, while a changed source, cell source or environment is stale."
+      ],
+      "input": {
+        "rows": [
+          {"row_id": "csv:demo:0", "name": "Zoë", "timestamp": "2025-01-01T00:00:00Z", "amount": "2"},
+          {"row_id": "csv:demo:1", "name": "東京", "timestamp": "2025-01-02T00:00:00Z", "amount": null},
+          {"row_id": "csv:demo:2", "timestamp": "2025-01-03T00:00:00Z"},
+          {"row_id": "csv:demo:3", "name": "bad-value", "timestamp": "not-a-timestamp", "amount": "2.5"}
+        ],
+        "cell_source": "amount = int(raw_amount)",
+        "environment": {"python": "3.12.x", "packages": {"stdlib": "candidate-runtime"}}
+      },
+      "candidate_authored_code": "import hashlib, json\n\n\ndef digest(value):\n    payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"), allow_nan=False)\n    return hashlib.sha256(payload.encode(\"utf-8\")).hexdigest()\n\n\naccepted = []\nrejected = []\nfor row in data[\"rows\"]:\n    raw = row.get(\"amount\", \"__MISSING__\")\n    if raw == \"__MISSING__\":\n        state, amount = \"missing\", None\n    elif raw is None:\n        state, amount = \"null\", None\n    elif isinstance(raw, str) and raw.isascii() and raw.isdecimal():\n        state, amount = \"value\", int(raw)\n    else:\n        rejected.append({\"row_id\": row[\"row_id\"], \"reason\": \"amount is not an ASCII nonnegative integer\", \"raw\": row})\n        continue\n    accepted.append({\"row_id\": row[\"row_id\"], \"name\": row.get(\"name\"), \"timestamp\": row[\"timestamp\"], \"amount_state\": state, \"amount\": amount})\n\nassert len(data[\"rows\"]) == len(accepted) + len(rejected)\nassert [r[\"amount_state\"] for r in accepted] == [\"value\", \"null\", \"missing\"]\nassert accepted[0][\"name\"] == \"Zoë\" and accepted[1][\"name\"] == \"東京\"\nassert rejected[0][\"row_id\"] == \"csv:demo:3\"\n\nfingerprint = {\n    \"source\": digest(data[\"rows\"]),\n    \"cell\": digest(data[\"cell_source\"]),\n    \"environment\": digest(data[\"environment\"]),\n}\nsaved = {\"fingerprint\": fingerprint, \"output\": digest(accepted)}\n\ndef status(current):\n    return \"current\" if current == saved[\"fingerprint\"] else \"stale\"\n\nchanged_source = dict(fingerprint, source=digest(data[\"rows\"] + [{\"row_id\": \"csv:demo:4\", \"amount\": \"4\", \"timestamp\": \"2025-01-01T00:00:00Z\"}]))\nchanged_cell = dict(fingerprint, cell=digest(data[\"cell_source\"] + \"\\n# edit\"))\nchanged_environment = dict(fingerprint, environment=digest(dict(data[\"environment\"], python_patch=\"changed\")))\nassert status(fingerprint) == \"current\"\nassert status(changed_source) == status(changed_cell) == status(changed_environment) == \"stale\"\nprint(f\"accepted={len(accepted)} rejected={len(rejected)} amount_states=value,null,missing\")\nprint(\"source_edit=stale cell_edit=stale environment_edit=stale unchanged=current\")",
+      "expected_stdout": "accepted=3 rejected=1 amount_states=value,null,missing\nsource_edit=stale cell_edit=stale environment_edit=stale unchanged=current\n",
+      "receipt": {
+        "execution_id": "exec-04f1zlok",
+        "execution_label": "executed by candidate",
+        "code_sha256": "ac65a6a73d14750a94ab9b1ac0ac02c2c45bea9f7341f6138da03e5bf8f90e86",
+        "data_sha256": "410a1f8ed701d1a0b49adb977cc62f62dc552821a868af5a591f85a4627b465c",
+        "stdout": "accepted=3 rejected=1 amount_states=value,null,missing\nsource_edit=stale cell_edit=stale environment_edit=stale unchanged=current\n",
+        "stdout_sha256": "8fa23294d1af6d7cd3d6900e89ad65f37d41202f00aa28b8048a16225d4a1fb5",
+        "stdout_bytes": 130,
+        "stderr": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_scope": "Adapter receipt notes stderr excludes trusted bootstrap prefix; stderr-observed.bin retains wire bytes.",
+        "exit_code": 0,
+        "elapsed_seconds": 0.3432202310068533,
+        "limits": {
+          "wall_seconds": 5,
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "tasks": 16,
+          "stream_bytes_each": 32768,
+          "network": "new empty namespace"
+        }
+      },
+      "scope_limits": [
+        "Uses candidate-authored Python and JSON input with standard-library hashlib/json only.",
+        "Checks a small helper shape; does not test the proposed product, DuckDB, Jupyter/nbclient, filesystem durability, source-file hashing, a large dataset, or a production sandbox.",
+        "The timestamp string is carried through unchanged; this witness does not validate timestamp parsing or timezone semantics.",
+        "A passing synthetic component check is not evidence of full runtime or 5-GB input correctness."
+      ]
+    }
+  ],
+  "not_executed": [
+    "DuckDB CSV regression reproduction and all engine checks.",
+    "Notebook clean replay, progress, cancellation, status invalidation and cross-machine reopen.",
+    "Large-file memory/throughput benchmark, sandbox attack checks, crash recovery, concurrency and accessibility validation."
+  ]
+}

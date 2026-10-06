@@ -1,0 +1,187 @@
+{
+  "schema_version": "er9.research.sources.v1",
+  "evidence_date": "2026-10-06",
+  "capture_semantics": "A capture ID and SHA-256 identify the exact public HTTP response body. They prove acquisition identity, not semantic truth. Where delivery was partial, the complete-body capture may exist while only the stated prefix was delivered to the candidate. Pins below are version tags or immutable commit references, not floating claims about all future releases.",
+  "sources": [
+    {
+      "id": "NB1",
+      "title": "Jupyter Notebook file format",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/docs/format_description.rst",
+      "pin": "jupyter/nbformat tag v5.10.4",
+      "exact_locator": ["Top-level structure", "Code cells", "Cell ids", "Backward-compatible changes", "Metadata", "execution_count"],
+      "capture": {"capture_id": "183757ae2d824e778b14f474c6ebcd43", "sha256": "2f6f094c7d33de17da0aafb4693d75f063265613eb3bfb602ebe8623197c3d70", "path": "public_captures/2f6f094c7d33de17da0aafb4693d75f063265613eb3bfb602ebe8623197c3d70.body", "captured_utc": "2026-10-06T05:01:21.781869+00:00", "body_complete": true, "delivered_bytes": 15492},
+      "applicability": "Pinned human-readable nbformat 5.10.4 description. Establishes document fields/IDs/metadata behavior; does not establish runtime order, kernel state, output provenance, or product support."
+    },
+    {
+      "id": "NB2",
+      "title": "Executing notebooks with nbclient",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/docs/client.rst",
+      "pin": "jupyter/nbclient tag v0.10.2",
+      "exact_locator": ["Using the Python API interface", "Execution arguments", "Hooks before and after notebook or cell execution", "Handling errors and exceptions", "Execute and save all errors", "timeout", "kernel_name"],
+      "capture": {"capture_id": "8e78221b15664b59ae958d9c98ae27b6", "sha256": "8ebe87af531f4aa02beca6b7b47ca68386283cd036f586bf0878d795369322d8", "path": "public_captures/8ebe87af531f4aa02beca6b7b47ca68386283cd036f586bf0878d795369322d8.body", "captured_utc": "2026-10-06T05:01:24.131965+00:00", "body_complete": true, "delivered_bytes": 10822},
+      "applicability": "Pinned nbclient execution mechanism and documented defaults/controls. Does not isolate untrusted code or prove determinism."
+    },
+    {
+      "id": "NB3",
+      "title": "Jupyter kernels and kernel specs",
+      "url": "https://raw.githubusercontent.com/jupyter/jupyter_client/v8.6.3/docs/kernels.rst",
+      "pin": "jupyter/jupyter_client tag v8.6.3",
+      "exact_locator": ["Making kernels for Jupyter", "Connection files", "Kernel specs", "interrupt_mode", "env"],
+      "capture": {"capture_id": "5cfed307d60641e2800b4de06a849d50", "sha256": "4b93c7249c2fea1f525e92c677bf77bf9ad65ea4eb20b1db10f7119a5855b5fc", "path": "public_captures/4b93c7249c2fea1f525e92c677bf77bf9ad65ea4eb20b1db10f7119a5855b5fc.body", "captured_utc": "2026-10-06T05:07:08.075332+00:00", "body_complete": true, "delivered_bytes": 9356},
+      "applicability": "Documents kernel process startup, communication, signal/message interrupt and environment inheritance. It is not an OS isolation guarantee."
+    },
+    {
+      "id": "DB1",
+      "title": "DuckDB v1.5.6 bugfix release",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.6",
+      "pin": "DuckDB release tag v1.5.6; published 2026-09-28",
+      "exact_locator": ["tag_name", "name", "published_at", "target_commitish"],
+      "capture": {"capture_id": "277b74e077c94cdb9c3e8cb62b5eabd7", "sha256": "771db75392e4b3b12e010e9682cf7407331ace0fd9538a9d97b01f09d46484e6", "path": "public_captures/771db75392e4b3b12e010e9682cf7407331ace0fd9538a9d97b01f09d46484e6.body", "captured_utc": "2026-10-06T05:07:18.305731+00:00", "body_complete": true, "delivered_bytes": 32768, "response_bytes": 53225},
+      "applicability": "Establishes existence/name/date of the v1.5.6 release. Response capture is complete; only its first 32,768 bytes were delivered. Does not establish a particular issue fix's presence."
+    },
+    {
+      "id": "DB2",
+      "title": "DuckDB CSV import and reader options",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/data/csv/overview.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["Parameters", "all_varchar", "columns", "encoding", "ignore_errors", "parallel", "store_rejects", "strict_mode", "Order Preservation", "Writing Using COPY"],
+      "capture": {"capture_id": "7e3b7fd281464df79ebbc8d46addb544", "sha256": "f0f8db09a36a783808d74b348334392d7d9595536909d3b92139b5f4671479b7", "path": "public_captures/f0f8db09a36a783808d74b348334392d7d9595536909d3b92139b5f4671479b7.body", "captured_utc": "2026-10-06T05:09:06.774742+00:00", "body_complete": true, "delivered_bytes": 14831},
+      "applicability": "Pinned DuckDB current-doc source tree, then labeled 1.5. Documents reader options/order mechanics. Runtime behavior must still be verified against the product's exact binary."
+    },
+    {
+      "id": "DB3",
+      "title": "DuckDB CSV auto detection",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/data/csv/auto_detection.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["Sample Size", "Dialect Detection", "Type Detection", "Overriding Type Detection", "Header Detection", "Dates and Timestamps"],
+      "capture": {"capture_id": "8838c8e7ef584ec79cd68207a6fed7ac", "sha256": "705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa", "path": "public_captures/705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa.body", "captured_utc": "2026-10-06T05:09:10.590756+00:00", "body_complete": true, "delivered_bytes": 12270},
+      "applicability": "Documents sample-based inference, compressed/non-seekable sampling behavior, ambiguities and overrides. Sampling is not full-dataset validation."
+    },
+    {
+      "id": "DB4",
+      "title": "DuckDB reading faulty CSV files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/data/csv/reading_faulty_csv_files.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["Structural Errors", "Using the ignore_errors Option", "projection pushdown", "Retrieving Faulty CSV Lines", "Reject Scans", "Reject Errors"],
+      "capture": {"capture_id": "3f559d8af0874906b9c32f13d7019b2f", "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad", "path": "public_captures/12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad.body", "captured_utc": "2026-10-06T05:03:10.419445+00:00", "body_complete": true, "delivered_bytes": 12080},
+      "applicability": "Documents skip/reject mechanics and warns via examples that projection can prevent a cast error from being evaluated. Rejects do not prove all columns were validated."
+    },
+    {
+      "id": "DB5",
+      "title": "DuckDB JSON loading, including NDJSON",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/data/json/loading_json.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["Functions for Reading JSON Objects", "newline_delimited", "Functions for Reading JSON as a Table", "sample_size", "missing keys become NULL", "COPY FROM"],
+      "capture": {"capture_id": "2d91264520044704a831a46f67238c88", "sha256": "d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642", "path": "public_captures/d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642.body", "captured_utc": "2026-10-06T05:03:18.904538+00:00", "body_complete": true, "delivered_bytes": 15526},
+      "applicability": "Documents newline-delimited JSON parsing, schema sampling and missing-key behavior. Preserving absent-versus-null requires a product-level presence/raw-record policy."
+    },
+    {
+      "id": "DB6",
+      "title": "DuckDB reading and writing Parquet",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/data/parquet/overview.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["read_parquet parameters", "file_row_number", "schema parameter", "Partial Reading", "filter and projection pushdown", "Writing to Parquet Files"],
+      "capture": {"capture_id": "aa6983b309234c49bfdd2ab9d54f6ff0", "sha256": "3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd", "path": "public_captures/3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd.body", "captured_utc": "2026-10-06T05:03:24.988342+00:00", "body_complete": true, "delivered_bytes": 12373},
+      "applicability": "Documents Parquet scan/pushdown and version-aware schema/read options. Does not establish target-workstation performance."
+    },
+    {
+      "id": "DB7",
+      "title": "DuckDB combining schemas across files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/data/multiple_files/combining_schemas.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["Combining Schemas", "Union by Position", "Union by Name"],
+      "capture": {"capture_id": "b30908dad101422ead77e1916604f9ac", "sha256": "943f82b197a2562dd20071ba669d8c8ca3e0550ca63b2033f5f7087dc8227457", "path": "public_captures/943f82b197a2562dd20071ba669d8c8ca3e0550ca63b2033f5f7087dc8227457.body", "captured_utc": "2026-10-06T05:03:28.477328+00:00", "body_complete": true, "delivered_bytes": 3898},
+      "applicability": "Documents positional default, name-based union behavior and memory trade-off for multiple files."
+    },
+    {
+      "id": "DB8",
+      "title": "DuckDB Python result conversion",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/clients/python/conversion.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["Object Conversion: Python Object to DuckDB", "None", "str", "datetime.datetime", "list", "dict", "Result Conversion: DuckDB Results to Python", "fetch_df_chunk", "to_arrow_reader"],
+      "capture": {"capture_id": "34595c59cf0e4180beefbc9ab2ac7970", "sha256": "bdf7f5cc43a78d77c0660c715a505741426e85ed020840e3f60bd95ab26b6f1e", "path": "public_captures/bdf7f5cc43a78d77c0660c715a505741426e85ed020840e3f60bd95ab26b6f1e.body", "captured_utc": "2026-10-06T05:03:31.742518+00:00", "body_complete": true, "delivered_bytes": 11735},
+      "applicability": "Documents explicit Python↔DuckDB conversions and chunked reader option. Whole DataFrame/table APIs materialize results."
+    },
+    {
+      "id": "DB9",
+      "title": "DuckDB order preservation",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/sql/dialect/order_preservation.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["Clauses", "ORDER BY", "Insertion Order", "row_number() OVER ()"],
+      "capture": {"capture_id": "5d2f32ec557440e19951fd24d588484b", "sha256": "5af7c5eab350cf86672f02d75ee5d0d63c4e52ce21d03ea5b76b993c9c6bd916", "path": "public_captures/5af7c5eab350cf86672f02d75ee5d0d63c4e52ce21d03ea5b76b993c9c6bd916.body", "captured_utc": "2026-10-06T05:03:35.793876+00:00", "body_complete": true, "delivered_bytes": 2814},
+      "applicability": "Documents preserved and non-preserved operation classes, including unstable ORDER BY. Stable final order requires an explicit total key."
+    },
+    {
+      "id": "DB10",
+      "title": "DuckDB workload tuning and out-of-core limits",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/guides/performance/how_to_tune_workloads.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["The preserve_insertion_order Option", "Larger-than-Memory Workloads", "Spilling to Disk", "Blocking Operators", "Limitations"],
+      "capture": {"capture_id": "d88eee29d0e04e0f9dab3aa1d6088736", "sha256": "743ec0d904dde2652ea392384bf4b18d58a587e5e940e9baeed79900b2513fcb", "path": "public_captures/743ec0d904dde2652ea392384bf4b18d58a587e5e940e9baeed79900b2513fcb.body", "captured_utc": "2026-10-06T05:06:03.894353+00:00", "body_complete": true, "delivered_bytes": 10226},
+      "applicability": "Documents out-of-core support and named limitations. Not a benchmark for 5 GB on the specified machine."
+    },
+    {
+      "id": "DB11",
+      "title": "DuckDB concurrency",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/017ca4e091f17446c4f0a79a18841beef856c378/docs/current/connect/concurrency.md",
+      "pin": "duckdb/duckdb-web commit 017ca4e091f17446c4f0a79a18841beef856c378; current documentation selector identified 1.5",
+      "exact_locator": ["Single Process", "Concurrency Model within a Single Process", "Multiple Processes", "File locks"],
+      "capture": {"capture_id": "bbb4085559c2401c9db07672020c11b8", "sha256": "f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f", "path": "public_captures/f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f.body", "captured_utc": "2026-10-06T05:03:40.230220+00:00", "body_complete": true, "delivered_bytes": 3565},
+      "applicability": "Documents one-process read-write ownership, within-process concurrency and lock cautions for shared/network filesystems."
+    },
+    {
+      "id": "DB12",
+      "title": "DuckDB issue #25164: parallel CSV duplicate rows",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/25164",
+      "pin": "DuckDB issue #25164, closed 2026-09-07; report identifies reproduced versions 1.4.4, 1.5.2 and 1.5.5",
+      "exact_locator": ["body: What happens?", "To Reproduce", "Only CRCRLF is affected", "Real-world case", "DuckDB Version"],
+      "capture": {"capture_id": "e3df545a619841258edd91c2557ef8d9", "sha256": "5486aac86d6778c4aa01c5f81e25f061420aa55983842f3c20cb496cffbb739c", "path": "public_captures/5486aac86d6778c4aa01c5f81e25f061420aa55983842f3c20cb496cffbb739c.body", "captured_utc": "2026-10-06T05:07:14.566226+00:00", "body_complete": true, "delivered_bytes": 8110},
+      "applicability": "Issue report/reproduction and affected versions; not itself proof of fix or status in later release."
+    },
+    {
+      "id": "DB13",
+      "title": "DuckDB PR #25232: CSV duplicate-row fix",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232",
+      "pin": "PR #25232 merged 2026-09-07 into base branch v2.0-cyanoptera at merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86",
+      "exact_locator": ["base.ref", "merged", "merged_at", "merge_commit_sha", "body: Problem/Fix/Testing"],
+      "capture": {"capture_id": "9553a1bae8034b1bb8ea474b6c5cb2da", "sha256": "aaf06d0a1618918f28cd50054f16aa80c3cdcfb45fbdbb9592d9f829ec00e1c2", "path": "public_captures/aaf06d0a1618918f28cd50054f16aa80c3cdcfb45fbdbb9592d9f829ec00e1c2.body", "captured_utc": "2026-10-06T05:02:06.500666+00:00", "body_complete": true, "delivered_bytes": 18724},
+      "applicability": "Merged development-branch fix and author-reported regression results. Does not imply inclusion in DuckDB v1.5.x."
+    },
+    {
+      "id": "DB14",
+      "title": "DuckDB PR #25232 changed files and patch",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232/files",
+      "pin": "PR #25232 file diff; base v2.0-cyanoptera, final merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86",
+      "exact_locator": ["src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp patch", "test/sql/copy/csv/parallel/test_rrrn_parallel.test added test"],
+      "capture": {"capture_id": "449317db9ab44b35be72f59a7b1dc2ac", "sha256": "12b4ff4dcaed30d87e5af886623682c3509b03aa85fbb226620e4403c8a63b67", "path": "public_captures/12b4ff4dcaed30d87e5af886623682c3509b03aa85fbb226620e4403c8a63b67.body", "captured_utc": "2026-10-06T05:04:00.076862+00:00", "body_complete": true, "delivered_bytes": 6504},
+      "applicability": "Patch establishes the concrete guard/test added in the PR. GitHub file diff does not by itself establish released runtime behavior."
+    },
+    {
+      "id": "DB15",
+      "title": "DuckDB CSV boundary regression test at merge commit",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "pin": "DuckDB merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86",
+      "exact_locator": ["generated fixed-width fixture", "1024-byte boundary", "parallel/sequential counts", "IDs 39 and 40", "duplicate-row assertion"],
+      "capture": {"capture_id": "79a63257edcb4afb9c2542b8f5785b30", "sha256": "86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f", "path": "public_captures/86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f.body", "captured_utc": "2026-10-06T05:02:12.405195+00:00", "body_complete": true, "delivered_bytes": 3714},
+      "applicability": "Pinned regression fixture proves what the test asserts on its branch; its passing status is reported by PR author, not executed in this research stage."
+    },
+    {
+      "id": "DB16",
+      "title": "DuckDB PR #25325 proposed port to main",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25325",
+      "pin": "PR #25325, closed; base ref main; API reports merged=false and merged_at=null",
+      "exact_locator": ["base.ref", "state", "merged", "merged_at", "body: Port of #25232 to main"],
+      "capture": {"capture_id": "69df09fd32754a57af832598db8244d2", "sha256": "df04405534ac1b061b34653b6e8e635ef00950b3d3f9677716fbc98d48ffc3b9", "path": "public_captures/df04405534ac1b061b34653b6e8e635ef00950b3d3f9677716fbc98d48ffc3b9.body", "captured_utc": "2026-10-06T05:02:00.658347+00:00", "body_complete": true, "delivered_bytes": 17168},
+      "applicability": "Does not establish that the proposed port reached main or a stable release."
+    },
+    {
+      "id": "DB17",
+      "title": "DuckDB v1.5.6 CSV scanner source spot-check",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "pin": "DuckDB tag v1.5.6",
+      "exact_locator": ["ProcessOverBufferValue, source lines 1410-1449; separately read lines 1445-1514"],
+      "capture": {"capture_id": "6bd38b199e604732a54e86aeda795466", "sha256": "0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18", "path": "public_captures/0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18.body", "captured_utc": "2026-10-06T05:04:11.253410+00:00", "body_complete": true, "response_bytes": 83185, "candidate_delivery_bytes": 32768, "inspected_ranges": [{"lines": "1400-1449", "range_sha256": "fdbd8a75f116d0906a99e39c074f7710602867ce53b5f19e31917b13904476cd"}, {"lines": "1445-1514", "range_sha256": "9afb07da37226824b5fe0ea0afedca5fc6647f6daa43ec7999bff4777f009ac9"}]},
+      "applicability": "Source inspection shows carry-on newline/return logic already present in v1.5.6, but no exact execution of issue #25164's regression fixture. Similar code is not evidence of pass/fail; release behavior remains unqualified."
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+# Critique review — FieldBook research-stage proposal (brief H2, offline field observations and map exchange)
+
+Stage: fresh source-grounded critic, C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001, 2026-10-06.
+Reviewed artifact: `inputs/prior/C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/research/proposal.md` (sha256 `00f0d82790cb0aa1a9c438c4119040e921d13358441d31093c88cff92a5a1913`, 28 827 B) with its catalogs `sources.json` (`064c98fc…bb05c8`), `witnesses.json` (`3aa46583…757c85`), `leads.json` (`07123291…3f77f`), and the eight captured source bodies under `inputs/source_context/…research-a001/` (0000–0007, hashes listed in `index.json` `e70edea8…b971a87`).
+
+This review is self-contained: the next same-family candidate can resolve every finding from the locators below without the reviewer's context.
+
+---
+
+## 0. Review method and evidence base
+
+Verification operations performed by this critic (all within this stage's admitted tools):
+
+1. **Local capture reads** (claim-vs-captured-bytes): `0002.body` (PROJ issue #4631, full), `0005.body` (PR #4632 files list, full), targeted byte ranges of `0000.body`, `0001.body` (CouchDB §2.3.1–2.3.6), `0003.body` (TOC), `0004.body` (Natural Earth terms, head and tail), `0006.body` (GDAL OSR tutorial §"CRS and axis order"), `0007.body` (PROJ search items #4842, #4770, #4758, #4632, #4708, #4707, #4667, #4671).
+2. **Live re-fetches** (independent verification against current public versions, 2026-10-06T10:07–10:08Z):
+   - `https://api.github.com/repos/OSGeo/PROJ/pulls/4632` — capture id `c1ae73dd675046b6a5fc0a9a80b8a2e4`, sha256 `219aa15679b38703f01b7cf45f87390d72f431288856143cc00dc72da6e9f12d`, status 200, 18 075 B.
+   - `https://api.github.com/repos/OSGeo/gdal/issues/15337` — capture id `bbb4e2ffa4fb4c509869c4d481defa4c`, sha256 `cf1ddf6b6abaf3a5b9888d303046257a1da583cb68b54737d69389b5a0d6eaed`, status 200, 6 210 B.
+   - `https://www.sqlite.org/rtree.html` — returned **byte-identical** to the researcher's capture `0003.body` (same sha256 `de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55`, 41 813 B; page last-modified 2026-09-11). This is the strongest possible corroboration of F4.
+   - `https://operations.osmfoundation.org/policies/tiles/` — **failed again with `OSError`** in this environment (same failure mode the researcher reported for F7). F7's "transport-blocked, therefore unverified" treatment is honest and stands.
+3. **Executed-by-candidate arithmetic replication** of witness W1 (critique-stage check `exec-io5wo3j4`, exit 0, stdout sha256 `2669de075be57e398b4122505314d0825cd600aca084f7ec979aac4afd059ac8`): haversine displacements for the three axis-swapped cities, antimeridian naive-vs-wrap bbox test, float32 narrowing. Isolated pure-arithmetic check; does not establish any application behavior.
+
+Not re-verified by this critic: W1/W2's original execution receipts (their sandbox artifacts were not in my inputs; I verified only the *reproducible arithmetic* of W1 and the *internal consistency* of W2's described semantics), the two line_map scratch outputs in `out/critique/` (reviewer working files), and anything behind the failed OSM fetches.
+
+---
+
+## 1. Verdict summary
+
+The research proposal is **source-correct on every load-bearing external claim I checked** — I found no fabricated quote, misdated event, or wrong pin. The issue→fix→regression chain (F2) is real and precisely described, the open-regression counterexample (F3) is real and still open today, the SQLite/CouchDB/Natural-Earth/GDAL-tutorial facts match their captures verbatim, and the two candidate-executed witnesses are arithmetically reproducible. The labeling discipline (FACT/INF/CHOICE/UNCERT) is consistently applied and the honest-uncertainty items (L1, L6, L7) are genuine.
+
+Six corrections follow (Section 3): none invalidates the architecture; C1 (release landscape) and C2 (PROJ version floor for vertical chaining) change two version statements; C3 changes a witness's "SILENT" labeling; C4 replaces an unverified PROJ configuration mechanism with an evidenced one; C5 adds a load-bearing license dependency (transformation grids) that the proposal under-flags; C6 fixes an internal tension between the rev-hash identity and merge idempotence. All are resolvable without new network access except C4's alternative verification (one proj.org docs fetch, currently reachable — my GitHub/sqlite fetches succeeded on the same transport).
+
+---
+
+## 2. Claim-by-claim verification results
+
+Legend: **SUPPORTED** = claim matches cited capture; **SUPPORTED (LIVE)** = additionally matches a fresh 2026-10-06 fetch by this critic; **CORRECTED** = see Section 3; **UNVERIFIED-HERE** = not checkable in this stage.
+
+- **F1 (GDAL OSR tutorial, axis order)** — **SUPPORTED.** `0006.body` bytes ~24 500–30 500 contain §"CRS and axis order" verbatim: the order "is a constant matter of confusion and vary depending on conventions used by geodetic authorities, GIS user, file format and protocol specifications, etc. This is the source of various interoperability issues."; "Before GDAL 3.0, the OGRSpatialReference class did not honour the axis order mandated by the authority…"; "Starting with GDAL 3.0, the axis order mandated by the authority defining a CRS is by default honoured by the OGRCoordinateTransformation class"; `SetAxisMappingStrategy` with `OAMS_TRADITIONAL_GIS_ORDER` / `OAMS_AUTHORITY_COMPLIANT` ("the default value when instantiating OGRSpatialReference") / `OAMS_CUSTOM`; projected-CRS easting/northing reversal warning. The proposal's F1 wording is a fair paraphrase.
+- **F2 failure half (PROJ #4631)** — **SUPPORTED.** `0002.body` (8915 B, complete): title "Add option to skip extent validation in `proj_normalize_for_visualization()`"; created `2025-12-04T08:47:01Z`, closed `2025-12-04T19:20:31Z`, state_reason "completed"; body: EPSG:8047 (ED50→ED87→WGS84), EPSG:1147 "covers Norway N65 area", EPSG:1146 North Sea, non-intersecting extents; "When using pyproj's `always_xy=True` parameter (which calls `proj_normalize_for_visualization()` internally)"; C API "returns NULL"; manual `+step +proj=axisswap +order=2,1` wrapper "This is error-prone". Nuance, not a correction: upstream labeled it "feature request"; the user-visible effect the proposal calls a "failure" is accurately described.
+- **F2 fix + regression half (PR #4632)** — **SUPPORTED (LIVE).** `0005.body` files list matches the proposal's three files and stats exactly: `concatenatedoperation.cpp` +4/−0 (propagates `hasBallparkTransformation`), `singleoperation.cpp` +35/−2 (flattened sub-operations via `ConcatenatedOperation::create`, domains preserved, name suffix "(with axis order normalized for visualization)"), `test/unit/test_operation.cpp` +27/−0 inside `TEST(operation, normalizeForVisualization)` asserting EPSG:8047 normalization succeeds, PROJ string exports, name suffix, `domains().size()==1`. Live fetch confirms: `merged_at 2025-12-04T19:20:30Z`, `merge_commit_sha 13265bdfbeb139d4c5b01f7e0694e1aa36c01e1a`, head `6e42eb13b903a9c9225acf62ba1a7334711dbadc`, milestone "9.8.0" (id 49, closed `2026-03-02T13:23:48Z`, closed_issues 35), merged_by rouault, totals 3 files +66/−2.
+- **F2 release context (#4842, S8)** — **SUPPORTED with CORRECTION C1.** `0007.body` item 1 verbatim: "PROJ 9.8.1 (`Rel. 9.8.1, April 10th, 2026`) — the current release." — correctly attributed by the proposal as a *reporter claim*. Its WKT-export content (same CRS via two import routes exports differing WKT2: `CONVERSION["unknown"` vs `"unnamed"`, `AXIS["(E)"` vs `"easting"`) genuinely supports the proposal's decision to hash the *pipeline string* + library/proj.db versions rather than raw WKT for `transform_id`.
+- **F3 (GDAL #15337 open regression)** — **SUPPORTED (LIVE, upgraded pin).** Dedicated fetch today: state **open**, 0 comments, created `2026-10-04T17:58:20Z`, title and body match every quoted detail: `GetMinMaxProjYForSpatialIndex()` transforms `(0, ±89.9)` from `CloneGeogCS()` without `OAMS_TRADITIONAL_GIS_ORDER`; 9.7.0 northing limits `[-44927335.4, 44927335.4]` vs 9.7.1 `[0.0, 0.0]`; `ogrinfo -spat` Count 0 with index vs 1 with `OPENFILEGDB_USE_SPATIAL_INDEX=NO`; writer-path warning; reporter's tested fix sets the axis mapping on both CRSs (`filegdbtable.cpp` diff). The research pin was "item 1 of a search capture"; this stage supplies the dedicated issue capture (`cf1ddf6b…d6eaed`) — the next candidate should cite it.
+- **F4 (SQLite R*Tree)** — **SUPPORTED (LIVE, byte-identical).** All quoted behaviors verbatim in the fresh fetch: min/max columns "stored as 32-bit floating point values for \"rtree\"… or as 32-bit signed integers in \"rtree_i32\"", "silently converts"; §3.4 "lower-bound coordinates are rounded down and the upper-bound coordinates are rounded up"; contained-within queries "might cause some entries to be excluded" with remedy "expand their contained-within query boxes slightly (by 0.000012%)"; overlapping queries "will never miss"; §3.5 `SQLITE_LOCKED` and "store the results in a temporary table"; §4.1 aux columns "Beginning with SQLite version 3.24.0 (2018-06-04)"; §7.2 `rtreecheck()` section exists (TOC + section title).
+- **F5 (CouchDB replication/conflict model)** — **SUPPORTED.** `0001.body` bytes 6 000–48 000 contain §2.3.1–2.3.6 verbatim: "The answer is simple: both versions exist on both sides!"; deterministic winner "so that the same choice will be made on all peers"; "It could look as if the changes she made there have been lost - but of course they have not… otherwise they will effectively have been lost."; "Any sensible business-card application will, at minimum, have to present the conflicting versions"; §2.3.2 single-node "409 Conflict (not saved)"; §2.3.3 revision tree, deleted leaves retrievable with `"_deleted":true`, compaction "the bodies of all the non-leaf documents are discarded. However, the list of historical _revs is retained" plus "revision pruning"; §2.3.4 `conflicts=true` / `open_revs=all` and the note that `open_revs=all` order is NOT the winner order. Every F5 statement and quote in the proposal checks out.
+- **F6 (Natural Earth terms)** — **SUPPORTED.** `0004.body` verbatim: "All versions of *Natural Earth* raster + vector map data found on this website are in the public domain. You may use the maps in any manner, including modifying the content and design, electronic dissemination, and offset printing."; "No permission is needed to use *Natural Earth.* Crediting the authors is unnecessary."; accuracy disclaimer ("not responsible for any problems relating to accuracy, content, design, and how it is used"); embedded third-party releases (Washington Post, EC JRC IES, XNR, International Mapping) each "for the sole purpose of creating a world base map"; and in the tail: "name data for more than 20 languages from Wikidata which is under a CC0 (public domain) license." The bundling-permission conclusion is sound for the *selected* source.
+- **F7 (OSM tile policy blocked)** — **SUPPORTED (REPRODUCED).** My independent fetch to `operations.osmfoundation.org/policies/tiles/` failed with the same `OSError`. The decision to exclude ODbL-licensed sources from v1 pending review (L1) is the correct bounded alternative; keep it.
+- **W1 (axis/boundary arithmetic demo)** — **ARITHMETIC SUPPORTED (executed replication `exec-io5wo3j4`, exit 0)**: Tokyo 6 470 523 m (proposal: 6 471 km), Reykjavík 12 006 880 m (12 007), Sydney 6 987 896 m (6 988); stored −180.0005 vs query [179.999, 180] → naive MISS, wrap-normalised (179.9995) HIT; 179.99995 → float32 `179.9999542236328` (changed). Labeling corrected — see **C3**.
+- **W2 (merge semantics toy)** — **INTERNALLY CONSISTENT, UNVERIFIED-HERE.** The described input/output (disjoint fields auto-merge; `height_m` 12→15/12→14 surfaces as `{base 12, local 15, remote 14}` conflict; LWW baseline loses the note and one height; delete-vs-edit requires explicit conflict) is semantically coherent and the honest scope note ("toy JSON, not the production engine") is appropriate. Its receipts were not in my inputs; treat as plausible and correctly scoped. The proposed property tests (W5/V4) are the right way to make it carry weight.
+- **PR #4708 / L5 (vertical chaining lead)** — **SUPPORTED with CORRECTION C2.** `0007.body` item: title "Chain vertical CRS transformations through intermediate same-datum vertical CRS"; label `backport 9.8` ("Backport to 9.8 branch"); created `2026-03-10`, `merged_at 2026-03-13T18:03:48Z`; closes #4707; before `+proj=affine +s33=-1` "← wrong" vs after `+proj=pipeline +step +proj=geogoffset +dh=28 +step +proj=axisswap +order=1,2,-3` "← correct"; tests in `test/unit/test_operationfactory.cpp`; NEWS entry placed "under 9.8.0 Updates". L5's facts are accurate; the proposal's *version floor* wording is not (C2).
+
+---
+
+## 3. Corrections (evidence-backed; each with scope and affected dependencies)
+
+### C1 — Release-landscape statement is stale and must be time-stamped, not asserted as "current"
+- **Claim:** proposal §2 F2: "current stable per a captured issue body is 'PROJ 9.8.1 (Rel. 9.8.1, April 10th, 2026)'".
+- **Evidence:** the same *class* of evidence (reporter's version string inside an issue body) now also shows a newer release: GDAL #15337 body (created 2026-10-04, capture `cf1ddf6b…d6eaed`, bytes §"Versions and provenance") reports `projinfo` → "Rel. 9.9.0, September 15th, 2026" (and GDAL 3.13.3 "Iowa City", released 2026/08/13). Both are reporter claims; neither is verified against PROJ's release page in either stage.
+- **Correction:** in the final proposal, state release facts only as "`Rel. X, date` as reported in <issue>, captured <date>"; never "current". The version-pin-per-project mitigation is unaffected and remains the right design.
+- **Scope/conditions:** documentation-level; affects §2 F2, §7 ("PROJ's improved vertical chaining ≥ 9.8.0" wording) and `leads.json` L7 framing.
+- **Affected dependencies:** transform_id already contains the PROJ version, so drift is detected by design — keep that.
+
+### C2 — "PROJ ≥ 9.8.0" is the wrong floor for the vertical-chaining improvement
+- **Claim:** proposal §4 and OPP4: vertical chaining available "≥ 9.8.0".
+- **Evidence:** PR #4708 merged `2026-03-13T18:03:48Z` (capture `0007.body`), but the 9.8.0 milestone closed `2026-03-02T13:23:48Z` (verified live and in `0007.body`); #4708 carries the `backport 9.8` label and its own NEWS line was placed under "9.8.0 Updates" despite landing after the milestone. So #4708 did not ship in 9.8.0; the earliest plausible carrier is the 9.8 maintenance line (9.8.1, per the #4842 reporter claim of 9.8.1 released 2026-04-10 — itself unverified against release notes).
+- **Correction:** replace "≥ 9.8.0" with "a 9.8-line release that contains PR #4708 (merged 2026-03-13; presence in any concrete release to be verified from that release's NEWS/changelog before adoption)". L5's facts need no change.
+- **Affected dependencies:** OPP4 (vertical datum transformation as later opportunity) and the §4 "no automatic vertical-datum transformation in v1" boundary — v1 boundary itself is correct and should not change.
+
+### C3 — W1's "SILENT" label overstates silence for two of its three cases
+- **Claim:** witness W1 stdout excerpt labels Tokyo and Sydney displacements "SILENT"; W1's own `expected_behavior` concedes "(|lat|>90 cases are detectable)".
+- **Evidence:** replication (`exec-io5wo3j4`): swapped readings use the original longitude as latitude — Tokyo |139.6503|, Sydney |151.2093| both exceed 90 (range-detectable=True), Reykjavík |−21.9426| does not (range-detectable=False). The distances are correct; only the label is wrong.
+- **Correction:** restate W1 as: *axis swaps are catastrophic in all three cases; a `|lat| ≤ 90` range check would catch Tokyo/Sydney-class swaps but not Reykjavík-class swaps; no in-band check detects the displacement without an external reference — which is why FieldBook's registry must carry declared axis order per record instead of inferring it.* Do not present Tokyo/Sydney as undetectable.
+- **Scope/conditions:** witness presentation only; the derived design rule (explicit axis metadata) is unaffected and remains well-grounded in F1/F3.
+- **Affected dependencies:** §4 display pipeline; §10 V1 (round-trip suite should include a deliberate axis-swapped case and assert it is *flagged*, not just wrong).
+
+### C4 — "Ballpark fallbacks are disabled in FieldBook's PROJ configuration" names no verified mechanism
+- **Claim:** proposal §4: "Silent ballpark/unknown-accuracy fallbacks are disabled in FieldBook's PROJ configuration."
+- **Evidence:** no captured source documents a PROJ switch that disables ballpark fallbacks. What the captures *do* evidence: ballpark provenance is a queryable/propagatable property of built operations — PR #4632's patch (`0005.body`, `concatenatedoperation.cpp`) propagates `hasBallparkTransformation` through concatenations, and #4708/#4707 show ballparks appearing where PROJ finds no registered operation. [INF, reviewer] PROJ also has a "best/ballpark" preference mechanism commonly referenced as `ONLY_BEST` in proj.org documentation — **UNVERIFIED in both stages; do not rely on it without capture.**
+- **Correction:** implement the intent via the *evidenced* mechanism: after building each pipeline, inspect the operation's ballpark flag and refuse + record `unresolved_transform` when set (per-record refusal, not a global switch); optionally verify `ONLY_BEST` from proj.org docs at implementation time and, if confirmed, use it as a belt-and-braces default. [INF] This also composes with the `transform_id` revalidation job (a flag change on upgrade is detectable).
+- **Scope/conditions:** design-mechanism correction; user-facing behavior (refuse rather than invent position) unchanged.
+- **Affected dependencies:** §4 transform validation; V1 pass criteria should assert `unresolved_transform` is produced for a known ballpark-only pair (e.g., the #4707 EPSG:5705→5706 height→depth case *as of a PROJ version predating #4708*, and a correct registered chain *after*).
+
+### C5 — Transformation-grid redistribution licensing is a load-bearing, unexamined dependency
+- **Claim:** §4 "proj.db is bundled and version-pinned" (and §8 lists "PROJ (+proj.db + grids)" with license "[UNCERT] pin of license page not captured this stage").
+- **Evidence:** none of the captured sources covers PROJ/EPSD/grid licensing. [INF, reviewer] `proj.db` embeds EPSG registry content and useful transformations frequently require external grid files whose redistribution terms can differ from PROJ's own license; a bundle that ships grids under unreviewed terms can violate the brief's "bundled map/source-data permissions must be investigated for the actual selected source" for *data*, even though the map source (Natural Earth, F6) is settled. L6 flags only the PROJ *license page*, not grid data terms.
+- **Correction:** split the dependency into three capture-before-implementation items: (i) PROJ software license, (ii) proj.db/EPSG content terms, (iii) per-grid redistribution terms for every grid the v1 CRS list would ship. **Bounded alternative (recommended for v1):** restrict the supported CRS list to transformations executable without external grids (built-in/nul-grid operations), which keeps v1's license surface to PROJ + SQLite + Natural Earth only, and grow the grid list only as each grid's terms are captured into `license_manifest.json` (extend V7 to assert grid-level entries).
+- **Scope/conditions:** affects the §4 support boundary ("expressible in WKT2/PROJJSON with declared axis order" needs the grid qualifier) and §8's dependency table.
+
+### C6 — Rev-hash identity and merge idempotence are in tension as written
+- **Claim:** §3 defines `rev = hash(prev_rev ‖ canonical_payload ‖ author ‖ replica_id ‖ hlc_ts)` while §5's merge rule says "identical changes → idempotent".
+- **Problem:** [INF, reviewer] with `replica_id` and `hlc_ts` inside the hash, two replicas making the *same semantic edit* from the same base produce *different* revs; rev equality can therefore never express "identical changes" across replicas. As written, an implementation keyed on rev equality would surface spurious conflicts or duplicates.
+- **Correction:** define merge idempotence on semantic tuples — `(obs_id, base_rev, canonical payload delta)` — and use `rev` solely as per-replica history identity. Add this one sentence to §5 and a matching assertion to V4's property tests (same-op replay on two replicas must merge to one record with no conflict).
+- **Scope/conditions:** internal-consistency fix; no external evidence involved; affects §3, §5, W5/V4.
+
+---
+
+## 4. Remaining unsupported assumptions and risks (preserved honestly)
+
+- **R1 — Backport status of #4632 to 9.7.x:** still unknown; captured data shows the `backport 9.8` label only on sibling #4708, and my live fetch of #4632 shows `labels: []`. L7's treatment (version pin + revalidation) is the correct mitigation. Keep L7 open.
+- **R2 — "Open issue ⇒ no fix":** F3 was open with 0 comments at my fetch (2026-10-06); "no merged fix visible" remains true only as of that instant. The proposal already avoids assuming a fix; keep the watch item (L4) and re-check before citing #15337 as open in any shipped document.
+- **R3 — 250k performance:** remains [PROPOSED/UNEXECUTED] (V5/W6). The bounded-access design (R*Tree over explicitly-derived display bboxes + keyset pagination + streaming export) is consistent with the F4 rules, but no measurement exists in either stage; the proposal labels this correctly — preserve that label; do not let the final proposal upgrade it to a claim.
+- **R4 — Shell/renderer choice (Tauri/Leaflet-class) and GeoPackage alternative:** legitimately CHOICE/INF-level with no primary-source capture in either stage (L2, L6). Acceptable as bounded alternatives; the final proposal must keep them labeled as unverified-at-source rather than silently presenting them as vetted.
+- **R5 — CouchDB-derived merge granularity:** F5 evidences document-level conflicts plus a recommended fetch/merge algorithm (§2.3.6's four-step algorithm is in the capture); the proposal's *field-level* three-way merge is a design extension beyond the source. That is fine as [INF/CHOICE] (the proposal says "in spirit"), but the final proposal should keep saying so — field-granularity behavior is not claimed by CouchDB's docs and is exactly what V4 must establish.
+
+---
+
+## 5. Supported claims to preserve unchanged
+
+These were verified and must survive into the final proposal verbatim in substance:
+1. The complete PROJ #4631 → PR #4632 → `test_operation.cpp` regression chain with merge metadata (timestamps, milestone 9.8.0 closed 2026-03-02, head `6e42eb1`, +66/−2 over three files) and its three lessons (axis-order/extent entanglement; ballpark-provenance propagation defect; error-prone manual workarounds).
+2. GDAL #15337 as a live open instance of the "index coordinates derived through implicit axis mapping silently miss data" failure class, including the writer-path persistence warning (strongest support for "a displayed pin / successful query ≠ correct export").
+3. All F4 R*Tree rules (32-bit silent narrowing; outward rounding; contained-within misses at edges + 0.000012% expansion; SQLITE_LOCKED + temp-table remedy; aux columns ≥3.24.0; `rtreecheck`).
+4. The F5 no-silent-winner conflict contract and its evidentiary basis (deterministic winner, both-versions-preserved, 409 single-node, compaction retaining rev identity, `conflicts=true`/`open_revs=all`).
+5. F6's Natural Earth public-domain terms for the actual selected basemap source (including embedded third-party releases and Wikidata CC0), and F7's ODbL exclusion pending verification.
+6. The four-way identity separation (§3), quarantine-not-drop handling of unknown CRS/incomplete records, "preview ≠ validation" labeling, transform_id composition (pipeline + library + proj.db + grid hashes — now additionally supported by #4842's WKT-instability evidence), and the V1–V8 validation plan with its ship gate.
+
+---
+
+## 6. Brief-obligation coverage check (research stage, as reviewed)
+
+| Brief obligation | Status |
+|---|---|
+| ≥2 independently useful implementation precedents with pins + concrete lessons | **Met** — three mechanisms, each evidence-backed and mechanism-fit: PROJ transforms/provenance (F2), SQLite R*Tree storage behavior (F4), CouchDB revision/conflict model (F5). |
+| ≥1 real public issue → fix → regression test, with release/branch applicability | **Met** — PROJ #4631 → #4632 → `TEST(operation, normalizeForVisualization)`; applicability pinned to milestone 9.8.0 with backport uncertainty honestly flagged (L7). Live open counterexample GDAL #15337 adds the "not fixed everywhere" dimension. |
+| Coordinate/display/export identity + support boundary + transform versioning/validation | **Met** in design (§3–§4); validation proposed/UNEXECUTED, correctly labeled (C4/C5 refinements above). |
+| Offline editing, identity, revisions, merge semantics, conflicts, recovery, re-import, media relocation | **Met** (§3, §5, §6); recovery harness V3 and merge property tests V4 remain UNEXECUTED and must stay labeled so. C6 wording fix required. |
+| 250k bounded access, indexing/cache invalidation, cancellation, offline state, export | **Met as engineering plan** (§6–§7), honestly unmeasured (R3). |
+| License investigation of the actual selected source | **Met** for the basemap (F6); **under-flagged for transformation grids** — fix via C5. |
+| Useful opportunity + plausible alternative | **Met** — OPP1–OPP4 and A1/A2, with unverified-at-source labels where applicable (R4). |
+| Separation FACT/INF/CHOICE/UNCERT; executed vs proposed labels; no invented receipts | **Met**; W1 relabeling per C3; no receipt invention found. |
+
+---
+
+## 7. Resolution guidance for the next candidate (no reviewer context needed)
+
+1. Apply C1: time-stamp every release claim; never write "current release" from an issue body.
+2. Apply C2: change "≥ 9.8.0" (vertical chaining) to "a 9.8-line release containing PR #4708 (merged 2026-03-13), verified from release notes before adoption".
+3. Apply C3: rewrite W1's presentation (three displacement magnitudes are verified; only Reykjavík-class swaps evade a `|lat| ≤ 90` range check).
+4. Apply C4: replace the "disabled in configuration" mechanism with post-build ballpark-flag inspection + `unresolved_transform`; verify `ONLY_BEST` from proj.org docs (reachable in this environment — GitHub and sqlite.org fetches succeeded; osmfoundation.org did not) before relying on it.
+5. Apply C5: add the three-way license split (PROJ software / proj.db-EPSG content / per-grid terms); adopt the no-external-grids v1 CRS list as the bounded default; extend V7 accordingly.
+6. Apply C6: define merge idempotence on `(obs_id, base_rev, canonical payload delta)`, not rev equality; assert in V4.
+7. Keep everything in Section 5; keep L1/L6/L7 open; cite GDAL #15337 via the dedicated capture `cf1ddf6b…d6eaed` (or a fresh fetch) rather than the search-payload item.
+8. Keep every UNEXECUTED label; nothing in this review converts a proposed check into an executed one except the W1 arithmetic replication (`exec-io5wo3j4`), which remains an isolated arithmetic check only.
+
+---
+
+## 8. Reviewer capture/receipt appendix
+
+- Live captures made this stage: PR #4632 JSON (`219aa15679b38703f01b7cf45f87390d72f431288856143cc00dc72da6e9f12d`); GDAL #15337 JSON (`cf1ddf6b6abaf3a5b9888d303046257a1da583cb68b54737d69389b5a0d6eaed`); sqlite.org/rtree.html refetch (byte-identical, `de560a2e…4cd55`); failed fetch receipt: `https://operations.osmfoundation.org/policies/tiles/` → OSError (2026-10-06T10:08Z).
+- Executed check: `exec-io5wo3j4` (exit 0; code/data/stdout sha256 `eeea7096…738441b7` / `ab0fd75a…4dc4cf` / `2669de07…059ac8`); pure arithmetic (haversine R=6 371 008.8 m, modulo wrap, struct-based float32); isolated; does not establish application behavior.
+- Read ranges of prior captures are identified in Section 0; scratch line-map files `_lm_0003.txt`, `_lm_0006.txt` in `out/critique/` are reviewer working artifacts, not evidence.
+- Clock: stage allocation 900 s; all verification and this review completed within the candidate action window (telemetry in each tool receipt).

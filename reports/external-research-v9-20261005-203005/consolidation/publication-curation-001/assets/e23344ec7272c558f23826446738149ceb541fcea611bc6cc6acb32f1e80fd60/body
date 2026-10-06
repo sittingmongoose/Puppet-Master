@@ -1,0 +1,73 @@
+{
+  "schema": "er9.research.leads.v1",
+  "stage": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "useful_opportunity": {
+    "lead": "Use DuckDB's CSV auto-detection output as an editable import proposal; commit reviewed parser options and a versioned schema contract rather than treating inference as full validation.",
+    "source": "S4",
+    "applicability": "DuckDB LTS 1.4 documentation describes CSV sniffing and explicit overrides. Verify the exact selected engine release and detection behavior in implementation."
+  },
+  "plausible_alternative": {
+    "lead": "Use only a file-based manifest and JSONL event history, omitting SQLite; this trades index speed for simpler folder/bundle exchange and avoids WAL sidecar/checkpoint lifecycle.",
+    "source": "S10 and S11",
+    "applicability": "Alternative architecture inference informed by SQLite atomic-commit/WAL documentation; not benchmarked."
+  },
+  "deferred_or_unresolved": [
+    {
+      "lead": "DuckDB linked issue #14440 standalone body and triage.",
+      "source_url": "https://api.github.com/repos/duckdb/duckdb/issues/14440",
+      "observed_result": "HTTP 404 at public capture boundary; no issue body or capture identity available.",
+      "effect": "The PR #14464 body, patch/tests, and v1.2.0 ancestry support a bounded failure/fix/regression/release chain, but original context and impact remain unknown."
+    },
+    {
+      "lead": "DuckDB sniff_csv regression issue #19578, separate from required parser-fix chain.",
+      "source_url": "https://api.github.com/repos/duckdb/duckdb/issues/19578",
+      "capture": {"capture_id": "7f0c9c6f133d4dfdb3e59cd7138ad9d5", "sha256": "3f170fbc0e5865d7b841adbc5c266523a4f8b06bd17ab668e0314b77cf306ead"},
+      "followup_capture": {"capture_id": "cbec82b3f384448a81e9020cd0c37394", "sha256": "d5261f38007443db54713b4b67d17aa8dd0446e3808a96cd34f0d7677d867772"},
+      "observed_scope": "Reporter described sniff_csv behavior on 1.3.2/1.4.1 and a later comment reported it worked on 1.4.4; no associated fix commit/regression-test chain was established here.",
+      "effect": "Do not claim a verified fix path. Useful only as a caution that sniffer behavior can vary by version; issue text/comment are anecdotal follow-up, not release qualification."
+    },
+    {
+      "lead": "DVC pipeline documentation as an alternative data-lineage precedent.",
+      "source_url": "https://dvc.org/doc/user-guide/pipelines/defining-pipelines",
+      "observed_result": "Public capture request failed with OSError; no content or capture identity.",
+      "effect": "Deferred; no DVC mechanism is asserted in the proposal."
+    },
+    {
+      "lead": "Exact product version pins for CPython, uv, nbformat/NBClient/Jupyter Client, DuckDB, base OS/runtime and native libraries.",
+      "evidence": "Captured docs identify some current/LTS documentation versions, but moving docs are not a tested application lock; Bubblewrap source was mutable main with no exact upstream commit established.",
+      "effect": "Select exact compatible binaries and lock hashes only after replay and sandbox qualification. Until then cross-machine executable compatibility is unresolved."
+    },
+    {
+      "lead": "5 GB / 8-core / 16 GB resource envelope, including global operators and spill/temp-disk capacity.",
+      "evidence": "No workload benchmark or product execution was run. DuckDB tuning documentation describes order/memory trade-offs, not this target's performance.",
+      "effect": "Proposed measurement matrix in proposal.md remains UNEXECUTED; do not make a performance claim."
+    },
+    {
+      "lead": "Execution isolation on non-Linux hosts and exact Linux policy/host configuration.",
+      "evidence": "Bubblewrap README is a mutable main-branch capture and describes a low-level mechanism, not a qualified policy or binary.",
+      "effect": "Linux-first sandbox is a product proposal; user namespaces, mounts, symlinks, sockets, seccomp, quotas and host kernel behavior require tests. Keep execution disabled where no equivalent boundary is qualified."
+    },
+    {
+      "lead": "Full content hashing cost for large files and provisional quick-fingerprint policy.",
+      "evidence": "Engineering inference; no benchmark was run.",
+      "effect": "Expose provisional versus content-verified identity; measure one-pass import hashing and decide whether to rehash on every clean replay."
+    },
+    {
+      "lead": "Proposal citation-number corrections needed in the already-created proposal file.",
+      "evidence": "The frozen proposal was written before its source-number cross-reference pass. Source catalog IDs in sources.json are authoritative: S9=DuckDB compare, S10=SQLite atomic-commit, S11=SQLite WAL, S12=Bubblewrap, S13=uv.",
+      "corrections": [
+        "In the recommendation paragraph, citation [S9–S11] for SQLite plus Bubblewrap should be [S10–S12].",
+        "In the local SQLite index paragraph, [S10] should be [S11].",
+        "In the save/recovery paragraph, [S9, S10] should be [S10, S11].",
+        "In the environment paragraph, [S2, S3, S12] should be [S2, S3, S13].",
+        "In the sandbox paragraph, [S11] should be [S12].",
+        "Failure-chain citations [S7–S9] are correct."
+      ],
+      "effect": "The bounded write capability rejected an attempt to replace the already-created proposal with the corrected cross-reference version (FileExistsError). Proposal content and source cards are present, but apply these five citation corrections before treating citations as final."
+    }
+  ],
+  "deferred_opportunities": [
+    "Optional reviewable DVC-style transform graph or external data-versioning integration; not needed for a small folder-first MVP and not verified in this research.",
+    "Real-time collaboration, hosted execution, scheduling and broader language kernels remain future options after local replay/provenance and folder exchange are validated."
+  ]
+}

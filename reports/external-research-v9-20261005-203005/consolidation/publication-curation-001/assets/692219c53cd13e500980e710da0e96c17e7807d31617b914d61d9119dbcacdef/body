@@ -1,0 +1,145 @@
+# Critique review — frozen research proposal "LabBook: a local-first notebook + versioned-data workspace"
+
+Stage: critique (fresh source-grounded critic, V01 bounded executable checking enabled).
+Reviewed artifact: `inputs/prior/I-02-treatment-research-a001/research/proposal.md` (sha256 `63a0055f…`) with `sources.json`, `witnesses.json`, `leads.json`, against the 27 pinned captures in `inputs/source_context/` (index sha256 `fe170693…`) and the brief (`inputs/brief.md`, sha256 `6e6749f3…`).
+Author: this critique's candidate model. No evaluator material, no other arms consulted.
+
+---
+
+## 1. Method and scope
+
+For every consequential [F]-labeled claim in the proposal I located the cited capture, re-read the exact body, and compared the claim's wording, numbers, dates, and locators against the capture text. I additionally ran four small executable checks in the admitted isolated sandbox (§5) and performed one fresh live re-fetch of the most time-sensitive volatile claim (§4, V-1). I did not re-derive the design sections ([C]/[I]) as "true or false"; I audited them for obligation coverage (§6) and internal consistency.
+
+Reading coverage: I opened every source capture except four small auxiliary files I verified through the index and catalog only (see §3, note N5). The DuckDB issue→fix→regression-test chain, both tag pins, the nbformat schema + directory listing, marimo docs/search, papermill README, PEP 723, both Python-version sources, and the concurrency doc were read in full or in the sections the claims rely on.
+
+**Overall verdict:** the research is substantially source-correct. Every load-bearing claim I checked traces to real capture content, including the two I initially suspected were overclaims (the S3 "Quack protocol" claim and the S13 "buffer-pool code visible in the tag commit" claim — both are literally present in their captures). I found **no substantive factual correction to the proposal text**; corrections are confined to catalog locators/metadata and two small spec gaps. Key claims are preserved with evidence below.
+
+---
+
+## 2. Verified claims (preserve all of these)
+
+Evidence format: proposal section → capture file → what the capture actually says.
+
+**nbformat precedent (proposal §2.1, S4)** — `0006.body` (schema, sha256 `523e3578…`, 16,104 bytes):
+- Cell `id` is required in all three cell types, pattern `^[a-zA-Z0-9-_]+$`, minLength 1, maxLength 64 (lines 98–104, 119, 157, 191–200). ✓
+- `execution_count`: "The code cell's prompt number. Will be null if the cell has not been run.", type `["integer","null"]`, minimum 0 (lines 269–273). ✓
+- Output `oneOf` is exactly `execute_result | display_data | stream | error` (lines 301–309); error output requires `output_type, ename, evalue, traceback` (line 371). ✓
+- Root `metadata.kernelspec` requires `["name","display_name"]` (line 16); `nbformat_minor` minimum 5 (line 82); required code-cell keys `[id, cell_type, metadata, source, outputs, execution_count]` (lines 191–198). ✓
+- "v4.schema.json byte-identical to the 4.5 schema, same git blob 670bbd35" — `0002.body` lists **both** `nbformat.v4.schema.json` and `nbformat.v4.5.schema.json` with git blob sha `670bbd35f343f0d1324b8e6056ba42420f7ec6aa` and size 16104, matching the captured schema body's byte count. GitHub's content addressing makes same-blob ⇒ byte-identical. ✓
+
+**marimo precedent (§2.2, S5/S6/S21)** — `0003.body`, `0015.body`, `0010.body`:
+- Static refs/defs analysis forming a DAG; lazy runtime "marking cells as stale"; "Variable mutations are not tracked"; "Interrupting a cell also cancels execution of any queued dependent cells"; unique global names; deletion deletes variables (`0015` lines 37–45, 74–78, 90–95, 148–154, 156–158). ✓
+- Stored as pure Python, deterministic order "based on variable references instead of cells' positions", "no hidden state", ipyflow cited in lineage (`0003` lines 38–41, 133–138, 51, 333). ✓
+- Issue #9881 open, created 2026-06-14, title exactly "marimo edit replays a stale session's cached error after reconnect, with no live-vs-cached provenance", assigned to mscolnick (`0010` items[2]). ✓
+- Issue #3140 open, "Don't mark cell as stale on comments/whitespace changes?" (items[1]); #10602 open, embedded-notebook `mo.state` setter staleness (items[0]). ✓
+- PR #10912 merged 2026-10-02T22:39:09Z; body: "Each cell records the generation it ran under and the watcher captures the generation at detection and skips cells that ran under a newer one… the watcher's late marking flags cells that already hold the new code" — supports the "generation counters" mechanism claim (items[5]). ✓
+- PR #10915 closed 2026-10-05T08:17:35Z with `merged_at: null` (items[4]). ✓ **Re-verified live on 2026-10-06T02:27Z**: `GET /repos/marimo-team/marimo/pulls/10915` returned `state: "closed"`, `"merged": false`, `"merged_at": null`, `updated_at` unchanged at 2026-10-05T08:17:49Z (fresh capture sha256 `d27d01034f92289823a4956ae0b7b309fafbd78710fe70b2deea52b24e56aa54`). The claim and lead L10 hold one day after the research capture.
+
+**DuckDB precedent (§2.3, S1/S2/S3/S13)** — `0000.body`, `0024.body`, `0026.body`, `0021.body`:
+- CSV error taxonomy exactly CAST / MISSING COLUMNS / TOO MANY COLUMNS / UNQUOTED VALUE / LINE SIZE OVER MAXIMUM / INVALID ENCODING; default stop-and-throw; error block prints `null_padding=0`, `sample_size=20480`, `(Auto-Detected)` labels and "Override the type for this column manually" (`0024` lines 20–27, 31, 36–62). ✓
+- Projection-pushdown caveat verbatim: "if we were to select only the name column, both rows would be considered valid, as the casting error on the age would never occur" (`0024` line 123). Supports data-contract rule D4. ✓
+- `reject_scans`/`reject_errors` with `line`, `line_byte_position`, `error_type`, `csv_line`, `error_message`; `store_rejects` default False (`0024` lines 139–203). ✓
+- Concurrency: one read-write process / READ_ONLY multi-process; file locks with caution on shared/network directories; "Quack remote protocol… Quack in beta stage as of DuckDB v1.5.2", expected mature "by DuckDB v2.0 in fall 2026"; DuckLake with PostgreSQL catalog as stable multi-writer route, DuckLake v1.0 published April 2026 (`0026` lines 13–28, 42–44). **This claim, which I initially flagged as a fabrication risk, is fully supported by the capture. Preserved.** ✓
+- S13's buffer-pool claim: the v1.1.0 tag-commit API response (`0021`) includes the commit's file diffs; `src/storage/buffer/buffer_pool.cpp` patch hunk header is `BufferPool::EvictionResult BufferPool::EvictBlocksInternal(...)`, and `buffer_pool.hpp` contains `void SetLimit(idx_t limit, …)` and the comment "The maximum amount of memory that the buffer manager can keep (in bytes)". **Supported, not an overclaim. Preserved.** ✓
+
+**Issue→fix→regression chain #12596 (§3, S1/S9/S10/S11/S12/S13)** — all pins verified field-by-field:
+- Issue body (`0000` items[3]): trailing-delimiter CSV `c1,c2 / 1,2, / 3,4,`, extra all-NULL row only with `parallel = false`, versions "1.0.0 and nightly", created 2024-06-19T04:07:20Z, `reproduced` label present. Timeline (`0011`): `labeled reproduced` 2024-06-19T04:07:28Z, `connected` → PR #12679 `state: "merged"`, closed 2024-06-24T17:12:34Z. ✓
+- PR #12679 (`0017`): title "[CSV] [Bug-Fix] Fix for issue related with single-threaded execution and null padding.", created 2024-06-24T13:52:39Z, merged 2024-06-24T17:12:33Z by Mytherin, merge_commit_sha `2532c30fa649ac6296c7ab2b55976b4337ff46ce`, head `fa19250f…`, 3 files +28/−1. ✓
+- Diff (`0018`): fixture `data/csv/bug_12596.csv` = `c1,c2\n1,2,\n3,4,`; one-line guard in `string_value_scanner.cpp` adding `&& result.chunk_col_id > 0`; regression test `test/sql/copy/csv/test_12596.test` with three query blocks (default parallel, `parallel=false, auto_detect=false`, `parallel=false`) each expecting exactly rows `(1,2,NULL),(3,4,NULL)`. ✓
+- Version bounds (`0020`, `0021`): v1.0.0 → commit `1f98600c…` authored 2024-05-29T12:16:53Z; v1.1.0 → commit `fa5c2fe1…` authored 2024-09-08T19:26:28Z. My executed check C1 confirmed all seven chain timestamps strictly monotonic with the merge strictly inside the tag interval (§5). "Not established whether a 1.0.x bugfix release carried it" remains honest (lead L1). ✓
+
+**papermill precedent (§2.4, S14)** — `0004.body`: "parameterizing, executing, and analyzing Jupyter Notebooks"; input→separate output `pm.execute_notebook('path/to/input.ipynb','path/to/output.ipynb', …)`; `parameters`/`injected-parameters` cell protocol; "This library currently supports Python 3.10+ versions. As minor Python versions are officially sunset by the Python org papermill will similarly drop support." ✓
+
+**PEP 723 (§4/§11, S17)** — `0025.body`: Status Final, Resolution 08-Jan-2024; `# /// script` block; `dependencies` (PEP 508) + `requires-python` (PEP 440); "Script runners MUST error if the specified dependencies cannot be provided"; Security Implications: auto-install "could cause arbitrary code to be downloaded and installed". ✓
+
+**Python support boundary (§11, S15/S16)** — `0008.body` (":end-of-life: Five years after a release, support ends"; references `include/branches.csv`), `0005.body` (rendered page: "The main branch is currently the future Python 3.16"), `0023.body` (3.9 eol 2025-10-31; 3.10 eol 2026-10-01; 3.11 2027-10-31; 3.12 2028-10-31; 3.13 2029-10-31; 3.14 released 2025-10-07 eol 2030-10-31). Executed check C4 confirmed exactly 3.9 and 3.10 are past EOL at the 2026-10-05 capture date, so the 3.11 floor statement is correct (§5). `0022.body` confirms `include/` contains only `activate-tab.rst` and `links.rst`, supporting negative-evidence source S22 and lead L3. ✓
+
+**Witnesses (§6/§13)** — `witnesses.json` is internally consistent with the proposal: W1-rev1 failure receipt retained (exec-83jjs6ws, exit 1, TypeError on null-vs-int sort); W1 rev2 exec-6tyxg1kl exit 0; W2 exec-eo7n39wa; W3 exec-vephzgkd; W4 exec-0mgh0exa with "python 3.14.4" env binding. My check C3 independently reproduced the W1-rev1 failure class with the **identical** Python error text ("'<' not supported between instances of 'NoneType' and 'int'") and showed partition-then-sort yields the documented replay-order behavior — the recorded failure and fix are real Python semantics, not a narrative. W4's "3.14.4" is plausible (endoflife lists 3.14 line active, latest 3.14.8) but the specific patch version is not independently verifiable from captures — acceptable, and W4 itself flags "sandbox interpreter was 3.14.4 — not one of the proposed supported versions". Scope warnings in the inventory are honest.
+
+**Leads** — L1–L11 all correspond to real unresolved/optional items; L2 (null_padding default discrepancy) is genuinely open: PR #6765 body says "This defaults to true, which mimicks the behavior of Pandas/Polars" (`0000` items[6], exact quote confirmed) while the docs error sample prints `null_padding=0` (`0024` line 58). My probe of the pinned overview page (`0009`) for the parameter table hit page chrome/icons, not the table, so I could not settle the current default either; **L2 remains unresolved, as recorded.**
+
+---
+
+## 3. Corrections (evidence-backed; none change the design conclusions)
+
+**CR1 (catalog locator defect — S21 item indices swapped). Severity: low, must fix in the final catalog.**
+`sources.json` S21 locator says "items[4] #10912 … items[3] #10915". Actual capture order in `0010.body` is items[0]=#10602, items[1]=#3140, items[2]=#9881, **items[3]=#10916** (an unrelated merged-then-reverted-status PR "fix: clean up stale UI element on re-registration"), **items[4]=#10915, items[5]=#10912**. Executed check C2 asserts this (exit 0, exec-e32tbk3y). The substantive facts attached to #10912/#10915 (dates, merge status, generation-counter content) are all correct — only the indices are wrong. **Affected dependency:** none on the proposal text (it cites [S21] without indices); fix the catalog line. A fresh author must not "correct" the #10912/#10915 facts — only the indices.
+
+**CR2 (catalog pin parentheticals wrong for S20/S21). Severity: low.**
+Both entries claim "first 32768 bytes captured". Actual captures are complete: `0009.body` is 393,173 bytes and `0010.body` is 44,688 bytes; the index sha256s match the **full** bodies (verified by the read tool's reported byte counts and the shared sha256 values). The parentheticals appear to be stale notes from an earlier partial-fetch attempt. Fix: delete or correct them; the sha256 pins themselves are valid. Also note `0009`'s index metadata says `truncated: false` while S20's note implies truncation — the index is right.
+
+**CR3 (catalog capture identity unverifiable). Severity: low.**
+`sources.json` `capture_id` values are 32-hex strings (e.g. S2 `9d162850…`) that match neither the source index sha256 (`12897abe…`) nor any prefix of it. They are presumably an internal digest I cannot recompute. The catalog contract requires "capture identity"; recommend the final catalog carry the **full sha256 of the capture body** (as the index already does) so a fresh reader can verify identity. No claim depends on the old values.
+
+**CR4 (date-precision nuance on the 3.10 EOL date). Severity: informational.**
+endoflife.date gives 3.10 EOL = 2026-10-01 with day precision; the devguide/PEP 619 schedule gives "October 2026". The proposal's conclusion ("already past" at capture; floor 3.11) is unaffected and my check C4 confirms it against the capture, but the final proposal should attribute day precision to the aggregator, not to python.org. **Affected dependency:** §11 wording only.
+
+**CR5 (spec gap: cancel/interrupt of a *clean replay*). Severity: low, close it in the final.**
+§6 defines cancel semantics for interactive runs (running cell + queued descendants → `unverified`) and §7 says clean replay has "progress, cancel", but no line states what happens to the partially-written replay artifact and its status overlay when a replay is cancelled or dies mid-run. By the design's own rules it should be: artifact kept, all its outputs `unverified`, event log records an interrupted event (never `current`). One sentence fixes it. **Affected dependency:** §7/§10 recovery text; W3's state machine already implements the needed transition.
+
+**N1 (note, not a defect).** One capture claim needed care and survived: S13's locator ("file list in the tagged commit's parent diff shows … buffer_pool.cpp EvictBlocksInternal/SetLimit") is literally true because the GitHub commit endpoint returned per-file patches for the tag commit; see §2. Similarly S3's "Quack remote protocol beta as of v1.5.2" is verbatim in the capture.
+
+**N2 (note).** The proposal's §2.1 phrase "an `outputs` array restricted to exactly four output types" is accurate for the v4.5 `output` oneOf; the schema's separate `unrecognized_output` definition exists but is not part of that oneOf. No change needed.
+
+**N3 (note).** PR #12679 has `"body": null` — the proposal never attributes content to the PR body (it correctly uses the issue body and the diff), so nothing to fix; recorded so a future author doesn't expect a PR description.
+
+**N4 (note).** `0007.body` and `0016.body` are byte-identical (same sha256) for two superficially different search query strings (`12596 in:body type:pr` vs `type:pr 12596`) — GitHub normalizes token order. Not a defect; explains the duplicate.
+
+**N5 (note, catalog completeness).** Four index captures have no catalog entry: `0001` (unpinned CSV overview), `0007`/`0016` (the #12596 PR searches), `0019` (devguide root listing). I checked: **none of them backs any proposal claim**; they are discovery-trail artifacts. Either add them as uncited discovery captures or state in the catalog that index files without S-ids are intermediate fetches.
+
+---
+
+## 4. Executed checks (all by this critic, admitted isolated executor; tiny data; component-level only)
+
+**C1 — chain timestamp ordering** (`exec-0qfwm6tg`; inputs: seven captured timestamps verbatim from `0020`/`0000`/`0011`/`0017`/`0021`).
+Expectation (independent): a tag commit predating the fix merge cannot contain the fix, so all seven events must be strictly monotonic for the proposal's version-applicability claim to stand. Output: all six pairwise orderings OK; "fix merge strictly inside [v1.0.0, v1.1.0] tag-commit interval: True"; interval span 102 days. The run's tail had my own parsing bug (`int("[2]")`) → exit 1; **every substantive assertion printed OK before the bug**, and the corrected comparison was rerun standalone in C2. Limits: tag-commit *dates* order the interval; ancestry is not proven by dates (the proposal already treats 1.0.x containment as unestablished, L1).
+
+**C2 — marimo S21 item indices** (`exec-e32tbk3y`; exit 0).
+Expectation: catalog indices must equal actual capture positions. Output: items[0],[1],[2] MATCH; "items[4]: catalog says #10912, actual #10915 -> MISMATCH"; "items[3]: catalog says #10915, actual #10916 -> MISMATCH"; "S21 locator item indices all correct: False". Basis for CR1.
+
+**C3 — nbformat cell-id semantics + null execution_count ordering** (`exec-wmkmiiyt`; exit 0).
+(a) Mini JSON-Schema draft-04 validator over the `cell_id` definition transcribed from `0006`: 64-char id valid; 65 chars → maxLength; empty → minLength+pattern; space/Unicode/dot/slash → pattern. (b) `sorted()` over mixed int/null `execution_count` raised exactly `TypeError: '<' not supported between instances of 'NoneType' and 'int'` — character-identical to W1-rev1's recorded stderr — and partition-then-sort produced replay order `[load, stat, plot]` with `fresh` excluded, matching W1 rev2. Disclosed artifact: the harness printed one "BAD id='' " line solely because my expected-error list was order-sensitive (`['pattern','minLength']` vs my `['minLength','pattern']`); the empty string correctly fails both constraints. There is **no schema-semantics discrepancy**. Limits: rules derived from the schema text; the real nbformat library was not run (same scope limit as W1).
+
+**C4 — EOL arithmetic + row-digest mechanism** (`exec-drfb8bio`; exit 0).
+(a) From the `0023` values: exactly 3.9 and 3.10 past EOL at capture 2026-10-05; 3.11–3.14 supported; release+5y approximates each EOL within 40 days — the §11 floor claim holds against the capture. (b) Independent re-implementation of the D5 mechanism: same rows in different order → different digests; explicit total sort key → identical digests across input orders; 512-row chunked digest == whole-set digest for an order-preserving transform. This corroborates the proposal's stable-vs-deterministic ordering and streaming-digest design without reusing W2's code. Limits: 5,000 synthetic rows in-process; not DuckDB, not 5 GB.
+
+**V-1 — live re-fetch of marimo PR #10915** (public HTTPS GET, 2026-10-06T02:27:08Z, capture sha256 `d27d0103…`): `state:"closed"`, `merged:false`, `merged_at:null`, updated_at unchanged since the research capture. The research's "not merged as of capture" claim is still true; L10's "recheck before relying on it" advice stands.
+
+**Not executed by me:** DuckDB itself (no binary in scope), the W2–W4 original runs (I audited receipts for consistency instead), and any large-data path. Nothing here proves full-application behavior.
+
+---
+
+## 5. Obligation coverage audit (brief → proposal)
+
+| Brief obligation | Status |
+|---|---|
+| ≥2 independently useful precedents with mechanisms + independence | Met (4 precedents; independence arguments in §2 are plausible: format vs runtime semantics vs engine vs replay pattern) |
+| One consequential issue followed through fix + regression test + version applicability + evidence limits | Met and verified end-to-end (#12596; see §2); evidence limits honestly stated |
+| Four-way distinction: display order / execution order / kernel state / output provenance | Met (§6), with a real-world failure (#9881) grounding it |
+| Status model current/stale/failed/unverified + invalidation rules for edit/dataset/env/restart/interrupt | Met (§6); W3 asserted; CR5 adds the replay-cancel sentence |
+| Clean-replay guarantee boundary (nondeterminism, network, unpinned deps, undeclared files) | Met (§7) |
+| Data contract: schema pinning, type conversion, row/order identity, no silent deletion, no mutation, preview-not-proof | Met (§5 D1–D7), each mechanism traceable to S1/S2 |
+| Minimum workflow (10 steps) | §12 table covers all steps; manifest contents stated |
+| Large-data bounded path + explicit different bounds; truncation; caching/invalidation; locking; interrupted-save recovery; schema evolution | Met as *targets to investigate* (§10); 5 GB performance correctly labeled unverified (V1/V2, L5) |
+| Untrusted-code boundary, no import-blacklist promise, browsing ≠ execution | Met (§9 explicitly rejects blacklists) |
+| Support boundary Python + defensible SQL relationship | Met (§11, floor 3.11 verified against captures; SQL as engine view, not a second kernel) |
+| Exchange via folders/bundles; credentials out of scope | Met (§4; PEP 723 for single-file) |
+| Executed vs proposed validation separation | Met; labels [W]/[V] used consistently; my additions above are separately labeled |
+
+---
+
+## 6. Preserved uncertainty (keep open in the final proposal)
+
+- **L1** first release with the #12596 fix (1.0.x series unchecked) — unresolved, correctly flagged; C1's date ordering is necessary but not sufficient for containment.
+- **L2** `null_padding` current default — still unresolved; my probe of the pinned overview page did not reach the parameter table. Resolution path unchanged: read the `read_csv` parameter table on a pinned docs version or execute a pinned engine.
+- **L3, L4, L5, L6, L7, L8, L9, L10, L11** — all correspond to real open items; L6/L10 re-verified current today (V-1).
+- Day-precision EOL dates are aggregator-sourced (CR4).
+- The four witnesses remain candidate-executed component checks on synthetic data; the receipts are internally consistent and W1's failure mode was independently reproduced (C3), but they establish component behavior only, as their own scope limits state.
+
+## 7. Guidance for the next author
+
+1. Apply CR1–CR3 to `sources.json` (fix S21 indices to items[4]=#10915, items[5]=#10912; delete/repair the "first 32768 bytes" parentheticals on S20/S21; replace or verify `capture_id` with full body sha256s). Do not alter the facts those entries carry — they are verified.
+2. Add the CR5 sentence to §7 (replay cancel/interrupt → artifact kept, outputs `unverified`, interrupted event recorded).
+3. Add the CR4 attribution note to §11 (EOL day precision from endoflife.date).
+4. Optionally note the four uncataloged discovery captures (N5).
+5. Everything else in the proposal is verified against its pins and should be preserved unchanged, including: the S3 Quack/DuckLake claim, the S13 buffer-pool visibility claim, the entire #12596 chain (all SHAs, dates, ±stats, fixture, and test content re-verified), the nbformat schema facts (including the shared-blob identity), the marimo issue/PR states (re-confirmed live for #10915), the papermill and PEP 723 facts, and the Python support-floor arithmetic.

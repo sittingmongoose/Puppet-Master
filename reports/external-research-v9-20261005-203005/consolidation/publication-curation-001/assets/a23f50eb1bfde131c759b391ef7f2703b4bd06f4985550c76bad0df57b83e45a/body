@@ -1,0 +1,62 @@
+{
+  "stage": "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+  "labels": {
+    "executed_by_candidate": "check authored and run by this candidate inside the admitted isolated python_execute sandbox (stdlib-only, no network, 256 MiB cap). Receipts (execution_id, sha256, exit_code, stdout/stderr) are platform-issued.",
+    "scope_warning": "Every witness below is an isolated component/mechanism check. None establishes whole-application behavior, SQLite/pyproj product behavior, or performance of the real implementation."
+  },
+  "witnesses": [
+    {
+      "id": "W0",
+      "name": "merge-three-way (FIRST RUN — FAILED)",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-iiilc69k",
+      "code_sha256": "d36b134091bde2cbac5563f03dbdf8a6840e08317fde8bfdae8e17b5c1931786",
+      "exit_code": 1,
+      "stderr_summary": "NameError: name 'duplicate_detected' is not defined (candidate authored the variable but omitted its assignment)",
+      "stdout": "",
+      "disposition": "superseded by W2 after fixing the candidate's own bug; recorded because it is part of the honest receipt trail."
+    },
+    {
+      "id": "W2",
+      "name": "merge-three-way (fixed rerun)",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-9blb5nsp",
+      "code_sha256": "63bd650d9c15da68eeb680a3dafb41dc978482547ed661d89feb7c6747fd5feb",
+      "input": "synthetic single-record dicts: base {lat 48.2, lon 16.3, note 'alder'}; ours edits lat; theirs edits note (case 1); ours edits lat+note, theirs tombstones (case 2); dupkey() normalization function (case 3)",
+      "expected_behavior": "case 1 auto-merges disjoint field edits; case 2's naive auto-merge yields a contradictory 'deleted+moved' record, so the merge driver must force an edit-vs-delete conflict and exit nonzero; case 3 shows normalized/rounded/casefolded duplicate keys",
+      "exit_code": 2,
+      "stdout_sha256": "d2efab8c8af83cb3fb19319cbb49002efc36e7ba302b44535837eb75a5fbdc3b",
+      "stdout_summary": "case 1: field_conflicts=[], merged {lat 48.21, note 'alder (leaf damage)'}; case 2: naive_auto_merge {deleted:true, lat:48.21, note:'alder; relocated 200 m east'}, delete_vs_edit_forced_conflict=true; duplicate_detection.detected=false",
+      "interpretation": "auto-merge of disjoint edits and forced edit-vs-delete conflict demonstrated (exit 2). The duplicate-detection positive case did NOT demonstrate: the test pair 16.3E vs 196.3E is genuinely non-coincident (196.3E correctly wraps to 163.7W), so keys legitimately differ — my test-input error, detected by execution. Positive duplicate case is PROPOSED/UNEXECUTED (V4 in proposal §11).",
+      "scope_limits": ["synthetic data", "field-level three-way mechanism only; not the product merge engine", "no persistence, no UI"]
+    },
+    {
+      "id": "W1",
+      "name": "bounded-viewport grid-index simulation (250k points)",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-nfil_n4y",
+      "code_sha256": "05c29d70b66c378529b6c8420d8b4fd7fa733d85354752cf8aaa84b41bb3fe75",
+      "input": "seed-42 synthetic: 250,000 points, 60% clustered at 200 centers (gauss sigma 0.05°), 40% uniform in [-180,180]x[-85,85]; uniform 0.05° grid index; viewport 12.0–12.4E / 45.0–45.4N",
+      "expected_behavior": "query visits only the 81 window cells' buckets; candidate count far below total; every hit within viewport by construction",
+      "exit_code": 0,
+      "stdout_sha256": "d5ae5baa338fe56568cb49bed36760846bed880b1712a4320876a9551fb3217b",
+      "stdout_summary": "{\"candidate_points_scanned\": 3, \"cells_in_query_window\": 81, \"distinct_cells_with_data_visited\": 3, \"scanned_fraction_of_project\": 1.2e-05, \"total_points\": 250000, \"viewport_hits\": 2}",
+      "interpretation": "bounded-read mechanism demonstrated: 3 of 250,000 candidates touched (1.2e-05). The small hit count reflects the chosen window's sparse synthetic occupancy; boundedness, not throughput, is the claim.",
+      "scope_limits": ["pure-python uniform grid, NOT SQLite R-Tree semantics", "synthetic spatial distribution", "no timing claim — wall_seconds in receipt is sandbox overhead, not a benchmark"]
+    },
+    {
+      "id": "W3",
+      "name": "spherical Web-Mercator domain-edge probe",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-iomyz22c",
+      "code_sha256": "cd6c18636d17771a2ed7c462c65465a10312dbc7e72afdfc5ab542a324c56e88",
+      "input": "forward/inverse spherical Mercator (R=6378137) at lon 179.9999, lat {0, 45, 85.0511287798066}; lat 89.999999 and 90; antimeridian segment 175E→175W vs unwrapped 175E→185E; wrap() examples",
+      "expected_behavior": "roundtrip exact within float tolerance at the EPSG:3857 latitude limit with y ≈ 20,037,508.34 m (matches S8 bound); lat 90 produces a huge finite y (no exception) exceeding the bound; naive antimeridian dx massively overestimates distance",
+      "exit_code": 0,
+      "stdout_sha256": "f11576a66ad9298e50669ed2f2b74f33246042004d4e0e35250e927c149b6b3b",
+      "stdout_summary": "lat=85.05112878 roundtrip lat_abs_err 0.0, y=20037508.34 m; y_at_90 = 238107693.26 m with no exception (12x bound); y_at_89.999999 = 118358353.0 m; antimeridian naive 38,961.8 km vs unwrapped 1,113.2 km; wrap(196.3) = -163.7",
+      "interpretation": "validates the proposal's requirements that display-CRS domain checks be explicit bound checks (not exception-driven) and that tracks carry unwrapped longitudes. Note the executed wrap(196.3) = −163.7 corrected this candidate's earlier assumption that it would map to 16.3 (see W2 interpretation).",
+      "scope_limits": ["toy spherical formulas, not PROJ", "EPSG:3857 officially uses ellipsoidal coordinates with spherical development (S8 remark) — bounds, not full transform behavior, are the demonstrated point"]
+    }
+  ]
+}

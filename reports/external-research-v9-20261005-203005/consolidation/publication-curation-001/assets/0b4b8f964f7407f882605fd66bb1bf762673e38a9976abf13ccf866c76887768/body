@@ -1,0 +1,90 @@
+{
+  "catalog_version": "research-stage-1",
+  "note": "Optional/deferred ideas and open questions preserved per the brief. None is a v0 obligation. Statuses: opportunity, alternative, deferred, open-question.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "Embed napari as the viewer canvas instead of a custom compositor",
+      "status": "alternative",
+      "evidence_or_rationale": "napari v0.9.2 provides multiscale/lazy rendering, coordinate transforms, and annotation layers out of the box [S01, S05]; cost is dependency weight, Qt binding, UX constraints, and monthly 'Meso' release churn [S01].",
+      "next_step": "Decide after W4 benchmark; if CPU compositing misses responsiveness targets, prototype napari-embed behind the reader interface."
+    },
+    {
+      "id": "L2",
+      "title": "Adopt OME-NGFF 0.5/0.6 for derived data",
+      "status": "deferred",
+      "evidence_or_rationale": "NGFF versions 0.5/0.6 exist [S20, S21]; tifffile already targets NGFF 0.5 in its zarr store (2026.5.2 revision) [S04]. 0.4 pinned for v0.",
+      "next_step": "Track ngff-spec; migrate writer when 0.5+ tooling is stable in our pinned stack."
+    },
+    {
+      "id": "L3",
+      "title": "pyvips / libvips streaming as an alternative access layer",
+      "status": "alternative",
+      "evidence_or_rationale": "Not investigated in this stage (no primary capture); candidate for large-image derived ops (resampling, pyramid building) with low memory.",
+      "next_step": "If W4 shows tifffile/zarr decode bottlenecks during pyramid building, benchmark pyvips for the derived-op pipeline."
+    },
+    {
+      "id": "L4",
+      "title": "Local automation interface (scripting; MCP-style server is a community ask)",
+      "status": "opportunity",
+      "evidence_or_rationale": "QuPath issue #2159 requests an opt-in, local-only MCP server exposing read-only tools [S26]; shows demand for structured external control. Our journal/manifest format is already scriptable.",
+      "next_step": "v0 ships headless CLI for export/import; consider a read-only local API later with explicit opt-in."
+    },
+    {
+      "id": "L5",
+      "title": "Zarr v3 / sharding for derived store",
+      "status": "deferred",
+      "evidence_or_rationale": "tifffile notes zarr format 3 stores (2026.5.x revisions) [S04]; v0 uses v2-style chunk directories via NGFF 0.4 conventions [S07].",
+      "next_step": "Evaluate shard sizes vs shared-storage file-count costs during implementation."
+    },
+    {
+      "id": "L6",
+      "title": "WSI support boundary extension (OpenSlide / tifffile slide kinds)",
+      "status": "deferred",
+      "evidence_or_rationale": "tifffile reads SVS/NDPI/BIF kinds [S04] and lists openslide-python/tiffslide among alternatives [S04]; v0 explicitly excludes WSI to keep the tested boundary small (§6.2).",
+      "next_step": "If the group acquires a scanner, add one WSI reader behind the same windowed-reader interface with its own support tests."
+    },
+    {
+      "id": "L7",
+      "title": "True multi-user concurrency on shared storage",
+      "status": "deferred",
+      "evidence_or_rationale": "v0 is single-writer-per-bundle by design (§11.3); real concurrency needs leases/merge, out of brief scope.",
+      "next_step": "Keep journal format merge-friendly (append-only, per-entry files) so a later sync/merge tool is possible."
+    },
+    {
+      "id": "L8",
+      "title": "ImageJ RoI zip exchange",
+      "status": "opportunity",
+      "evidence_or_rationale": "QuPath documents ImageJ RoiManager zip exchange [S09]; cheap interop win for groups still using Fiji.",
+      "next_step": "Add an export filter mapping our polygon annotations to ImageJ RoIs (documenting the same frame descriptor caveats)."
+    },
+    {
+      "id": "L9",
+      "title": "Color deconvolution as a recorded derived view",
+      "status": "deferred",
+      "evidence_or_rationale": "QuPath concepts doc covers stain separation with explicit quantification caveats [S11]; fits our recorded-op pipeline (§4.6) as a derived artifact type.",
+      "next_step": "Add after core derived ops; keep the 'dubious quantification' caveat in the preservation statement."
+    },
+    {
+      "id": "L10",
+      "title": "Registration / automatic segmentation",
+      "status": "deferred",
+      "evidence_or_rationale": "Brief lists these as later alternatives; out of v0 scope.",
+      "next_step": "Recorded-op pipeline is designed so a future segmentation result lands as a derived artifact + annotations with provenance, not as edits to sources."
+    },
+    {
+      "id": "L11",
+      "title": "Open question: does any QuPath test now cover MultiLineString GeoJSON export after PR #2117?",
+      "status": "open-question",
+      "evidence_or_rationale": "PR #2117 added no test [S18]; the io test dir has no ROITypeAdapters-named test [S25]; TestPathObjectIO coverage UNVERIFIED.",
+      "next_step": "Optional follow-up: read TestPathObjectIO.java on main; regardless, our own exporter regression suite (W7) is unaffected."
+    },
+    {
+      "id": "L12",
+      "title": "Open question: persistence of napari's fixed composition order at current tags",
+      "status": "open-question",
+      "evidence_or_rationale": "Fix verified at PR #1884 (2020) and release 0.4.1 [S14, S15]; the 0.4.x file paths 404 at tag v0.9.2 [S24] (module layout changed), so the fix's current location was not re-verified.",
+      "next_step": "Optional follow-up: locate transforms module in current napari tree; does not affect our format rule (we pin our own order and version it)."
+    }
+  ]
+}

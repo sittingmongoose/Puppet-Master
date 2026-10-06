@@ -1,0 +1,83 @@
+{
+  "schema": "er9.research.leads.v1",
+  "stage": "research",
+  "leads": [
+    {
+      "id": "L01",
+      "title": "OHMS (Oral History Metadata Synchronizer, University of Kentucky) as transcript-cue sync precedent",
+      "status": "unavailable_in_environment",
+      "detail": "Two fetch attempts failed at the tool boundary: https://ohms.uky.edu/ (ValueError) and https://www.ohms.uky.edu/ (gaierror/DNS). No bytes captured, so no claim about OHMS internals is made. Mechanism-family rationale (sync metadata separate from media, timecode-indexed transcripts for oral history) remains a plausible lead for the transcript-cue data contract but is UNVERIFIED here.",
+      "next_step": "Retry from a permitted network path or use published OHMS documentation PDFs; do not cite until captured."
+    },
+    {
+      "id": "L02",
+      "title": "WebVTT timestamp/cue syntax sections (deep spec text)",
+      "status": "partially_captured",
+      "detail": "S18 pins WebVTT status (W3C CRD 2026-05-20) and its time-aligned-metadata purpose from the captured header/abstract; the capture is truncated at 524,288 bytes of a larger document, so the normative timestamp grammar and cue-identifier sections were not read. The proposal therefore uses WebVTT as an opportunity/alternative only, not as a pinned syntax reference.",
+      "next_step": "Capture the editor's draft with range reads and pin the timestamp grammar before implementing the WebVTT cue exporter."
+    },
+    {
+      "id": "L03",
+      "title": "libsndfile bext (Broadcast Wave) specific command API",
+      "status": "unpinned",
+      "detail": "S12 pins the generic foreign-chunk API (sf_get_chunk_iterator / sf_get_chunk_size / sf_get_chunk_data / sf_set_chunk) described as fail-safe for retrieving arbitrary chunks; a dedicated SF_BROADCAST_INFO command interface is believed to exist in sndfile.h but its documentation page (command.html) was not captured. The proposal's metadata-retention design relies only on the pinned generic chunk API.",
+      "next_step": "Capture command.html; verify bext field-level read/write support at libsndfile 1.2.2."
+    },
+    {
+      "id": "L04",
+      "title": "EBU Tech 3306 (RF64) primary specification",
+      "status": "unfetched",
+      "detail": "RF64 is relevant for >4 GiB exports (W3 shows 8-channel 2h 24-bit crosses the RIFF field). libsndfile's SF_FORMAT_RF64 support is pinned (S12); the EBU primary PDF was not fetched in this stage.",
+      "next_step": "Fetch and pin tech3306 if BWF/RF64 export becomes a requirement; also verify libsndfile's RF64 write path behavior at the pinned version."
+    },
+    {
+      "id": "L05",
+      "title": "audiowaveform upstream continuation on Codeberg",
+      "status": "adoption_caveat",
+      "detail": "S03 records the README note that ongoing development moved to codeberg.org/chrisn/audiowaveform; the GitHub master (pinned here, latest release v1.10.3, 2025-08-20) is what all evidence in this stage refers to. Anyone adopting audiowaveform as a component must re-bind pins against the Codeberg continuation.",
+      "next_step": "If used as a component, pin the Codeberg release and re-verify the S07 regression tests exist there."
+    },
+    {
+      "id": "L06",
+      "title": "BBC peaks.js browser waveform/zoom component",
+      "status": "deferred",
+      "detail": "Useful zoom/overview precedent referenced by S03 (audiowaveform targets peaks.js), but it is browser-targeted; out of scope for a native desktop v1. Deferred as a precedent for overview-level interaction patterns only.",
+      "next_step": "Consult peaks.js docs if a web companion viewer is ever requested."
+    },
+    {
+      "id": "L07",
+      "title": "Alternative I/O pipelines: GStreamer; Rust (symphonia/cpal)",
+      "status": "deferred_alternatives",
+      "detail": "Bounded alternatives to libsndfile/libsamplerate for format reach and language choice. Not investigated in this stage; the chosen stack keeps the audio core in the two pinned C libraries so the UI toolkit and language are separable decisions.",
+      "next_step": "Evaluate only if v1 input set proves insufficient; each alternative needs its own release/API binding pass."
+    },
+    {
+      "id": "L08",
+      "title": "Local automatic transcription for draft cues",
+      "status": "optional_opportunity_unexecuted",
+      "detail": "The brief lists automatic transcription as optional. An offline local model could generate draft cues bound to the same source-anchor contract, but nothing was executed or benchmarked here.",
+      "next_step": "Prototype only after the cue contract is stable; measure RAM/latency on the 8 GB target."
+    },
+    {
+      "id": "L09",
+      "title": "Single-file SQLite project format (Audacity AU3-style) as alternative container",
+      "status": "alternative_considered_deferred",
+      "detail": "S16 documents Audacity's single-file .aup3 (SQLite + WAL/SHM) with its costs (opaque to other tools, undo history not saved, 4 GB-file-class exchange pain, compaction on close). The proposal chooses a folder bundle with an atomic JSON manifest; the SQLite container remains the documented fallback/alternative.",
+      "next_step": "Re-evaluate if multi-editor merge or very many small objects make JSON manifests unwieldy; SQLite transactional guarantees (S17) would then be reused directly."
+    },
+    {
+      "id": "L10",
+      "title": "Loudness measurement (EBU R128-class) and reviewed-region tracking",
+      "status": "deferred_opportunity",
+      "detail": "Loudness normalization is explicitly out of v1 scope per the brief ('do not convert all features found elsewhere into requirements'). A lightweight peak/clip census per export is in scope; full loudness is deferred. Reviewed-region tracking (who heard what, when) is a near-free add-on over the region data contract and is listed as the headline opportunity in proposal.md.",
+      "next_step": "Keep region-review state schema-forward; add R128 only with a proper meter implementation."
+    },
+    {
+      "id": "L11",
+      "title": "Lossy-codecer seek offset (MP3 info frames / Opus pre-skip and pre-roll)",
+      "status": "open_risk",
+      "detail": "S02 shows audiowaveform had to skip MP3 information frames to correct an initial offset delay, evidencing that lossy-input sample alignment is a real defect class. libsndfile seek is frame-based (S12), but codec delay/padding handling at seek boundaries for MP3/Opus in 1.2.2 was not verified. The proposal requires a verification test before trusting sample-exact scrub on lossy sources; until then lossy inputs are flagged in provenance.",
+      "next_step": "Round-trip test: decode seek-to-frame vs sequential decode at the pinned libsndfile; document discrepancies per format."
+    }
+  ]
+}

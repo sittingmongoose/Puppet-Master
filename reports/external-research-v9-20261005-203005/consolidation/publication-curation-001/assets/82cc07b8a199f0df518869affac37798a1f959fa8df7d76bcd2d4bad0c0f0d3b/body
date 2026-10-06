@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "executed by candidate",
+      "type": "isolated coordinate/display arithmetic check",
+      "execution_id": "exec-0l9io9c7",
+      "code_sha256": "4dfa1f207257ec02c8414d521e2abfb53e2c3bc46c60a3ff4c4fe63227ab2933",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "code": "import json\n\nindices = {\"z\": 2, \"y\": 4, \"x\": 8}\nscale = {\"z\": 5.0, \"y\": 0.5, \"x\": 0.25}\ntranslation = {\"z\": 100.0, \"y\": 10.0, \"x\": -2.0}\nphysical = {axis: indices[axis] * scale[axis] + translation[axis] for axis in indices}\nrecovered = {axis: (physical[axis] - translation[axis]) / scale[axis] for axis in indices}\nraw = [0, 50, 100]\nwindow_level = [value / 100.0 for value in raw]\nresult = {\n    \"physical_axes_order\": [physical[a] for a in (\"z\", \"y\", \"x\")],\n    \"visible_xyz\": [indices[a] for a in (\"x\", \"y\", \"z\")],\n    \"inverse\": [recovered[a] for a in (\"z\", \"y\", \"x\")],\n    \"display_values\": window_level,\n    \"source_samples_unchanged\": raw == [0, 50, 100],\n}\nprint(json.dumps(result, sort_keys=True))",
+      "input": {
+        "indices_by_named_axis": {"z": 2, "y": 4, "x": 8},
+        "scale_by_named_axis": {"z": 5.0, "y": 0.5, "x": 0.25},
+        "translation_by_named_axis": {"z": 100.0, "y": 10.0, "x": -2.0},
+        "raw_samples": [0, 50, 100],
+        "mapping": "physical = index * scale + translation; display = sample / 100"
+      },
+      "expected": "Axis-name mapping yields physical coordinates [110, 12, 0] in z,y,x order; visible x,y,z indices are [8,4,2]; inverse mapping recovers [2,4,8]; display values are [0,0.5,1] while the original sample list remains [0,50,100].",
+      "stdout": "{\"display_values\": [0.0, 0.5, 1.0], \"inverse\": [2.0, 4.0, 8.0], \"physical_axes_order\": [110.0, 12.0, 0.0], \"source_samples_unchanged\": true, \"visible_xyz\": [8, 4, 2]}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "stdout_sha256": "49e9248d5d3e8a3433788ee757b7f756be33440b30e452b4235c47fffb3570e8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope_and_limits": "Candidate-authored pure arithmetic in the isolated Python execution service (exit 0; no application, files, parser, renderer or export code accessed). Checks this formula and named-axis ordering only. It does not prove OME metadata interpretation, UI coordinate placement, storage immutability, TIFF/Zarr behavior, or full application behavior."
+    }
+  ],
+  "proposed_checks": [
+    {"id":"P1","label":"proposed/UNEXECUTED","check":"Measure 3 GB tiled/strip OME-TIFF and OME-Zarr access on 8-core/16 GB target; peak RSS, largest decode unit, cache ceiling, cancellation and progress.","reason":"No component source establishes the proposed app's bounded memory or responsive latency."},
+    {"id":"P2","label":"proposed/UNEXECUTED","check":"Round-trip YX/ZYX/TCZYX axis mapping, nonzero translations, unequal spacing and negative direction through import, annotation, reopen and export.","reason":"Arithmetic witness does not exercise metadata parsing or application transforms."},
+    {"id":"P3","label":"proposed/UNEXECUTED","check":"Hash source before/after display-only changes; inject process failure through staged import, blob write, commit, snapshot and export; verify recovery and previous valid state.","reason":"SQLite documentation states assumptions; no filesystem or app crash experiment was run."},
+    {"id":"P4","label":"proposed/UNEXECUTED","check":"Relocate closed bundle to another machine, validate exact-hash source matching, styles, annotations, calibration and export; deliberately change one source chunk to verify mismatch handling.","reason":"No multi-machine application round trip was run."},
+    {"id":"P5","label":"proposed/UNEXECUTED","check":"Round-trip CSV coordinates, OME-Zarr labels, lossless crop values/origin, rendered PNG bit depth, keyboard operation and negative-scale hit testing at the locked dependency versions.","reason":"Public component tests do not establish behavior of the integrated product."}
+  ]
+}

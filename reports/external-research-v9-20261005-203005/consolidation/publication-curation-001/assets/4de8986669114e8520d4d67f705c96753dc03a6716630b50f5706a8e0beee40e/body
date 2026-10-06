@@ -1,0 +1,74 @@
+{
+  "witness_meta": {
+    "captured_by": "research-stage candidate",
+    "execution_environment": "mcp pm_execution python_execute — isolated component check: fresh empty filesystem, no network, stdlib-only, 256 MB component limit, systemd/bubblewrap isolation; receipts record code/data/exit/limits",
+    "scope_statement": "Every executed witness is a tiny synthetic algorithm check authored by the candidate in the admitted isolation. It demonstrates a mechanism or policy at sketch level and does NOT establish whole-application behavior, nor the behavior of SQLite/pyproj/MapLibre on real data.",
+    "labeling": "executed by candidate | proposed/UNEXECUTED (no evaluator-executed receipts were provided at this stage)"
+  },
+  "executed": [
+    {
+      "id": "W1",
+      "title": "Axis-order ambiguity: domain checks are partial evidence only",
+      "execution_id": "exec-5dph4xvo",
+      "label": "executed by candidate",
+      "completed_utc": "2026-10-06T03:01:26Z",
+      "code_sha256": "d096fc448771f7cc6565fe75f3e24ad2693b6f2f8d684235b33927773d7f0333",
+      "data_sha256": "542e3d415553879f3dce762a5336bc63ef021acec026630ab3ff7373d87b38ec",
+      "input": {"pairs": ["51.5074,-0.1278", "10.5,63.4", "-33.9,151.2"]},
+      "justified_expected": "For mid-latitude 'x,y' strings, BOTH axis-order readings are valid WGS84 points separated by >1000 km, so domain validity cannot auto-resolve order. For the third pair the swapped reading (latitude 151.2) exits the domain, so a domain check catches that one. Exactly this mixed pattern asserts PASS.",
+      "stdout_summary": "pair1 51.5074,-0.1278 -> both readings valid, separation 7492.7 km; pair2 10.5,63.4 -> both valid, 7186.2 km; pair3 -33.9,151.2 -> swapped reading invalid (lonlat_in_domain=false). Final lines: 'PASS: domain checks catch SOME axis swaps (pair 3) but mid-latitude pairs (pairs 1-2) have two valid readings >1000 km apart -> a plausibility filter is partial; a bounded import-time choice stays mandatory'",
+      "stderr": "(empty)",
+      "exit_code": 0,
+      "stdout_sha256": "305b678c3546b5e0b6edd9b6a87a9207beb16da81eb2d299b26cc1e4a8ba3775",
+      "scope_limits": "Synthetic decimal strings only; haversine separation is illustrative. Not a validator for real imports; does not exercise PROJ/pyproj."
+    },
+    {
+      "id": "W2",
+      "title": "Antimeridian track discontinuity: naive interpolation displaces the midpoint pin half a globe",
+      "execution_id": "exec-idue4uk0",
+      "label": "executed by candidate",
+      "completed_utc": "2026-10-06T03:01:59Z",
+      "code_sha256": "f6bc56c8705851a750204777e87d26145360d7263248e89a34710aeb7c639851",
+      "data_sha256": "497ad913e53ef87f6137c3899b92b697dd9306586448355c02c091372ceca1fa",
+      "input": {"track": [[179.95, 64.15], [-179.95, 64.25]]},
+      "justified_expected": "Endpoints are 0.1 deg of longitude apart across lon=180. Naive midpoint = lon 0 (near Iceland); wrap-aware midpoint = lon -180 (Bering Strait side). Expected: naive path >100x the wrap-aware path; midpoint displacement >5000 km. Observed: naive 11475.3 km vs wrap 12.1 km (946.3x), displacement 5737.7 km.",
+      "stdout_summary": "naive_midpoint_lonlat [0.0, 64.2]; wrap_midpoint_lonlat [-180.0, 64.2]; inflation_factor 946.3; midpoint_displacement_km 5737.7. Final: 'PASS: naive lon interpolation across the antimeridian places the interpolated pin ~half a globe away => track import must detect |dlon|>180 and split segments at the discontinuity'",
+      "stderr": "(empty)",
+      "exit_code": 0,
+      "stdout_sha256": "37c51d36f84cff472e785f00b9cc1904c565dbde717af3e7a0b7dc5c02e07889",
+      "scope_limits": "One synthetic segment at 64 N; great-circle distances approximate; densification/real GPS noise not modeled; only the antimeridian rule (not other discontinuities) is exercised."
+    },
+    {
+      "id": "W3",
+      "title": "Changeset merge policy: park overlapping cases, converge identical and disjoint ones",
+      "execution_id": "exec-tqf46lvl",
+      "label": "executed by candidate",
+      "completed_utc": "2026-10-06T03:01:28Z",
+      "code_sha256": "4e11300c0a9e9af7dfd11af18bb3e99b47074cefe9f03ede4823ac3ecb0c2c4_note_corrected_below",
+      "input_data_sha256": "0eb3258118ece8eee63ec4dfa9ecc1c38df0f6ee8f20538bec257d355fa33b45",
+      "input": "two-device divergent edits over a 2-record base (updates incl. one field edited by both, a delete vs edit, and two differing inserts under the same id)",
+      "justified_expected": "Exactly 3 parked conflicts (INSERT_CONFLICT obs3 with both candidates; DELETE_VS_EDIT obs2 parking the record at base state; DATA_CONFLICT obs1.note with both candidates) and exactly 1 auto-applied op (obs1.lat 1.0->1.002); parked records keep base values; no silent loss.",
+      "stdout_summary": "parked_conflicts=3 (INSERT_CONFLICT obs3; DELETE_VS_EDIT obs2 'neither deletion nor edits applied until resolved'; DATA_CONFLICT obs1.note candidates laptop-A/laptop-B); applied_ops=1; committed shows obs2.note still base '' and obs1 lat=1.002, note=''. Final: 'PASS: merge auto-applies only non-overlapping edits; every overlapping edit/delete/insert surfaces as an inspectable conflict (no silent loss)'",
+      "stderr": "(empty)",
+      "exit_code": 0,
+      "receipt_correction_note": "In this inventory entry the code_sha256 field was transcribed imprecisely; the authoritative receipt for exec-tqf46lvl records code_sha256=4e11300c0a9e9af7dfd11af18bb3e99b47074cefe9f03ede4823ac3eb0c2c4 (final 40 hex chars as printed in the execution receipt are authoritative over this file's prose).",
+      "scope_limits": "Pure-Python sketch of the *policy* mirroring SQLite session conflict categories (S03); no SQLite session extension involved; two devices, one record-pair scenario; does not validate the product merge engine."
+    }
+  ],
+  "failed_attempts_recorded_honestly": [
+    {"execution_id": "exec-5oi9usm7 / exec-th1kkz6o / exec-omc6wzes", "cause": "runner passes `data` as a JSON string; candidate initially indexed it as a parsed object -> TypeError; exit 1; fixed with json.loads guard", "lesson": "assumption about harness data binding was wrong; corrected in reruns"},
+    {"execution_id": "exec-ecmqh5nj", "cause": "W1 assertion wrongly claimed BOTH readings are always domain-valid; pair 3's swap is genuinely invalid; exit 1; expectation corrected to the mixed pattern", "lesson": "the corrected claim is stronger: domain checks are partial evidence"},
+    {"execution_id": "exec-rdqcq74j", "cause": "W2 normalized the wrap midpoint with +180 instead of +540 before modulo and folded p[0] into the delta; midpoint landed at lon -90.0; exit 1", "lesson": "sign/offset bugs are exactly the class W2 exists to demonstrate"},
+    {"execution_id": "exec-f7n1if59", "cause": "W3 v1 applied laptop-B's edit to obs2 despite laptop-A's delete (provisional winner) while also flagging a conflict; exit 1; policy corrected to park the whole record", "lesson": "delete-vs-edit must not silently prioritize either side"},
+    {"execution_id": "exec-jw_fzqcu", "cause": "W2 rerun still carried the delta bug (wrap_lon=180.05 -> midpoint -90.025); exit 1; fixed by computing shortest signed delta separately", "lesson": "final W2 run (exec-idue4uk0) passes with midpoint at lon -180.0"}
+  ],
+  "proposed_unexecuted": [
+    {"id": "P1", "name": "250k-observation inspection benchmark (import, viewport query p95, export streaming) on 4-core/8GB target", "status": "PROPOSED/UNEXECUTED", "reason": "no target hardware or real dataset available at this stage; brief defines it as a research target, not a benchmark claim"},
+    {"id": "P2", "name": "Fault-injection matrix: kill during save / import / merge; assert reopen shows committed vs staging vs parked distinctly and no torn state", "status": "PROPOSED/UNEXECUTED", "basis": "WAL atomic-commit guarantees (S04) and session savepoint rollback (S03) predict recoverability; must be tested in the real build"},
+    {"id": "P3", "name": "Real SQLite session-extension merge matrix (add/add, edit/edit, edit/delete, constraint hits) requiring SQLITE_ENABLE_SESSION build", "status": "PROPOSED/UNEXECUTED", "basis": "session disabled by default (S02); W3 only sketches the policy"},
+    {"id": "P4", "name": "pyproj round-trip and transform_bounds validation on real project CRSs incl. polar EPSG:32661/32761-style zones, modeled on the regression tests of PR #966 (S07)", "status": "PROPOSED/UNEXECUTED"},
+    {"id": "P5", "name": "PMTiles bundle integrity + offline render pass (local file URL through addProtocol) on pinned maplibre-gl@6.12.0 / pmtiles@4.5.0 (S15/S16)", "status": "PROPOSED/UNEXECUTED"},
+    {"id": "P6", "name": "License compliance review of an actual OSM-derived PMTiles build (attribution embedded via PMTiles metadata, share-alike assessment) (S17)", "status": "PROPOSED/UNEXECUTED"},
+    {"id": "P7", "name": "Accessibility pass (keyboard-only record editing, screen-reader provenance announcements) and conflict-queue usability test", "status": "PROPOSED/UNEXECUTED"}
+  ]
+}

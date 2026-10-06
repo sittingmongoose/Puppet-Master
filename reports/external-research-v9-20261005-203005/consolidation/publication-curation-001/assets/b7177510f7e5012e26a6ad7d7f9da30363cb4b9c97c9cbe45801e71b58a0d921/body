@@ -1,0 +1,339 @@
+{
+  "schema_version": "1.0",
+  "research_date": "2026-10-06",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF specification 0.5.2",
+      "url": "https://raw.githubusercontent.com/ome/ngff/0.5.2/0.5/index.bs",
+      "pin": {
+        "tag": "0.5.2",
+        "tag_object": "764b18e662e46b1a13f89230c0749509ad30f489",
+        "commit": "5cdf83b6806b5e500477c7af69dae9ed2adcf77d"
+      },
+      "exact_locator": [
+        "#storage-format — Zarr v3 storage",
+        "axes metadata — explicit names and units; 2–5 dimensions and axis ordering guidance",
+        "coordinate transformations — sequential scale and translation constraints",
+        "image-label / labels metadata — integer mask representation and source-image relationship",
+        "channel display metadata — transitional status"
+      ],
+      "capture": {
+        "capture_id": "e0dd4e214a6847098103fe3af9b9c44d",
+        "sha256": "eb007bba48e6b359906a1b5f289a4d6f5965a7fc0e8f50fd3bcfaeb765fef685",
+        "captured_bytes": 37464,
+        "delivered_excerpt_bytes": 32768,
+        "capture_body_complete": true,
+        "delivered_source_complete": false
+      },
+      "claims_used": [
+        "OME-Zarr 0.5 is based on Zarr v3.",
+        "The schema describes explicit axes, 2–5D images and sequential scale/translation transforms.",
+        "Integer label images are useful for masks; the standard does not define the app's complete points/polygons and edit-history contract.",
+        "A general rotated affine is not encoded by the cited scale/translation transformation model."
+      ],
+      "applicability_and_limits": "Normative format specification for the pinned revision. It does not qualify any particular reader/writer implementation, provide a general oriented affine, or establish application behavior or performance."
+    },
+    {
+      "id": "S2",
+      "title": "OME-NGFF specification 0.4.1",
+      "url": "https://raw.githubusercontent.com/ome/ngff/0.4.1/0.4/index.bs",
+      "pin": {
+        "tag": "0.4.1",
+        "tag_object": "f6645e7b4a1a1603b6ab4ed3d729f1d3190bae2e",
+        "peeled_commit": "unresolved: GitHub tag-object request returned HTTP 403 rate limit"
+      },
+      "exact_locator": [
+        "#on-disk and #image-layout — Zarr v2 hierarchy and chunked arrays",
+        "#axes-md — axis names/order and units",
+        "#trafo-md and #multiscale-md — scale/translation coordinate mapping",
+        "#labels-md and #label-md — integer labels linked to source image",
+        "#omero-md — transitional channel display metadata"
+      ],
+      "capture": {
+        "capture_id": "b62a585cb8084891b00f55a9ebb8c22d",
+        "sha256": "592413727ee8d42916bd98007262f48c6139273cb373839c6d285a0ba20b6406",
+        "captured_bytes": 40372,
+        "delivered_excerpt_bytes": 32768,
+        "capture_body_complete": true,
+        "delivered_source_complete": false
+      },
+      "claims_used": [
+        "This legacy NGFF revision describes Zarr v2 storage.",
+        "The axes and transform conventions provide a basis for identifying version incompatibility with the v0.5 target."
+      ],
+      "applicability_and_limits": "Used to bound a legacy compatibility/conversion path, not as the native target. The annotated tag object was observed, but the REST API rate limit prevented resolving its peeled commit in this capture."
+    },
+    {
+      "id": "S3",
+      "title": "tifffile README at v2026.9.20",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/a14e516c4fa3c0c9ede980ebb3111260347dd213/README.rst",
+      "pin": {
+        "version": "2026.9.20",
+        "tag": "v2026.9.20",
+        "commit": "a14e516c4fa3c0c9ede980ebb3111260347dd213"
+      },
+      "exact_locator": [
+        "README.rst — OME-TIFF and multidimensional metadata sections",
+        "README.rst — `return_as='zarr'` / sliced reads and Dask examples",
+        "README.rst — installation requirements and Zarr/imagecodecs notes"
+      ],
+      "capture": {
+        "capture_id": "a1d66eba8f0c42f0a1631063c5130920",
+        "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+        "captured_bytes": 32898,
+        "delivered_excerpt_bytes": 32768,
+        "capture_body_complete": true,
+        "delivered_source_complete": false
+      },
+      "claims_used": [
+        "The library reads OME-TIFF metadata and demonstrates Zarr/Dask-backed and sliced access to TIFF image data.",
+        "Current README names Python 3.12+ and Zarr 3.4.0 in requirements; specific compression codecs may need imagecodecs."
+      ],
+      "applicability_and_limits": "A component implementation and documentation precedent. Examples do not establish this app's latency, cancellation, bounded RSS, support for every TIFF organization/codec, or output metadata preservation."
+    },
+    {
+      "id": "S4",
+      "title": "tifffile latest release record at research date",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/releases/latest",
+      "pin": {
+        "version": "2026.9.20",
+        "tag": "v2026.9.20",
+        "commit": "a14e516c4fa3c0c9ede980ebb3111260347dd213"
+      },
+      "exact_locator": ["Release JSON: tag_name, release notes and date"],
+      "capture": {
+        "capture_id": "afff1ccc5d494a7190114f97a2f2c2e9",
+        "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3",
+        "captured_bytes": null,
+        "capture_body_complete": true
+      },
+      "claims_used": ["Identifies the current release tag used with the exact pinned README."],
+      "applicability_and_limits": "The `/latest` endpoint is mutable; the tag and commit pin make the proposed component version reproducible. Release notes are not a format conformance guarantee."
+    },
+    {
+      "id": "S5",
+      "title": "tifffile README at v2026.4.11 and Zarr compatibility history",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/2ee66438ff4cb99c5f619de3f918f041a98e62ae/README.rst",
+      "pin": {
+        "version": "2026.4.11",
+        "tag": "v2026.4.11",
+        "commit": "2ee66438ff4cb99c5f619de3f918f041a98e62ae"
+      },
+      "exact_locator": [
+        "README.rst — Zarr store requirements stating Zarr 2 is not compatible",
+        "README.rst — release history entry 2025.5.21 describing the Zarr 3 store transition"
+      ],
+      "capture": {
+        "capture_id": "519fe8b74a624037a99d6aae4e615974",
+        "sha256": "582848038370a0bd529c29c0bfb26e5ea9e82650a342a94da0b3cb167cfe46e4",
+        "captured_bytes": 30342,
+        "capture_body_complete": true
+      },
+      "claims_used": ["The current `tifffile` Zarr-store interface is not compatible with Zarr 2, so mixing it with a Zarr-2-era stack cannot be assumed to work."],
+      "applicability_and_limits": "This is a version-specific package compatibility statement for `tifffile`'s Zarr-store interface. It does not say that every TIFF operation requires Zarr or that separate conversion environments cannot be used."
+    },
+    {
+      "id": "S6",
+      "title": "Zarr Python 3.4.0 release and exact tag",
+      "url": "https://github.com/zarr-developers/zarr-python/releases/tag/v3.4.0",
+      "pin": {
+        "version": "3.4.0",
+        "tag": "v3.4.0",
+        "commit": "292aeb4edcbbff50ec0ef7a49ff376e267904efc"
+      },
+      "exact_locator": ["Release notes: v3.4.0 and release date", "Tag ref: refs/tags/v3.4.0"],
+      "capture": {
+        "release_capture_id": "98ea9d9f7e134453bfa7635bef38390b",
+        "release_sha256": "abc8a6a14660744b3fbd5c66b52e297c2a6c9e1eec94865e9748939803cce08b",
+        "release_bytes": 12763,
+        "tag_ref_capture_id": "23494d28f8f34a67a26ea34b6ff02f41",
+        "tag_ref_sha256": "2189529813f19d41aac593fd4f63e56a0de7ff1e21ed8284c90de03265ac6501",
+        "tag_ref_bytes": 363
+      },
+      "claims_used": ["Pins the Zarr version named by the current `tifffile` README and proposed for qualification."],
+      "applicability_and_limits": "Version/release evidence only; no claim that Zarr itself establishes OME-NGFF 0.5 conformance or app-level performance."
+    },
+    {
+      "id": "S7",
+      "title": "ome-zarr-py v0.20.1 release, README and project metadata",
+      "url": "https://github.com/ome/ome-zarr-py/tree/v0.20.1",
+      "pin": {
+        "version": "0.20.1",
+        "tag": "v0.20.1",
+        "commit": "0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7"
+      },
+      "exact_locator": [
+        "README.rst — purpose as tools for multiresolution images in Zarr filesets according to OME-NGFF",
+        "pyproject.toml [project] — requires-python and dependencies (`zarr>=3.0.0`)",
+        "v0.20.1 release record"
+      ],
+      "capture": {
+        "release_capture_id": "e5da9ce37e104e2ba572b8b28221e3df",
+        "release_sha256": "b034a4396014ba28b854889c0b62461ba04f7ff74d2c879423098404a2863360",
+        "readme_capture_id": "b14d84115f2b4778888ad613f4b9ad28",
+        "readme_sha256": "fa65523bc91d5493709bc9bc8a8e79fdb8a7588665deed39c6fd98e72c3ffa08",
+        "readme_bytes": 1841,
+        "pyproject_capture_id": "9f821e769bdc4c948e25707e4bfbaf69",
+        "pyproject_sha256": "d79b5825c98f8ebd6b56c6b08086465476565b26354f5eba45665cedec72f8ab",
+        "pyproject_bytes": 3513,
+        "tag_ref_capture_id": "a09f78e10c374f32b643972ac08cf974",
+        "tag_ref_sha256": "b971656b2cf5dee1984f6e1d61b468c859d32e9603d2b45580eae523e277adac"
+      },
+      "claims_used": ["This is a plausible NGFF/Zarr implementation helper and its metadata is in the Zarr-3 era."],
+      "applicability_and_limits": "The captured metadata does not prove complete 0.5.2 feature support or resolution with the exact napari, tifffile and Zarr pins. Keep it optional until exact interoperability tests pass."
+    },
+    {
+      "id": "S8",
+      "title": "napari v0.9.2 release record and tag commit",
+      "url": "https://api.github.com/repos/napari/napari/releases/latest",
+      "pin": {
+        "version": "0.9.2",
+        "tag": "v0.9.2",
+        "commit": "595639295a153c84bcb127a9e07d801355440a35"
+      },
+      "exact_locator": ["Release description: multidimensional viewer for browsing, annotating and analyzing images", "Exact tag/commit"],
+      "capture": {
+        "release_capture_id": "8a17c1828461431cb4e000708b82e20e",
+        "release_sha256": "2a9f007acf29c66522e42dd2ed1c7e5c2d1ece2bc9d8ddf86fb7ff0c2457f2b4"
+      },
+      "claims_used": ["napari is a candidate independent viewer/interaction component; v0.9.2 is the proposed version pin."],
+      "applicability_and_limits": "Release description is not a proof of suitability for the app's storage model, exports, performance, accessibility or full dependency compatibility."
+    },
+    {
+      "id": "S9",
+      "title": "napari issue #9247: off-slice Shapes outline report",
+      "url": "https://api.github.com/repos/napari/napari/issues/9247",
+      "pin": {"issue": 9247, "repository": "napari/napari"},
+      "exact_locator": ["Issue body: reproduction and expected behavior for selection/hover outlines on an adjacent 3D slice"],
+      "capture": {
+        "capture_id": "14c822cd29954b8e929d989b6fd77d10",
+        "sha256": "6b5651cf32b79e433a8cb4cb41517d549e539b1166eb09a9875aa6410f490550",
+        "captured_bytes": 7432,
+        "capture_body_complete": true
+      },
+      "claims_used": ["The issue reporter observed a selected/hovered polygon outline on a slice where the face was hidden and supplied a reproduction."],
+      "applicability_and_limits": "An issue report establishes the reported reproduction and expected behavior, not by itself the correctness of a repair. The fix and regression test are separately evidenced by S12 and S13."
+    },
+    {
+      "id": "S10",
+      "title": "SQLite atomic commit documentation",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": {"documentation_capture_date": "2026-10-06", "content_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"},
+      "exact_locator": ["Introduction and rollback-journal commit protocol", "OS/filesystem assumptions", "Testing atomic-commit behavior"],
+      "capture": {
+        "capture_id": "4c8d1ed65b204bd996e62020aea3c91e",
+        "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "captured_bytes": 77968,
+        "delivered_excerpt_bytes": 32768,
+        "capture_body_complete": true,
+        "delivered_source_complete": false
+      },
+      "claims_used": ["SQLite documents transactional atomicity under specified OS, filesystem and storage assumptions."],
+      "applicability_and_limits": "Does not prove durability on the group's shared filesystem, atomic publication of a directory bundle, or correctness of application recovery logic."
+    },
+    {
+      "id": "S11",
+      "title": "SQLite Write-Ahead Logging documentation",
+      "url": "https://www.sqlite.org/wal.html",
+      "pin": {"documentation_capture_date": "2026-10-06", "content_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"},
+      "exact_locator": ["Overview and how WAL works", "Concurrency", "Shared-memory implementation of the WAL index"],
+      "capture": {
+        "capture_id": "20cb6b148e5b48118777a83a4801c6d9",
+        "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "captured_bytes": 42143,
+        "delivered_excerpt_bytes": 32768,
+        "capture_body_complete": true,
+        "delivered_source_complete": false
+      },
+      "claims_used": ["WAL coordination relies on same-host shared memory and is not suitable for a live SQLite database on a network filesystem; WAL sidecars matter to state."],
+      "applicability_and_limits": "Supports the choice to use local working copies and closed-bundle exchange. It does not characterize all network-storage products or file-copy/rename behavior."
+    },
+    {
+      "id": "S12",
+      "title": "napari PR #9059 merge record",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9059",
+      "pin": {
+        "pull_request": 9059,
+        "merge_commit": "de87bdd0be61a3f63e643865553277ab22a04ac8",
+        "merged_at": "2026-08-12T13:26:54Z",
+        "milestone": "0.9.0"
+      },
+      "exact_locator": ["PR body: closes #9247 and describes selection preservation/current-view highlight filtering", "merged_at, merge_commit_sha, milestone"],
+      "capture": {
+        "capture_id": "3d220ddd929b43049fe6d706e0583726",
+        "sha256": "55e2893206eff690fdfd83db222deabcdd021bb1a24348cb9ac5a07e1a5c363e",
+        "captured_bytes": null,
+        "capture_body_complete": true
+      },
+      "claims_used": ["The issue was linked to a merged implementation change; selection is preserved while drawing/highlight state is based on the current view."],
+      "applicability_and_limits": "PR description and merge metadata identify the change; exact implementation and regression coverage are grounded in S13. A PR title or link alone would not establish a fix."
+    },
+    {
+      "id": "S13",
+      "title": "napari PR #9059 patch and regression tests",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9059/files",
+      "pin": {
+        "merge_commit": "de87bdd0be61a3f63e643865553277ab22a04ac8",
+        "patch_head": "73c43b519d6760b3d1a699ebbb2020e8728b3993"
+      },
+      "exact_locator": [
+        "src/napari/layers/shapes/_tests/test_shapes.py — test_outline_not_drawn_off_slice",
+        "src/napari/layers/shapes/_tests/test_shapes_selection.py — in-view selection, scrolling, hover and interaction-box tests",
+        "src/napari/layers/shapes/shapes.py — _selected_data_in_view, view-gated outline/hit-testing, stale-hover cleanup"
+      ],
+      "capture": {
+        "capture_id": "ef3a7f76c24f4ac0bebbb8f95b531605",
+        "sha256": "eb7367ab4f8e991a5ab17d07913d257cbc2911e14bf9a70413f58d14b0516591",
+        "captured_bytes": 18823,
+        "capture_body_complete": true
+      },
+      "claims_used": ["The patch filters highlight/interaction behavior to shapes in the visible slice while keeping logical selection, and includes regression assertions for selected and hover-only outlines off-slice."],
+      "applicability_and_limits": "Patch and tests show component-level implementation intent and regression coverage; they do not verify application persistence, coordinate conventions, export, or behavior outside this napari code path."
+    },
+    {
+      "id": "S14",
+      "title": "napari #9399 incomplete-merge follow-up and v0.9.2 ancestry comparison",
+      "url": "https://api.github.com/repos/napari/napari/commits/1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6",
+      "pin": {
+        "follow_up_commit": "1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6",
+        "parent_merge_commit": "de87bdd0be61a3f63e643865553277ab22a04ac8",
+        "release_tag": "v0.9.2",
+        "release_commit": "595639295a153c84bcb127a9e07d801355440a35"
+      },
+      "exact_locator": [
+        "Commit message/body and parent: #9399 says #9059 merge was incomplete because names changed; patch updates implementation and regression tests to the renamed view index.",
+        "Comparison response from merge commit to v0.9.2: base/merge-base is de87bdd..., status ahead, first listed commit is #9399 (response truncated after 524288 bytes)."
+      ],
+      "capture": {
+        "commit_capture_id": "97926f3532ee41ac854e696c7053daab",
+        "commit_sha256": "c3302d26e04b4644c9266ebe5eef604f87be439f139b253c738c3dc68b3f4337",
+        "commit_bytes": 9413,
+        "compare_capture_id": "8a84233483164577b505dd5fd5b4b25e",
+        "compare_sha256": "6813848f4a861218e47ec3c1bfc7d4cae3b8f2156c0f79be1853960a67ecae24",
+        "compare_captured_bytes": 524288,
+        "compare_body_complete": false,
+        "compare_excerpt_bytes": 32768
+      },
+      "claims_used": ["The main fix had a real follow-up for stale internal names and its tests; the v0.9.2 compare identifies the merge as the release base and the follow-up as the first listed commit after it."],
+      "applicability_and_limits": "The direct commit response is complete. The large compare response is truncated; only its captured header and first listed commit are used. The evidence supports inclusion of the merge in v0.9.2 and shows the follow-up at the head of that range, but does not establish every later commit or test outcome."
+    },
+    {
+      "id": "S15",
+      "title": "Bio-Formats 7.3.1 command-line conversion guide",
+      "url": "https://bio-formats.readthedocs.io/en/v7.3.1/users/comlinetools/conversion.html",
+      "pin": {"documentation_version": "7.3.1", "redirected_from": "https://docs.openmicroscopy.org/bio-formats/7.3.1/users/comlinetools/conversion.html"},
+      "exact_locator": ["Converting a file to a different format: `bfconvert` selections, crop/tile options, and output/compression limitations"],
+      "capture": {
+        "capture_id": "33af6beeccdf464d93af2b403aa6b22d",
+        "sha256": "92bfdffa5574985eb012ffcede5d7b8346878a2a49b1ddaca6060028c876b257",
+        "captured_bytes": 53374,
+        "delivered_excerpt_bytes": 32768,
+        "capture_body_complete": true,
+        "delivered_source_complete": false
+      },
+      "claims_used": ["The versioned guide describes selecting series/planes/channels/crops and tiled outputs; it notes output compression/conversion can be lossy and a different target leaves the original file unchanged."],
+      "applicability_and_limits": "A plausible explicit converter path for selected formats, not a promise that all laboratory formats are supported, lossless, or bounded in this app."
+    }
+  ]
+}

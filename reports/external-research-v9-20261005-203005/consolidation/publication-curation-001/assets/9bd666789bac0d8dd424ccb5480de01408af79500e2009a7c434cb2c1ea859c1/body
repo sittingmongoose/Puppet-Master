@@ -1,0 +1,242 @@
+{
+  "catalog_version": "research-stage-1",
+  "captured_utc_window": "2026-10-05T23:30:29Z .. 2026-10-05T23:37:23Z",
+  "capture_method": "public_https_get; capture identity = sha256 of exact HTTP response body as returned by the tool receipt. Four captures truncated by the 32768-byte delivery cap are marked complete:false with the verified content noted as inside the captured range.",
+  "notes": "Search-result captures are used only as locators to issue/timeline/file-list captures. 404 captures are recorded because they bound a chain (S24).",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "napari latest release (v0.9.2)",
+      "url": "https://api.github.com/repos/napari/napari/releases/latest",
+      "pin": "napari v0.9.2, published 2026-09-29, target_commitish 595639295a153c84bcb127a9e07d801355440a35, EffVer 'Meso', monthly release policy",
+      "exact_locator": "release JSON: tag_name, body (highlights: Vispy update #9499, release policy docs#1126)",
+      "capture": {"capture_id": "3c72066360754678bf47d61eb2eca65f", "sha256": "880744a834a20737b7d4ebbf48c0fa209d0e391585a1b1f2c1624c533c9975e2", "captured_utc": "2026-10-05T23:30:29Z", "complete": true},
+      "applicability": "Version pin for the napari precedent; documents release cadence and API-churn class relevant to the 'embed napari' alternative."
+    },
+    {
+      "id": "S02",
+      "title": "QuPath latest release (v0.7.0)",
+      "url": "https://api.github.com/repos/qupath/qupath/releases/latest",
+      "pin": "QuPath v0.7.0, published 2026-03-02",
+      "exact_locator": "release body: auto-generated changelog entries #1964 (Pyramidal zarr writer), #1989/#1991 (zarr import), #1965 (Fix transform annotations with no main selection), #1982 (Improve display histogram level choice), #2038 (Reduce navigation speed using arrow keys)",
+      "capture": {"capture_id": "4471c8abe48541ada16335a8719e7ea7", "sha256": "109fb54208dc4541260ab01b0458ccf00a3754265da23cc81d65916c76386b78", "captured_utc": "2026-10-05T23:30:31Z", "complete": true},
+      "applicability": "Version pin for the QuPath precedent; zarr interop evidence."
+    },
+    {
+      "id": "S03",
+      "title": "tifffile latest release (v2026.9.20)",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/releases/latest",
+      "pin": "tifffile v2026.9.20, published 2026-09-21",
+      "exact_locator": "release body 'Changes' (NDPI delete fix, LSM >4GB offsets fix)",
+      "capture": {"capture_id": "14b811c57b164b30ade709e6641a2a39", "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3", "captured_utc": "2026-10-05T23:30:31Z", "complete": true},
+      "applicability": "Version pin for the tifffile reader precedent."
+    },
+    {
+      "id": "S04",
+      "title": "tifffile README.rst at tag v2026.9.20",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/README.rst",
+      "pin": "tag v2026.9.20",
+      "exact_locator": "intro (NumPy/Zarr reads from strips, tiles, pages, SubIFDs, pyramidal levels); 'Notes' section (MMStack 'often corrupted or wrong', NDPI wrong tag values, shaped/truncated TIFF only readable by tifffile); 'Examples' (z['0'][2,0,128:384,256:] tile read; memmap; OME-TIFF PhysicalSizeX metadata; 2026.5.2 revision: ZarrTiffStore NGFF 0.5, fsspec NGFF 0.4)",
+      "capture": {"capture_id": "bcdd930f72cf4ba1903463110debd400", "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "captured_utc": "2026-10-05T23:31:25Z", "complete": false, "note": "32768 of 32898 bytes delivered; all cited sections are inside the captured range."},
+      "applicability": "Bounded/tile-wise image access mechanism; metadata-hazard precedent; NGFF zarr interop evidence."
+    },
+    {
+      "id": "S05",
+      "title": "napari docs — Image layer (docs/howtos/layers/image.md @ main)",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "pin": "napari/docs main, capture sha 2897310c (2026-10-05)",
+      "exact_locator": "'napari will also wait until just before it displays data...' (lazy arrays, >100GB example); 'Multiscale images' (~100k x 200k pathology example; locked_data_level); 'Loading multichannel images' (channel_axis); 'Adjusting contrast limits': 'the values set in the contrast limits do not change the underlying values of the image, only the visualization of the colormap'",
+      "capture": {"capture_id": "c586193ae60246278d5ae552704c01c2", "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963", "captured_utc": "2026-10-05T23:31:43Z", "complete": true},
+      "applicability": "Display-mapping-must-not-alter-samples fact; lazy/bounded access precedent; multichannel display model."
+    },
+    {
+      "id": "S06",
+      "title": "napari docs — Labels layer (docs/howtos/layers/labels.md @ main)",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/labels.md",
+      "pin": "napari/docs main, capture sha 0d93f9cc (2026-10-05)",
+      "exact_locator": "'Undo/redo functionality' ('ctrl-z ... up to 100 events in the past'; warning 'adjusting the currently viewed slice will cause the undo history to be reset'); keyboard tool keys (2 paintbrush, 3 polygon, 4 fill, 5 picker, 6 pan/zoom); brush size keys [ ]; n_edit_dimensions; preserve_labels",
+      "capture": {"capture_id": "8c682048060b44c488ed79683bdd19da", "sha256": "0d93f9cc7fcb5cdf93afd3fd8571effe5c61703b1b27e72efc5c52bd159ac66d", "captured_utc": "2026-10-05T23:34:14Z", "complete": true},
+      "applicability": "Undo/redo precedent and its documented limitation (our anti-goal); keyboard operability precedent."
+    },
+    {
+      "id": "S07",
+      "title": "OME-NGFF specification 0.4 (W3C CG-FINAL, 2023-05-25)",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/a4c68004fdb8a8d822367205dc12f9574a32ddf8/index.md",
+      "pin": "ngff-spec tree a4c68004fdb8a8d822367205dc12f9574a32ddf8 (the commit referenced by ome/ngff specifications/0.4), spec version 0.4",
+      "exact_locator": "'\"axes\" metadata' (unique name, type space/time/channel, UDUNITS-2 units); '\"coordinateTransformations\" metadata' (identity/translation/scale, 'applied sequentially and in order'); '\"multiscales\" metadata' (2-5 axes, time->channel->space order, zyx SHOULD, datasets highest->lowest, exactly one scale, translation after scale); '\"omero\" metadata' (channel window min/max/start/end); '\"image-label\" metadata' (overlap: 'SHOULD ignore all except the last entry')",
+      "capture": {"capture_id": "3c311b807c2a471e883a79363bd77914", "sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211", "captured_utc": "2026-10-05T23:34:13Z", "complete": false, "note": "32768 of 36817 bytes delivered; all cited sections are inside the captured range."},
+      "applicability": "Coordinate-frame metadata schema mirrored by our data contract; multiscale and label-overlap semantics; unit vocabulary."
+    },
+    {
+      "id": "S08",
+      "title": "QuPath docs — Project structure (_sources markdown, stable/0.7)",
+      "url": "https://qupath.readthedocs.io/en/stable/_sources/docs/reference/projects_structure.md.txt",
+      "pin": "QuPath 0.7.x docs (last_modified 2025-06-26)",
+      "exact_locator": "'The project.qpproj file' (serverBuilder + URI, entryID, randomizedName); tip on duplicating .qpproj per computer with different image paths; 'The data directory' (data.qpdata + thumbnail.jpg + summary.json 'written at the same time as data.qpdata'); scripts/ and classifiers/",
+      "capture": {"capture_id": "99e380193abf4ab29c3e3461d38ff799", "sha256": "b21a8766e7dac3af11a4200a96f71fdec7d3debaaa73fb634e554507e5511855", "captured_utc": "2026-10-05T23:32:40Z", "complete": true},
+      "applicability": "Project-bundle persistence precedent; per-machine path relocation pattern; dual-artifact write precedent."
+    },
+    {
+      "id": "S09",
+      "title": "QuPath docs — Exporting annotations (_sources markdown, stable/0.7)",
+      "url": "https://qupath.readthedocs.io/en/stable/_sources/docs/advanced/exporting_annotations.md.txt",
+      "pin": "QuPath 0.7.x docs (last_modified 2025-06-26)",
+      "exact_locator": "'Units and origin' admonition ('coordinates in pixel units, taking the origin (0, 0) as the top left corner of the full-resolution image'); GeoJSON sidebar ('ellipses become polygons'); labeled-image export ('Stroma will win' draw-order rule; downsample advice for whole-slide labels)",
+      "capture": {"capture_id": "a2459fe696ed40f0ac5889e58e43df99", "sha256": "08a3dcd72724cdb010b1f6e6fc0a058a47334ee7aaaf28e665ffe21c4d08f735", "captured_utc": "2026-10-05T23:33:14Z", "complete": true},
+      "applicability": "Export coordinate contract and honest-losses precedent for our preservation statement."
+    },
+    {
+      "id": "S10",
+      "title": "QuPath docs — Shortcuts (_sources markdown, stable/0.7)",
+      "url": "https://qupath.readthedocs.io/en/stable/_sources/docs/reference/shortcuts.md.txt",
+      "pin": "QuPath 0.7.x docs (last_modified 2023-09-12)",
+      "exact_locator": "'Drawing & navigation' table (M/R/O/L/P/V/B/W/.), Alt/Shift modifier semantics, 'Display shortcuts' table (H/A/G/C/F, numeric keys toggle channels), focus caveat note",
+      "capture": {"capture_id": "01545b46d3634e67bf338d329a594cd9", "sha256": "a300d9e645b7c737d8d1c8a3aafa39be61526dc4c2946dcadde9a64dedd2877b", "captured_utc": "2026-10-05T23:35:04Z", "complete": true},
+      "applicability": "Keyboard operability precedent and focus-handling caveat."
+    },
+    {
+      "id": "S11",
+      "title": "QuPath docs — Concepts: Images (_sources markdown, stable/0.7)",
+      "url": "https://qupath.readthedocs.io/en/stable/_sources/docs/concepts/images.md.txt",
+      "pin": "QuPath 0.7.x docs (last_modified 2026-08-21)",
+      "exact_locator": "LUT section ('changing the brightness/contrast ... without changing the underlying pixel values'; 'Scientific image analysis is not photo editing!'); 'Where do pixel sizes come from?' warning ('not guaranteed to be a) present, or b) correct'; JPEG/PNG lack it; TIFF print-DPI hazard); multidimensional section ('Objects ... should remember which plane they belong to'); interpolation note (nearest default rationale)",
+      "capture": {"capture_id": "3c4f66aeb89b40299e1c8e7070bc0dea", "sha256": "8d6f90a3a610f4c33447ec603af7bce596725f4b5c4e9653570c887fbff2aaae", "captured_utc": "2026-10-05T23:35:05Z", "complete": true},
+      "applicability": "Display/data separation; calibration uncertainty as first-class state; annotation plane scope; interpolation default."
+    },
+    {
+      "id": "S12",
+      "title": "napari issue #1841 — 'Affine matrix composition order'",
+      "url": "https://github.com/napari/napari/issues/1841",
+      "pin": "opened 2020-11-05, labeled bug, milestone 0.4.1, closed 2020-11-17",
+      "exact_locator": "issue body: compose at transform_utils.py#L95 uses full_rotate @ full_scale @ full_shear; LLSM deskew reproduction with shear_matrix_from_angle and expected/actual screenshots",
+      "capture": {"capture_id": "cd2d6f020f044af8a4d0822c0fb61c43 (GitHub search result carrying full issue body)", "sha256": "351c022dbc58b980533ca96dcd0800a4c0ed43c166741cccce44840f81f4ff65", "captured_utc": "2026-10-05T23:32:16Z", "complete": true},
+      "applicability": "Chain A origin: real coordinate-transform failure."
+    },
+    {
+      "id": "S13",
+      "title": "napari issue #1841 timeline (maintainer diagnosis + PR cross-reference)",
+      "url": "https://api.github.com/repos/napari/napari/issues/1841/timeline",
+      "pin": "captured 2026-10-05",
+      "exact_locator": "comment 728212713 (2020-11-16, sofroniewn: order 'a little odd', decomposition must change too); cross-referenced event to PR #1884 (merged_at 2020-11-17T03:51:15Z); closed event",
+      "capture": {"capture_id": "7539763ef7124403abf3d9e0e8161d0a", "sha256": "b4e15a12f31b7a66b4b4c1b5b684564abccc1e0cbd1e0274bb17dc3cf352d79a", "captured_utc": "2026-10-05T23:32:40Z", "complete": true},
+      "applicability": "Chain A diagnosis step."
+    },
+    {
+      "id": "S14",
+      "title": "napari PR #1884 'Fix affine composition order' — file list with full patches",
+      "url": "https://api.github.com/repos/napari/napari/pulls/1884/files",
+      "pin": "merged 2020-11-17T03:51:15Z, milestone 0.4.1, head commit 76b1fb4ee4b85d4f4631d0dd03b7951be04854ee (per blob URLs)",
+      "exact_locator": "patch hunk transform_utils.py: '- return full_rotate @ full_scale @ full_shear' / '+ return full_rotate @ full_shear @ full_scale' plus decompose fix; new test 'test_composition_order' in napari/utils/transforms/_tests/test_transform_utils.py asserting matrix == rotate @ shear @ np.diag(scale)",
+      "capture": {"capture_id": "0a4e2a6073a5443b855970dd19cc9941", "sha256": "cd7b8118b9f23cec78a8948fa9a7f5945ed098681068b2cf34b624d156ff54d6", "captured_utc": "2026-10-05T23:33:13Z", "complete": true},
+      "applicability": "Chain A fix + regression test evidence."
+    },
+    {
+      "id": "S15",
+      "title": "napari release v0.4.1",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.4.1",
+      "pin": "published 2020-11-25T01:05:17Z, target_commitish dabd83c990e780a36496bc3d5adafa7d27c90abc",
+      "exact_locator": "Bug Fixes: 'Fix affine composition order (#1884)'; also 'Fix bug for painting when scale above 1 (#1840)', 'Fix TransformChain.__init__() (#1809)', 'Enhance accessibility by ensuring welcome screen contrast meets required standards (#1863)'",
+      "capture": {"capture_id": "3da19d16edb04fa5b10b6afde4d86cfa", "sha256": "b19a519985cc70d526bf6fbeaa9f46c0d7b566d8bfe678f43cd7d767ea03cf30", "captured_utc": "2026-10-05T23:34:11Z", "complete": true},
+      "applicability": "Chain A release applicability; accessibility precedent."
+    },
+    {
+      "id": "S16",
+      "title": "QuPath issue #2115 — 'StackOverflowError at ROITypeAdapters.writeCoordinates when exporting large number of geometries'",
+      "url": "https://github.com/qupath/qupath/issues/2115",
+      "pin": "opened 2026-03-30 against QuPath 0.6.0, labeled bug, closed 2026-03-31 (completed)",
+      "exact_locator": "issue body: stack trace repeating 'ROITypeAdapters.writeCoordinates(ROITypeAdapters.java:339)'; call QP.exportObjectsToGeoJson over 300k+ geometries; environment RHEL 9.3 / QuPath 0.6.0",
+      "capture": {"capture_id": "0fd8b2605f0947b99008c9353223c001 (GitHub search result carrying full issue body)", "sha256": "bb96a9bc752c62fd5f1c71c5aecaa7b4f66bbc01f02153e907d64c3a53840171", "captured_utc": "2026-10-05T23:32:16Z", "complete": false, "note": "search response truncated at 32768/112415 bytes; issue #2115 body and #2159 body are fully inside the captured range."},
+      "applicability": "Chain B origin: annotation-export failure."
+    },
+    {
+      "id": "S17",
+      "title": "QuPath issue #2115 timeline (root-cause comment, fix PR cross-reference, close commit)",
+      "url": "https://api.github.com/repos/qupath/qupath/issues/2115/timeline",
+      "pin": "captured 2026-10-05",
+      "exact_locator": "comment 4162323432 (2026-03-31T12:34:39Z): 'the issue is with exporting GeoJSON objects that contain multiple disconnected lines. You can't draw these in QuPath, but you can create them in other ways (e.g., merging annotations)' + two-polyline RoiTools.union repro; referenced event commit 4b2b80df4eb14849baf4f3acb532812abfea8041; cross-referenced PR #2117 (milestone v0.8.0, merged_at 2026-03-31T12:53:18Z); closed event; maintainer comment 'This should be fixed by ... pull/2117'",
+      "capture": {"capture_id": "cc93ad55e9e64abca8e55b32b1da594d", "sha256": "aeb7fec6535ed125b133f3efdc5270c82bd765df9dbb8a5acab90605152c88cd", "captured_utc": "2026-10-05T23:32:39Z", "complete": false, "note": "32768 of 38070 bytes delivered; all cited events/comments are inside the captured range."},
+      "applicability": "Chain B diagnosis + fix linkage + milestone status."
+    },
+    {
+      "id": "S18",
+      "title": "QuPath PR #2117 'Fix export of multiline strings' — file list with full patch",
+      "url": "https://api.github.com/repos/qupath/qupath/pulls/2117/files",
+      "pin": "merged 2026-03-31T12:53:18Z, milestone v0.8.0, commit 4b2b80df4eb14849baf4f3acb532812abfea8041",
+      "exact_locator": "single changed file qupath-core/src/main/java/qupath/lib/io/ROITypeAdapters.java (+33/-21): per-type methods writeCoordinatesPoint/MultiPoint/LineString/MultiLineString/Polygon/MultiPolygon; MultiLineString iterates geometryN with guard 'else throw new IllegalArgumentException(\"MultiLineString contains geometry...\" )'; no test file in the PR",
+      "capture": {"capture_id": "5a4ca2da4db24aa587b486cc58850a40", "sha256": "e413cc4374d669691f6c3da6b56e8f8fc8765e4b31a8735cb27ffac975c7c8ee", "captured_utc": "2026-10-05T23:33:12Z", "complete": true},
+      "applicability": "Chain B fix evidence; absence of regression test is itself a finding."
+    },
+    {
+      "id": "S19",
+      "title": "QuPath releases list (release status of the Chain B fix)",
+      "url": "https://api.github.com/repos/qupath/qupath/releases?per_page=5",
+      "pin": "captured 2026-10-05",
+      "exact_locator": "first item = v0.7.0 (published 2026-03-02); no v0.7.1/v0.8.0 present in the first page; v0.7.0-rc1 second",
+      "capture": {"capture_id": "33b5a387a2324288ab7f6322d6f1a5e0", "sha256": "ec65c692ec3bd5ac7f17ebd9e2582d4e128b9cba9a4da2333e2a0c11e41ad154", "captured_utc": "2026-10-05T23:33:13Z", "complete": false, "note": "truncated at 32768/75197 bytes; the v0.7.0 and v0.7.0-rc1 entries (sufficient to establish latest-release status) are inside the captured range."},
+      "applicability": "Chain B release applicability: fix exists only on main ahead of unreleased v0.8.0."
+    },
+    {
+      "id": "S20",
+      "title": "ome/ngff repo — specifications directory listing (version pins)",
+      "url": "https://api.github.com/repos/ome/ngff/contents/specifications",
+      "pin": "captured 2026-10-05; specifications/0.4 -> ngff-spec tree a4c68004fdb8a8d822367205dc12f9574a32ddf8; 0.5 and 0.6 also present",
+      "exact_locator": "entries 0.1..0.6 and dev with git_url tree shas",
+      "capture": {"capture_id": "cf95a595cb28442eb9ce26d0577c3f24", "sha256": "dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa", "captured_utc": "2026-10-05T23:31:43Z", "complete": true},
+      "applicability": "Provenance of the S07 pin; evidence that NGFF has versions beyond 0.4."
+    },
+    {
+      "id": "S21",
+      "title": "ome/ngff-spec repo root listing (spec moved to its own repo)",
+      "url": "https://api.github.com/repos/ome/ngff-spec/contents/",
+      "pin": "captured 2026-10-05; main index.md size 89897 (multi-version dev)",
+      "exact_locator": "index.md entry, version_history.md entry",
+      "capture": {"capture_id": "c36ce8bf3a9f47d685e5df7eb8e7642c", "sha256": "ae414039016271fc3dace473a9e134a229c5ec44ff1292ab8aff25a89db48603", "captured_utc": "2026-10-05T23:32:40Z", "complete": true},
+      "applicability": "Locator provenance for S07; NGFF evolution lead."
+    },
+    {
+      "id": "S22",
+      "title": "napari/docs repo — docs/howtos/layers listing",
+      "url": "https://api.github.com/repos/napari/docs/contents/docs/howtos/layers",
+      "pin": "captured 2026-10-05",
+      "exact_locator": "entries image.md, labels.md, shapes.md, points.md ...",
+      "capture": {"capture_id": "8f96b32bdb2e46dca2e4c6cc46187d55", "sha256": "ee7346895acfb63d40d28659683b2d48fdb0765c088df195626096bde793bbc3", "captured_utc": "2026-10-05T23:31:24Z", "complete": true},
+      "applicability": "Locator provenance for S05/S06."
+    },
+    {
+      "id": "S23",
+      "title": "ome/ngff repo root listing",
+      "url": "https://api.github.com/repos/ome/ngff/contents/",
+      "pin": "captured 2026-10-05",
+      "exact_locator": "specifications/ directory entry",
+      "capture": {"capture_id": "635db5191119445ba6890b520a6f131f", "sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24", "captured_utc": "2026-10-05T23:31:24Z", "complete": true},
+      "applicability": "Locator provenance for S20."
+    },
+    {
+      "id": "S24",
+      "title": "404 captures — napari v0.9.2 paths for transform_utils.py and its test",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/napari/utils/transforms/transform_utils.py (and .../napari/utils/transforms/_tests/test_transform_utils.py)",
+      "pin": "tag v0.9.2; both return 404",
+      "exact_locator": "response body '404: Not Found'",
+      "capture": {"capture_id": "c41a817f8b374225a362f94ad7d7f996 (transform_utils) and 956a37a0cdb6443cb01f9e0b123323d2 (test)", "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "captured_utc": "2026-10-05T23:37:20-23Z", "complete": true},
+      "applicability": "Chain A limit: fixed file/test not re-located at the newest tag (module layout changed); persistence of the fix at v0.9.2 is UNVERIFIED, not asserted."
+    },
+    {
+      "id": "S25",
+      "title": "QuPath qupath-core io test directory listing (regression-test absence check)",
+      "url": "https://api.github.com/repos/qupath/qupath/contents/qupath-core/src/test/java/qupath/lib/io",
+      "pin": "ref=main, captured 2026-10-05",
+      "exact_locator": "entries: TestGsonTools.java, TestPathIO.java, TestPathObjectIO.java, TestPointIO.java (no ROITypeAdapters test)",
+      "capture": {"capture_id": "2f20a50659244c8ba24eb996ed6fa688", "sha256": "0bacfe34840e0a897c9fd2aeff25dee6292ee44a46718b15b02452da65dd17d6", "captured_utc": "2026-10-05T23:34:13Z", "complete": true},
+      "applicability": "Chain B limit: no ROITypeAdapters-named test on main; whether TestPathObjectIO covers MultiLineString export is UNVERIFIED."
+    },
+    {
+      "id": "S26",
+      "title": "QuPath issue #2159 — MCP server feature request (lead source)",
+      "url": "https://github.com/qupath/qupath/issues/2159",
+      "pin": "opened 2026-07-18, enhancement, open",
+      "exact_locator": "issue body within capture of S16 (search result bb96a9bc...): proposal for a local-only, opt-in MCP server exposing read-only tools",
+      "capture": {"capture_id": "same capture as S16", "sha256": "bb96a9bc752c62fd5f1c71c5aecaa7b4f66bbc01f02153e907d64c3a53840171", "captured_utc": "2026-10-05T23:32:16Z", "complete": false},
+      "applicability": "Deferred lead L4 (automation/AI integration opportunity), not a v0 requirement."
+    }
+  ]
+}

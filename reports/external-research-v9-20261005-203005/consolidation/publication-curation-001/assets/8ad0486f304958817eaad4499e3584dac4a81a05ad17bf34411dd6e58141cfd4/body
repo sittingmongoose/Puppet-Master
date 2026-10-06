@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "stage": "research",
+    "purpose": "Optional ideas, deferred opportunities, and unresolved dependencies recorded separately from minimum obligations; adoption deferred, nothing here blocks the minimum workflow."
+  },
+  "leads": [
+    {
+      "id": "L1",
+      "title": "Wrapper-based undo for out-of-band writes (napari PR #3155 idea)",
+      "detail": "napari's unmerged draft proposed overriding Labels.data.__setitem__ so plugin-style direct writes join the undo queue. No upstream fix chain exists (merged_at null, closed 2022-06-28). Our design closes the gap structurally (single command-log write path); if a scripting API is added later, revisit this wrapper pattern.",
+      "evidence": "sources S3 (PR 3155 record)",
+      "status": "deferred design option"
+    },
+    {
+      "id": "L2",
+      "title": "Direction-cosine / oriented physical spaces (ITK/SimpleITK conventions)",
+      "detail": "ITK-family tools treat images as objects in a physical space with direction matrices (LPS convention). Not investigated or captured in this stage. Relevant only if rotated/anisotropic stage calibration becomes a requirement (current v1: unsupported, rejected visibly).",
+      "evidence": "none captured; UNINVESTIGATED",
+      "status": "future investigation"
+    },
+    {
+      "id": "L3",
+      "title": "ImageJ/Fiji calibration and units precedent",
+      "detail": "ImageJ's image-calibration model (pixel size, unit, global vs per-image calibration) is a long-lived precedent for microscopy metadata handling. Not captured in this stage; candidate comparison source if the support boundary is revisited.",
+      "evidence": "none captured; UNINVESTIGATED",
+      "status": "future investigation"
+    },
+    {
+      "id": "L4",
+      "title": "Pin concrete streaming image libraries (critical unresolved dependency)",
+      "detail": "The 3 GB bounded-access target (brief) and the TIFF/Zarr support boundary assume maintainable chunked readers (zarr-class stores; tifffile-class TIFF access; ome-zarr-py for NGFF). None of these libraries was fetched, pinned, or benchmarked in this stage. Must be resolved before implementation; fallback is convert-on-import to an NGFF-shaped store.",
+      "evidence": "design-level only; see proposal sections 5, 9 (A1) and witness P1",
+      "status": "blocking dependency for implementation, not for this plan"
+    },
+    {
+      "id": "L5",
+      "title": "NGFF 0.5+ transformation vocabulary (rotation/affine)",
+      "detail": "If rotated stage calibration is ever required, check whether a later NGFF revision adds affine/rotation transformations and whether migration from the pinned 0.4 is provided before extending the v1 contract.",
+      "evidence": "sources S2 (0.4 has identity/translation/scale; migration-scripts promise)",
+      "status": "deferred; v1 rejects rotation visibly"
+    },
+    {
+      "id": "L6",
+      "title": "Bio-Formats bridge for vendor microscope formats",
+      "detail": "Vendor containers (.czi/.nd2/.lif) stay unsupported in v1; a later optional converter backend (Bio-Formats-style) could widen the boundary without touching the core, mirroring QuPath's optional extension pattern.",
+      "evidence": "sources S9, S14 (optional ImageServer extensions)",
+      "status": "later alternative"
+    },
+    {
+      "id": "L7",
+      "title": "Zarr v3 / sharded storage",
+      "detail": "NGFF 0.4 mandates Zarr v2 layout. Zarr v3/sharding could reduce small-chunk overhead for derived pyramids; track ecosystem maturity before considering; keep derived stores behind the image-access interface so the layout can change.",
+      "evidence": "sources S2 (v2 mandate); v3 not captured",
+      "status": "deferred"
+    },
+    {
+      "id": "L8",
+      "title": "GPU-accelerated rendering path",
+      "detail": "Optional GPU exists in the envelope. v1 uses one composed render buffer; a vispy-class GPU path is an optimization to evaluate only if P1 shows CPU rendering misses interactivity budgets.",
+      "evidence": "engineering option; unmeasured",
+      "status": "deferred"
+    },
+    {
+      "id": "L9",
+      "title": "Automatic segmentation / registration assistance",
+      "detail": "Explicitly out of minimum scope per brief; could later feed the annotation store through the same recorded-operation path (so machine proposals stay distinguishable from human annotations).",
+      "evidence": "brief; no source captured",
+      "status": "out of scope, recorded for preservation"
+    },
+    {
+      "id": "L10",
+      "title": "Collaboration beyond shared-storage bundles",
+      "detail": "Real-time co-annotation or cloud services are not required; bundle exchange satisfies the six-person workflow. Any future service must preserve the hash-pinned identity and export-honesty contracts.",
+      "evidence": "brief; no source captured",
+      "status": "out of scope, deferred"
+    },
+    {
+      "id": "L11",
+      "title": "napari performance/threading guides as implementation references",
+      "detail": "napari/docs contains performance.md and threading.md (located but not fetched in this stage) — likely primary material for the tile-cache and cancel/progress design when implementation starts.",
+      "evidence": "sources S12 (listing only; contents UNFETCHED)",
+      "status": "future investigation"
+    }
+  ]
+}

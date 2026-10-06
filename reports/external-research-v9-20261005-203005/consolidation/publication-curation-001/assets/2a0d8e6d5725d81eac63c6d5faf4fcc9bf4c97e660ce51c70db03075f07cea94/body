@@ -1,0 +1,87 @@
+{
+  "schema": "er9.candidate-source-use-catalog.v1",
+  "purpose": "Append-only role catalog. source_id values refer to immutable inputs/seed/source_catalog.json unless explicitly marked as a supplemental capture. These records add exact locators and capture checks for the enrichment; they do not replace the base catalog.",
+  "base_catalog": {
+    "path": "inputs/seed/source_catalog.json",
+    "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b",
+    "source_ids": ["S1", "S2", "S5", "S6", "S7", "S8", "S9", "S10"]
+  },
+  "evidence_uses": [
+    {
+      "source_id": "S1",
+      "title": "OME-NGFF 0.5 specification",
+      "url": "https://ngff.openmicroscopy.org/0.5/index.html",
+      "pin": "OME-NGFF 0.5; HTML revision d9164040dd61b3e4688494de1a58a69251b13f24",
+      "capture": {"path": "inputs/source_context/0000.body", "capture_id": "5e1577f1e24b483f9c9faa1821988023", "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b", "bytes": 158591, "index_status": "complete"},
+      "locator": "HTML lines 2419-2436 (axes), 2576-2629 (ordered transformations and multiscale constraints), 2641-2700 (worked t,c,z,y,x pyramid example), 2702-2711 (named-multiscale example fallback)",
+      "use": "Axis/type/unit and dimension boundary; per-level/group transformation composition; numerical fixture; multi-multiscale fallback qualification."
+    },
+    {
+      "source_id": "S2",
+      "title": "napari documentation — Image layer",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "pin": "napari/docs main, capture dated 2026-10-05; moving documentation pin, not a package release pin",
+      "capture": {"path": "inputs/source_context/0020.body", "capture_id": "47b6fd92a2df40a6b9a5ef3ea6f7cc8a", "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963", "bytes": 20309, "index_status": "complete"},
+      "locator": "Lines 60-64 (2D-only GUI layer transform and reset); lines 163-190 (NumPy-like and lazy Dask/Zarr input behavior)",
+      "use": "Positive lazy-array/display precedent and qualification that the documented GUI transform does not establish resampling, source mutation, persistence, or export behavior."
+    },
+    {
+      "source_id": "S5",
+      "title": "tifffile README",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "Document version 2026.9.20 on captured master; exact release commit/wheel hash not supplied",
+      "capture": {"path": "inputs/source_context/0023.body", "capture_id": "820a5a9673af4adaa05c9da2031ae009", "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "bytes": 32898, "index_status": "complete"},
+      "locator": "Lines 12-31 (format/read/write/codec scope); lines 40-41 (document version); lines 67-85 (tested dependency versions and optional requirements)",
+      "use": "Positive bounded-reader mechanisms; exact v2026.9.20 snapshot and dependency versions. Not evidence of application latency or universal region access.",
+      "base_catalog_reconciliation": "Base S5 records 32,768 delivered bytes of 32,898; the attached indexed body is the full 32,898 bytes with the same SHA."
+    },
+    {
+      "source_id": "S6",
+      "title": "tifffile CHANGES.rst",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "pin": "master snapshot whose head entry is 2026.9.20; moving source URL",
+      "capture": {"path": "inputs/source_context/0006.body", "capture_id": "ec24d46c000041ec8ba96ce6b742a6a2", "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e", "bytes": 45003, "index_status": "complete"},
+      "locator": "Lines 59-82 (2026.5.2 breaking series/Zarr API changes); lines 92-105 (2026.3.3 fix and 2026.2.24 history); lines 1-4 (2026.9.20 head)",
+      "use": "Release applicability and API/storage-format branch. Treat dated release entries as such; do not treat later master changes as pinned package behavior.",
+      "base_catalog_reconciliation": "Base S6 notes a 32,768-byte delivery; the attached indexed body is 45,003 bytes and complete. The older-than-2019 tail is outside this use."
+    },
+    {
+      "source_id": "S7",
+      "title": "tifffile issue #319",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/319",
+      "pin": "Issue opened 2026-02-26; closed 2026-03-03; REST body includes reproduction but not discussion comments",
+      "capture": {"path": "inputs/source_context/0010.body", "capture_id": "174a2677b4974899b581e6ee07336961", "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692", "bytes": 3952, "index_status": "complete"},
+      "locator": "Issue body reproduction: PixelSizeX 1.4208036661148071 (2026.2.20) vs 1.4208036661148072e-09 (2026.2.24); title says 2026.2.26",
+      "use": "Observed reported failure and version discrepancy; does not independently contain the repair."
+    },
+    {
+      "source_id": "S8",
+      "title": "tifffile fix commit edede6002c817f056d75125ade0b20332d549cca",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/edede6002c817f056d75125ade0b20332d549cca",
+      "pin": "Commit edede6002c817f056d75125ade0b20332d549cca, 2026-03-03T19:06:33Z, parent 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "capture": {"path": "inputs/source_context/0016.body", "capture_id": "d98ef66b18794ac185c756b87ce37766", "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f", "bytes": 15123, "index_status": "complete"},
+      "locator": "Unified diff in read_tvips_header: issue URL comment and conversion disabled; same patch updates supported TIFF feature notes and CCITT handling",
+      "use": "Code-fix evidence and version-specific positive/negative support boundary."
+    },
+    {
+      "source_id": "S9",
+      "title": "tifffile tests commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "pin": "Commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938, 2026-03-03T18:56:28Z; parent 2798a136509280b69b3f94cbf9c0f2e1b3b90ec9",
+      "capture": {"path": "inputs/source_context/0017.body", "capture_id": "744343a38392409d8b360a9308828c88", "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c", "bytes": 18687, "index_status": "complete"},
+      "locator": "Patch adds test_issue_tvips_pixelsize and assertions; adds exact-equality examples for bit-depth/strip and CCITT cases",
+      "use": "Regression assertion and data-structure/type examples. Commit precedes S8 by parent relation; individual test execution is not captured."
+    },
+    {
+      "source_id": "S10",
+      "title": "tifffile commit history through v2026.3.3 release",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "pin": "Captured commit list includes 7d9eaedd, edede600, 8c91499e, and 503cb4eb",
+      "capture": {"path": "inputs/source_context/0013.body", "capture_id": "2d0da64bb8a749f28bf0fae816d19089", "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a", "bytes": 12844, "index_status": "complete"},
+      "locator": "Parent sequence: 2798a136 -> 7d9eaedd (tests) -> edede600 (fix) -> 8c91499e (changelog) -> 503cb4eb (release v2026.3.3)",
+      "use": "Correct chronology and release applicability.",
+      "base_catalog_reconciliation": "Base S10 hash has a one-character discrepancy; use the full SHA in the attached source index and body metadata."
+    }
+  ],
+  "no_new_public_source_claim": "All facts here use public source bodies already attached to the fixed context. Repeated IDs are references to the base catalog, not duplicate or independent precedents."
+}

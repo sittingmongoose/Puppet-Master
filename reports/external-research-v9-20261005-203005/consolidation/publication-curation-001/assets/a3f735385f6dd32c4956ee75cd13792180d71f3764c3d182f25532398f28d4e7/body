@@ -1,0 +1,51 @@
+{
+  "witness_version": "research-stage-1",
+  "label_rules": "executed_by_candidate = code authored and run by this candidate in the admitted isolation runtime with receipts; proposed_UNEXECUTED = planned validation not run this session; executed_only_by_evaluator = none legitimately provided in this stage.",
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-vn2bccpa",
+      "completed_utc": "2026-10-06T08:00:10Z",
+      "runtime_limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "none"},
+      "code_sha256": "2d5184bc3fbc92d7a9376e0ef0dae1e46aca491ea245818b4d56acea28064b93",
+      "description": "Isolated arithmetic check of the proposed timeline/cache contract (proposal §3.3, §6): (C1) monotonicity of exact-rational 44100->48000 mapping over 2 h sampled at prime step 7919; (C2) half-open trim boundary for cue anchors; (C3) direct vs composed rational conversion at one tested point, asserted with <=1 sample tolerance; (C4) cue-inside-crossfade flagging; (C5) min/max waveform bucketing incl. short tail bucket + sha256-based cache-key determinism; (C6) memory arithmetic for 2 h stereo 48 kHz float32/float64.",
+      "inputs": "literal constants in code; no external data",
+      "expected": "C1: 0 monotonic violations; C2: cue at 1999999 kept (local 999999), cue at 2000000 dropped; C3: diff within 1 sample; C4: 'in_transition'; C5: [(-7,5),(-9,9),(4,4)], key stable and tier-sensitive; C6: ~2.57/5.15 GiB",
+      "observed": {"exit_code": 0, "stdout_sha256": "05514f6f472bef9991faecd3f8ad0345923d9b8afef127262dabdc40c499beb2", "stdout_summary": "C1 monotonic violations: 0; C2 kept/(999999)/dropped; C3 proj_direct=proj_comp=1222810 diff 0; C4 in_transition; C5 buckets/key results as expected; C6 float32=2.57 GiB float64=5.15 GiB", "stderr": "empty"},
+      "justification_of_expectations": "Round-half-even on exact rationals must be monotonic (positive rational scaling); [in,out) convention places 'out' outside kept media; crossfade interval check is set-membership; bucketing tails may be short; sha256 is deterministic; GiB arithmetic is elementary.",
+      "scope_limits": "Pure-integer/Fraction sandbox check with no audio library, no file I/O, no GUI, and a single tested point for C3 (monotonicity sampled at prime steps, not exhaustively). Establishes plausibility of the contract arithmetic ONLY; it does not establish that any editor, libsndfile, or rendered audio behaves accordingly (proposal §9 covers the real checks, UNEXECUTED)."
+    },
+    {
+      "id": "W2",
+      "label": "proposed_UNEXECUTED",
+      "description": "Property test: randomized tiny fixtures (seconds long) assembled via the block renderer must equal a direct reference assembly sample-for-sample (PCM compare), across trim/join/fade/gap/resample combinations. This is the designated 'content was assembled correctly' evidence, which durations/exit codes cannot provide.",
+      "depends_on": "engine implementation; codec set per §2"
+    },
+    {
+      "id": "W3",
+      "label": "proposed_UNEXECUTED",
+      "description": "Far-seek/tail-read suite: for every supported codec, long-file seeks >2 s and reads ending at EOF must return the exact expected frame counts (direct counter-measure to the #643 test gap, S06/S08).",
+      "depends_on": "libsndfile build with MPEG+Vorbis support; long fixtures"
+    },
+    {
+      "id": "W4",
+      "label": "proposed_UNEXECUTED",
+      "description": "Perf/cancel harness on a 2 h fixture: import/peak-build/render wall time and RSS vs §6 targets (<800 MB open RSS, scrub <50 ms — targets, not claims); cancel mid-render must leave no artifact labeled complete and a manifest status of cancelled.",
+      "depends_on": "engine implementation; 2 h test fixture"
+    },
+    {
+      "id": "W5",
+      "label": "proposed_UNEXECUTED",
+      "description": "Manual accessibility pass: keyboard-only operation of the full minimum workflow; NVDA/ORCA screen-reader walkthrough of transcript panel, provenance inspector, and error surfaces.",
+      "depends_on": "UI implementation"
+    },
+    {
+      "id": "W6",
+      "label": "proposed_UNEXECUTED",
+      "description": "Four-editor exchange drill: bundle handoff via USB, source relocation to new paths, deliberate missing-media and same-name/different-hash conflict cases; verify no write ever occurs to original recording locations (hash-verify before/after).",
+      "depends_on": "bundle exchange implementation"
+    }
+  ],
+  "executed_only_by_evaluator": []
+}

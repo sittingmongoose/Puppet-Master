@@ -1,0 +1,126 @@
+{
+  "schema": "er9.candidate-dependency-binding.v1",
+  "status": "candidate pins only; no resolved lock, installation, build, or application smoke test",
+  "purpose": "Make library and format-version assumptions explicit. A source release or declared dependency range is not proof that the proposed application works with it.",
+  "source_evidence": {
+    "tifffile_tested_profile": "SRC-TIFF-README reports CPython 3.12.10, NumPy 2.5.3, imagecodecs 2026.8.16, and Zarr 3.4.0 in its tested requirements/dependencies list.",
+    "zarr_formats": "SRC-ZARR-PY-34 says Zarr-Python 3.4.0 supports Zarr formats 2 and 3 and documents API migration changes; SRC-NGFF-04 targets format 2 and SRC-NGFF-05 targets format 3.",
+    "ui_release_metadata": "SRC-PYSIDE6-6112 declares exact matching Qt Python packages and Python >=3.10,<3.15; SRC-VISPY-017 provides release metadata for VisPy 0.17.0 and Python >=3.10."
+  },
+  "candidate_pins": [
+    {
+      "name": "CPython",
+      "version": "3.12.10",
+      "role": "proposed interpreter for the reader profile",
+      "evidence": ["SRC-TIFF-README"],
+      "status": "candidate pin; not installed or cross-platform qualified"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3",
+      "role": "array representation and numeric operations",
+      "evidence": ["SRC-TIFF-README"],
+      "status": "candidate pin; not installed or application-qualified"
+    },
+    {
+      "name": "tifffile",
+      "version": "2026.9.20",
+      "role": "read-only TIFF/BigTIFF and TIFF-family adapter; evaluate region/Zarr access only on matching layouts",
+      "evidence": ["SRC-TIFF-README"],
+      "status": "candidate pin; captured README is moving master content hash-pinned, not an immutable source commit"
+    },
+    {
+      "name": "imagecodecs",
+      "version": "2026.8.16",
+      "role": "candidate codec dependency for fixture-qualified TIFF profiles",
+      "evidence": ["SRC-TIFF-README"],
+      "status": "candidate pin; codec/layout coverage and platform wheels unverified"
+    },
+    {
+      "name": "zarr",
+      "version": "3.4.0",
+      "role": "candidate store access for local OME-Zarr format 2 and format 3 targets",
+      "evidence": ["SRC-TIFF-README", "SRC-ZARR-PY-34", "SRC-NGFF-04", "SRC-NGFF-05"],
+      "status": "candidate pin; declared format support does not establish the proposed OME-NGFF app adapter"
+    },
+    {
+      "name": "PySide6",
+      "version": "6.11.2",
+      "role": "candidate desktop UI toolkit",
+      "evidence": ["SRC-PYSIDE6-6112"],
+      "status": "candidate pin; Qt backend and target platform behavior unverified"
+    },
+    {
+      "name": "Shiboken6",
+      "version": "6.11.2",
+      "role": "PySide6 declared matching package requirement",
+      "evidence": ["SRC-PYSIDE6-6112"],
+      "status": "declared requirement; not resolved or installed"
+    },
+    {
+      "name": "PySide6_Essentials",
+      "version": "6.11.2",
+      "role": "PySide6 declared matching package requirement",
+      "evidence": ["SRC-PYSIDE6-6112"],
+      "status": "declared requirement; not resolved or installed"
+    },
+    {
+      "name": "PySide6_Addons",
+      "version": "6.11.2",
+      "role": "PySide6 declared matching package requirement",
+      "evidence": ["SRC-PYSIDE6-6112"],
+      "status": "declared requirement; not resolved or installed"
+    },
+    {
+      "name": "vispy",
+      "version": "0.17.0",
+      "role": "candidate canvas/rendering layer behind a small application-owned adapter; proposed use is app/gloo, not scene internals",
+      "evidence": ["SRC-VISPY-017"],
+      "status": "candidate pin; Qt integration, graphics drivers, and runtime behavior unverified"
+    }
+  ],
+  "format_matrix": [
+    {
+      "profile": "local TIFF, BigTIFF, OME-TIFF, and selected ImageJ TIFF layouts",
+      "candidate_binding": ["tifffile 2026.9.20", "imagecodecs 2026.8.16", "NumPy 2.5.3", "CPython 3.12.10"],
+      "support_status": "target only; enabled per fixture family after qualification",
+      "qualification_required": [
+        "axes and metadata precedence",
+        "integer/floating sample dtype and byte order",
+        "each codec and compression arrangement",
+        "strip versus tile versus page/SubIFD/pyramid layout",
+        "region-read granularity, peak RSS, p95 latency, and cancellation",
+        "calibration fixture and original-source immutability"
+      ],
+      "evidence_limit": "tifffile documents mechanisms and limitations; its tested-version list does not guarantee bounded access or performance for a given file."
+    },
+    {
+      "profile": "local OME-Zarr 0.4",
+      "candidate_binding": ["OME-NGFF 0.4 metadata", "Zarr format 2", "Zarr-Python 3.4.0 candidate"],
+      "support_status": "target only; no format-2 fixture read or export executed",
+      "qualification_required": ["store open and metadata parse", "axes and per-level transform rules", "chunks/codecs", "identity/tree hashing", "copy and relocation"],
+      "evidence_limit": "Zarr-Python 3.4.0's migration guide documents format 2 and 3 support, but does not verify this OME-NGFF reader path."
+    },
+    {
+      "profile": "local OME-Zarr 0.5",
+      "candidate_binding": ["OME-NGFF 0.5 metadata", "Zarr format 3", "Zarr-Python 3.4.0 candidate"],
+      "support_status": "target only; no format-3 fixture read or export executed",
+      "qualification_required": ["store open and metadata parse", "axes and per-level transform rules", "chunks/codecs", "labels if enabled", "identity/tree hashing", "copy and relocation"],
+      "evidence_limit": "Specification and package metadata do not show interoperability in the proposed app."
+    },
+    {
+      "profile": "other formats, stores, and unsupported metadata families",
+      "candidate_binding": [],
+      "support_status": "disabled by default in v1",
+      "failure_behavior": "Keep source untouched; retain available metadata and a recoverable unsupported/ambiguous project record; explain why display/annotation is blocked."
+    }
+  ],
+  "unresolved_bindings": [
+    "No platform-specific dependency lock or transitive resolver output exists.",
+    "PySide6, VisPy, NumPy, and OpenGL/Qt backend compatibility has not been tested together.",
+    "No target OS, minimum graphics driver, optional GPU policy, or reproducible build configuration is qualified.",
+    "OME-Zarr 0.4 format-2 and 0.5 format-3 need distinct fixture-backed adapter qualification.",
+    "Supported codecs, TIFF layouts, memory bounds, 3 GB latency, cancellation, and network-filesystem behavior remain unverified."
+  ],
+  "binding_rule": "Treat each profile as unsupported until its exact dependency lock and representative fixtures pass the validation plan. Package metadata, specifications, and isolated component checks do not promote a profile to supported."
+}

@@ -1,0 +1,257 @@
+{
+  "catalog_version": "research-1",
+  "captured_utc": "2026-10-05T22:23-22:32Z",
+  "note": "Capture identity fields (capture_id, sha256, captured_utc) are produced by the experiment's public HTTPS capture tool. Pins are release tags or, for raw main-branch files, the content sha256 plus (where fetched) the latest commit sha touching the file. Semantic acquisition is annotated per entry; capture of a page is not by itself verification of release behavior.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "RFC 4180 — Common Format and MIME Type for Comma-Separated Values (CSV)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+      "pin": "rfc4180 (October 2005, Informational)",
+      "locator": "Section 2: \"While there are various specifications and implementations for the CSV format ... there is no formal specification in existence\"; quoting/escaping rules items 5-7; CRLF line breaks item 1; \"Spaces are considered part of a field\".",
+      "capture": {"capture_id": "cf474a24e5ba43c99df1fe6e4b4551a8", "sha256": "5d9ec035aa40c0108362cb767c9e2d08c30f7225cb2a4715f484cb13c29b5f21", "captured_utc": "2026-10-05T22:24:00Z", "bytes": 12931, "complete": true},
+      "applicability": "Data contract for CSV: format is ambiguous; delimiter/quote/escape/line-break parameters must be declared per dataset and hashed into identity.",
+      "class": "primary-spec"
+    },
+    {
+      "id": "S2",
+      "title": "NDJSON — Newline delimited JSON specification v1.0.0",
+      "url": "https://raw.githubusercontent.com/ndjson/ndjson-spec/master/README.md",
+      "pin": "master @ content sha256 285f83e4... (repo archived-in-place spec; last_update 2014-10-19)",
+      "locator": "Section 3.1: each JSON text MUST conform to RFC 8259, MUST use UTF-8; Section 3.2: \"If the JSON text is not parsable, the parser SHOULD raise an error. The parser MAY silently ignore empty lines ... This behavior MUST be documented and SHOULD be configurable\".",
+      "capture": {"capture_id": "9f5f8c4affd24739bdb7033507a08ec5", "sha256": "285f83e49a0f0c6254a4624f64817151a7fc6f19a65fd7cdda76a693b7ff93e4", "captured_utc": "2026-10-05T22:25:31Z", "bytes": 4003, "complete": true},
+      "applicability": "Data contract for NDJSON: encoding fixed, silent skips must be documented/configurable — mirrors the no-silent-deletion rule.",
+      "class": "primary-spec"
+    },
+    {
+      "id": "S3",
+      "title": "Jupyter nbformat v4.5 JSON schema (notebook document model)",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "main @ content sha256 523e3578... (latest release at capture: v5.11.1, 2026-08-17, see S5b)",
+      "locator": "code_cell required [id, cell_type, metadata, source, outputs, execution_count]; execution_count: \"The code cell's prompt number. Will be null if the cell has not been run.\"; output oneOf execute_result|display_data|stream|error; metadata.execution iopub/shell ISO dates; nbformat major 4 minimum minor 5; cell id pattern ^[a-zA-Z0-9-_]+$ len<=64.",
+      "capture": {"capture_id": "2a9d1fc76cb44d63b09176678bc0fbc5", "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a", "captured_utc": "2026-10-05T22:24:22Z", "bytes": 16104, "complete": true},
+      "applicability": "Document/interchange precedent P1: separates code from outputs; carries kernel execution counts and timing metadata; does NOT define execution semantics or staleness — those are runtime concerns the product owns.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S4",
+      "title": "jupyter/nbclient README",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/main/README.md",
+      "pin": "main @ content sha256 3a756e31... (latest release v0.11.0, see S5)",
+      "locator": "\"NBClient lets you execute notebooks\"; \"used to be part of nbconvert ... extracted nbconvert's ExecutePreprocessor\"; \"This library currently supports Python 3.10+ versions. As minor Python versions are officially sunset by the Python org, nbclient will similarly drop support\".",
+      "capture": {"capture_id": "b3d9a965f73246cd9af2a2c5886bb813", "sha256": "3a756e31c830e943c1303cab7b5e84723bd1b1edf2f1057759c90ff0b26ff1ee", "captured_utc": "2026-10-05T22:25:15Z", "bytes": 3163, "complete": true},
+      "applicability": "Clean-replay precedent (programmatic notebook execution) + Python support-floor policy evidence for §4.7.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S5",
+      "title": "jupyter/nbclient release v0.11.0 (latest at capture)",
+      "url": "https://api.github.com/repos/jupyter/nbclient/releases/latest",
+      "pin": "tag v0.11.0, published 2026-06-05T07:52:44Z",
+      "locator": "tag_name v0.11.0; published_at 2026-06-05; wheel nbclient-0.11.0-py3-none-any.whl sha256 cc6698fa...(asset digest list in capture).",
+      "capture": {"capture_id": "a0b133c179434c1eb4cc300485875dac", "sha256": "2dfc18b4b05da7e4aae9823a25309a11ed0289ce0b3fb8ca0701e61d3da5bb24", "captured_utc": "2026-10-05T22:28:39Z", "bytes": 11468, "complete": true},
+      "applicability": "Version pin for the execution precedent; changelog range v0.10.4..v0.11.0 shows maintenance-only changes.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S5b",
+      "title": "jupyter/nbformat release v5.11.1 (latest at capture)",
+      "url": "https://api.github.com/repos/jupyter/nbformat/releases/latest",
+      "pin": "tag v5.11.1, published 2026-08-17T08:10:55Z",
+      "locator": "tag_name v5.11.1; published_at 2026-08-17.",
+      "capture": {"capture_id": "b1d060538ad24e1890ecd0f04aeacd5c", "sha256": "94f3a4d49829fddc6967673b46f6c85a809a1c93cef7a68f0faca682e3cf02c5", "captured_utc": "2026-10-05T22:28:38Z", "bytes": 10314, "complete": true},
+      "applicability": "Version pin paired with S3 (schema captured from main).",
+      "class": "primary-source"
+    },
+    {
+      "id": "S6",
+      "title": "executablebooks/jupyter-cache README",
+      "url": "https://raw.githubusercontent.com/executablebooks/jupyter-cache/main/README.md",
+      "pin": "main @ content sha256 abb03f68...",
+      "locator": "\"If you have a number of notebooks whose execution outputs you want to ensure are kept up to date...\"; preconditions: \"You use the same environment...; They run no non-deterministic code...; They do not depend on external resources... that change over time\"; desired-not-yet-implemented: \"A transparent and robust cache invalidation: imagine the user updating an external dependency or a Python module, or checking out a different git branch\"; \"Separates out 'edits to content' from 'edits to code cells'\"; utilised by jupyter-book for caching.",
+      "capture": {"capture_id": "945a986c1f1341838c8adb863114a3de", "sha256": "abb03f682abbd0ce196e15711ddc6a85d8d0fb824c10f55d5dfeb8d3394018f6", "captured_utc": "2026-10-05T22:24:23Z", "bytes": 3552, "complete": true},
+      "applicability": "Staleness/caching precedent; its precondition list is adopted as the clean-replay guarantee boundary; its admitted invalidation gap justifies building the status layer ourselves.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S7",
+      "title": "DuckDB docs (current) — CSV Import overview",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/overview.md",
+      "pin": "duckdb-web main, docs/current, latest commit touching file d6a1aad080334112d988c56548c83bdc08eab92c (2026-09-21, 'Add v2.0 preview docs pages'); content sha256 f0f8db09...",
+      "locator": "Parameter table: store_rejects 'Skip any lines with errors and store them in the rejects table'; rejects_scan/rejects_table/rejects_limit; strict_mode default true; sample_size default 20480; encoding utf-8|utf-16|latin-1; dateformat/timestampformat; nullstr; Order Preservation: with preserve_insertion_order=true (default) \"the order of the rows ... is the same as the order of the corresponding lines read from the file(s)\".",
+      "capture": {"capture_id": "ef90c15bb18c4e638ddef65d416dbd23", "sha256": "f0f8db09a36a783808d74b348334392d7d9595536909d3b92139b5f4671479b7", "captured_utc": "2026-10-05T22:26:41Z", "bytes": 14831, "complete": true},
+      "applicability": "Data-engine precedent P2: typed configurable CSV reader, reject parameters, order-preservation guarantee, bounded sniffer sample (preview != full-dataset proof).",
+      "class": "primary-source"
+    },
+    {
+      "id": "S8",
+      "title": "DuckDB docs (current) — Reading Faulty CSV Files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "pin": "duckdb-web main, docs/current, latest commit touching file d6a1aad080334112d988c56548c83bdc08eab92c (2026-09-21); content sha256 12897abe...",
+      "locator": "Error taxonomy: CAST, MISSING COLUMNS, TOO MANY COLUMNS, UNQUOTED VALUE, LINE SIZE OVER MAXIMUM, INVALID ENCODING; reject_scans and reject_errors table schemas (line, line_byte_position, byte_position, column_idx, error_type ENUM, csv_line, error_message); detailed error message example with auto-detected parameters and suggested fixes; projection caveat: \"the CSV Parser is affected by the projection pushdown optimization ... if we were to select only the name column, both rows would be considered valid\".",
+      "capture": {"capture_id": "02f1dbabe6e746b49dacbcce6e040281", "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad", "captured_utc": "2026-10-05T22:27:30Z", "bytes": 12080, "complete": true},
+      "applicability": "Mechanism for 'record, don't silently drop' quarantine ledger; documented projection-dependence is a named reproducibility risk the product must design around.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S9",
+      "title": "DuckDB docs (v0.10 snapshot) — Reading Faulty CSV Files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/0.10/data/csv/reading_faulty_csv_files.md",
+      "pin": "duckdb-web main, docs/0.10 snapshot; content sha256 25605f4c...",
+      "locator": "Same rejects mechanism incl. reject_scans/rejects_limit; error type named INVALID UNICODE (renamed INVALID ENCODING in current docs); same projection-pushdown caveat; same error-anatomy message.",
+      "capture": {"capture_id": "9be79d7c3baa475ba6d9be6c405930b9", "sha256": "25605f4c0179f5acfd598c244072f2637d69b04d689063d370712a45e4fb8367", "captured_utc": "2026-10-05T22:27:31Z", "bytes": 11875, "complete": true},
+      "applicability": "Version applicability for Chain A: mechanism present in 0.10-era docs; error-type naming drift shows contract must be engine-versioned.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB docs (v1.0 snapshot) — CSV Import overview",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/1.0/data/csv/overview.md",
+      "pin": "duckdb-web main, docs/1.0 snapshot; content sha256 79e16aa3...",
+      "locator": "Parameter table of v1.0 docs does NOT list store_rejects (though 'Reading Faulty CSV Files' page exists); max_line_size default 2097152 (current docs say 2000000); encoding note: 'CSV reader only supports input files using UTF-8' in 1.0 vs utf-8/utf-16/latin-1 in current.",
+      "capture": {"capture_id": "101726b2919e4f9c821fd97fddff3f6e", "sha256": "79e16aa3b2a3c1dc3fe00186194fc095ad2acd321cf387f81d9d2125c98777eb", "captured_utc": "2026-10-05T22:26:41Z", "bytes": 12098, "complete": true},
+      "applicability": "Evidence that docs versions omit/lag features and defaults drift — pin behavior to release binaries/tests, not docs (lesson 4, §3).",
+      "class": "primary-source"
+    },
+    {
+      "id": "S11",
+      "title": "duckdb/duckdb PR #11512 — CSV Rejects Tables 2.0 (MERGED)",
+      "url": "https://github.com/duckdb/duckdb/pull/11512",
+      "pin": "merged_at 2024-04-11T14:22:49Z; author @pdet (member)",
+      "locator": "PR body: six registered error types; reject_scans (12 columns listed) and reject_errors (10 columns listed) schemas; parameters store_rejects/rejects_table/rejects_scans/rejects_limit; worked example with expected reject_errors rows incl. multi-error lines; 'It also adds many tests, including tests with different buffer sizes, and combinations with potential problematic options (i.e., ignore_errors, skip_rows, store_rejects)' (from related PR #13162 for comment option).",
+      "capture": {"via": "api.github.com search/issues (merged store_rejects PRs), capture_id d2b880ed62df4b2582a2897a9b0c1d64, sha256 558483f2..., captured_utc 2026-10-05T22:24:22Z, complete"},
+      "applicability": "Chain A merged fix: mechanism + tests. First-release binary attribution UNRESOLVED: merged 2024-04-11; v0.10.2 (2024-04-17, S18) is labeled bug-fix-only; likely 1.0.0 — unverified.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S12",
+      "title": "duckdb/duckdb PR #25793 — Migrate read_csv to TableFunctionMultiFileWrapper (MERGED)",
+      "url": "https://github.com/duckdb/duckdb/pull/25793",
+      "pin": "merged_at 2026-09-17T19:09:58Z; author @Mytherin (collaborator/member label)",
+      "locator": "Behaviour changes: 'ignore_errors no longer depends on unrelated options ... Adding filename=true to a scan could then change which rows were rejected — on data/csv/error/mismatch/*.csv the row count moved between 34968 and 34977 depending on the projection'; 'rejects tables identify a file by its index ... makes file_id deterministic under parallelism'.",
+      "capture": {"via": "api.github.com search/issues, capture_id d2b880ed62df4b2582a2897a9b0c1d64 (same capture as S11), complete"},
+      "applicability": "Chain A merged refactor documenting a reproducibility hazard (query-dependent reject sets). Release applicability (v1.5.6 vs 2.0 build) UNRESOLVED — lead L2; current docs caveat (S7/S8) suggests projection-independence still not guaranteed.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S13",
+      "title": "duckdb/duckdb issue #25825 — read_csv with explicit buffer_size silently drops the final row (OPEN)",
+      "url": "https://github.com/duckdb/duckdb/issues/25825",
+      "pin": "created 2026-09-17; label 'reproduced'; state open at capture",
+      "locator": "Reproduction tables: buffer 64KiB/1MiB/2MiB on multi-MB files return exactly one row short with no error and no reject_errors entry; default buffer raises 'Maximum line size ... exceeded'; minimal 33-byte case matrix.",
+      "capture": {"via": "api.github.com search/issues, capture_id 4069777231f0ccf6c5999ed967741f2c14ae00496e769e74ec6fd428bd912e41, sha256 4069777..., captured_utc 2026-10-05T22:23:59Z (32KB prefix of 42773)"},
+      "applicability": "Chain A frontier defect: silent data loss path. Evidence limits: issue text is the reporter's + maintainer label; no merged fix at capture.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S14",
+      "title": "duckdb/duckdb PR #26195 — Fix CSV reader silently dropping an oversized final row when buffer_size is set (OPEN, not merged)",
+      "url": "https://github.com/duckdb/duckdb/pull/26195",
+      "pin": "created 2026-09-26; state open at capture; fixes #25825",
+      "locator": "Regression test test/sql/copy/csv/test_buffer_size_final_row.test; 'With the ProcessExtraRow call removed the test fails with \"Expected 4 rows, but got 3\", the same silent drop'; author reports full CSV suite 286 cases passing.",
+      "capture": {"via": "api.github.com search/issues (same capture as S13)"},
+      "applicability": "Chain A frontier fix + regression test, NOT merged — release behavior unaffected as of capture; included precisely as an unmerged-evidence limit.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S15",
+      "title": "duckdb/duckdb issue #26211 — CSV reader loads NULL instead of raising on invalid TIMESTAMPTZ/TIMETZ when ICU is loaded (OPEN)",
+      "url": "https://github.com/duckdb/duckdb/issues/26211",
+      "pin": "created 2026-09-27; label 'reproduced'; state open; reporter verified on v1.5.5 (d8cdaa33fd) and nightly v2.0.0-alpha (8cbdaba6ac)",
+      "locator": "'silently loads SQL NULL ... even with strict_mode = true and ignore_errors = false. ignore_errors = true keeps the row (as NULL) instead of skipping it, and store_rejects = true records nothing'; root cause: ICU cast functions 'set the failing row to NULL ... but always return true'.",
+      "capture": {"via": "api.github.com search/issues (same capture as S13), complete within prefix"},
+      "applicability": "Chain A frontier defect #2: silent NULL injection defeating the entire reject mechanism under a default configuration (ICU). Direct input to V2 permutation testing.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S16",
+      "title": "duckdb/duckdb PR #26212 — Report failed ICU VARCHAR->TIMESTAMPTZ/TIMETZ casts (OPEN, not merged)",
+      "url": "https://github.com/duckdb/duckdb/pull/26212",
+      "pin": "created 2026-09-27; state open; fixes #26211",
+      "locator": "Test: test/sql/copy/csv/test_csv_icu_tz_cast_error.test (require icu); key evidence-limit sentence: 'The existing tests test_timestamptz_12926.test and rejects/csv_rejects_read.test expect these errors, but pass in CI only because they run without ICU.'",
+      "capture": {"via": "api.github.com search/issues (same capture as S13), complete within prefix"},
+      "applicability": "Chain A frontier fix + regression test; demonstrates that config-permutation testing is required for the reject contract.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S17",
+      "title": "duckdb/duckdb issue #18980 — reject_errors csv_line truncated near 10,000 chars (OPEN)",
+      "url": "https://github.com/duckdb/duckdb/issues/18980",
+      "pin": "created 2025-09-13; labels reproduced+stale; reproduced on v1.3.2 (Ossivalis) 0b83e5d2f6",
+      "locator": "len(csv_line) == 9999 for a >10000-char faulty line imported with ignore_errors=true, store_rejects=true.",
+      "capture": {"via": "api.github.com search/issues (same capture as S13), complete within prefix"},
+      "applicability": "Reject ledger fidelity limit: our own ledger caps raw-line storage deliberately (like rejects_limit) and must disclose truncation.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S18",
+      "title": "duckdb/duckdb release v0.10.2",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v0.10.2",
+      "pin": "tag v0.10.2, published_at 2024-04-17T13:50:44Z",
+      "locator": "'This is a bug fix release for various issues discovered after we released 0.10.1. There are no new features, just bug fixes.' (body prefix captured; PR list truncated at 32KB — #11512 not visible in captured portion)",
+      "capture": {"capture_id": "71aac39c571a4a5da7d1a87d633130dc", "sha256": "42e3fc2139323f27f65172ca1259668e1795e6837561335ebb1e8535f7a25fb0", "captured_utc": "2026-10-05T22:27:31Z", "bytes": 32768, "complete": false},
+      "applicability": "Release-date anchor for Chain A version applicability (merged 2024-04-11 < release 2024-04-17, but release claims bug-fixes-only).",
+      "class": "primary-source"
+    },
+    {
+      "id": "S19",
+      "title": "duckdb/duckdb latest release (v1.5.6 at capture)",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/latest",
+      "pin": "tag v1.5.6 'Bugfix Release', published_at 2026-09-28T13:35:11Z; target_commitish 069cc9f9b5be802405797faecc284961b07c70ef",
+      "locator": "tag_name v1.5.6; asset digests recorded in capture (e.g., duckdb_cli-linux-amd64.zip sha256:6e89deac...).",
+      "capture": {"capture_id": "4b8c1431b3ce46928a5fbf1ab005e54c", "sha256": "d675d9ad521e832c64e3a9ca62fc2f5e2bf45bee6daff3b93c5a506b2d19a2d4", "captured_utc": "2026-10-05T22:28:37Z", "bytes": 32768, "complete": false},
+      "applicability": "Current stable pin proposed for env/lock.json default; docs 'current' target this series (2.0 docs are preview).",
+      "class": "primary-source"
+    },
+    {
+      "id": "S20",
+      "title": "DuckDB docs (current) — Configuration overview",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/configuration/overview.md",
+      "pin": "duckdb-web main, docs/current; content sha256 1277c75f... (FIRST 32768 OF 69018 BYTES captured — settings beyond that range NOT evidenced)",
+      "locator": "Example 'SET memory_limit = \\'10GB\\''; SET threads; SET enable_progress_bar = true; SET default_null_order = 'nulls_last'; enable_external_access ('Allow the database to access external state (through e.g., loading/installing modules, COPY TO/FROM, CSV readers, pandas replacement scans, etc)'); allowed_paths/allowed_directories; disabled_filesystems ('e.g., LocalFileSystem'); allow_unsigned_extensions; allow_persistent_secrets.",
+      "capture": {"capture_id": "32a55407766e4a56ad9ad28ed66fb4d9", "sha256": "1277c75fedc3ed63a211b163dc3563f7d0ef1fe5d0f30a48520494d31380a96f", "captured_utc": "2026-10-05T22:27:31Z", "bytes": 32768, "complete": false},
+      "applicability": "Resource bound (memory_limit), progress surface, deterministic ordering defaults, and in-engine restriction primitives for the execution boundary. Spill/temp_directory details beyond capture = lead L3.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S21",
+      "title": "Python Developer's Guide — Status of Python versions",
+      "url": "https://devguide.python.org/versions/",
+      "pin": "page last_modified 2026-10-01 (ETag W/\"7f484ad8...\"); content sha256 4f149cde... (first 32768 of 125357 bytes)",
+      "locator": "'The main branch is currently the future Python 3.16'; five lifecycle phases per PEP 602 (feature/prerelease/bugfix/security/end-of-life); 'end-of-life: Five years after a release, support ends.'",
+      "capture": {"capture_id": "144ef751b0504417ac79ad8fb8908434", "sha256": "4f149cdef9239c62ac9e6067db3cbf1d2a33594149dc1c1c201b2dbf0541748c", "captured_utc": "2026-10-05T22:23:59Z", "bytes": 32768, "complete": false},
+      "applicability": "Python support-boundary policy source (phase definitions); numeric EOL table from S22.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S22",
+      "title": "endoflife.date Python API (aggregator, keyed to PEPs)",
+      "url": "https://endoflife.date/api/python.json",
+      "pin": "content sha256 cad1d979... captured 2026-10-05T22:26:42Z",
+      "locator": "3.14 eol 2030-10-31 (PEP-0745); 3.13 eol 2029-10-31 (PEP-0719); 3.12 eol 2028-10-31 (PEP-0693); 3.11 eol 2027-10-31 (PEP-0664); 3.10 eol 2026-10-01 (PEP-0619) — already past at capture; 3.9 eol 2025-10-31.",
+      "capture": {"capture_id": "3a1fccb40fe347be8345d2df54a80a60", "sha256": "cad1d97926cff0ce8f110242733f4376c7a7ff65670434c8f204bf6fee4c54e6", "captured_utc": "2026-10-05T22:26:42Z", "bytes": 2755, "complete": true},
+      "applicability": "Support boundary fact: as of 2026-10-05, supported = 3.11-3.14. Aggregator (secondary); PEPs cited within are the primaries.",
+      "class": "secondary-aggregator"
+    },
+    {
+      "id": "S23",
+      "title": "DVC docs — dvc status command reference",
+      "url": "https://raw.githubusercontent.com/iterative/dvc.org/main/content/docs/command-reference/status.md",
+      "pin": "dvc.org repo main @ content sha256 b735e7bb...",
+      "locator": "Status states: changed checksum / always changed / changed deps|outs with new|modified|deleted|not in cache; '--with-deps' resolves upstream dependencies; import stages: \"update available means that an import stage is outdated (the original data source has changed)\"; comparison 'between data files in the workspace and corresponding files in the cache directory'.",
+      "capture": {"capture_id": "1a535a38bf994cd391b7160633422625", "sha256": "b735e7bb52c22af269f05c2ab727df64a63d83173b46dea28a63174e22bf902a", "captured_utc": "2026-10-05T22:25:15Z", "bytes": 11035, "complete": true},
+      "applicability": "Procedent P3: checksum-based, dependency-aware staleness vocabulary adopted for dataset/cell invalidation; data tracked by hash without git storage.",
+      "class": "primary-source"
+    },
+    {
+      "id": "S24",
+      "title": "containers/bubblewrap README",
+      "url": "https://raw.githubusercontent.com/containers/bubblewrap/main/README.md",
+      "pin": "main @ content sha256 0c1dc12c...",
+      "locator": "'bubblewrap is not a complete, ready-made sandbox with a specific security policy ... the level of protection between the sandboxed processes and the host system is entirely determined by the arguments passed'; always new mount namespace w/ tmpfs root; CLONE_NEWNET 'only a loopback device'; seccomp filters; PR_SET_NO_NEW_PRIVS; CVE-2017-5226 (TIOCSTI) requires --new-session or seccomp; setuid mode removed.",
+      "capture": {"capture_id": "2e9b535a3b7e44c0aff0f5a734f89d8f", "sha256": "0c1dc12c6d94017c45e220fc0e5b679f24c0f09494bdd4bc7157d8abcd75c001", "captured_utc": "2026-10-05T22:26:06Z", "bytes": 10687, "complete": true},
+      "applicability": "Execution-boundary mechanism (P4) + its honesty constraint: the sandbox policy (args) is ours and must be versioned/tested (V3).",
+      "class": "primary-source"
+    }
+  ]
+}

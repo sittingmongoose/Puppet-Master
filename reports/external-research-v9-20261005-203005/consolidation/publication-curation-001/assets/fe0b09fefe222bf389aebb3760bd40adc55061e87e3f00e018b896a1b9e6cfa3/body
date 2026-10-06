@@ -1,0 +1,96 @@
+{
+  "schema": "er9.research.witnesses.v1",
+  "stage": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "kind": "isolated component arithmetic check",
+      "execution_id": "exec-awzx96nd",
+      "claim_scope": "The candidate-authored formula for one named-axis scale/translation example yields the stated world coordinates and inverse; the candidate-authored display mapping created a separate small list and left its source list unchanged.",
+      "code": "# Candidate-authored component check: named-axis sample-index/world round trip\n# and a display-only window mapping. This does not use OME-Zarr, napari,\n# SQLite, source files, or any full application.\naxes = (\"t\", \"c\", \"z\", \"y\", \"x\")\nsource_index = {\"t\": 1, \"c\": 2, \"z\": 2.0, \"y\": 3.0, \"x\": 4.0}\nspatial_axes = (\"z\", \"y\", \"x\")\nscale = {\"z\": 0.8, \"y\": 0.2, \"x\": 0.1}\ntranslation = {\"z\": 0.0, \"y\": 12.5, \"x\": -3.0}\nworld = {a: source_index[a] * scale[a] + translation[a] for a in spatial_axes}\nassert world == {\"z\": 1.6, \"y\": 13.1, \"x\": -2.6}\nround_trip = {a: (world[a] - translation[a]) / scale[a] for a in spatial_axes}\nassert all(abs(round_trip[a] - source_index[a]) < 1e-12 for a in spatial_axes)\n# Display mapping returns a new view buffer and leaves original integer samples alone.\nsamples = [0, 100, 65535]\noriginal = samples[:]\nlo, hi = 0, 100\nview = [max(0, min(255, round((v - lo) * 255 / (hi - lo)))) for v in samples]\nassert view == [0, 255, 255]\nassert samples == original\nprint(\"world_zyx=1.6,13.1,-2.6\")\nprint(\"round_trip_zyx=2.0,3.0,4.0\")\nprint(\"display_u8=0,255,255; source_unchanged=True\")",
+      "input": {
+        "data": "No explicit JSON data argument; constants are embedded in code.",
+        "code_sha256": "d2fdefb020a29388ca4943451e9512b5c4bf503e01e986d4c8f3e8823f01641d",
+        "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      },
+      "expected_behavior_and_why": "With app convention index 0 at sample center and the code's diagonal affine, forward mapping must produce z=1.6, y=13.1, x=-2.6 and the inverse must recover z=2, y=3, x=4. Mapping samples through window [0,100] to display bytes should yield [0,255,255] while leaving the original list unchanged. This is a discriminating formula check, not an application test.",
+      "stdout": "world_zyx=1.6,13.1,-2.6\nround_trip_zyx=2.0,3.0,4.0\ndisplay_u8=0,255,255; source_unchanged=True\n",
+      "stderr": "",
+      "exit_code": 0,
+      "stdout_sha256": "699621bcc9cc201cbe2346201c180e639e11b6fedcee6a154d2a448b736fe7cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "execution_constraints": {
+        "wall_seconds": 5,
+        "cpu_seconds": 3,
+        "memory_bytes": 268435456,
+        "network": "new empty namespace"
+      },
+      "limitations": [
+        "Pure standard-library arithmetic only; no image reader, NGFF metadata, Dask, napari, SQLite, file IO or actual application was used.",
+        "One axis order and one diagonal scale/translation case; no rotation, shear, display inversion, resampling or external image.",
+        "List immutability demonstrates only that code path; it does not establish that a viewer display operation preserves original image samples.",
+        "Does not establish 3 GB memory use, I/O bounds, project recovery, export fidelity, or UI behavior."
+      ]
+    },
+    {
+      "id": "W2",
+      "status": "proposed / UNEXECUTED",
+      "kind": "bounded-access and responsiveness validation",
+      "sources": ["S2", "S5", "S6"],
+      "procedure": "On an ordinary 8-core/16 GB workstation, test an approximately 3 GB tiled TIFF and an OME-Zarr v0.5 specimen with instrumented ArrayAccess read calls. Exercise 2D slices from T/C/Z, zoom/pan, channel switches, a mask edit, contrast changes, cancellation and cold/warm cache. Compare axis-aware access with a deliberately reshaped Dask access path, and compare direct Zarr slicing with a Dask-wrapped array. Record bytes/chunks read, decode concurrency, RSS, p50/p95 response time, cancel acknowledgement and progress cadence.",
+      "expected_behavior": "The visible slice/ROI is read without creating a second full-size source array; cache and decoder concurrency respect their declared limits. A window change performs no source sample write. Cancellation releases pending work, progress advances, and expensive whole-stack statistics are not run on the UI thread.",
+      "scope_limit": "Tests only the eventual selected locked packages, specific formats/fixtures and workstation. Does not demonstrate every Bio-Formats/tifffile format. Targets in proposal are proposed engineering thresholds, not current results."
+    },
+    {
+      "id": "W3",
+      "status": "proposed / UNEXECUTED",
+      "kind": "axis, calibration and coordinate round trip",
+      "sources": ["S1", "S4", "S7", "S8", "S10"],
+      "procedure": "Generate 2D, ZYX, CZYX and TCZYX arrays with distinguishable values, named and permuted axes, anisotropic scale, nonzero origin, physical units, fractional coordinates, axis flips and an application-owned rotated affine. Convert sample-index to world to displayed plane to sample-index; save, close, reopen on a second workstation path; compare annotation vertices, fixed selectors, raw metadata and unit values. Include unknown/custom axis, missing unit, contradictory spacing and override/correction cases.",
+      "expected_behavior": "Round trips recover the original coordinates within declared numeric tolerance; T/C and omitted axes remain explicit; index-zero/sample-center convention is consistent; original metadata stays available after override; unsupported physical mapping is visibly unavailable rather than guessed.",
+      "scope_limit": "Requires actual readers/writer/UI and standards compatibility checks. A math-only round trip is insufficient."
+    },
+    {
+      "id": "W4",
+      "status": "proposed / UNEXECUTED",
+      "kind": "transform-preservation regression suite",
+      "sources": ["S7", "S8", "S9", "S10", "S11"],
+      "procedure": "Reproduce the RGB split failure. Parameterize source layer scale, translation, full affine, rotation and shear; test both channel axis placements and per-plane annotations. Repeat after undo/redo, save/reopen, export and any recorded resampling. Assert expected matrix/coordinates or an explicit new operation transform at every step.",
+      "expected_behavior": "Every metadata-preserving operation retains the original transform; geometric operations produce an auditable output transform/lineage. Regression case must fail if the source-to-world relationship silently becomes identity.",
+      "scope_limit": "The cited napari fix only verifies a narrower split-layer path and does not supply this application's persistence or export behavior."
+    },
+    {
+      "id": "W5",
+      "status": "proposed / UNEXECUTED",
+      "kind": "interrupted import/save/export, relocation and shared-storage recovery",
+      "sources": ["S12", "S13"],
+      "procedure": "Inject process termination, disk-full and copy errors at each import/cache/SQLite transaction/bundle/export staging step. Relaunch and run integrity checks. Test local filesystem recovery, then actual university SMB/NFS/shared storage with two workstations using closed bundles. Move/rename source assets; test hash match, same path/different bytes and missing source.",
+      "expected_behavior": "Last validated project generation stays openable; incomplete attempts are distinguishable and resumable or removable; no incomplete export is marked ready. Moved matching sources can be explicitly relinked; changed/missing content never silently inherits old image identity. Share-specific assumptions are recorded from observed results.",
+      "scope_limit": "SQLite documentation describes engine mechanisms and filesystem assumptions, not this application's bundle protocol or the target server's guarantees."
+    },
+    {
+      "id": "W6",
+      "status": "proposed / UNEXECUTED",
+      "kind": "export semantics, visual usability and keyboard accessibility",
+      "sources": ["S1", "S4", "S7", "S10"],
+      "procedure": "Export points, polygons and masks across plane/timepoint/volume/acquisition scopes. Reopen table and sidecar and compare IDs/vertices/units; render integer-label overlay and check its ID mapping; copy a crop and compare all dtype/sample values; separately resample and inspect recorded transform/interpolation/output hash. Attempt keyboard-only import, channel/slice/time navigation, drawing, style selection, undo/redo and error recovery; inspect focus order and legible/announced calibration feedback.",
+      "expected_behavior": "Table is authoritative for vector geometry; overlay is identified as rasterized/lossy where relevant; native crop preserves samples; resampling and rendered PNG state precisely what changed and what was lost; all required review actions work by keyboard.",
+      "scope_limit": "Requires an application and actual exported files; this stage produced neither."
+    },
+    {
+      "id": "W7",
+      "status": "source-chain evidence, not code execution",
+      "kind": "public failure/fix/regression/release chain",
+      "sources": ["S7", "S8", "S9", "S10", "S11"],
+      "evidence": {
+        "failure": "napari issue #7085 reports RGB splitting dropping nontrivial transformations (issue capture S7).",
+        "reproduction": "Issue comments include a parameterized test and maintainer response identifying discarded metadata (S8).",
+        "fix": "Merged PR #8256 routes split_rgb through split_channels and updates layer metadata handling (PR and patch captures S9-S10).",
+        "regression_test": "Commit 3f994d... updates test_split_rgb for default, scale, translation and affine matrix preservation (S10-S11).",
+        "release": "napari v0.6.5 release notes list PR #8256 under improvements and bug fixes (S11)."
+      },
+      "limitations": "No candidate code or napari tests were executed. The source chain does not cover rotation/shear test cases, application serialization, export or another workstation."
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+# Critique review — ER9 confirmation brief H1 (offline audio review and edit exchange)
+
+- Role: critique (fresh, source-grounded). Stage: C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001
+- Date of work: 2026-10-06. Author: admitted candidate model, native goal.
+- Input contract: `inputs/brief.md` (sha256 a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50) read in full; `inputs/STAGE_CLOCK.json` read at stage start.
+- Deliverable: this file. Supporting machine-readable catalogs: `out/critique/sources.json`, `out/critique/witnesses.json`, `out/critique/leads.json`.
+
+Every item below is labeled: **[VERIFIED — capture pinned]** (external fact, candidate captured bytes), **[EXECUTED — candidate]** (admitted bounded isolation, receipt cited), **[INFERENCE]** (engineering reasoning from verified facts), **[PRODUCT CHOICE]**, or **[UNEXECUTED]** (proposed validation only).
+
+---
+
+## 1. Predecessor-artifact finding (C-1) — frozen research proposal NOT FOUND
+
+The critique contract says ops attaches "exact full same-arm native predecessor artifacts and navigation under `inputs/prior/`". `inputs/prior/` **exists as a directory** (reads against it fail with `ValueError` rather than `FileNotFoundError`), but **no file inside it could be located**. Probes attempted, all `FileNotFoundError` unless noted:
+
+| # | path probed | result |
+|---|---|---|
+| 1 | `inputs/prior` (as file) | ValueError — is a directory |
+| 2 | `inputs/prior/proposal.md` | not found |
+| 3 | `inputs/prior/research/proposal.md` | not found |
+| 4 | `inputs/prior/out/research/proposal.md` | not found |
+| 5 | `inputs/prior/out/final/proposal.md` | not found |
+| 6 | `inputs/prior/INDEX.json`, `index.json`, `manifest.json`, `README.md`, `NAVIGATION.md`, `navigation.json`, `prior-manifest.json`, `sources.json`, `research-proposal.md`, `workspace/out/research/proposal.md` | not found |
+| 7 | `inputs/research/proposal.md`, `inputs/manifest.json` | not found |
+| 8 | `out/research/proposal.md` (own workspace) | not found |
+| 9 | `mechanical line_map` / `cache_source` on `inputs/prior` | ValueError — directory, no listing capability in the admitted toolset |
+
+Consequences, stated as obligations for the next fresh same-family candidate:
+
+1. **C-1a [fact of this stage]** No frozen research proposal or catalog was reviewable. This review therefore does NOT contain finding-by-finding verdicts on predecessor text — inventing them is prohibited. If the predecessor artifacts appear in a later attachment, this review's verification pack (§3) and obligation audit (§5) remain usable as prior-independent checks; reconcile finding IDs then, and do not treat ID stability as truth ("correcting a finding ID does not prove the new wording is true").
+2. **C-1b [fact]** The stage id contains "INFRA-STAGE-REPAIR"; the missing attachment is consistent with an infra-failure scenario. The repair-compatible deliverable is: (a) this documented absence, (b) the independently verified source pack a correct proposal must be consistent with, and (c) the acceptance checks any successor proposal must pass. That is what §3–§6 provide.
+3. **C-1c [limitation preserved]** Because no proposal text existed to quote, no claim in this review is a correction of predecessor wording. All corrections below target *claim classes* that research proposals for this brief typically assert, verified against pinned public versions.
+
+---
+
+## 2. Scope and method
+
+Independent verification performed against **eligible public primary sources only** (vendor/stdlib documentation and the projects' own release histories in their repositories). Campaign/evaluator/other-arm material was not sought or used; no capture contained such material. Five HTTP captures were taken (exact bytes pinned, see §7) and one bounded isolated execution was run (receipt `exec-z8lwmo7y`). No maintainers were contacted; no external repository was modified.
+
+---
+
+## 3. Verified source pack (V-1…V-7) — claim classes any proposal must get right
+
+### V-1. "The stdlib `wave` module can read our recordings" — FALSE as stated; version-scoped
+**[VERIFIED]** Python 3.14 documentation (captured 2026-10-06, capture `99a954bd498d4cd99ac4ea919437f39c`, sha256 `463a7c29…78bc5ca`, locator: page text "Only uncompressed PCM encoded wave files are supported."): the module supports uncompressed PCM only. Same page: "**Changed in version 3.12:** Support for `WAVE_FORMAT_EXTENSIBLE` headers was added, provided that the extended format is `KSDATAFORMAT_SUBTYPE_PCM`."
+- Applicability: any Python-stdlib-only I/O path (a plausible bounded alternative) rejects or mishandles 32-bit float WAV, ADPCM, mp3-in-WAV, etc. Extensible-header PCM files need **Python ≥ 3.12**; on 3.11 and earlier they fail. A proposal choosing the stdlib path must state this boundary explicitly and version-pin the interpreter, and must still store an ingest verdict per file rather than silently passing metadata through.
+- A proposal claiming "reads WAV" without a subtype table fails the brief's "practical supported input/output boundary" requirement.
+
+### V-2. libsndfile as I/O backbone — supported, but claims must be version-pinned
+**[VERIFIED]** libsndfile official home page, version footer "1.2.2" (capture `91d61ea8101b4b31b26cc913ff4c40a5`, sha256 `edb94f16…efdd5d527`): reads/writes "a large number" of formats, on-the-fly conversion; **latest release per repo changelog is 1.2.2 (2023-08-13)** (capture `55c4b29c…1fe91f`, CHANGELOG.md, "## [1.2.2] - 2023-08-13").
+- Applicability: libsndfile is a sound I/O **boundary** choice, not a "handles every codec" guarantee; e.g. MP3 support only exists since 1.1.0 (CHANGELOG "## [1.1.0] … MPEG Encode/Decode Support", decode seeking listed as available, encode limited to Layer III). A proposal must enumerate its accepted format/subtype list and pin a minimum libsndfile version.
+
+### V-3. Consequential real failure, followed through fix, with exact release applicability
+**[VERIFIED]** libsndfile `NEWS.OLD` (capture `3a78bdab…ab05263`):
+- "Version 1.0.26 (2015-11-22) … Minor bug fixes and improvements." — release in which the regression was introduced.
+- "Version 1.0.27 (2016-06-19): **Fix an SF_INFO seekable flag regression introduced in 1.0.26.** … Add handling of CUE chunks. …"
+- Related later seek fixes: 1.0.29 (2020-08-15) "Fix ASAN crash in `wavlike_ima_seek()`"; 1.0.30 (2020-09-18) "`sf_open_fd()` sometimes leaves filehandle open even if `close_desc` is TRUE".
+- **Causal limits:** the defect window is exactly 1.0.26 → fixed in 1.0.27; behavior claims about "libsndfile reports seekable" are **false on 1.0.26, true on ≥1.0.27**. Lesson for the plan (affects waveform/cache identity and seeking design): seek behavior of the I/O layer is version-dependent; the proposal must pin **min libsndfile ≥ 1.0.27** and re-run seek conformance checks at every dependency bump, because a wrong `seekable` flag silently changes which read path (seek vs stream) a cache builder takes.
+- **[Limitation preserved]** The exact fix commit hash and the specific regression-test file for the 1.0.27 fix were **not captured** in this stage (not located within the stage budget). The official `NEWS.OLD` entry plus the project's own test-suite policy ("When new bugs are found, new tests are added to the test suite to ensure that these bugs don't creep back", home page, V-2) support the issue→fix→test chain at release granularity only. Do not cite a commit hash for this fix without capturing it — that would be an invented source chain.
+
+### V-4. Cue support has a version floor; cue *semantics* are not given by the library
+**[VERIFIED]** Same `NEWS.OLD`: "Add handling of CUE chunks" appears first in 1.0.27. **[INFERENCE]** Reading/writing a CUE chunk is format plumbing; nothing captured defines what a cue means at an edit boundary, under rate conversion, or after a trim — that mapping is the proposal's own contract (brief ¶7). A proposal that treats "libsndfile handles cues" as a semantic guarantee overreaches. Also relevant: a cue table is primarily an *editorial* artifact; the sidecar-table export (not the WAV CUE chunk) should be the authoritative cue representation, with CUE-chunk round-trip as an optional fidelity extra.
+
+### V-5. Samplerate limits are version-dependent
+**[VERIFIED]** CHANGELOG (capture `55c4b29c…1fe91f`): 1.2.0 (2022-12-25) "Removed: Maximum samplerate limit … In version 1.1.0, an artificial limit of 655350 Hz was created" (issue #850).
+- Applicability: any proposal sentence of the form "libsndfile caps samplerates at 655350 Hz" is **true for 1.1.0 only, false for ≥1.2.0**. Conversely "no samplerate limit" must still not be read as "all rates are validated/sensible". Version-scope every format-capability claim.
+
+### V-6. Resource lifecycle: `sf_open_fd` regressions (twice)
+**[VERIFIED]** `NEWS.OLD` 1.0.30: "`sf_open_fd()` function sometimes leaves filehandle open, even if `close_desc` parameter is TRUE". CHANGELOG 1.2.1 (2023-08-12): "`sf_open_fd`() regression, thanks @brentr (PR #950)" (fixed) — i.e. a regression shipped in 1.2.0 and fixed in 1.2.1.
+- Applicability: an editor that opens long sources repeatedly for scrub/cache building must close descriptors deterministically; descriptor leaks on a 4-editor laptop translate into "too many open files" failures mid-session. The proposal should (a) pin ≥1.2.2 (current release), and (b) include a long-session descriptor-count check in validation. **[INFERENCE]** from the two upstream regressions; the check itself is proposed/UNEXECUTED.
+
+### V-7. Audacity precedent — branch pinning is mandatory, and this is a research-failure mode to check
+**[VERIFIED]** Audacity `README.md` on `master` (capture `c84ab599…6978d121`, captured 2026-10-06): "This repository is currently undergoing major structural change… working on Audacity 4… It is still possible to submit patches to Audacity 3.x; make sure you branch off `audacity3`… Build instructions for 3.x … `release-3.7.0`."
+- Applicability: any behavioral claim sourced from "Audacity master" is about an in-refactor codebase and may not describe shipped Audacity 3.x. A research proposal citing Audacity implementation behavior (nondestructive clips, blockfiles, autosave/recovery) **without a branch/tag pin** is unverifiable; the reviewer should reject such citations or demand re-pinning to `audacity3`/`release-3.7.x`. Same discipline applies to any component cited for waveform-cache or project-format lessons.
+- Audacity remains a legitimate **precedent** for the nondestructive clip model and for crash recovery; what this stage verified is only the repository-state fact above, not Audacity's internal behavior claims. Any proposal-level Audacity behavior statement must be separately pinned to a branch, file and line before being relied on. **[UNEXECUTED here by design of this role's budget]**
+
+---
+
+## 4. Executed bounded check (W-1) — rounding, cumulative drift, and clipping
+
+**[EXECUTED — candidate]** Receipt `exec-z8lwmo7y`, exit 0, 2026-10-06T08:18:04Z, code sha256 `77ebc3f7…daa31`, stdlib-only arithmetic, no audio library, no files, no network. Limits: 5 s wall / 256 MiB / no network namespace. Scope limit: an isolated arithmetic check; **it is not evidence about any editor application.**
+
+Honest results, including the null results:
+
+| Case | Input | Result | Reading |
+|---|---|---|---|
+| A | 1 s boundary, 44100→48000, floor vs round vs nearest | all → 48000 (exact) | **No divergence at this boundary** — the mapping is exact here. A proposal may not claim this specific point as a rounding hazard; boundary policy must be demonstrated on non-integer mappings. |
+| B | cue at 1 h 02 m 03.5 s, 48000→44100→48000 round-trip (round-half-up both ways) | drift 0 frames | **No drift at this point** — single-point round trips can be lossless. |
+| C | 100 clips × 96001 frames each, per-clip 48000→44100 rounding vs one-shot conversion | per-clip total 8 820 100 vs one-shot 8 820 092 → **+8 frames (~0.18 ms)** | The load-bearing result: **per-clip rounding accumulates**. Concatenating independently rounded clip lengths yields a mix whose total length differs from the single-authoritative mapping. This is precisely the brief's warning that "a numerical time calculation … is not evidence that the final audio content was assembled correctly." |
+| D | float 1.4 → int16 naive wrap vs clamp | wrap → **−19663**; clamp → 32767 | A hot sample above full scale wraps to a large negative value if conversion casts before clamping; preview gain applied pre-limit can push peaks over 1.0. The mixdown contract must define clamp-before-quantize and where the preview gain sits relative to it. |
+
+Design consequences (all **[INFERENCE]** from W-1 + brief ¶7): (1) the project must have **one authoritative mapping function** (integer sample arithmetic in the *project rate* frame, with a single documented rounding rule at clip edges — e.g. half-open intervals with floor for start/end so abutting clips cannot overlap or gap), never per-clip ad-hoc conversions; (2) cue positions must be stored as integers in the space they refer to (source frames or project frames) with the conversion applied once, at the edge where the space changes; (3) exported cue positions and the mix must come from the same pass so C-class drift cannot split them.
+
+---
+
+## 5. Obligation audit — acceptance checks the successor proposal must pass
+
+Because no frozen proposal was reviewable, this section converts the brief's obligations into concrete acceptance checks (each must be *shown* in the proposal, with labeled evidence class). These are the review criteria the next critic should apply:
+
+1. **A1 Minimum workflow** (brief ¶3): import (mixed rates/channels/widths) → inspect metadata → scrub/listen → named regions + transcript cues → trim → join with optional short transition → preview gain → save/close/reopen → export review mix + cue table; originals unchanged. Proposal must show each step in the data contract, not prose only.
+2. **A2 Three-state distinctness**: every project artifact classed as nondestructive edit / display-only / rendered-audio operation, with rules for which states survive save/close/reopen and which are per-view. Preview gain must be display/monitor-side, never written into clips or exports unless explicitly rendered.
+3. **A3 I/O boundary honesty**: explicit accepted list (container/codec/subtype/channels/widths) with per-file ingest verdict (accepted / accepted-with-ambiguity / rejected, reasons). Given V-1/V-2: no "reads WAV/mp3" without version-pinned subtype table; rejected formats named, not silently coerced.
+4. **A4 Timeline contract**: explicit five-space relationship (source sample positions ↔ clip-local ↔ project time ↔ displayed timecode ↔ exported cue positions), one rounding authority, boundary semantics at edit points (half-open [start, end), meaning of a cue exactly at a cut), channel mapping rule for mono/stereo/multichannel, and the requirement that rate conversion/trim/gap/transition never re-point a cue at different content. W-1/C and W-1/D are the concrete hazards the contract must close.
+5. **A5 Metadata ambiguity**: absent/contradictory/unsupported metadata retained verbatim alongside the ingest verdict; ambiguity surfaced in UI and in the project file. (Supported by V-1's extensible-header case: a parser that "fixes" headers destroys evidence.)
+6. **A6 Resources**: 2-hour-interview target on 8 GB with bounded waveform/audio access; progress + cancel for indexing/rendering; **cancelled render ≠ complete export** (explicit artifact states: partial/invalid/complete, and cleanup on cancel); cache identity = (source content id, format verdict, waveform params, edit-relevant graph version) with invalidation rules; seek behavior under the pinned I/O version (V-3); interrupted import/render/save recovery semantics.
+7. **A7 Exchange**: portable bundle/folder with source identity (content hash, not just path), relocation, missing-media reporting, recovery that never overwrites originals (write-side new files, originals read-only in workflow).
+8. **A8 Accessibility & control**: keyboard navigation, legible transcript, error feedback, undo/redo, solo/mute/channel choice, current-edit indication, timing/provenance inspector. Optional items (auto-transcription, noise reduction, real-time co-editing, cloud) must be marked opportunities, not requirements.
+9. **A9 Evidence hygiene**: executed checks labeled with receipt/scope; proposed validation labeled UNEXECUTED; no invented receipts or source chains; limitations preserved (e.g., do not cite a commit hash that was never captured — see V-3 limitation).
+10. **A10 Precedents & issue chain**: ≥2 independently useful implementation precedents with concrete lessons; ≥1 real issue followed through fix (V-3 satisfies the pattern at release granularity; a successor should still try to pin the exact commit/test file — see §7 leads).
+11. **A11 Scope discipline**: no conversion of found features into requirements; clipping/resampling/transition addressed only as far as A4/A2 honesty requires.
+12. **A12 Catalog discipline**: sources with URL/pin/locator/capture identity/applicability; claims classified fact vs inference vs product choice.
+
+---
+
+## 6. Preserved valid content, opportunity, alternative
+
+- **Preserved valid claims** (valid regardless of proposal wording): V-1–V-7 above; W-1's C and D results; the A-checklist as review criteria.
+- **Useful opportunity [PRODUCT CHOICE/guidance]**: make the cue table the authoritative editorial artifact (sidecar, versioned with the edit graph), and treat WAV CUE-chunk round-trip as an optional fidelity extra — this matches V-4 (CUE-chunk plumbing exists ≥1.0.27 but carries no edit-boundary semantics) and gives the "next editor" comprehension the brief demands. Second opportunity: expose per-source ingest verdicts (including V-1-style subtype gates) as first-class provenance shown in the timing/provenance inspector (A8).
+- **Plausible alternative [bounded]**: stdlib-only pipeline (`wave`-based, PCM-only, 3.12+ for extensible headers) as a zero-dependency fallback, with explicit rejection of everything else — honest but narrow (V-1); versus libsndfile-backed boundary pinned ≥1.2.2 (V-2/V-5/V-6). A proposal should pick one as primary and name the other as fallback, with the tradeoff stated; neither may be presented as "supports everything".
+
+---
+
+## 7. Unresolved leads and explicitly unsupported dependencies
+
+1. Exact commit hash + regression-test file for libsndfile 1.0.27 SF_INFO seekable fix — **not captured**; release-granularity applicability only (V-3). Successor: fetch `libsndfile` git history around 2016-06-19; do not guess the hash.
+2. Audacity implementation-behavior pins (blockfile/AUP3 recovery, clip model) on `audacity3`/`release-3.7.x` — **UNEXECUTED** here (V-7); needed only if the successor uses Audacity as a load-bearing precedent.
+3. Waveform-cache identity/invalidation and cancel-safety precedents (e.g., how Audacity names block files by content) — UNEXECUTED; treat as proposed validation in any successor.
+4. Rounding-rule choice (floor vs round at clip edges) is a **product choice**; W-1 only shows that *having no single rule* is defective. The successor must commit to one rule and test abutting/zero-length clips at edit boundaries.
+5. Memory/2-hour performance numbers: **no measurement exists in this stage**; any numeric performance claim in a successor must be labeled proposed/UNEXECUTED unless actually measured.
+
+---
+
+## 8. Sources and witnesses (summary; full detail in `out/critique/sources.json` / `witnesses.json`)
+
+| id | source | capture identity | key locator |
+|---|---|---|---|
+| S1 | docs.python.org/3/library/wave.html | capture `99a954bd498d4cd99ac4ea919437f39c`, sha256 `463a7c29…78bc5ca`, 2026-10-06 | "Only uncompressed PCM …"; "Changed in version 3.12: WAVE_FORMAT_EXTENSIBLE … KSDATAFORMAT_SUBTYPE_PCM" |
+| S2 | libsndfile.github.io/libsndfile/ | capture `91d61ea8101b4b31b26cc913ff4c40a5`, sha256 `edb94f16…efdd5d527`, footer "1.2.2" | features list; test-suite policy sentence |
+| S3 | raw.githubusercontent.com/libsndfile/libsndfile/master/CHANGELOG.md | capture `b7215f9f…4e5d420b92b3498582f47c7e`, sha256 `55c4b29c…1fe91f` | [1.2.2] 2023-08-13; [1.2.1] sf_open_fd regression PR #950; [1.2.0] samplerate-limit removal (issue #850); [1.1.0] MPEG support |
+| S4 | raw.githubusercontent.com/libsndfile/libsndfile/master/NEWS.OLD | capture `b2298c8936794e1e97cca927307b07c1`, sha256 `3a78bdab…ab05263` | 1.0.27 (2016-06-19) SF_INFO seekable regression fix + CUE chunks; 1.0.26 (2015-11-22); 1.0.29 wavlike_ima_seek ASAN fix; 1.0.30 sf_open_fd leak fix |
+| S5 | raw.githubusercontent.com/audacity/audacity/master/README.md | capture `65608cc1c1df46f0b87eb61585c3f681`, sha256 `c84ab599…6978d121` | master mid-refactor to Audacity 4; 3.x on `audacity3`; build docs at `release-3.7.0` |
+| W1 | python_execute exec-z8lwmo7y (EXECUTED — candidate) | code sha256 `77ebc3f7…daa31`, exit 0, stdout sha256 `41dcd284…63b62b609cdd8` | case C +8 frames cumulative per-clip drift; case D wrap −19663 vs clamp 32767; cases A/B null (exact) |
+
+Label summary: 5 public HTTPS captures + 1 isolated execution were performed by the candidate in this stage. All other validation anywhere in the successor's deliverables must remain labeled **proposed/UNEXECUTED** until actually run.

@@ -1,0 +1,109 @@
+{
+  "schema": "er9.research.sources.v1",
+  "stage": "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+  "role": "research",
+  "captured_utc_day": "2026-10-06",
+  "capture_method": "mcp public_https_get (exact-http-response-body-bytes); capture identity = sha256 of response body",
+  "eligibility_note": "All entries are independently chosen third-party public primary sources (project docs, GitHub API issue/commit records). No campaign, evaluator, or other-arm material was retrieved or used.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Transport security for kernels — jupyter_client 8.10.0 documentation",
+      "url": "https://jupyter-client.readthedocs.io/en/latest/security.html",
+      "pin": "readthedocs 'latest' as served 2026-10-06; page self-identifies as jupyter_client 8.10.0; CurveZMQ feature 'Added in version 8.9'",
+      "exact_locator": "Sections: intro paragraph ('bound to local TCP ports with no transport-level encryption ... Any process on the same host that can reach those ports can connect and read messages, including all IOPub output'); 'The transport_encryption setting' ('disabled' (default) / 'auto' / 'required'); note that IPC sockets rely on filesystem permissions",
+      "capture": {"sha256": "898aa59feea3d3889a8c9ae2e531620272a44ee186fdd8034dd878f8e9c5114d", "capture_id": "9ee693043a044ec79f46a370e5e11d30", "captured_utc": "2026-10-06T09:18:05.319691+00:00", "bytes": 32252, "etag": "W/\"8aecdda36751ed528b770d79eb66ce37\"", "complete": true},
+      "applicability": "FACT for default kernel transport exposure and absence of a default isolation boundary; basis for the execution-boundary design (§8)."
+    },
+    {
+      "id": "S2",
+      "title": "Welcome to nbclient — nbclient documentation (index)",
+      "url": "https://nbclient.readthedocs.io/en/latest/index.html",
+      "pin": "readthedocs 'latest' as served 2026-10-06; docsearch version 0.11",
+      "exact_locator": "'NBClient lets you execute notebooks'; 'NBClient was spun out of nbconvert's former ExecutePreprocessor'; 'Python Version Support: ... supports python 3.6+ versions'",
+      "capture": {"sha256": "d993cf510508347bb2124db010268bc5cb7f7a39a68445f4cfde725b41e35768", "capture_id": "d8f32fd3376642508f2f83b245f11ddc", "captured_utc": "2026-10-06T09:18:05.622686+00:00", "bytes": 19798, "etag": "W/\"649206e678b3059b582a2e30f4fc8dfa\"", "complete": true},
+      "applicability": "FACT for nbclient's role as programmatic notebook executor and its support policy; Python support-boundary input (§9)."
+    },
+    {
+      "id": "S3",
+      "title": "Executing notebooks — nbclient documentation",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": "readthedocs 'latest' as served 2026-10-06; docsearch version 0.11",
+      "exact_locator": "Example: NotebookClient(nb, timeout=600, kernel_name='python3', resources={'metadata': {'path': 'notebooks/'}}); 'timeout traitlet ... default is 30 s'; 'Execution until first error': raises CellExecutionError, notebook can still be saved with outputs up to failing cell + stack trace; 'allow_errors (default is False)'; hooks on_notebook_start/complete/error, on_cell_start/execute/complete/executed/error; widget state + 'Trust Notebook'",
+      "capture": {"sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a", "capture_id": "26af4c3e2e7c411fa94636c04ee6b33c", "captured_utc": "2026-10-06T09:20:05.099666+00:00", "bytes": 36686, "etag": "W/\"3d95897bdab2bf160a1200df34c34dc8\"", "complete": true},
+      "applicability": "FACT for clean-replay mechanism, error semantics, cancel/progress hook surface (§1, §6, §10)."
+    },
+    {
+      "id": "S4",
+      "title": "nbformat v4 notebook JSON schema (v4.5), served at tag v5.11.1",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "git tag v5.11.1 (latest nbformat release as of capture, see S5); file nbformat/v4/nbformat.v4.schema.json",
+      "exact_locator": "description 'Jupyter Notebook v4.5 JSON schema'; definitions.cell_id pattern ^[a-zA-Z0-9-_]+$ minLength 1 maxLength 64; code_cell required [id, cell_type, metadata, source, outputs, execution_count]; execution_count 'prompt number. Will be null if the cell has not been run'; output oneOf execute_result/display_data/stream/error; execute_result carries execution_count; metadata.kernelspec/language_info",
+      "capture": {"sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a", "capture_id": "44d42f32932e4a8e9834b29c7c9d07d1", "captured_utc": "2026-10-06T09:19:06.403661+00:00", "bytes": 16104, "etag": "\"5a268c8430e216c21dfbbe3301eef41af32e212c1b0d8c41a144c46b5012106f\"", "complete": true},
+      "applicability": "FACT for the notebook document model: stable cell identity, displayed order vs execution_count, outputs (incl. error outputs) stored without reproducibility claims (§2, §6)."
+    },
+    {
+      "id": "S5",
+      "title": "GitHub API: jupyter/nbformat latest release",
+      "url": "https://api.github.com/repos/jupyter/nbformat/releases/latest",
+      "pin": "API response as served 2026-10-06",
+      "exact_locator": "tag_name v5.11.1; published_at 2026-08-17T08:10:55Z; target_commitish main; changelog body lists merged PRs #459/#458/#453/#451/#450",
+      "capture": {"sha256": "94f3a4d49829fddc6967673b46f6c85a809a1c93cef7a68f0faca682e3cf02c5", "capture_id": "68fdd35d6cea4e93a3ed6294cf975245", "captured_utc": "2026-10-06T09:18:06.428293+00:00", "bytes": 10314, "etag": "W/\"94f3a4d49829fddc6967673b46f6c85a809a1c93cef7a68f0faca682e3cf02c5\"", "complete": true},
+      "applicability": "FACT for pinning S4's tag as the latest nbformat release at capture time."
+    },
+    {
+      "id": "S6",
+      "title": "CSV Import — DuckDB documentation (current)",
+      "url": "https://duckdb.org/docs/current/data/csv/overview.html",
+      "pin": "docs/current as served 2026-10-06; version selector shows '1.5 current' (also 2.0-dev preview, 1.4 LTS, 1.3, 1.2, 1.1, 1.0, 0.10); canonical URL per page",
+      "exact_locator": "Jekyll SEO meta description (in captured head): \"Read a CSV file from disk, auto-infer options: SELECT * FROM 'flights.csv'; Use the read_csv function with custom options ... columns = { 'FlightDate': 'DATE', ... }\"; 'Read a CSV from stdin'; sidenav links /docs/current/data/csv/auto_detection and /docs/current/data/csv/reading_faulty_csv_files",
+      "capture": {"sha256": "a65af879f6ac4b784cbaeba7b9a9a7095f837578ec1c914af90d88e4b16efff6", "capture_id": "1e007df5ce6a41869df600b0b733a9d1", "captured_utc": "2026-10-06T09:19:05.784753+00:00", "bytes": 393313, "complete": true, "read_note": "captured in full; deep-read limited to head+nav ranges (byte 0-32768, 45000-77768); article body beyond nav not deep-read"},
+      "applicability": "FACT for file-direct SQL over CSV with auto-infer or explicit columns mapping (no import copy), and for existence of sniffer/faulty-CSV doc pages. Body-quoted claims kept to head/meta region actually read."
+    },
+    {
+      "id": "S7",
+      "title": "GitHub API issue search: repo:duckdb/duckdb 'sniffer' in:title (issues)",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+sniffer+in%3Atitle+type%3Aissue&sort=comments&per_page=10",
+      "pin": "API response as served 2026-10-06 (total_count 14)",
+      "exact_locator": "items[0] = issue #16476 (title, label 'reproduced', opened 2025-03-03, closed 2025-03-12, body with full failing query + sniffer state: delimiter/quote/escape 'Auto-Detected', escape = \\\\, strict_mode = true, ignore_errors = false, sample_size = 20480, error 'CSV Error on Line: 171130 ... Value with unterminated quote found', suggested fixes incl. strict_mode=false / ignore_errors=true / quote=''); items[3] = #11840 (date-format inference varies with column content/order, 0.10.0); items[4] = #10336 (trailing null row flips inferred type DOUBLE→VARCHAR, 0.9.2)",
+      "capture": {"sha256": "16f96e0f2f8c928489ddbdfd89fed923868f9fac8bdb97147e9f925962b6111e", "capture_id": "1c9d52387cbb41de8fca3947d68bc1ba", "captured_utc": "2026-10-06T09:18:06.858532+00:00", "bytes": 60624, "complete": true, "read_note": "delivered bytes 0-32768 of 60624; items[0] fully in range; items[3]/[4] bodies fully in range"},
+      "applicability": "FACT for the traced issue (§3) and for sniffer defaults and skip-options; also evidence of the sample-bounded-inference bug class."
+    },
+    {
+      "id": "S8",
+      "title": "GitHub API comments on duckdb/duckdb issue #16476",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/16476/comments",
+      "pin": "API response as served 2026-10-06",
+      "exact_locator": "comment[0] dimkr 2025-03-03: '1.1.3 imports the same CSV file successfully'; comment[1] Tishj (member): dispute of doubling as standard; comment[2] marcoslot: Postgres COPY csv doubling demo; comment[3] pkoppstein: RFC 4180 rule 7 quote; comment[4] Tishj: 'I stand corrected'; comment[5] simonmhawkins: same error on duckdb v1.2.0 build 5f5512b827; comment[6] pkoppstein 2025-03-12: 'the following commit addresses the issue: 7d9d4fc60d1b51e1f18763f4f8f4e3c91112bb37'",
+      "capture": {"sha256": "1cfb0574202a65dadefb5570ec25fe69ef2b48710ed078dba28ac85462716587", "capture_id": "d3d1f11af1b84dda8285f3fc0a3055f8", "captured_utc": "2026-10-06T09:19:06.999223+00:00", "bytes": 13572, "complete": true},
+      "applicability": "FACT for regression window (1.1.3 OK → 1.2.0 broken), standards discussion, and pointer to the fix commit."
+    },
+    {
+      "id": "S9",
+      "title": "GitHub API commit 7d9d4fc60d1b51e1f18763f4f8f4e3c91112bb37 (duckdb/duckdb)",
+      "url": "https://api.github.com/repos/duckdb/duckdb/commits/7d9d4fc60d1b51e1f18763f4f8f4e3c91112bb37",
+      "pin": "commit as served 2026-10-06; GPG signature 'verified: true, reason: valid'; author Mark (mark.raasveldt@gmail.com) 2025-03-12T08:47:04Z; parents 335ca7cd, ea9836f6",
+      "exact_locator": "message 'Give preference to quote=escape if we can't do better (#16584)' + 'Fix: https://github.com/duckdb/duckdb/issues/16476'; files[0] src/execution/operator/csv_scanner/sniffer/dialect_detection.cpp (+9: among tied candidates prefer escape==quote); files[1] test/sql/copy/csv/test_quoted_later_escaped.test (status added, +35: builds file with plain quotes for 100000 rows then escape-by-doubling row, asserts sniff_csv quote=\\\" escape=\\\"; second 5000-row variant); stats +44/-0",
+      "capture": {"sha256": "6358f3cc9fbd4c9f5b4391410f915d0eee808ab1fdf83f19baf9d6ad08a04de5", "capture_id": "c6b3df09560149e6870fbe24b1b6b50d", "captured_utc": "2026-10-06T09:20:04.049346+00:00", "bytes": 8106, "complete": true},
+      "applicability": "FACT for fix mechanism and regression-test existence/content. LIMIT: establishes merge to main 2025-03-12; first stable release containing it NOT established (lead L3)."
+    },
+    {
+      "id": "S10",
+      "title": "Streaming — Polars user guide",
+      "url": "https://docs.pola.rs/user-guide/concepts/streaming/",
+      "pin": "page as served 2026-10-06 (canonical URL per page); mkdocs-material build; repository link pola-rs/polars",
+      "exact_locator": "page title 'Streaming - Polars user guide'; table-of-contents sections 'Inspecting a streaming query' and 'Monitoring a streaming query' (read via captured byte range 40000-72768); sibling pages visible in nav: lazy API, optimizations, schema, sources and sinks, query execution",
+      "capture": {"sha256": "4484065b8518d6e8bd0c09a82787a2ddc2cbb53ea3458ded4da6179d7b64b126", "capture_id": "c948edb0e73f4cec8ac3e27aab239a0b", "captured_utc": "2026-10-06T09:18:06.176311+00:00", "bytes": 234294, "complete": true, "read_note": "captured in full but only head (0-32768) and nav/TOC range (40000-72768) read; article BODY TEXT NOT READ"},
+      "applicability": "FACT: page exists with those sections; repo is pola-rs/polars. LIMIT: no body quotes; any streaming memory-bound claim in the proposal is inference + proposed validation (leads L1)."
+    },
+    {
+      "id": "S11",
+      "title": "404 record: jupyter-notebook.readthedocs.io/en/stable/security.html",
+      "url": "https://jupyter-notebook.readthedocs.io/en/stable/security.html",
+      "pin": "response as served 2026-10-06 (HTTP 404, readthedocs 'Documentation page not found')",
+      "exact_locator": "meta readthedocs-http-status 404",
+      "capture": {"sha256": "fbde61d2180be033f7f6ebdc1ed19a685229175e596c3416af144e072f9135ea", "capture_id": "0e8a9a32e7d34822994779d969eda909", "captured_utc": "2026-10-06T09:19:06.735864+00:00", "bytes": 2543, "complete": true},
+      "applicability": "Dead-end record: the classic Jupyter 'trusted vs untrusted notebooks' page is no longer at this URL; canonical successor not located in this stage (lead L4). No trust-model claim in the proposal rests on this URL."
+    }
+  ]
+}

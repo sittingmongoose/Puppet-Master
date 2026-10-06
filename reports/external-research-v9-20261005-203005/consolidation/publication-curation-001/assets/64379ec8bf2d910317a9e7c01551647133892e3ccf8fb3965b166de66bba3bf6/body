@@ -1,0 +1,114 @@
+{
+  "note": "Source catalog for research stage, brief A (local biomedical image review workspace). All captures taken 2026-10-06 via the admitted public_https_get tool; identity is the exact HTTP response body bytes (sha256 as returned by the capture tool). Pins are URL + capture sha256 + any version strings observed in the body. This catalog supports but does not replace the citations in out/research/proposal.md.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "napari issue #9338: [Points] Can't add points on layers with negative scale values e.g. (-1, -1)",
+      "url": "https://github.com/napari/napari/issues/9338",
+      "pin": "issue created 2026-07-31T19:19:13Z, closed 2026-08-05T12:03:07Z, label bug",
+      "exact_locator": "GitHub API: api.github.com/repos/napari/napari/issues/9338 (+ /timeline); evidence read from timeline JSON which embeds issue body, comment, and cross-referenced PR",
+      "capture_identity": "capture sha256 e4643ede56539bc89e59b26ee422de2fb45b01fa25d757fce611a33f8ce92fbf; etag W/\"e4643ede56539bc89e59b26ee422de2fb45b01fa25d757fce611a33f8ce92fbf\"; captured_utc 2026-10-06T05:13:03Z",
+      "applicability": "Start of the issue->fix->regression-test chain. Symptom: adding a point on a Points layer whose scale is negative (a reflection, possibly inherited from an image layer) raises ValueError in the highlight path; reporter notes shapes can be drawn but vertex editing breaks.",
+      "limits": "Evidence is the API JSON capture, not a rendered page; comment count 1 (the 'Shapes can be drawn...' note)."
+    },
+    {
+      "id": "S2",
+      "title": "napari PR #9339: Use magnitude of Layer.scale for points/shape handles",
+      "url": "https://github.com/napari/napari/pull/9339",
+      "pin": "merged_at 2026-08-05T12:03:06Z; merge_commit_sha 19cba1928282b89eff206cbc4b3fe424b50307f3; head sha f23db55f0779f97f73159d8ce954d2fff5673a05; base napari:main; labels bugfix+tests; milestone 0.9.0 (milestone closed 2026-08-31, 140 closed issues); +60/-6 across 5 files; merged_by Czaki",
+      "exact_locator": "GitHub API: api.github.com/repos/napari/napari/pulls/9339",
+      "capture_identity": "capture sha256 ad6c19780b01c9f4ff45ad6bc8c3af04c6388a914b6ffa0b120b7b9778470db3; etag \"ad6c19780b01c9f4ff45ad6bc8c3af04c6388a914b6ffa0b120b7b9778470db3\"; captured_utc 2026-10-06T05:13:44Z",
+      "applicability": "The fix of the chain: uses abs() so marker sizes/handle radii use the magnitude of scale while positions keep the signed mapping; PR body states 'Added minimal tests that fail on main, pass with this branch'.",
+      "limits": "API metadata; the code delta itself is S3."
+    },
+    {
+      "id": "S3",
+      "title": "napari PR #9339 file patches (fix + regression tests)",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9339/files",
+      "pin": "5 files: src/napari/_vispy/_tests/test_vispy_points_layer.py (+25, adds test_negative_scale_highlight parametrized over (-1,-1),(1,-1),(-1,1)); src/napari/_vispy/layers/points.py (abs() on scale in _on_data_change/_on_highlight_change); src/napari/layers/points/points.py (np.abs on scale_ratio in _get_value/_get_value_3d); src/napari/layers/shapes/_tests/test_shapes.py (+25, adds test_value_vertex_with_negative_scale parametrized over (-1,-1),(1,-1),(-2,3)); src/napari/layers/shapes/shapes.py (_normalized_scale_factor uses abs)",
+      "exact_locator": "GitHub API pulls/9339/files; test docstrings state 'previously raised ValueError: edge_width cannot be negative' and 'Vertices must stay grabbable when the layer scale is negative'",
+      "capture_identity": "capture sha256 ba3681289706fb6d3022207b82f0b780f0cd963ec4f00749a63bf5ad044c178a; last-modified 2026-08-06; captured_utc 2026-10-06T05:13:43Z",
+      "applicability": "Regression-test evidence: two new tests that fail on the pre-fix code path and exercise annotation interactivity (add point, grab vertex) under reflecting scales. This is the executed-by-upstream portion of the required chain.",
+      "limits": "Tests were not executed by this candidate (no napari environment); their 'fail on main' status is asserted by the PR author and the code path is visible in the patch."
+    },
+    {
+      "id": "S4",
+      "title": "napari releases (first 6, descending)",
+      "url": "https://api.github.com/repos/napari/napari/releases?per_page=6",
+      "pin": "v0.9.2 published 2026-09-29 (release notes list Bug Fixes; EffVer meso release), v0.9.2rc1 published 2026-09-23",
+      "exact_locator": "GitHub API releases list, page 1",
+      "capture_identity": "capture sha256 1698fcf9eed9ebeb111733e74c21cf44689d3ff19d306315f34e7edfebccad6e; captured_utc 2026-10-06T05:13:44Z",
+      "applicability": "Release-applicability context: the fix (milestone 0.9.0, merged 2026-08-05) predates the v0.9.2 release (2026-09-29) observed here; milestone 0.9.0 was closed 2026-08-31.",
+      "limits": "v0.9.0/v0.9.1 releases are NOT on this first page, so a published v0.9.0 tag containing merge 19cba192 was not directly observed. Treat 'first shipped in v0.9.0' as supported by the milestone field only, not by an observed release tag (proposed check W5-NA in witnesses.json)."
+    },
+    {
+      "id": "S5",
+      "title": "QuPath 0.7.0 documentation: Project structure",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "pin": "QuPath 0.7.0 docs, stable; page last-modified 2026-03-02",
+      "exact_locator": "sections 'The project.qpproj file', 'The data directory'",
+      "capture_identity": "capture sha256 d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f; captured_utc 2026-10-06T05:13:44Z",
+      "applicability": "Precedent 2 (project persistence): project.qpproj is a JSON representation with per-image serverBuilder (reader library + URI), unique entryID, randomizedName (UUID); data directory stores per-entry data.qpdata (object hierarchy), thumbnail.jpg, and summary.json written together with data.qpdata to preview entries without opening the large file. The doc explicitly documents duplicate .qpproj files with machine-specific image paths as the supported way to share one project across computers on a shared drive, with a warning about adding images with duplicate IDs.",
+      "limits": "Documents behavior of QuPath 0.7.x; not a spec our project can inherit, only a precedent."
+    },
+    {
+      "id": "S6",
+      "title": "QuPath 0.7.0 documentation: Exporting annotations",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "pin": "QuPath 0.7.0 docs, stable; last-modified 2026-08-18",
+      "exact_locator": "admonition 'Units and origin'; sections GeoJSON, Well-structured text, Binary & labeled images",
+      "capture_identity": "capture sha256 df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420; captured_utc 2026-10-06T05:15:08Z",
+      "applicability": "Export-honesty precedent: GeoJSON is QuPath's preferred shape export ('preserves quite a lot of information', FeatureCollection carries classifications); 'Units and origin' states ALL shape exports use pixel units with origin (0,0) at the top-left of the full-resolution image, and warns other software may differ. Documented lossy mappings: ellipses become polygons in GeoJSON; labeled-image exports have draw-order semantics ('if Tumor and Stroma annotations overlap... Stroma will win'). Also documents refusal pattern for ad-hoc XML (no public schema -> not supported, focus on well-defined open formats).",
+      "limits": "QuPath-specific behavior; the cited GeoJSON standard itself (IETF RFC 7946) was not fetched this session."
+    },
+    {
+      "id": "S7",
+      "title": "tifffile README (cgohlke/tifffile)",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "Version: 2026.9.20; BSD-3-Clause; etag \"51198551b82008b749d5546aa3f99615eb5557921ea2f37ca0900948d9ea30a5\"",
+      "exact_locator": "intro list of readable formats; 'Notes' section (BigTIFF, ImageJ hyperstack, OME-TIFF, MMStack 'often corrupted or wrong', NDPI corrections); Examples (series.axes strings like 'YX'/'QYX'/'TZCYX'; PhysicalSizeX/PhysicalSizeXUnit OME metadata; imread(..., return_as='zarr') ZarrTiffStore tile access; memmap; SubIFD pyramids; fsspec ReferenceFileSystem)",
+      "capture_identity": "capture sha256 cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48; captured_utc 2026-10-06T05:12:17Z",
+      "applicability": "Support-boundary precedent: a maintained single-maintainer library draws an explicit line (TIFF6 subset 'mainly 1-32' + listed TIFF-like formats; explicit not-implemented list) and exposes bounded access to huge files (read tiles/zarr/dask from tiled pages, memory-mapping for contiguous data). Also demonstrates that real instrument formats carry wrong/ambiguous metadata that readers must surface (MMStack, NDPI tag corrections).",
+      "limits": "README claims, plus examples; no TIFF file was parsed by this candidate. Changelog entries observed (2026.5.2 'breaking' changes) show the API moves; pin exact versions when implementing."
+    },
+    {
+      "id": "S8",
+      "title": "Zarr Storage Specification Version 2",
+      "url": "https://zarr-specs.readthedocs.io/en/latest/v2/v2.0.html",
+      "pin": "zarr-specs docs 'latest'; page states the v2 spec 'has been superseded' by v3; RFC 2119 keywords",
+      "exact_locator": "Storage section (key/value interface; directory or S3 example); Arrays/Metadata (.zarray keys: zarr_format, shape, chunks, dtype, compressor, fill_value, order, filters; optional dimension_separator '.' or '/')",
+      "capture_identity": "capture sha256 8b4b5f24291fb890c264d97f9aa42b0c9751ccd95bae4764765cda3546c747d2; last-modified 2026-09-21; captured_utc 2026-10-06T05:13:04Z",
+      "applicability": "Chunked-storage mechanism for bounded access to >RAM images: uniform chunks declared in JSON metadata, key/value storage that a shared-drive directory or object store can provide. Also evidence that Zarr v2 is now superseded by v3 (choose format deliberately, pin it in the project contract).",
+      "limits": "First 32 KB of the page captured (through data-type encoding); chunk-key/hierarchy clauses later in the page not re-read from the capture."
+    },
+    {
+      "id": "S9",
+      "title": "OME-Zarr specification (NGFF) 0.5",
+      "url": "https://ngff.openmicroscopy.org/0.5/index.html",
+      "pin": "OME-Zarr specification, version 0.5 page; response last-modified 2026-10-01",
+      "exact_locator": "single-page spec; axes/units/multiscales/coordinateTransformations clauses exist in this document but were not re-read from the capture this session",
+      "capture_identity": "capture sha256 a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b; captured_utc 2026-10-06T05:12:16Z",
+      "applicability": "Target interop format for optional export of project images (named axes with dimension types and units, multiscale levels, coordinate transforms). tifffile S7 independently shows the ecosystem writing 'multiscales to NGFF 0.5' in its zarr stores, evidencing adoption.",
+      "limits": "HONEST LIMIT: only the document title and capture identity were verified; a mechanical section-extraction attempt failed (tool JSONDecodeError), so no NGFF clause was quoted or normatively relied on this session. Clause-level verification is proposed/UNEXECUTED (witness W6)."
+    },
+    {
+      "id": "S10",
+      "title": "GitHub issue search: napari closed bug-labeled issues with 'scale' in title",
+      "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+is%3Aissue+is%3Aclosed+label%3Abug+in%3Atitle+scale&per_page=30",
+      "pin": "total_count 54 at capture time; first items include #9507 (gridded scale bar, 2026-09) and #9338 (negative scale points, 2026-07)",
+      "exact_locator": "GitHub search API v3",
+      "capture_identity": "capture sha256 8a014529a7f76e71445a481de0847132c93bc64ca17befd3a7ada56bc8d74bce; captured_utc 2026-10-06T05:12:16Z",
+      "applicability": "Discovery provenance for the chain (S1) and evidence that scale/coordinate bugs are a recurring class in layered viewers (supporting the choice to make the coordinate contract explicit and regression-tested from day one)."
+    },
+    {
+      "id": "S11",
+      "title": "Attempted URLs that returned 404 (recorded as negative evidence)",
+      "url": "https://napari.org/stable/howtos/layers/transformations.html ; https://napari.org/stable/concepts.html ; https://zarr.readthedocs.io/en/stable/spec/v2.html ; https://qupath.readthedocs.io/en/stable/docs/intro/projects.html ; https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/transformations.md",
+      "pin": "404 responses captured 2026-10-06 (e.g. napari 404 page sha256 b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368; napari/docs raw 404 sha256 d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed)",
+      "exact_locator": "n/a (failed fetches)",
+      "applicability": "Documentation sites have been restructured; no napari prose documentation page was captured this session. All napari behavior cited in the proposal therefore rests on the issue/PR/release API captures (S1-S4), which include source patches and test code, not on napari's narrative docs. Follow-up lead L11 re-locates the current docs.",
+      "limits": "Negative evidence only."
+    }
+  ],
+  "executed_checks_referenced": ["W1 (python_execute exec after fix, see witnesses.json)", "W2 (python_execute exec-dp5d1p91, see witnesses.json)"]
+}

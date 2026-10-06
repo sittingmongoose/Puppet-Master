@@ -1,0 +1,171 @@
+# Critique review — Brief A research proposal (fresh source-grounded critic stage)
+
+Stage: critique (same-arm, R001). Review date: 2026-10-06. Reviewer: fresh same-family candidate, no access to the research stage's private context; only the frozen artifacts listed below plus independently fetched public sources.
+
+**Reviewed inputs (exact frozen artifacts, verified by SHA-256 at read time):**
+
+| Artifact | SHA-256 (first 12) | Bytes |
+|---|---|---|
+| `inputs/prior/research/research/proposal.md` | `36750223243a` | 24,356 |
+| `inputs/prior/research/research/sources.json` | `1ca353a2e984` | 12,829 |
+| `inputs/prior/research/research/witnesses.json` | `ac9124b0badf` | 6,036 |
+| `inputs/prior/research/research/leads.json` | `341f73c0393e` | 4,267 |
+
+**Verdict in one paragraph.** The proposal is substantively sound and unusually honest about evidence limits. All three release pins, both issue→fix chains (as far as each is claimed), the NGFF 0.4 normative quotes, the napari docs pin, and the executed precision check W1 were independently re-verified by this stage against primary sources — every load-bearing claim checked held, and two key captures were byte-identical to the frozen catalog (same SHA-256). Seven findings follow: one substantive design gap (MEDIUM — the data contract cannot represent orientation/rotation, which the brief explicitly requires it to represent or explicitly reject), one resolved negative lead (QuPath docs are live at new paths; a genuinely useful precedent was nearly lost), and five minor corrections/clarifications. No fabricated evidence, invented repair history, or mislabeled execution was found.
+
+---
+
+## 1. Independent verification log
+
+Method: fresh HTTPS captures via the admitted tool (no reuse of research-stage capture files except where bytes proved identical), plus one independent re-execution of the W1 arithmetic. Capture identity = exact response-body bytes; SHA-256 values below are of those bytes.
+
+| # | Claim (proposal §) | Frozen source | Critique-stage evidence | Verdict |
+|---|---|---|---|---|
+| V1 | napari v0.9.2, release id 399569218, target commit `595639295a…`, published 2026-09-29T22:18:39Z; "browsing, annotating… large multi-dimensional images… Qt, vispy, numpy/scipy"; EffVer; monthly release policy (§0, §2 P1) | S1 | Fresh capture of `api.github.com/repos/napari/napari/releases/latest`: identical facts; sha256 `5fdcf8bf24ab…`, capture_id `698e144d4cde…`. Release body also lists a **tifffile dependency update** (#9492), indirectly supporting "napari's stack consumes tifffile". | **VERIFIED** |
+| V2 | napari docs 'stable' serves version 0.9.2; image-layer properties (contrast limits, opacity, colormaps, blending, interpolation); guides for axis-names, units, handedness, performance, threading, events; tutorials "Annotating videos" + "Using Dask…" (§2 P1) | S2 | Fresh capture byte-identical to frozen S2 (sha256 `49ea71016179…`); `docsearch:version = 0.9.2` present in delivered head; TOC confirms all named guides/tutorials. Note: 'stable' is a moving URL — final author should cite the captured bytes, not the live URL. | **VERIFIED** |
+| V3 | tifffile v2026.9.20 published 2026-09-21T04:01:35Z; format list incl. OME-TIFF, ImageJ hyperstack, Micro-Manager MMStack/NDTiff; "NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher order series, pyramidal levels" (§0, §2 P2) | S3 | Fresh capture byte-identical to frozen S3 (sha256 `387aa3381eb5…`, capture_id `79c1628c953c…`). Body additionally lists **DICOM-TIFF** among readable formats (see finding C-04). | **VERIFIED** |
+| V4 | zarr-python v3.4.0 published 2026-09-15T20:55:52Z; notes list #4358 + polish #4359, #4204, #4219; new `msgspec>=0.19` dep (§0, Chain A) | S4 | Fresh capture byte-identical to frozen S4 (sha256 `abc8a6a14660…`, capture_id `997a1128f0d5…`). | **VERIFIED** |
+| V5 | Chain A failure/fix narrative: PR #4358 merged 2026-09-15T14:57:41Z, merge commit `6947dd87…`, head `4bb856d7…`, 3 files +146/−4; v2 retried via #698, v3 #3412 dropped it; WinError 5/32; 183 excluded; "judgement, not measurement" (§3 Chain A) | S5 | Fresh capture byte-identical to frozen S5 (sha256 `1ad7c2e417c3…`, capture_id `1b5f43129893…`). All facts confirmed in PR body and PR metadata. | **VERIFIED** |
+| V6 | Chain A regression tests: `changes/3522.bugfix.md`; `_TRANSIENT_WINERRORS {5,32}`; `_RETRY_DELAYS (0.0, 0.001, 0.005, 0.02, 0.05, 0.2)`; both `_atomic_write` branches routed through `_move_with_retry`; four named tests with the stated parametrizations (§3 Chain A, §5.4) | S6 | Fresh capture byte-identical to frozen S6 (sha256 `ffcf8be1c865…`, capture_id `592c20afac31…`). Diff confirms every element, including `test_retry_delays_are_bounded` (`sum < 1.0`, first delay `0.0`). Chain A is a complete issue→fix→regression-test chain with release applicability at zarr ≥ 3.4.0. | **VERIFIED** |
+| V7 | tifffile #334: MMStack regression 2026.5.2–2026.9.9, ok ≤ 2026.4.11; `z-step_um` = string `'2.9033'`, `PixelSize_um` = 0.3625 numeric; Micro-Manager 1.4 `setAcquisitionProperty` strings since 2014; repro + sample file + suggested isinstance guard (§3 Chain B) | S7 | Fresh capture of the issue endpoint (sha256 `e5572e592f26…`, capture_id `cb0c35938e29…`) confirms the full body verbatim, including the version table and the traceback line `coords['Z'] = (0.0, sizez * abs(zstep))`. | **VERIFIED** |
+| V8 | #334 maintainer comments: "This will be fixed in the next version of tifffile." (2026-09-15T14:41:07Z) and "Fixed in v2026.9.15" (2026-09-15T17:04:02Z) (§3 Chain B) | S8 | Fresh capture byte-identical to frozen S8 (sha256 `dffcfba382e3…`, capture_id `081106274e26…`). Both comments from OWNER cgohlke. | **VERIFIED** |
+| V9 | Chain B limit: fix commit and regression test NOT verified; CHANGES.md/README raw fetches 404 (§3 Chain B, W6, L1, N3) | N3 | This stage re-attempted `raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.md` → 404, bytes byte-identical to frozen N3 (sha256 `d5558cd419c8…`). The limit stands; L1 remains open. | **RE-CONFIRMED (limit stands)** |
+| V10 | NGFF 0.4: "Final Community Group Report, 1 October 2026", revision `a4c68004…`; §2 "Arrays MUST be defined and stored… as defined by version 2 of the Zarr specification"; §2.1 multiscales/labels, 2–5D, label dims same-or-1 integers only, time before channel before space; §3.1 axes (unique name MUST; type SHOULD space/time/channel MAY custom; unit SHOULD UDUNITS-2 micrometer/second; length MUST equal ndim); §3.2 bioformats2raw.layout transitional with OME/METADATA.ome.xml + `<MetadataOnly/>`, readers SHOULD surface multiple images; migration-scripts promise (§0, §2 P3, §4, §5) | S9 | Fresh capture byte-identical to frozen S9 (sha256 `ca4780a33f95…`, capture_id `378ce73f645f…`); this stage additionally read bytes 36,000–100,000 of the identical capture and confirmed **all quoted normative text verbatim**, plus §3.3 `coordinateTransformations` = identity/translation/scale applied sequentially (supports the proposal's "scale/translation at 0.4 level; full affine is 0.5 territory" inference). | **VERIFIED (extended)** |
+| V11 | #277: ZYX-written volume displayed by Fiji as SizeT=32/SizeZ=1 — cross-tool axis disagreement (§3 Chain B supporting evidence) | S7 | Fresh capture of the issue endpoint (sha256 `0f6ed7c38170…`, capture_id `dd1f67a03a64…`): title "Write BigTIFF as XYZ instead of TXY"; Fiji reports SizeT=32, SizeZ=1, SizeC=1; "Other software such as Dragonfly or 3D Slicer can read it correctly." Nuance: labeled `question`, closed same day with 1 comment, resolution not captured — the proposal uses it only as ambiguity evidence and claims no fix, which is accurate. | **VERIFIED (with nuance)** |
+| V12 | W1: float64-JSON exact round-trip; f32 errors +1.192e-08 / +4.692e-08 / +4.750e-11 / 0 / −6.250e-05; max voxel-index error 177 (pathological 3e9 single axis), 0, 0 (§4) | witnesses W1 | **Independently re-executed** by this stage (own code, not the original script): `mcp__pm_execution__python_execute`, execution_id `exec-dl_2oo8y`, exit 0, stdout sha256 `660578296cab…`. All five float64-JSON and float32 results and all three index-error maxima reproduce exactly (177 at i=2,962,560,000). Same scope limits apply: stdlib arithmetic only; no real component tested. | **CORROBORATED** |
+| V13 | S7 items #322, #270, #261 (TZCYX grouping, 2024.8.24 OME write regression, OME Position write gap) | S7 | Not re-fetched this stage (supporting evidence only; search endpoint not re-queried). #270 and #261 are also carried as lead material (L8). | **NOT RE-VERIFIED (preserved as-is)** |
+| V14 | zarr issue #3522 itself (the failure report) | referenced by S5/S6 | Issue endpoint not fetched; the PR body and `changes/3522.bugfix.md` are the captured evidence and are internally consistent with the proposal's account. | **NOT RE-VERIFIED (chain does not depend on it)** |
+
+Negative captures N1/N2 were not re-verified except as noted in finding C-02 (N1 is now **superseded**).
+
+---
+
+## 2. Findings (evidence-backed corrections)
+
+Severity scale: MEDIUM = must be resolved before the final proposal; LOW = should be resolved or explicitly acknowledged.
+
+### C-01 (MEDIUM) — The data contract cannot represent orientation/rotation, which the brief requires it to represent or explicitly reject
+
+The brief requires: "Any origin, axis order, **orientation**, sampling, scale or display transformation must be represented with enough precision to reopen, inspect and export the project reliably." The §4 descriptor records per-axis `{origin, spacing}` (verified against NGFF 0.4 §3.3, which at the 0.4 level defines only identity/translation/scale — confirmed in V10), but has **no orientation/direction field**. A rotated or non-axis-aligned acquisition (common with staged/tiled microscopes) therefore cannot be represented, yet §8's "unsupported cases declared" list does not name orientation either. As written, such an import would be silently mis-calibrated (treated as axis-aligned) rather than caught.
+
+**Resolution (either is acceptable, pick one explicitly):** (a) declare rotated acquisitions unsupported and add an import-time check (e.g., detect non-axis-aligned OME orientation/affine metadata) that routes them to the same explicit correction/rejection path as ambiguous axes; or (b) add an optional per-image orientation field (direction-cosine matrix or NGFF-0.5-style affine, identity default) with the original metadata retained. Option (a) is the minimum compliant fix.
+
+**Affected dependencies:** §4 image descriptor; §4 unsupported-input behavior; §6 step 3 (metadata inspection); export manifest honesty statement (must say orientation is/isn't preserved); W4 (cross-tool round-trip must include the chosen representation); lead L3 (upgraded from optional to resolution-(b)'s evidence path if chosen).
+
+### C-02 (LOW, resolved lead) — QuPath docs are live; N1 was a stale path, not an absent resource
+
+The research stage recorded a 404 for `qupath.readthedocs.io/en/stable/docs/starting/projects.html` (N1) and deferred QuPath to lead L2. This stage found the docs root live at **QuPath 0.7.0** and the project pages at new paths:
+
+- `https://qupath.readthedocs.io/en/stable/` → 200, "QuPath 0.7.0 documentation" (capture_id `a35fadd329bc…`, sha256 `2e5b0725fb78…`).
+- `https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html` → 200, "Project structure" (capture_id `0f841fba5316…`, sha256 `d43691575723…`). The projects tutorial is now at `docs/tutorials/projects.html`.
+
+The captured page is directly relevant to the proposal: QuPath's project directory = `project.qpproj` (JSON; per-entry `serverBuilder` + `entryID`) + `data/<entryID>/data.qpdata` + `summary.json` (preview without opening the large file), and it documents a **per-machine duplicate `.qpproj` file pattern for shared drives where image paths differ per computer** — a third relocation strategy alongside the proposal's hash-verified re-link and the bundle option. QuPath's relocation is name/URI-based with no content-hash check ("they should refer to the same images"); the proposal's `content_sha256` re-link is strictly stronger, and saying so with this citation strengthens §5.4/§7. L2 should be updated from "not located" to this pin. This does not change the v1 architecture choice; it upgrades the precedent pool.
+
+### C-03 (LOW) — Chain A measurement numbers differ between the PR body and the merged code comment
+
+The proposal cites the PR body: "4,000 rewrites: 155–171 failures before, 0 after". The **merged** code comment (verified in the S6-identical diff) reads: "Measured on Windows 11 over 20,000 replaces onto an existing destination: 720 failed with no retry and none with, 475 of those clearing on the second attempt and the worst on the fourth." The discrepancy presumably arises in the review/polish (#4359). Both are author measurements; neither is vendor documentation. The final proposal should quote the merged in-repo comment as authoritative and may note the PR-body figure as the pre-polish measurement.
+
+**Affected dependencies:** §3 Chain A narrative; S5 locator text in the catalog.
+
+### C-04 (LOW) — DICOM exclusion wording vs tifffile's DICOM-TIFF support
+
+§4 excludes "DICOM" from the support boundary, but the verified tifffile release notes (V3) list **DICOM-TIFF** among readable formats. Medical DICOM (.dcm) and DICOM-TIFF (a TIFF-dialect) are different things; without a clarifying sentence, a user may be confused when a DICOM-TIFF file opens inside the declared "out: DICOM" boundary. Recommend: state explicitly that medical DICOM is out of scope while DICOM-TIFF falls inside tifffile's parsed TIFF subset (with calibration metadata caveats as for any TIFF).
+
+**Affected dependencies:** §4 support boundary; §8 unsupported cases; the import-time unsupported-format messaging.
+
+### C-05 (LOW) — No invalidation rule for the cached `physical` projection after a calibration correction
+
+§4 stores annotations in the index frame plus "a cached `physical` projection written at save time for export convenience," and separately supports import-time calibration correction (`calibration_status: corrected` + `correction_record`). If calibration is corrected after annotations exist, the cached projections go stale; no invalidation/recache rule is stated. Recommend: recompute (or invalidate with an explicit flag) all cached physical projections whenever a descriptor's calibration changes, and record the calibration version used in each export row.
+
+**Affected dependencies:** §4 annotations; export table columns; §6 step 9 (verification).
+
+### C-06 (LOW) — Atomic-save algorithm: make ordering and durability steps explicit
+
+§5.4's scheme is sound but under-specified in two places: (1) the `.bak` copy must happen **before** `os.replace` (sequence: write tmp → fsync file → validate → copy current to `.bak` + fsync → `os.replace(tmp, project.json)`); a crash at any point then leaves either old+old or new+old, which is the intended invariant; (2) for full crash-consistency the directory entry should be fsynced after the rename on filesystems where that matters. Both belong in the W3 recovery-drill specification so the drill actually tests the real sequence. The proposal's validate-on-load (schema + self-hash) is already stated and is correct.
+
+**Affected dependencies:** §5.4; witness W3 (drill plan should encode this exact ordering).
+
+### C-07 (LOW) — napari embedding resource cost is an unexamined envelope risk; add a witness
+
+The architecture embeds napari 0.9.2 (verified pin) as component 4 and budgets 1–2 GB for the tile cache on a 16 GB machine, but W2 only benchmarks the chunk-read path. Qt+vispy+napari bring their own substantial memory and startup cost (the released bundle installers are 0.4–0.77 GB, for scale). Recommend a proposed witness **W7**: measure embedded-napari RSS and interaction latency with a 3 GB chunked source and a 1–2 GB cache at the pinned versions; this gates the §7 fallback decision (custom Qt+vispy viewer), which the proposal already keeps bounded and open. UNEXECUTED by this stage.
+
+---
+
+## 3. Preserved supported claims (explicitly retained)
+
+The following stand after independent verification and must be carried into the final proposal unchanged in substance:
+
+1. All three component pins and their mutual compatibility narrative (V1–V4), including tifffile ≥ v2026.9.15 as the chain-B gate and zarr ≥ 3.4.0 as the chain-A release binding.
+2. **Chain A is a complete, verified issue→fix→regression-test chain** (V5–V6) — merge commit, retry delays, winerror set, exclusive-path exclusion, all four regression tests, release-notes applicability, and the stated limits (LocalStore-only; retry tail is judgement; Windows root cause is reporter evidence).
+3. **Chain B is correctly claimed only as far as the maintainer's release statement** (V7–V9); its honesty limit is accurate and L1 remains the right way to complete it.
+4. The NGFF 0.4 metadata vocabulary claims, including every normative quote used (V10), and the derived inference that 0.4-level calibration is scale/translation only.
+5. The cross-tool axis-ambiguity lesson from #277 (V11) and the version-pinning lesson from the two reader regressions (#334 verified directly; #270 preserved from S7, V13).
+6. W1's conclusions — persist float64, never float32 in the persistence path — now independently corroborated (V12), with its scope limits intact.
+7. The three-precedent independence argument (view layer / import boundary / storage contract), the six-component architecture, the transactional-import and quarantine behavior, the bundle-vs-reference default (reference + explicit bundling), and the leads/optional-work separation (L9, L10) — all consistent with the verified evidence and the brief's obligations.
+
+---
+
+## 4. Obligation coverage audit (brief → proposal)
+
+| Brief obligation | Where covered | Status |
+|---|---|---|
+| Minimum 9-step workflow | §6 | Covered |
+| Data contract; visible↔stored↔physical relationship | §4 | Covered, **except orientation (C-01)** |
+| ≥2 independently useful precedents + mechanisms + independence | §2 P1–P3 | Covered (pipeline independence argued) |
+| ≥1 consequential lesson: issue→fix→regression test→commit/release applicability→limits | §3 Chain A (complete), Chain B (partial, honest) | Covered and verified (V5–V9) |
+| 3 GB bounded access, no second full copy | §5 component 2; W2 | Covered as design + **UNEXECUTED gate** (elevate W2 to blocking for component-2 freeze; see §5) |
+| Cancellation/progress | §5 component 2; W2 cancel criterion | Covered (design) |
+| Atomic save/recovery; partial import; failed export | §5.4; W3 | Covered (make ordering explicit, C-06) |
+| Identity, relocation, bundle-vs-reference trade-off | §5.4 | Covered; QuPath comparison now citable (C-02) |
+| Unsupported input fails without destroying project | §4 transactional import + quarantine | Covered |
+| Support boundary a small team can test | §4 | Covered; clarify DICOM-TIFF (C-04) |
+| Styles, keyboard nav, undo/redo, original-vs-derived, honest exports | §4, §5.4 | Covered |
+| Accessibility | §5.4 | Covered |
+| Separate facts/inference/choice/validation labels | throughout | Consistent |
+| Executed discriminating check for numeric/coordinate/storage behavior | W1 | Executed + corroborated (V12) |
+| Opportunity + plausible alternative; optional ideas separate | §7; leads.json | Covered (L9, L10) |
+| No universal format promise; no competitor feature-chase | §4, §9 | Covered |
+
+No brief obligation is missing from the proposal; the only substantive representational gap is C-01.
+
+---
+
+## 5. Residual uncertainties and proposed validation (all UNEXECUTED unless noted)
+
+1. **W2 (3 GB bounded-access benchmark) is the single highest-risk unexecuted dependency** — the whole ArraySource/TileCache design and the brief's envelope target rest on it. Recommend the final stage treat W2 as a design gate for component 2, not backlog. (Flagged by the research stage already; elevation is this review's addition.)
+2. **W7 (new, from C-07):** embedded-napari RSS/latency with a 3 GB chunked source at pinned versions, 1–2 GB cache; success criterion: total RSS comfortably under 16 GB with the cache full, annotation edits responsive while prefetch runs.
+3. V13 items (#322, #270, #261) rest on the frozen search capture only; if any is cited in the final proposal beyond its current supporting role, re-fetch the issue endpoints directly (cheap, as done for #334/#277).
+4. NGFF 0.5 affine claims (L3) remain unfetched; required before resolving C-01 via option (b).
+5. Issue #3522 itself was not fetched; the Chain A account relies on the PR body and changes file (internally consistent, verified). Fetching #3522 is optional hardening.
+6. The 'stable' napari docs URL is moving; cite captured bytes (V2), not the live URL, for any doc-content claim.
+
+---
+
+## 6. New evidence introduced by this critique stage
+
+| What | URL | Capture identity |
+|---|---|---|
+| napari latest release (re-check) | `https://api.github.com/repos/napari/napari/releases/latest` | capture_id `698e144d4cde4629bc154ce45dfb6f53`, sha256 `5fdcf8bf24ab…` (2026-10-06T10:07:28Z) |
+| tifffile latest release (re-check) | `…/cgohlke/tifffile/releases/latest` | capture_id `79c1628c953c…`, sha256 `387aa3381eb5…` (byte-identical to S3) |
+| zarr latest release (re-check) | `…/zarr-developers/zarr-python/releases/latest` | capture_id `997a1128f0d5…`, sha256 `abc8a6a14660…` (byte-identical to S4) |
+| PR #4358 (re-check) | `…/zarr-python/pulls/4358` | capture_id `1b5f43129893…`, sha256 `1ad7c2e417c3…` (byte-identical to S5) |
+| PR #4358 files (re-check) | `…/zarr-python/pulls/4358/files` | capture_id `592c20afac31…`, sha256 `ffcf8be1c865…` (byte-identical to S6) |
+| tifffile issue #334 body | `…/cgohlke/tifffile/issues/334` | capture_id `cb0c35938e29…`, sha256 `e5572e592f26…` |
+| tifffile #334 comments (re-check) | `…/issues/334/comments` | capture_id `081106274e26…`, sha256 `dffcfba382e3…` (byte-identical to S8) |
+| tifffile issue #277 body | `…/cgohlke/tifffile/issues/277` | capture_id `dd1f67a03a64…`, sha256 `0f6ed7c38170…` |
+| NGFF 0.4 spec (re-check + byte-range reads) | `https://ngff.openmicroscopy.org/0.4/index.html` | capture_id `378ce73f645f…`, sha256 `ca4780a33f95…` (byte-identical to S9); ranges 36,000–68,000 and 68,000–100,000 read |
+| napari docs image page (re-check) | `https://napari.org/stable/howtos/layers/image.html` | capture_id `7204fc2b0606…`, sha256 `49ea71016179…` (byte-identical to S2; tool capture truncated at 524,288 of 1,701,221 bytes, head delivered) |
+| tifffile CHANGES.md (negative, re-check) | `https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.md` | 404, capture_id `9a9b30a471ee…`, sha256 `d5558cd419c8…` (byte-identical to N3) |
+| QuPath docs root (resolves N1/L2) | `https://qupath.readthedocs.io/en/stable/` | 200 "QuPath 0.7.0 documentation", capture_id `a35fadd329bc…`, sha256 `2e5b0725fb78…` |
+| QuPath project structure (resolves N1/L2) | `https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html` | 200, capture_id `0f841fba5316…`, sha256 `d43691575723…` |
+| W1 corroboration (executed by candidate) | — | `exec-dl_2oo8y`, exit 0, code sha256 `090317b8a390…`, stdout sha256 `660578296cab…`; isolated component check; does not establish any application's behavior |
+
+---
+
+## 7. Instructions for the next same-family candidate (self-contained)
+
+1. Resolve **C-01** first: choose option (a) (declare orientation unsupported + explicit import-time rejection) or option (b) (add an orientation field, evidence via L3/NGFF 0.5 fetch), then update §4, §8, §6 step 3, the export manifest wording, and W4. Either resolution satisfies the brief; silence does not.
+2. Apply C-03, C-04, C-05, C-06 as wording/spec refinements; they change no architecture decision.
+3. Update L2 with the QuPath 0.7.0 pins from C-02; cite the per-machine-`.qpproj` relocation pattern and QuPath's per-entry `summary.json` preview as prior art in §5.4/§7 comparisons, noting the proposal's hash-checked re-link is stronger than QuPath's path-based relocation.
+4. Elevate W2 to a component-2 design gate and add W7 per C-07. Keep all UNEXECUTED labels honest; this stage executed only the W1 corroboration (`exec-dl_2oo8y`).
+5. Per the contract: resolving these findings does not make the new wording true — any new external claim added while resolving them needs its own source pin; the QuPath and tifffile-#277 pins in §6 above are ready to reuse.

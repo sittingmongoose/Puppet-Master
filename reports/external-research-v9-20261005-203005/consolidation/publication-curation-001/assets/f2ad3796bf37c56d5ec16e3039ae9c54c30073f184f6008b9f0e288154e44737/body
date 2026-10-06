@@ -1,0 +1,76 @@
+{
+  "schema": "er9.research.leads.v1",
+  "stage": "I-08-LUNA-S1-control-research-a001",
+  "leads": [
+    {
+      "id": "L01",
+      "kind": "critical dependency",
+      "topic": "DuckDB parallel CSV fix and release applicability",
+      "status": "unresolved",
+      "lead": "Select an exact supported DuckDB Python/runtime build, inspect its tag/commit and release notes, and run an adapted CRCRLF boundary regression on that exact build. The evidence captured here locates the fix on v2.0-cyanoptera and an attempted main port closed unmerged; it does not establish a stable released build with the fix.",
+      "why_it_matters": "The issue reports silent duplicate rows, a data integrity failure. Parallel CSV cannot be labelled verified for a candidate pin until this behavior is checked.",
+      "source_ids": ["S12", "S13", "S14", "S15", "S16"],
+      "proposed_validation": "UNEXECUTED in this stage: exact-release source pin audit, candidate-build run of the boundary fixture plus variants and serial comparison."
+    },
+    {
+      "id": "L02",
+      "kind": "critical dependency",
+      "topic": "Per-platform execution isolation and resource enforcement",
+      "status": "unresolved",
+      "lead": "Choose the supported workstation platforms and implement the sandbox backend. Verify on each that the worker cannot read host credentials or undeclared paths, cannot reach the network by default, has enforced CPU/memory/process/time/disk limits, and is killed/reaped after cancellation. Container documentation is not a security proof.",
+      "why_it_matters": "Notebook code is untrusted; the proposed filesystem, network and resource boundary is central to the product claim. Rootless/container and cgroup enforcement vary by host.",
+      "source_ids": ["S17"],
+      "proposed_validation": "UNEXECUTED: security review, adversarial path/network/resource tests; evaluate a VM-backed worker for higher assurance."
+    },
+    {
+      "id": "L03",
+      "kind": "critical target",
+      "topic": "Five-gigabyte workload on 8 cores and 16 GB RAM",
+      "status": "unverified",
+      "lead": "Benchmark representative CSV, NDJSON and Parquet inputs and the product's selected query patterns on the actual workstation envelope, including Python conversion, scratch spill, preview, export and cancellation.",
+      "why_it_matters": "DuckDB documentation describes selected out-of-core operations but neither it nor the four-row witness measures this target or bounds arbitrary Python notebook code.",
+      "source_ids": ["S09", "S10"],
+      "proposed_validation": "UNEXECUTED: performance/correctness matrix with peak RSS, disk use, wall time, key-level result comparison and spill limits."
+    },
+    {
+      "id": "L04",
+      "kind": "critical dependency",
+      "topic": "Runtime and reproducibility binding",
+      "status": "unresolved",
+      "lead": "Choose exact Python, IPython/Jupyter client, nbclient, DuckDB, uv, extension, OS/architecture and worker image versions/digests; define lock restore and offline behavior. Retest message correlation, failure and cancellation on the actual combination.",
+      "why_it_matters": "The captured Jupyter and uv pages are release-labelled or moving documentation, not a product bill of materials. A package lock does not pin external files, host libraries or services.",
+      "source_ids": ["S01", "S02", "S03", "S04"],
+      "proposed_validation": "UNEXECUTED: compatibility matrix and cross-machine reopen/replay using the selected immutable environment."
+    },
+    {
+      "id": "L05",
+      "kind": "optional lead",
+      "topic": "DVC pipeline/cache model",
+      "status": "unreviewed",
+      "lead": "Investigate DVC's official pipeline and cache documentation if a declarative pipeline/cache alternative is useful. A public HTTPS retrieval attempt did not produce a usable capture in this stage; no DVC mechanism is cited or required by the proposal.",
+      "why_it_matters": "Could inform a future comparison for explicit data dependencies and cache invalidation, but it may introduce Git/DVC conventions beyond the small team's folder workflow.",
+      "source_ids": [],
+      "proposed_validation": "Optional source review and small portability/cache invalidation comparison; no product dependency selected."
+    },
+    {
+      "id": "L06",
+      "kind": "optional lead",
+      "topic": "Portable dependency lock format",
+      "status": "partially reviewed",
+      "lead": "Evaluate PEP 751 pylock.toml and uv lock export/import behavior against the selected package set and supported platforms. The captured uv docs describe a portability versus uv-feature trade-off; no pylock interoperability test ran.",
+      "why_it_matters": "Could make project exchange less tool-specific, but adopting a standard lock format alone does not bind kernel behavior or external dependencies.",
+      "source_ids": ["S04"],
+      "proposed_validation": "UNEXECUTED: round-trip the proposed lock across clean machines and compare resolved artifact identities."
+    },
+    {
+      "id": "L07",
+      "kind": "optional alternative",
+      "topic": "Polars/Arrow plus a separate SQL engine",
+      "status": "not evaluated",
+      "lead": "Compare a Polars/Arrow-first transform path with DuckDB's integrated SQL/table readers only if representative users need dataframe-specific operations or current DuckDB CSV release behavior blocks the chosen pin.",
+      "why_it_matters": "May suit Python transforms but adds conversion boundaries, duplicate engine semantics and more version combinations. No Polars behavior is asserted as fact in this proposal.",
+      "source_ids": [],
+      "proposed_validation": "Optional representative-transform comparison; retain the same schema, provenance, ordering and sandbox checks."
+    }
+  ]
+}

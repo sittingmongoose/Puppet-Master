@@ -1,0 +1,1919 @@
+{
+  "requested_reply": "Exact per-path/SHA classification: AUTHENTIC_CANDIDATE_AUTHORED_OUTPUT_WITNESS_OR_CHECK versus RAW_PUBLICSOURCE_BODY or UNKNOWN_PRIVATE/FOREIGN. No body semantics/content in reply. Freeze producer authenticity alone does not classify downloaded rawsourcebody.",
+  "rows": [
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "041c6bb2bbcd5d22c9a0bb46126d62b097e9e96865622774c502718c4df5f7bd",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 23508,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "7b9bafad45075f5e4dca6128b59ee4f46e6479344d0d0ccb08559f3334c1ecb8",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-B-control-whole_critic-a001-resource-v13-a002/frozen-output/critique/source-index-lines.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "7b9bafad45075f5e4dca6128b59ee4f46e6479344d0d0ccb08559f3334c1ecb8"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "0755bdedd51a84d3c90b3d16259032835e1d43012d38d80c986d2c9dcedec5b0",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 12508,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "dfbaab387ead96c1ad849a0a12e65d161f831d582a0444ae0ac8936fb5d10ba3",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/scratch-sources.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "dfbaab387ead96c1ad849a0a12e65d161f831d582a0444ae0ac8936fb5d10ba3"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "0818c1f01f8691b8c4631137264fbaa372bfe3febf40b73be5978b11fa0ffa10",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 11182,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4b64cad265d27cba2812e5ee1ac1ef56b2aec0ac9393ab31cc884cd6eb1999ee",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/scratch-sources-final.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4b64cad265d27cba2812e5ee1ac1ef56b2aec0ac9393ab31cc884cd6eb1999ee"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "08a8f79817f946b57561ff16dd4cca775ac4f34c40da9ab1038b14274ad4a572",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 1565,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "1d211d2010977532cd2b1e12b1a25d275486276f5006dcfe3c8e84856266e84a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/frozen-output/research/corrections.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "1d211d2010977532cd2b1e12b1a25d275486276f5006dcfe3c8e84856266e84a"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "0ec8bdbf81f0196c5fce14de73e8cc8a6bec0971802eb9f3101a925e7d06cd9c",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 3495,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "8417267ed2e7c38818a3e6846fd79f2bee96de27f149464d29ee748afcce3659",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001/frozen-output/research/witness-code.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "8417267ed2e7c38818a3e6846fd79f2bee96de27f149464d29ee748afcce3659"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "10b43e01bd84b1be7e0c74f26a40e5cbfea65b63c8a5ec4e165c8bd419f58df7",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 14,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/frozen-output/scratch/json_probe.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "122f3d0dc6e133badd507bbb4dbd1de48f515e124059574e4adabb346680603e",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 3125,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "60418086861cbbe70d8785d55ae11e8874d935b2c8389cc6c97207b0552c6055",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/scratch-leads.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "60418086861cbbe70d8785d55ae11e8874d935b2c8389cc6c97207b0552c6055"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "16365c5d0aa4ec51a913b98c5d18daa1e3f9b87a78b88f0531b1a07ba2e7c1ad",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 19,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6ebd9795ac36c9f304f0307f5c55266c9be1f29aee791883a895ea2ed0e72474",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-research-a001/frozen-output/research/.cache_probe.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6ebd9795ac36c9f304f0307f5c55266c9be1f29aee791883a895ea2ed0e72474"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "164bc55daaef7210cbef7c866237c90a7e8144c3f3251ef6782016b1662c22d1",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 21344,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "1491db681275d8be1cedb2e400466c0090a62c8b321deb65f0da3eaf16a546f1",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-research-a001/frozen-output/research/duckdb_csv_overview.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "1491db681275d8be1cedb2e400466c0090a62c8b321deb65f0da3eaf16a546f1"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-08-FRESH-DELIVERY-R001-control-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-08-FRESH-DELIVERY-R001-control-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "1bee818fce294f258f492e24a1c439d45d8abbc03b6c725206625c89b101eb2d",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 480611,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "7ecfe7e27aa9fee65f10ddfb7e046702c5187984bfcdf75aa73676e9fb069be8",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/frozen-output/critique/qupath-tree-map.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "7ecfe7e27aa9fee65f10ddfb7e046702c5187984bfcdf75aa73676e9fb069be8"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "1d376c8f3a9dfe3840800bdc4ff2651f1944d7a314dfba15328facaf6aab84d9",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 372286,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002/frozen-output/research/duckdb-auto-detection.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "1e4673b48515925622712db4b91e4c117f7c4b2558f36937e5ecbc46b27cd9f7",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 2570,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "cd98bc24a5c5fadec962f69190600efe57edd3969236342ba9a29851828dabc4",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-S1-control-research-a001/frozen-output/research/w01_contract_check.py",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "cd98bc24a5c5fadec962f69190600efe57edd3969236342ba9a29851828dabc4"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-08-LUNA-S1-control-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-08-LUNA-S1-control-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "20cce418882ef21938269fcb777ac8c9a687b6f144628ba2f5ebe4b59fd26c3d",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 323498,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "d359659580993a7934e464d6aafa43ec80db35beae4d2cc8c98e5d83f9be1e63",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-treatment-research-a001/frozen-output/research/tmp/issue-search-map.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "d359659580993a7934e464d6aafa43ec80db35beae4d2cc8c98e5d83f9be1e63"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-LUNA-S1-treatment-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-LUNA-S1-treatment-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "20fef83418c2bffac32ff1b6b34138295c0a188d903cec693f8d310e8551b41b",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 74,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "5cd6924ce6de5e8ba88dfd90e84275f1e855d813928a1e72df48688011ed4925",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/frozen-output/final/mechanical_probe_v3.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "5cd6924ce6de5e8ba88dfd90e84275f1e855d813928a1e72df48688011ed4925"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "234ef8f1d41adf9293dbfbbef448a6c093ca379903ea3b5ef5296a1abfd0f2fe",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 117320,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2b8d3ecc16cacec4572b01c53be60166bbba7c288b02415393cb78e2a9ad6c52",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001-navigation-index-r001/frozen-output/critique/_lm_0006.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2b8d3ecc16cacec4572b01c53be60166bbba7c288b02415393cb78e2a9ad6c52"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "289217532969a5edcd27a2fec593e132fcac855d3cc4cd5d131f25159df014fc",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 11,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "a67d5f46542514f52d658493fc9405829d2922cf1647574c838b6b86f125477a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V16-A-treatment-diagnostic-a001/frozen-output/research/cache-probe-source-v2.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "a67d5f46542514f52d658493fc9405829d2922cf1647574c838b6b86f125477a"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V16-A-treatment-diagnostic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V16-A-treatment-diagnostic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "2dfc19d83f0e58c563ca27b66b03401ce8f2d96aaed6eef99731a9e59b11ed74",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 350363,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c10fd214e9623a0a0bcb9d0d39851ee0f110d5916a65720a2e5912a6e94dec05",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-treatment-critique-a001/frozen-output/critique/issue-search-map-lines.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c10fd214e9623a0a0bcb9d0d39851ee0f110d5916a65720a2e5912a6e94dec05"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-LUNA-S1-treatment-critique-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-LUNA-S1-treatment-critique-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "310711f3cd38ce9b2f599127752203d67df5f8d7b75578b6cf5e293d3aea0f52",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 163797,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6100146cec43e1288f196d3311516de7c8a05e22f02206ec7597d5a7fbdf3670",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/frozen-output/research/cache/zarr-indexing-lines.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6100146cec43e1288f196d3311516de7c8a05e22f02206ec7597d5a7fbdf3670"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V15-A-control-diagnostic-a002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V15-A-control-diagnostic-a002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "336cb892ccb511e067c75f2a349859bda160611959ae39fa4a37e40f346b0581",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 7706,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "291bf0473332e0516457f3c748b215d7867905d53fa7f0af45dc9b938ea5d36e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/critique/recovery-review.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "291bf0473332e0516457f3c748b215d7867905d53fa7f0af45dc9b938ea5d36e"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "388e0dd82fa1036d00fd9c9b600027329e3db5ebaafb6c5e73f5297e6a615307",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 87,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "0cc6bb4df24293a3ef8f57e60f3fadfdf625da88d852e768b880cc1ad647c1a9",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/frozen-output/final/mechanical_probe_v2.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "0cc6bb4df24293a3ef8f57e60f3fadfdf625da88d852e768b880cc1ad647c1a9"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "3933ce0d20d9aa7fe9eddd7df55118f2a2b146f306b3e1c9ce54cd64f483dd40",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 66384,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "27f9365f677189dc911a6ce85c6ad753ebb831fb85c6f67b25e275fe44b4fce7",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001-navigation-index-r001/frozen-output/critique/_lm_0003.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "27f9365f677189dc911a6ce85c6ad753ebb831fb85c6f67b25e275fe44b4fce7"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "3a3ce46289fa6986d14e568c42faba3251c7a1d049e02083a0988cb75ba4a764",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 296190,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "9866367bc57d9cb4ae73f7d21e31239098d30241d10573c278d151f1c366ed84",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-control-research-a001/frozen-output/research/scratch_issue_search.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "9866367bc57d9cb4ae73f7d21e31239098d30241d10573c278d151f1c366ed84"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-LUNA-S1-control-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-LUNA-S1-control-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "3beecbd9c6a5328298c2c75ce75037f732f1114e3b15dbefc8a2400bcd336862",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 92530,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "0ce384062ceb2f9d9096d1dd445747938641dbfbca2eb64030bb1976fb986fe5",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/frozen-output/scratch/napari_test_shapes.py",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "0ce384062ceb2f9d9096d1dd445747938641dbfbca2eb64030bb1976fb986fe5"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-07-FRESH-DELIVERY-R001-control-revision-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-07-FRESH-DELIVERY-R001-control-revision-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "4506ca444cb05fab6a65fe0d069e34435c6732d88633d645b9552cdffb9f4a54",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 6013,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "5011f47db4e2642914c70f1d325bad225e20b90382ec31869ff008cfc576dda0",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/critique/final-review.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "5011f47db4e2642914c70f1d325bad225e20b90382ec31869ff008cfc576dda0"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "5285b06415399a7934f09489ecf3cf549dea6f91da9a0a1739eb1a907b9f1ac0",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 7,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/critique/probe.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "54ba85974f63d18e961ff7c2262bb69ea6a6bf68e9bd637bb57290469d4b0935",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 336205,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4720b07c13920829da5c40e6131aea5152574e738925533c9795859b90c3978c",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001-role-birth-r001/frozen-output/scratch/issue-map.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4720b07c13920829da5c40e6131aea5152574e738925533c9795859b90c3978c"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "5937203158c7b6358d7a4401391f2f7ab09fd158940d94aa5169616ee0477b95",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 399817,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "1776028164f57c7707b74e88ecc810dd9ce3e0563cd34c6a1f07c754d21aff49",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/frozen-output/final/schema-lines.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "1776028164f57c7707b74e88ecc810dd9ce3e0563cd34c6a1f07c754d21aff49"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_SOURCE_CODE_AUTHORSHIP_UNKNOWN",
+      "pin_ref": "6a5d0a322e453fa67f8925349f765cd2bc25330937f124baafef37a10ca7ecfe",
+      "reason": "Potential copied primary/foreign source code; no candidate-authorship type proof. Opaque locator/SHA retained outsideGit; no semantic read",
+      "source_pin": {
+        "bytes": 24030,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2f14e6cf836e583e27d82f9afed82cc07e2b68f52285e0f933ecba9b3e7368c2",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/frozen-output/working/qupath-GsonTools-v0.7.0.java",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2f14e6cf836e583e27d82f9afed82cc07e2b68f52285e0f933ecba9b3e7368c2"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "6bd5bae73b363146d982e0100e528740cb2aafe92d7f8c19d523b4e1b9f7a9da",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 11,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "197c7c60ef8a8470a38d1a9212bdfde9cfe6fd4be910825fe6ac7880ac765d16",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V16-A-treatment-diagnostic-a001/frozen-output/research/cache-probe-source.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "197c7c60ef8a8470a38d1a9212bdfde9cfe6fd4be910825fe6ac7880ac765d16"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V16-A-treatment-diagnostic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V16-A-treatment-diagnostic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "6e6de131781e9dae08d575b2bdd0344cd21a028cba34585178a2a67d5c0c235d",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 29722,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "a13c4374dad8082a2d36a8a6791f50a5396a100fc11bb9a5899fc6c21cded2b4",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/frozen-output/scratch/final-proposal.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "a13c4374dad8082a2d36a8a6791f50a5396a100fc11bb9a5899fc6c21cded2b4"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-FRESH-DELIVERY-R001-control-revision-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-FRESH-DELIVERY-R001-control-revision-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "6f14d4b925c6a0594b4b222e96d7f8e9beed21b40cdc494792eecbb6584b8359",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 421,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "8a291801db6f54879e4c33a20c3d3623af6816953dbe0205dc5c3d6fc8dd0997",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/frozen-output/research/citation-errata-correction.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "8a291801db6f54879e4c33a20c3d3623af6816953dbe0205dc5c3d6fc8dd0997"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "73fa71a2a9a3a41c8e4a133e5d89fa48503407e35d1396848d4d6970a36a82bf",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 5384,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "3fe8547e6f37eaca3fe0d6c5207b011da18b0d4c445402aa463c4c4f5ed482ee",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/scratch-witnesses.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "3fe8547e6f37eaca3fe0d6c5207b011da18b0d4c445402aa463c4c4f5ed482ee"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "7829687a37cbcffc24a021528592d051ff9712209ed0f9e020b980a7ee2d831f",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 11,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "197c7c60ef8a8470a38d1a9212bdfde9cfe6fd4be910825fe6ac7880ac765d16",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V16-A-treatment-diagnostic-a001/frozen-output/research/cache-probe-copy.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "197c7c60ef8a8470a38d1a9212bdfde9cfe6fd4be910825fe6ac7880ac765d16"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V16-A-treatment-diagnostic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V16-A-treatment-diagnostic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "7b77111a86e0c659310533e0098b9e8a1d2edbdf9537ad76cf62157949dde2e7",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 320666,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "da6ed20893bbf8bb94544f47fdd912b0bc7483d67741a04dee09d14fb93279e6",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/frozen-output/research/scratch_issue_search_lines.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "da6ed20893bbf8bb94544f47fdd912b0bc7483d67741a04dee09d14fb93279e6"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "80fb94d203c6323cf6b3dc8fc48307ee748b3b44532bdc91f5b5284ffb2f48b6",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 30,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "abfadf2801193bb2e5b43e4abd1df82a255de04f6e00babb3b3d4a86b059f401",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/scratch-write-check.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "abfadf2801193bb2e5b43e4abd1df82a255de04f6e00babb3b3d4a86b059f401"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "80fbcdacaf22e8179437efd87c8d4c2949b91d51fc7c5b9ec90e088e38eecfc5",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 131764,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4e7ac1b7b1c4b3163b34b6e2688e81745beea3a9043629594046894d57247a30",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/frozen-output/scratch/napari_shapes_v092.py",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4e7ac1b7b1c4b3163b34b6e2688e81745beea3a9043629594046894d57247a30"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-07-FRESH-DELIVERY-R001-control-revision-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-07-FRESH-DELIVERY-R001-control-revision-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "857d8dc5a4dc2549d79e3bacbd6fda833daacad3fc036b47a96868bc8a8c9769",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 1912,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "27fa78e613979c0a373afcd4624d75a0e0d0d4b8ed642867254f7adc6aa0ead2",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-treatment-research-a001/frozen-output/research/source-capture-errata.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "27fa78e613979c0a373afcd4624d75a0e0d0d4b8ed642867254f7adc6aa0ead2"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-LUNA-S1-treatment-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-LUNA-S1-treatment-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "8ed3e91e277d3b76ddeb64062b3920d1e8e5fc4e12a9c87bdcd93828b17050e7",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 19,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6ebd9795ac36c9f304f0307f5c55266c9be1f29aee791883a895ea2ed0e72474",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-research-a001/frozen-output/research/.cache_probe_copy.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6ebd9795ac36c9f304f0307f5c55266c9be1f29aee791883a895ea2ed0e72474"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "9714794be11164884b627bc3e61af4cf1ed896caee87ff1929e3f59b8d3393f5",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 41,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/frozen-output/final/mechanical_probe.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "9a5e9c03d1eef7a5eb84650a9b69fa3ff93f431ecd9cdcdfdb2e4707d343d376",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 399821,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "5334d8ed030c2e22fde17d90495250f487877294e8b73aead5333cee5f95d830",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/frozen-output/research/ome_schema_lines.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "5334d8ed030c2e22fde17d90495250f487877294e8b73aead5333cee5f95d830"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "9e79146e9a99d0d15afd43ab6c55ff65c99111ea3f1d2bb30edbd46b2c1e88cc",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 4915,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6ce4ca20942c8b67265f5a3e00fb2cc1dd21404d4ecad75b54d8e7e11a7c2dbb",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/critique/independent-correction.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6ce4ca20942c8b67265f5a3e00fb2cc1dd21404d4ecad75b54d8e7e11a7c2dbb"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "a37da238d5681da788b6811826752c64cb289d30ac1964d96bc403149277fc3f",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 3137,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "cdcdac4137013179ac7f6733746c00b7d2f2fd5705194eb092b58d58c5663585",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/scratch-review-final.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "cdcdac4137013179ac7f6733746c00b7d2f2fd5705194eb092b58d58c5663585"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "a4c83431e7ee6e848e1b494134b56c66f9a943eb699137e842ce49e4237679db",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 12,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "7084248d32c5dd0c8cc65e5204a7fc985dd85315a4a714f3f13b06aeaca72d6e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/frozen-output/probe/sanity.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "7084248d32c5dd0c8cc65e5204a7fc985dd85315a4a714f3f13b06aeaca72d6e"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-control-critique-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-control-critique-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "a8b6bcb31c772a81c8cfb2503596557ece6b92c14af0e9c2af03be5e0f0daa48",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 10534,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "84509a844f9b8daf5ee3c7c184c5d99c34bae2c365be05835596d771f775d5f9",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/scratch-proposal.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "84509a844f9b8daf5ee3c7c184c5d99c34bae2c365be05835596d771f775d5f9"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "ae4f1ed57fa140af5f394eeffa39d91ee45bc913058cb1d758f4c9d1c0fbec13",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 101,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "75e6152b3d44b458fa5886545e9887adb4b76cbed29a83c9cc02397a8e721458",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/frozen-output/final/mechanical_probe.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "75e6152b3d44b458fa5886545e9887adb4b76cbed29a83c9cc02397a8e721458"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_SOURCE_CODE_AUTHORSHIP_UNKNOWN",
+      "pin_ref": "b1c289f87ef340201bc51500a9ecdebcf1030f41099c99643c2e246103cc15f0",
+      "reason": "Potential copied primary/foreign source code; no candidate-authorship type proof. Opaque locator/SHA retained outsideGit; no semantic read",
+      "source_pin": {
+        "bytes": 212192,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "fde9a6650072a175089167332790895ad486be3d8da2d52296da9a1edfdb4519",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/frozen-output/working/qupath-QP-v0.7.0.java",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "fde9a6650072a175089167332790895ad486be3d8da2d52296da9a1edfdb4519"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_SOURCE_CODE_AUTHORSHIP_UNKNOWN",
+      "pin_ref": "b55dc6da139cab073f3f22d1d92f63ae7079cb660d08245147b2e0794918eb5e",
+      "reason": "Potential copied primary/foreign source code; no candidate-authorship type proof. Opaque locator/SHA retained outsideGit; no semantic read",
+      "source_pin": {
+        "bytes": 21344,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "5a49abe9da369f12be8e97caf5cb4bff05261135e27d899a9be150036dea71ef",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/frozen-output/working/qupath-QuPathTypeAdapters-v0.7.0.java",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "5a49abe9da369f12be8e97caf5cb4bff05261135e27d899a9be150036dea71ef"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "b7e61b73024314c4b908edd5a280aa2049f837e536e194059cee90299d13287b",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 41,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/frozen-output/final/mechanical_probe_cached.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "b835bb06c9d9455fb3742dcbc92db5a1caa8ca1d62332073ae19573be8fb4a82",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 372286,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-control-research-a001/frozen-output/research/source-notes/cache-test.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-FRESH-DELIVERY-R001-control-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-FRESH-DELIVERY-R001-control-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "b95489c22431bcca2d89b331109ae191f80758792ce1e25023f7973cf69cb89b",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 982,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "363aa847d1d23cf8582249e1d1abab755ea8ff37b49690b83f133c6b25f4ba81",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/frozen-output/research/citation-errata.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "363aa847d1d23cf8582249e1d1abab755ea8ff37b49690b83f133c6b25f4ba81"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "bfea4400e491b9004d548f6e36ca44d2d860a0ac50b80bd935c254152f25a33f",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 263310,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "8d1e48e3b7f0c84e3ed1f0085bfb4f7c936eaad67a45b2ad009a644e220b67f5",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/frozen-output/scratch/cgroupv2-lines.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "8d1e48e3b7f0c84e3ed1f0085bfb4f7c936eaad67a45b2ad009a644e220b67f5"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-08-FRESH-DELIVERY-R001-control-revision-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-08-FRESH-DELIVERY-R001-control-revision-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "c16627a78914e3fb49d180eb40adb51181cc265832ce39a04ce7cbd694a8a2d6",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 6422,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "b6db2dc1b8c0060efd213ae1f755862d4f957674c60895c5361ab1c1d72323a5",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/scratch-brief-map.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "b6db2dc1b8c0060efd213ae1f755862d4f957674c60895c5361ab1c1d72323a5"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "c91bb0f3c98bd00e725ac3083606f5c916a8e3aeb47e0af3966bec4b3cba783c",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 158591,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001/frozen-output/final/ngff-text.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "cacb2467eef1f94389692d677adc4e6a4d02223066aeb16ef836be0a3023016c",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 6351,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "ce284ae08ce423ac062c4a3d6dfd4786a65dc65e82993df5a8e39f267e18209c",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-control-critique-a001/frozen-output/critique/notes/verification-log.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "ce284ae08ce423ac062c4a3d6dfd4786a65dc65e82993df5a8e39f267e18209c"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-11-control-critique-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-11-control-critique-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "ce7ee594ecf04499207dec9f4d0120c4a5d77fcad2e2bd8e35042dcab983a0c8",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 6422,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "b6db2dc1b8c0060efd213ae1f755862d4f957674c60895c5361ab1c1d72323a5",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/frozen-output/research/map.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "b6db2dc1b8c0060efd213ae1f755862d4f957674c60895c5361ab1c1d72323a5"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_SOURCE_CODE_AUTHORSHIP_UNKNOWN",
+      "pin_ref": "dd84d51f8aeda779f1371bf86d3840a1d4ee7f340361a9fcdb42b13964901608",
+      "reason": "Potential copied primary/foreign source code; no candidate-authorship type proof. Opaque locator/SHA retained outsideGit; no semantic read",
+      "source_pin": {
+        "bytes": 42881,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "70a8b46518618499bb0c9f1a8a901fb58becb10d49d64d50b15be62bba35d58e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/frozen-output/working/qupath-PathIO-v0.7.0.java",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "70a8b46518618499bb0c9f1a8a901fb58becb10d49d64d50b15be62bba35d58e"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "e3e0749809ca0d981456efd83c96eb12b4d738bf27ca0c4fd066bf8d546ee955",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 320666,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "da6ed20893bbf8bb94544f47fdd912b0bc7483d67741a04dee09d14fb93279e6",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/frozen-output/critique/scratch_issue_search_lines.txt",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "da6ed20893bbf8bb94544f47fdd912b0bc7483d67741a04dee09d14fb93279e6"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "e43539f953fb5f71cf8b81294265b36c2d1b3a99222509945ee43f2fb3cf9414",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 4805,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "75c2244fc57e246abcebb8dfd5df7ff073e5a800e052fd7f69788b7ed4e1fde6",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/critique/recovery-final.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "75c2244fc57e246abcebb8dfd5df7ff073e5a800e052fd7f69788b7ed4e1fde6"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": [
+            "warm_single_roles_no_new_logical_targets"
+          ]
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_ARTIFACT_TYPE_OR_RAW_SOURCE_BOUNDARY_UNKNOWN",
+      "pin_ref": "ee50cf1f13149cc8940ffd55c5e3181cfbc0c0f70d2535473899ec96378ddfde",
+      "reason": "Nonrequired artifact lacks exact candidate-authored versus rawsource-capture type proof; opaque locator/SHA retained, no semantic inspection",
+      "source_pin": {
+        "bytes": 226,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "1672b649be45b6e26fb4efc20f7709544b315ad4f3feff4d6d44ee2db5b17584",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-treatment-research-a001/frozen-output/research/worklog.md",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "1672b649be45b6e26fb4efc20f7709544b315ad4f3feff4d6d44ee2db5b17584"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": false,
+          "job_id": "I-09-treatment-research-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": false,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "I-09-treatment-research-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    },
+    {
+      "classification": "QUARANTINED_SOURCE_CODE_AUTHORSHIP_UNKNOWN",
+      "pin_ref": "ff0632709226b3bd8cb8f5f8c741d093b96a3309a821d55457bf23332385c5a1",
+      "reason": "Potential copied primary/foreign source code; no candidate-authorship type proof. Opaque locator/SHA retained outsideGit; no semantic read",
+      "source_pin": {
+        "bytes": 15045,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "b4961527f7642aaa78db9a7c1dfeb201bd2ebb572ec68e2b343756b85dfb43f1",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/frozen-output/working/qupath-ROITypeAdapters-v0.7.0.java",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "b4961527f7642aaa78db9a7c1dfeb201bd2ebb572ec68e2b343756b85dfb43f1"
+      },
+      "staged": false,
+      "uses": [
+        {
+          "current_selected": true,
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "OPAQUE_AUTHORED_ARTIFACT",
+          "lineage_strata": [],
+          "stage_binding_scope": "LAUNCHED_OR_ENTERED"
+        },
+        {
+          "current_selected": true,
+          "field": "/opaque_authored_artifact_inventory/artifact",
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "kind": "ADDITIONAL_PIN_REFERENCE",
+          "lineage_strata": []
+        }
+      ]
+    }
+  ],
+  "schema": "er9.curation-exact-artifact-type-owner-request.v1",
+  "source_manifest_sha256": "a6cce2051f8f4233e7398ab768df3a438ef01a1c3527fead29c102b8174135e7"
+}

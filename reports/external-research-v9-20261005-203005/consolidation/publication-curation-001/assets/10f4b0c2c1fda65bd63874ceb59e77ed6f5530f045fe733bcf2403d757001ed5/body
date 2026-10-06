@@ -1,0 +1,61 @@
+{
+  "schema": "er9.candidate-lead-catalog.addendum.v1",
+  "catalog_role": "enrichment addendum for the frozen proposal",
+  "base_proposal": {
+    "path": "inputs/seed/proposal.md",
+    "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7"
+  },
+  "inheritance_status": "Earlier lead catalog was not located at inputs/seed/leads.json or out/final/leads.json during this run. Existing proposal leads L1-L12 are not reconstructed here; entries L13-L17 are supplemental.",
+  "entries": [
+    {
+      "id": "L13",
+      "title": "Pin and test the TIFF reader API adapter",
+      "priority": "high",
+      "lead_type": "implementation validation",
+      "source_refs": ["E03", "E04", "E05", "E06"],
+      "question": "Can one supported lockfile select tifffile 2026.3.3 with aszarr=True, or 2026.5.2+ with return_as='zarr', without accepting mutable development snapshots?",
+      "next_action": "Choose one exact release and add a slice-read smoke fixture using that release's documented API and tested Zarr version.",
+      "status": "OPEN"
+    },
+    {
+      "id": "L14",
+      "title": "Build instrument calibration fixtures",
+      "priority": "high",
+      "lead_type": "data qualification",
+      "source_refs": ["E07", "E08", "E09", "E10"],
+      "question": "Do the group's instruments preserve file-native calibration values and units through import, reopen, transform, and export?",
+      "next_action": "Acquire representative lawful local files for each instrument; retain native metadata; assert expected values and unit labels through the selected reader release. Do not rely on the upstream TVIPS fixture, which is absent from the captured commit response.",
+      "status": "OPEN"
+    },
+    {
+      "id": "L15",
+      "title": "Validate NGFF 0.5 axis and transform subset",
+      "priority": "high",
+      "lead_type": "format validation",
+      "source_refs": ["E01", "E02"],
+      "question": "Can the importer/exporter enforce unique axes, dimension_names agreement, permitted axis patterns, transform ordering and vector lengths, and multiscale defaults?",
+      "next_action": "Implement a small schema-focused fixture set including invalid axis order, missing dimension_names, vector length mismatch, translation before scale, and multiple named multiscales.",
+      "status": "OPEN"
+    },
+    {
+      "id": "L16",
+      "title": "Prove original-image immutability in the reader service",
+      "priority": "high",
+      "lead_type": "data-integrity validation",
+      "source_refs": ["E05", "E06"],
+      "question": "Does every source open path remain read-only while region reads, display changes, annotations, and cancellation occur?",
+      "next_action": "Exercise all source open paths with mode='r'; hash files before and after. Ensure derived writes use a separate destination and no r+ handle can escape the reader boundary.",
+      "status": "OPEN"
+    },
+    {
+      "id": "L17",
+      "title": "Decide whether CCITT belongs in the maintained TIFF boundary",
+      "priority": "medium",
+      "lead_type": "support-boundary decision",
+      "source_refs": ["E05", "E07", "E08", "E09"],
+      "question": "Which CCITT RLE/Group 3/Group 4 inputs occur in the lab, and are they read-only requirements?",
+      "next_action": "If needed, pin a compatible imagecodecs version greater than 2026.1.14 and test representative decode fixtures; leave encoding unsupported unless a distinct encoder path is verified.",
+      "status": "OPEN"
+    }
+  ]
+}

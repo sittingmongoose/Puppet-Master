@@ -1,0 +1,48 @@
+{
+  "schema": "er9.candidate-witness-addendum.v1",
+  "base_catalog": {
+    "path": "inputs/seed/witness_catalog.json",
+    "sha256": "5b5e0c0d9d8c52c3d8259fcb11bd51a29f1d6d468f953f721f03e38a2e37ca4a",
+    "preserved_ids": ["W1", "W2", "W3", "V1", "V2", "V3", "V4", "V5", "V6"]
+  },
+  "executed_additions": [
+    {
+      "id": "W4",
+      "title": "Apply OME-NGFF 0.5 multiscale example transforms to one t,c,z,y,x coordinate",
+      "kind": "isolated component arithmetic check",
+      "rationale": "Discriminate axis ordering and sequential dataset/group scale application using the actual numeric scales in the captured NGFF 0.5 example.",
+      "sources": ["S1"],
+      "fixture": {
+        "axes": ["t", "c", "z", "y", "x"],
+        "units": ["millisecond", null, "micrometer", "micrometer", "micrometer"],
+        "sample_index": [2.0, 0.0, 4.0, 10.0, 20.0],
+        "dataset_level_0_scale": [1.0, 1.0, 0.5, 0.5, 0.5],
+        "group_scale_applied_after_dataset": [0.1, 1.0, 1.0, 1.0, 1.0],
+        "dataset_level_1_spatial_scale": [1.0, 1.0, 1.0, 1.0, 1.0]
+      },
+      "execution": {
+        "execution_id": "exec-km13mr0y",
+        "completed_utc": "2026-10-06T04:35:48.546537+00:00",
+        "code_sha256": "d7b03590e94d0484ebae502d74e7220ae7c7d2aeb1a21e04c0ead23983158f0c",
+        "data_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "stdout_sha256": "3fdb02d135467b351eefb29ba2dfad74be44abc6f56ae1c30b3b049e125903e1",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "stdout": "{'axes': ['t', 'c', 'z', 'y', 'x'], 'units': ['millisecond', None, 'micrometer', 'micrometer', 'micrometer'], 'level0_index': [2.0, 0.0, 4.0, 10.0, 20.0], 'level0_physical': [0.2, 0.0, 2.0, 5.0, 10.0], 'level1_x_um': 10.0}\n",
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "new empty namespace"}
+      },
+      "observation": "Level 0 maps to [0.2,0,2,5,10]; level 1 x-index 10 maps to 10 micrometers, the same x location as level-0 index 20.",
+      "scope_limits": [
+        "Checks only candidate-authored stdlib arithmetic and constants transcribed from the specification example.",
+        "Does not parse or write a Zarr store, validate an OME-NGFF implementation, or test application coordinate handling.",
+        "Does not establish image-data values, latency, persistence, or export behavior."
+      ]
+    }
+  ],
+  "proposed_unexecuted_additions": [
+    {"id": "V7", "title": "OME-Zarr 0.5 axis and pyramid fixture", "status": "UNEXECUTED", "plan": "Read a real v0.5 store; validate dimension_names, axes, units and per-level scales; map one landmark across levels and a group transform."},
+    {"id": "V8", "title": "Multiscale selection and ambiguous-axis UI", "status": "UNEXECUTED", "plan": "Exercise multiple named multiscales, fallback labeling, custom/missing axes, explicit correction, and verbatim metadata retention."},
+    {"id": "V9", "title": "Pinned TIFF boundary and 3 GB bounded-read test", "status": "UNEXECUTED", "plan": "Against pinned tifffile/imagecodecs versions, test tiled and stripped layouts, dtypes, CCITT, unsupported compression, memory, latency, and cancellation."},
+    {"id": "V10", "title": "Team-owned calibration regression fixture", "status": "UNEXECUTED", "plan": "Use an available instrument file and assert value-plus-unit through import for every reader upgrade; the historical TVIPS fixture is not supplied."}
+  ]
+}

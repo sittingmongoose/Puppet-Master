@@ -1,0 +1,127 @@
+{
+  "catalog_schema": "er9.research.sources.v1",
+  "captured_utc_note": "All captures taken 2026-10-06 via admitted public_https_get; each entry carries the exact-response-body sha256 (capture identity) returned by the capture tool. Only the first 32768 bytes of large pages were delivered for reading (noted per entry).",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Jupyter Notebook Format v4.5 JSON schema (nbformat)",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "branch main as of capture 2026-10-06T11:32:39Z (no per-release tag pinned; see S1b for the failed 5.10.4 tag attempt)",
+      "locator": "properties.metadata.kernelspec; definitions.code_cell (required id/cell_type/metadata/source/outputs/execution_count); definitions.cell_id (pattern ^[a-zA-Z0-9-_]+$, maxLength 64); code_cell.execution_count description: 'The code cell's prompt number. Will be null if the cell has not been run.'; definitions.output -> execute_result/display_data/stream/error",
+      "capture_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "captured_utc": "2026-10-06T11:32:39.524352+00:00",
+      "applicability": "Notebook document model: per-cell execution provenance fields, output types, kernel binding, cell identity. Basis of proposal sections 2/P1, 6, 11, 13.",
+      "limits": "main-branch snapshot, not a release tag; future changes possible. Full body read (16104 bytes)."
+    },
+    {
+      "id": "S1b",
+      "title": "Failed pin attempt: nbformat schema at tag 5.10.4 (HTTP 404)",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/5.10.4/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "tag 5.10.4 (nonexistent at this path)",
+      "locator": "response body: '404: Not Found'",
+      "capture_sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "captured_utc": "2026-10-06T11:31:39.180882+00:00",
+      "applicability": "Discloses that a release-tag pin for the schema was not obtained; S1 is main-branch.",
+      "limits": "Negative evidence only."
+    },
+    {
+      "id": "S2",
+      "title": "nbclient documentation — Executing notebooks (client.html)",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": "docs 'latest' as served 2026-10-06 (page meta self-reports doc version 0.11; not a PyPI release pin)",
+      "locator": "'Execution until first error' (error stops execution, raises CellExecutionError, saved notebook keeps outputs up to failing cell incl. stack trace); 'allow_errors (default is False)'; 'timeout traitlet ... default is 30 s'; kernel_name 'obtained from the notebook metadata'; hooks on_notebook_start/complete/error, on_cell_*; CLI 'jupyter execute --allow-errors'",
+      "capture_sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a",
+      "captured_utc": "2026-10-06T11:31:39.399639+00:00",
+      "applicability": "Clean-replay semantics and defaults the Run Service mirrors or overrides. Basis of sections 2/P1, 7, 13.",
+      "limits": "First 32768 of 36686 bytes delivered/read (remainder is CLI help tail). Docs 'latest', not a pinned release; defaults may drift between versions."
+    },
+    {
+      "id": "S3",
+      "title": "DuckDB documentation — CSV Import (overview)",
+      "url": "https://duckdb.org/docs/current/data/csv/overview.html",
+      "pin": "docs 'current' (version selector shows 1.5 current) as served 2026-10-06",
+      "locator": "page title 'CSV Import'; read_csv auto-infer examples; sibling pages: data/csv/auto_detection, data/csv/reading_faulty_csv_files (nav captured)",
+      "capture_sha256": "3d18995a557d05a92ac547c2bbbd6c13cc8f607a26807c7205e3c2d48dce49b5",
+      "captured_utc": "2026-10-06T11:32:40.329332+00:00",
+      "applicability": "Identity of the engine's CSV entry points and doc set used as the data-engine precedent (P2).",
+      "limits": "Only first 32768 of 393313 bytes delivered/read (mostly navigation chrome); the sample_size default value is therefore cited from S4/S5 (engine error text and issue reports), not from this page's parameter table. Redirect chain docs/data/csv/overview.html -> /docs/current/data/csv/overview (308) captured as 8322f51a2bba3a3066ef3552b02caa38697296833c5b9618ef73e34e9d3966a1."
+    },
+    {
+      "id": "S4",
+      "title": "duckdb#25824 — CSV reader silently rounds/truncates values past the sniffer's sample_size (OPEN at capture)",
+      "url": "https://github.com/duckdb/duckdb/issues/25824",
+      "pin": "issue state open; created 2026-09-17T04:10:48Z; captured via Search API response 2026-10-06",
+      "locator": "issue body: default sample '20 480 lines'; sniffer strict=true (type_detection.cpp:182 on main@2bbfe6f236) vs scanner strict=false (string_value_scanner.cpp:335); '20 479 leading rows then 1.5 -> BIGINT 2 silently rounded'; timestamp-as-DATE silently day-truncated; version matrix 1.1.3 / 1.5.5 / 1.6.0.dev214 / main@2bbfe6f236 all affected; sample_size=-1 returns correct value",
+      "capture_sha256": "02be09c96cd1ffc8bc8021244728e2818aed1827ea977422f594647986bd7818",
+      "captured_utc": "2026-10-06T11:31:40.553533+00:00",
+      "applicability": "Primary evidence that sample-based inference can silently corrupt values past the window — motivates the data contract's labeled-hypothesis rule and no-silent-conversion policy; motivates proposed validation V3.",
+      "limits": "Reporter-claimed, maintainer-unconfirmed, open/unfixed at capture; behavior not independently reproduced in this experiment (no DuckDB runtime available in the admitted executor)."
+    },
+    {
+      "id": "S5",
+      "title": "duckdb#5378 — Parsing quotes in TSV... returns an error (closed 2022-12-19)",
+      "url": "https://github.com/duckdb/duckdb/issues/5378",
+      "pin": "issue closed 2022-12-19T12:29:02Z; reported against 0.6.0; captured via same Search API response as S4",
+      "locator": "quoted DuckDB error text: '...SAMPLE_SIZE=20480, IGNORE_ERRORS=0, ALL_VARCHAR=0' — engine's own error output stating the runtime default sample size",
+      "capture_sha256": "02be09c96cd1ffc8bc8021244728e2818aed1827ea977422f594647986bd7818",
+      "captured_utc": "2026-10-06T11:31:40.553533+00:00",
+      "applicability": "Corroborates the 20,480-row sniffing window via the engine's own error message (user-quoted).",
+      "limits": "Error text quoted inside a user report, not fetched from engine source/docs."
+    },
+    {
+      "id": "S6",
+      "title": "duckdb PR #1015 — CSV Loader wrongly assumes column with all sample values null to be Bool (fix + regression tests)",
+      "url": "https://github.com/duckdb/duckdb/pull/1015",
+      "pin": "merged 2020-10-16T11:12:26Z; head merge commit 921d87713fd5052f5feed541cfdb2723b05a7a9e",
+      "locator": "files API: src/execution/operator/persistent/buffered_csv_reader.cpp patch — adds LogicalType::SQLNULL to candidate list; final selection: if (best_sql_types_candidate.size() == type_candidates.size()) d_type = LogicalType::VARCHAR; tests added/modified: test/sql/copy/csv/auto/test_auto_voter.test (new, voter.tsv 5301 lines, expects COUNT 5300), test_sample_size.test (statement error -> statement ok + typeof INTEGER/VARCHAR/DATE/VARCHAR), test_type_detection.test (+int_bol.csv asserting INTEGER/BOOLEAN), fixtures int_bol.csv and voter.tsv",
+      "capture_sha256": "9bb42216f94849dc13739fcb777eefd0d7e5a0c4f94a60792d352f06c595e674",
+      "captured_utc": "2026-10-06T11:32:40.728500+00:00",
+      "applicability": "The followed issue->fix->regression-test chain (proposal section 3): all-NULL sample column sniffed as BOOLEAN; fixed by SQLNULL/VARCHAR fallback with three regression tests.",
+      "limits": "Merge metadata and diffs captured; behavior inside built releases not executed here."
+    },
+    {
+      "id": "S7",
+      "title": "duckdb release v0.2.4 (\"Jubata\")",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v0.2.4",
+      "pin": "tag v0.2.4; published_at 2021-02-02T06:35:32Z",
+      "locator": "release JSON: created/published timestamps; body lists major changes (does NOT list #1015)",
+      "capture_sha256": "b3a7dc11f3cefc7f13a88cf3b275e8f9a863ffd4448744b67a2f9a895e545a95",
+      "captured_utc": "2026-10-06T11:32:40.978008+00:00",
+      "applicability": "Version-applicability bound for the S6 fix: merge (2020-10-16) precedes release (2021-02-02).",
+      "limits": "Presence of the fix inside the v0.2.4 tag artifact was NOT verified (file-at-tag not fetched); claim is merge-ordering inference, disclosed in proposal section 17.4."
+    },
+    {
+      "id": "S8",
+      "title": "PEP 723 — Inline script metadata (Status: Final)",
+      "url": "https://peps.python.org/pep-0723/",
+      "pin": "PEP page as served 2026-10-06 (page banner: canonical spec maintained at PyPA 'Inline script metadata' spec page)",
+      "locator": "Status: Final; Resolution 08-Jan-2024; Specification: '# /// script' block, top-level 'dependencies' (PEP 508 strings) and 'requires-python' (PEP 440 specifier); 'Script runners MUST error if the specified dependencies cannot be provided.'",
+      "capture_sha256": "1bb79e5880add2424221e259128a0a8ceeb8f047a159d8a03d8a26b823f22c78",
+      "captured_utc": "2026-10-06T11:31:40.123973+00:00",
+      "applicability": "Environment-binding format for per-notebook/per-transform dependency declarations (proposal sections 2/P3, 11, 12, 16).",
+      "limits": "First 32768 of 73655 bytes delivered/read; specification sections fully within delivered bytes. For future edits pin the PyPA canonical spec, not the PEP page."
+    },
+    {
+      "id": "S9",
+      "title": "duckdb#15576 — cli: csv strange sniffing behavior (closed 2025-01-07, label 'reproduced')",
+      "url": "https://github.com/duckdb/duckdb/issues/15576",
+      "pin": "closed 2025-01-07T14:26:58Z; reported on v1.1.3; captured via same Search API response as S4",
+      "locator": "issue body: single malformed row flips delimiter sniff '|' vs ';'; ignore_errors=true changes the sniff; no error by default",
+      "capture_sha256": "02be09c96cd1ffc8bc8021244728e2818aed1827ea977422f594647986bd7818",
+      "captured_utc": "2026-10-06T11:31:40.553533+00:00",
+      "applicability": "Secondary corroboration that sniffed dialect/options are fragile and error-handling flags change results — quarantine policy in data contract.",
+      "limits": "User report; fix PR not followed; 'reproduced' label is maintainer-added but root-cause fix not traced here."
+    },
+    {
+      "id": "S10",
+      "title": "duckdb#15777 — COPY fails when dateformat='AUTO' is set by user, succeeds when auto-detected (closed 2025-02-06, label 'reproduced')",
+      "url": "https://github.com/duckdb/duckdb/issues/15777",
+      "pin": "closed 2025-02-06T07:21:59Z; reported on 1.1.3; captured via same Search API response as S4",
+      "locator": "issue body: explicit dateformat 'AUTO' errors ('Sniffer detected value different than the user input ... Set: AUTO Sniffed: %m/%d/%y') where implicit detection succeeds",
+      "capture_sha256": "02be09c96cd1ffc8bc8021244728e2818aed1827ea977422f594647986bd7818",
+      "captured_utc": "2026-10-06T11:31:40.553533+00:00",
+      "applicability": "Secondary: date-format inference is option-sensitive; supports recording declared format strings in the data contract.",
+      "limits": "User report; fix PR not followed."
+    }
+  ]
+}

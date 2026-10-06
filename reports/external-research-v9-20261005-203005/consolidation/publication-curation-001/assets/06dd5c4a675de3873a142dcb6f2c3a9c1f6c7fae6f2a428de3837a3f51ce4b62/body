@@ -1,0 +1,110 @@
+{
+  "schema": "er9.research.leads.v1",
+  "stage": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+  "leads": [
+    {
+      "id": "L1",
+      "type": "critical unresolved dependency",
+      "topic": "Exact Zarr/nD lazy-slicing behavior through viewer layers",
+      "evidence": ["S1", "S5", "S6"],
+      "supported_finding": "NGFF 0.5 describes chunked Zarr datasets; napari's Dask guide documents a lazy-array read-amplification hazard when reshaping; open issue #9515 reports over-fetch on direct Zarr slicing in a different newer software environment.",
+      "uncertainty": "Issue #9515 is an open user report, not a verified root-cause/fix/test chain. No candidate ran an access benchmark. The report's versions are not the proposed 0.6.5 stack.",
+      "bounded_alternatives": [
+        "Expose an axis-aware lazy Dask array from the app's own adapter and permit only reader/view combinations that pass measured read-count and memory tests.",
+        "If that path cannot meet the envelope, use a custom Qt/VisPy ROI fetch layer or materialize a user-approved chunked working derivative while retaining the original; do not default to whole-image decode."
+      ],
+      "next_validation": "W2 instrument direct Zarr, Dask-wrapped Zarr, and TIFF-to-Zarr reads on representative local datasets and a 3 GB input; compare bytes read, RSS, cancellation and latency."
+    },
+    {
+      "id": "L2",
+      "type": "critical unresolved dependency",
+      "topic": "Package compatibility and deployment lock",
+      "evidence": ["S2", "S4", "S5", "S6", "S11"],
+      "supported_finding": "The source precedents are at different versions. The tifffile documentation capture reports version 2026.9.20 and Zarr >=3.2.0; napari v0.6.5 is a separate older application release. The open Zarr report uses napari 0.9.1, Zarr >=3 and current Dask.",
+      "uncertainty": "No combined dependency resolution, compatibility matrix, GUI launch or reader call was executed. The current tifffile documentation is rolling and its capture does not by itself pin an immutable wheel/source artifact.",
+      "bounded_alternatives": [
+        "Pin napari 0.6.5 with versions resolved from its release constraints and select a compatible tested TIFF/Zarr/Dask reader set.",
+        "Move to a newer napari release only after rerunning all access, annotation-transform and save/reopen checks against that exact release."
+      ],
+      "next_validation": "Resolve and publish a reproducible environment lock with artifact hashes; test startup, Zarr 3, tifffile, Dask and GPU-free CPU behavior."
+    },
+    {
+      "id": "L3",
+      "type": "critical unresolved data-contract dependency",
+      "topic": "Arbitrary orientation and coordinate mapping beyond NGFF scale/translation",
+      "evidence": ["S1", "S7", "S8", "S9", "S10"],
+      "supported_finding": "OME-NGFF 0.5 multiscale transforms are restricted to scale and translation. napari issue #7085 demonstrates that even a UI layer operation can discard transform metadata, and its fix adds a narrower preservation regression test.",
+      "uncertainty": "The vendor-specific interpretation of all input orientation/origin metadata is not investigated here. No source-to-display or source-to-world implementation was run.",
+      "bounded_alternatives": [
+        "Keep an application-owned full affine matrix with named axes and provenance; export NGFF transforms only when exactly representable and include a sidecar otherwise.",
+        "If a format's orientation cannot be resolved, retain its raw metadata and require an explicit user correction before physical annotation or transformed export."
+      ],
+      "next_validation": "W3-W4 coordinate and transform tests with anisotropic spacing, nonzero origin, permutation, flip, rotation/shear, and save/reopen/export."
+    },
+    {
+      "id": "L4",
+      "type": "critical unresolved durability dependency",
+      "topic": "SQLite and bundle recovery over actual university shared storage",
+      "evidence": ["S12", "S13"],
+      "supported_finding": "SQLite describes rollback journal atomic commits under filesystem assumptions and explicitly excludes WAL over a network filesystem. Bundle copying/rename and SMB/NFS behavior are outside that evidence.",
+      "uncertainty": "The group's share type, locking, flush and rename semantics are unknown. No crash/recovery test was run.",
+      "bounded_alternatives": [
+        "Maintain the working SQLite database locally and publish immutable, unique, validated bundle generations for exchange.",
+        "If users demand direct shared editing, first characterize the exact file server and design a separate coordination/conflict model; do not open one live WAL database from multiple machines."
+      ],
+      "next_validation": "W5 inject failures on local disk and the actual share; test closed-bundle generation and completion-marker recovery before relying on it."
+    },
+    {
+      "id": "L5",
+      "type": "critical support-boundary dependency",
+      "topic": "Representative lab format/codec corpus and metadata allowlist",
+      "evidence": ["S1", "S2", "S3"],
+      "supported_finding": "OME-NGFF constrains its image model to 2–5 dimensions and described axis forms. tifffile supports numerous TIFF-like structures but lists unimplemented features and special cases. Bio-Formats reports format-specific support ratings rather than one uniform capability.",
+      "uncertainty": "The six researchers' actual instruments, file encodings, calibration edge cases and sample files were not supplied or accessed. Therefore the proposed extension allowlist is a test plan, not a factual list of currently compatible instruments.",
+      "bounded_alternatives": [
+        "Admit only representative OME-Zarr v0.5 and TIFF/OME-TIFF fixtures whose chosen reader returns explicit axes/calibration and passes bounded-access checks.",
+        "Add narrowly scoped reader adapters one format family at a time; retain original metadata and raw source identity.",
+        "Consider Bio-Formats conversion for selected unsupported instruments after local sample tests, without claiming broad write fidelity."
+      ],
+      "next_validation": "Collect user-authorized public/synthetic or lab-provided fixtures outside this research stage, create a per-format/codec/metadata test matrix, and document exclusions."
+    },
+    {
+      "id": "L6",
+      "type": "critical engineering assumption",
+      "topic": "3 GB source performance under 16 GB RAM",
+      "evidence": ["S2", "S5", "S6"],
+      "supported_finding": "The napari Dask guide demonstrates browsing a 3.69 GB TIFF collection; the tifffile docs describe reading from TIFF pages/tiles through Zarr-like arrays. Neither proves a single 3 GB source stays under a second in-memory copy on an 8-core/16 GB workstation.",
+      "uncertainty": "File layout, plane dimensions, compression ratio, codec memory, source filesystem speed and viewport access pattern materially affect memory and latency.",
+      "bounded_alternatives": [
+        "Set a reader capability gate on maximum plane/chunk decode size, cache limit, concurrency and available memory; report unsupported cases clearly.",
+        "If a source lacks usable random access, offer explicit cancellable conversion into a chunked derivative with capacity estimate and keep the original immutable."
+      ],
+      "next_validation": "W2 measure resident memory, in-flight decode buffers, actual bytes read, p95 interaction latency and cancellation on a representative 3 GB source."
+    },
+    {
+      "id": "L7",
+      "type": "optional opportunity",
+      "topic": "Bio-Formats as an opt-in reader or converter",
+      "evidence": ["S3"],
+      "supported_finding": "Bio-Formats v7.3.1 documents many formats and distinct pixel/metadata/export/multipage/pyramid ratings.",
+      "deferred_reason": "Format count does not imply exact calibration or metadata preservation, and conversion may consume storage/time. It is not necessary for the first narrow, testable whitelist.",
+      "preserve_for_later": "Keep as a candidate adapter for instruments outside direct support. Qualify each format family and reader version with fixtures, compare captured metadata and output axes, retain source bytes and conversion provenance."
+    },
+    {
+      "id": "L8",
+      "type": "optional alternative",
+      "topic": "Custom Qt/VisPy renderer instead of napari layer integration",
+      "evidence": ["S4", "S5", "S7", "S9", "S10", "S11"],
+      "deferred_reason": "It may give complete control over ROI reads and the transform contract, but duplicates interaction, keyboard/accessibility, annotation editing, layer tools and GPU/CPU rendering work that a small team would otherwise inherit.",
+      "adoption_trigger": "Choose only if the exact pinned napari+adapter path cannot pass W2-W4 or cannot support the required user interaction without fragile internal coupling."
+    },
+    {
+      "id": "L9",
+      "type": "optional future work",
+      "topic": "Shared live collaboration, cloud services, registration and automatic segmentation",
+      "evidence": ["S1", "S4", "S7", "S9"],
+      "deferred_reason": "The brief requires ordinary bundle exchange; it does not require synchronization, registration or automated labels. These features introduce conflict handling or additional coordinate and provenance obligations.",
+      "preserve_for_later": "If added, keep bundle snapshots as recoverable lineage; represent registrations as explicit transform records, and preserve annotations as human-reviewable source-index geometry."
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "er9.leads.v1",
+  "stage": "I-05-LUNA-S1-treatment-research-a001",
+  "method": {
+    "v14_protected_discovery": "Roughly 30% of planned discovery was reserved prospectively for mechanism families outside whole-product viewer comparisons: OME-NGFF axes/chunked storage, OME-TIFF plane mapping and tifffile access, and Bio-Formats as a format-bridge alternative.",
+    "elapsed_time_claim": "No elapsed-time measurements were recorded; this is a prospective method commitment, not a retrospective timing claim or a claim that every lead was fully verified."
+  },
+  "catalog_errata": [
+    {
+      "id": "E1",
+      "file": "out/research/source-capture-errata.json",
+      "applies_to": "sources.json S5 capture object",
+      "action_for_downstream_reader": "Use the exact re-captured patch identity in E1. The first S5 capture path and digest in sources.json are truncated; the source URL, commit, claim and other source records are unchanged.",
+      "why_preserved": "The no-overwrite boundary prevented correcting an already-created file in place. This transparent erratum keeps the complete source identity and correction trail available without disguising the first draft."
+    }
+  ],
+  "leads": [
+    {
+      "id": "L1",
+      "title": "Candidate GUI/canvas integration and runtime pin",
+      "status": "critical unresolved dependency",
+      "evidence": ["S7", "S9", "S10"],
+      "why_useful": "Napari has useful multidimensional canvas and annotation-layer mechanisms, while its stable documentation is versioned separately from the old source tags used for the detailed issue/fix chain.",
+      "current_boundary": "Use napari as a canvas candidate only after a maintained package/source release is reconciled and tested with the selected Qt, Python, array, Zarr and reader versions; otherwise use a native canvas adapter. The v0.4.19 sources are mechanism precedents, not an adoption pin.",
+      "next_step": "Record exact package/source tags and lockfile; verify lazy chunk reads, rendering, mouse/keyboard operation, label editing, undo behavior, OS support, and accessibility on the supported workstation set."
+    },
+    {
+      "id": "L2",
+      "title": "Bio-Formats vendor reader or controlled conversion path",
+      "status": "useful later alternative",
+      "evidence": ["S11"],
+      "why_useful": "May cover vendor inputs excluded from the first native OME-Zarr/TIFF boundary and offers a possible conversion path into a simpler project asset model.",
+      "current_boundary": "The 8.5.0 support table varies by format and read/write direction; the published format count is not a uniform support guarantee. No runtime or converter was tested.",
+      "next_step": "Ask the group for actual instrument formats; build a per-format allowlist with firmware/version fixtures, axis/calibration checks, memory/cancellation tests, licensing and deployment review before adoption."
+    },
+    {
+      "id": "L3",
+      "title": "OME-Zarr multiscale and label interoperability",
+      "status": "opportunity for first version, interoperability unverified",
+      "evidence": ["S1"],
+      "why_useful": "Named axes, units, multiscale scale/translation and label-image conventions may let projects exchange chunked masks and images with other scientific tools.",
+      "current_boundary": "Project-owned metadata remains authoritative for full affine transforms, point/polygon geometry, styles, undo history and provenance. NGFF 0.5.2 multiscale transforms do not express arbitrary rotation/shear.",
+      "next_step": "Write a representative project and read it with at least two independent NGFF implementations; compare axis names, units, coordinate transforms, pyramid levels, labels and source links."
+    },
+    {
+      "id": "L4",
+      "title": "Label rendering precision at large integer IDs",
+      "status": "implementation hazard if napari/VisPy labels are adopted",
+      "evidence": ["S5", "W7"],
+      "why_useful": "The fixing patch also documents conversion of arbitrary integer label arrays to float32 texture values as not lossless. This may matter for high label IDs even if ordinary small label values render correctly.",
+      "current_boundary": "No application-level collision was established. Store masks and annotation IDs as integer data; never reconstruct IDs from rendered texture values.",
+      "next_step": "Run W7 across the exact renderer/backend and supported integer ranges; use a separate dense color/index mapping if needed."
+    },
+    {
+      "id": "L5",
+      "title": "Multi-file OME-TIFF and vendor-specific TIFF edge cases",
+      "status": "deferred support expansion",
+      "evidence": ["S2", "S3"],
+      "why_useful": "OME-TIFF supports UUID-linked multi-file arrangements; tifffile's own notes expose per-format limits and unusual organization.",
+      "current_boundary": "Initial import is single-file and requires unambiguous plane mapping and a bounded access path. Unsupported or ambiguous inputs stop before project registration, with metadata retained when readable.",
+      "next_step": "Expand only when representative fixtures exercise IFD/plane mapping, codecs, truncation, multi-file relocation and bounded decode."
+    },
+    {
+      "id": "L6",
+      "title": "Shared-storage live collaboration and cloud synchronization",
+      "status": "optional later direction",
+      "evidence": [],
+      "why_useful": "Concurrent annotation and remote access could reduce bundle handoffs if the group's workflow later requires it.",
+      "current_boundary": "Six researchers currently exchange projects through ordinary shared storage. The proposed first version uses single-writer revision checks and conflict-preserving copies; no cloud service or conflict-free merge is required.",
+      "next_step": "Revisit only after local project identity, recovery, and exchange round trips are reliable and there is a demonstrated workflow need."
+    },
+    {
+      "id": "L7",
+      "title": "Automatic segmentation and registration",
+      "status": "optional research opportunity, deferred",
+      "evidence": [],
+      "why_useful": "Could reduce repetitive drawing or align derived acquisitions in later research workflows.",
+      "current_boundary": "Would add model/parameter and coordinate-transform provenance obligations and could obscure which pixels/annotations are original. No algorithm, GPU dependency, or registration behavior is selected here.",
+      "next_step": "If pursued, treat each output as a distinct derived operation with versioned parameters, transform and validation against original-frame references."
+    },
+    {
+      "id": "L8",
+      "title": "Portable bundle versus external references",
+      "status": "required product tradeoff; policy remains a product choice",
+      "evidence": ["S1", "S2"],
+      "why_useful": "A complete copied bundle is easier to move between workstations; external references avoid duplicating multi-gigabyte sources and reduce shared-storage use.",
+      "current_boundary": "Proposal defaults to read-only external references and offers an explicit verified copy-in portable mode. A bundle must disclose external dependencies and match source hashes on relocation.",
+      "next_step": "Ask the group which projects require complete portability; measure copy/checksum time and storage cost; expose bundle completeness before handoff."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "er9.safe-neutral-final-clock-tail.v1",
+  "evaluation_id": "independent-DEC019-warm-1",
+  "tail_sample_utc": "2026-10-06T12:56:57.363246+00:00",
+  "tail_sample_epoch_ns": 1791291417363246459,
+  "source_elapsed_seconds": 297.61059879,
+  "phase2_literal_inclusive_elapsed_seconds": 375.074766276,
+  "whole_inclusive_elapsed_seconds": 672.685365066,
+  "original_source_limit_seconds": 1200,
+  "original_phase2_limit_seconds": 600,
+  "original_whole_limit_seconds": 1800,
+  "original_phase2_stop_utc": "2026-10-06T13:00:42.288480+00:00",
+  "original_whole_stop_utc": "2026-10-06T13:15:44.677830+00:00",
+  "all_prior_waits_reports_and_required_scientific_publication_handoffs_included": true,
+  "required_handoffs_completed": [
+    "/root",
+    "/root/publisher",
+    "/root/frozen_exports neutral metadata only"
+  ],
+  "no_ACK_wait": true,
+  "no_clock_reset": true,
+  "P1_source_judgment_hash_unchanged": true,
+  "source_closure_sha256": "43e10f2793eaa7703d55610bb451ef4bbd8cc68e183d06bac18dc177137af8eb",
+  "safe_selector_sha256": "1a9e4dddea7c02b465d1b435f2b1a358b6a90fb6833c1ffe26d1bc38fd505936"
+}

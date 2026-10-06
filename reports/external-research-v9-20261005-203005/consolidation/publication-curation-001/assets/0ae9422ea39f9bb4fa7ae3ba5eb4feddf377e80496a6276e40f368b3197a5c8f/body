@@ -1,0 +1,253 @@
+{
+  "catalog": "ER9 confirmation brief H1 (offline oral-history audio review/edit exchange) — research-stage source catalog",
+  "captured_utc": "2026-10-06T02:37:28Z .. 2026-10-06T02:44:29Z",
+  "capture_method": "mcp public_https_get; exact HTTP response bodies; sha256 as returned by the capture tool. HTML/JSON captures longer than 32768 bytes were delivered to me truncated at 32768 bytes (delivery.range_bytes records this); sha256 values below are of the full captured body as reported by the tool, except where noted as delivery-range sha256.",
+  "label_rules": "facts = external facts actually visible in the capture; applicability = how I use them; caveats = limits preserved. In proposal.md: [S#] source fact, [I] engineering inference, [C] product choice, [E#] executed check, [P] proposed/UNEXECUTED.",
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://manual.audacityteam.org/man/label_tracks.html",
+      "title": "Audacity Development Manual — Label Tracks",
+      "publisher": "Audacity (MuseXW / MediaWiki manual)",
+      "pinned_version": "manual page serving Label Track 3-6-0 screenshots (page last-modified header 2026-09-03)",
+      "locator": "intro paragraph; 'Limitations of Labels'; 'Point labels and region labels'; 'Removing Labels only' (use cases); Sync-Lock tip; 'Importing and Exporting Labels'; 'Navigating Labels' (Tab / Alt+Left/Right)",
+      "capture": {"sha256_full_body": "abcd14f76cd5144888860d1d0cfb79c2ff4c9dbf7f41bce3bbf8b80dfa09a8f5", "captured_utc": "2026-10-06T02:37:28Z", "bytes": 41693, "delivered_range_sha256": "cb5eed391851c2bb77f8b46e663b2dc22c0e78708f549353d913c772a793135e (bytes 0..32768)"},
+      "facts_used": [
+        "A Label Track 'can be used to reference points or regions in the project's audio tracks but the label track itself does not contain audio'.",
+        "'Delete method - loses audio synchronization for labels to right of the delete point'; other removal methods retain sync — i.e., Audacity labels are timeline positions, not content anchors, and some edits silently detach them from content.",
+        "Sync-Locked Track Groups exist so 'a length-changing action in one track of the group affects all the others'.",
+        "Labels export/import as tab-delimited text; labels cannot be embedded in exported audio.",
+        "Label text >260 chars silently fails to reload; keyboard Tab / Alt+Left/Right navigation through labels; keyboard-accessible tabular Label Editor."
+      ],
+      "applicability": "Precedent P3 (supporting): motivates content-anchored cues (anchor = source samples, positions derived), explicit orphan policy, and a cue table export; also the keyboard-navigation and tabular-cue-editor UX patterns.",
+      "caveats": "Documents Audacity behavior, not a specification of my design; HTML truncated in delivery (full body captured by tool)."
+    },
+    {
+      "id": "S02",
+      "url": "https://api.github.com/repos/libsndfile/libsndfile/releases/latest",
+      "title": "libsndfile GitHub API — latest release",
+      "publisher": "libsndfile org",
+      "pinned_version": "tag 1.2.2, published 2023-08-13T09:26:08Z, target_commitish master",
+      "locator": "tag_name/name/published_at fields; release body '1.2.2 - 2023-08-13'",
+      "capture": {"sha256_full_body": "4c7ae113a5911a56ec91593296bc5ac6b0f3d75b79f4a6bcdd38c3a51ae2048b", "captured_utc": "2026-10-06T02:37:32Z", "bytes": 10774},
+      "facts_used": ["Latest libsndfile release as of capture is 1.2.2 (2023-08-13); signed Windows builds and 1.2.2.tar.xz published."],
+      "applicability": "Version pin for the I/O component (media boundary).",
+      "caveats": "'Latest' is as of capture date 2026-10-06; a newer release could exist later."
+    },
+    {
+      "id": "S03",
+      "url": "https://raw.githubusercontent.com/libsndfile/libsndfile/master/CHANGELOG.md",
+      "title": "libsndfile CHANGELOG.md (master)",
+      "publisher": "libsndfile org",
+      "pinned_version": "master branch blob, sha256 0f6da3d7baf2e453f3bcb54a5655474730fa8cb87dcf669f33cbb7adf2b3bd36 (git blob etag in capture)",
+      "locator": "'## [1.1.0] - 2022-03-27' → '### Security' bullet list; '### Added' → 'New fuzzer for OSS-Fuzz, thanks @DavidKorczynski'; '## [1.2.0]' → 'Removed: Maximum samplerate limit ... 655350 Hz'; '## [1.2.1]' → 'Reading of MP3 files without Xing or INFO headers', 'sf_open_fd() regression (PR #950)'",
+      "capture": {"sha256_full_body": "55c4b29cf61a77f192f2a620379249077a1327920474cea2c201bb9a4c1fe91f", "captured_utc": "2026-10-06T02:39:29Z", "bytes": 8337},
+      "facts_used": [
+        "1.1.0 (2022-03-27) Security section: heap buffer overflow in msadpcm_decode_block() credited to OSS-Fuzz issue 26803; same class in wavlike_ima_decode_block() (25530), psf_binheader_readf() (26026), psf_nms_adpcm_decode_block() (25561), flac_buffer_copy(), copyPredictorTo24() (27503), plus integer-overflow fixes (nms_adpcm_update 25522, psf_log_printf 28441/25624, dyn_get_32bit 27366) and other fuzz finds (25364, 25442, 26257, 29339, 30375).",
+        "1.1.0 added 'New fuzzer for OSS-Fuzz' and a SECURITY.md; CIFuzz fuzzer (PR #796).",
+        "1.2.0 removed the artificial maximum-samplerate limit of 655350 Hz introduced in 1.1.0.",
+        "1.2.1 fixed reading of MP3 files without Xing or INFO headers and an sf_open_fd() regression (PR #950)."
+      ],
+      "applicability": "Release applicability for issue #687 (fixed by 1.1.0); justification for pinning 1.2.2; input-boundary design rule that the application must bound supported rates itself because the library no longer rejects very high rates; MP3 support honesty (present but with recent fixes).",
+      "caveats": "CHANGELOG of master; historical 1.0.x NEWS not captured."
+    },
+    {
+      "id": "S04",
+      "url": "https://github.com/libsndfile/libsndfile/issues/687",
+      "title": "Issue #687: heap-buffer-overflow in msadpcm_decode_block",
+      "publisher": "libsndfile org (GitHub)",
+      "pinned_version": "issue state as of capture (closed)",
+      "locator": "issue body (AFL++ report, ASAN trace: WRITE of size 2 at ms_adpcm.c:279 in msadpcm_decode_block, called from wavlike_msadpcm_init (ms_adpcm.c:171) ← wav_open (wav.c:258) ← psf_open_file ← sf_open ← sndfile-info --cart); created 2021-01-15T10:43:55Z; closed 2021-07-24T07:48:32Z; milestone 'v1.1.0'; PoC attachment sndfile_heap_overflow.tar.gz",
+      "capture": {"capture_route": "GitHub search API (issues) result item", "sha256_full_body": "8d8ef5d468031099ff1a237f862c7b763312d75e397d65ecc30c7516122b155e", "captured_utc": "2026-10-06T02:37:32Z", "bytes": 8404},
+      "facts_used": ["Real public fuzzer-found heap overflow reachable from sf_open on a crafted WAV with MS ADPCM content; fixed milestone v1.1.0; PoC file published."],
+      "applicability": "The consequential real issue→fix chain required by the brief (input-boundary robustness).",
+      "caveats": "Captured via search API item; comment bodies beyond the first page were captured separately (S05)."
+    },
+    {
+      "id": "S05",
+      "url": "https://github.com/libsndfile/libsndfile/issues/687 (timeline/comments)",
+      "title": "Issue #687 timeline: triage discussion and maintainer closure",
+      "publisher": "libsndfile org (GitHub)",
+      "pinned_version": "timeline as of capture",
+      "locator": "comment by zodf0055980 2021-01-25: root cause analysis 'BlockAlign = 1280, NumChannels = 128, BitsPerSample = 1' with WavPack's defensive check quoted; cross-referenced sibling issue #697 (heap-buffer-overflow in wavlike_ima_decode_block, ima_adpcm.c:434); comment by tamir-ben 2021-07-21 citing commit 9e0e55f8bfa60bddca083ff85699f855c91c42e7; maintainer evpobr (member) 2021-07-21: 'it was fixed: https://oss-fuzz.com/testcase-detail/5696502087024640. I guess i forgot to close this issue.'; closed_at 2021-07-24",
+      "capture": {"capture_route": "GitHub issues/timeline API", "sha256_full_body": "652252f6676bcc542046fe8669428e62391a168a7d16934a85267350992e389b", "captured_utc": "2026-10-06T02:38:11Z", "bytes": 129479, "delivered_range_sha256": "f2bdcf8aff90f0a9c974d174b90cf23fde150df03c9f64e69e2ce369e73e96c5 (bytes 0..32768 delivered to me)"},
+      "facts_used": [
+        "Maintainer states #687 was fixed via an OSS-Fuzz testcase (id 5696502087024640) and the issue was closed late; fix landed before the v1.1.0 milestone closed.",
+        "The malformed input is ordinary header metadata (absurd BlockAlign/NumChannels/bit-depth combination), not exotic codec internals.",
+        "A sibling issue #697 covers the same class in IMA ADPCM.",
+        "A commenter attributed the fix to commit 9e0e55f8 — verified below (S06) to be an unrelated error-message refactor."
+      ],
+      "applicability": "Causal chain: untrusted file metadata → decoder overflow → fix in 1.1.0 → regression pressure via OSS-Fuzz; design rules for my import path.",
+      "caveats": "Delivered text truncated at 32768 bytes; later comments not read (nothing in them is relied on)."
+    },
+    {
+      "id": "S06",
+      "url": "https://github.com/libsndfile/libsndfile/commit/9e0e55f8bfa60bddca083ff85699f855c91c42e7.patch",
+      "title": "Commit 9e0e55f8 patch (referenced from #687 thread)",
+      "publisher": "libsndfile org (GitHub)",
+      "pinned_version": "commit dated Sun, 14 Feb 2021",
+      "locator": "Subject: 'Move these magic numbers into the common header and give them some error messages'; diffs touch src/avr.c, src/caf.c, src/common.h, src/mpc2k.c, src/sndfile.c only",
+      "capture": {"sha256_full_body": "914f7229621275573cfac1a29c4a19e12e73d5d8694100cb431831d6bc39390c", "captured_utc": "2026-10-06T02:39:29Z", "bytes": 3374},
+      "facts_used": ["This commit only relocates SFE_* error codes and adds error strings; it does not touch ms_adpcm.c and is not the #687 overflow fix."],
+      "applicability": "Negative check demonstrating 'an issue comment's patch link does not establish the fix' — recorded to enforce the brief's causal-limit discipline.",
+      "caveats": "The exact fix commit SHA for msadpcm_decode_block was NOT captured (GitHub REST commits endpoint returned 403 rate-limit, see N02). Release applicability is instead pinned by S03 (CHANGELOG 1.1.0 Security entry) and S05 (maintainer closure)."
+    },
+    {
+      "id": "S07",
+      "url": "https://raw.githubusercontent.com/chirlu/soxr/master/README",
+      "title": "SoX Resampler Library (libsoxr) README",
+      "publisher": "SoX Resampler project (robs)",
+      "pinned_version": "master @ capture; project copyright 2007-18",
+      "locator": "paragraphs: purpose ('one-dimensional sample-rate conversion'); formats ('floating-point or integer, ... interleaved or split'); quality note ('Bit-perfect within practical occupied-bandwidth limits'); latency note ('High Quality configuration ... 44100Hz and 48000Hz, the latency is around 1000 output samples, i.e. roughly 20ms'); design ('Bandlimited Interpolation ... FFT-based over-sampling')",
+      "capture": {"sha256_full_body": "c3d94aa8237daeb4e6bd5b6555b72bf5cf1fbe9319f5980fd5362cdc5982f90e", "captured_utc": "2026-10-06T02:37:33Z", "bytes": 2866},
+      "facts_used": ["libsoxr exposes fp/integer APIs and interleaved/split channel buffers", "HQ preset latency ≈1000 output samples (~20 ms) for 44.1k↔48k", "quality claim is explicitly bounded ('within practical occupied-bandwidth limits')"],
+      "applicability": "Resampler choice for render/preview; honest latency/quality statements for the preview path; buffer sizing (~20 ms latency must be covered by pre-roll).",
+      "caveats": "README-level claims, not benchmark measurements; project last released 0.1.3 (S08)."
+    },
+    {
+      "id": "S08",
+      "url": "https://api.github.com/repos/chirlu/soxr/tags",
+      "title": "soxr repository tags",
+      "publisher": "chirlu/soxr (GitHub mirror of the SoX resampler)",
+      "pinned_version": "latest tag 0.1.3, commit 945b592b70470e29f917f4de89b4281fbbd540c0",
+      "locator": "first array element",
+      "capture": {"sha256_full_body": "7bc98b292e8b46330f0981a9d8f5208eded8ecb55577d94d9181977c18140722", "captured_utc": "2026-10-06T02:38:11Z", "bytes": 1561},
+      "facts_used": ["0.1.3 is the newest tag; no newer release exists as of capture."],
+      "applicability": "Pin for the resampler component.",
+      "caveats": "Tag list capture; release notes not published via GitHub releases."
+    },
+    {
+      "id": "S09",
+      "url": "https://xiph.org/vorbis/doc/v-comment.html",
+      "title": "Ogg Vorbis I specification: comment field and header",
+      "publisher": "Xiph.Org",
+      "pinned_version": "specification page © 1994-2005 (current hosted version)",
+      "locator": "'Overview' (comments are 'meant for short, text comments, not arbitrary metadata'); 'Comment encoding' (vendor string + length-prefixed UTF-8 user comments + framing bit); 'Field names' (TITLE, DATE, LOCATION, DESCRIPTION, CONTACT, LICENSE, ...); 'Implications' (field names not required unique)",
+      "capture": {"sha256_full_body": "0a18c29c2f944ad293552f7bdda6a6b1f8f8fc2c557690bffd63c1d2d36394d2", "captured_utc": "2026-10-06T02:37:33Z", "bytes": 9048},
+      "facts_used": ["Vorbis comments support vendor string and repeated, named UTF-8 fields including DATE/LOCATION/DESCRIPTION/CONTACT", "spec warns against using it as arbitrary metadata."],
+      "applicability": "Breadth-lane opportunity: embed bounded provenance (project id, source id, render manifest digest) as Vorbis comments when exporting Ogg/FLAC review mixes; bounded by the spec's 'short comments' intent.",
+      "caveats": "FLAC/Vorbis comment mapping identical per flac spec, not separately captured (lead L12)."
+    },
+    {
+      "id": "S10",
+      "url": "https://pypi.org/pypi/OpenTimelineIO/json",
+      "title": "OpenTimelineIO on PyPI (project metadata)",
+      "publisher": "Academy Software Foundation (ASWF)",
+      "pinned_version": "0.18.1 (latest at capture), requires_python >3.9.0, license Apache-2.0",
+      "locator": "info.version / info.description: 'OTIO is not a container format for media, rather it contains information about the order and length of cuts and references to external media' and 'a dependency-less library for dealing strictly with time, opentime'",
+      "capture": {"sha256_full_body": "cc47f9f5255bdfad7e108109c5d4eb7dc8c4ef59da847cad6fe88904640824b0", "captured_utc": "2026-10-06T02:38:54Z", "bytes": 250943, "delivered_range_sha256": "75bfd4d07b057e04faa25a2abac3e17089529ac9d63816fbd8417893aa95e725 (bytes 0..32768 delivered to me)"},
+      "facts_used": ["OTIO 0.18.1 is the current PyPI release; OTIO stores editorial cuts + external media references, not media; opentime is a dependency-free time library."],
+      "applicability": "Pin for the exchange/time-model precedent; optional OTIO adapter is the v1.x opportunity.",
+      "caveats": "Delivered text truncated; releases listing portion not read (not needed)."
+    },
+    {
+      "id": "S11",
+      "url": "https://raw.githubusercontent.com/AcademySoftwareFoundation/OpenTimelineIO/main/docs/tutorials/time-ranges.md",
+      "title": "OpenTimelineIO — Time Ranges tutorial (main branch)",
+      "publisher": "ASWF OpenTimelineIO",
+      "pinned_version": "main @ capture; git blob sha 74bc63c753548fea06fcf9d419461495002d6652",
+      "locator": "'Clip time frame' vs 'parent time frame'; Clip.source_range/trimmed_range/visible_range; 'clipA.range_in_parent().end_time_exclusive() == clipB.range_in_parent().start_time'; 'Markers ... marked_range ... relative to the object it is attached to'; 'available_range() may return None'; Transition overlap via visible_range ('ends at frame 15' example)",
+      "capture": {"sha256_full_body": "6f92e3ffb83e4eeeeb27354887b204f10393da6f27b1ffb4a18cd7f8f4082cb3", "captured_utc": "2026-10-06T02:38:53Z", "bytes": 7313},
+      "facts_used": [
+        "OTIO distinguishes, per clip: available/source/trimmed/visible ranges and range_in_parent — each explicitly scoped to a time frame.",
+        "Adjacent clips are contiguous by an exclusive-end rule; gaps are first-class items; transitions extend the visible range of adjacent clips (overlap is accounted, not hidden).",
+        "Markers are attached to an item and interpreted in that item's time frame; media range may be unknown (None)."
+      ],
+      "applicability": "Precedent P1: the anchor/derived dual representation for cues, half-open boundary rule, and crossfade 'applies_to both sides' cue semantics.",
+      "caveats": "Tutorial doc, not normative spec text; C++/Python API details not separately pinned (PyPI pin S10 covers the release)."
+    },
+    {
+      "id": "S12",
+      "url": "https://raw.githubusercontent.com/AcademySoftwareFoundation/OpenTimelineIO/main/docs/tutorials/otio-filebundles.md",
+      "title": "OpenTimelineIO — File Bundles (otiod/otioz)",
+      "publisher": "ASWF OpenTimelineIO",
+      "pinned_version": "main @ capture; git blob sha 21714dc8b2460d3a15764ce4a1177cb9ffcc63a2",
+      "locator": "structure trees (content.otio + media/; version.txt '1.0.0' in otioz); 'media references are either MissingReferences, or ExternalReferences with target_urls that are relative paths'; unique-basename rule; MediaReferencePolicy: ErrorIfNotFile (default) / MissingIfNotFile / AllMissing; 'only the content.otio file is read'",
+      "capture": {"sha256_full_body": "9c7f9ac12a6633f6fc303caca572d760c5a8ceeffd15aaa74fd3f3aebffa5352", "captured_utc": "2026-10-06T02:38:54Z", "bytes": 5845},
+      "facts_used": ["Bundle = manifest + flat media dir with unique basenames", "missing media is represented, not dropped (MissingReference preserves the original reference in metadata)", "policies are explicit at bundle-write time."],
+      "applicability": "Precedent P1 (exchange half): template for the project bundle layout, relink/missing-media policy, and portable-vs-folder modes.",
+      "caveats": "Same version pin as S10."
+    },
+    {
+      "id": "S13",
+      "url": "https://manual.ardour.org/toc/",
+      "title": "The Ardour Manual — Table of Contents",
+      "publisher": "Ardour.org",
+      "pinned_version": "site version served 2026-09-15 (last-modified header)",
+      "locator": "chapter list: Sessions & Tracks; Importing and Exporting (Import Dialog; Copying Versus Linking; Supported File Formats); Working With Regions; Fades and Crossfades; Rulers and Markers (Location/Cue markers); Backup and Sharing of Sessions",
+      "capture": {"sha256_full_body": "a4f29c3994eae488e85370e39a0c1b28b506ae93748ea5cb8c966c6238d89115", "captured_utc": "2026-10-06T02:38:53Z", "bytes": 40865, "delivered_range_sha256": "f7f43bcf314ffdf020246dffc79c23805882a762b8d150962e57c2babde3562e (bytes 0..32768 delivered to me)"},
+      "facts_used": ["Exact manual URLs for the pages used (S14, S15) and existence of documented Import/resample and cue-marker chapters."],
+      "applicability": "Navigation evidence; also shows Ardour documents 'Cue Markers' as a first-class feature (naming precedent for cue table).",
+      "caveats": "Only TOC-level; chapter contents beyond S14/S15 not captured (leads L9-class)."
+    },
+    {
+      "id": "S14",
+      "url": "https://manual.ardour.org/working-with-regions/",
+      "title": "The Ardour Manual — Working With Regions",
+      "publisher": "Ardour.org",
+      "pinned_version": "site version served 2026-09-15",
+      "locator": "'What Regions Are' (region = source file(s) + offset + length; in a playlist gains position + layer); 'Regions Are Not Files' ('Changing the length of a region has no effect on the audio file(s) on disk. Splitting and copying regions does not alter the audio file ... only recording, and the Export, Bounce and Reverse operations create new audio files')",
+      "capture": {"sha256_full_body": "b4de5f1abfaeda1e13eb4da5863d52733ee08266e86afe01c64a19e339d944c3", "captured_utc": "2026-10-06T02:39:29Z", "bytes": 11716},
+      "facts_used": ["Region model: (source, offset, length, position, layer) with edits non-destructive by construction and an explicit short list of file-creating operations."],
+      "applicability": "Precedent P2 (first half): the clip record schema (source_id, src_start, src_end exclusive, proj_start, layer) and the explicit 'rendered operations' class in the three-state contract.",
+      "caveats": "Documents Ardour (GPL); behavior of Ardour itself not executed here."
+    },
+    {
+      "id": "S15",
+      "url": "https://manual.ardour.org/working-with-sessions/whats-in-a-session/",
+      "title": "The Ardour Manual — What's in a Session?",
+      "publisher": "Ardour.org",
+      "pinned_version": "site version served 2026-09-15",
+      "locator": "session folder listing: session_name.ardour; *.ardour snapshots; .ardour.bak auto-backup; .history (undo history); instant.xml; interchange/ (raw audio); export/; peaks/ ('waveform renderings of all audio files'); analysis/; 'dead sounds/' waste basket; backward-load note ('oldest known version is 2.8 released in 2009 ... data that cannot be supported will be skipped entirely')",
+      "capture": {"sha256_full_body": "078665bdea4e4ad2b1da9f0ed53a0fa2a28fce720280419fc430f7239558c74b", "captured_utc": "2026-10-06T02:39:30Z", "bytes": 9610},
+      "facts_used": ["Session-as-folder layout separating editable state (snapshot), auto-backup, undo history, derived caches (peaks/analysis), imported media, exports, and a purgatory for deleted media; long-horizon forward compatibility is a stated goal with explicit skip semantics."],
+      "applicability": "Precedent P2 (second half): project bundle layout, atomic-save + .bak + history-file recovery design, peaks as a regenerable derived cache, and schema-versioning/forward-compat policy.",
+      "caveats": "Documents Ardour; not executed."
+    },
+    {
+      "id": "S16",
+      "url": "https://api.github.com/repos/bastibe/python-soundfile/releases/latest",
+      "title": "python-soundfile GitHub API — latest release",
+      "publisher": "bastibe/python-soundfile",
+      "pinned_version": "0.14.0, published 2026-06-06T09:00:43Z",
+      "locator": "tag_name '0.14.0'; body: 'Fixed race condition when opening files concurrently', 'Removed support for Python <= 3.9', 'Added ARM64 support for Windows'",
+      "capture": {"sha256_full_body": "4ffd51852908860b817490c56c8fc732d4cda354bc689665946e764b8d44454b", "captured_utc": "2026-10-06T02:38:12Z", "bytes": 15969},
+      "facts_used": ["soundfile 0.14.0 is the current Python binding release; it recently fixed a concurrent-open race; Python 3.10+ required."],
+      "applicability": "Pin for the Python I/O binding; concurrent-open race fix is relevant since four editors may open the same source read-only simultaneously.",
+      "caveats": "The libsndfile version bundled inside 0.14.0 wheels is NOT stated in this capture (lead L6); release notes list fixes but not the full changelog."
+    },
+    {
+      "id": "N01",
+      "url": "https://api.github.com/repos/OpenTimelineIO/OpenTimelineIO/releases/latest (and AcademySoftwareFoundation variant)",
+      "title": "Negative capture: releases/latest 404 for OpenTimelineIO org paths",
+      "publisher": "GitHub API",
+      "locator": "response body '{\"message\":\"Not Found\",...\"status\":\"404\"}'",
+      "capture": {"sha256_full_body": "d9e37600354c1839f6b22cebde497e9d14750d2401a06c9a51b1619baf991613 (identical for both org paths)", "captured_utc": "2026-10-06T02:37:32Z / 02:38:10Z", "bytes": 130},
+      "facts_used": ["GitHub 'latest release' endpoint returns 404 for OTIO under both org spellings tried — OTIO versions are PyPI releases; pin taken from PyPI (S10)."],
+      "applicability": "Documents why the OTIO pin comes from PyPI rather than GitHub releases.",
+      "caveats": "Negative result only."
+    },
+    {
+      "id": "N02",
+      "url": "https://api.github.com/repos/libsndfile/libsndfile/commits/9e0e55f8bfa60bddca083ff85699f855c91c42e7",
+      "title": "Negative capture: GitHub REST commits endpoint 403 rate-limited",
+      "publisher": "GitHub API",
+      "locator": "'API rate limit exceeded for <shared IP>'",
+      "capture": {"sha256_full_body": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369", "captured_utc": "2026-10-06T02:38:52Z", "bytes": 279},
+      "facts_used": ["Unauthenticated API quota exhausted; commit metadata fetch failed."],
+      "applicability": "Preserves the limitation that the exact msadpcm fix commit SHA was not captured; mitigated via .patch endpoint (S06) and CHANGELOG (S03).",
+      "caveats": "Environmental, not a source fact about libsndfile."
+    },
+    {
+      "id": "N03",
+      "url": "https://raw.githubusercontent.com/libsndfile/libsndfile/master/ossfuzz/sndfile_fuzz.cc",
+      "title": "Negative capture: guessed OSS-Fuzz harness path 404",
+      "publisher": "raw.githubusercontent.com",
+      "locator": "'404: Not Found'",
+      "capture": {"sha256_full_body": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "captured_utc": "2026-10-06T02:39:30Z", "bytes": 14},
+      "facts_used": ["The guessed harness path does not exist at that name; the fuzzer's existence in 1.1.0 is documented by S03 instead."],
+      "applicability": "Honest record that the regression harness file was not located by direct fetch (lead L2).",
+      "caveats": "Negative result only."
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "schema": "er9.candidate-witness-catalog.v1",
+  "status": "authentic unscored candidate revision",
+  "scope": "Records component checks and inherited reports. A witness here is not proof of full application behavior or source-semantic qualification.",
+  "base_artifacts": {
+    "proposal_sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+    "critic_sha256": "c3b00093877ccf26a2553c9ed7dbfb21bfe79dbdc1e0e7cd0e69cdf34ff15ef7"
+  },
+  "catalog_availability": {
+    "inherited_witnesses_json": "not available at checked inputs/seed paths; details below are limited to statements preserved in the frozen proposal and critique",
+    "full original check code_and_data": "not supplied in accessible role artifacts",
+    "current_revision_checks": "candidate-authored isolated standard-library arithmetic and hashing logic only"
+  },
+  "witnesses": [
+    {
+      "witness_id": "W1",
+      "origin": "frozen proposal report; not rerun in this revision",
+      "reported_receipt": "exec-zw6uyd4k",
+      "reported_exit_code": 0,
+      "reported_check": "float32 versus binary64 coordinate storage and a JSON round trip",
+      "reported_result": "At 104857.6 px, float32 absolute error approximately 0.00156 px; binary64 JSON round-trip reported exact for that value.",
+      "independent_critic_observation": {
+        "receipt": "exec-va_gjzoa",
+        "reported_result": "For 104857.6, float32 pack/unpack absolute error 0.001562499994179234; Python JSON encode/decode preserved that binary64 value.",
+        "limit": "Critic's distinct arithmetic check does not verify every JSON consumer or the project schema."
+      },
+      "status": "reported, not independently audited from original code/data",
+      "limits": [
+        "Original witness catalog/code/data are unavailable in accessible paths.",
+        "Single-number arithmetic is not a serializer interoperability or application persistence test."
+      ]
+    },
+    {
+      "witness_id": "W2",
+      "origin": "frozen proposal report; not rerun in this revision",
+      "reported_receipt": "exec-2ambjtod",
+      "reported_exit_code": 0,
+      "reported_check": "Transform composition order discrimination.",
+      "reported_result": "translate-then-scale produced (22,84); scale-then-translate produced (12,24); the orders differed.",
+      "status": "reported, exact input unavailable",
+      "limits": [
+        "The fixture values and original code are not present in the accessible artifact paths.",
+        "The critique explicitly says its independent arithmetic example used different inputs and did not reproduce W2.",
+        "This does not validate the revised frame model; see W-R01 for a separate illustrative check."
+      ]
+    },
+    {
+      "witness_id": "W3",
+      "origin": "frozen proposal report; not rerun in this revision",
+      "reported_receipt": "exec-gw87zrsh",
+      "reported_exit_code": 0,
+      "reported_check": "Temporary-file plus os.replace save simulation and SHA-256 identity sensitivity.",
+      "reported_result": "Proposal reports the old project file remained intact after a simulated mid-save crash, an orphan temporary file remained, and the identity hash was stable and byte-sensitive.",
+      "status": "reported scratch-filesystem component simulation",
+      "limits": [
+        "Original code/data and witness catalog are unavailable in accessible paths.",
+        "Does not establish process/power-loss recovery, the revised immutable-generation protocol, multi-file transactionality, or NFS/SMB semantics."
+      ]
+    },
+    {
+      "witness_id": "W-R01",
+      "origin": "current revision; candidate-authored isolated component check",
+      "execution_receipt": "exec-rvu06tqp",
+      "code_sha256": "44940354400def26763b1668f61cfd48042e633a1053591539b29437d93b4476",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "exit_code": 0,
+      "check": "Standard-library coordinate arithmetic: YX source array to XY annotation/export adapter, non-square scale, nonzero origin, rotated affine, anisotropically resampled derived frame, boundary-touching polygon, inverse mapping, and JSON encode/decode.",
+      "result": {
+        "maximum_inverse_coordinate_error": 0.0,
+        "maximum_world_coordinate_disagreement_between_source_and_derived_routes": 8.881784197001252e-16,
+        "example_json_round_trip": "preserved"
+      },
+      "status": "executed isolated arithmetic only",
+      "limits": [
+        "Does not test every affine dimension/order, the project implementation, CSV consumers, NGFF export, or a full application.",
+        "No application serializer or image file was used."
+      ]
+    },
+    {
+      "witness_id": "W-R02",
+      "origin": "current revision; candidate-authored isolated component check in the same execution as W-R01",
+      "execution_receipt": "exec-rvu06tqp",
+      "code_sha256": "44940354400def26763b1668f61cfd48042e633a1053591539b29437d93b4476",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "exit_code": 0,
+      "check": "Candidate canonical-manifest hashing example for a two-file directory tree; reversed enumeration order and modified one payload byte.",
+      "result": {
+        "enumeration_order_invariant": true,
+        "content_change_sensitive": true,
+        "example_digest": "32bbb6ef84344eb8067dbecc5021b2914638733f23f05659d6bfd902d850b48a"
+      },
+      "status": "executed small isolated algorithm check",
+      "limits": [
+        "No actual OME-Zarr store, filesystem walk, large file, symlink attack, concurrent mutation, or copy/relocation was tested.",
+        "Does not establish race-free or crash-consistent whole-tree identity."
+      ]
+    }
+  ],
+  "validation_plan": [
+    {
+      "validation_id": "V1",
+      "status": "UNEXECUTED",
+      "scope": "Move/reopen project on another workstation and verify annotations and relocation behavior. The revised source-identity and generation checks still need implementation and fixtures."
+    },
+    {
+      "validation_id": "V2 / V-R1",
+      "status": "UNEXECUTED",
+      "scope": "3 GB tiled, chunked, contiguous/mmap, and strip/page cases on 8-core/16 GB target; measure p95 viewport latency, peak RSS, cancellation, and source-byte preservation. Proposed thresholds are <100 ms, <4 GB, and <250 ms respectively."
+    },
+    {
+      "validation_id": "V3",
+      "status": "UNEXECUTED",
+      "scope": "Kill at each write, generation publication, pointer-backup/switch, and export-publication boundary; reopen a coherent generation on each supported filesystem."
+    },
+    {
+      "validation_id": "V4",
+      "status": "UNEXECUTED",
+      "scope": "Export/reimport coordinates and manifest, including exact consumer behavior and only NGFF-representable transform subsets."
+    },
+    {
+      "validation_id": "V5",
+      "status": "UNEXECUTED",
+      "scope": "Cross-filesystem relocation/copy, source identity verification, and external-reference versus included-source bundles."
+    },
+    {
+      "validation_id": "V6",
+      "status": "UNEXECUTED",
+      "scope": "Instrument-specific calibration fixtures, including TVIPS issue 319 and representative TIFF/OME-TIFF/OME-Zarr layout and metadata families."
+    },
+    {
+      "validation_id": "V-ACCESSIBILITY",
+      "status": "UNEXECUTED",
+      "scope": "Keyboard-only session, focus/screen-reader flow, readable and copyable errors, metadata legibility, progress, and contrast review."
+    }
+  ],
+  "qualification_note": "No witness in this file certifies the candidate's semantic correctness, source grade, application behavior, or a scored diagnostic PASS."
+}

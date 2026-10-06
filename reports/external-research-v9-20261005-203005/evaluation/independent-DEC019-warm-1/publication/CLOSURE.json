@@ -1,0 +1,57 @@
+{
+  "schema": "er9.independent-review-neutral-closure.v1",
+  "evaluation_id": "independent-DEC019-warm-1",
+  "closed_utc": "2026-10-06T12:54:10.628621+00:00",
+  "closed_epoch_ns": 1791291250628620763,
+  "source_elapsed_seconds": 297.61059879,
+  "phase2_literal_inclusive_elapsed_seconds": 208.34014058,
+  "whole_inclusive_elapsed_seconds": 505.95073937,
+  "source_limit_seconds": 1200,
+  "phase2_limit_seconds": 600,
+  "whole_limit_seconds": 1800,
+  "within_all_original_limits": true,
+  "waits_reports_and_required_handoffs_included": true,
+  "required_scientific_handoffs_completed": [
+    "/root",
+    "/root/publisher"
+  ],
+  "neutral_operational_handoff_completed": "/root/frozen_exports",
+  "inbox_checked_before_closure": true,
+  "P1_source_judgment_unchanged": true,
+  "no_new_tests_Goals_candidate_feedback_Git": true,
+  "no_unlisted_nested_private_reads": true,
+  "pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/reservation.json",
+      "sha256": "4810b01e139e37b65516520287626d50abf241f0d11a27cd908aec15a372aaa6",
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/START.json",
+      "sha256": "b991c866997d74765eccc7a82e4dc68af660749d0c23d5ffdde12b18d03f2057",
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/input-pins.json",
+      "sha256": "5e8f88a7d7ff684b0dd4628a1d9f46ec65121def7c6d49e55638d42a7c4f53e9",
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/P1-source-judgment.json",
+      "sha256": "c44304f22cd3d4ffb563b29802266a5251048c59dd64b67d0c1c378295c56751",
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/P1-source-judgment.md",
+      "sha256": "87890d98afe12435915aabe536533a10e6736defc86ae0a99c21fc024d6d6095",
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/P1-freeze.json",
+      "sha256": "f1c75ebc0901df5bbd19be2e48f022b5955af70286c0478aeb0103000584ff98",
+      "mode": "0o444"
+    }
+  ],
+  "source_neutral_closure_sha256": "43e10f2793eaa7703d55610bb451ef4bbd8cc68e183d06bac18dc177137af8eb",
+  "publication_projection": "P2-open and private-bearing P2 report path omitted; public P2 report supplied separately. No frozen source judgment changed."
+}

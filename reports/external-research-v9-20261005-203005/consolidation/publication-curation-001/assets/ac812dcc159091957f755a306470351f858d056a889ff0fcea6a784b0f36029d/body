@@ -1,0 +1,104 @@
+# Critique review — frozen research proposal, brief A (local biomedical image review workspace)
+
+Stage: critique (fresh native). Author: admitted candidate (same family, no shared private context with the research stage). Date: 2026-10-06.
+Reviewed artifact: `inputs/prior/research/research/proposal.md` (sha256 b0c5e3627b086f8c7051f9b35bffccf6cd633b19a373a561f1cfa60c957f2b41, 21033 bytes), with catalogs `sources.json`, `witnesses.json`, `leads.json` and the attached capture `ngff04_linemap.txt` (sha256 7a68bf2d…, a mechanical line-map of the research stage's NGFF 0.4 page capture; its embedded `source_sha256` equals S2's recorded capture sha256 ca4780a3…).
+
+## 0. Method
+
+I re-verified the proposal's consequential claims independently: (a) fresh public HTTPS captures of every load-bearing napari/QuPath source; (b) direct inspection of the local NGFF 0.4 linemap capture for each normative claim; (c) fresh isolated-Python re-execution of all three executed witnesses. Captures marked **byte-identical** below reproduced the research stage's recorded sha256 exactly. Two GitHub API re-captures differ in whole-body sha256 because dynamic fields (stars, timestamps) moved between captures; in both cases **every cited field matched**. Critique re-executions are labeled **executed by critic**; they are isolated component checks and do not establish any application behavior.
+
+## 1. Verdict summary
+
+The proposal is **supported overall**. The required issue→fix→regression-test chain (F1, napari PR #533 → v0.2.0) verifies in full, including release applicability. The NGFF 0.4 data-contract facts verify against the captured spec text. The QuPath and napari-docs quotes verify byte-identically. All three executed witnesses reproduce exactly. I record **no factual corrections that overturn a design decision**; I record four precision findings (C1–C4) that tighten wording or add spec obligations, one catalog-precision finding (C5), and one not-re-verified sub-claim (C6) with a cheap resolution path. All minimum obligations R1–R10 are covered; fact/inference/choice separation and executed/proposed labeling are honest throughout.
+
+## 2. The F1 chain (napari labels undo/redo) — verified in full
+
+This is the brief's required "consequential lesson traced through a real public issue, fix, and regression test." Every link re-verified:
+
+| Claim in proposal | Verdict | Evidence (this critique) |
+|---|---|---|
+| PR #533 "add undo/redo to labels layer" by kne42, merged 2019-09-28T04:16:18Z by sofroniewn, merge commit d09bea9c1b36ef3d78b97b64a159bc36c1b8d9b8, base master@dd48e8e6…, head kne42:undo-redo-labels@9ba94a13…, milestone "0.2", 7 commits, +116/−15, 4 files | **Verified, all fields** | Fresh capture of `api.github.com/repos/napari/napari/pulls/533`, capture_id 7e94a7b381d84b21a048242eceb88e01, sha256 59a003de… (body differs from S4's sha only in dynamic repo-metadata fields; cited fields identical) |
+| PR body states "the undo/redo stack is reset whenever you change the viewed dimensions"; Ctrl+Z / Ctrl+Shift+Z | **Verified** | Same capture, PR body text |
+| Mechanism: `_history_limit = 100`; history entries are slice snapshots `self.data[self.dims.indices].copy()`; `_block_saving` spans one paint stroke; `_set_view_slice` clears `_undo_history`/`_redo_history`; keybindings in `napari/layers/labels/keybindings.py` | **Verified** | Fresh capture of `pulls/533/files?per_page=100` is **byte-identical** to research S5 (sha256 f25e5a78…, etag match). See precision C1 on the exact press/release ordering |
+| Regression test `test_labels_undo_redo` in `napari/tests/test_advanced.py`: fill→undo→redo round trip; `_history_limit=1` → one undo works, second undo no-op | **Verified** | Patch in the byte-identical files capture; and fresh capture of the raw file at tag **v0.2.0** is **byte-identical** to research S6 (sha256 b810ad32…) with `test_labels_undo_redo` as the final function. Release applicability at v0.2.0 stands |
+| PR #3155 (override `Labels.data.__setitem__`), opened 2021-08-13 by jni, draft, never merged (merged_at null), closed 2022-06-28; body names plugins writing `layer.data[indices]=…` (watershed-split example) and the rejected `data_setitem` alternative (API-footprint cost) | **Verified, all fields** | Fresh capture of `api.github.com/repos/napari/napari/pulls/3155`, capture_id 93939efb853b4e5db1c2c8f1c1526dd9, sha256 f71fc426… (draft: true, merged: false, merged_at: null, closed_at 2022-06-28T18:17:23Z, created 2021-08-13T06:15:49Z) |
+| "No fix/regression chain exists for the direct-write gap; upstream documented it but did not repair it" | **Supported as scoped** | Consistent with the #3155 record. Standard limit: absence of a merge is evidence about what I could observe on the record, not proof of future/priority history; the proposal already words this correctly and its stated chain limits (v0.2.0-scoped release claim; later test relocations not audited) are appropriate |
+
+## 3. NGFF 0.4 data-contract claims — verified against the captured spec text
+
+Verified by reading the local linemap of the captured page (line numbers are linemap `line` values; page URL `https://ngff.openmicroscopy.org/0.4/index.html`):
+
+| Proposal claim | Verdict | Exact captured text |
+|---|---|---|
+| Transform vocabulary is identity/translation/scale only; rotation/shear unsupported in v1 (A4) | **Verified** | §3.3 table (lines 2617–2629): `identity` ("is the default transformation"), `translation`, `scale`, each `List[float]` or `path` |
+| "The transformations in the list are applied sequentially and in order" | **Verified verbatim** | Line 2638 |
+| Axes: unique `name`; `type` space/time/channel; `unit` UDUNITS-2; length equals array dims | **Verified** (see C2 nuance) | Lines 2483–2487, 2495: name "MUST be unique across all 'name' fields"; type "SHOULD … one of 'space', 'time' or 'channel', but MAY take other string values"; unit "SHOULD be one of the following strings, which are valid units according to UDUNITS-2"; "the length of 'axes' MUST be equal to the number of dimensions of the arrays" |
+| Multiscales: 2–5 dims; time-first, then channel/custom, then space | **Verified** | Lines 2643–2645: "length of 'axes' must be between 2 and 5 and MUST be equal to the dimensionality"; "entries MUST be ordered by 'type' where the 'time' axis must come first (if present), followed by the 'channel' or custom axis (if present) and the axes of type 'space'" |
+| Labels: integer-only; dims match image or 1 | **Verified as content** (see C3 nuance) | Lines 2418–2420 ("Each dimension of the label … should be either the same as the corresponding dimension of the image, or 1 …") and 2428–2429 ("only integer values are supported") — both inside the §2.1 layout-example comments |
+| Zarr v2 mandate | **Verified** | Lines 2376–2379: "Arrays MUST be defined and stored in a hierarchical organization as defined by the version 2 of the Zarr specification" |
+| Pinned spec is "the 0.4 release … migration scripts will be provided … editor's-draft data will not necessarily be supported" | **Partially re-verified; see C5/C6** | I independently verified the page self-identifies as the 0.4 edition: §6 Citing "This edition of the specification is https://ngff.openmicroscopy.org/0.4/" with date "8 February 2022" (lines 3130–3134), and §7 Version History (lines 3135–3171) lists the 0.x revision series. The literal "migration scripts" sentence sits in the page header region (S2 locator byte range 43000–75768), which I did not reach with my probes; it remains **catalog-locator-backed, not re-located in this critique pass** (C6) |
+
+## 4. QuPath and napari-docs claims — verified
+
+- **QuPath TECHNICAL_NOTES.md [S9]**: my fresh capture is **byte-identical** to the research capture (sha256 1b9cd69eefd281a84f3ebc1a270dc4bd81a4e21e43686541f7bfaf8ea41e4564). All quoted passages verify verbatim: two core jars "with no dependency on JavaFX or the UI"; "ImageServer extensions, to add support for image types"; "Extensions are all optional; QuPath should be able to launch without them"; "Serialization is currently used for `.qpdata` files, but ultimately this should be removed"; "Prefer JSON to other kinds of serialization" + "could I read this in Python if I wanted to?"; "It's preferable to break a script completely rather than subtly change its behavior (since no results flag a problem, while wrong results can slip through unnoticed)". capture_id 48a2e77a194f4dd692659cf4e3b70ad7.
+- **napari axis-names guide [S10]**: fresh capture **byte-identical** (sha256 02cf687f…). Warning block confirms the 0.6/0.7/0.9 churn exactly as the proposal describes (pre-0.6 order-only mapping; 0.6.x names/units present but ignored; 0.7.x units propagate, names ignored; 0.9.x names propagate), plus right-aligned negative indexing.
+- **napari units guide [S11]**: fresh capture **byte-identical** (sha256 ef71dd31…). Confirms "Scale and units are layer metadata", scale transforms data→world coordinates, "If you do not set units, napari assumes pixels", "Units do not rename axes", and layers with different units/scales aligning in one world space.
+- Not independently re-fetched (corroboration-only, low risk): S7 README, S8/S12/S14 directory listings, S3 search result, S13 404 probes. S14's extension-module claim is independently supported by the byte-identical TECHNICAL_NOTES text itself.
+
+## 5. Witness re-executions — all three reproduce exactly
+
+Executed by critic in the isolated Python executor (fresh filesystem, no network; same scope limits as the originals — stdlib reference behavior only):
+
+| Witness | Critique execution | Observed | Agreement with research stage |
+|---|---|---|---|
+| W1 JSON float64 round-trip vs float32 | exec-1k2rlesw, exit 0 | `json_exact_for_all=true`; `max_float32_rel_err=3.9736429702230673e-08`; 123456.123456789→123456.125 | Exact match (same max error; same float32 value) |
+| W2 affine compose/invert (scale 0.65/translate 11.5,3.25; zoom 2.0/pan −120.25,−45.5) | exec-f0uerzo5, exit 0 | sequential-vs-composed err 0.0; inverse round-trip err 4.547473508864641e-13; det 1.69 ≠ 0 | Exact match |
+| W3 temp+`os.replace` save mechanics | exec-jh0voq2n, exit 0 | rename consumes temp; aborted save leaves version 1 target intact | Exact match |
+
+The proposal's labeling of these as isolated component checks with honest limits (no crash injection, no fsync durability, no application code) is accurate and must be preserved. P1–P5 remain correctly **proposed/UNEXECUTED**.
+
+## 6. Findings
+
+Severity scale: HIGH = would change a decision; MED = add an obligation or change a citation's strength; LOW = wording precision. None are HIGH.
+
+- **C1 [LOW, precision] — PR #533 undo-entry timing.** The proposal says the entry is created because `_block_saving` "is set at mouse-press and cleared at mouse-release so one paint stroke = one undo entry." The patch shows the entry is saved **at mouse-press before the stroke mutates data** (`self._save_history()` then `self._block_saving = True` in `on_mouse_press`), and `_block_saving` suppresses the `_save_history()` calls inside subsequent `paint()`/`fill()` calls until `on_mouse_release` clears it. Also, history trimming pops the **oldest undo entry when the combined undo+redo length exceeds the limit**. Effect ("one stroke = one pre-stroke-state entry") is as the proposal describes; affected dependency: Section 3 mechanism description and the Section 5 undo design (no design change; if anything the press-time snapshot is the right model for our command log: record state before mutation).
+- **C2 [LOW, precision] — axes MUST/SHOULD split.** The proposal summarizes "axes carry unique `name`, `type`, and `unit`" without the modality split: name uniqueness is MUST; `type` and `unit` are SHOULD (and `type` MAY be a custom string). Affected dependency: Section 6 import validator must **tolerate** NGFF stores with missing `type`/`unit` (or custom types), surfacing them as an explicit user-confirmed assumption (pixels/dimensionless) exactly as already planned for PNG/JPEG, rather than hard-requiring the fields.
+- **C3 [LOW, precision] — labels constraints are informative, not normative.** "Only integer values are supported" and "dims match image or 1" live in the §2.1 layout-example **comments**, not in a normative MUST clause of NGFF 0.4. The proposal's citation [FACT S2 §2.1] is factually placed but should not imply normative force. Affected dependency: Section 4.2 — our own project contract should state integer-only masks and dims-matching as **our** normative rules (NGFF 0.4 will not enforce them for us).
+- **C4 [MED, addition] — multiscales transform obligations strengthen the import validator.** The captured §3.4 adds rules the proposal does not list but that its affine design matches exactly: dataset coordinateTransformations "MUST only be of type `translation` or `scale`"; "MUST contain exactly one `scale`"; translation, if present, "MUST be listed after `scale`"; scale/translation lengths MUST equal the axes length; datasets paths ordered largest→smallest. Also `path`-referenced binary transforms exist in the vocabulary (the proposal only describes inline vectors; our exporter uses inline vectors — fine, but the importer should either support or visibly reject `path` forms). Affected dependency: Section 6 support boundary — adopt these as concrete import-validation rules and rejection messages.
+- **C5 [LOW, catalog precision] — the pinned page is revision 0.4.1.** The captured page's Version History shows the latest revision as **0.4.1, 2022-09-26** ("transitional metadata for image collections ('bioformats2raw.layout')"), with 0.4.0 dated 2022-02-08. The proposal/catalog cite "OME-NGFF 0.4 … updated 2026-10-01" (presumably a page-delivery date). Affected dependency: pin wording in any final document should read "NGFF 0.4 line, page revision 0.4.1 (2022-09-09–26 content)" — no design change; the normative sections the proposal relies on (§3.1–3.4) are unaffected by the 0.4.1 transitional-metadata addition, though an importer **may encounter** `bioformats2raw.layout` collections in the wild (§3.2 of the same page) and should handle multi-image groups explicitly rather than silently opening only the first image (the spec itself advises readers to make users aware of multiple images — line 2600).
+- **C6 [honest gap] — one sub-claim not re-verified in this pass.** The literal sentence "This is the 0.4 release of this specification. Migration scripts will be provided between numbered versions" (and the editor's-draft caveat) is recorded in catalog S2 with a byte-range locator, but my probes of the linemap did not reach the page-header region containing it. I did verify adjacent structure (§6 Citing "This edition … /0.4/", §7 Version History). Resolution for the next candidate: read the linemap in the approximate byte range 126000–130000 (immediately before the TOC tail seen at 130000) and quote the sentence; until then, treat A3's "migration scripts promise" as **catalog-backed, not independently re-verified**. The 0.4-pin decision itself does not hinge on this sentence.
+
+## 7. Preserved supported claims (keep as-is)
+
+1. The full F1 chain with its stated limits, including the never-merged #3155 gap and the "no upstream repair" claim as scoped.
+2. The three-space contract (voxel/physical/display) and the two-affine "what transformed" decidability argument (W2 re-confirmed).
+3. Binary64 + round-trippable JSON decimal for stored coordinates (W1 re-confirmed); float32 exclusion.
+4. Atomic save via temp+`os.replace` with previous-version backup (W3 re-confirmed; P2 remains the real durability test).
+5. QuPath-shaped core/UI separation with optional format backends as the R10 mechanism (S9/S14).
+6. napari units/axis lessons: calibration as metadata; axis identity must be a file-format contract from v1 (S10/S11).
+7. Copy-vs-reference bundle policy with hash checks and missing-image placeholders (design inference, soundly reasoned).
+8. The declared support boundary (OME-Zarr 0.4; plain TIFF ≤5 dims; PNG/JPEG 2-D; visible rejection with retained sidecar metadata) — appropriately modest for a six-person team.
+9. The leads catalog (L1–L11), especially L4 as the one **blocking implementation dependency** (streaming libraries unpinned) with its bounded convert-on-import fallback.
+
+## 8. Critical assumptions after critique
+
+- **A1 (streaming libraries, L4): still unresolved — correctly flagged as blocking for implementation, not for this plan.** This critique also did not fetch zarr/tifffile; the fallback (recorded convert-on-import to an NGFF-shaped store) keeps the plan valid either way. Keep P1 as the deciding benchmark.
+- **A3 (0.4 pin): supported**, with C5's pin-wording precision and C6's one unre-verified sentence.
+- **A2, A5, A6: unchanged**; P2/P1 remain the proposed validators.
+- **A4 (no rotation/shear): verified** against the §3.3 vocabulary.
+
+## 9. Coverage audit against the brief
+
+R1–R10 all mapped to design sections (proposal §1 list is complete and accurate against the brief text). Both precedents are independently useful and their independence is argued (different language/UI stack and persistence tradition; each mechanism usable alone; NGFF as the storage-side standard). Exactly one issue→fix→regression chain is required and one is delivered and verified. External fact / engineering inference / product choice / proposed validation are separated consistently (label system used throughout). Optional ideas are recorded separately in leads.json. Export honesty, accessibility, cancel/progress, and the 3 GB bounded-access target each appear with correct UNEXECUTED labeling. The proposal does not claim whole-application behavior from component checks. No brief obligation is hidden in an appendix.
+
+## 10. Concrete resolutions for the next candidate
+
+1. Apply C1 wording (press-time snapshot; combined-limit trim) to the F1 mechanism description.
+2. Apply C2 (tolerate missing SHOULD fields with explicit user-confirmed assumption) and C3 (make integer-only/dims-match our normative rule) to the data contract and validator.
+3. Adopt C4's multiscales transform rules as import-validation checks; decide support-or-reject for `path`-form transforms and `bioformats2raw.layout` multi-image collections (spec advises making users aware of multiple images).
+4. Re-word the spec pin per C5 ("NGFF 0.4, revision 0.4.1"); resolve C6 by quoting the release/migration sentence from linemap bytes ≈126000–130000 or by re-locating it in a fresh capture.
+5. Keep everything in §7 above unchanged; keep P1–P5 and the leads catalog as the deferred agenda.
+
+## 11. Critique verification inventory
+
+Fresh public captures (all `exact-http-response-body-bytes`): pulls/533 (capture_id 7e94a7b3…, sha256 59a003de…, dynamic-field SHA differs from S4, cited fields identical); pulls/533/files (**byte-identical** to S5, f25e5a78…); pulls/3155 (capture_id 93939efb…, sha256 f71fc426…, dynamic-field SHA differs from the S3 search record, cited fields identical); raw TECHNICAL_NOTES.md@main (**byte-identical** to S9, 1b9cd69e…); raw axis-names.md@main (**byte-identical** to S10, 02cf687f…); raw units.md@main (**byte-identical** to S11, ef71dd31…); raw test_advanced.py@v0.2.0 (**byte-identical** to S6, b810ad32…). Local capture inspection: ngff04_linemap.txt regions at bytes 0–3000, 90000–94000, 130000–133800, 135000–139200, 140000–144000, 144000–148200, 150200–154000, 152000–156200, 156000–160200, 168000–172200, 172200–176400, 221500–225900, 233000–237400, 243000–247000, 251000–255000, 258000–262400. Critique executions: exec-1k2rlesw, exec-f0uerzo5, exec-jh0voq2n (isolated executor receipts; code sha256 values 2eb78b53…, c3e7d6f1…, 48a7735b…). All critique checks are isolated component checks and none establishes full-application behavior.

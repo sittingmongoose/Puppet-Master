@@ -1,0 +1,449 @@
+{
+  "schema": "er9.independent-scoped-source-judgment.v1",
+  "evaluation_id": "independent-DEC019-warm-1",
+  "governing_criteria": {
+    "brief_obligations": 12,
+    "common_dimensions": 8,
+    "important_checks": 5,
+    "scoring": "Obligation coverage and source-grounded defect identities/severity; no aggregate score",
+    "important_checks_qualification": "The original source card has no important_checks_path. The dispatched A-P1 through A-P5 are explicitly root-authorized current common checks, not a falsely attributed original-card field."
+  },
+  "scope": {
+    "assessed_subject": "The one current 18185-byte critic report: consequential correction, preservation, source interpretation and physical delivery against admitted original research context",
+    "scope_state": "PARTIAL",
+    "critic_source_screen_outcome": "FAIL_SCREEN",
+    "canonical_final_delivery": "INCOMPLETE",
+    "canonical_final_semantics": "UNASSESSED",
+    "governing_research_full_proposal": "UNASSESSED",
+    "original_pipeline_quality": "UNASSESSED",
+    "fresh_or_matched_or_causal_credit": false,
+    "negative_control": "The screen does not erase supported criticism. Final absence establishes delivery incompleteness only, never semantic failure of an absent proposal."
+  },
+  "inputs": {
+    "dispatch": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/dispatch.json",
+      "sha256": "65123b78b035ace764861f4110f8cb02053f926da6dacecf156ff4ed5745498b",
+      "locator": "entire source-only dispatch"
+    },
+    "critic": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/current-critic/review.md",
+      "sha256": "937ada912179d7c82d7c5ab9ca8081c62a58587811dfbbf0f98840dcc707b32e",
+      "locator": "entire report"
+    },
+    "input_pins_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/input-pins.json",
+    "all_48_pins_verified": true,
+    "all_48_source_files_readonly": true,
+    "identity_status_history_economics_key_read_before_freeze": false,
+    "unavoidable_identity_hints": "Exact original Task identifies the research role; source critic body identifies failed-parent warm stage and same-arm research stage labels. Perfect blinding is not claimed. Supplied routing metadata also names the subject. No private status/history/economics/key was opened."
+  },
+  "findings": [
+    {
+      "id": "DEC019-WARM-S01",
+      "severity": "HIGH",
+      "dimensions": [
+        "Q3",
+        "Q6",
+        "Q7"
+      ],
+      "obligations": [
+        "A05",
+        "A10",
+        "A12"
+      ],
+      "checks": [
+        "A-P2",
+        "A-P4"
+      ],
+      "type": "unsupported consequential preservation/completeness endorsement",
+      "claim": "Critic declares atomic-save coverage and that everything outside its listed corrections can stand; D-4 recommends reusing the existing writer for export.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/current-critic/review.md",
+          "sha256": "937ada912179d7c82d7c5ab9ca8081c62a58587811dfbbf0f98840dcc707b32e",
+          "locator": "§5 D-4; §6 coverage audit, line 90; §7 item 5, line 98"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-research/proposal.md",
+          "sha256": "50902ea7bbe01b80bc93b164f2b317626f12d92944379a8f7b2bed6911202fc3",
+          "locator": "§7.1-A, line 191; W4 and §14 assumption 1"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/task/brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+          "locator": "Interrupted save must leave a recoverable project state"
+        }
+      ],
+      "source_grounded_reason": "The admitted proposal overwrites each annotations/<id>.json via os.replace before replacing project.json last. A crash after one annotation replacement but before manifest replacement leaves old manifest plus new annotation contents, and possibly a mixture of new and old annotation documents. Deleting temp files and discarding an uncommitted provenance record restores none of the overwritten old bytes. This trace follows the specified operation order; it is logical analysis, not an executed test. Per-file atomic replacement is not an atomic project generation. Even perfect rename/fsync ordering does not close this gap. The asserted previous-generation guarantee therefore does not follow from the design the critic endorses.",
+      "consequence": "A05 recovery and annotation consistency remain critical unresolved dependencies, beyond the export-output caveat. The critic should retain the directory-store alternative but qualify/change the generation-commit protocol; its blanket preservation instruction is unsafe."
+    },
+    {
+      "id": "DEC019-WARM-S02",
+      "severity": "HIGH",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q6",
+        "Q7"
+      ],
+      "obligations": [
+        "A05",
+        "A10",
+        "A12"
+      ],
+      "checks": [
+        "A-P2",
+        "A-P4"
+      ],
+      "type": "missed consequential source-identity defect in endorsed contract",
+      "claim": "Critic says the identity/relocation/bundle contract is covered and everything else can stand, while P-4 treats QuPath identity-derived claims as preserved.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/current-critic/review.md",
+          "sha256": "937ada912179d7c82d7c5ab9ca8081c62a58587811dfbbf0f98840dcc707b32e",
+          "locator": "§5 P-4; §6 line 90; §7 line 98"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-research/proposal.md",
+          "sha256": "50902ea7bbe01b80bc93b164f2b317626f12d92944379a8f7b2bed6911202fc3",
+          "locator": "§4.2 line 101; §7.2 line 198; §10 annotation table source content_sha256"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0014.body",
+          "sha256": "b21a8766e7dac3af11a4200a96f71fdec7d3debaaa73fb634e554507e5511855",
+          "locator": "QuPath duplicate .qpproj warning: different images with the same IDs"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0006.body",
+          "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "locator": "§2 chunk-addressable storage and group/array hierarchy"
+        }
+      ],
+      "source_grounded_reason": "For OME-Zarr the admitted proposal hashes chunk filenames and sizes plus .zarray/.zattrs, not chunk data bytes. Replacing a chunk with different equal-length sample bytes while retaining its name and metadata leaves that defined identity input unchanged. This is a static counterexample to the specified digest input, not a new executed test and not a hash collision. The resulting digest cannot establish same image samples after relocation/reopen, which the brief and export reference contract require. Hashing a metadata-root listing in §4.2 is weaker still.",
+      "consequence": "The source-change and annotation-reference guarantee is unsupported for an explicitly supported format. Preserve QuPath’s actual identity warning and the need for content identity, but do not endorse this listing hash as content_sha256."
+    },
+    {
+      "id": "DEC019-WARM-S03",
+      "severity": "MEDIUM",
+      "dimensions": [
+        "Q2",
+        "Q6"
+      ],
+      "obligations": [
+        "A03",
+        "A12"
+      ],
+      "checks": [
+        "A-P2",
+        "A-P4"
+      ],
+      "type": "overpreservation of derived-data identity assertion",
+      "claim": "Critic lets the export contract stand apart from export atomicity, including the inherited claim that derived output content_sha256 differs from its source by construction.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/current-critic/review.md",
+          "sha256": "937ada912179d7c82d7c5ab9ca8081c62a58587811dfbbf0f98840dcc707b32e",
+          "locator": "§5 affected dependencies and §7 item 5"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-research/proposal.md",
+          "sha256": "50902ea7bbe01b80bc93b164f2b317626f12d92944379a8f7b2bed6911202fc3",
+          "locator": "§10 item 3, line 237"
+        }
+      ],
+      "source_grounded_reason": "A separate derived image identity/op record does not force different content bytes: a no-op/identity operation or identical-format copy may reproduce identical output bytes, and the proposed Zarr listing-only digest can also stay identical after changed samples. Thus content-hash inequality is not guaranteed by a derived label or provenance record. This is a scope/logic counterexample, not an executed data operation.",
+      "consequence": "Derived provenance should be represented by image/op identity and explicit transformation semantics, without requiring an unsupported hash-inequality claim."
+    },
+    {
+      "id": "DEC019-WARM-U01",
+      "severity": "UNKNOWN",
+      "dimensions": [
+        "Q5",
+        "Q8"
+      ],
+      "obligations": [
+        "A11",
+        "A12"
+      ],
+      "checks": [
+        "A-P3"
+      ],
+      "type": "execution-verification limit",
+      "claim": "Critic §4 reports three executed checks E-1/E-2/E-3 using execution IDs and abbreviated code/stdout hashes, and confirms W1/W3.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/current-critic/review.md",
+          "sha256": "937ada912179d7c82d7c5ab9ca8081c62a58587811dfbbf0f98840dcc707b32e",
+          "locator": "§1 item 3 and §4 E-1/E-2/E-3"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-research/witnesses.json",
+          "sha256": "34cc0f5f20e6e4360ad8eb2190b7dcbf71d44ee3e1b2d1dfb124621eed837af6",
+          "locator": "W1/W2/W3 catalog metadata and self-contained stdout; no code bytes"
+        }
+      ],
+      "source_grounded_reason": "The P1 allowlist contains no candidate check code, sandbox code/input receipts, full critic stdout/stderr artifacts, or independently inspectable execution records. Printed IDs/hash prefixes and inherited catalogs are not those artifacts. Source-checkable arithmetic/source mechanisms can be reviewed, but actual executed code, result integrity and admitted execution provenance remain UNKNOWN before P2. No fabricated execution is alleged.",
+      "consequence": "Do not award verified execution or full A11/Q5 completeness from this packet alone. Preserve the legitimate arithmetic/source insights with execution provenance qualified."
+    }
+  ],
+  "supported_content_preserved": [
+    {
+      "id": "SUP01",
+      "assessment": "SUPPORTED_SCOPED",
+      "text": "The #4926 issue symptom/reproducer, #5004 mechanism and permutation regression tests, and v0.4.18 release-note anchor form the cited chain in the captured versions. The critic correctly preserves its napari-only/internal-consistency limit, without cross-app or full-workspace credit.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0001.body",
+          "sha256": "5017f5dfc0f1dc34f995461c234130624ad48dda5e2108bd4ceffb2c4e624dad",
+          "locator": "issue title/body/reproducer/environment"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0005.body",
+          "sha256": "60a7d6a4336d7e06c135ccb427ae05404554fa2fce10b271f8b1f4dd4c253fc8",
+          "locator": "entire diff: four vispy tests, ten rank-map cases, Image._get_order, double argsort"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0004.body",
+          "sha256": "c5d11849316f6d4427366965ba8f330f1274f551e5f05bc9cfdc34de582d9cbc",
+          "locator": "Bug Fixes #5004"
+        }
+      ]
+    },
+    {
+      "id": "SUP02",
+      "assessment": "SUPPORTED_SCOPED",
+      "text": "#6636 diff contains per-axis sign normalization, new 3D decomposition/Affine tests and the changed mixed-flipped expectation. The 0.5.0 notes anchor it. The critic correctly retains the missing standalone-issue link rather than upgrading the partial chain.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0024.body",
+          "sha256": "2251e11772e0d9c95347139c7f54ef46a79a24e34a128af34688fc384aba33cd",
+          "locator": "entire diff"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0008.body",
+          "sha256": "9559024ff0a62b9d7d728e660b230093c2e6454ff861be30218c323230acdf9d",
+          "locator": "Bug Fixes #6636"
+        }
+      ]
+    },
+    {
+      "id": "SUP03",
+      "assessment": "SUPPORTED_SCOPED",
+      "text": "C-1 correctly identifies internally inconsistent W2 geometry. 64×256×256 chunks against 2048×2048×362 produce grid 32×8×2 and 512 nominal chunks; an aligned 512×512 xy viewport touches 8×2=16 chunks, not 4. 1,482,752 bytes is 2048×362×2, not a full 2048×2048 xy plane (8,388,608 bytes). Choosing 256×256×64 yields grid 8×8×6=384 and four aligned viewport chunks. These are static arithmetic consequences, not newly executed checks. Resource feasibility remains an arithmetic-only illustration, with real decoder/filesystem/RSS behavior UNASSESSED.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-research/witnesses.json",
+          "sha256": "34cc0f5f20e6e4360ad8eb2190b7dcbf71d44ee3e1b2d1dfb124621eed837af6",
+          "locator": "W2 input/stdout/limits"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-research/proposal.md",
+          "sha256": "50902ea7bbe01b80bc93b164f2b317626f12d92944379a8f7b2bed6911202fc3",
+          "locator": "§9"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/current-critic/review.md",
+          "sha256": "937ada912179d7c82d7c5ab9ca8081c62a58587811dfbbf0f98840dcc707b32e",
+          "locator": "§4 E-3; §5 C-1"
+        }
+      ]
+    },
+    {
+      "id": "SUP04",
+      "assessment": "SUPPORTED_SCOPED",
+      "text": "QuPath captured documentation supports external path variants and the duplicate-entry identity warning, LUT/data separation, calibration sanity checks and plane-bound annotations. Preserving these facts is useful; they do not independently validate the proposed save protocol or listing digest.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0014.body",
+          "sha256": "b21a8766e7dac3af11a4200a96f71fdec7d3debaaa73fb634e554507e5511855",
+          "locator": "project.qpproj, shared-drive tip, duplicate-entry warning"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0000.body",
+          "sha256": "8d6f90a3a610f4c33447ec603af7bce596725f4b5c4e9653570c887fbff2aaae",
+          "locator": "LUTs, raw pixel values, Pixel size warning, z/time plane membership"
+        }
+      ]
+    },
+    {
+      "id": "SUP05",
+      "assessment": "SUPPORTED_SCOPED",
+      "text": "The 0.5.0 release notes state that napari was not using axis-label/unit information at that release. The critic’s captured-version and no-live-refetch limitation is appropriate; it does not establish present-day napari capability. NGFF scale/translation and RFC7946 export qualifications in the inherited proposal have relevant matching captured text, but the entire un-reverified quotation set and chosen architecture remain UNASSESSED.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0008.body",
+          "sha256": "9559024ff0a62b9d7d728e660b230093c2e6454ff861be30218c323230acdf9d",
+          "locator": "Highlights axis labels/units"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0006.body",
+          "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+          "locator": "§3.4 exactly one scale and translation after scale"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/0002.body",
+          "sha256": "cb52f07b9cc6c841750d75850988fe8f32c7b7f0e1f7420f2069d5b5ded124f8",
+          "locator": "§4 CRS and prior arrangement; §6.1 foreign-member processing limit"
+        }
+      ]
+    },
+    {
+      "id": "SUP06",
+      "assessment": "SUPPORTED_SCOPED",
+      "text": "Every catalog source capture digest maps to an admitted HTTP200 body. There are 14 source records because S5b accompanies S1–S13; the critic’s count of 13 is a minor bookkeeping error. Byte identity supports capture integrity, not semantic correctness or fresh discovery. W4–W7 remain proposed/UNEXECUTED and are not converted into executed app checks.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-research/sources.json",
+          "sha256": "b241c8da94c070534530b9b1aaab700992b642438090543ab5c3a186ae51adcf",
+          "locator": "all source capture SHA fields"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-source-context/source-pins.json",
+          "sha256": "9f0e30bef6739681df6cd4f90652e15969b064898394b94416b87eb17fabc9fc",
+          "locator": "matching public_retrieval_status200 and body pins"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/dec019-warm-current-preparation-001/packet/governing-research/witnesses.json",
+          "sha256": "34cc0f5f20e6e4360ad8eb2190b7dcbf71d44ee3e1b2d1dfb124621eed837af6",
+          "locator": "W4–W7 proposed-UNEXECUTED"
+        }
+      ]
+    }
+  ],
+  "additional_qualification": "D-2 correctly rejects a documented-failure interpretation of the #7016 default flip. Its suggested wording about napari judging it harmful enough still infers motive not established by the release-note line; neutral wording would report only the changed default. C-2’s different float32 rounding result is not by itself proof that the original execution receipt is erroneous; original code/rounding paths are unavailable, so preserve the discrepancy as unresolved rather than replace historical stdout. Neither item is the decisive screen.",
+  "coverage": {
+    "obligations": {
+      "A01": {
+        "coverage": "UNASSESSED",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A02": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A03": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A04": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A05": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A06": {
+        "coverage": "UNASSESSED",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A07": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A08": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A09": {
+        "coverage": "UNASSESSED",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A10": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A11": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      },
+      "A12": {
+        "coverage": "PARTIAL",
+        "note": "Selected critic corrections/preservation only; absent final and full original proposal remain UNASSESSED."
+      }
+    },
+    "dimensions": {
+      "Q1": {
+        "coverage": "PARTIAL",
+        "note": "Scoped critic/source screen; no whole-case PASS."
+      },
+      "Q2": {
+        "coverage": "PARTIAL",
+        "note": "Scoped critic/source screen; no whole-case PASS."
+      },
+      "Q3": {
+        "coverage": "PARTIAL",
+        "note": "Scoped critic/source screen; no whole-case PASS."
+      },
+      "Q4": {
+        "coverage": "PARTIAL",
+        "note": "Scoped critic/source screen; no whole-case PASS."
+      },
+      "Q5": {
+        "coverage": "PARTIAL",
+        "note": "Scoped critic/source screen; no whole-case PASS."
+      },
+      "Q6": {
+        "coverage": "PARTIAL",
+        "note": "Scoped critic/source screen; no whole-case PASS."
+      },
+      "Q7": {
+        "coverage": "PARTIAL",
+        "note": "Scoped critic/source screen; no whole-case PASS."
+      },
+      "Q8": {
+        "coverage": "PARTIAL",
+        "note": "Scoped critic/source screen; no whole-case PASS."
+      }
+    },
+    "important_checks": {
+      "A-P1": {
+        "coverage": "PARTIAL",
+        "result": "Source chain supported; original discovery and final delivery not credited"
+      },
+      "A-P2": {
+        "coverage": "PARTIAL",
+        "result": "FAIL_SCREEN on endorsed recovery/identity claims"
+      },
+      "A-P3": {
+        "coverage": "PARTIAL",
+        "result": "UNKNOWN execution artifacts; static arithmetic/source evidence separate"
+      },
+      "A-P4": {
+        "coverage": "PARTIAL",
+        "result": "FAIL_SCREEN overpreservation; useful supported corrections retained"
+      },
+      "A-P5": {
+        "coverage": "UNASSESSED",
+        "result": "No full current-final minimum-workflow review"
+      }
+    }
+  },
+  "delivery": {
+    "critic_artifact": {
+      "present": true,
+      "bytes": 18185,
+      "sha256": "937ada912179d7c82d7c5ab9ca8081c62a58587811dfbbf0f98840dcc707b32e",
+      "native_authenticity": "UNKNOWN before held-key inspection"
+    },
+    "canonical_final": null,
+    "required_absent": [
+      "out/final/proposal.md",
+      "out/final/sources.json",
+      "out/final/witnesses.json",
+      "out/final/leads.json"
+    ],
+    "basis": "Exact source dispatch; underlying native absence proofs are held until P2."
+  },
+  "method_limits": [
+    "No new tests, candidate feedback, native Goals or Git operations",
+    "No sibling output, roster, old judgment, private history, economics or held key opened",
+    "No weighted score or invented rubric",
+    "No original-pipeline, fresh, matched, winner or causal credit",
+    "Logical counterexamples above are not executed witnesses"
+  ],
+  "scientific_recipients_only": [
+    "/root",
+    "/root/publisher"
+  ],
+  "source_review_completed_utc": "2026-10-06T12:50:42.232095+00:00"
+}

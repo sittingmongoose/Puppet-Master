@@ -1,0 +1,160 @@
+{
+  "schema": "er9.research.sources.v1",
+  "stage": "I-08-LUNA-S1-control-research-a001",
+  "captured_on": "2026-10-05",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "nbformat: The Jupyter Notebook Format",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "pin": {"kind": "documentation release label", "value": "nbformat 5.11 documentation; latest page", "immutable_upstream_ref": false},
+      "locators": ["Notebook file format", "Top-level structure", "Code cells", "Outputs"],
+      "capture_identity": {"capture_id": "0764b7404f2a484fb9a20c5b759dda6f", "body_sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503", "captured_on": "2026-10-05"},
+      "applicability": "Primary format specification for JSON notebooks, code-cell source/output fields and nullable execution_count. Establishes document/interchange structure only; it does not establish runtime behavior or output provenance."
+    },
+    {
+      "id": "S02",
+      "title": "nbclient: Executing notebooks",
+      "url": "https://nbclient.readthedocs.io/en/stable/client.html",
+      "pin": {"kind": "documentation release label", "value": "nbclient 0.11 documentation; stable page", "immutable_upstream_ref": false},
+      "locators": ["Executing notebooks", "NotebookClient", "Cell execution hooks", "Errors", "Timeout"],
+      "capture_identity": {"capture_id": "1c50ffb59ba944ea80701d45b03c6e39", "body_sha256": "f4bc1460415ea1abac5667099a71ef422272697401d96527d9b97c03897a85a2", "captured_on": "2026-10-05"},
+      "applicability": "Execution client API, hooks and documented stop/allow-errors behavior inform a clean replay design. Documentation behavior must be checked against the selected package version; timeout defaults alone are not a resource boundary."
+    },
+    {
+      "id": "S03",
+      "title": "Jupyter Client: Messaging",
+      "url": "https://jupyter-client.readthedocs.io/en/stable/messaging.html",
+      "pin": {"kind": "documentation/specification", "value": "jupyter_client docs 8.10.0; messaging protocol 5.5", "immutable_upstream_ref": false},
+      "locators": ["Message header", "Parent header", "Execute request", "Status messages", "Kernel sessions"],
+      "capture_identity": {"capture_id": "e9dee37c94014d6ca82a5f366589f078", "body_sha256": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0", "captured_on": "2026-10-05"},
+      "applicability": "Primary protocol source for relating emitted messages to an execute request and distinguishing kernel sessions/restarts. Protocol events are useful evidence but do not prove code was deterministic or inputs were declared."
+    },
+    {
+      "id": "S04",
+      "title": "uv project layout and lockfile",
+      "url": "https://raw.githubusercontent.com/astral-sh/uv/main/docs/concepts/projects/layout.md",
+      "pin": {"kind": "repository branch", "value": "astral-sh/uv main at capture time", "immutable_upstream_ref": false},
+      "locators": ["uv.lock", "Lockfile", "pylock.toml", "Project layout"],
+      "capture_identity": {"capture_id": "3f5813cd9c554d1d867fa748e5e04071", "body_sha256": "39a4e523e58410f02fd0a6e0cb31d59bf17dd08097f5457aded8b6b7c7ec5b08", "captured_on": "2026-10-05"},
+      "applicability": "Documents uv.lock as an exact uv resolution and the distinction from PEP 751 pylock.toml, including portability/feature trade-offs. Main-branch docs do not select or verify a product uv release."
+    },
+    {
+      "id": "S05",
+      "title": "DuckDB CSV auto detection",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/auto_detection.md",
+      "pin": {"kind": "documentation path", "value": "DuckDB web repository main, docs/current; current docs identified as 1.5 at capture time", "immutable_upstream_ref": false},
+      "locators": ["Sample Size", "Type Detection", "Dates and Timestamps", "all_varchar"],
+      "capture_identity": {"capture_id": "150bf76ef78743e98789aca359fb1c1a", "body_sha256": "705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa", "captured_on": "2026-10-05"},
+      "applicability": "Documents sampled CSV type detection (default sample_size 20,480, optional whole-file sample), overrides and date ambiguity. Current documentation, not a package pin or measured full-input guarantee."
+    },
+    {
+      "id": "S06",
+      "title": "DuckDB reading faulty CSV files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "pin": {"kind": "documentation path", "value": "DuckDB web repository main, docs/current; mutable", "immutable_upstream_ref": false},
+      "locators": ["Structural Errors", "Using the ignore_errors Option", "Retrieving Faulty CSV Lines", "Reject Errors", "Projection Pushdown"],
+      "capture_identity": {"capture_id": "5f7e38d76d0c43bfa02fb6e35e194e01", "body_sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad", "captured_on": "2026-10-05"},
+      "applicability": "Documents strict parser failures and permissive options that skip records; reject capture is temporary and projection can affect which bad values are observed. Supports explicit error/quarantine behavior, not an assertion about every reader version."
+    },
+    {
+      "id": "S07",
+      "title": "DuckDB loading JSON",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/json/loading_json.md",
+      "pin": {"kind": "documentation path", "value": "DuckDB web repository main, docs/current; mutable", "immutable_upstream_ref": false},
+      "locators": ["Functions for Reading JSON Objects", "Functions for Reading JSON as a Table", "sample_size", "union_by_name", "Missing keys"],
+      "capture_identity": {"capture_id": "d28919af394c4907bc201ffca4efd303", "body_sha256": "d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642", "captured_on": "2026-10-05"},
+      "applicability": "Documents NDJSON readers, sampled inference and missing-key-to-SQL-NULL behavior. The missing/null distinction recommendation follows directly when that behavior is used; verify against the chosen engine build."
+    },
+    {
+      "id": "S08",
+      "title": "DuckDB Parquet overview",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/parquet/overview.md",
+      "pin": {"kind": "documentation path", "value": "DuckDB web repository main, docs/current; mutable", "immutable_upstream_ref": false},
+      "locators": ["Reading Parquet files", "Filter and projection pushdown", "file_row_number", "union_by_name", "Metadata"],
+      "capture_identity": {"capture_id": "f1c660e8f5c2460ba3da4739bfd424e2", "body_sha256": "3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd", "captured_on": "2026-10-05"},
+      "applicability": "Documents Parquet scans, pushdown, file row coordinate and multi-file schema union. A file row coordinate is not a stable business key across changed/repacked files."
+    },
+    {
+      "id": "S09",
+      "title": "DuckDB Python conversion",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/clients/python/conversion.md",
+      "pin": {"kind": "documentation path", "value": "DuckDB web repository main, docs/current; mutable", "immutable_upstream_ref": false},
+      "locators": ["Result Conversion: DuckDB Results to Python", "Pandas", "Apache Arrow", "fetch_df_chunk", "to_arrow_reader"],
+      "capture_identity": {"capture_id": "8ac0e25322144cd9a24a91b13dd3607f", "body_sha256": "bdf7f5cc43a78d77c0660c715a505741426e85ed020840e3f60bd95ab26b6f1e", "captured_on": "2026-10-05"},
+      "applicability": "Documents eager DataFrame conversion and chunked/Arrow-reader result APIs. Supports a bounded transfer design; does not itself guarantee bounded memory in downstream Python code."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB environment and larger-than-memory workloads",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/guides/performance/environment.md",
+      "pin": {"kind": "documentation path", "value": "DuckDB web repository main, docs/current; mutable", "immutable_upstream_ref": false},
+      "locators": ["Memory Limit", "Out-of-core Processing", "Larger-than-memory", "Storage"],
+      "capture_identity": {"capture_id": "ecb447743fe043df82a827dd0c13dffb", "body_sha256": "d9bb57d8a566cd1a92454255243298d406caa07969995acde56b38301345bc10", "captured_on": "2026-10-05"},
+      "applicability": "Documents spilling for supported group/join/sort/window operations and workload/resource guidance. Establishes a plausible engine path, not success or performance for the brief's 5 GB file on 16 GB RAM. Also advises against a shared writable native database on network-attached storage."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB non-deterministic behavior",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/operations_manual/non-deterministic_behavior.md",
+      "pin": {"kind": "documentation path", "value": "DuckDB web repository main, docs/current; mutable", "immutable_upstream_ref": false},
+      "locators": ["Set Semantics", "Floating-Point Aggregate Operations with Multi-Threading", "Working Around Non-Determinism"],
+      "capture_identity": {"capture_id": "6771e5ea08004002985a6aba5ef3e8af", "body_sha256": "26603dacf4fdd8f592f851723efed1c85d233cc601e2810f39691d2e31eb6f24", "captured_on": "2026-10-05"},
+      "applicability": "Documents row-order variability under set semantics/parallelism and possible floating-point variation; informs stable order and scoped reproducibility claims."
+    },
+    {
+      "id": "S12",
+      "title": "DuckDB issue 25164: parallel CSV reader emits duplicate rows with CRCRLF",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/25164",
+      "pin": {"kind": "issue record", "value": "duckdb/duckdb issue #25164, captured issue state", "immutable_upstream_ref": false},
+      "locators": ["Issue title/body", "Affected versions and reproducer report", "Closed/linked fix fields"],
+      "capture_identity": {"capture_id": "977f0411f39c43a2a3e56d3eed8bd7eb", "body_sha256": "5486aac86d6778c4aa01c5f81e25f061420aa55983842f3c20cb496cffbb739c", "captured_on": "2026-10-05"},
+      "applicability": "User report says parallel CSV parsing silently duplicated rows for CRCRLF boundary cases and names affected 1.4.x/1.5.x builds. Report evidence is not an independently reproduced candidate test or a release-wide proof."
+    },
+    {
+      "id": "S13",
+      "title": "DuckDB PR 25232: fix duplicate rows in parallel CSV reader",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232",
+      "pin": {"kind": "merge commit and base branch", "value": "59ae0c6fb3f29369cfd0df124c76e9232181ef86 on v2.0-cyanoptera; merged 2026-09-07", "immutable_upstream_ref": true},
+      "locators": ["body Problem/Fix/Testing", "merged", "merge_commit_sha", "base.ref", "base.sha"],
+      "capture_identity": {"capture_id": "23cbc884cb3a4cdfa38cb385bdab37fa", "body_sha256": "5795ca684a8533f116ede63a7512cd0d28baa5bc90956741d3e5fa50a10cc5e2", "captured_on": "2026-10-05"},
+      "applicability": "PR metadata and author description tie a scanner early-return fix and reported relassert outcome to v2.0-cyanoptera. A merged PR on this branch is not evidence that a stable package release contains it."
+    },
+    {
+      "id": "S14",
+      "title": "DuckDB PR 25232 changed files",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232/files",
+      "pin": {"kind": "pull request revision", "value": "PR #25232, merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86", "immutable_upstream_ref": true},
+      "locators": ["src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp", "test/sql/copy/csv/parallel/test_rrrn_parallel.test"],
+      "capture_identity": {"capture_id": "6cc205377b0848c9b3fbe1689901d5fd", "body_sha256": "12b4ff4dcaed30d87e5af886623682c3509b03aa85fbb226620e4403c8a63b67", "captured_on": "2026-10-05"},
+      "applicability": "Changed-file API evidence for the production scanner patch and named regression-test addition. Consult with PR metadata and actual test source; file list alone does not establish release behavior."
+    },
+    {
+      "id": "S15",
+      "title": "DuckDB parallel CSV CRCRLF regression test at merge commit",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "pin": {"kind": "git commit", "value": "59ae0c6fb3f29369cfd0df124c76e9232181ef86", "immutable_upstream_ref": true},
+      "locators": ["generated 1024-byte boundary fixture", "parallel and sequential row counts", "duplicate ID assertion", "mid-buffer case"],
+      "capture_identity": {"capture_id": "aafb640559d34ad497e5b7f72933dfd4", "body_sha256": "86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f", "captured_on": "2026-10-05"},
+      "applicability": "Exact checked-in regression fixture engineered to split CRCRLF across a 1024-byte buffer boundary, with parallel/sequential assertions. Test source does not mean this candidate ran it; fixture does not establish behavior outside the tested scenario."
+    },
+    {
+      "id": "S16",
+      "title": "DuckDB PR 25325: proposed port of CSV fix to main",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25325",
+      "pin": {"kind": "pull request state", "value": "PR #25325 targeting main; closed 2026-09-03 with merged=false in captured response", "immutable_upstream_ref": false},
+      "locators": ["title", "state", "merged", "base.ref", "closed_at"],
+      "capture_identity": {"capture_id": "c737621d33cf49b285f3aba8052fa02b", "body_sha256": "c0272a615d196ed66c1b4caf29e15d58b9520a43bb9271f17b6476fd5a633bff", "captured_on": "2026-10-05"},
+      "applicability": "Captured PR metadata shows the attempted main port closed unmerged. This is not proof that no later port or release exists; it prevents treating PR #25232 as main/stable applicability evidence."
+    },
+    {
+      "id": "S17",
+      "title": "Podman run manual",
+      "url": "https://docs.podman.io/en/latest/markdown/podman-run.1.html",
+      "pin": {"kind": "documentation channel", "value": "Podman latest manual at capture time", "immutable_upstream_ref": false},
+      "locators": ["DESCRIPTION", "--cap-drop", "--network", "--read-only", "--memory", "--cpus", "--pids-limit", "rootless/cgroup notes"],
+      "capture_identity": {"capture_id": "5c22977fe612435dbf9c16d203fc9118", "body_sha256": "3ba224e99ab444e265d9c22c94bcc22708152071a48d3633178c1beb9ccd3408", "captured_on": "2026-10-05"},
+      "applicability": "Manual documents container isolation and relevant controls while noting host/rootless and cgroup caveats. It informs a proposed execution boundary but does not prove security against kernel/runtime escape or enforcement on every workstation."
+    }
+  ]
+}

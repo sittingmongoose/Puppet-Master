@@ -1,0 +1,207 @@
+# Critique Review — Research stage of "Development Brief B: reproducible notebook and data workspace"
+
+Stage: critique (V01 control modifier — legacy workflow: verification by source reading and manual reasoning only; the deterministic calculation/execution tool is not available to this stage and no code was executed, directly or indirectly).
+Date: 2026-10-06.
+Reviewed artifact (frozen, immutable handoff): `inputs/prior/I-02-control-research-a001/research/proposal.md` (sha256 e738b247…), with `…/sources.json` (0a7e4412…), `…/witnesses.json` (c0b6b503…), `…/leads.json` (f6507135…).
+Evidence base: `inputs/source_context/0000.body`–`0034.body` plus `inputs/source_context/index.json` (e26acf0c…), the exact captured HTTP bodies referenced by the catalog.
+
+This review is self-contained: every finding below cites catalog IDs (S/W/U/L) and, where new, the specific capture file and section so a fresh candidate can re-verify without other context.
+
+---
+
+## 1. Verdict
+
+The research proposal is **substantively sound and unusually well-evidenced**. All 18 source-catalog entries were re-verified against their archived capture bodies; every load-bearing quotation, number, and mechanism claim in the proposal matches its capture. The witness receipts (W1–W4) are internally consistent, honestly scoped, and include a recorded failed attempt. The proposed/unexecuted boundary is respected (nothing proposed is claimed as done). The proposal satisfies the brief's structural obligations (two+ independent precedents with an independence argument; one issue→fix→regression chain with stated version applicability and evidence limits; minimum-workflow table; S/I/P/E/U labeling; opportunity + alternative).
+
+The review contributes:
+
+- **7 corrections (C1–C7)** — none of which falsify a headline claim, but several of which must be fixed before the proposal is reused: one real evidence gap (NDJSON/Parquet reader support asserted without any captured source, plus a design consequence for quarantine), one missing version floor that the research's own captured source documents (SQLite WAL-reset bug), one receipt-bookkeeping inconsistency, one catalog-note understatement, and several pin/wording precision fixes.
+- **4 new evidence-backed findings (F1–F4)** the planner can use, the largest being a complete second issue→fix→version chain (SQLite WAL-reset bug, fixed 3.51.3) already sitting inside a source the proposal cites for other purposes.
+- **3 additional proposed/UNEXECUTED checks (U6–U8)** and an explicit preserve-list of valid claims and open uncertainties.
+
+Severity legend used below: **[major]** must be fixed before implementation guidance is relied on; **[moderate]** fix in the next revision; **[minor]** precision improvement.
+
+---
+
+## 2. Verification method and coverage
+
+1. Every S01–S18 claim listed in `sources.json` was checked against the exact capture body in `inputs/source_context/` (raw bytes, not summaries). Capture sha256 values in `sources.json` match `index.json` for all 18 (e.g., S01↔0000 `3ff000fc…`, S02↔0010 `9fac1c63…`, S03↔0005 `523e3578…`, S08↔0016 `f76d0f41…`, S17↔0022 `f3467b53…`, S18↔0033 `5a61fded…`).
+2. Two live refetches were performed on 2026-10-06T02:22Z through the admitted public-HTTPS tool: the nbformat v4 schema (S03 URL) and the DuckDB concurrency doc (S08 URL). Both returned **byte-identical bodies** (sha256 `523e3578…` and `f76d0f41…` respectively), confirming (a) the archived captures are genuine and (b) no drift on these branch-`main` pins one day after capture. This is a *critique-stage* check, not a research-stage execution.
+3. Witness arithmetic was re-derived by hand (explicitly allowed by the V01 modifier); nothing was executed. W1's probability identity is confirmed correct (see §7).
+4. The 404 captures in `index.json` (0001, 0008, 0013, 0018, 0019, 0020, 0021, 0023, 0027, 0028 — all sha256 `d5558cd4…`, i.e., "404: Not Found" bodies) were cross-checked against the catalog: **none is load-bearing**. `sources.json` cites only 200-status captures, and L2 honestly records the 404 of the "Interrupting Kernels" page rather than inventing a replacement. This is a preserved strength, not a defect.
+
+Limits of this review: verification is against the frozen capture record plus the two refetches above; no other network sources were consulted, and no release binaries, installers, or test suites were exercised. Where the proposal itself marks an inference [I], choice [P], or proposed validation [U], this review evaluates whether the label is honest, not whether the underlying engineering guess is "true."
+
+---
+
+## 3. Claim-by-claim verification results
+
+| Claim (proposal §) | Capture | Verdict |
+|---|---|---|
+| OSV CVE-2023-47248: affected 0.14.0–14.0.0, fix = upgrade to 14.0.1 / pyarrow-hotfix, introduced `a591d76a…`, fixed `f1417097…` (§4) | 0000.body | **Verified verbatim**, incl. schema_version 1.9.0, aliases, modified 2026-08-27. |
+| Arrow fix commit f141709: GH-38607 / PR #38608 "Disable PyExtensionType autoload", author Pitrou 2023-11-06, signed-off Cumplido, parent 5a37e741, stats 377+/245−; regression tests `test_ipc_unregistered`, `test_ipc_registered`, `validate(full=True)` after Parquet reads, `registered_extension_type` helper in test_cffi.py (§4) | 0010.body | **Verified in full** against the complete 44,002-byte body: all named tests exist in the patch; mechanism confirmed in `python/pyarrow/types.pxi` (`_py_extension_type_auto_load = False`; deserialization returns `UnknownExtensionType(storage, serialized)` instead of `pickle.loads`, with `set_auto_load` escape hatch). See C4 on the catalog note. |
+| nbformat v4.5 schema: code_cell required = [id, cell_type, metadata, source, outputs, execution_count]; execution_count description; output oneOf execute_result/display_data/stream/error; kernelspec required [name, display_name]; **no kernel-session/liveness field anywhere** (§2, §5.3) | 0005.body | **Verified** by reading the entire schema. The absence claim holds: no property in notebook or cell metadata records session identity or liveness. `nbformat_minor` minimum 5 confirmed; schema self-describes "Jupyter Notebook v4.5 JSON schema." |
+| JEP 62: id required for nbformat 4.5+; motivation "comparing a cell's output across multiple runs"; paste/copy collision rules; older formats auto-updated (§2) | 0009.body | **Verified verbatim** (status Implemented, 2020-09-25). |
+| DVC status: changed checksum / always changed / changed deps / changed outs with new/modified/deleted/not-in-cache; `--with-deps` example editing `code/featurization.py` marks `matrix-train.p` "changed deps"; import "update available" (§2, §5.3) | 0007.body | **Verified verbatim.** Note for precision: DVC computes this **on demand** by re-hashing (`--with-deps` "searches backward from the targets"); the proposal's "become stale immediately" is a product choice about when the app recomputes, correctly labeled [P]. |
+| DuckDB faulty-CSV: error types incl. LINE SIZE OVER MAXIMUM default 2,097,152 bytes; `ignore_errors`; `store_rejects` → reject_scans/reject_errors with line/line_byte_position/column/error_type/csv_line; projection-pushdown pitfall (§2, §5.2) | 0014.body | **Verified verbatim**, including the pitfall sentence. Additional fact: rejects tables are documented as **temporary** ("creates two temporary tables", "default rejects temporary tables") — the proposal handles this correctly via L5 (project-owned persistent quarantine). |
+| DuckDB samples: seed only guarantees identical sample with `SET threads = 1`; reservoir exact counts, recommended for small samples (§2, §5.2) | 0015.body | **Verified verbatim.** Additional fact: reservoir "requires the entire sample to be materialized in memory" — bounds preview size (F3). |
+| DuckDB concurrency: one read-write process or many read-only; file locks; shared-directory caution; Quack multi-process write in beta as of v1.5.2 (§2, §5.5) | 0016.body + live refetch | **Verified verbatim**, including Quack (beta, "expected to become mature by DuckDB v2.0 in fall 2026") and the DuckLake/PostgreSQL stable-alternative pointer. See C6 for a wording precision. |
+| DuckDB union_by_name: unifies by name, NULL-fills missing columns, increases memory (§2, §5.2) | 0017.body | **Verified verbatim.** CSV-only examples (relevant to C1). |
+| DuckDB OOM: some operations circumvent the buffer manager; 50–60% guidance; preserve_insertion_order=false (§2, §5.8) | 0031.body | **Verified verbatim.** The doc frames 50–60% as the *remedy when OOM occurs*; the proposal's use as general envelope guidance is a fair but slightly stronger reading (acceptable; keep U1 as the gate). |
+| DuckDB limits: memory_limit = 80% RAM, "only applies to the buffer manager"; temp dir unlimited (§2, §5.8) | 0034.body | **Verified verbatim.** |
+| PEP 723 Final, resolution 08-Jan-2024 (§2, §5.6) | 0004.body | **Verified** in header (Status: Final; Created 04-Aug-2023; Replaces 722). |
+| PEP 751 Final, resolution 31-Mar-2025, pylock.toml, replaces PEP 665 (§2, §5.6) | 0012.body | **Verified** in header; ToC confirms the File Name section exists (the `pylock.toml` name itself sits in the unobserved tail of the page — not load-bearing). |
+| Frictionless Table Schema v1: constraints = logical, missingValues = physical; ordered fields required; updated 2021-10-05 (§2, §5.2) | 0032.body | **Verified verbatim.** |
+| Jupyter Server security: "access to the Jupyter Server means access to running arbitrary code…"; docsearch:version 2.22 (§2, §5.7) | 0024.body | **Verified verbatim** in the article body; version meta tag confirmed. |
+| JupyterLab: untrusted outputs sanitized until explicit trust; "Paste code cells without output" setting; Cell ID in Property Inspector (§2) | 0029.body | **Verified verbatim.** Additional corroborating sentence: "manually re-running a non-trusted cell will mark it as trusted" — output trust is independent of execution truth (F4). |
+| SQLite WAL: COMMIT = special record appended to WAL; readers don't block writers; WAL kept with DB when copied/moved, else committed transactions may be lost/corrupt; synchronous=NORMAL drops per-commit sync (§5.8) | 0022.body | **Verified verbatim** (§1–§4 of the page). The page also contains §11, the WAL-reset bug — see F1/C2, missed by the research. |
+| nbclient: allow_errors default False → stop + CellExecutionError with error output recorded; force_raise_errors overrides `raises-exception` tags; skip tag default "skip-execution"; record_timing True (§2, §5.4) | 0033.body | **Verified** in trait definitions; also confirmed `stop_on_error=not cell_allows_errors` on execute. Pin is branch-`main` (see C5). |
+
+**Result: 18/18 catalog entries verified against their captures; no fabricated quotation, number, or mechanism was found.** The two-refetch sample shows the frozen record matches live sources.
+
+---
+
+## 4. Corrections
+
+### C1. [major] NDJSON/Parquet reader support is asserted but not evidenced by any capture — and the quarantine mechanism is documented for CSV only
+
+The executive summary states DuckDB "covers CSV/NDJSON/Parquet" [S06, S08, S09, S11], and the §3 table credits it with "streaming CSV/NDJSON/Parquet readers." Verified coverage of those four sources is **CSV only**: 0014 (faulty CSV), 0016 (concurrency — no formats), 0017 (combining schemas — CSV examples only), 0031/0034 (memory/limits — no formats). No capture documents `read_json`/NDJSON or Parquet reading, and no capture documents any quarantine/`store_rejects` analog for NDJSON. This matters beyond citation hygiene:
+
+- The proposal's malformed-record policy ("quarantined, never dropped," §5.2, §10) is grounded in a **CSV-specific** feature. Whether DuckDB's JSON reader offers equivalent rejects/`ignore_errors` handling is unestablished in this record. The quarantine guarantee as written silently extrapolates from CSV to NDJSON.
+- The Parquet path is separately load-bearing for the pyarrow≥14.0.1 floor (S01), but no capture establishes that the project's engine reads Parquet at all.
+
+**Required fix for the resolver:** either (a) capture the DuckDB JSON-reader and Parquet docs pages and add catalog entries with locators, and explicitly bound the `store_rejects`-style quarantine guarantee to CSV while defining NDJSON error handling from the newly captured evidence (relabel to [S] only what the new captures state); or (b) keep the current text but relabel NDJSON/Parquet coverage as [I] (engineering inference) and add U6 (below) as the discriminating check. Affected dependencies: §0 item 3, §3 table row 3, §5.2, §10, L7.
+
+### C2. [major] The event-store design needs a SQLite version floor — the research's own captured source documents a corruption bug fixed in 3.51.3
+
+`0022.body` (wal.html, the page cited as S17) contains a section the proposal never mentions: **§11 "The WAL-Reset Bug."** Key facts from the capture, quoted/paraphrased with locators:
+
+- Present in "all versions of SQLite from 3.7.0 (2010-07-21) through 3.51.2 (2026-01-09)"; **fixed in 3.51.3 (2026-03-13)**; backports listed for 3.44.6 (`sqlite.org/src/info/863c171b76cd36e0`) and 3.50.7 (`c7facf7ac58d2cda`).
+- Trigger: WAL-mode database with **two or more connections in separate threads/processes** where two connections write/checkpoint "at the same instant"; a checkpoint/WAL-reset data race leaves the wal-index header wrong and later checkpoints skip committed transactions → **database corruption**.
+- Evidence chain quality (this strengthens, not weakens, the brief's issue→fix→regression obligation): the page describes the fix, precise version applicability, the regression-test mechanism (developers had to add `sqlite3_test_control()`-driven timing injection because the bug could not be reproduced organically), the limits of that evidence, and — UPDATE 2026-08-24 — an independent reproducer (Phil Eaton, theconsensus.dev) that does not need the test hack.
+
+Why it matters here: the proposal's design has a long-lived WAL-mode event store (`runs/events.sqlite`) with a writer (kernel feed) and readers (UI), plus U4 (two app processes) and crash recovery (U2). That is exactly the multi-connection WAL pattern the bug requires. Python's stdlib `sqlite3` module binds whatever SQLite the interpreter was built with, so "SQLite (stdlib)" is **not** a version guarantee.
+
+**Required fix:** add an explicit runtime gate — assert `sqlite3.sqlite_version >= 3.51.3` (or a documented backport) at project open, refusing or downgrading (e.g., journal_mode=DELETE) with an actionable message otherwise; record the SQLite version in `manifest.json` tool versions. Optionally cite this as a second, fully verified issue→fix→regression chain. Affected: §5.8 event store, §10 dependencies list, U2/U4 test plans.
+
+### C3. [moderate] Witness receipts share one `data_sha256` across different inputs — bookkeeping must be repaired
+
+All five witness entries (W1, W2, W3-attempt-1, W3, W4) record `data_sha256: 74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b` although their described inputs differ (1000-row dataset; 7 NDJSON lines; a two-cell chain; 3 rows). Different byte inputs cannot share a SHA-256; `witnesses.json` never defines the field. The stdout hashes and summaries differ per witness and are internally consistent, and W3-attempt-1's honest failure argues against systematic fabrication — so this reads as a copy-paste error or an undefined convention (e.g., hash of a shared fixture manifest), **not** as invented receipts.
+
+**Required fix:** define `data_sha256` in the labeling block or restate each witness's input hash individually; until then, downstream stages must treat per-witness `data_sha256` as unusable for input identification (stdout/code hashes remain usable). Affected: §7's "[E] receipts in witnesses.json" cross-reference.
+
+### C4. [minor] sources.json understates the completeness of S02's capture
+
+S02's catalog note says "32768-byte window of a 44002-byte JSON response; file list partially observed." The archived `0010.body` is the **complete** 44,002-byte response, and every locator claim (stats 377/245; both test names; `validate(full=True)` insertion; the `registered_extension_type` helper) is verifiable in it. The proposal's evidence-limit sentence ("file list and patches observed") is therefore *supported more strongly than the catalog note suggests*. Fix the note; no change to the proposal's claims is needed. (The fix commit's real product-code change — `python/pyarrow/types.pxi`, disabling pickle autoload — is also fully visible in this capture and could be cited as the primary mechanism locator, which is stronger evidence than test files alone.)
+
+### C5. [moderate] Pin hygiene: branch-`main` captures and "pinned 1.x line" are not version pins
+
+S03, S05, S06–S09, S11, S16, S18 are pinned only by branch + capture-date + body sha256. The proposal mostly treats this honestly (catalog declares "identity = capture sha256"), and this review's two live refetches found zero drift on the two most load-bearing branch pins. Two actions for the resolver: (a) where a release version matters (nbformat schema ↔ nbformat package releases; DuckDB behaviors ↔ engine version), resolve the commit SHA behind the `main` capture via the repo API at next capture, or keep the sha256-as-identity convention and say so in the proposal text, not just the catalog; (b) §5.5's "DuckDB embedded (pinned 1.x line)" is not a pin — replace with a concrete minimum version (docs behavior observed is v1.5-era: Quack beta as of v1.5.2) plus "record actual engine version in the manifest" (which §5.9 already promises). Affected: §5.5, §10, S-catalog notes.
+
+### C6. [minor] S08 wording: "single-writer/multi-reader" describes the multi-process model only
+
+0016.body: within **one process**, DuckDB "supports multiple writer threads" (MVCC + optimistic control, appends never conflict, conflicting row edits fail with a conflict error); across **processes**, it is one read-write process **or** many read-only ones. The proposal's operational uses (§5.5 colleague is read-only; §5.8 project-level single-writer flock) are correct for the multi-process case, but §3's "single-writer locking" shorthand should name the scope (multi-process) to avoid implying single-threaded writers inside the app. Affected: §3 table row 3, §5.5.
+
+### C7. [minor] W1's [E] label must not be read onto the DuckDB preview mechanism
+
+W1 is a stdlib-only demonstration; its own scope limit says it "does not measure DuckDB USING SAMPLE behavior or any real reader." The proposal's §5.2 cites [S07] (docs) and W1 [E] adjacently for the preview design, and §7's W1 summary is careful, but a reader can mistake the [E] for engine-path validation. The real preview path's repeatability guarantee additionally depends on S07's `SET threads = 1` condition, which W1 never exercises. Fix: in §5.2, attribute repeatability to [S07] + U8 (below), and reserve W1 [E] for the epistemic point (sample ≠ proof; truncation marker pattern). No other change needed — §7 already carries the honest scope statement.
+
+---
+
+## 5. New evidence-backed findings the resolver can use
+
+**F1. Second complete issue→fix→regression chain, already in the capture record (source: 0022.body §11).** Summarized under C2; the resolver should treat this as citable evidence with version applicability (3.7.0–3.51.2 affected; fixed 3.51.3, 2026-03-13; backports 3.44.6/3.50.7), a documented regression-test mechanism, stated evidence limits (timing-dependent, not organically reproducible without instrumentation; independent reproducer published 2026-08-24), and a concrete design consequence (version gate for the event store).
+
+**F2. WAL operational constraints that bear on U2/U3/U4 (source: 0022.body §1–§5, §9).**
+- "WAL does not work over a network filesystem" (§1 disadvantages; §2.2 explains the shared-memory requirement). The proposal cautions about shared/network dirs for DuckDB [S08] but should extend the same caution to its own event store: projects opened directly from a NAS share must either disable WAL or require a local working copy.
+- Read-only opening of a WAL database needs the `-wal`/`-shm` files present/creatable or `immutable=1` (§5; relaxed in 3.22.0). U4's "second opener gets read-only mode" must account for this — a read-only open of a project whose WAL files are absent or unwritable will fail without `immutable`, and `immutable` is only safe when no writer exists.
+- With `synchronous=NORMAL`, "transactions are no longer durable and might rollback following a power failure" (§2.3). The proposal cites the performance side [S17]; U2's crash test should distinguish process-kill (WAL intact — recovery works) from power-loss (last commits may vanish under NORMAL) and pick the pragma deliberately.
+
+**F3. Preview sizing bound (source: 0015.body, reservoir section).** Reservoir sampling "requires the entire sample to be materialized in memory" and is "only recommended for small sample sizes." This gives a principled cap for the product's preview size (e.g., ≤ a few thousand rows) and another reason previews must never back full-dataset claims. §5.2 should state the preview-size bound as engine-grounded.
+
+**F4. Corroborating details worth citing.** (a) JupyterLab docs (0029.body): "manually re-running a non-trusted cell will mark it as trusted" — upstream confirmation that output trust and execution state are orthogonal, strengthening §5.3's rule that statuses attach to event-log records, not document bytes. (b) nbclient (0033.body) exposes `allow_error_names` — finer-grained than `allow_errors` — which the clean-replay policy (§5.4) can use to allow, say, `StopExecution`-style control exceptions without allowing all errors. (c) The S08 capture names **DuckLake (v1.0, April 2026, PostgreSQL-catalog)** as the docs' stable multi-writer recommendation — L4 already says "do not design against beta Quack"; the lead can be sharpened to name DuckLake as the bounded future alternative.
+
+---
+
+## 6. Preserved claims (verified and to be kept unchanged)
+
+The following load-bearing content is **supported by the captures and should survive into any revision without weakening**:
+
+1. The PyArrow CVE-2023-47248 chain in §4, including affected range, fix commit identity, regression tests, the `pyarrow>=14.0.1` floor, and the stated limits of evidence (§4 "Limits" paragraph is accurate and appropriately humble).
+2. The four-notions model (displayed order / execution order / kernel state / output provenance) and its grounding: the nbformat schema's missing kernel-state field (0005.body, full-read absence claim) plus JEP 62's cell-id rationale (0009.body). The conclusion that `.ipynb` alone cannot answer "is this output current?" is an inference clearly labeled [I] and is sound.
+3. nbclient replay semantics (§5.4) exactly as documented in 0033.body, including stop-on-first-error with error outputs recorded and `skip-execution` tags.
+4. The DVC hash-diff-report staleness mechanism (0007.body) and its use as the invalidation model (§5.3), with "immediately" understood as a [P] UI commitment.
+5. DuckDB envelope facts: buffer-manager-only memory limit, operations that circumvent it, 50–60% guidance, unlimited temp dir, union_by_name NULL-fill + memory cost, projection-pushdown pitfall, `store_rejects` column layout, seeded-sample `threads = 1` condition (0014/0015/0016/0017/0031/0034.body). The brief's "preview ≠ full-dataset proof" rule is enforced in design (§5.2) and demonstrated in W1.
+6. Quarantine-not-delete and never-mutate-source as default contract policy, with the correct observation (L5) that `store_rejects` tables are session-scoped and must be persisted project-side.
+7. The execution-boundary stance (§5.7): OS-level sandbox, default-deny network, allowlist filesystem, and the explicit rejection of import blacklists — now doubly grounded by the verified PyArrow chain (native deserializer reached by data loading) and the Jupyter Server arbitrary-code statement (0024.body).
+8. WAL copy rule and atomic-save design (§5.8) as far as §17's cited sections go — with C2/F1/F2 additions layered on top.
+9. Labeling discipline: every [S]/[I]/[P]/[E]/[U] boundary this review probed was drawn honestly; U1–U5 are nowhere claimed as executed; the failed W3 attempt is preserved.
+10. Precedent independence (§3): three unrelated codebases/spec processes, each mechanism documented to work without the others — verified mechanism-by-mechanism above.
+
+---
+
+## 7. Witness audit (manual derivations; nothing executed)
+
+- **W1** (`exec-ibi5bnok`): The stated probability C(999,20)/C(1000,20) = 980/1000 = 0.98 is **arithmetically correct** (hand derivation: the ratio equals (1000−20)/1000). Observed outcome (the 20-row sample missed the lone 'B' row; repeat with same seed identical) is consistent with the expectation. Scope limits are honest. See C7 for the labeling adjustment and C3 for the shared `data_sha256`.
+- **W2** (`exec-g1i97bf6`): 3 accepted / 4 quarantined with per-row reasons and preserved raw lines, source untouched — internally consistent with the described input and contract; scope limited to the contract algorithm, correctly.
+- **W3-attempt-1** (`exec-g8sj7v5r`): honest failure record (exit 1, KeyError from an uncalled scenario); properly superseded.
+- **W3** (`exec-scuesopl`): the observed timeline (current → downstream stale with named cause → all stale → unverified on restart → failed with captured error; manifest hash round-trip) matches the §5.3 status machine and the brief's restart mandate. Scope (synthetic hashes, no live kernel) correctly stated.
+- **W4** (`exec-wabe9p2h`): hand-check of the claim: Python's stable sort keeps tied keys in input order, so inputs [1,3,2] and [3,1,2] sort to [1,3,2] and [3,1,2] respectively under key-only ordering, and both to [1,3,2] with an explicit rid tie-break. The recorded stdout summary is exactly consistent.
+- **All W1–W4 stdout sha256 values are distinct** as expected for distinct runs; the only receipt defect is C3's shared `data_sha256`.
+
+---
+
+## 8. Brief-obligation audit of the research proposal
+
+| Obligation | Status |
+|---|---|
+| ≥2 independently useful precedents with mechanisms and independence | **Met** (three: nbformat/nbclient/JEP 62; DVC; DuckDB; independence argument in §3 verified mechanism-wise). |
+| ≥1 consequential issue→fix→regression chain with version applicability and evidence limits | **Met** (PyArrow §4; commit, tests, and mechanism verified in 0010.body). **Augmented** by C2/F1 (SQLite WAL-reset chain) — the resolver should add it. |
+| Minimum workflow coverage | **Met** (§6 table covers all nine steps). |
+| Four notebook notions + status machine incl. restart/interrupt → never silently current | **Met** (§5.3; grounded in S03 absence + S04; demonstrated in W3). |
+| Clean-replay guarantee and its explicit boundary | **Met** (§5.4 lists nondeterminism, external services, unpinned packages, undeclared file access, BLAS/float). |
+| Execution boundary, blacklist rejection, usability trade-offs | **Met** (§5.7). |
+| Data contract: schema assumptions, coercion, row/order identity, error handling; no silent deletion/mutation | **Met** (§5.2; W2), **with C1's CSV-vs-NDJSON scope caveat on quarantine.** |
+| Large input (5 GB) bounded path; explicit different bound; not a verified result | **Met** (§5.8 + U1; correctly labeled investigation). |
+| Schema evolution, caching/invalidation, truncation, deterministic vs stable ordering, locking, interrupted-save recovery | **Met** (§5.8; W4; U2/U4). |
+| Exchange via folders/bundles; WAL shipped with bundle | **Met** (§5.1/§5.8, U3), **with F2's NAS caveat to add.** |
+| SQL relationship and Python support boundary | **Met** (§5.5/§5.6); "pinned 1.x" needs concretizing (C5). |
+| Opportunity + plausible alternative kept visible | **Met** (§9). |
+| No execution over-claiming | **Met**; C3 bookkeeping fix required. |
+
+---
+
+## 9. Uncertainty to preserve (do not let a revision silently close these)
+
+- **L1** — the nbformat release whose *writers* emit cell ids by default is unverified ("5.1.0 per community memory"). Keep open until the CHANGELOG is fetched; the schema/JEP facts are unaffected.
+- **L2** — the canonical restart-vs-outputs page 404'd; the design correctly rests on the schema-absence argument instead. Keep open; if the final stage cites any replacement page, capture it.
+- **L3** — PEP 751 installer adoption unverified; dual lock artifacts remain the right mitigation. Keep open.
+- **L4/L5/L7/L8/L9** — correctly deferred with bounded scope; L4 should gain the DuckLake pointer (F4c); L5 is confirmed by the capture's "temporary tables" wording.
+- **New** — actual SQLite version bundled with target CPython builds (C2): unverified here; gate at runtime regardless.
+- **New** — DuckDB JSON-reader error handling (C1): unknown within this record; U6.
+- **Limits** — the PyArrow chain establishes the fix in the upstream commit and advisory; distribution-channel backports beyond the 14.0.1 release were not verified (the proposal says this; keep saying it). Similarly F1's chain is known from the vendor page plus an independent reproducer write-up referenced there — not from running either SQLite branch.
+
+---
+
+## 10. Additional proposed/UNEXECUTED checks for the next stage
+
+All three are **proposed/UNEXECUTED by this critic** (V01 modifier: no execution available or performed here). They extend, not replace, U1–U5:
+
+- **U6 — engine format coverage and NDJSON quarantine behavior.** In the admitted sandbox: create a tiny valid NDJSON file and a variant with one malformed line; run DuckDB's JSON reader with default options and with its error-handling options (whatever the engine exposes); record whether malformed lines are quarantined, skipped, or fatal. Repeat a minimal Parquet read. Acceptance: the proposal's format-coverage and quarantine claims hold as written, or §5.2/§10 are re-scoped (CSV-only quarantine, explicit NDJSON policy). Gate: requires DuckDB in the sandbox; if unavailable, remains UNEXECUTED and C1's relabel-to-[I] fallback applies.
+- **U7 — SQLite version gate.** Component check: open the event store on a build whose `sqlite3.sqlite_version` is below 3.51.3 and assert the app refuses/downgrades with an actionable message; on a compliant build, assert WAL mode engages and a forced process kill mid-write leaves a store that reopens with the last committed event intact (pairs with U2). This check validates the C2 mitigation only; it does not establish the upstream bug's trigger conditions.
+- **U8 — preview repeatability on the real engine.** With DuckDB present: `USING SAMPLE reservoir(20 ROWS) REPEATABLE(411)` over a ~1000-row synthetic table, run twice with `SET threads = 1` (expect identical samples) and twice with `threads = 4` (document that identity is not guaranteed, per S07). This closes C7's gap between W1's stdlib demonstration and the product's actual preview path.
+
+---
+
+## 11. Resolver checklist (minimal edit list for the next candidate)
+
+1. C1: capture DuckDB JSON/Parquet docs or relabel NDJSON/Parquet coverage [I]; scope the quarantine guarantee to CSV or define NDJSON handling; add U6.
+2. C2: add SQLite ≥ 3.51.3 (or backport) runtime gate; record SQLite version in manifest; optionally add the WAL-reset chain as a second issue study; note NAS/WAL and read-only-open constraints (F2) in §5.8 and U2/U4.
+3. C3: define or restate per-witness `data_sha256` in witnesses.json (and say in the proposal that receipts' input hashes were corrected).
+4. C4: upgrade S02's capture note to "complete body available; all locator claims verified."
+5. C5: replace "pinned 1.x line" with a concrete floor + manifest-recorded engine version; resolve commit SHAs for branch-pinned captures or state the sha256-identity convention in the proposal text.
+6. C6: scope the single-writer phrasing to multi-process; mention in-process multi-thread writers + optimistic control.
+7. C7: reattribute preview repeatability to [S07] + U8; keep W1 [E] for the epistemic point.
+8. Keep everything listed in §6 unchanged; keep §9's open leads open; fold F3's preview-size bound into §5.2.
+
+*End of review. No part of this document reports an execution performed by the critic; the two live refetches in §2 are public-source reads, and U6–U8 are explicitly proposed/UNEXECUTED.*

@@ -1,0 +1,51 @@
+{
+  "schema": "er9.research.witnesses.v1",
+  "stage": "research",
+  "labels": {
+    "executed_by_candidate": "Candidate-authored check run in the admitted isolated python_execute sandbox; receipted by the runtime. Isolated component check only; does NOT establish full application behavior.",
+    "proposed_unexecuted": "Planned validation in the implementation stage; NOT run in this stage. No receipt exists."
+  },
+  "witnesses": [
+    {
+      "id": "W1",
+      "name": "Clip/cue sample-domain mapping checks (rev 2)",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-skw8qxd4",
+      "completed_utc": "2026-10-06T03:36:59Z",
+      "exit_code": 0,
+      "stdout_sha256": "2d3d581968a06de050fbdd98921f5db538e990d0a4f356328276d85dd32911c2",
+      "scope": "Pure integer arithmetic of the proposed source<->project sample mapping: floor rule, half-open clip domain, boundary orphaning, 1:1-rate involutivity, and non-involutive behavior of the inverse map at 44.1k->48k (4516/4547 probes differ after roundtrip).",
+      "justified_expected_behavior": "At integer-ratio 1:1 the mapping must be exactly involutive and boundary-exact; at 44100->48000 floor mapping cannot round-trip most samples, which is the documented justification for anchoring cues in source samples rather than project time.",
+      "stdout_summary": "6 PASS lines for case A (48k/48k); case B: 4516/4547 probes fail exact roundtrip; proj_len(44.1k 10s -> 48k) = 480000; W1 OK.",
+      "revision_disclosure": "Rev 1 (execution_id exec-dztmovzi, exit_code 1) failed because the candidate's expected constant was wrong: 10 s at 44.1 kHz maps to exactly 480,000 frames at 48 kHz, not 4,819,047. The check caught the candidate's error; logic was unchanged, constant corrected in rev 2. Both receipts are reported here.",
+      "limits": "No audio I/O, no libsndfile/libsamplerate, no application code. Proves arithmetic properties of the proposed formula only; not that the implemented editor behaves accordingly."
+    },
+    {
+      "id": "W2",
+      "name": "Display timecode rounding rule checks",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-y6407e0b",
+      "completed_utc": "2026-10-06T03:36:30Z",
+      "exit_code": 0,
+      "stdout_sha256": "1d8e40e15302d175b4e794daaace85ceb9076cf9938d06118ec81aa6dec4d111",
+      "scope": "Integer round-half-up conversion of project samples to HH:MM:SS.mmm, negative clamp to 00:00:00.000, sub-millisecond truncation, exact half-millisecond round-up case, 2-hour formatting, and a demonstration that float formatting (f'{2.675:.2f}' -> '2.67') differs from decimal half-up.",
+      "justified_expected_behavior": "The brief requires defined rounding and boundary behavior for displayed timecodes; integer-sample math avoids binary-float artifacts that a seconds-float pipeline would exhibit.",
+      "stdout_summary": "7 PASS lines; float pitfall demonstrated; W2 OK.",
+      "limits": "Arithmetic-only isolated check; no GUI, no integration with playback or export."
+    },
+    {
+      "id": "W3",
+      "name": "RIFF 4 GiB boundary and whole-file memory arithmetic",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-6qrpmckx",
+      "completed_utc": "2026-10-06T03:36:30Z",
+      "exit_code": 0,
+      "stdout_sha256": "36afc466bcfaf006db2c49266f96d7fcfb04a338fc08230d3ebc9e9da7365e43",
+      "scope": "Data-chunk byte counts for 2-hour 48 kHz 24-bit PCM at 1/2/4/8 channels vs the 32-bit unsigned RIFF size field (0xFFFFFFFF); whole-file float32 footprint of a 2-hour stereo program (2.57 GiB); size of a 2-second bounded access window (750 KiB).",
+      "justified_expected_behavior": "2-channel 2h fits (2,073,600,000 bytes), 8-channel 2h exceeds the field (8,294,400,000 > 4,294,967,295), 4-channel 2h fits (4,147,200,000). Whole-file float access is incompatible with an 8 GB laptop budget; windowed access is compatible.",
+      "stdout_summary": "channels=1..8 table with over-flag only at 8 channels; whole-file 2,764,800,000 bytes = 2.57 GiB; window 750 KiB; W3 OK.",
+      "limits": "Arithmetic only. Does not measure any real renderer's memory behavior, nor libsndfile's RF64 writer; it sizes the design constraint the export path must respect."
+    }
+  ],
+  "proposed_unexecuted_summary": "All implementation-stage validation (unit/property tests, golden renders, interrupt/cancel simulations, memory soak, accessibility audit) is PROPOSED/UNEXECUTED and enumerated in proposal.md section 10; no receipts exist for it in this stage."
+}

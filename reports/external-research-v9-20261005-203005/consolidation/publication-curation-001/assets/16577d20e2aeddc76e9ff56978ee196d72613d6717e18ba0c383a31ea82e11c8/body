@@ -1,0 +1,68 @@
+{
+  "schema": "er9.witnesses.v1",
+  "stage": "I-05-LUNA-S1-treatment-research-a001",
+  "witnesses": [
+    {
+      "id": "W1",
+      "name": "Index-to-physical example and display mapping invariance",
+      "status": "executed by candidate",
+      "execution_id": "exec-tukp86p1",
+      "code": "def physical_xyz(index_zyx, spacing_zyx, origin_xyz):\n    z, y, x = index_zyx\n    sz, sy, sx = spacing_zyx\n    ox, oy, oz = origin_xyz\n    return [ox + sx*x, oy + sy*y, oz + sz*z]\n\nsamples = data[\"samples\"]\noriginal = list(samples)\nlo, hi = data[\"window\"]\nrendered = [round((v - lo) * 255 / (hi - lo)) for v in samples]\nworld = physical_xyz(data[\"index_zyx\"], data[\"spacing_zyx\"], data[\"origin_xyz\"])\nassert world == data[\"expected_world_xyz\"]\nassert rendered == data[\"expected_rendered\"]\nassert samples == original\nprint({\"world_xyz\": world, \"rendered\": rendered, \"raw_unchanged\": samples == original})",
+      "input_json": {"index_zyx": [2, 3, 4], "spacing_zyx": [2, 0.5, 0.25], "origin_xyz": [10, 20, 30], "expected_world_xyz": [11, 21.5, 34], "samples": [0, 1000, 65535], "window": [0, 65535], "expected_rendered": [0, 4, 255]},
+      "expected_behavior": "Under the proposal's explicit zero-based sample-center convention and zyx index/XYZ physical-axis order, index [2,3,4] maps to [11,21.5,34]. Linear window mapping rounds the selected samples to [0,4,255] and does not mutate the input list.",
+      "observed": {"stdout": "{'world_xyz': [11.0, 21.5, 34], 'rendered': [0, 4, 255], 'raw_unchanged': True}\n", "stderr": "", "exit_code": 0},
+      "receipt": {"code_sha256": "bf12e09d1224c0f6c0a6015aa89ba8a795916fa8a7d5147f67f9ffa3a76db786", "data_sha256": "beff0b6aa1f08634ac6748fa6fef86098fe926b72c3bb1f4b125e17ddae8b090", "stdout_sha256": "91e37ede56bf19d30f97460d192f3d9757c11215ca184d7b812f684bbdf4624f", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "elapsed_seconds": 0.2068238539941376, "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "stream_bytes_each": 32768, "network": "new empty namespace"}},
+      "scope_limits": ["Isolated standard-library component arithmetic only.", "Does not test any application, viewer, reader, metadata parser, transform serializer, save, export, or source file.", "The expected behavior follows the proposal's stated convention; this is not independent confirmation that the convention matches any instrument's metadata."]
+    },
+    {
+      "id": "W2",
+      "name": "napari issue to fix to regression tests and tagged-source chain",
+      "status": "source inspected; tests not executed by candidate",
+      "evidence": ["S4", "S5", "S6", "S7", "S8"],
+      "expected_behavior": "An adequately evidenced repair chain identifies the failure mechanism, fixing diff, regression coverage, and a released source tree where the fix and tests are present.",
+      "observed": "Issue #6079 describes stale display after editing Zarr/TensorStore-backed labels because backend slices are copies. Commit 658b080d62bd9c6f478f781163020cdcf5a44139 updates visible slice data and adds paint/fill/mouse tests across NumPy/Zarr/TensorStore. The relevant code and test file are present at v0.4.19; the sampled v0.4.18 implementation lacks the direct update. Tests were not run here.",
+      "scope_limits": ["Applicability established only for the inspected files/tags, not the earliest fixed release.", "Regression tests cover rendered small arrays, not project durability, 3 GB access, or physical-coordinate/export behavior."],
+      "capture_correction": "The fix patch was reacquired after the first catalog draft. Use correction record E1 in source-capture-errata.json for the exact capture identity; the S5 row in sources.json contains a truncated first capture path/hash."
+    },
+    {
+      "id": "W3",
+      "name": "5D axis, calibration, and transform round trip",
+      "status": "proposed/UNEXECUTED",
+      "setup": "Create a synthetic t,c,z,y,x array with non-unit channel/time axes, zyx anisotropic scale, nonzero origin, and known index permutation. Verify selected plane/channel and index-to-physical-to-index round trip at several fractional/integer points.",
+      "expected_behavior": "Axes remain named and ordered without squeezing singleton dimensions; calculated coordinates round-trip within a declared floating-point tolerance; exported NGFF scale/translation agrees where representable; rotation/shear is preserved in the project affine and is not misrepresented as NGFF scale/translation.",
+      "scope_limits": ["Proposed application-level validation, not executed.", "Must include representative instrument metadata and a second NGFF reader to test interoperability."]
+    },
+    {
+      "id": "W4",
+      "name": "Source immutability and external relocation identity",
+      "status": "proposed/UNEXECUTED",
+      "setup": "Hash a read-only source before and after import, display edits, annotation edits, project save/reopen, and export. Move the source to a new path and test exact-content relink, then replace it with same-name different bytes.",
+      "expected_behavior": "Raw source hash stays identical. Exact content can be relinked with a path update; different bytes trigger an explicit conflict and do not silently inherit the old image identity or annotation binding.",
+      "scope_limits": ["Proposed integration validation, not executed.", "A display-only function witness W1 does not establish source-file immutability in an application."]
+    },
+    {
+      "id": "W5",
+      "name": "Chunked 3 GB access, edit refresh, and cancellation",
+      "status": "proposed/UNEXECUTED",
+      "setup": "On an 8-core/16 GB workstation, open representative compressed and uncompressed 3 GB sources through each supported adapter. Measure RSS/cache, first view, slice/channel navigation, pan, mask edit/render consistency, undo/redo, and cancellation at chunk/page boundaries.",
+      "expected_behavior": "No second whole-image decoded copy; cache remains within the declared budget; UI remains responsive; cancellation is acknowledged at a decode boundary; rendered mask state agrees with authoritative stored labels for every backing type.",
+      "scope_limits": ["No component or application benchmark was executed in this stage.", "napari's historical tests do not establish these targets."]
+    },
+    {
+      "id": "W6",
+      "name": "Interrupted save/import/export recovery on local and shared filesystems",
+      "status": "proposed/UNEXECUTED",
+      "setup": "Terminate between asset staging, checksums, manifest write, generation publication, CURRENT pointer replacement, and export rename. Reopen on local storage and the actual group share.",
+      "expected_behavior": "Reopen selects a complete current or previous generation; incomplete staging is recoverable or safely discardable; source bytes remain intact; an interrupted export is not presented as complete; share behavior matches measured filesystem semantics.",
+      "scope_limits": ["No save/recovery implementation or filesystem was exercised.", "Atomic rename and flush semantics are deployment-specific assumptions until measured."]
+    },
+    {
+      "id": "W7",
+      "name": "Label identifier fidelity in candidate renderer",
+      "status": "proposed/UNEXECUTED",
+      "setup": "If napari is selected, exercise integer label IDs around and above the exact-integer range of float32, including high uint32/uint64 values if accepted; compare authoritative stored IDs, selected-label lookup, and rendered colors.",
+      "expected_behavior": "Distinct authoritative IDs remain distinct in app-side records and rendering lookup; any renderer conversion is a view mapping only and cannot overwrite or alias the stored mask IDs.",
+      "scope_limits": ["Motivated by S5's explicit comment that float32 texture conversion is not lossless; no collision or app-level defect was executed/proven in this stage."]
+    }
+  ]
+}

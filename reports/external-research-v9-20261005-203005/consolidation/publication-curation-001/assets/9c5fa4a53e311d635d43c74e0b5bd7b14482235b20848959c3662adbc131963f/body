@@ -1,0 +1,270 @@
+{
+  "catalog_version": "1.0",
+  "research_date": "2026-10-06",
+  "capture_policy": "Each capture is identified by capture_id and exact response-body SHA-256. A content hash pins the captured bytes, not an upstream release unless an immutable tag/blob pin is separately stated. Public sources are evidence only.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "nbformat: Jupyter Notebook Format description",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "pin": "Captured response body SHA-256 f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503; page identifies nbformat 5.11; latest URL is mutable.",
+      "exact_locator": ["Notebook structure", "Top-level structure", "Code cells", "Outputs"],
+      "capture_identity": {
+        "capture_id": "dee3aebcdc09487795a227695103b541",
+        "sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503",
+        "path": "public_captures/f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503.body",
+        "response_bytes": 51110,
+        "semantic_bytes_delivered": "first 32768 bytes; cited structure and code-cell/output sections were in delivered range"
+      },
+      "applicability_and_limits": "Defines the standard JSON document and serialized output fields. It does not define how cells actually ran, current kernel state, data identity, or provenance. Optional metadata may be ignored by readers."
+    },
+    {
+      "id": "S2",
+      "title": "Jupyter Client: Messaging in Jupyter",
+      "url": "https://jupyter-client.readthedocs.io/en/stable/messaging.html",
+      "pin": "Captured response body SHA-256 50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0; documentation identifies jupyter_client 8.10.0 and messaging protocol 5.5; stable URL is mutable.",
+      "exact_locator": ["Introduction", "Message header", "Parent header", "Kernel status", "Shell channel", "IOPub channel", "Control channel", "Kernel restarting"],
+      "capture_identity": {
+        "capture_id": "c9723a797ee241db83c4ff1560a2e1c8",
+        "sha256": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0",
+        "path": "public_captures/50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0.body"
+      },
+      "applicability_and_limits": "Supports event-based capture of requests, replies, outputs, status, sessions, and restarts. Protocol documentation is not an implementation or a sandbox guarantee."
+    },
+    {
+      "id": "S3",
+      "title": "nbclient: Executing notebooks",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": "Captured response body SHA-256 b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a; documentation identifies nbclient 0.11; latest URL is mutable.",
+      "exact_locator": ["Executing notebooks", "Timeouts", "Error handling", "NotebookClient"],
+      "capture_identity": {
+        "capture_id": "74aefc7c00274b29a4fc40b801979c3d",
+        "sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a",
+        "path": "public_captures/b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a.body",
+        "semantic_bytes_delivered": "first 32768 bytes"
+      },
+      "applicability_and_limits": "Documents the library execution API, timeout/error controls, and notebook output saving. It does not establish host-process isolation or behavior of every released version under OOM."
+    },
+    {
+      "id": "S4",
+      "title": "DuckDB CSV overview",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/overview.md",
+      "pin": "DuckDB web documentation Git blob b73164199f58afab275f7ba2535ee2f2236c5003; exact captured body SHA-256 f0f8db09a36a783808d74b348334392d7d9595536909d3b92139b5f4671479b7. The raw main URL is moving; the docs site identified current 1.5 at capture time.",
+      "exact_locator": ["Sniffing", "read_csv parameters", "columns", "all_varchar", "sample_size", "nullstr", "encoding", "preserve_insertion_order"],
+      "capture_identity": {
+        "capture_id": "bf24bb7197f443bcb02c54cf4b0df12e",
+        "sha256": "f0f8db09a36a783808d74b348334392d7d9595536909d3b92139b5f4671479b7",
+        "path": "public_captures/f0f8db09a36a783808d74b348334392d7d9595536909d3b92139b5f4671479b7.body",
+        "response_bytes": 14831
+      },
+      "applicability_and_limits": "Documents CSV parser controls and sample-based inference. Current docs and a docs Git blob do not prove that every historical DuckDB binary behaves identically."
+    },
+    {
+      "id": "S5",
+      "title": "DuckDB: Reading Faulty CSV Files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "pin": "Exact captured body SHA-256 12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad; source path is on moving DuckDB web main branch.",
+      "exact_locator": ["Ignore errors", "Rejects table", "Projection pushdown", "Casting errors"],
+      "capture_identity": {
+        "capture_id": "06c8d59c6daf4b229654d806c8fd2c45",
+        "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad",
+        "path": "public_captures/12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad.body",
+        "response_bytes": 12080
+      },
+      "applicability_and_limits": "Documents skip-on-error and reject capture behavior, including a projection example that can change whether a cast error is seen. These are reasons to keep skipping opt-in and verify against the chosen engine release."
+    },
+    {
+      "id": "S6",
+      "title": "DuckDB: Loading JSON",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/json/loading_json.md",
+      "pin": "Exact captured body SHA-256 d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642; source path is on moving DuckDB web main branch.",
+      "exact_locator": ["Loading JSON", "read_ndjson", "Format", "Sampling", "Missing keys", "Timestamp detection", "ignore_errors"],
+      "capture_identity": {
+        "capture_id": "2bfa0d4da20c44f4bcc7a2d6ad3733c5",
+        "sha256": "d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642",
+        "path": "public_captures/d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642.body",
+        "response_bytes": 15526
+      },
+      "applicability_and_limits": "Documents NDJSON loading and missing keys becoming NULL in the described path, which can collapse absent and explicit-null distinctions unless a contract preserves presence. Timestamp inference is not a universal timezone-preservation guarantee."
+    },
+    {
+      "id": "S7",
+      "title": "DuckDB: Parquet overview",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/parquet/overview.md",
+      "pin": "Exact captured body SHA-256 3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd; source path is on moving DuckDB web main branch.",
+      "exact_locator": ["Reading and Writing Parquet", "file_row_number", "union_by_name", "Schema parameter", "Projection pushdown", "Filter pushdown"],
+      "capture_identity": {
+        "capture_id": "fe053ec7e9454535ae90ab95ec9d1f6b",
+        "sha256": "3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd",
+        "path": "public_captures/3a4586a1d73f6e3d1107460c6506906ba7bc208fc8d0d8ae2cafef14c83b30fd.body",
+        "response_bytes": 12373
+      },
+      "applicability_and_limits": "Documents file scanning, row locator option, schema union behavior, and pushdown. Does not decide which schema evolution policy a project should accept."
+    },
+    {
+      "id": "S8",
+      "title": "DuckDB workload tuning",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/guides/performance/how_to_tune_workloads.md",
+      "pin": "Exact captured body SHA-256 743ec0d904dde2652ea392384bf4b18d58a587e5e940e9baeed79900b2513fcb; source path is on moving DuckDB web main branch.",
+      "exact_locator": ["Larger-than-memory workloads", "Blocking operators", "Limitations", "temp_directory", "preserve_insertion_order"],
+      "capture_identity": {
+        "capture_id": "d54e047aa99b422ca910420092d8485d",
+        "sha256": "743ec0d904dde2652ea392384bf4b18d58a587e5e940e9baeed79900b2513fcb",
+        "path": "public_captures/743ec0d904dde2652ea392384bf4b18d58a587e5e940e9baeed79900b2513fcb.body",
+        "response_bytes": 10226
+      },
+      "applicability_and_limits": "Documents spill-to-disk capability and named workload limitations. It is not a 5-GB/16-GB benchmark or guarantee for arbitrary combined operators."
+    },
+    {
+      "id": "S9",
+      "title": "DuckDB SQL introduction",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/sql/introduction.md",
+      "pin": "Exact captured body SHA-256 81c89dde1948bd4c809aed592b0167e9e3c9a1cb3866a25ce4af9c9f8a384c23; source path is on moving DuckDB web main branch.",
+      "exact_locator": ["Concepts", "SQL dialect note", "Querying a table", "ORDER BY examples", "Loading data"],
+      "capture_identity": {
+        "capture_id": "9153101d79dd48168eccaf88fa3311d3",
+        "sha256": "81c89dde1948bd4c809aed592b0167e9e3c9a1cb3866a25ce4af9c9f8a384c23",
+        "path": "public_captures/81c89dde1948bd4c809aed592b0167e9e3c9a1cb3866a25ce4af9c9f8a384c23.body",
+        "response_bytes": 18412
+      },
+      "applicability_and_limits": "States DuckDB SQL closely follows PostgreSQL with listed exceptions, and gives examples where a partial ordering leaves tied rows in either order. It is an introduction rather than a dialect compatibility guarantee."
+    },
+    {
+      "id": "S10",
+      "title": "nbclient issue 88: Nbclient waits indefinitely on killed subprocesses",
+      "url": "https://api.github.com/repos/jupyter/nbclient/issues/88",
+      "pin": "Issue #88, created 2020-06-30 and closed 2020-07-10; exact captured API body SHA-256 f864134fc41517e9bbed407580f2479e6eea9bbb7861744ed124707ba596e0a7.",
+      "exact_locator": ["Issue body", "Docker memory-limited reproduction", "closed_at/state_reason"],
+      "capture_identity": {
+        "capture_id": "f8da7e2d958f4034945196ad84b660b7",
+        "sha256": "f864134fc41517e9bbed407580f2479e6eea9bbb7861744ed124707ba596e0a7",
+        "path": "public_captures/f864134fc41517e9bbed407580f2479e6eea9bbb7861744ed124707ba596e0a7.body",
+        "response_bytes": 8032
+      },
+      "applicability_and_limits": "Reporter observed an indefinite wait after the kernel subprocess died under a container memory limit and noted that a simple timeout did not resolve it. A report establishes the failure scenario as reported, not universal incidence."
+    },
+    {
+      "id": "S11",
+      "title": "nbclient issue 88 comments",
+      "url": "https://api.github.com/repos/jupyter/nbclient/issues/88/comments",
+      "pin": "Exact captured API body SHA-256 ebc0fe6e5df67512f5f945f52a1517255167fb435776194a55e65f7af54c33bc.",
+      "exact_locator": ["Maintainer discussion of cell timeout versus kernel liveness"],
+      "capture_identity": {
+        "capture_id": "4c2066cd06df418babea5d365d83c84a",
+        "sha256": "ebc0fe6e5df67512f5f945f52a1517255167fb435776194a55e65f7af54c33bc",
+        "path": "public_captures/ebc0fe6e5df67512f5f945f52a1517255167fb435776194a55e65f7af54c33bc.body"
+      },
+      "applicability_and_limits": "Discussion informs intended distinction between ordinary cell timeout and dead-kernel detection; discussion text alone does not establish release behavior."
+    },
+    {
+      "id": "S12",
+      "title": "nbclient pull request 90 metadata",
+      "url": "https://api.github.com/repos/jupyter/nbclient/pulls/90",
+      "pin": "PR #90, merged 2020-07-10; merge commit 9750d9198084bd1324e679cf936f8a09ae12f057; exact API body SHA-256 0d9db61926971396b0101ced873952417114352c49d766c1816f6d5d2a5e60aa.",
+      "exact_locator": ["title", "body", "merged_at", "merge_commit_sha", "base"],
+      "capture_identity": {
+        "capture_id": "95109a694d784b7abe40b4f86706d748",
+        "sha256": "0d9db61926971396b0101ced873952417114352c49d766c1816f6d5d2a5e60aa",
+        "path": "public_captures/0d9db61926971396b0101ced873952417114352c49d766c1816f6d5d2a5e60aa.body"
+      },
+      "applicability_and_limits": "PR metadata links the fix to issue 88 and identifies the merge; merge alone is not used as proof of release behavior."
+    },
+    {
+      "id": "S13",
+      "title": "nbclient pull request 90 changed files",
+      "url": "https://api.github.com/repos/jupyter/nbclient/pulls/90/files",
+      "pin": "Exact API response body SHA-256 58a82d107a09ae7f86ea0ecd568034755c19e48382b73218e1a764741024e4fd; PR merge commit 9750d9198084bd1324e679cf936f8a09ae12f057.",
+      "exact_locator": ["nbclient/client.py liveness polling change", "test_client.py test_kernel_death_during_execution", "Autokill.ipynb fixture"],
+      "capture_identity": {
+        "capture_id": "3fa42f31988848ee96a29c19442c5b3e",
+        "sha256": "58a82d107a09ae7f86ea0ecd568034755c19e48382b73218e1a764741024e4fd",
+        "path": "public_captures/58a82d107a09ae7f86ea0ecd568034755c19e48382b73218e1a764741024e4fd.body"
+      },
+      "applicability_and_limits": "Patch shows periodic async kernel-alive polling and a regression test. The test kills its kernel; it does not directly simulate every cgroup OOM case."
+    },
+    {
+      "id": "S14",
+      "title": "nbclient tag 0.5.0 reference",
+      "url": "https://api.github.com/repos/jupyter/nbclient/git/ref/tags/0.5.0",
+      "pin": "Tag ref points to annotated tag object 3feaa9c8caf90525bcf9eb6894b7b85da9713dc9; exact API body SHA-256 9d2d0851560ca84c87403545f271a2d96d34d6c7527a793b4241212b3204cfef.",
+      "exact_locator": ["object.sha", "object.type", "ref"],
+      "capture_identity": {
+        "capture_id": "43312a520c4a49e6a0cb00fc51ada35b",
+        "sha256": "9d2d0851560ca84c87403545f271a2d96d34d6c7527a793b4241212b3204cfef",
+        "path": "public_captures/9d2d0851560ca84c87403545f271a2d96d34d6c7527a793b4241212b3204cfef.body"
+      },
+      "applicability_and_limits": "Establishes the named release tag identity before dereferencing; not used alone to claim the fix shipped."
+    },
+    {
+      "id": "S15",
+      "title": "nbclient 0.5.0 annotated tag object",
+      "url": "https://api.github.com/repos/jupyter/nbclient/git/tags/3feaa9c8caf90525bcf9eb6894b7b85da9713dc9",
+      "pin": "Annotated tag object 3feaa9c8caf90525bcf9eb6894b7b85da9713dc9 points to commit 886729c81c1310c393e2c32b01dcd2c2e963c382; tagger date 2020-08-27; exact response SHA-256 0e0abd3291398d7a99ad20bc00a0ccccb6321eee2ff303ccdfab01248346e796.",
+      "exact_locator": ["tag", "object.sha", "tagger.date", "verification"],
+      "capture_identity": {
+        "capture_id": "2b1f763c059a46458e76745f3fb08e43",
+        "sha256": "0e0abd3291398d7a99ad20bc00a0ccccb6321eee2ff303ccdfab01248346e796",
+        "path": "public_captures/0e0abd3291398d7a99ad20bc00a0ccccb6321eee2ff303ccdfab01248346e796.body"
+      },
+      "applicability_and_limits": "Tag is reported unverified/unsigned. Tag commit identity plus files fetched at the 0.5.0 ref establish source contents, not a cryptographically verified publisher signature."
+    },
+    {
+      "id": "S16",
+      "title": "nbclient 0.5.0 client source",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/0.5.0/nbclient/client.py",
+      "pin": "Immutable release tag path 0.5.0; exact captured source SHA-256 e506eb12a555c45ed5432807704a33966d77d94d59d33d4161ca2f8942dd3662.",
+      "exact_locator": ["_async_poll_kernel_alive", "kernel-death error propagation", "execution wait loop"],
+      "capture_identity": {
+        "capture_id": "9f7fa323937d422e85fc88de63ab69be",
+        "sha256": "e506eb12a555c45ed5432807704a33966d77d94d59d33d4161ca2f8942dd3662",
+        "path": "public_captures/e506eb12a555c45ed5432807704a33966d77d94d59d33d4161ca2f8942dd3662.body",
+        "response_bytes": 39834,
+        "semantic_bytes_delivered": "first 32768 bytes; relevant liveness implementation was in delivered range"
+      },
+      "applicability_and_limits": "Confirms liveness polling exists in tagged 0.5.0 source. It does not verify behavior of current nbclient versions or all process supervisors."
+    },
+    {
+      "id": "S17",
+      "title": "nbclient 0.5.0 test client source",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/0.5.0/nbclient/tests/test_client.py",
+      "pin": "Immutable release tag path 0.5.0; exact captured source SHA-256 6efeb067f0d19e5b54bd35ea30f6df058083907a9661ed5ca65d56c698588cd7.",
+      "exact_locator": ["test_kernel_death_during_execution", "Autokill.ipynb fixture", "test_kernel_death_after_timeout"],
+      "capture_identity": {
+        "capture_id": "666de3ee38b44606a884f551ad0685a1",
+        "sha256": "6efeb067f0d19e5b54bd35ea30f6df058083907a9661ed5ca65d56c698588cd7",
+        "path": "public_captures/6efeb067f0d19e5b54bd35ea30f6df058083907a9661ed5ca65d56c698588cd7.body",
+        "response_bytes": 54208,
+        "semantic_bytes_delivered": "first 32768 bytes; cited kernel-death and timeout tests were in delivered range"
+      },
+      "applicability_and_limits": "Regression test is present at 0.5.0 and asserts RuntimeError for kernel death while retaining a separate timeout case. Fixture self-terminates the kernel with SIGTERM; it is not a cgroup OOM regression."
+    },
+    {
+      "id": "S18",
+      "title": "uv projects: Locking and syncing",
+      "url": "https://raw.githubusercontent.com/astral-sh/uv/main/docs/concepts/projects/sync.md",
+      "pin": "Exact captured body SHA-256 5c6a534a81111800ff37455f8c547bbb67f304b9d0cb02543c7185266dbef218; source path is on moving uv main branch.",
+      "exact_locator": ["Locking", "Syncing", "uv run", "--locked", "--frozen", "exact sync"],
+      "capture_identity": {
+        "capture_id": "948ed0716451426e9579f18a0f3e394d",
+        "sha256": "5c6a534a81111800ff37455f8c547bbb67f304b9d0cb02543c7185266dbef218",
+        "path": "public_captures/5c6a534a8111426e9579f18a0f3e394d.body",
+        "response_bytes": 8386
+      },
+      "applicability_and_limits": "Supports the lock-versus-sync distinction and strict lock checking. Does not prove cross-platform environment identity or provide a runtime sandbox."
+    },
+    {
+      "id": "S19",
+      "title": "PyPA pylock.toml specification",
+      "url": "https://raw.githubusercontent.com/pypa/packaging.python.org/main/source/specifications/pylock-toml.rst",
+      "pin": "Exact captured specification body SHA-256 e6b7e27936c81380a6e3f1dc213090ca6e1ca0f9e3a067bbd6b6800e25646da4; source path is on moving main branch; captured history includes March 2026 clarification.",
+      "exact_locator": ["File Format", "lock-version", "environments", "requires-python", "packages", "Installation", "History"],
+      "capture_identity": {
+        "capture_id": "88e0c5eae12f44d497dbc3b25c88a23b",
+        "sha256": "e6b7e27936c81380a6e3f1dc213090ca6e1ca0f9e3a067bbd6b6800e25646da4.body",
+        "path": "public_captures/e6b7e27936c81380a6e3f1dc213090ca6e1ca0f9e3a067bbd6b6800e25646da4.body",
+        "response_bytes": 27627
+      },
+      "applicability_and_limits": "Current PyPA lock-file specification states package/environment information for reproducible installation. It does not capture notebook execution state, all OS/native dependencies, data inputs, network access, or filesystem behavior."
+    }
+  ]
+}

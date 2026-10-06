@@ -1,0 +1,69 @@
+# Enrichment — data contract and dependency-boundary findings
+
+Stage: `SEED-DEV-B-FIXED-BASE-enrichment-s002`. This appendix supplements the immutable candidate proposal at `inputs/seed/proposal.md`; it does not replace it. Source IDs S1–S22 remain defined by the unchanged input source catalog. New full captures are S23–S27 in `sources.json`. The source, witness, and lead catalogs here are additive overlays that identify the exact base-catalog hashes they extend.
+
+## Evidence labels and scope
+
+- **[F]** Captured source fact, with a source ID and version/applicability boundary.
+- **[I]** Engineering inference from those facts.
+- **[C]** Product choice for LabBook.
+- **[W]** A candidate-executed isolated check. This role added no executed check.
+- **[V]** Proposed validation, **UNEXECUTED**.
+
+The new DuckDB source files are complete captures, including the second byte ranges read for the two scanner files. Static source and test-file inspection does not establish that a DuckDB binary was run. The captured v1.1.0 regression test is evidence that the test is present in the tag, not an execution receipt.
+
+## 1. A row-count bug exposes a vector-finalization boundary
+
+**[F]** DuckDB issue #12596 gives a compact numerical example. With an explicit three-column schema and `null_padding=true`, the CSV data rows `1,2,` and `3,4,` should yield two rows with a null third field. The issue reports that the serial path (`parallel=false`) yielded a third, all-null row, while the parallel path did not [S1, S9]. The report names DuckDB 1.0.0 and a nightly build; it is a report, not a candidate reproduction.
+
+**[F]** The fix in PR #12679 changes one branch in `StringValueScanner::FinalizeChunkProcess`: the EOF padding condition now also requires `result.chunk_col_id > 0`. The old condition at the v1.0.0 tag had no such guard. The v1.1.0 tag has the guard [S11, S23, S24]. In the v1.1.0 tagged test file, the same fixture expects exactly the two intended rows for the ordinary parallel path, serial execution with autodetection disabled, and serial execution with autodetection enabled [S25]. The PR was merged to `main` on 2024-06-24; the v1.0.0 tag commit predates it and v1.1.0 postdates it [S9–S13].
+
+**[I]** `chunk_col_id` is per-current-row/vector scanner state; requiring it to be positive avoids finalizing a padding-only row after the scanner has consumed no field for that row. The diff and fixture support this reading, but I did not build or run either release. This is a parser state bug: a correct input contract and the same bytes can still produce different row counts when the execution path changes.
+
+**Applicability boundary.** The fix is established at source-and-test level in the v1.1.0 tag (commit `fa5c2fe15f3da5f32397b009196c0895fce60820`) and absent from the compared v1.0.0 source (commit `1f98600c2cf8722a6d2f2d805bb4af5e701319fc`). The first 1.0.x bugfix release containing it is still unknown [L1]. A tag’s source and checked-in regression test do not prove a particular packaged binary was built from that tree, nor do they prove the test passed in CI. v1.1.0 is a historical applicability anchor, not a proposed current production pin.
+
+**[C]** For LabBook, persist DuckDB version/build and scan options with every execution event. Pin `null_padding` explicitly instead of inheriting an engine default. Record row count and schema in the output manifest; those checks would reveal this failure class but do not prove cell values are correct. Treat row-shape changes as contract differences that require review.
+
+## 2. Defaults and structural error domains
+
+**[F]** There is a real versioned-default discrepancy. The body of the 2023 PR that introduced `null_padding` says it “defaults to true” [S1]. In the complete DuckDB v1.1.0 `csv_reader_options.hpp`, the declaration is `bool null_padding = false`; the same struct initializes `ignore_errors` and `store_rejects` to false, and `rejects_limit` to zero with a comment defining zero as no limit [S26]. The current DuckDB docs’ printed error-parameter block shows `null_padding=0`, but that line is an error diagnostic, not an independent specification of a current default [S2]. Thus the exact v1.1.0 source default is false; when and why it changed from the PR’s stated default is not established [L2].
+
+**[F]** The current DuckDB guide distinguishes at least these input domains: a cast error (`The 90s` cannot be cast to `DATE`), too few columns, too many columns, malformed quoting, line-size overflow, and invalid encoding [S2]. `null_padding` addresses short rows by filling missing fields with nulls; it is not a general malformed-row recovery rule. `ignore_errors=true` skips a faulty row. The guide’s default path stops and throws on structural errors. These are documented behaviors in the captured `duckdb-web@main` guide, not release-pinned v1.1.0 documentation [S2, S27].
+
+**Unit boundary [F].** The guide specifies a default maximum line size of 2,097,152 **bytes**, and its example sets a limit of 25 bytes. This per-line bound is distinct from a 5 GB file-size target. UTF-8 character count and encoded byte count can differ, so UI copy and manifest fields should say bytes rather than characters [S2]. Reject data likewise distinguishes `line_byte_position` and `byte_position` from a line number [S2].
+
+**Positive capability [F].** With `store_rejects=true`, the guide describes two temporary tables: `reject_scans` records scanner settings/schema and `reject_errors` records each faulty line, including line number, byte positions, column index/name, enum error type, original CSV line, and message. `rejects_limit=0` means no limit [S2].
+
+**Scoped negative capability [F].** This is not a durable project ledger by itself: the documented tables are temporary. Also, projection pushdown affects validation. The guide’s example has a row whose `age` cannot be cast to `INTEGER`; reading `name` alone does not evaluate the `age` cast, so the row is returned as if valid. Selecting the typed failing column with `ignore_errors=true` skips that row [S2]. A successful projected query therefore cannot certify the full declared schema or all source values.
+
+**[C]** Keep three outcomes distinct in the import UI: (1) accepted typed row, (2) padded short row, and (3) rejected malformed row. If a user opts into padding, record which fields were absent and how many rows were padded; do not silently turn this into proof of the declared schema. The contract-validation action must scan every declared column with projection pushdown disabled (or use an equivalent full-column pass) and must report that it did so. Snapshot DuckDB’s temporary reject tables into a durable project artifact before closing the engine, keyed by source identity and full scan configuration. Apply LabBook’s own storage/resource cap even though DuckDB’s documented reject limit of zero is unlimited.
+
+## 3. A qualification beyond the short reactive-runtime description
+
+**[F]** The full marimo reactivity guide says its dependency DAG is statically built from cell-level global references and definitions. It explicitly says mutations to objects or attributes are not tracked. Its examples include `my_list.append(42)` and `my_object.value = 42`; a dependent cell will not react to such a mutation. It recommends creating a new variable or mutating an object in the same cell that defines it. Deleting a cell deletes its global variables, and an interrupt cancels queued dependent cells [S6]. This capture is `marimo-team/marimo@main` with a content hash, not a release tag or commit.
+
+**[I]** A static references/definitions graph can provide explainable invalidation for name bindings, but it cannot by itself establish freshness for in-place mutation, undeclared file reads, external services, or other side effects. The base proposal already records the no-mutation limitation; this example makes its consequence concrete: a downstream output can be stale even when no graph edge represents the mutating cell.
+
+**[C]** Keep the owned static DAG as a conservative invalidation aid, not as proof that an output is current. For clean replay, make cross-cell mutation and undeclared inputs unsupported unless the author declares them as dependencies. If the system cannot account for a mutation or external dependency, mark affected outputs `unverified`; do not use a passing graph check to promote them to `current`. A plausible alternative is to adopt a reactive runtime such as marimo and its cell conventions, but that would make those runtime semantics—and their documented mutation boundary—part of the supported product contract.
+
+## 4. Consequences for implementation and validation
+
+**[C]** The import contract should pin, at minimum, the engine build, declared columns/types, `null_padding`, `ignore_errors`, `store_rejects`, reject limit, line-size limit, parallelism, autodetection setting, and any locale/encoding/date parameters used. Store effective settings, not only UI-level intent. When autodetection is allowed for exploration, save the inferred schema as a proposal for user approval; do not let a later sniff silently redefine an existing dataset contract.
+
+**Useful opportunity [C].** Present rejects as a data-quality pane with links from each rejected row to source bytes and scanner options. Preserve both the raw line and byte offsets. Show padded rows separately from rejected rows so users can choose whether missing trailing fields are acceptable.
+
+**Plausible alternative [C].** Instead of owning the scanner’s reject-persistence adapter, LabBook could expose the engine’s temporary reject tables only for the live session and require an explicit export. This reduces project integration work but makes recovery, sharing, and after-reopen inspection weaker; it is not the selected minimum workflow.
+
+**[V] Proposed, all UNEXECUTED:**
+
+1. Run the v1.0.0 and v1.1.0 DuckDB test/build paths against the exact two-row fixture and compare parallel and serial row counts. Retain binary/build hashes and CI output; do not infer first-fixed 1.0.x release from the two endpoint tags.
+2. On the selected production release, test implicit and explicit `null_padding`, `ignore_errors`, and `store_rejects` settings. Confirm defaults from runtime behavior and compare with source declarations.
+3. Use a typed bad value in an unselected column. Compare a projected query with a full-column contract scan; assert the contract scan reports it even when the normal query prunes that column.
+4. Persist `reject_scans`/`reject_errors`, close and reopen the project, and verify raw-line bytes, byte offsets, schema, options, and source identity survive. Include reject-limit exhaustion and oversized-line cases.
+5. Exercise two Python cells where the first binds a mutable list and the second calls `.append`; verify LabBook keeps affected outputs unverified or rejects the undeclared mutation according to the chosen policy. Repeat on the exact supported marimo release only if that alternative is adopted.
+
+No DuckDB or marimo runtime test was run for this enrichment. The base proposal’s W1–W4 remain the only executed candidate witnesses and retain their original scope limits. The proposals above do not establish the 5 GB performance target, release behavior outside the exact tags/docs cited, or a production sandbox/runtime guarantee.
+
+## 5. Sources and independence
+
+S23–S26 are all DuckDB v1.0.0/v1.1.0 source-tree artifacts. The scanner and regression test are related evidence from one repository, not independent implementations; the test file is checked-in regression intent, not an independent runtime result. S2/S27 are DuckDB’s separate moving documentation repository and have no release pin tying the projection/reject-table descriptions to v1.1.0. S6 is the separate marimo project’s moving-main guide and supports a runtime mechanism and limitation, but not a particular released marimo version. DuckDB and marimo remain distinct implementation precedents, with different scopes and evidence boundaries.

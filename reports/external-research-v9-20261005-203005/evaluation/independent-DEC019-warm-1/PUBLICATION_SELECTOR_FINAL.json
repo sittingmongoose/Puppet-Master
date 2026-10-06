@@ -1,0 +1,53 @@
+{
+  "schema": "er9.positive-safe-publication-selector.v1",
+  "evaluation_id": "independent-DEC019-warm-1",
+  "permission": "Root and publisher may inspect and publish ONLY these explicit safe report/provenance/closure files. References inside them are citations, never grants to open nested paths.",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/publication/P1-source-judgment.json",
+      "sha256": "c44304f22cd3d4ffb563b29802266a5251048c59dd64b67d0c1c378295c56751",
+      "bytes": 26202,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/publication/P1-source-judgment.md",
+      "sha256": "87890d98afe12435915aabe536533a10e6736defc86ae0a99c21fc024d6d6095",
+      "bytes": 6661,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/publication/P2-provenance-runtime-report.json",
+      "sha256": "0d63512f0973cc06bf8d832f7c56bcb1f90abafb84e3910018ef9e378a1465af",
+      "bytes": 20106,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/publication/provenance-qualification.json",
+      "sha256": "2c321d0c217312529f8a857da66ab106a5150c47dbfafc1d42ae08be06ec41f3",
+      "bytes": 2933,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/publication/CLOSURE.json",
+      "sha256": "4ed3a8de692e3fe5b022bc010ad5f06dc1286b2f6078b867ae6f58536c16cc37",
+      "bytes": 2735,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/publication/FINAL_CLOCK_TAIL.json",
+      "sha256": "2799b0a1d6795c593ea1cf412ab5cfb77957b4b5eeca788b2b87363781f9cdd9",
+      "bytes": 1111,
+      "mode": "0o444"
+    }
+  ],
+  "private_key_raw_private_native_ModelIO_Task_paths_excluded": true,
+  "original_frozen_P1_bytes_identical": true,
+  "no_directory_or_recursive_read_grant": true,
+  "clock_deadline_utc": "2026-10-06T13:00:42.288480+00:00",
+  "scientific_review_recipients_only": [
+    "/root",
+    "/root/publisher"
+  ],
+  "prior_selector_sha256": "1a9e4dddea7c02b465d1b435f2b1a358b6a90fb6833c1ffe26d1bc38fd505936",
+  "closure_tail_included": true
+}

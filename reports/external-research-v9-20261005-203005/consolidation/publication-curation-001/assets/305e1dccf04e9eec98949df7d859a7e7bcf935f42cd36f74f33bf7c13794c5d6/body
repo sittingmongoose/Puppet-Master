@@ -1,0 +1,100 @@
+{
+  "inventory_version": "research-1",
+  "labels": {
+    "executed_by_candidate": "Code authored by the candidate and executed in the experiment's admitted isolated execution capability (fresh empty filesystem, no network, no host secrets). Receipt fields (execution_id, code_sha256, stdout_sha256, exit_code, limits) are produced by that capability.",
+    "proposed_unexecuted": "Planned validation NOT run in this stage."
+  },
+  "executed": [
+    {
+      "id": "W1",
+      "title": "Output staleness classifier (current/stale/failed/unverified)",
+      "label": "executed by candidate",
+      "receipts": [
+        {
+          "execution_id": "exec-t18u4k8v",
+          "version": "v1",
+          "outcome": "FAILED 3/14 checks (exit 1)",
+          "code_sha256": "57ccc48e415a1f5718f21d50cc18a29563a8a9d658fefd407296effa3fb0f8bb",
+          "stdout_sha256": "d0ae1496e8cdc0bc52f1acd88bca59cc57d0da49cf6f3acb1819a77d5a9b463b",
+          "observed": "edit B -> C stayed 'current'; data change -> C stayed 'current'; externally edited output classified 'stale' instead of 'unverified'",
+          "analysis": "Real design bug the witness caught: chaining provenance to upstream OUTPUT hashes lets downstream outputs stay 'current' after an upstream edit, and outputs without journal events were indistinguishable from stale ones."
+        },
+        {
+          "execution_id": "exec-c_lvd07b",
+          "version": "v2",
+          "outcome": "ALL_PASS 14/14 checks (exit 0)",
+          "code_sha256": "dcf38ba078ea1889d0f35c78d7504540c9de7037ff47318fb0972652c47f7f8b",
+          "stdout_sha256": "8a9099a6368c1f2b04bf70b4befe61425c89a5c04a22f5fb2ca5d02750bf7c22",
+          "observed": "structural (recursive) provenance + run-event binding: baseline current; edit upstream -> downstream stale (transitive); dataset change -> readers stale; env-lock change -> stale; kernel restart -> all unverified; interrupted run -> unverified; errored run -> failed; externally edited notebook output -> unverified.",
+          "elapsed_seconds": 0.218
+        }
+      ],
+      "expected_behavior_justification": "Rules are the product's stated contract: an output is 'current' only if bound to a completed run event of the current kernel epoch whose structural hash (code + env lock + input datasets + upstream cell closure) matches recomputation; restarts and interruptions must never leave old outputs 'current' (brief requirement).",
+      "input": "Tiny synthetic 3-cell DAG (A load -> B clean -> C report), one dataset, one env lock; scenario script applies edits/changes and asserts classifications.",
+      "scope_limits": "In-memory model only; no real kernel process, no real nbformat files, no filesystem journal. Establishes the classification RULES, not a working runtime.",
+      "data_var": "{\"witness\": \"W1(v2)\", \"scope\": \"tiny in-memory model, no real kernel\"}"
+    },
+    {
+      "id": "W2",
+      "title": "Bounded-memory streaming CSV scan with reject ledger + type-inference pitfall",
+      "label": "executed by candidate",
+      "receipts": [
+        {
+          "execution_id": "exec-3wx6wrz4",
+          "version": "v1",
+          "outcome": "CRASH (exit 1): io.UnsupportedOperation: readline",
+          "code_sha256": "317197d17182492e95b67f608daa387d1689a14e6ebac04a57281a837948ff0e",
+          "stderr_sha256": "5a386d...(see receipt)",
+          "observed": "csv.reader requires readline(); read()-only wrapper insufficient."
+        },
+        {
+          "execution_id": "exec-aa893ru6",
+          "version": "v2",
+          "outcome": "FAILED 3/9 checks (exit 1): wrong hand-computed expectations (48 data rows / 45 kept / first reject ordinal 46, not 46/43/43); all mechanism checks passed (reject kinds, raw-line capture, identity, pitfall, stable identity)",
+          "code_sha256": "261f22f93ad37cf4cb7f1f0e73504c53fcf2415c3c9c91a5110b6107d9bd98b6"
+        },
+        {
+          "execution_id": "exec-y2_7pifw",
+          "version": "v3",
+          "outcome": "ALL_PASS 9/9 checks (exit 0)",
+          "code_sha256": "8703c48a4995e2fdd86b4af3adfd076fe18b5616cfc54137dbd295e03f09d060",
+          "stdout_sha256": "d92eaa5eaa33e244e58d185601998dfe083dad96b298416a270c59949df442d7",
+          "observed": "streamed sha256 == whole-file hash; 48 data rows, 45 clean kept; 3 rejects (CAST row 46, TOO MANY COLUMNS row 47, MISSING COLUMNS row 48) captured with ordinal + raw line, none silently dropped; bounded read buffer; naive per-chunk type inference yields conflicting hypotheses; stable identity across passes.",
+          "elapsed_seconds": 0.191
+        }
+      ],
+      "expected_behavior_justification": "Mirrors the DuckDB reject-ledger contract (S8/S11) at toy scale: parse errors are recorded with physical ordinal + raw line + reason and bounded like rejects_limit; physical order is stable identity (order-preservation per S7); per-chunk inference conflict motivates declared schemas (sampling is not proof).",
+      "input": "~520-byte synthetic CSV: UTF-8 unicode names (Zoë, naïve 文件, Takashi 山田), quoted comma field, empty (null) field, ISO timestamps, 40 numeric rows, one bad-int row, one extra-column row, one short row.",
+      "scope_limits": "Hand-rolled reader at synthetic scale (128-byte chunks); NOT a 5 GB run, NOT the real engine, no parallelism, no quoted embedded newlines in the fixture. V1 covers scale.",
+      "data_var": "{\"witness\": \"W2(v3)\", \"scope\": \"synthetic CSV ~520 bytes; 5GB-scale is proposed/UNEXECUTED\"}"
+    },
+    {
+      "id": "W3",
+      "title": "Reproducibility manifest: atomic save, crash recovery, tamper detection, portable reopen",
+      "label": "executed by candidate",
+      "receipts": [
+        {
+          "execution_id": "exec-p7m3le4x",
+          "version": "v1",
+          "outcome": "ALL_PASS 9/9 checks (exit 0)",
+          "code_sha256": "2037d4390b865cd88d4eab60ef4544568e41bc54d752ca99129ad8a63174e22bf9 (see receipt for authoritative hash)",
+          "stdout_sha256": "fcd6097633948d37391b038526f5aba337eb41e435e9524594451fa3c364fad4",
+          "observed": "save via tmp+fsync+rename; verify passes on clean project; crash-before-rename leaves previous complete manifest intact and an orphan .tmp detected; tamper (append byte to a source) is detected and names data/raw.csv; manifest with relative paths verifies in a fresh directory (cross-machine reopen).",
+          "elapsed_seconds": 0.237
+        }
+      ],
+      "expected_behavior_justification": "Brief requires recovery after interrupted save and portable exchange: atomic rename guarantees the on-disk manifest is always a complete prior state; hashes make tamper detection and cross-machine verification mechanical.",
+      "input": "Tiny synthetic project (data/raw.csv, env/lock.txt, notebook.json) in sandbox tmpdir; simulated crash (write without rename) and simulated second machine (fresh temp dir, copies).",
+      "scope_limits": "No real SIGKILL, no fsync-under-power-loss claims, single file granularity; V4/V5 cover real crash and real multi-machine flows.",
+      "data_var": "{\"witness\": \"W3\", \"scope\": \"tiny synthetic project in sandbox tmpdir; no real crash (simulated)\"}"
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "V1", "title": "5 GB CSV through pinned DuckDB: peak RSS target, hash-verified in/out, projection-independent reject counts", "why": "Brief's workstation envelope target; S12 hazard makes reject-count stability a named check."},
+    {"id": "V2", "title": "Engine permutation tests on the pinned release (with/without ICU, with/without filename=true)", "why": "S15/S16 and S12 show reject semantics flip under configuration; regression tests that pass without ICU did not catch silent NULLs."},
+    {"id": "V3", "title": "Sandbox egress suite (network deny, FS allowlist, rlimits) per OS, versioned as the sandbox profile", "why": "S24: protection is determined by the arguments we pass; must be tested, not assumed."},
+    {"id": "V4", "title": "Real crash matrix: SIGKILL during save/replay; torn journal recovery", "why": "W3 simulates the crash; real process death and fsync semantics need OS-level testing."},
+    {"id": "V5", "title": "Cross-machine bundle round-trip with a real pinned kernel", "why": "W3 verifies hashes only; real kernel + env resolution must be exercised."},
+    {"id": "V6", "title": "First-release attribution of PR #11512 (install 0.10.x vs 1.0.0 binaries, query rejects tables)", "why": "Closes the UNRESOLVED version applicability in Chain A."}
+  ]
+}

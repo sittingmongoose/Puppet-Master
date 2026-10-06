@@ -1,0 +1,64 @@
+{
+  "schema": "er9.current-dependencies.v1",
+  "architecture": "Python notebook process + nbformat document interchange + DuckDB tabular/SQL engine + separate provenance and isolation layers",
+  "dependencies": [
+    {
+      "name":"Python runtime",
+      "role":"Only general notebook execution language; isolated process per clean replay.",
+      "candidate_policy":"Support Python 3.11-3.13 after CI; recheck lifecycle before release.",
+      "exact_build_pin":"UNSELECTED",
+      "source_refs":["C0005","C0008","C0023"],
+      "status":"Critical; interpreter build, platform and package resolver must be captured in each run."
+    },
+    {
+      "name":"nbformat",
+      "role":"Read/write interoperable notebook documents; runtime/provenance semantics remain in LabBook sidecars.",
+      "candidate_policy":"Target v4.5-compatible documents; select and pin a released package/schema after fixture testing.",
+      "exact_build_pin":"UNSELECTED; C0006 is mutable-main schema snapshot sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "source_refs":["C0002","C0006"],
+      "status":"Critical; validate round-trip preservation, cell IDs, outputs and unknown metadata against exact pin."
+    },
+    {
+      "name":"DuckDB",
+      "role":"Local external-file scans/transforms and optional SQL query surface.",
+      "candidate_policy":"Select a maintained release and pin package/build, extensions, platform and settings. Require a source history containing fix commit 2532c30fa649ac6296c7ab2b55976b4337ff46ce; source evidence proves it is absent from v1.0.0 ancestry and present in v1.1.0 ancestry.",
+      "evidence_pins":{"affected_commit":"2532c30fa649ac6296c7ab2b55976b4337ff46ce","before_tag":"v1.0.0 (tag commit 1f98600c2cf8722a6d2f2d805bb4af5e701319fc, compare capture C0027)","after_tag":"v1.1.0 (tag commit fa5c2fe15f3da5f32397b009196c0895fce60820, merge-base evidence C0028)","regression":"test/sql/copy/csv/test_12596.test in PR files capture C0018"},
+      "exact_product_build_pin":"UNSELECTED; v1.1.0 is historical source applicability evidence, not recommended as a current production pin.",
+      "source_refs":["C0000","C0001","C0009","C0011","C0017","C0018","C0024","C0026","C0027","C0028"],
+      "status":"Critical; verify CSV reject APIs, operator resource limits, extension policy and the regression on the shipped binary."
+    },
+    {
+      "name":"Python kernel / notebook runner",
+      "role":"Interactive selected-cell execution and clean replay in a fresh process; a papermill-style separate output artifact is an option.",
+      "candidate_policy":"Choose a released runner/kernel-manager combination only after process cancellation, event capture, document fidelity and output persistence tests.",
+      "exact_build_pin":"UNSELECTED",
+      "source_refs":["C0004"],
+      "status":"Critical; papermill README supports a workflow precedent, not a required dependency or runtime guarantee."
+    },
+    {
+      "name":"Project dependency specification and lock",
+      "role":"Resolve and pin direct/transitive Python dependencies for clean replay.",
+      "candidate_policy":"Use a project-level lock mechanism; permit PEP 723 only as optional inline script metadata.",
+      "exact_build_pin":"FORMAT AND RESOLVER UNSELECTED",
+      "source_refs":["C0025"],
+      "status":"Critical; do not treat inline metadata as a lockfile or notebook runtime."
+    },
+    {
+      "name":"OS isolation and resource controls",
+      "role":"Filesystem/network/process/CPU/memory/wall limits for untrusted notebook code.",
+      "candidate_policy":"Select native per-platform sandbox implementation; default network off and source paths read-only.",
+      "exact_build_pin":"UNSELECTED; platform-specific",
+      "source_refs":[],
+      "status":"Critical unsupported dependency; no production boundary or escape audit is evidenced by this candidate work."
+    },
+    {
+      "name":"Project provenance sidecars and content store",
+      "role":"Append-only execution events, source/output digests, freshness state, cache and export manifest.",
+      "candidate_policy":"Candidate-owned formats with versioned schemas, checksums, atomic replacement and conservative recovery.",
+      "exact_build_pin":"NOT AN EXTERNAL PACKAGE; schema versions to be designed and pinned by product release",
+      "source_refs":[],
+      "status":"Critical product implementation; crash and cross-filesystem guarantees are unverified."
+    }
+  ],
+  "dependency_boundary":"Marimo and papermill are implementation precedents/options, not mandatory runtime dependencies. SQL uses the same DuckDB engine and dataset registry; no second general language kernel is proposed."
+}

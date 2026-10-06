@@ -1,0 +1,203 @@
+# Fieldbook — a local-first fieldwork application for offline observation recording and map exchange
+
+**Stage:** research (confirmation brief H2 — offline field observations and map exchange)
+**Date:** 2026-10-06 · **Status:** implementable proposal, not a finished product
+**Labels used throughout:** `[FACT]` external, source-pinned evidence · `[INFERENCE]` engineering inference from evidence · `[CHOICE]` product decision this proposal makes (changeable) · `[UNCERTAIN]` unresolved dependency or unknown. Checks are labeled `EXECUTED BY CANDIDATE` (receipted, isolated component checks) or `PROPOSED/UNEXECUTED`. Catalog IDs `[S#]` map to `sources.json`, `[W#]`/`[P#]` to `witnesses.json`, `[L#]` to `leads.json`.
+
+---
+
+## 1. Problem and scope
+
+A small environmental survey group records observations (points, short tracks, notes, optional photographs) on laptops and tablets with no connectivity, then exchanges whole project bundles when they return. The product must place observations on a map trustworthily, preserve every edit and its provenance, and reconcile two divergent copies of a project **without silently losing work**. It is a research field tool: not emergency navigation, not a hosted account service, not a general mapping product.
+
+Delivered here: workflow, data/coordinate/revision contracts, a coherent architecture with bounded alternatives, critical dependencies, support/resource/recovery limits, licensing investigation, and a validation plan with explicit executed/proposed labeling.
+
+## 2. Session workflow (one round trip)
+
+1. **Create/import project** — import a bounded map area and a local observation table (CSV/GPKG/GeoJSON). The importer never guesses metadata: CRS, axis order, units, altitude and time provenance are either read from declared metadata or presented to the user as a bounded choice (§4.3, §5).
+2. **Inspect metadata** — a project header screen shows every coordinate/reference fact: declared CRS with EPSG/WKT identity, axis order, angular/linear units, vertical datum label, time provenance, importer/tool versions. Anything unknown is displayed as "unknown — choose" rather than hidden.
+3. **Search and preview** — table search plus map viewport queries return bounded windows of records (§8); previews are explicitly labeled as previews and never as validation (§5.6, W4).
+4. **Record offline** — add/edit points and short tracks, attach notes and photos; every change is appended to a local op journal in one committed batch (§6, §7).
+5. **Save/reopen elsewhere** — the project is a single-file bundle; a copy-on-exit procedure guarantees the database and its side files travel together (§7.2). Reopening on another machine requires no network and no account.
+6. **Merge a colleague's copy** — the merge produces a *new* file, unions ops idempotently by op id, surfaces field-level conflicts for explicit resolution, and reconciles media by content hash (§6.4). Originals are never modified in place.
+7. **Export** — a table (CSV with explicit CRS/provenance columns) plus a map overlay (GeoJSON per RFC 7946 `[FACT S3]`), streamed for large projects (§8.5). Exports come from storage, never from the screen (§3.5).
+
+Originals stay intact at every step: imports are read-only against source files; merges and re-imports write new artifacts.
+
+## 3. Coordinate and identity contract
+
+### 3.1 The four coordinate notions, and how they relate `[CHOICE]`
+
+| Notation | Where it lives | Definition |
+|---|---|---|
+| **Stored original** | `obs_coords_original` | Verbatim source text + declared CRS identity + axis order + units + provenance. Never rewritten. |
+| **Canonical working geometry** | `obs_geom` | WGS84 longitude/latitude in decimal degrees, axis order `[lon, lat]`, per RFC 7946 §3.1.1/§4 `[FACT S3]`. Optional third value = meters above the WGS84 ellipsoid only when the source altitude datum is known to be ellipsoidal; otherwise altitude is a separate labeled column, not geometry `[FACT S3]`. |
+| **Display coordinates** | renderer only | Projection of canonical values into the map view (Web Mercator for slippy maps). Purely derived; never persisted back. |
+| **Exported coordinates** | export writers | Either (a) stored originals verbatim, (b) canonical values, or (c) canonical values projected to a user-chosen export CRS through a recorded pipeline (§4.2). The export header names which of the three was used, per record class. |
+
+Geometry identity is separate from coordinate values: a record's identity is its UUID (§3.2); moving a pin changes geometry and creates a new revision, but not a new identity. Edits are deltas on `(record_id, field)` keyed by op id, not replacements of rows.
+
+### 3.2 Project, record and media identity `[CHOICE]`
+
+- **project_id**: UUID generated once at project creation; copies inherit it (that is what makes two files *the same project* for merging). Bundle layout: `project.db` (SQLite), `media/` (content-addressed photos), `manifest.json` (project_id, schema version, app version, bundle format version, declared map area, license manifest).
+- **record_id**: UUID minted per record at creation; imported rows get fresh UUIDs plus a retained `source_external_id` (the original table key). External identifiers are never trusted as identity — they are attributes (conflicting duplicates of an external id are a conflict case, §5.4).
+- **media**: photos stored once under `media/<sha256>.<ext>`; a record references hashes. EXIF GPS is read at import and copied into a provenance sidecar `[FACT S13]`; the original file bytes are never rewritten.
+
+### 3.3 What the display pin does and does not prove `[FACT→INFERENCE]`
+
+`[FACT S3]` fixes canonical order and datum; `[FACT S1]` shows the spatial index deliberately stores *approximate* (32-bit, outward-rounded) boxes; `[W1]` shows a displayed/derived projection can differ from stored truth by thousands of kilometers if axis order is misread (≈8,773 km for one real test point), and that a projection formula happily returns a finite, absurd value at the domain edge (lat 90° → 238,107,693 m artifact instead of an error). Therefore: **a pin on the screen proves only that display-side derivation succeeded.** The product's trust boundary is the storage layer: exports and geometry edits read `obs_geom`/`obs_coords_original`, and every display path is a one-way function. This is an inference the evidence forces: previews, pins and indexes are approximations; only the stored canonical pair plus its provenance is authoritative.
+
+## 4. Reference systems: support boundary and transformation governance
+
+### 4.1 In-box support (v1) `[CHOICE, bounded]`
+
+- EPSG:4326 / OGC:CRS84 (lon,lat degrees; RFC 7946 §4 `urn:ogc:def:crs:OGC::CRS84` `[FACT S3]`)
+- EPSG:3857 (Web Mercator; display + some imports), with its domain limit near ±85.06° noted in UI
+- UTM zones (EPSG:326xx/327xx) and common national projected grids **via PROJ**, not hand-written math
+- Vertical: ellipsoidal heights only when declared; otherwise altitude is stored with an explicit `vertical_datum: unknown` label. No geoid transformation in v1 `[CHOICE]` (leads L8).
+- Everything else: the bounded "unknown CRS" path (§4.3). The support boundary is PROJ's capability minus grids we cannot bundle under license `[UNCERTAIN L3]`.
+
+### 4.2 Transformation registry — how transforms are versioned and validated `[CHOICE]`
+
+Every non-identity transformation (import→canonical, canonical→export) is executed through and recorded in a `transform_registry` table:
+
+```
+transform_id | source_crs (WKT2) | target_crs (WKT2) | pipeline (PROJJSON)
+| proj_library + version | grid_files + sha256 (if any) | declared_accuracy_m | created_at | tool_build_id
+```
+
+- All transforms go through one boundary API that **forces x=lon,y=lat (an `always_xy`-style policy)** at the edge, independent of authority axis order `[INFERENCE]`. The proj4js incident chain shows why: axis/vertical handling was wrong in released code until issue #575 / PR #576 (May 2026), and the same class resurfaced for two more projections in PR #598 (v2.22.0, Aug 2026) `[FACT S7-S9]`.
+- **Versioned:** a PROJ/grid upgrade never mutates past transforms; it creates new registry rows. Records carry the `transform_id` that produced their canonical values. A "reproject" task that re-derives canonical values after an upgrade runs as an explicit, reported batch (n changed / n failed), and only then updates records' `transform_id`.
+- **Validated:** (a) roundtrip gate per batch — `|p − inv(fwd(p))|` within tolerance, as demonstrated in W1; (b) a control-point suite checked against pinned PROJ CLI output (P1, PROPOSED/UNEXECUTED); (c) any transform whose pipeline or registry row is missing marks affected records "unverified" — visible, not silent.
+
+### 4.3 Unknown or ambiguous metadata `[CHOICE]`
+
+When declared metadata is absent or ambiguous (WKT vs. EPSG code disagreement, axis order not stated, units unstated), the importer shows a bounded choice: pick from a searched EPSG list, supply WKT2, or "import as-is, flagged `crs_unverified`". It never applies a default silently. WKT2 parsing is itself a known failure source — proj4js issue #545 (Feb 2026) shows the same CRS giving different results via its EPSG code vs. its WKT2 definition `[FACT S15]`, so the UI displays which identity the user chose and the importer records both when both were given.
+
+## 5. Hard cases investigated (no universal behavior invented)
+
+1. **Near a coordinate/domain boundary.** Values outside the declared CRS's valid domain are rejected into a flagged tray with the reason; values near edges are retained with a warning. W1 shows why the gate must be explicit: the Mercator formula returns a finite artifact at the pole rather than an error `EXECUTED BY CANDIDATE`.
+2. **Tracks spanning the antimeridian.** Canonical storage keeps the point sequence with lon ∈ [−180,180]; display and GeoJSON export use deterministic cutting into segments, per RFC 7946 §3.1.9 (SHOULD cut) and §5.2 (antimeridian bbox convention) `[FACT S3]`. The un-split form remains available for export when the user needs continuity; the split is an operation recorded in provenance, not a silent rewrite `[CHOICE]`. Fixture P7 (PROPOSED/UNEXECUTED) tests it; no universal claim is made for arbitrary CRS pairs.
+3. **Incomplete coordinates.** Null/partial coordinates are legal states: the record exists, is searchable, appears in an "incomplete" filter, and is excluded from the spatial index (which requires numeric boxes `[FACT S1]`). GeoJSON export emits `"geometry": null` for unlocated features, which the spec explicitly permits `[FACT S3]`.
+4. **Conflicting identifiers.** Two rows sharing an external id but differing otherwise are both kept, linked, and surfaced as a conflict candidate set; nothing is overwritten by id-matching `[CHOICE]`.
+5. **Index vs. truth.** The R*Tree index is a candidate reducer, not an answer: SQLite's own docs state it "does not normally provide the exact answer" and its boxes are 32-bit, rounded outward `[FACT S1]`. W3 `EXECUTED BY CANDIDATE` reproduces the documented contained-within exclusion at an exact-touching edge and its recovery via the documented 0.000012% query padding — so viewport queries pad the box and re-check exact stored coordinates in SQL.
+6. **Previews cannot validate imports.** W4 `EXECUTED BY CANDIDATE`: with 1% scattered corruption in 250k rows, a 50-row preview detects it only ≈40% of the time (theory 39.5%); 500 rows ≈99% (still fallible); corruption clustered in later rows is detected **0%** by a first-100 preview. Therefore imports run full-scan validators (row counts reconciled; CRS-domain check; geometry sanity; duplicate scan) — a preview is labeled a preview and nothing more `[CHOICE]`.
+
+## 6. Offline revision and merge contract
+
+### 6.1 Semantics `[CHOICE]`
+
+- **Append/edit/delete:** every change is an operation `{op_id (UUID), record_id, base_rev, set:{field: new_value} | tombstone, actor, device, wall_clock}` appended to a per-project journal. Deletes are tombstones (recoverable; a delete racing an edit is a conflict, not a silent void). Edits are field deltas; geometry is just another (atomically replaced) field.
+- **Revisions:** per-record monotonically increasing `rev`; ops declare the `base_rev` they were made against. Wall clocks order display only — they never decide outcomes (W2 shows LWW by wall clock silently destroying "Arctic Tern").
+
+### 6.2 Duplicate detection `[CHOICE]`
+
+Deterministic candidate rules only: exact external-id match, or (distance < ε AND same normalized label AND |Δt| < 15 min). Matches become **suggestions in a review list**; nothing auto-merges.
+
+### 6.3 Merge when two copies diverge `[CHOICE]`
+
+Merge = (1) union of op journals by `op_id` — idempotent, re-importing the same ops is a no-op (demonstrated in W2: duplicates dropped, set unchanged); (2) replay in causal order using `base_rev` chains; (3) **field-level conflict records** when two ops with neither a descendant of the other touch the same field — both values kept in the conflict record, a provisional value chosen for display, and the conflict queued in an inspector for an explicit human choice (keep A / keep B / keep both as separate records). This is a *practical explicit* policy; the proposal explicitly does **not** promise automatic perfect merge. (Full CRDT convergence is an optional later adoption — §11 — not a v1 requirement.)
+
+### 6.4 No silent loss `[FACT→CHOICE]`
+
+Failed records (unparseable geometry, out-of-domain coordinates, unknown CRS) are never dropped to make a merge look clean: they land in a per-import/per-merge **quarantine tray** with reasons and original bytes, and the summary screen reconciles counts (`imported + flagged + rejected = source rows`). Provenance (who/when/which device/which transform) is carried on every record and through merges `[CHOICE]`.
+
+## 7. Recovery: interrupted save, import, merge, relocation, re-import
+
+- **Committed vs. incomplete:** each UI save is one SQLite transaction that appends a batch of ops and updates derived state; the batch carries a `batch_id`. On reopen, a batch either fully exists (committed) or fully does not; a separate **staging area** holds in-progress forms, clearly labeled "uncommitted draft" — distinguishable from committed records `[CHOICE]`.
+- **SQLite WAL facts we rely on** `[FACT S2]`: commits land in the `-wal` file; **"If a database file is separated from its WAL file, then transactions that were previously committed to the database might be lost, or the database file might become corrupted"**; WAL does not work on network filesystems; journal mode is persistent; checkpointing is what makes data durable in the main file.
+- **Bundle copy/relocation procedure** `[INFERENCE from S2]`: before copying a project (USB stick, cloud-folder sync), the app runs a checkpoint and clean close (or uses the backup API) so no `-wal`/`-shm` side files are needed; the manifest records the DB's sha256. This directly addresses "relocating project media needs defined behavior". Copying a live WAL database is refused with an explanation.
+- **Interrupted import/merge:** imports and merges build a **staging database**, then swap atomically (write new file → fsync → rename). An interrupted merge leaves the original two copies untouched plus a resumable staging artifact; reopen shows both sources and the staging state, and the user retries or discards explicitly `[CHOICE]`.
+- **Re-importing the same source** is idempotent at two levels: identical file hash → detected and skipped with a note; same ops re-delivered (merge path) → deduplicated by `op_id` (W2). A genuinely re-run import of a *changed* source creates a new import batch with its own provenance; it never overwrites in place `[CHOICE]`.
+
+## 8. Resource plan: 250,000 observations on 4 cores / 8 GB (research targets)
+
+All performance numbers below are **targets to research, not measurements** — nothing has been benchmarked (P3 PROPOSED/UNEXECUTED).
+
+- **Storage:** one SQLite database per project; R*Tree virtual table for bbox indexing (`SQLITE_ENABLE_RTREE` must be enabled in the bundled build `[FACT S1]`); rtree rows reference canonical ids; auxiliary columns (SQLite ≥ 3.24.0) may carry display fields to avoid joins `[FACT S1]`.
+- **Index/cache invalidation:** the R*Tree is maintained inside the same transaction as the geometry write, so index and table can never disagree after a commit; derived render caches (tile GeoJSON per viewport zoom band) are keyed by `(viewport, zoom_band, max_op_id_seen)` and invalidated when the op journal advances — a monotonic watermark makes staleness cheap to detect `[INFERENCE]`.
+- **Viewport access:** every map pan/zoom issues one padded, `LIMIT n` bbox query (pad per W3/S1), returning ids + light geometry; edits during an open scan are deferred (SQLite reports `SQLITE_LOCKED` if an R*Tree is modified mid-scan `[FACT S1]`), so the UI materializes scan results before applying edits.
+- **Cancellation:** long tasks (import validation, merge, export) run on worker(s) with cooperative checkpoints between chunks; cancel is checked between bounded chunks, so a canceled task leaves only committed chunks (recoverable state per §7).
+- **Large export:** streaming writers (cursor → file) with progress and cancel; GeoJSON FeatureCollection or newline-delimited features; no full materialization in RAM.
+- **Photographs:** content-addressed blobs referenced by hash; thumbnails generated once at import; the DB stores hashes + EXIF-derived provenance, not bytes.
+- **Usable with no network:** 100% of the above — storage, editing, search, map rendering from the bundled basemap, merge, export — is offline by construction; nothing in the v1 loop calls out `[CHOICE]`.
+
+## 9. Map and photograph sources, licenses (investigated, actual selected sources)
+
+- **Basemap, chosen source:** **Natural Earth** (public domain) for small/medium scales — "All versions of Natural Earth raster + vector map data found on this website are in the public domain... No permission is needed to use Natural Earth" `[FACT S4]`. Bounded to the project area at import.
+- **OSM-derived detail (optional, per project):** OSM data is ODbL — attribution notice + clear ODbL statement required, and "If you alter or build upon our data, you may distribute the result only under the same license" `[FACT S5]`. Also captured from OSM: "we cannot provide a free-of-charge map API or map tiles for third-parties" `[FACT S5]` — so **bundling tiles scraped from OSM's tile servers is off the table**; an OSM-derived basemap must be rendered from ODbL-licensed data extracts, carrying attribution and share-alike obligations on the derived database. Full ODbL text and attribution guidelines not yet captured → L2 `[UNCERTAIN]`. The Tile Usage Policy page itself could not be fetched from this environment (L1).
+- **Tile packaging:** bundled map area ships as a **PMTiles v3** single-file archive — "a single-file archive format for tiled data" with a 127-byte header, a root directory that must fit in 16 KiB, and a JSON metadata block whose `attribution` key exists precisely to carry display attribution with the tileset `[FACT S11]`. The renderer must display that attribution `[CHOICE]`.
+- **CRS registry data:** the EPSG Dataset is published by IOGP at no charge, but its terms forbid distribution for profit, require acknowledgment of IOGP ownership in any publication or transmission, allow only enumerated parameter modifications, and forbid attributing modified data to EPSG `[FACT S6]`. Consequence: bundling CRS definitions is feasible with acknowledgment; a paid distribution channel or modified parameter sets need legal review `[UNCERTAIN L3]`. PROJ's own license and the per-grid licenses of transformation grids were not captured yet (L3).
+- **Photographs:** EXIF GPS provenance is harvested at import — hemisphere refs (GPSLatitudeRef N/S, GPSLongitudeRef E/W), altitude ref (0 = above / 1 = below sea level), UTC GPSTimeStamp, measure mode (2D/3D), DOP, positioning error, processing method (GPS/CELLID/WLAN/MANUAL) `[FACT S13]`. Missing tags are shown as "unknown", never guessed.
+
+## 10. User-facing trust, accessibility, offline state
+
+- **Legible provenance:** every record view shows a coordinate/provenance panel: stored original (verbatim), canonical lon/lat, CRS identity, transform_id (registry row: pipeline, PROJ version, grids, accuracy), importer batch, edit history (ops), photo sidecars. `[CHOICE]`
+- **Error feedback:** failures are enumerated with row-level reasons and never collapse into "import finished" — counts must reconcile (§6.4).
+- **Undo/reversible edits:** undo = append of an inverse op (the journal is the mechanism, so undo survives restarts and merges like any edit); tombstoned deletes are restorable until a merge is finalized `[CHOICE]`.
+- **Accessible editing & keyboard navigation:** full form editing via keyboard (tab order, labeled inputs, visible focus), map interactions have keyboard equivalents (arrow panning, zoom keys, record list navigation); conflict inspector is a list-based, screen-reader-friendly flow, not map-only `[CHOICE]`.
+- **Obvious offline state:** a persistent status strip shows the offline badge, project_id, last checkpoint time, and any uncommitted drafts/quarantined rows; there is no state in which the user can believe a sync happened `[CHOICE]`.
+- **Inspectable conflicts:** the conflict inspector lists each conflict with both values, actors, devices, timestamps and surrounding context, and records the resolution decision as an op (so merges of the resolution propagate) `[CHOICE]`.
+
+## 11. Opportunities (optional adoption, explicitly not v1 requirements)
+
+- **CRDT-based convergence** via Automerge ("fast implementations of several different CRDTs... and a sync protocol", positioned as "PostgreSQL for your local-first app"; Automerge 3 claims ~10× memory reduction — project's own claim) `[FACT S12]` could later replace/augment the explicit conflict flow for text fields. Scale at 250k records is unverified (L7).
+- **Tablet delivery** via a thin native shell around the same UI (L6).
+- **Live GNSS capture**, **LAN peer sync** between field laptops, **automated photo/track classification** — later, each optional.
+
+## 12. Alternatives considered (bounded)
+
+- **Alternative A — adopt OGC GeoPackage as the bundle container** instead of a custom SQLite schema. GeoPackage is "an open, standards-based, platform-independent, portable, self-describing, compact format... a platform-independent SQLite database file", aimed at "mobile devices... in communications environments with limited connectivity", with normative tables (`gpkg_spatial_ref_sys` Annex C.1), a registered **R-tree Spatial Indexes** extension (Annex F.3), and a WKT-for-CRS extension (Annex F.10) `[FACT S10]`. *Lesson value:* standards-based container with immediate QGIS interop for export. *Why not the v1 store:* the revision/merge contract (§6) has to live in app-level tables either way; the standard's per-feature-table single SRS declaration (the `gpkg_geometry_columns` model, Annex C.3) pushes mixed-CRS imports into normalization or multi-table layouts `[INFERENCE from S10 structure]`; and precise requirement text (e.g., axis-order rules in the body) was not fully read — only identity, TOC and abstract were captured (L9). **Adopted instead as an export/interop target** (P8 conformance suite, PROPOSED/UNEXECUTED).
+- **Alternative B — Electron/Node with proj4js end-to-end.** Rejected for v1 after reviewing proj4js issue history: WKT2 parsing divergences (#545, #588 `[FACT S15]`), WKT2-only forms failing outright (#370, #393 `[FACT S15]`), and the vertical-axis incident (§13.2) — the JS transform stack is usable but thinner than PROJ for the CRS variety this brief demands `[INFERENCE]`. proj4js remains acceptable for *display-side* math in the map pane.
+- **Alternative C — CRDT store as the primary store.** Deferred: spatial indexing and bounded viewport queries are the 250k-row bottleneck, and those are SQLite's strength; CRDT convergence is a merge-layer feature (§11).
+
+## 13. Implementation precedents (independently useful, with pins)
+
+### 13.1 Precedent 1 — SQLite R*Tree + WAL for local spatial storage and recovery `[FACT S1, S2]`
+Pins: sqlite.org/rtree.html §3.4 (roundoff), §3.5 (SQLITE_LOCKED mid-scan), §4.1 (auxiliary columns, ≥3.24.0), §2 (compile flag); sqlite.org/wal.html §4 (side-file rule quoted in §7), §1 (concurrency advantages), §3.3 (persistence).
+**Concrete lessons:** (a) an R*Tree is a candidate filter — pad contained-within queries by the documented 0.000012% and re-check exact coordinates (reproduced in W3); (b) never copy a database without its WAL side file — bundle-copy must checkpoint+close first; (c) defer edits during R*Tree scans. These three directly shaped §5.5, §7.2 and §8.
+
+### 13.2 Precedent 2 — proj4js axis handling: real issue → fix → regression tests → releases `[FACT S7, S8, S9]`
+Chain, fully traced:
+- **Issue #575**, "`forward(...,true)` does not respect vertical axis" (opened 2026-05-14, closed 2026-05-17): enu→ned conversion did not negate Z even with `enforceAxis`; includes a Node repro asserting `[10,20,30] → [20,10,-30]`.
+- **Fix: PR #576**, "Fix enforceAxis for z and arbitrary orders" (merged 2026-05-17): rewrites `lib/adjust_axis.js` into explicit `adjustAxisToEnu`/`adjustAxisFromEnu` with per-direction sign handling for `e/w/n/s/u/d`; touches `lib/Proj.js`, `lib/core.js`, `lib/transform.js`.
+- **Regression tests** added in `test/proj4.test.mjs`: "should respect the vertical axis when enforceAxis is true" and "should handle non-trivial axis reordering with enforceAxis" (enu→ned, neu→uen, uen→uen roundtrip assertions).
+- **Release applicability:** v2.20.8 (2026-04-06) predates the fix; the v2.20.9 changelog (2026-06-08) explicitly lists PR #576 — so **the fix ships in ≥ 2.20.9 only**; anything pinning ≤ 2.20.8 is exposed. Latest v2.22.0 (2026-08-31) additionally ships PR #598 "Preserve z when enforceAxis=true for omerc and robin" — the *same bug class* fixed again in two more projections.
+**Lessons adopted:** (1) vertical-axis and axis-order code fails silently and repeatedly — our transform boundary (§4.2) forces axis policy at one choke point and records the library version per transform; (2) an upstream fix plus a passing isolated test does **not** prove whole-product correctness (PR #598 proves the class recurred) — pin versions ≥ 2.20.9, re-run the upstream suite at the pinned version (P4), and keep app-level control-point checks (P1); (3) never trust a released library's axis semantics without our own fixtures.
+
+### 13.3 Precedent 3 — RFC 7946 as the interchange contract `[FACT S3]`
+Pins: §3.1.1 (position order: longitude, latitude, mandatory two elements), §4 (WGS84/CRS84; optional third element = meters above WGS84 ellipsoid; alternative CRSs removed for interoperability), §3.1.9 (antimeridian cutting SHOULD), §5.2 (antimeridian bbox), §3.1.10 (digit count must not be read as precision/uncertainty).
+**Lesson:** the export format's constraints are strict and deliberately narrow — which is exactly why the canonical layer (§3.1) maps cleanly onto it, while non-GeoJSON exports must carry CRS/provenance in sidecar columns, not in-band hacks.
+
+### 13.4 Precedent 4 — PMTiles for the bundled map area `[FACT S11]`
+Pin: PMTiles v3 specification (§1 abstract "single-file archive format for tiled data"; §3 header; §4.1 entries; §5 JSON metadata incl. `attribution`).
+**Lesson:** one file per project area, random access friendly, attribution travels inside the artifact — matches the bundle-exchange model and keeps the license surface visible (§9).
+
+### 13.5 Precedent 5 — Automerge (and the local-first framing) `[FACT S12]`
+Pin: automerge/automerge README (captured): CRDT implementations + compact format + sync protocol, local-first motivation. **Lesson:** convergence machinery exists and is maturing, but is an optional merge-layer adoption (§11/§12C), not the v1 storage substrate.
+
+## 14. Critical dependencies, limits, and validation plan
+
+### 14.1 Critical dependencies `[FACT unless noted]`
+SQLite build with `SQLITE_ENABLE_RTREE` (and WAL) `[S1]`; PROJ-based transform stack (e.g., pyproj/PROJ) with pinned version + registry `[S7-S9 lesson]`; bundled EPSG-derived CRS data under EPSG terms `[S6]`; Natural Earth public-domain basemap `[S4]`; PMTiles v3 reader/writer `[S11]`; ODbL compliance only if OSM-derived data is bundled `[S5, L2 UNCERTAIN]`. Rendering stack (MapLibre/Leaflet) is a UI dependency, not a correctness one (L5).
+
+### 14.2 Support and resource limits (stated honestly)
+CRS breadth = what PROJ + licensable grids allow `[L3]`; vertical datum transformations out of v1 scope `[L8]`; 4-core/8GB and 250k numbers are unmeasured targets `[P3]`; merge is explicit-choice, not auto-perfect `[§6]`; tablets unproven in v1 `[L6]`; no real-world corpus tested `[P3/P5]`.
+
+### 14.3 Validation plan
+**Executed by candidate (isolated component checks, receipts in witnesses.json):**
+- W1 transform arithmetic: 4326↔3857 roundtrip ≤ 2e-9 m error; control 1° lon = 111,319.49079327357 m (matches the value quoted independently in proj4js issue #545 `[S15]`); pole artifact and axis-swap magnitude demonstrated. Scope: formula-level only, not PROJ.
+- W2 merge model: LWW silent loss shown; conflict-preserving merge surfaces both values; op-id union idempotent. Scope: toy model, not the real journal.
+- W3 index roundoff: contained-within exclusion at an exact edge, recovered by documented padding. Scope: float32 simulation, not SQLite's actual rtree module.
+- W4 sampling: 50-row preview detects 1% scattered corruption ≈40%; clustered corruption 0% for a first-100 preview. Scope: synthetic arithmetic.
+
+**Proposed / UNEXECUTED (P1–P8, defined in witnesses.json):** control-point transform suite vs. pinned PROJ CLI (P1); crash-injection during save/import/merge with reopen classification (P2); 250k-row performance harness on 4 cores/8 GB (P3); upstream proj4js test suite re-run at the pinned version including PR #576's tests (P4); full-scan import validators (P5); merge property tests (P6); antimeridian track fixture (P7); GeoPackage export conformance (P8).
+
+**Acceptance gates (product-level, proposed):** counts reconcile on every import/merge/export; reopen after injected crash always yields a classifiable state; no export path can read from the renderer; every unknown CRS blocks commit until resolved; attribution displays from bundle metadata.
+
+## 15. Evidence base
+
+Sources, capture identities (URL, capture id, sha256, byte counts, exact locators) are in `sources.json`; executed/proposed checks with code, receipts and scope limits in `witnesses.json`; unresolved/optional leads in `leads.json`. All captures made 2026-10-06 via the admitted public-HTTP tool; nothing was taken from campaign, evaluator, or other-arm material; no maintainers were contacted.
+
+### Consolidated limitation note
+`[UNCERTAIN]` items that would change the design if resolved: ODbL share-alike scope for rendered tile databases (L2) — could force a Natural-Earth-only basemap; EPSG/PROJ data redistribution for a distributed app (L3); tablet/WebView PMTiles delivery (L6); all P1–P8 outcomes (P3 in particular could force a coarser index design, e.g., static zoom-band precomputation instead of per-pan rtree queries).

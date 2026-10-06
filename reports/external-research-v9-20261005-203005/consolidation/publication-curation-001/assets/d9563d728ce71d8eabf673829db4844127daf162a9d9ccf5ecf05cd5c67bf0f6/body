@@ -1,0 +1,198 @@
+{
+  "schema": "seed.sources.v1",
+  "stage": "SEED-DEV-B-base-s001",
+  "retrieved_date_utc": "2026-10-05",
+  "source_capture_policy": "Public source response bodies are preserved under public_captures/ and pinned by exact body SHA-256 and byte count. Git source pins identify repository plus full commit or version tag; web documentation without a source commit is pinned to its exact captured body and stated documentation version. Rendered text captures are supplemental reading aids; direct publisher HTML/raw/API captures are primary where supplied.",
+  "input_pins": {
+    "task_md": {"sha256": "d3069da43d077f845b3a0299322c567df3b1a74ceb186ace7a19ce537352a8f7"},
+    "brief_md": {"sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a", "bytes": 5830}
+  },
+  "sources": [
+    {
+      "id": "nbclient-0102-client",
+      "publisher": "Jupyter / nbclient",
+      "source_url": "https://raw.githubusercontent.com/jupyter/nbclient/5a68cb361412d540e23fbc444cda75ede73c16d1/nbclient/client.py",
+      "source_path": "nbclient/client.py",
+      "identity": {"release": "nbclient 0.10.2", "commit": "5a68cb361412d540e23fbc444cda75ede73c16d1"},
+      "capture": {"path": "public_captures/3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971.body", "sha256": "3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971", "bytes": 49833, "complete": true, "format": "raw source response"},
+      "relevant_mechanism": "NotebookClient.async_execute walks notebook cells sequentially in stored list order, requests cell execution, and uses kernel setup/cleanup methods. The client default behavior includes allow_errors=false and a fresh kernel for an execution call; this is a runtime mechanism, not a provenance/dependency tracker."
+    },
+    {
+      "id": "nbclient-0102-changelog",
+      "publisher": "Jupyter / nbclient",
+      "source_url": "https://raw.githubusercontent.com/jupyter/nbclient/5a68cb361412d540e23fbc444cda75ede73c16d1/CHANGELOG.md",
+      "source_path": "CHANGELOG.md",
+      "identity": {"release": "nbclient 0.10.2", "commit": "5a68cb361412d540e23fbc444cda75ede73c16d1"},
+      "capture": {"path": "public_captures/c49dcd17b4aa1d6cbd1125143763de8b3000c5569b42bf6aaa9e9d99f52b6f7d.body", "sha256": "c49dcd17b4aa1d6cbd1125143763de8b3000c5569b42bf6aaa9e9d99f52b6f7d", "bytes": 34829, "complete": true, "format": "raw source response"},
+      "relevant_mechanism": "The release history records the stream-output enhancement under v0.7.4 with PR #282 and lists the v0.7.4 comparison range."
+    },
+    {
+      "id": "nbformat-5104-v45-schema",
+      "publisher": "Jupyter / nbformat",
+      "source_url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.5.schema.json",
+      "source_path": "nbformat/v4/nbformat.v4.5.schema.json",
+      "identity": {"release_tag": "v5.10.4", "schema": "notebook format v4.5"},
+      "capture": {"path": "public_captures/523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a.body", "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a", "bytes": 16104, "complete": true, "format": "raw schema response"},
+      "relevant_mechanism": "Schema represents cells as an ordered list and permits saved code-cell execution_count and outputs. It does not encode actual execution history, dependency graph, data identity, or environment lock."
+    },
+    {
+      "id": "nbclient-pr-282-report",
+      "publisher": "GitHub API / Jupyter nbclient",
+      "source_url": "https://api.github.com/repos/jupyter/nbclient/pulls/282",
+      "source_path": "pull request 282 API representation",
+      "identity": {"title": "include stream output in CellExecutionError", "merged_at": "2023-04-19T09:07:23Z", "merge_commit": "314c12ed3621e31a8b3f0713fd8ac41d3931bddc"},
+      "capture": {"path": "public_captures/6122fc4b5c004051db58ee0319242513d56236c16321480b67accaa872975f5f.body", "sha256": "6122fc4b5c004051db58ee0319242513d56236c16321480b67accaa872975f5f", "bytes": 18032, "complete": true, "format": "GitHub API JSON response"},
+      "relevant_mechanism": "Reporter describes a real debugging failure: duplicated displayed error where the earlier output held the useful cause but the terminating exception referred to prior output. Example has stdout hello, stderr errorred, Unicode source, and Exception: message; discussion notes streams can be arbitrarily large and considers truncation."
+    },
+    {
+      "id": "nbclient-pr-282-patch",
+      "publisher": "GitHub patch endpoint / Jupyter nbclient",
+      "source_url": "https://patch-diff.githubusercontent.com/raw/jupyter/nbclient/pull/282.patch",
+      "source_path": "pull request 282 patch",
+      "identity": {"merge_commit": "314c12ed3621e31a8b3f0713fd8ac41d3931bddc"},
+      "capture": {"path": "public_captures/35868bd41930f11f1cca3f26f69a06f4eb0c537763490d90cb961c88f2a98a58.body", "sha256": "35868bd41930f11f1cca3f26f69a06f4eb0c537763490d90cb961c88f2a98a58", "bytes": 11089, "complete": true, "format": "patch response"},
+      "relevant_mechanism": "Patch changes CellExecutionError construction to include stream output and updates tests/fixtures."
+    },
+    {
+      "id": "nbclient-074-tag-ref",
+      "publisher": "GitHub API / Jupyter nbclient",
+      "source_url": "https://api.github.com/repos/jupyter/nbclient/git/ref/tags/v0.7.4",
+      "source_path": "tag ref v0.7.4",
+      "identity": {"release_tag": "v0.7.4", "annotated_tag_object": "8be9cb42f1d2c8b72028299e49a5a1083b5d2a87"},
+      "capture": {"path": "public_captures/3dcd5f925092499744dce7cfa938c25a6104fac5f7613ec9ed5adc9bbb1e5f4e.body", "sha256": "3dcd5f925092499744dce7cfa938c25a6104fac5f7613ec9ed5adc9bbb1e5f4e", "bytes": 335, "complete": true, "format": "GitHub API JSON response"}
+    },
+    {
+      "id": "nbclient-074-tag-object",
+      "publisher": "GitHub API / Jupyter nbclient",
+      "source_url": "https://api.github.com/repos/jupyter/nbclient/git/tags/8be9cb42f1d2c8b72028299e49a5a1083b5d2a87",
+      "source_path": "annotated tag object for v0.7.4",
+      "identity": {"release_tag": "v0.7.4", "tag_object": "8be9cb42f1d2c8b72028299e49a5a1083b5d2a87", "tagged_commit": "d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b", "tag_date": "2023-04-25T14:37:49Z", "signature": "unsigned"},
+      "capture": {"path": "public_captures/ec6adadd8f71cd1f89c67bfb900626557a2b0008175abaa3c62b6b9173320371.body", "sha256": "ec6adadd8f71cd1f89c67bfb900626557a2b0008175abaa3c62b6b9173320371", "bytes": 682, "complete": true, "format": "GitHub API JSON response"}
+    },
+    {
+      "id": "nbclient-074-exceptions",
+      "publisher": "Jupyter / nbclient",
+      "source_url": "https://raw.githubusercontent.com/jupyter/nbclient/d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b/nbclient/exceptions.py",
+      "source_path": "nbclient/exceptions.py",
+      "identity": {"release_tag": "v0.7.4", "commit": "d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b"},
+      "capture": {"path": "public_captures/a31d8b2e8476de8fd6baa65fa40e45931fee5491d50f0307868acb42c9a72b72.body", "sha256": "a31d8b2e8476de8fd6baa65fa40e45931fee5491d50f0307868acb42c9a72b72", "bytes": 3996, "complete": true, "format": "raw source response"},
+      "relevant_mechanism": "from_cell_and_msg collects stream outputs by channel, includes those streams in the raised cell error text, and then includes the traceback."
+    },
+    {
+      "id": "nbclient-074-tests",
+      "publisher": "Jupyter / nbclient",
+      "source_url": "https://raw.githubusercontent.com/jupyter/nbclient/d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b/nbclient/tests/test_client.py",
+      "source_path": "nbclient/tests/test_client.py",
+      "identity": {"release_tag": "v0.7.4", "commit": "d38bbb3e66fb09454b4412887ec9ff7f91fe0d3b", "regression_test": "test_force_raise_errors"},
+      "capture": {"path": "public_captures/59694b5e995a6f48b5a34280060e2ef549de51e47837f2869403fa447d816be2.body", "sha256": "59694b5e995a6f48b5a34280060e2ef549de51e47837f2869403fa447d816be2", "bytes": 71162, "complete": true, "format": "raw source response"},
+      "relevant_mechanism": "Release test asserts the execution failure text contains Exception: message, stdout/stderr headings and hello/errorred stream lines. Unicode assertion is skipped on Windows due to an encoding issue in that test."
+    },
+    {
+      "id": "duckdb-141-tag-ref",
+      "publisher": "GitHub API / DuckDB",
+      "source_url": "https://api.github.com/repos/duckdb/duckdb/git/ref/tags/v1.4.1",
+      "source_path": "tag ref v1.4.1",
+      "identity": {"release_tag": "v1.4.1", "commit": "b390a7c3760bd95926fe8aefde20d04b349b472e"},
+      "capture": {"path": "public_captures/65ee83da3ee77d81871c6b792c94d0eaf9bc68dc79d87c8f74cb923f6f32c1da.body", "sha256": "65ee83da3ee77d81871c6b792c94d0eaf9bc68dc79d87c8f74cb923f6f32c1da", "bytes": 335, "complete": true, "format": "GitHub API JSON response"}
+    },
+    {
+      "id": "duckdb-141-read-csv-code",
+      "publisher": "DuckDB source",
+      "source_url": "https://raw.githubusercontent.com/duckdb/duckdb/b390a7c3760bd95926fe8aefde20d04b349b472e/src/function/table/read_csv.cpp",
+      "source_path": "src/function/table/read_csv.cpp",
+      "identity": {"release_tag": "v1.4.1", "commit": "b390a7c3760bd95926fe8aefde20d04b349b472e"},
+      "capture": {"path": "public_captures/9fb39cad210f45f0d63036321ca193d129ef48eaf5977cbbe6380f21760bdd2a.body", "sha256": "9fb39cad210f45f0d63036321ca193d129ef48eaf5977cbbe6380f21760bdd2a", "bytes": 10204, "complete": true, "format": "raw source response"},
+      "relevant_mechanism": "Registers read_csv/read_csv_auto through the multi-file CSV scan implementation and declares parser options such as sample_size, explicit types, all_varchar, ignore_errors, reject capture and parallelism."
+    },
+    {
+      "id": "duckdb-lts-csv-overview",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/data/csv/overview",
+      "source_path": "DuckDB 1.4 LTS CSV overview",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/eb3a6949223516edb7828f859432f46c8671402fa37c92a8c2e2c34541f2cf49.body", "sha256": "eb3a6949223516edb7828f859432f46c8671402fa37c92a8c2e2c34541f2cf49", "bytes": 382054, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/data/csv/overview", "path": "public_captures/ee492697922e4cecd4ec99764dd4d28925f9d9771b6087c8da1fde532e98c9c7.body", "sha256": "ee492697922e4cecd4ec99764dd4d28925f9d9771b6087c8da1fde532e98c9c7", "bytes": 16369, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "Documents CSV parser defaults including sample_size 20480, ignore_errors false, strict_mode true, store_rejects false and insertion-order preservation true."
+    },
+    {
+      "id": "duckdb-lts-csv-auto-detection",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/data/csv/auto_detection",
+      "source_path": "DuckDB 1.4 LTS CSV auto-detection",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/b74fe88b88257c0eadf870c44864337fcf4587d9454d408895ace37973b92a2e.body", "sha256": "b74fe88b88257c0eadf870c44864337fcf4587d9454d408895ace37973b92a2e", "bytes": 361907, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/data/csv/auto_detection", "path": "public_captures/33d987b5adecc5174291055310f49b3cdaf4d904bd5c4664eb53bed1a73b69b2.body", "sha256": "33d987b5adecc5174291055310f49b3cdaf4d904bd5c4664eb53bed1a73b69b2", "bytes": 12460, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "Auto-detection samples 20480 rows by default; -1 requests full-file detection. Compressed/nonseekable inputs may sample only the start. Explicit types are available. This and the CSV overview disagree on candidate-type priority, so that ordering is not treated as a stable contract."
+    },
+    {
+      "id": "duckdb-lts-csv-faulty",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/data/csv/reading_faulty_csv_files",
+      "source_path": "DuckDB 1.4 LTS faulty CSV handling",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/e2d0a66662d031a1c88138dcaee150f7755ce82311cad6b8a8e5a93d67bcc0b7.body", "sha256": "e2d0a66662d031a1c88138dcaee150f7755ce82311cad6b8a8e5a93d67bcc0b7", "bytes": 365645, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/data/csv/reading_faulty_csv_files", "path": "public_captures/1d6d6536b6282803f217c0c11d0fcb2b0272073586c3a52cd28bb0e414bc5e0a.body", "sha256": "1d6d6536b6282803f217c0c11d0fcb2b0272073586c3a52cd28bb0e414bc5e0a", "bytes": 13192, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "ignore_errors can skip faulty conversions; projection pushdown can avoid parsing a malformed unselected column. store_rejects diagnostics are temporary tables, so the product must persist any durable reject report itself."
+    },
+    {
+      "id": "duckdb-lts-parquet",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/data/parquet/overview",
+      "source_path": "DuckDB 1.4 LTS Parquet overview",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/0fbacd3d82f1a1e9fa696c91fb0a5127f85605961c0866e9fb1cae74e273cefb.body", "sha256": "0fbacd3d82f1a1e9fa696c91fb0a5127f85605961c0866e9fb1cae74e273cefb", "bytes": 372348, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/data/parquet/overview", "path": "public_captures/73ff1c1036663a04f0c65827e902918a625f1263c328401af351b527f88d94d9.body", "sha256": "73ff1c1036663a04f0c65827e902918a625f1263c328401af351b527f88d94d9", "bytes": 13388, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "Direct Parquet query support includes filter and projection pushdown; union_by_name has additional memory cost and is not the default. File row number is an explicit option rather than a default stable logical identity."
+    },
+    {
+      "id": "duckdb-lts-json-loading",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/data/json/loading_json",
+      "source_path": "DuckDB 1.4 LTS JSON loading",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/e4695995839d3ffd1568a3a51af0727b4cf95dac74827576e43aeda1c8a15ddc.body", "sha256": "e4695995839d3ffd1568a3a51af0727b4cf95dac74827576e43aeda1c8a15ddc", "bytes": 389030, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/data/json/loading_json", "path": "public_captures/6d8ab5513975e3a488e95d23d2818bb2bc4a7a3f3bb9e0db0b1a59956a68470.body", "sha256": "6d8ab5513975e3a488e95d23d2818bb2bc4a7a3f3bb9e0db0b1a59956a68470", "bytes": 16198, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "NDJSON sampling defaults to 20480 rows with -1 for full input; missing JSON keys become NULL; parse errors fail by default; explicit schema/columns and resource limits are documented."
+    },
+    {
+      "id": "duckdb-lts-order-preservation",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/sql/dialect/order_preservation",
+      "source_path": "DuckDB 1.4 LTS order preservation behavior",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/ed48c9a70bd481a0077ed1a2b029193da99585a0ac770541e585962b331ea3d3.body", "sha256": "ed48c9a70bd481a0077ed1a2b029193da99585a0ac770541e585962b331ea3d3", "bytes": 345753, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/sql/dialect/order_preservation", "path": "public_captures/8431a222867d9252069be649a346dbaf34174260f77b215bcfa4b267325ac411.body", "sha256": "8431a222867d9252069be649a346dbaf34174260f77b215bcfa4b267325ac411", "bytes": 41272, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "Docs list operations with preserved input order and operations without order guarantee; GROUP BY/joins/sampling and ORDER BY ties can be unstable. preserve_insertion_order defaults true but is not a general semantic ordering guarantee."
+    },
+    {
+      "id": "duckdb-lts-config",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/configuration/overview",
+      "source_path": "DuckDB 1.4 LTS configuration overview",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/ac3ecfef55ce4112ead4e27680ea695db49d4ce9402b016503a66815e5f0ea2f.body", "sha256": "ac3ecfef55ce4112ead4e27680ea695db49d4ce9402b016503a66815e5f0ea2f", "bytes": 400479, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/configuration/overview", "path": "public_captures/50a2ee22cccb2ee1d648191891cda24a30081b53304c88994560fde418e6c70d.body", "sha256": "50a2ee22cccb2ee1d648191891cda24a30081b53304c88994560fde418e6c70d", "bytes": 22442, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "Defaults include memory_limit 80% RAM, threads at CPU core count, external access enabled and known extension autoload enabled. The proposal therefore needs stricter managed resource and sandbox settings."
+    },
+    {
+      "id": "duckdb-lts-performance-environment",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/guides/performance/environment",
+      "source_path": "DuckDB 1.4 LTS performance environment guidance",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/f959d93f5dc98ddab1c7806667c163df5c31e95efacb19355c591b1aa5c22366.body", "sha256": "f959d93f5dc98ddab1c7806667c163df5c31e95efacb19355c591b1aa5c22366", "bytes": 348078, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/guides/performance/environment", "path": "public_captures/c7662d456228260599d458e0d4589cc65012cc16dac2f81e8edc6cc6f6a25813.body", "sha256": "c7662d456228260599d458e0d4589cc65012cc16dac2f81e8edc6cc6f6a25813", "bytes": 44429, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "DuckDB documents disk spilling for GROUP BY, joins, sorting and windows, and recommends fast local storage. This is implementation guidance, not evidence that the brief's 5 GB/16 GB target has been met."
+    },
+    {
+      "id": "duckdb-lts-python-sql",
+      "publisher": "DuckDB documentation",
+      "source_url": "https://duckdb.org/docs/lts/guides/python/execute_sql",
+      "source_path": "DuckDB 1.4 LTS Python SQL guide",
+      "identity": {"documentation_version": "DuckDB 1.4 LTS", "web_page_is_mutable": true, "capture_pin_date": "2026-10-05"},
+      "capture": {"path": "public_captures/9987c41760e33c692d849058e30b310e50c09c0a3b4ad4453fc03cede3e195b1.body", "sha256": "9987c41760e33c692d849058e30b310e50c09c0a3b4ad4453fc03cede3e195b1", "bytes": 343371, "complete": true, "format": "publisher HTML response"},
+      "supplemental_render": {"url": "https://r.jina.ai/http://duckdb.org/docs/lts/guides/python/execute_sql", "path": "public_captures/cb4c1e642db03657956a4fe60175f6d58ae1a043e2748ca6c0e6c53183b1e79e.body", "sha256": "cb4c1e642db03657956a4fe60175f6d58ae1a043e2748ca6c0e6c53183b1e79e", "bytes": 38748, "complete": true, "format": "rendered text aid"},
+      "relevant_mechanism": "DuckDB's Python client exposes SQL execution and result conversion, allowing a Python notebook and optional SQL workflow to share one local analytical engine; conversion to an in-memory dataframe is a separate, potentially large-result path."
+    }
+  ]
+}

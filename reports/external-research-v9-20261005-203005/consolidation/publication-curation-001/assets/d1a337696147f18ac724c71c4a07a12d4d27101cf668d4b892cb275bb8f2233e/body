@@ -1,0 +1,211 @@
+{
+  "schema": "er9.research.sources.v1",
+  "stage": "research",
+  "captured_utc_window": "2026-10-06T03:30:40Z/2026-10-06T03:34:00Z",
+  "capture_tool": "mcp public_https_get (exact-http-response-body-bytes); capture_id and sha256 below are from the tool receipts",
+  "notes": "Locators name the exact section/lines relied on. Applicability states whether the entry supports a source FACT or only bounded INFERENCE used in proposal.md. Truncated-capture limits are recorded per entry.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "GitHub repository metadata: bbc/audiowaveform",
+      "url": "https://api.github.com/repos/bbc/audiowaveform",
+      "pin": "repo state captured 2026-10-06; default branch master; latest release v1.10.3 (2025-08-20)",
+      "capture_id": "bc0d09a9397743299cef8b316d10c1df",
+      "capture_sha256": "f0f4c01c2c378e7596fac668709ace460ecbbd9311ab39f23bf428defd68e26d",
+      "captured_utc": "2026-10-06T03:30:40Z",
+      "locator": "JSON fields: license.spdx_id=GPL-3.0; language=C++; open_issues_count=43; archived=false; pushed_at=2025-08-24",
+      "applicability": "FACT: license and repo state for the waveform-cache precedent component."
+    },
+    {
+      "id": "S02",
+      "title": "audiowaveform CHANGELOG.md (raw, master)",
+      "url": "https://raw.githubusercontent.com/bbc/audiowaveform/master/CHANGELOG.md",
+      "pin": "master at capture; top entry v1.10.3 (2025-08-20)",
+      "capture_id": "029b160d85824b6da01044431e089087",
+      "capture_sha256": "615aedbdf138e689edb2e0540286d79db1c24fd0766b56ed545f364588571083",
+      "captured_utc": "2026-10-06T03:30:43Z",
+      "locator": "entries: v1.6.0 (2022-02-18) 'Fixed crash when reading malformed .dat files' + 'Added support for Opus audio'; v1.5.0 (2021-07-07) 'Increased channel limit to 24'; v1.1.0 (2017-02-02) 'Skip information frames in MP3 files, to correct for initial offset delay'",
+      "applicability": "FACT: release applicability of issue #159 fix (v1.6.0); FACT: MP3 info-frame offset is a real handled defect class; FACT: Opus support exists since 1.6.0."
+    },
+    {
+      "id": "S03",
+      "title": "audiowaveform README.md (raw, master)",
+      "url": "https://raw.githubusercontent.com/bbc/audiowaveform/master/README.md",
+      "pin": "master at capture; copyright 2013-2025 BBC",
+      "capture_id": "2fb73bc86f7742c7a5888187c9a6df8b",
+      "capture_sha256": "516077a1fb67d8d4ab1a388c1fd2bb187f149b9b7a11194487570b88c14a6f8d",
+      "captured_utc": "2026-10-06T03:32:06Z",
+      "locator": "sections: intro paragraph (min/max per N input samples, channel combine to mono); '--split-channels'; '--zoom' note 'it is not possible to set a zoom level less than that used to create the original waveform data file'; 'Install Google Test test framework'; header note 'Ongoing development of this project has moved to https://codeberg.org/chrisn/audiowaveform'; 'Note that Opus support requires libsndfile 1.0.29 or later'",
+      "applicability": "FACT: waveform cache model and generation-level zoom rule; FACT: upstream moved to Codeberg (adoption caveat)."
+    },
+    {
+      "id": "S04",
+      "title": "Issue bbc/audiowaveform#159 - Crash when parsing malformed DAT and FLAC files",
+      "url": "https://github.com/bbc/audiowaveform/issues/159",
+      "pin": "issue id 1105084830; created 2022-01-16; closed 2022-02-18, state_reason completed",
+      "capture_id": "19ca0225867b42f4b865eaa88bb8e4d5 (captured via GitHub search API result containing full issue JSON)",
+      "capture_sha256": "0e8969285376b9cf92aa06cbddeec3358a513421e90f4398cab31d07705ff845",
+      "captured_utc": "2026-10-06T03:30:59Z",
+      "locator": "issue body: crash.dat repro (crafted 22-byte .dat), gdb backtrace 'WaveformRescaler::rescale' SIGFPE, 'Input scale: 0 samples/pixel', gdb exploitable 'PROBABLY_NOT_EXPLOITABLE'; second repro crash.flac with stack inside libFLAC/libsndfile",
+      "applicability": "FACT: symptom, repro, and crash location for the issue chain."
+    },
+    {
+      "id": "S05",
+      "title": "Fix commit 63c8bd4 'Improved .dat file validation / See #159'",
+      "url": "https://github.com/bbc/audiowaveform/commit/63c8bd4baadc19e6e19c60dd3e0894f8e551215e",
+      "pin": "commit 63c8bd4baadc19e6e19c60dd3e0894f8e551215e; author/committer 2022-01-16; GPG signed (valid)",
+      "capture_id": "fa25454f1340418c8d59b8bb067cf0b3",
+      "capture_sha256": "00616f2d78d67f64a7b5be72bae96846a0fb490b6c8237e7fe5575ee2ba4cf10",
+      "captured_utc": "2026-10-06T03:32:05Z",
+      "locator": "files array: only src/WaveformBuffer.cpp (+24/-21); patch hunk: sample_rate_ and samples_per_pixel_ validated immediately after header read with reportReadError + 'return false', replacing the former post-read checks that only set success=false and continued",
+      "applicability": "FACT: fix content, file, and behavioral change (validation becomes fatal during header parse)."
+    },
+    {
+      "id": "S06",
+      "title": "Release commit 49e3668 'Version 1.6.0' (audiowaveform)",
+      "url": "https://github.com/bbc/audiowaveform/commit/49e36682f1bcebaa23717db3f0b6074ee15810f6",
+      "pin": "commit 49e36682f1bcebaa23717db3f0b6074ee15810f6; dated 2022-02-18; parent 1028801",
+      "capture_id": "a08b9eb7910948c48d7633681c052b0b (commits-listing capture; includes both 49e3668 and parent chain)",
+      "capture_sha256": "63905f28b15d26d83249eb10363f794d0f4967c061ff912a868d32a634f6a5d2",
+      "captured_utc": "2026-10-06T03:31:31Z",
+      "locator": "commits array entries dated 2022-02-18 (49e3668 'Version 1.6.0', 1028801 'Update README.md') and 2022-01-16 (63c8bd4 'Improved .dat file validation, See #159')",
+      "applicability": "FACT: fix shipped in v1.6.0 (2022-02-18); issue closed same day."
+    },
+    {
+      "id": "S07",
+      "title": "test/WaveformBufferTest.cpp (raw, master)",
+      "url": "https://raw.githubusercontent.com/bbc/audiowaveform/master/test/WaveformBufferTest.cpp",
+      "pin": "master at capture; file header copyright 2013-2020 BBC",
+      "capture_id": "67df51ed3aaa4bf480d77b8345f279b3",
+      "capture_sha256": "dbd8dfc4050b40c1618b07e545e7a298dce3c6d91201b0b97783bfd598a88a0d",
+      "captured_utc": "2026-10-06T03:33:57Z",
+      "locator": "TEST_F(WaveformBufferTest, shouldNotLoadDataFileWithSampleRateBelowMinimum) asserts load()==false and error 'Invalid sample rate: 0 Hz, minimum 1 Hz'; TEST_F shouldNotLoadDataFileWithSamplesPerPixelBelowMinimum asserts 'Invalid samples per pixel: 0, minimum 2'; fixtures under ../test/data/",
+      "applicability": "FACT: regression tests exercise the fatal-failure behavior the fix introduced."
+    },
+    {
+      "id": "S08",
+      "title": "test/data directory listing (audiowaveform)",
+      "url": "https://api.github.com/repos/bbc/audiowaveform/contents/test/data",
+      "pin": "master at capture",
+      "capture_id": "9438905b1e864ce3ac4baf95571f0b25",
+      "capture_sha256": "074c753363f410c73701d253c866d214e55502ec15ee61bec97c2c8a2732c598",
+      "captured_utc": "2026-10-06T03:33:40Z",
+      "locator": "entries: sample_rate_too_low.dat (blob b0210f11), samples_per_pixel_too_low.dat (blob 71b7df44), not_enough_channels.dat, size_mismatch.dat",
+      "applicability": "FACT: malformed-header regression fixtures exist at master."
+    },
+    {
+      "id": "S09",
+      "title": "Commit history of test/data/sample_rate_too_low.dat (audiowaveform)",
+      "url": "https://api.github.com/repos/bbc/audiowaveform/commits?path=test/data/sample_rate_too_low.dat",
+      "pin": "single-commit history",
+      "capture_id": "25a372b61c154ec3ac6b7e65ae87de7c",
+      "capture_sha256": "8f53f33ea8161688ea12bd8152cdc6e2f1a6b6562dbc6b4a6e0fcb0a98ee2442",
+      "captured_utc": "2026-10-06T03:33:58Z",
+      "locator": "single entry: f69dfc04 'Initial import' 2013-10-14",
+      "applicability": "FACT/CAUSAL-LIMIT: the malformed-header fixtures predate the 2022 fix; the fix added no new test (see S10). Recorded as a preserved limitation."
+    },
+    {
+      "id": "S10",
+      "title": "Commit search 'repo:bbc/audiowaveform 159'",
+      "url": "https://api.github.com/search/commits?q=repo:bbc/audiowaveform+159",
+      "pin": "search at capture; total_count=1",
+      "capture_id": "598b665b58294ba6bf3cbb82ef448276",
+      "capture_sha256": "336e80bfca26c58a1dc2a98cd4845c43a9a087c167060eca5975d21ac0a14e0f",
+      "captured_utc": "2026-10-06T03:33:39Z",
+      "locator": "items: only 63c8bd4 (the fix commit)",
+      "applicability": "FACT/CAUSAL-LIMIT: no separate test commit references #159; regression coverage relies on pre-existing fixtures/tests (S07, S09)."
+    },
+    {
+      "id": "S11",
+      "title": "libsndfile documentation: Supported formats (formats.html)",
+      "url": "https://libsndfile.github.io/libsndfile/formats.html",
+      "pin": "docs site footer 'The libsndfile version: 1.2.2'; page last-modified 2026-09-01",
+      "capture_id": "0a064ab4c8e34a9ba049c23fa34b3eae",
+      "capture_sha256": "80e0e3844e962a4fc70954036f036ad42cf5e0b0c586aed8da4ec0e60255487b",
+      "captured_utc": "2026-10-06T03:30:43Z",
+      "locator": "format/encoding matrix (WAV, AIFF, AU, RAW, FLAC, ... columns; PCM 16/24/32, float32, float64, u-law/a-law, ADPCM rows); prose: 'From version 1.0.18 ... FLAC and Ogg/Vorbis', 'From version 1.0.29 ... Ogg/Opus', 'From version 1.1.0 ... MP3'; footer version string",
+      "applicability": "FACT: supported input format boundary at the pinned version."
+    },
+    {
+      "id": "S12",
+      "title": "libsndfile documentation: The libsndfile API (api.html)",
+      "url": "https://libsndfile.github.io/libsndfile/api.html",
+      "pin": "docs site footer 'The libsndfile version: 1.2.2'",
+      "capture_id": "a5fa7e758474478b8067b255b81deae0",
+      "capture_sha256": "e5efcf2a9dabf0b667b8c91aaf032cbad0e35b3df3d74ff2aca77b329e0f0f74",
+      "captured_utc": "2026-10-06T03:32:36Z",
+      "capture_note": "full 71,451-byte page captured; delivery split: bytes 0-32767 (range sha256 ef7f0c4b...) and bytes 32768-71450 (range sha256 ce674df3...) both read by candidate",
+      "locator": "sections: sf_seek ('seeks are defined in number of (multichannel) frames ... returns ... -1 if an error occurred'); sf_readf_* ('Attempts to read beyond the end ... return less ... or 0'); 'Functions to get and set chunks' ('These functions fail safely ... should allow you to retrieve any and all chunks'); sf_get/sf_set_string table incl. utf-8 caveat for WAV/AIFF; Note 1 (integer MSB rule; float normalization [-1.0,1.0]); Note 2 (SFC_SET_SCALE_FLOAT_INT_READ); sf_open note ('will reject values for field channels that are greater than 1024'); major format table incl. SF_FORMAT_RF64 'RF64 WAV file'",
+      "applicability": "FACT: seek semantics, EOF read behavior, foreign-chunk capture API, string metadata caveats, float/int scaling rules, channel cap, RF64 availability."
+    },
+    {
+      "id": "S13",
+      "title": "libsndfile release 1.2.2 (GitHub releases/latest)",
+      "url": "https://api.github.com/repos/libsndfile/libsndfile/releases/latest",
+      "pin": "tag 1.2.2; published 2023-08-13",
+      "capture_id": "c221983c4a354c349064b2f98bcef3ca",
+      "capture_sha256": "b9ed5f486f2804d5333e18879e4794d84c3d03d10a145d345dfe63b68e62b267",
+      "captured_utc": "2026-10-06T03:32:36Z",
+      "locator": "tag_name=1.2.2; body '1.2.2 - 2023-08-13' minor fixes; assets libsndfile-1.2.2.tar.xz etc.",
+      "applicability": "FACT: coherent release pin for the I/O boundary recommendation."
+    },
+    {
+      "id": "S14",
+      "title": "libsamplerate documentation: Full API (api_full.html)",
+      "url": "https://libsndfile.github.io/libsamplerate/api_full.html",
+      "pin": "docs at capture; library latest release 0.2.2",
+      "capture_id": "3594180b466d4021b67a5873715b91a2c",
+      "capture_sha256": "b45438c450036c2cc40dd7e8c39abeafa99c1b60e1abb4d993fb6f576beaee85",
+      "captured_utc": "2026-10-06T03:30:59Z",
+      "locator": "SRC_DATA struct fields input_frames_used / output_frames_gen; 'can be called over and over again, with each new call providing new input data'; 'data_in and data_out arrays may not overlap'; src_reset ('should be called whenever a ... converter is to be used on two separate, unrelated pieces of audio'); src_set_ratio (smooth transition vs step response); src_clone",
+      "applicability": "FACT: streaming resampler contract that the chunked renderer must follow (partial consumption, per-clip reset)."
+    },
+    {
+      "id": "S15",
+      "title": "libsamplerate release 0.2.2 (GitHub releases/latest)",
+      "url": "https://api.github.com/repos/libsndfile/libsamplerate/releases/latest",
+      "pin": "tag 0.2.2; published 2021-09-05",
+      "capture_id": "973531de1eb5466e82448c1722b50591",
+      "capture_sha256": "02251e8085a2e25c3aaf0f5ccb9588519d38733932611dd7c41bad85ce9c93df",
+      "captured_utc": "2026-10-06T03:30:43Z",
+      "locator": "tag_name=0.2.2; body lists build-system fixes",
+      "applicability": "FACT: coherent release pin for the resampler recommendation."
+    },
+    {
+      "id": "S16",
+      "title": "Audacity Manual: Managing Audacity Projects",
+      "url": "https://manual.audacityteam.org/man/audacity_projects.html",
+      "pin": "page captured 2026-10-06; last-modified 2026-09-03",
+      "capture_id": "1bd0cb0af6734cdcb21c54e652f3e654",
+      "capture_sha256": "cf60e9b373230c60881a2d91e76c3266be700c21fd53876e8ff352ee1f975607",
+      "captured_utc": "2026-10-06T03:31:00Z",
+      "capture_note": "page is 37,614 bytes; candidate relied on the first 32,768 bytes (delivered range sha256 d092b77b...); all cited statements fall inside that range",
+      "locator": "statements: 'A project is stored in a file with an aup3 extension'; 'can be opened and used only by Audacity'; 'the Undo history is not saved with the project'; FAT/FAT32 blocked due to 4GB file limit; 'Automatic Crash Recovery' section; 'Compaction' on close; 'references the original audio material until you actually perform some kind of edit'; 'Permanently delete trimmed audio' (nondestructive trim hides audio, 'project bloat'); 'Temporary work files' WAL & SHM",
+      "applicability": "FACT (product-documented behavior): precedent lessons for project format choice, recovery, and nondestructive storage costs."
+    },
+    {
+      "id": "S17",
+      "title": "SQLite documentation: Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": "page captured 2026-10-06; last-modified 2026-09-11",
+      "capture_id": "7faceecfd37e4e1db627077667fdd20f",
+      "capture_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "captured_utc": "2026-10-06T03:31:32Z",
+      "capture_note": "page is 77,968 bytes; candidate relied on the first 32,768 bytes (delivered range sha256 204cdfe2...); all cited statements fall inside that range",
+      "locator": "sections 3.5 (rollback journal holds original pages), 3.7/3.10 (two flush/fsync phases), 3.11 ('the rollback journal file is deleted. This is the instant where the transaction commits'; journal existence decides commit vs rollback), section 2 hardware assumptions (writes may be reordered; fsync assumed working), section 4.2 hot rollback journals",
+      "applicability": "FACT (mechanism family): journal-then-rename/fsync discipline for safe project saves and interrupted-save recovery."
+    },
+    {
+      "id": "S18",
+      "title": "W3C WebVTT: The Web Video Text Tracks Format (TR)",
+      "url": "https://www.w3.org/TR/webvtt1/",
+      "pin": "W3C Candidate Recommendation Draft, 20 May 2026; revision 064802512ff9d8cd22dea4aea2cd1508aa2cc679",
+      "capture_id": "4a0c85258cbe4bd5a93dc36083a7c656",
+      "capture_sha256": "a9425c5bacb46e4f84dc377bfd5366a4c75343dbc8c8b606290bfe065cf0865c",
+      "captured_utc": "2026-10-06T03:31:34Z",
+      "capture_note": "TR page exceeds capture cap: first 524,288 bytes captured, body_complete=false; candidate relied only on the document header/status/abstract inside the captured bytes",
+      "locator": "header: title, 'W3C Candidate Recommendation Draft, 20 May 2026', editor/tooling metadata; abstract: 'captions or subtitles ... chapters for content navigation, and more generally any form of metadata that is time-aligned with audio or video content'",
+      "applicability": "FACT: WebVTT is a standardized, time-aligned text-track format suited to cue-table interchange; deeper syntax sections UNPINNED (see leads L02)."
+    }
+  ]
+}

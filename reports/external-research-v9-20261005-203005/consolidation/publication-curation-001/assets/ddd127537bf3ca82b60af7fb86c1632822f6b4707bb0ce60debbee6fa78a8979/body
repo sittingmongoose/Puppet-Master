@@ -1,0 +1,78 @@
+{
+  "catalog": "er9.research.leads.v1",
+  "stage": "research",
+  "leads": [
+    {
+      "id": "L1",
+      "kind": "unresolved-defect-watch",
+      "title": "DuckDB issue #25824 (OPEN): values beyond the CSV sniffer's sample_size are silently rounded/truncated while the sniffer itself would reject them",
+      "detail": "Directly on-topic for the brief's rule that preview sampling must not be presented as proof of a full-dataset property: even a mature engine currently converts out-of-sample values non-strictly (1.5 -> 2 in a BIGINT column; timestamps truncated to DATE) with zero rejects recorded. Consequence for design: dataset imports must record the effective sniffer options, offer a full-scan verification pass (sample_size=-1 equivalent or explicit declared schema), and label sample-based schema as 'sniffed (bounded sample)'.",
+      "evidence": "S7 (issue body, state open at capture 2026-09-24 last update), S9 (sample-size semantics still exercised at v1.5.6)",
+      "uncertainty": "Issue-internal reproduction and version matrix not independently rerun; behavior at pin v1.5.6 not executed by this stage (proposed witness P5)."
+    },
+    {
+      "id": "L2",
+      "kind": "unverified-fact",
+      "title": "Exact per-version CPython EOL dates for the chosen support window",
+      "detail": "devguide capture establishes main=3.16 (S11) but the per-branch EOL table was beyond the delivered bytes. Product choice 'support 3.11-3.13 initially' should be re-anchored on exact EOL dates before release; 3.10 EOL timing (Oct 2026, unverified here) is close enough to matter.",
+      "evidence": "S11",
+      "uncertainty": "EOL dates from memory, not from captured table."
+    },
+    {
+      "id": "L3",
+      "kind": "missing-source",
+      "title": "Successor location of the Jupyter notebook trust/security documentation",
+      "detail": "jupyter-notebook readthedocs /en/stable/security.html now 404s (S12). The trust model (saved outputs are inert data; code in outputs only runs when trusted) is relevant to the proposal's output-status design. Find the current canonical page (likely docs.jupyter.org) before the final stage cites it.",
+      "evidence": "S12 (404 capture)",
+      "uncertainty": "No successor URL captured in this stage."
+    },
+    {
+      "id": "L4",
+      "kind": "unverified-fact",
+      "title": "DuckDB NDJSON reader details (schema detection, union_by_name for heterogeneous records)",
+      "detail": "The docs navigation captured in S4/S5 shows a JSON section including format settings and caveats, but the NDJSON pages were not fetched. Design relies on general SQL engine capability; verify read_ndjson/union_by_name semantics at pin v1.5.6 before promising heterogeneous-record imports.",
+      "evidence": "S4 (sidebar lists JSON docs pages, unfetched)",
+      "uncertainty": "No direct capture."
+    },
+    {
+      "id": "L5",
+      "kind": "product-decision",
+      "title": "Preview labeling policy and 'verify full scan' UX default",
+      "detail": "Product choice that preview panels carry a persistent 'bounded sample, not a full-dataset property' banner and that a one-click 'verify on full data' re-runs schema checks with the declared schema or full scan. Default verify-off vs verify-on per import size is an open product call.",
+      "evidence": "W1 (executed: sample vs full inference divergence), S7 (L1 issue shows real-world harm)",
+      "uncertainty": "None factual; open product decision."
+    },
+    {
+      "id": "L6",
+      "kind": "unverified-fact",
+      "title": "pylock.toml installer/tool adoption status",
+      "detail": "PEP 751 is Final with canonical spec at PyPA (S10), but which installers the team actually uses to consume pylock.toml at pin time was not surveyed. Fallback: keep a requirements.txt export alongside the lock.",
+      "evidence": "S10",
+      "uncertainty": "Tool support matrix unverified."
+    },
+    {
+      "id": "L7",
+      "kind": "optional-opportunity",
+      "title": "Real-time collaboration via CRDT document layer",
+      "detail": "Notebook documents as JSON make CRDT-based co-editing feasible; execution/journal state must remain single-writer per project (S6 locking model). Deferred: out of minimum obligations.",
+      "evidence": "S1, S6 (mechanisms only); no collaboration source captured",
+      "uncertainty": "No CRDT library evaluated."
+    },
+    {
+      "id": "L8",
+      "kind": "pin-migration-watch",
+      "title": "DuckDB 2.0-dev preview exists alongside 1.5 current / 1.4 LTS",
+      "detail": "Docs version selector (S4) shows a 2.0-dev preview channel and an LTS channel. Pin policy: bind to v1.5.6 now; re-run the sniffer regression corpus (P5) and dataset-contract tests before any 2.x migration; LTS channel is the conservative fallback.",
+      "evidence": "S4 (version selector), S9 (version-sensitive expectations)",
+      "uncertainty": "2.0 contents unknown."
+    },
+    {
+      "id": "L9",
+      "kind": "unverified-fact",
+      "title": "Kernel-restart output semantics in Jupyter frontends (stale outputs after restart)",
+      "detail": "The proposal REQUIRES that a kernel restart must not leave outputs labeled current; nbformat shows outputs and execution_count are stored in the document regardless of session state (S1), which is consistent with stale-after-restart being a real pitfall, but no captured source demonstrates a specific frontend's restart behavior. Design handles it regardless; capture a frontend/kernel-client source if a citation is wanted.",
+      "evidence": "S1 (document format), engineering inference",
+      "uncertainty": "No frontend behavior capture in this stage."
+    }
+  ]
+}

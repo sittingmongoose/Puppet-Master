@@ -1,0 +1,39 @@
+# Local biomedical image review workspace
+
+**Status:** candidate-authored plan; component compatibility, application behavior, and performance are proposed checks, not executed.
+
+## Product and boundary
+
+Build a local desktop workspace for six researchers to review microscopy and other biomedical images. One editor at a time; researchers exchange a closed project on ordinary shared storage. No cloud or simultaneous editing in the first version. Source images are read-only.
+
+Use a Python desktop shell and evaluate napari 0.9.0 for multidimensional viewing and annotation layers. Add an application-owned project/provenance layer. Read OME-Zarr only in tested NGFF/Zarr profiles; read OME-TIFF through Bio-Formats 7.3.1 only for tested samples. Validate exact Python, napari, reader, Zarr, Java, and OS combination before locking dependencies. Bio-Formats requires Java 8+ and support varies by format, so format names are not compatibility promises [S3–S8]. Other files fail with readable error and detected metadata; preserve project and source. Any explicit conversion is a separate derived-data operation with input/output identity, settings, and software version.
+
+## Data contract
+
+Keep sources immutable. Preserve raw metadata and store user corrections separately with old/new values, author/time, and reason. Ambiguous axis, unit, orientation, or calibration requires an explicit mapping; never guess silently. Show dimensions, axes, sample type, channels, time, calibration, provenance, and unknowns.
+
+Persist source axis names/order. Store annotation vertices as zero-based continuous array-index coordinates; integer index denotes the sample and fractional values positions between samples. Every annotation records source series/digest, coordinate frame, axes, and scope (plane, time/channel, volume, or acquisition); 2D geometry also records fixed axes. Masks are integer label arrays tied to the same frame/selectors. NGFF labels represent pixel annotations, not app vector points/polygons [S1].
+
+For physical coordinates, apply declared transformations in order and retain units/metadata. NGFF 0.5 requires axes to match array dimensions and specifies sequential transforms, one scale per multiscale dataset and optional translation after scale [S1 §§2.1, 2.3–2.4]. This plan uses `p=i*s+t`; inverse `(p-t)/s`. W1 checks one 3D case only. Display/window/level/channel colors and view orientation are view state and do not rewrite samples. Resampling, projection, or registration creates a named derived dataset with transform, parameters, software, and provenance. Keep source and derived views visually distinct.
+
+## Project and workflow
+
+A `.mrw` folder holds a versioned manifest, immutable generations, annotation records, optional masks, events/provenance, and export receipts. Default to external source references; optionally package source/derived data. Record size and fast fingerprint at import, then compute full digest asynchronously/cancellably. Identity remains provisional until done. Relocation requires full digest plus series match; never match by filename alone.
+
+Save to a sibling staging generation, validate and flush, rename generation, then atomically replace `CURRENT` on the same filesystem. Retain the last known-good generation; on failure offer prior complete generation and preserve damaged files. Filesystem rename/flush/power-loss guarantees need testing on actual shared storage. Single writer only; close before copy. Failed/cancelled import, save, or export leaves prior generation and source intact.
+
+Workflow: create project; import multiple images; inspect metadata/provenance; navigate 2D/volume, channels and time; adjust display; annotate points, polygons and masks with reusable styles, stable IDs, scope, keyboard navigation and undo/redo; save/close/copy/reopen elsewhere; relocate by identity; export CSV/JSON annotation table, NGFF mask, and small derived image. Export table includes index coordinates and calibrated coordinates when known, axes/units, transforms, scope, source digest. Label rendered PNG/TIFF as display output with intensity mapping, not raw samples. Export receipt states preserved/omitted content. Accessibility includes keyboard operation, readable metadata/errors, and screen-reader labels.
+
+## Performance gates and evidence
+
+The 3 GB target on 8-core/16-GB workstations is a requirement to investigate, not established component behavior. Zarr v3 uses chunk grids/codecs, but partial decoding is MAY for codecs, not guaranteed [S2]. Test actual reader/backend/codec/access pattern. Propose bounded review only for validated chunked/tiled profiles. Measure 3 GB sample cold-open, first view, sparse navigation, channel/time changes, cancellation, save and volume access: wall time, incremental RSS, bytes read, decode/chunk/cache size, UI latency. Initial proposed gates (confirm with researchers): metadata ≤5 s, first view ≤3 s, warm navigation p95 <250 ms, incremental RSS <2 GiB with cache ≤1 GiB; no full-source materialization or second full-size copy. These numbers are choices, not results. Unsupported performance profile is labeled and does not silently trigger full decode.
+
+Before release, run dependency/format fixtures; axis/type/calibration combinations; forward/inverse and annotation/mask/export round-trips; source immutability; crash failpoints and recovery; digest relocation; failed/cancelled operations; actual shared-storage semantics; accessibility; and selection/outline/hit-testing across slice and ndisplay changes. All W2–W7 are **UNEXECUTED**.
+
+## Precedents, issue chain, alternatives
+
+OME-NGFF is an independent published data convention for axes, transforms, multiscales, and label images [S1]. napari 0.9.0 documents multidimensional viewing/layers, a UI precedent rather than persistence [S9–S10]. Bio-Formats is a separate reader precedent [S3–S8]. No cited source proves combined compatibility.
+
+In napari, #8578 reports selection loss across dimensional display/slice changes and #9247 off-slice shape outlines [S11–S12]. Merged PR #9059 changes selection/visibility and adds regression tests [S13–S15]; PR #9399 repairs an incomplete merge [S16]. The merge and follow-up are in v0.9.0 ancestry [S4,S17]. This motivates equivalent app tests; upstream tests were inspected, not run here.
+
+Opportunity: exchange derived NGFF label images with source references and loss-aware tables, subject to interoperability tests. Alternative: use napari or Fiji plus Bio-Formats and build only a thin project/provenance package; less viewer work, but persistence, coordinates, undo, and cross-version exchange remain to validate. Reconsider after a compatibility/workflow pilot.

@@ -1,0 +1,136 @@
+{
+  "schema": "er9.sources.v1",
+  "captured_on": "2026-10-06",
+  "records": [
+    {
+      "id": "S1",
+      "title": "Jupyter Notebook Format v5.10.4: Format Description",
+      "url": "https://nbformat.readthedocs.io/en/v5.10.4/format_description.html",
+      "pin": "nbformat documentation v5.10.4",
+      "locator": "Top-level structure; Code cells; Code cell outputs",
+      "capture_id": "a35ee7b812824959a8edc7e397f55af4",
+      "capture_identity": "SHA-256 exact HTTP response body d09bb699e755c2d4d277028b2e92ced7cb441f12ac4b00872a1e5af1bb4e18cf; 50,850 bytes; delivery truncated after first 32,768 bytes",
+      "applicability": "Documents ordered JSON cells and saved code outputs/execution_count. Supports format/interchange description only; it does not specify a complete execution trace, environment lock, or runtime semantics."
+    },
+    {
+      "id": "S2",
+      "title": "Jupyter nbclient source: client.py",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/nbclient/client.py",
+      "pin": "Git tag v0.10.2",
+      "locator": "NotebookClient traits; setup_kernel; async_execute; cell execution loop and error/timeout handling",
+      "capture_id": "3cd5b421f56d4bc987e6d45d2ba2e820",
+      "capture_identity": "SHA-256 exact HTTP response body 3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971; 49,833 bytes; delivery truncated after first 32,768 bytes",
+      "applicability": "Versioned implementation precedent for programmatic, ordered notebook execution and timeout/error options. Does not establish this product's durable events, resource isolation, atomic output commit, or application-level cancellation."
+    },
+    {
+      "id": "S3",
+      "title": "Jupyter nbclient README",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/README.md",
+      "pin": "Git tag v0.10.2",
+      "locator": "Project description and relationship to jupyter_client, nbconvert ExecutePreprocessor",
+      "capture_id": "a0ef323cc8934c7592a185aa4a43ffdc",
+      "capture_identity": "SHA-256 exact HTTP response body 6c6b1895793cd079c45cb2260303031bf962653fd41fa5c2b88383289bb1cd66; complete capture",
+      "applicability": "Primary project description distinguishing notebook execution from kernel communication. Confirms a component boundary precedent, not a promise that all execution behavior is reproducible."
+    },
+    {
+      "id": "S4",
+      "title": "Jupyter Server security documentation",
+      "url": "https://jupyter-server.readthedocs.io/en/stable/operators/security.html",
+      "pin": "stable documentation capture observed as Jupyter Server 2.21 on 2026-10-06",
+      "locator": "Security page: access to a Jupyter Server means ability to run arbitrary code; token/auth discussion",
+      "capture_id": "616143156db7452d9e03493c7624dba7",
+      "capture_identity": "SHA-256 exact HTTP response body 55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b; 79,569 bytes; delivery truncated after first 32,768 bytes",
+      "applicability": "Supports arbitrary-code threat model only. Does not demonstrate an OS sandbox, Jupyter kernel containment, or security of the proposed permissions."
+    },
+    {
+      "id": "S5",
+      "title": "DuckDB CSV Auto Detection",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection.html",
+      "pin": "DuckDB documentation selector observed as 1.5 (current) in capture dated 2026-10-06",
+      "locator": "CSV Auto Detection; Sample Size; sniff_csv; lines 3740-3775 of captured HTML body (default sample 20,480; seekable/non-seekable sampling distinction); lines 3791-3849 (detected options)",
+      "capture_id": "1a19d29f84f547e9864bc7740fd10803",
+      "capture_identity": "SHA-256 exact HTTP response body b85b4ca7021523c3b79069d3ada242d524cc79cb19fcb8a413039d9bd0074069; 372,286 bytes; complete capture; initially delivered range truncated, relevant body subsequently read from case-owned capture",
+      "applicability": "Documents DuckDB CSV inference behavior and user overrides, including sampled type detection; a current alias captured at 1.5 is not a permanent patch-version contract. Supports labeling inferred schema as sample-derived."
+    },
+    {
+      "id": "S6",
+      "title": "DuckDB JSON Overview",
+      "url": "https://duckdb.org/docs/current/data/json/overview.html",
+      "pin": "DuckDB documentation selector observed as 1.5 (current) in capture dated 2026-10-06",
+      "locator": "About JSON; Loading JSON examples; read_json custom columns/format; auto-infer and COPY examples; lines 3758-3769 and 3811-3847 of captured HTML body",
+      "capture_id": "b5299841792f47cc921db35f771a5e03",
+      "capture_identity": "SHA-256 exact HTTP response body 72b426a4a957a574f3708d5cf934a84760cefff74fd231e9b18d6535970fb2e1; 362,469 bytes; complete capture; initial delivery only first 32,768 bytes, relevant body subsequently read from case-owned capture",
+      "applicability": "Documents JSON support and reader options in DuckDB 1.5 docs. Does not establish every NDJSON schema-evolution or malformed-line policy; those need pinned-reader tests."
+    },
+    {
+      "id": "S7",
+      "title": "DuckDB Reading and Writing Parquet Files",
+      "url": "https://duckdb.org/docs/current/data/parquet/overview.html",
+      "pin": "DuckDB documentation selector observed as 1.5 (current) in capture dated 2026-10-06",
+      "locator": "Page title and description: read Parquet and DESCRIBE reader; version selector in captured HTML shows 1.5 current",
+      "capture_id": "0f4ecbc256944fe1be5b5eb7ef947241",
+      "capture_identity": "SHA-256 exact HTTP response body 3ff624e1a1b85f597e40a8d5e68ddddc39fc59b92c12bee6b5e7afa9445ff16e; 385,444 bytes; complete capture; first delivery range only 32,768 bytes",
+      "applicability": "Establishes documented basic local Parquet reading and schema inspection examples. Detailed projection, row-identity and streaming performance still require exact-version validation."
+    },
+    {
+      "id": "S8",
+      "title": "DuckDB How to Tune Workloads / Larger-than-Memory Workloads",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads.html",
+      "pin": "DuckDB documentation selector observed as 1.5 (current) in capture dated 2026-10-06",
+      "locator": "The preserve_insertion_order Option; Larger-than-Memory Workloads; Blocking Operators; Limitations (captured body lines 3782-3887)",
+      "capture_id": "fa24cb6c1fa14c8ab1f8d030e1c59b35",
+      "capture_identity": "SHA-256 exact HTTP response body 4adf35a222f7fc99481b32c3880ab88a8962d2f80c64d5da9d1f16b2f8cbd321; complete capture",
+      "applicability": "Documents out-of-core spill support and important operator limitations; disabling insertion-order preservation permits reordering. Documentation is not a 5 GB benchmark or guarantee for every query shape."
+    },
+    {
+      "id": "S9",
+      "title": "DuckDB issue #24593: COUNT(x) rewritten to COUNT(*) doesn't prune x from scan",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/24593",
+      "pin": "Issue #24593, opened against DuckDB v1.5.5; issue API capture 2026-10-06",
+      "locator": "Issue title, body and version/environment fields; reported count(uuid) versus count(*) example and reporter benchmark",
+      "capture_id": "6532512bbf634ba683197a3ef0ea6762",
+      "capture_identity": "SHA-256 captured issue body 768977fee957262656d5d3ab48b546483d5beb923a8d98e41a339b12c22c676e; complete issue capture",
+      "applicability": "Evidence of the reporter's v1.5.5 reproduction and hypothesis. Benchmark values are reporter claims, not independently verified measurements."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB PR #24607 fixing statistics-driven unused-column pruning",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/24607",
+      "pin": "Merged to main 2026-08-27; merge commit 2756f0265561e29caea8750fb373e6fa1c9b79bf",
+      "locator": "PR merged_at, merge_commit_sha, body: optimizer rerun of UNUSED_COLUMNS, projection-map / COLUMN_LIFETIME updates and nested CTE reader binding correction; linked tests",
+      "capture_id": "3ac877946bc440a7a2ca246ee3ace6fa",
+      "capture_identity": "SHA-256 captured PR response body 050f9f5e872fa18217a4eedda625ca760aa47d66ea37c9582bdc3cdc1176e5e0; complete capture",
+      "applicability": "Establishes merged main-branch fix description and commit. Main is a development branch; merge alone does not prove inclusion in a tagged release or packaged Python wheel."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB PR #24607 changed files and regression tests",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/24607/files?per_page=100",
+      "pin": "Files for PR #24607, merged commit 2756f0265561e29caea8750fb373e6fa1c9b79bf",
+      "locator": "test/optimizer/statistics/statistics_count_not_null_pruning.test; test/optimizer/statistics/statistics_count_not_null_join_pruning.test; test/optimizer/common_subplan_nested_cte.test; associated optimizer source changes",
+      "capture_id": "2f8c66625c21425c982148f32ad8c281",
+      "capture_identity": "SHA-256 exact response body 4af2c53e2dd05dd63debc8f63affcd43e9d38a139dfe1b7092b810254b7ccd94; complete capture",
+      "applicability": "Shows named merged regression tests and test scope, including joins and nested CTE bindings. A diff does not prove those tests passed in each released artifact."
+    },
+    {
+      "id": "S12",
+      "title": "DuckDB v1.5.6 optimizer pass ordering",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/src/optimizer/optimizer.cpp",
+      "pin": "Git tag v1.5.6",
+      "locator": "Optimizer pass sequence around UNUSED_COLUMNS and PropagateStatistics",
+      "capture_id": "a75c9d6ceebf4c928d7e5726bf1a1bdb",
+      "capture_identity": "SHA-256 exact raw source body 70f533014a9fd76d00b89967f4876dbc796ac4e7a0c1c9094d944a4e385fb245; complete capture",
+      "applicability": "Tagged source still shows the pre-fix pass ordering and lacks the merged rerun behavior inspected in the PR. Supports saying v1.5.6 does not contain this source change, not a claim about later versions."
+    },
+    {
+      "id": "S13",
+      "title": "DuckDB v1.5.6 tagged path for new count-pruning test",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/optimizer/statistics/statistics_count_not_null_pruning.test",
+      "pin": "Git tag v1.5.6; HTTP 404 at the exact test path",
+      "locator": "Exact file path named in PR #24607 changed-files listing",
+      "capture_id": "4abf6cc1f1be49aeb04c7d2199006af9",
+      "capture_identity": "SHA-256 captured 404 response body d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "applicability": "Only establishes that this exact new regression-test path is absent at v1.5.6; absence alone is not proof of runtime behavior. Read together with tagged optimizer source S12."
+    }
+  ]
+}

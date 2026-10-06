@@ -1,0 +1,84 @@
+# Critique review — brief B research proposal (fresh critic stage, ER9)
+
+Reviewed artifacts (frozen same-arm inputs, sha256-verified against `inputs/prior_file_index.json`):
+- `inputs/prior/research/research/proposal.md` (22,459 B, `f3770f22…`)
+- `inputs/prior/research/research/sources.json` (13,963 B, `0e817a1a…`)
+- `inputs/prior/research/research/witnesses.json` (6,709 B, `30114ca8…`)
+- `inputs/prior/research/research/leads.json` (5,662 B, `ddd12753…`)
+
+Method: I re-fetched the primary sources independently with the stage's admitted `public_https_get` (capture window 2026-10-06T10:30–10:36Z) and compared against the research stage's recorded pins at byte level where the endpoint is stable, at exact-locator level where it is not (GitHub API bodies embed volatile counters such as `download_count`; duckdb.org pages embed cache-busting query strings — byte identity is not a valid expectation there, locator equality is). No ineligible campaign/evaluator material was encountered in any response. Verdict labels: **V-**n verified, **C-**n correction, **N-**n new evidence, **K-**n kept-supported claim, **R-**n resolution action for the next candidate.
+
+## 1. Verdict summary
+
+The proposal is substantially source-correct. Every consequential source claim I re-fetched held at the stated pin, the issue/PR chains are real and correctly described, and the honest labels (source fact vs inference vs choice vs executed vs unexecuted) are used accurately throughout. I found **no fabricated source, no invented receipt, and no overreach of an executed witness**. I found two corrections (one pin mislabel in `sources.json`, one scope overstatement in what the v1.5.6 regression file can evidence), one stated uncertainty that is now **resolved by stronger evidence** (first release containing the C1 fix = v0.2.2), and three new evidence items that strengthen the proposal's own leads. Nothing found undermines the architecture or the data contract.
+
+## 2. Independent verification results
+
+- **V-1 (S1/S2, nbformat)** — `releases/latest` re-captured **byte-identical** (sha `94f3a4d4…`): v5.11.1, published 2026-08-17T08:10:55Z, prerelease false, wheel digest `cc6698fa…` matches. The v4.5 schema at tag v5.11.1 re-captured **byte-identical** (sha `523e3578…`); all six S1 locators verified verbatim in the delivered body: description "Jupyter Notebook v4.5 JSON schema."; `cell_id` pattern `^[a-zA-Z0-9-_]+$`, minLength 1, maxLength 64; `code_cell.required` includes id/outputs/execution_count; execution_count description "…prompt number. Will be null if the cell has not been run."; output oneOf execute_result/display_data/stream/error; `nbformat` minimum 4 maximum 4, `nbformat_minor` minimum 5.
+- **V-2 (S2 byte-identity claim)** — schema fetched from `main` returns the same etag and sha `523e3578…` as the tag: the "schema byte-identical between main and tag v5.11.1" claim is verified as of 2026-10-06, not just at the research capture window.
+- **V-3 (S3, DuckDB release)** — `releases/latest` re-fetch: tag v1.5.6, "DuckDB v1.5.6 Bugfix Release", published 2026-09-28T13:35:11Z, prerelease false — locator-level match. Full-body sha differs from prior S3 (`4c2692e3…` vs `e37bba3e…`, same 53,225-byte length): volatile-field drift, expected on this endpoint; prior `source_version` remains a valid capture identity, locators carry the claim. Verified.
+- **V-4 (S6, concurrency doc)** — fresh capture (full body `8e052204…`; prior `882321c2…`; page bytes drift via cache-busted assets). The og:description verifies the load-bearing text verbatim: read-write = one process read+write; read-only = multiple processes read, none write (`access_mode = 'READ_ONLY'`); multiple writer threads via MVCC + optimistic concurrency control "all within that single writer process". Version selector re-confirms "1.5 current", "1.4 LTS", "2.0-dev preview" (supports S4 and L8).
+- **V-5 (S7/S8, PR #1015 chain)** — PR API re-fetch: `merged: true`, `merged_at` 2020-10-16T11:12:26Z, merged_by Mytherin, 7 changed files, +5362/−9. The `/files` diff re-captured **byte-identical** to prior S8 (sha `9bb42216…`); every claimed hunk verified: SQLNULL appended to the type-candidate list (@@ -512); fallback `if (best_sql_types_candidate.size() == type_candidates.size()) { d_type = LogicalType::VARCHAR; }` (@@ -718,8 +719,11); `test_auto_voter.test` added expecting `COUNT(*) = 5300` from `voter.tsv`; `test_sample_size.test` flipped `statement error`→`statement ok` with typeof expectations; `int_bol.csv` case + both fixtures (voter.tsv = 5,301 added lines). The research stage's C1 description is accurate.
+- **V-6 (S7, issue #25824)** — full issue body now captured (11,074 B, sha `2916d6e9…`): state **open** at 2026-10-06 (created 2026-09-17, updated 2026-09-24, 2 comments, label "needs triage"). Body confirms every quoted claim as issue-internal: default sample 20,480 *lines* (header counts, so 20,479 data rows before the boundary); silent `1.5→2` rounding in BIGINT, timestamp→DATE truncation, `007→7`, `1_000→1000`, zero rejects under `store_rejects=true`, non-parseable `abc`/`true` raise, `sample_size=-1` recovery; author version matrix 1.1.3 / 1.5.5 / 1.6.0.dev214 / main@2bbfe6f236 (v2.1.0-dev84350). Note: the matrix does **not** include 1.5.6, so proposed witness P5 (repro at the exact pin) remains necessary and correctly scoped.
+- **V-7 (S9, regression file at v1.5.6)** — re-captured **byte-identical** (sha `0cc5061c…`). Confirms "TestInteger now expects BIGINT" (SAMPLE_SIZE=1 block: BIGINT/VARCHAR/DATE/VARCHAR; SAMPLE_SIZE=−1 block: BIGINT/DOUBLE/DATE/VARCHAR) versus INTEGER in the 2020 diff — the proposal's version-sensitivity finding stands.
+- **V-8 (S10, PEP 751)** — full-body re-capture **byte-identical** to prior `source_version` (sha `a73937a1…`): Status Final, Created 24-Jul-2024, Resolution 31-Mar-2025, Replaces 665; file-name MUST be `pylock.toml` or match `r"^pylock\.([^.]+)\.toml$"`; historical-document banner pointing to the PyPA specs page; abstract's "without the need for dependency resolution at install-time". Verified.
+- **V-9 (S11, devguide)** — re-captured **byte-identical** (sha `4f149cde…`, Last-Modified 2026-10-01): "The main branch is currently the future Python 3.16, and is the only branch that accepts new features." Verified in delivered text.
+
+## 3. Corrections (evidence-backed)
+
+- **C-1 — `sources.json` S8 pin mislabeled the merge commit (must fix).** S8's pin reads "PR 1015 (merge commit 921d87713fd5052f5feed541cfdb2723b05a7a9e per blob URLs)". The PR API shows `merge_commit_sha` = `625b56f021ea19bc3181a60756801d746b2d1968`; `921d877…` is the PR **head** sha (it appears as `head.sha`/`statuses_url`, and as the second parent of merge commit 625b56f, whose message is "Merge pull request #1015 from cwida/ncvoter"). The blob URLs in `/files` reference the head sha, which is how the mislabel arose. Fix: S8 pin → "PR head 921d877…, merged as 625b56f… (2020-10-16)". Proposal prose never cites the sha, so no prose change; scope of impact is the catalog pin only. (Correcting the pin is not, by itself, evidence about anything else.)
+- **C-2 — S9 scope overstatement (must fix).** At v1.5.6 the `test_sample_size.test` file exercises only **explicit** `SAMPLE_SIZE=1` and `SAMPLE_SIZE=-1`; its later blocks' comments still say "sample size 500 / 50 / 200 / 20" while every statement actually uses `SAMPLE_SIZE = -1`. So the file evidences (a) presence at the pin and (b) version-shifted expectations, but **not** default-`sample_size` behavior at v1.5.6. The proposal's §4 sentence stays true with this scope note added; it also *strengthens* P5, because the pin's own regression file no longer covers the default-sampling path that #25824 exercises.
+- **C-3 — §14's stated uncertainty "first release containing the C1 fix is not established" is now resolved (apply the upgrade).** Compare-API ancestry: for `v0.2.1...625b56f` the merge-base is `d9bcedd` (v0.2.1 tip, 2020-08-29), `ahead_by 454` ⇒ the fix is **not** in v0.2.1; for `v0.2.2...625b56f` the merge-base is `625b56f` itself, `behind_by 288` ⇒ the fix **is** in v0.2.2 (tip `3222acc`, 2020-11-01); for `v0.2.3...625b56f`, merge-base again `625b56f`, `behind_by 818` ⇒ also in v0.2.3. First checked release containing the fix: **v0.2.2**. Residual limit (state it): releases between v0.2.1 and v0.2.2 were not exhaustively enumerated; the conclusion assumes the 0.2.1→0.2.2 tag sequence is consecutive.
+- **C-4 — labeling precision (should fix).** §10's "so 3.15 is newest stable" is an inference from "main = 3.16" (V-9); that 3.15 has shipped is not in any captured bytes (the release-cycle table was beyond the delivered portion). Mark it [INF] and extend L2 to cover "3.15 released status + per-version EOL dates" together.
+
+## 4. New evidence found by this critique (N)
+
+- **N-1** — The full #25824 body includes a **self-contained CLI SQL repro** (COPY/UNION ALL generates the CSV; no external data) and names the claimed mechanism (sniffer `strict=true` vs scanner `strict=false` in `TrySimpleIntegerCast`/`TryConvertDate`). P5 can adopt this repro directly; the mechanism claim remains author-run, not independently rerun.
+- **N-2** — #25824 references sibling issue **#25786**: a `read_json` variant of the same past-sample conversion problem, which the author says became reachable at defaults only in **1.5.1**. New lead: if NDJSON import is promised (currently L4), the same sample-past-end risk must be verified there, not only for CSV.
+- **N-3** — The DuckDB repo `default_branch` is now `v2.0-cyanoptera` (observed in the PR/issue payloads), independently corroborating L8's 2.0 migration watch alongside the docs version selector.
+
+## 5. Unsupported or critical assumptions (kept open, with status)
+
+1. **DuckDB out-of-core/spill capability** — design-inferred in §8, correctly labeled; P1 (UNEXECUTED) is the right check. The 5 GB envelope claim must stay a target in the final proposal.
+2. **NDJSON reader semantics** — no direct source captured (L4), now elevated by N-2; the brief lists NDJSON as a typical source, so the final proposal either captures `read_ndjson`/`union_by_name` docs at the pin or scopes NDJSON promises down.
+3. **Default `sample_size = 20480`** — still issue-internal; the CSV docs parameter table has never been captured (S5 delivery note; my re-fetch would truncate identically). Keep the number attributed to the issue or capture the parameters table.
+4. **Kernel-restart output semantics (L9)** — no frontend-behavior source; the design forces `unverified` regardless, so this is a citation gap, not a design gap. Keep.
+5. **pylock.toml tool support (L6)** and **CPython EOL/3.15 status (L2 + C-4)** — keep as unverified anchors of the environment-binding choice.
+
+## 6. Plan-obligation coverage check
+
+All brief obligations are covered by the research proposal: 10-step minimum workflow (§7), four output statuses plus derived-not-hand-set rule and the restart/interrupt non-silence rule (§6), invalidation table for upstream edit / dataset change / env change / cancel (§6), inside/outside clean-replay guarantee boundary (§6), data contract with schema tiers, null provenance, row identity, quarantine-not-delete (§5), envelope target with explicit different bound and honest UNEXEC label (§8), untrusted boundary with network default-deny, resource caps, source-browse/execute separation, and the explicit "import blacklist is not isolation" statement (§9), SQL-through-data-plane with CLI read-only interop (§10), two independent precedents + PEP 751 with independence stated (§3), issue→fix→regression chain with version limits (§4, now strengthened), opportunities/alternative/rejected record (§13). Two minor gaps to address in the final stage: (a) **schema evolution** is handled only implicitly via digest invalidation — add a short explicit mapping (Parquet column added/retyped, NDJSON new fields, declared-schema bump → affected outputs stale + contract re-verify); (b) the saved-vs-current **result diff** is at mechanism level (run-event comparison, §7.7/§13) — acceptable for research, keep visible.
+
+## 7. Executed-witness review
+
+W1 and W2 are correctly labeled `executed-by-candidate` with receipts (code/data/stdout hashes, exit codes, limits), including two honestly recorded failed iterations for W1. Scope limits are accurate and are respected wherever the proposal cites them (§11: "Neither check establishes full application behavior…"). This critique stage did not re-run them and holds no receipt bodies beyond the catalog; acceptance is of labeling and scoping, not independent re-execution. P1–P6 are correctly labeled UNEXECUTED with no receipts claimed.
+
+## 8. Resolutions for the next candidate
+
+- **R-1 (must):** fix S8's pin per C-1 (head sha vs merge_commit_sha).
+- **R-2 (must):** replace §14's "first release containing the C1 fix not pinned" with the v0.2.2 ancestry evidence (C-3), keeping the consecutive-release assumption visible; cite the three compare captures.
+- **R-3 (must):** add the C-2 scope note to §4/S9 (explicit SAMPLE_SIZE only; stale block comments; default path untested at pin) and tie it to P5.
+- **R-4 (should):** relabel "3.15 is newest stable" as inference; extend L2 (C-4).
+- **R-5 (should):** add the explicit schema-evolution mapping (§6 gap a); condition NDJSON promises on L4/N-2 verification.
+- **R-6 (should):** add N-1/N-2/N-3 to the catalogs; use #25824's SQL repro as P5's input.
+- **R-7 (preserve):** everything else — architecture, data contract, statuses/invalidation, boundary design, pin set, labels — is verified or properly labeled and must be carried forward unchanged, not relitigated.
+
+## 9. Critique-stage capture inventory
+
+Fresh public captures, 2026-10-06T10:30:23Z–10:35:42Z, all via admitted `public_https_get`; sha256 = exact response body:
+1. `api.github.com/repos/jupyter/nbformat/releases/latest` — `94f3a4d4…` (V-1)
+2. `raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/nbformat.v4.schema.json` — `523e3578…` (V-1)
+3. `raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json` — `523e3578…` (V-2)
+4. `api.github.com/repos/duckdb/duckdb/releases/latest` — `4c2692e3…` (V-3; drift vs prior S3 explained)
+5. `api.github.com/repos/duckdb/duckdb/issues/25824` — `2916d6e9…` (V-6, N-1, N-2)
+6. `api.github.com/repos/duckdb/duckdb/pulls/1015` — `e50cfd15…` (V-5, C-1)
+7. `api.github.com/repos/duckdb/duckdb/pulls/1015/files` — `9bb42216…` byte-identical to prior S8 (V-5)
+8. `raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/sql/copy/csv/auto/test_sample_size.test` — `0cc5061c…` byte-identical to prior S9 (V-7, C-2)
+9. `api.github.com/repos/duckdb/duckdb/compare/v0.2.3...625b56f0…` — `2759f2dc…` (C-3)
+10. `api.github.com/repos/duckdb/duckdb/compare/v0.2.2...625b56f0…` — `8ad1f767…` (C-3)
+11. `api.github.com/repos/duckdb/duckdb/compare/v0.2.1...625b56f0…` — `c788d0d7…` (C-3; 524,289+ B, truncated, needed fields in delivered prefix)
+12. `devguide.python.org/versions/` — `4f149cde…` byte-identical to prior S11 (V-9)
+13. `peps.python.org/pep-0751/` — `a73937a1…` byte-identical to prior S10 (V-8)
+14. `duckdb.org/docs/current/connect/concurrency` — `8e052204…` (V-4; drift vs prior S6 explained)
+
+Evidence limits: all DuckDB *runtime* behavior (sniffer conversions, concurrency enforcement, out-of-core execution) remains documented/issue-attributed, never executed here; #25824's content is the author's report (state and text verified; reproduction not rerun). This review changes no claim of the proposal by its own force — corrections take effect only if the next stage adopts R-1…R-6.

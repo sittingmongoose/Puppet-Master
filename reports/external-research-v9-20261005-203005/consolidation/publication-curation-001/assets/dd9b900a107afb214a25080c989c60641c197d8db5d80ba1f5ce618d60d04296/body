@@ -1,0 +1,234 @@
+{
+  "catalog_version": 1,
+  "evidence_cutoff": "2026-10-05",
+  "stage": "I-05-LUNA-S1-control-research-a001",
+  "sources": [
+    {
+      "id": "S1",
+      "kind": "primary specification",
+      "title": "OME-NGFF specification 0.4",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "OME-NGFF 0.4 specification",
+      "locators": [
+        {"section": "2", "heading": "On-disk format", "anchor": "#on-disk"},
+        {"section": "3.1", "heading": "Axes", "anchor": "#axes-md"},
+        {"section": "3.3", "heading": "Coordinate transformations", "anchor": "#trafo-md"},
+        {"section": "3.4", "heading": "Multiscale images", "anchor": "#multiscale-md"},
+        {"section": "3.5", "heading": "Display settings", "anchor": "#omero-md"},
+        {"section": "3.6", "heading": "Labels", "anchor": "#labels-md"},
+        {"section": "3.7", "heading": "Image labels", "anchor": "#label-md"}
+      ],
+      "capture": {
+        "id": "a749ba917eed4428af0bf951d5ad5587",
+        "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+        "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "captured_at": "2026-10-05T22:17:19.871950+00:00",
+        "response_bytes": 163120,
+        "complete": true
+      },
+      "applicability": "Defines the specific NGFF 0.4/Zarr v2 axis, multiscale, transform, display-hint, and integer image-label conventions used in the proposed boundary. Its documented transformations do not provide a general rotation/shear affine. Does not establish behavior of a particular parser or viewer."
+    },
+    {
+      "id": "S2",
+      "kind": "primary specification",
+      "title": "OME-TIFF specification",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "pin": "OME Model documentation 6.2.2",
+      "locators": [
+        {"heading": "OME-TIFF specification", "anchor": "#ome-tiff-specification"},
+        {"heading": "DimensionOrder", "anchor": "#dimensionorder"},
+        {"heading": "The TiffData element", "anchor": "#the-tiffdata-element"},
+        {"heading": "Multi-file OME-TIFF", "anchor": "#multi-file-ome-tiff"}
+      ],
+      "capture": {
+        "id": "9702c124defd4b78b35b42c56e619bb9",
+        "path": "public_captures/fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584.body",
+        "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+        "captured_at": "2026-10-05T22:18:46.379651+00:00",
+        "response_bytes": 48745,
+        "complete": true
+      },
+      "applicability": "Supports the requirement to parse OME XML TiffData/IFD plane assignments and dimension order rather than assume TIFF page order equals project axis order. The proposal limits implementation to a tested subset."
+    },
+    {
+      "id": "S3",
+      "kind": "release metadata and project documentation",
+      "title": "tifffile 2025.5.10 release metadata and description",
+      "url": "https://pypi.org/pypi/tifffile/2025.5.10/json",
+      "pin": "tifffile 2025.5.10",
+      "locators": [
+        {"json_pointer": "/info/version"},
+        {"description_heading": "Requirements"},
+        {"description_heading": "Notes"},
+        {"description_heading": "Use Zarr 2 to read parts of TIFF files"},
+        {"description_heading": "OME-TIFF"}
+      ],
+      "capture": {
+        "id": "d259edb7ccf847cf88c44a68781e3ae2",
+        "path": "public_captures/d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b.body",
+        "sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+        "captured_at": "2026-10-05T22:18:12.475198+00:00",
+        "response_bytes": 34722,
+        "complete": true
+      },
+      "applicability": "The pinned release documents TIFF/OME-TIFF support, a Zarr 2 aszarr region-access path, and restrictions including Zarr 3 incompatibility and multi-file pyramidal OME-TIFF limits. This is documentation for the library release, not a test of this application's reader stack or 3 GB performance."
+    },
+    {
+      "id": "S4",
+      "kind": "open-source implementation at release tag",
+      "title": "napari stack and channel utilities",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "pin": "napari tag v0.6.5",
+      "locators": [
+        {"symbol": "slice_from_axis"},
+        {"symbol": "split_channels"},
+        {"symbol": "split_rgb"}
+      ],
+      "capture": {
+        "id": "a1ecedac320a4b5a9c82f39a62cbe142",
+        "path": "public_captures/e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572.body",
+        "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+        "captured_at": "2026-10-05T22:17:55.840004+00:00",
+        "response_bytes": 15402,
+        "complete": true
+      },
+      "applicability": "Source shows lazy wrapping of Zarr arrays for slicing and a shared channel-splitting path that transfers transform metadata. It is a component implementation precedent, not proof of whole-viewer memory bounds, app persistence, or export fidelity."
+    },
+    {
+      "id": "S5",
+      "kind": "regression test at release tag",
+      "title": "napari test_layer_actions.py at v0.6.5",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "pin": "napari tag v0.6.5; regression associated with PR #8256",
+      "locators": [
+        {"test": "test_split_rgb", "assertion": "resulting affine.affine_matrix matches the original"},
+        {"parameters": "no transform, scale, translate, Affine(translate=...)"}
+      ],
+      "capture": {
+        "id": "8fd6f708e4ad44c1878282967bb655c4",
+        "path": "public_captures/3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e.body",
+        "sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+        "captured_at": "2026-10-05T22:18:03.054984+00:00",
+        "response_bytes": 11419,
+        "complete": true
+      },
+      "applicability": "Regression evidence for transform retention in the RGB split path in this tag. The cases cover a small RGB fixture and listed transformations, not general affine persistence, arbitrary rotate/shear behavior, projects, or exports."
+    },
+    {
+      "id": "S6",
+      "kind": "public issue and discussion",
+      "title": "napari issue #7085: Split RGB loses affine",
+      "url": "https://github.com/napari/napari/issues/7085",
+      "pin": "Issue #7085; report against napari 0.4.16.dev1413+ga4fa1fa0; linked PR #8256 closed 2025-09-26",
+      "locators": [
+        {"locator": "opening report titled Split RGB loses affine"},
+        {"locator": "maintainer discussion describing inconsistent metadata handling and requested transform cases"},
+        {"locator": "timeline linking closure to PR #8256"}
+      ],
+      "capture": {
+        "id": "194077c55d884276afa5d920399ca70d",
+        "path": "public_captures/4d6cd55337c62ff3a084799963fd8e97c7d7a4bd8b280cce1ff31d97b75c4503.body",
+        "sha256": "4d6cd55337c62ff3a084799963fd8e97c7d7a4bd8b280cce1ff31d97b75c4503",
+        "captured_at": "2026-10-05T22:15:20.301257+00:00",
+        "response_bytes": 289037,
+        "complete": true
+      },
+      "applicability": "Establishes a reported real failure and its context. The issue page alone does not prove repair; the patch and tagged regression source are recorded separately as S7 and S5."
+    },
+    {
+      "id": "S7",
+      "kind": "public fix patch and commit chain",
+      "title": "napari PR #8256 patch: handle affine layer metadata when splitting RGB images",
+      "url": "https://github.com/napari/napari/pull/8256.patch",
+      "pin": "Commits 2b51110e65af469863697797921ff12aa668d301; 3f994d36130e5d673ce059a1a0d66fac9cca03b0; 9f262998cbe464e0ec826eae691e487af752658c",
+      "locators": [
+        {"commit": "2b51110e65af469863697797921ff12aa668d301", "change": "use split_channels in split_rgb and carry transform metadata"},
+        {"commit": "3f994d36130e5d673ce059a1a0d66fac9cca03b0", "change": "add test for scale, translate, and affine"},
+        {"commit": "9f262998cbe464e0ec826eae691e487af752658c", "change": "set meta['rgb']=False"}
+      ],
+      "capture": {
+        "id": "322a2fdf2ff248b1981d0309c1d10d05",
+        "path": "public_captures/8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df.body",
+        "sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+        "captured_at": "2026-10-05T22:16:57.189767+00:00",
+        "response_bytes": 5042,
+        "complete": true
+      },
+      "related_capture": {
+        "id": "f8ede2581eab4b71b3cdf05e90575a56",
+        "path": "public_captures/1c98b7ce20b1b144a879cc0d5a0e317a50c62f3bb8f8fbc247974f0360544aea.body",
+        "sha256": "1c98b7ce20b1b144a879cc0d5a0e317a50c62f3bb8f8fbc247974f0360544aea",
+        "captured_at": "2026-10-05T22:16:45.499798+00:00",
+        "response_bytes": 487035,
+        "url": "https://github.com/napari/napari/pull/8256",
+        "locator": "pull request timeline and milestone 0.6.5"
+      },
+      "applicability": "The patch carries the code change and regression commit; the tagged code/test at v0.6.5 (S4/S5) supplies release applicability. The tested regression cases do not cover every affine, metadata round-trip, or application workflow."
+    },
+    {
+      "id": "S8",
+      "kind": "release dependency metadata",
+      "title": "napari v0.6.5 pyproject.toml",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/pyproject.toml",
+      "pin": "napari tag v0.6.5",
+      "locators": [
+        {"dependency": "dask[array]>=2021.10.0"},
+        {"dependency": "tifffile>=2022.7.28"},
+        {"optional dependency": "zarr>=2.12.0"}
+      ],
+      "capture": {
+        "id": "69f2ab0de09f4b69b447cfb4445fe052",
+        "path": "public_captures/b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354.body",
+        "sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+        "captured_at": "2026-10-05T22:20:56.151301+00:00",
+        "response_bytes": 31495,
+        "complete": true
+      },
+      "applicability": "These declared constraints are consistent with the proposal's candidate pins. They do not validate a full locked dependency resolution, Qt binding, codecs, operating-system matrix, or runtime integration."
+    },
+    {
+      "id": "S9",
+      "kind": "public issue search result / open issue report",
+      "title": "napari issue #9515: reported over-fetching when slicing nD Zarr arrays in 2D display",
+      "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari%20multiscale%20scale%20is%3Aissue&per_page=5",
+      "pin": "Search result issue #9515; report dated 2026-09-16; issue lists napari 0.9.1 and Zarr >=3",
+      "locators": [
+        {"search result": "#9515, title Slicing nD zarr arrays even in 2D display over-fetches"},
+        {"locator": "issue report describing slow/eager raw Zarr slicing and Dask wrapping observation"}
+      ],
+      "capture": {
+        "id": "8c1693019cef45d1854274fae547f7a5",
+        "path": "public_captures/912f177e2fa420ae4b08fa419b89dd255bef90914dd7a0fbfb5319cb15e6c95c.body",
+        "sha256": "912f177e2fa420ae4b08fa419b89dd255bef90914dd7a0fbfb5319cb15e6c95c",
+        "captured_at": "2026-10-05T22:14:58.537727+00:00",
+        "response_bytes": 24523,
+        "complete": true
+      },
+      "applicability": "An open, version-specific user report that motivates measuring actual read amplification and slicing. It is not a confirmed general napari defect, not an implemented fix, and not evidence about the proposed pinned stack."
+    },
+    {
+      "id": "S10",
+      "kind": "primary technical documentation",
+      "title": "SQLite Atomic Commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": "SQLite documentation page captured 2026-10-05; live, unversioned page",
+      "locators": [
+        {"heading": "Creating a rollback journal file", "anchor": "#_creating_a_rollback_journal_file"},
+        {"heading": "Flushing the rollback journal file to mass storage", "anchor": "#_flushing_the_rollback_journal_file_to_mass_storage"},
+        {"heading": "Deleting the rollback journal", "anchor": "#deleting_the_rollback_journal"},
+        {"heading": "Rollback", "anchor": "#_rollback"},
+        {"heading": "Hot rollback journals", "anchor": "#_hot_rollback_journals"},
+        {"heading": "Things that can go wrong", "anchor": "#_things_that_can_go_wrong"}
+      ],
+      "capture": {
+        "id": "a2c4db802e824b7cbdea3cabbbdeec6a",
+        "path": "public_captures/5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1.body",
+        "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "captured_at": "2026-10-05T22:21:12.461917+00:00",
+        "response_bytes": 77968,
+        "complete": true
+      },
+      "applicability": "Supports transactional database and rollback-journal recovery design under documented filesystem/VFS assumptions. It does not guarantee atomicity on every network share or validate the proposed storage topology."
+    }
+  ]
+}

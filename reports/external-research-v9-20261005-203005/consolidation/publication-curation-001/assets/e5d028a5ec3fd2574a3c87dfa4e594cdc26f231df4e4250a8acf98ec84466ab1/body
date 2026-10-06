@@ -1,0 +1,196 @@
+{
+  "schema": "er9.sources.v1",
+  "stage": "I-05-LUNA-S1-treatment-research-a001",
+  "captured_on": "2026-10-05",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF specification 0.5.2",
+      "url": "https://ngff.openmicroscopy.org/0.5/",
+      "pin": "OME-NGFF 0.5.2; specification history identifies 0.5.2; document uses Zarr v3",
+      "exact_locator": ["§1.1 Images", "§2.1 Axes", "§2.3 Coordinate transformations", "§2.4 Multiscales", "§2.5 OMERO metadata", "§2.6 Labels", "Version history"],
+      "capture": {
+        "capture_id": "22a3398491964ce5a2b1bf4fd3e8d8d1",
+        "path": "public_captures/a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b.body",
+        "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+        "bytes": 158591,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Primary format specification for axes, units, scale/translation transforms, multiscales, and label image metadata. Supports an interoperable model for common axis-aligned images and integer masks.",
+      "limitations": "The cited multiscales transform model does not represent arbitrary affine rotation/shear. A standard's metadata model does not prove a particular reader/writer's interoperability or performance."
+    },
+    {
+      "id": "S2",
+      "title": "OME-TIFF specification 6.2.2",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "pin": "OME Model documentation 6.2.2",
+      "exact_locator": ["OME-XML metadata", "DimensionOrder", "TiffData", "Multi-file OME-TIFF"],
+      "capture": {
+        "capture_id": "f8bdb307ebd44a42b3ff5d2737898cad",
+        "path": "public_captures/fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584.body",
+        "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+        "bytes": 48745,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Explains that OME-XML and DimensionOrder/TiffData metadata map TIFF IFDs to planes, and that multi-file data uses UUID references. Supports an explicit OME-TIFF subset and plane-mapping checks.",
+      "limitations": "Specification does not establish that arbitrary vendor TIFFs are valid OME-TIFF or that a reader supports every compression, page layout, or multi-file arrangement."
+    },
+    {
+      "id": "S3",
+      "title": "tifffile documentation",
+      "url": "https://www.cgohlke.com/docs/tifffile/",
+      "pin": "Documentation identifies tifffile 2026.9.20; requirements list zarr==3.4.0 and imagecodecs==2026.8.16",
+      "exact_locator": ["Overview", "Requirements", "Notes", "Revision history entries for 2026.5.2", "TiffPageSeries API"],
+      "capture": {
+        "capture_id": "50a267afb419477c9abc4c78049cc2a2",
+        "path": "public_captures/1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a.body",
+        "sha256": "1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a",
+        "captured_bytes": 524288,
+        "total_bytes_reported": 1139451,
+        "body_complete": false,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Independent TIFF implementation precedent. Captured material describes array/Zarr-oriented access to TIFF strips, tiles, pages, SubIFDs, series, and pyramid levels, along with format-specific limitations and the documented version requirements/API revision.",
+      "limitations": "Capture is partial; claims are limited to visible captured portions. Documentation is not a benchmark or proof that the proposed GUI and reader combination provides bounded memory, responsive cancellation, or atomic project behavior. API compatibility must be tested against the pinned release."
+    },
+    {
+      "id": "S4",
+      "title": "napari issue #6079: Painting into zarr arrays doesn't update the display",
+      "url": "https://github.com/napari/napari/issues/6079",
+      "pin": "Issue #6079, closed 2023-08-25; linked closing PR #6112",
+      "exact_locator": ["Issue description", "technical discussion of Zarr/TensorStore slice copy and stale rendering", "closing timeline/PR reference"],
+      "capture": {
+        "capture_id": "65a56b306a544ed1830f7712dd245fb8",
+        "path": "public_captures/3d48dc37f1f1ac45a3e28598453cc9549fdc86d8883aa3dc03d3f03c1978f8c0.body",
+        "sha256": "3d48dc37f1f1ac45a3e28598453cc9549fdc86d8883aa3dc03d3f03c1978f8c0",
+        "bytes": 310231,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Primary public failure report. Comments describe backend slice-copy behavior and stale cached display after labels painting.",
+      "limitations": "Issue discussion alone is not proof of a fix, tests, release inclusion, or behavior in a different application. Pair with S5 and S6-S8."
+    },
+    {
+      "id": "S5",
+      "title": "napari fix commit 658b080d62bd9c6f478f781163020cdcf5a44139",
+      "url": "https://github.com/napari/napari/commit/658b080d62bd9c6f478f781163020cdcf5a44139.patch",
+      "pin": "Commit 658b080d62bd9c6f478f781163020cdcf5a44139, 2023-08-25; PR #6112; fixes #6079",
+      "exact_locator": ["Labels update implementation", "index/slice handling", "tests in napari/_vispy/_tests/test_vispy_labels_layer.py"],
+      "capture": {
+        "capture_id": "91a5b611c0c74a6c8fe150fd28c9a759",
+        "path": "public_captures/7ebf2abacfc5a1514c960fd28c9a759",
+        "sha256": "7ebf2abacfc5a1514c960fd28c9a759",
+        "bytes": 12661,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "The full patch adds visible-slice update logic for non-NumPy-backed data and parameterized rendering tests for canvas updates after paint, fill, and mouse edits across NumPy, Zarr, and TensorStore cases.",
+      "limitations": "Tests are small in-memory/component tests. They do not establish large file-backed performance, persistence, undo recovery, or metadata/coordinate correctness. The patch does not prove a full application contract."
+    },
+    {
+      "id": "S6",
+      "title": "napari v0.4.18 Labels implementation (pre-fix comparison)",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.4.18/napari/layers/labels/labels.py",
+      "pin": "Git tag v0.4.18",
+      "exact_locator": ["Labels.data_setitem / visible slice update path"],
+      "capture": {
+        "capture_id": "484412d92ca1461581ae499f29c09e78",
+        "path": "public_captures/037802ad5af4bd4258f1dc7f2ff93a517b577814b9e724aa4ff4b4b37c8c0d57.body",
+        "sha256": "037802ad5af4bd4258f1dc7f2ff93a517b577814b9e724aa4ff4b4b37c8c0d57",
+        "bytes": 60183,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Pinned source comparison; sampled pre-fix implementation does not include the direct visible-slice update shown in v0.4.19.",
+      "limitations": "Comparison of one source file at two tags does not identify the earliest fixed release or every backend behavior."
+    },
+    {
+      "id": "S7",
+      "title": "napari v0.4.19 Labels implementation",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/layers/labels/labels.py",
+      "pin": "Git tag v0.4.19",
+      "exact_locator": ["Labels.data_setitem", "index_in_slice call", "visible slice raw data update", "label history/undo implementation"],
+      "capture": {
+        "capture_id": "0cac762c78ca457586ca76de34a1897a",
+        "path": "public_captures/0af292571b0b95f9050c504691a9fa9178f0b30e474377d0143a86107c19895d.body",
+        "sha256": "0af292571b0b95f9050c504691a9fa9178f0b30e474377d0143a86107c19895d",
+        "bytes": 62232,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Shows fixed update implementation at the v0.4.19 tag. Also illustrates layer-level history, which motivates checking persistence separately.",
+      "limitations": "Historical source only. Presence of in-memory history does not show project persistence or suitability of this old release for deployment."
+    },
+    {
+      "id": "S8",
+      "title": "napari v0.4.19 Labels rendering regression tests",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/_vispy/_tests/test_vispy_labels_layer.py",
+      "pin": "Git tag v0.4.19",
+      "exact_locator": ["canvas update tests for labels paint, fill, and mouse edits; backend parametrization includes NumPy, Zarr, TensorStore"],
+      "capture": {
+        "capture_id": "a762613912864454b613c9a68f5674dc",
+        "path": "public_captures/d0e1bb09bca290236b51608c1abff636746c0ea1800881ffadfb8c47a8249443.body",
+        "sha256": "d0e1bb09bca290236b51608c1abff636746c0ea1800881ffadfb8c47a8249443",
+        "bytes": 3382,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Regression tests are present in the v0.4.19 tagged source, linking the issue fix to a released source tree.",
+      "limitations": "Tests were inspected, not executed by this candidate. They cover rendering of small test arrays, not application persistence or performance."
+    },
+    {
+      "id": "S9",
+      "title": "napari v0.4.19 Shapes implementation",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/layers/shapes/shapes.py",
+      "pin": "Git tag v0.4.19",
+      "exact_locator": ["Shapes class documentation and data/style/transform model"],
+      "capture": {
+        "capture_id": "eaa08ff088d2465cb07ac65f52fb91a5",
+        "path": "public_captures/105b56815d79b1056cc86caa9017ff012a9b35d3baa98148e90ebf41ccd556d1.body",
+        "sha256": "105b56815d79b1056cc86caa9017ff012a9b35d3baa98148e90ebf41ccd556d1",
+        "captured_bytes": 32768,
+        "total_bytes_reported": 119593,
+        "body_complete": false,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Visible captured class documentation describes vertices, shape kinds, per-shape features/styles, and spatial transforms; useful as an interaction model precedent.",
+      "limitations": "Partial capture and historical implementation; does not establish annotation persistence or interoperability."
+    },
+    {
+      "id": "S10",
+      "title": "napari stable documentation",
+      "url": "https://napari.org/stable/",
+      "pin": "Stable documentation page identifies docs version 0.9.2",
+      "exact_locator": ["Overview describing multidimensional images and points/shapes/segmentations", "documentation version metadata"],
+      "capture": {
+        "capture_id": "9f7c7e33e566415a861a3d4eabdc3ac3",
+        "path": "public_captures/bea3ca2f2c5d75dc6198c95d208f0ac95dfd1a7cc48d3483d2fb61a1a8616d55.body",
+        "sha256": "bea3ca2f2c5d75dc6198c95d208f0ac95dfd1a7cc48d3483d2fb61a1a8616d55",
+        "bytes": 61364,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Current documentation supports napari as a plausible canvas/layer candidate for multidimensional viewing and common annotation types.",
+      "limitations": "Documentation version was not reconciled to a tested package/source tag in this research. No runtime integration or performance is established; do not treat 0.9.2 as an application pin."
+    },
+    {
+      "id": "S11",
+      "title": "Bio-Formats supported formats table",
+      "url": "https://bio-formats.readthedocs.io/en/stable/formats/",
+      "pin": "Stable documentation identifies Bio-Formats 8.5.0",
+      "exact_locator": ["Format support matrix and read/write/support-level columns", "documentation version metadata"],
+      "capture": {
+        "capture_id": "bcebee3c458e481fb48faac45d78f76d",
+        "path": "public_captures/ec34959ff00583da266a9615767f9979b3939a250512ef48a8ed8e70a984505f.body",
+        "sha256": "ec34959ff00583da266a9615767f9979b3939a250512ef48a8ed8e70a984505f",
+        "bytes": 9028,
+        "body_complete": true,
+        "captured_on": "2026-10-05"
+      },
+      "applicability": "Useful lead for later vendor format adapters/conversion; documents a large per-format matrix with different read/write support levels.",
+      "limitations": "A format count is not a uniform compatibility guarantee. No Bio-Formats runtime or converter was tested."
+    }
+  ]
+}

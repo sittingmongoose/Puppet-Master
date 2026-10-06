@@ -1,0 +1,171 @@
+{
+  "catalog_meta": {
+    "captured_by": "research-stage candidate",
+    "capture_window_utc": "2026-10-06T02:54:36Z .. 2026-10-06T03:01:59Z",
+    "capture_tool": "public_https_get (exact HTTP response-body bytes; sha256 per capture); GitHub API rate limit encountered once (see S08 note)",
+    "note": "A source catalog records URL, pin, exact locator, capture identity and applicability. It does not replace the inline citations in proposal.md."
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://www.sqlite.org/rtree.html",
+      "title": "The SQLite R*Tree Module (SQLite documentation)",
+      "exact_locator": "Sections 1 Overview; 3.3 Querying; 3.4 Roundoff Error (0.000012% expansion rule); 3.5 Reading And Writing At The Same Time (SQLITE_LOCKED); 4.1 Auxiliary Columns (since 3.24.0, '+' columns, 100-column cap); 7.2 rtreecheck()",
+      "capture": {"status": 200, "sha256": "de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55", "captured_utc": "2026-10-06T02:54:36Z", "capture_id": "aed34161aeb046ba93ff040054fc5af3", "content_type": "text/html; charset=utf-8", "etag": "\"m6aa3e181sa355\"", "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT", "capture_extent": "first 32768 of 41813 bytes transmitted (all cited sections within captured range)"},
+      "applicability": "Spatial storage precedent: viewport index design, derived-index rebuild policy, integrity check, documented write-during-scan limitation."
+    },
+    {
+      "id": "S02",
+      "url": "https://www.sqlite.org/sessionintro.html",
+      "title": "The Session Extension (SQLite documentation)",
+      "exact_locator": "1.1 Typical Use Case (Alice/Bob parallel edits, merge); 1.2 Obtaining (in amalgamation since 3.13.0; -DSQLITE_ENABLE_SESSION -DSQLITE_ENABLE_PREUPDATE_HOOK); 1.3 Limitations (no virtual tables; PRIMARY KEY required; NULL-PK rows silently not recorded); 2.1 Changesets/Patchsets (UPDATE carries old+new values); 2.2 Conflicts; 4 invert()/concat()",
+      "capture": {"status": 200, "sha256": "5410c53bab447ac791594e11698ac331aed9d2168838150c4f030b4dcbb11dc2", "captured_utc": "2026-10-06T02:54:38Z", "capture_id": "a7f7b28943944cdfb897b595c7cd5679", "content_type": "text/html; charset=utf-8", "etag": "\"m6aa3e181s6d91\"", "capture_extent": "complete (28049 bytes)"},
+      "applicability": "Local revision/merge precedent: changeset exchange between divergent copies; explicit conflict handler; invert for undo; limitations shape the schema (NOT NULL PKs, ordinary tables only)."
+    },
+    {
+      "id": "S03",
+      "url": "https://www.sqlite.org/session/sqlite3changeset_apply.html",
+      "title": "Apply A Changeset To A Database (SQLite Session C Interface)",
+      "exact_locator": "xConflict signature comment 'DATA, MISSING, CONFLICT, CONSTRAINT'; body: DELETE->DATA/NOTFOUND/CONSTRAINT, INSERT->CONFLICT/CONSTRAINT, UPDATE->DATA/NOTFOUND/CONSTRAINT; returns OMIT/ABORT/REPLACE (REPLACE only for DATA/CONFLICT); savepoint rollback on error; apply_v2 ppRebase rebase output; compatible-table check (SQLITE_SCHEMA warning)",
+      "capture": {"status": 200, "sha256": "007f2c8835d1bf3da6b930066c86533c5a045b74acf680ff682025029986a6dd", "captured_utc": "2026-10-06T02:57:04Z", "capture_id": "d0137d2dae6d4b7ca619791399fd76af", "content_type": "text/html; charset=utf-8", "etag": "\"m6aa3e181s3e97\"", "capture_extent": "complete (16023 bytes)"},
+      "applicability": "Exact conflict taxonomy mapped to Fieldbook's park-resolution policy (proposal 6.2); savepoint-rollback basis for merge crash recovery."
+    },
+    {
+      "id": "S04",
+      "url": "https://www.sqlite.org/wal.html",
+      "title": "Write-Ahead Logging (SQLite documentation)",
+      "exact_locator": "1 Overview (advantages/disadvantages); 2 How WAL Works (commit record; end mark); 2.3 Performance Considerations (synchronous NORMAL: only checkpoint fsyncs; transactions may rollback after power loss); 3.3 Persistence of WAL mode; 4 The WAL File ('The WAL file is part of the persistent state... if separated, committed transactions might be lost or corrupted')",
+      "capture": {"status": 200, "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e", "captured_utc": "2026-10-06T02:54:39Z", "capture_id": "f60392ec70884a48a44817301b26a9ba", "content_type": "text/html; charset=utf-8", "etag": "\"m6aa3e181sa49f\"", "capture_extent": "first 32768 of 42143 bytes (all cited sections within captured range)"},
+      "applicability": "Interrupted-save recovery design; synchronous=FULL choice; bundle container must keep db+wal together."
+    },
+    {
+      "id": "S05",
+      "url": "https://proj.org/faq.html",
+      "title": "FAQ — PROJ 9.9.0 documentation (stable)",
+      "exact_locator": "'Why is the axis ordering in PROJ not consistent?' (authority order per ISO 19111; pre-6 behavior; lat/lon EPSG convention vs internal lon/lat; projinfo WKT2 axis example for EPSG:4326); 'What is the best format…' (WKT2 preferred; lossy PROJ-string conversions 'potentially leading to erroneous transformations'); 'Cannot find proj.db' (PROJ_DATA search paths)",
+      "capture": {"status": 200, "sha256": "177c3400e36b16731e899769ce057c9c96dabeb6014dccf4714cee58a5b00cfb", "captured_utc": "2026-10-06T02:54:53Z", "capture_id": "d1012bf3d111402d964043df0ff942a6", "content_type": "text/html; charset=utf-8", "etag": "W/\"5fa89d5c4d8dea5d708eac8d3572e93d\"", "last_modified": "Sat, 03 Oct 2026 05:58:55 GMT", "capture_extent": "complete (26489 bytes); page footer '© 1983-2026 PROJ contributors, last updated 03 Oct 2026'; title pins PROJ 9.9.0"},
+      "applicability": "Axis-order policy, WKT2 storage requirement, proj.db bundling/offline determinism."
+    },
+    {
+      "id": "S06",
+      "url": "https://pyproj4.github.io/pyproj/stable/api/transformer.html",
+      "title": "Transformer — pyproj 3.7.2 documentation (stable)",
+      "exact_locator": "Warning box ('axis order may be swapped… use the always_xy option'); Transformer.from_crs signature: always_xy=False default; 'If true… longitude, latitude for geographic CRS and easting, northing for most projected CRS'; params area_of_interest, authority, accuracy, allow_ballpark (3.1.0), force_over (3.4.0), only_best (3.5.0); properties accuracy ('-1 if unknown'), area_of_use; versionadded notes 2.1.0/2.2.0(always_xy)",
+      "capture": {"status": 200, "sha256": "86ca34e1956d0a431a5b47814ba3440885a62252c56c1cd2db02c2045304a2a8", "captured_utc": "2026-10-06T02:54:53Z", "capture_id": "f8af8d6529c0478caae8e3d0ae59a18d", "content_type": "text/html; charset=utf-8", "etag": "\"6aaa8b55-2b335\"", "last_modified": "Wed, 16 Sep 2026 12:28:05 GMT", "capture_extent": "first 32768 of 176949 bytes (title pins 3.7.2; all cited items within captured range)"},
+      "applicability": "Transform invocation policy (always_xy), candidate-operation choice UI (accuracy/area_of_use/allow_ballpark/only_best), version pin."
+    },
+    {
+      "id": "S07",
+      "url": "https://github.com/pyproj4/pyproj/pull/966.diff",
+      "title": "pyproj PR #966 diff — 'BUG: Handle axis order with poles in transform_bounds' (merged 2021-10-02)",
+      "exact_locator": "pyproj/_transformer.pyx: new target_crs_lon_lat_order() (reads first axis abbrev == 'lon' from source/target CRS per direction); contains_north_pole/contains_south_pole gain lon_lat_order param; pole/antimeridian bound branches rewritten for both axis orders; pyproj/transformer.py docstring updated (left/bottom/right/top defined per axis of source/target CRS); test/test_transformer.py: NEW test_transform_bounds__north_pole and test_transform_bounds__south_pole (default axis order, EPSG:32661/32761, expects (48.656,-180,90,180) / (-90,-180,-48.656,180)), existing *_xy variants retained",
+      "capture": {"status": 200, "sha256": "4191b7b424953acaceba8bfd3d9ec14723485d3ac967ad512659276bf838c0ac", "captured_utc": "2026-10-06T02:56:05Z", "capture_id": "21bc8b818b274bae8a7b32ed1e52c046", "content_type": "text/plain; charset=utf-8", "capture_extent": "complete (10758 bytes)"},
+      "applicability": "Required issue->fix->regression-test chain: demonstrates axis-order + pole/domain-boundary failures fixed in a released projection stack, with named regression tests; motivates Fieldbook's per-record boundary margin checks."
+    },
+    {
+      "id": "S08",
+      "url": "https://api.github.com/search/issues?q=repo%3Apyproj4%2Fpyproj+axis+order+in%3Atitle&per_page=10",
+      "title": "GitHub issues search capture (pyproj, 'axis order' in title)",
+      "exact_locator": "item #966: type PR, state closed, merged_at 2021-10-02T04:04:32Z, body 'Idea from Evan [ref OSGeo/PROJ#2882 discussion]… Continuation of #962 … Tests added'; item #904 'Remove ignore_axis_order from CRS.is_exact_same as it was added by accident' (merged 2021-08-18); item #229 'Added axis order warning in transformer docs' (label axis-order: 'Issue related to axis order changes introduced in PROJ 6'); item #238 'Use proj_normalize_for_visualization…' milestone 2.2.0",
+      "capture": {"status": 200, "sha256": "3e3c351e59daa92f805caffa97f6ebce36fb5f79df841aba6519ed9fecbb923b", "captured_utc": "2026-10-06T02:55:20Z", "capture_id": "028db184d35348d29d222590000bca8c", "content_type": "application/json; charset=utf-8", "capture_extent": "first 32768 of 33222 bytes (items #966, #904, #796, #229, #543, #497, #475, #237, #393, #238 visible; #966 metadata complete)", "note": "Immediately subsequent api.github.com requests (issue 962 detail, PR 966 file list) returned 403 rate-limit responses (captured sha 8ef2b336…); the PR diff itself was captured via patch-diff.githubusercontent.com (S07)."},
+      "applicability": "Chain metadata (merge date, 'Tests added'), recurrence pattern of axis-order defects across releases."
+    },
+    {
+      "id": "S09",
+      "url": "https://raw.githubusercontent.com/pyproj4/pyproj/3.3.0/docs/history.rst",
+      "title": "pyproj Change Log at tag 3.3.0",
+      "exact_locator": "3.3.0 section: 'ENH: Add support for transforming bounds at the poles in Transformer.transform_bounds (pull #962)'; 'BUG: Improved handling of inf values in Transformer.transform_bounds (pull #961)'; 'WHL: Wheels contain PROJ 8.2.0'; 3.2.0 section: 'CLN: Remove ignore_axis_order kwarg from CRS.is_exact_same as it was added by accident (pull #904)'; 2.2.0 section: always_xy addition (issue #225)",
+      "capture": {"status": 200, "sha256": "c3c5e1e741ea33a07fb51f3a6cd94e4083f3df174f4db6dbd343562e941608c0", "captured_utc": "2026-10-06T02:56:05Z", "capture_id": "31f8aacae7624115abb7d721f46b4288", "content_type": "text/plain; charset=utf-8", "capture_extent": "complete (22560 bytes)"},
+      "applicability": "Release/branch applicability: the pole-bounds fix family is in pyproj >= 3.3.0; pinned stable 3.7.2 (S06) contains it."
+    },
+    {
+      "id": "S10",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/plugins/core_plugins/plugins_offline_editing.html",
+      "title": "25.2.4 Offline Editing Plugin — QGIS 3.44 documentation",
+      "exact_locator": "Opening paragraph: 'If several persons are working simultaneously on the same datasets, it is difficult to merge the edits by hand, even if people don't change the same features'; 'copying the content of the datasource to a SpatiaLite or GeoPackage database and storing the offline edits to dedicated tables'; workflow steps 'Convert to offline project' / 'Synchronize'; Note: '{string, number} list fields into string fields where values are separated by commas'; offline layers marked with indicator icon",
+      "capture": {"status": 200, "sha256": "8f6c8d0c125c2fe1189ad6e3c1da0ed09235c206310b4125749b615e149bf272", "captured_utc": "2026-10-06T02:57:04Z", "capture_id": "fc406b3e9ca2465c9e935af82561002f", "content_type": "text/html; charset=utf-8", "capture_extent": "complete (27367 bytes)"},
+      "applicability": "Whole-flow offline-editing precedent (precedent B): copy-edit-sync pattern works; its merge and type-fidelity weaknesses define where Fieldbook must differ."
+    },
+    {
+      "id": "S11",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/plugins/core_plugins/index.html",
+      "title": "25.2 Using QGIS Core Plugins — QGIS 3.44 documentation",
+      "exact_locator": "Core plugin table row: 'Offline Editing — Offline editing and synchronizing with database — Manual Reference 25.2.4'; docs version banner 'QGIS 3.44'; version list shows latest=3.44",
+      "capture": {"status": 200, "sha256": "efd4f0ca750182933449f1fdb3bf23d41a8dd4102c1f12f9402bdce16905c9c5", "captured_utc": "2026-10-06T02:56:42Z", "capture_id": "8466aacbf6fd489eae8e409403c2e75c", "content_type": "text/html", "capture_extent": "complete (26657 bytes)"},
+      "applicability": "Confirms plugin status in a current release (3.44); earlier user_manual/offline_editing.html path returned 404 (redirect to 3.44) — plugin documentation now under core plugins."
+    },
+    {
+      "id": "S12",
+      "url": "https://raw.githubusercontent.com/protomaps/PMTiles/main/spec/v3/spec.md",
+      "title": "PMTiles Version 3 Specification",
+      "exact_locator": "1 Abstract 'single-file archive format for tiled data'; 2 Overview (root directory MUST be in first 16384 bytes); 3.2 Fields (Tile Type incl. 0x06 'MapLibre Vector Tile'; Min/Max Position 1e-7 degree encoding); 3.3 Compression (none/gzip/brotli/zstd); 5 JSON Metadata (attribution, version semver, type overlay/baselayer; vector_layers per TileJSON 3.0)",
+      "capture": {"status": 200, "sha256": "2caa91c973f7959b175ee00d09a41998693ef59388ad9c26543a537c0269a49e", "captured_utc": "2026-10-06T02:55:19Z", "capture_id": "175b3335fcb04d4f805e5c88b323a808", "content_type": "text/plain; charset=utf-8", "capture_extent": "complete (19284 bytes)"},
+      "applicability": "Map bundle container for bounded areas; attribution field carries license credit inside the bundle."
+    },
+    {
+      "id": "S13",
+      "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+      "title": "MBTiles 1.3 Specification",
+      "exact_locator": "Tiles/Content: 'the tile commonly referred to as 11/327/791 is inserted as zoom_level 11, tile_column 327, and tile_row 1256, since 1256 is 2^11 - 1 - 791' (TMS vs XYZ y-axis flip); metadata table name/format required, bounds/center/minzoom/maxzoom SHOULD; 'Only core SQLite features are permitted; tilesets SHALL NOT require extensions'",
+      "capture": {"status": 200, "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d", "captured_utc": "2026-10-06T02:55:43Z", "capture_id": "db3645fee6db471c94014d2908e5ec5a", "content_type": "text/plain; charset=utf-8", "capture_extent": "complete (15807 bytes)"},
+      "applicability": "Alternative container (A3); second concrete axis-convention trap documented in a shipped spec."
+    },
+    {
+      "id": "S14",
+      "url": "https://docs.protomaps.com/pmtiles/maplibre",
+      "title": "PMTiles for MapLibre GL — Protomaps Docs",
+      "exact_locator": "Installation: 'The JavaScript library includes a plugin for MapLibre GL that uses its addProtocol feature'; code: maplibregl.addProtocol(\"pmtiles\", protocol.tile); source url 'pmtiles://https://example.com/example.pmtiles'; 'will automatically derive a minzoom and maxzoom'; addProtocol 'works best if it is only called once'; raster & raster-dem (terrarium) variants",
+      "capture": {"status": 200, "sha256": "d7556f4fe5977e0df05fbb42f3f222fde45a97c669dd827ff5a750bf5423e7e6", "captured_utc": "2026-10-06T02:56:06Z", "capture_id": "473662bb97d74dcd9e32d323cfc296ff", "content_type": "text/html; charset=utf-8", "etag": "W/\"9929d57097a82143c60bf1739616f79c\"", "last_modified": "Fri, 31 Jul 2026 23:07:13 UTC", "capture_extent": "first 32768 of 37874 bytes (all cited content within captured range)"},
+      "applicability": "Offline rendering integration path (local file via same protocol, replacing the https URL); links MapLibre addProtocol API doc."
+    },
+    {
+      "id": "S15",
+      "url": "https://registry.npmjs.org/pmtiles/latest",
+      "title": "npm registry — pmtiles (latest manifest)",
+      "exact_locator": "\"version\":\"4.5.0\"; \"license\":\"BSD-3-Clause\"; author Brandon Liu; homepage github.com/protomaps/pmtiles; gitHead 3b10e67edb65c6b04549f74c0279cef8328d859c; dist.integrity sha512-CBeD4SoUluFziGdy/8k7FOjQxQy486n+929W/tWophauvMICpkZ26vGBWhDt/6b1FZQWNaf4jFdT/5+q0Wii5w==",
+      "capture": {"status": 200, "sha256": "9aace694443378ef8ce75a4bdffbd024dd61bfd2d3e72fae69fa3c75b7cc8432", "captured_utc": "2026-10-06T02:56:43Z", "capture_id": "c86b32c1edd14e49b03e8e389f7bf5e8", "content_type": "application/json", "capture_extent": "complete (1777 bytes)"},
+      "applicability": "Artifact pin for the PMTiles reader/plugin dependency."
+    },
+    {
+      "id": "S16",
+      "url": "https://registry.npmjs.org/maplibre-gl/latest",
+      "title": "npm registry — maplibre-gl (latest manifest)",
+      "exact_locator": "\"version\":\"6.12.0\"; \"license\":\"BSD-3-Clause\"; gitHead 7976a989280508d763265f95f523e945d04d87b0; 'BSD licensed community fork of mapbox-gl, a WebGL interactive maps library'; provenance attestation (slsa.dev/provenance/v1); homepage maplibre.org",
+      "capture": {"status": 200, "sha256": "5f34bd510d28b4b6aa4e06bc6f39cc68856c0ae37166fb9e8fbcff0a7c03adfb", "captured_utc": "2026-10-06T02:56:43Z", "capture_id": "3f33dd6250704c248b932394d8dfe5d7", "content_type": "application/json", "capture_extent": "complete (7049 bytes)"},
+      "applicability": "Artifact pin for the map renderer dependency (V10 release/API binding)."
+    },
+    {
+      "id": "S17",
+      "url": "https://www.openstreetmap.org/copyright",
+      "title": "Copyright and License — OpenStreetMap",
+      "exact_locator": "'licensed under the Open Data Commons Open Database License (ODbL)… credit OpenStreetMap and its contributors… If you alter or build upon our data, you may distribute the result only under the same license'; 'you are required to… display our attribution notice… make clear that the data is available under the Open Database License'; 'Although OpenStreetMap is open data, we cannot provide a free-of-charge map API or map tiles for third-parties' (links Tile Usage Policy); documentation CC BY-SA 2.0",
+      "capture": {"status": 200, "sha256": "17bd10680740e0458432715a9cce481678317a97b5487c9052d26f5076fffbaa", "captured_utc": "2026-10-06T02:54:55Z", "capture_id": "6424a551bcb446998ed96ea31018a067", "content_type": "text/html; charset=utf-8", "etag": "W/\"17bd10680740e0458432715a9cce4816\"", "capture_extent": "complete (21314 bytes)"},
+      "applicability": "License investigation for the actual selected map source (OSM-derived bundles): attribution + share-alike obligations; no tile-server reliance."
+    },
+    {
+      "id": "S18",
+      "url": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "title": "Terms of Use — Natural Earth",
+      "exact_locator": "'All versions of Natural Earth raster + vector map data found on this website are in the public domain… No permission is needed to use Natural Earth. Crediting the authors is unnecessary.'",
+      "capture": {"status": 200, "sha256": "62409e53b132a80002e653cf998c9ad04ab57aa48663be28b588bc742f4e1a3b", "captured_utc": "2026-10-06T02:55:19Z", "capture_id": "14225e774f9a4821a5edda8aa75b983e", "content_type": "text/html; charset=UTF-8", "capture_extent": "first 32768 of 38013 bytes (Terms of Use body within captured range)"},
+      "applicability": "Zero-obligation coarse basemap option for small-scale context layers inside bundles."
+    },
+    {
+      "id": "S19",
+      "url": "https://raw.githubusercontent.com/vlcn-io/cr-sqlite/main/README.md",
+      "title": "cr-sqlite — Convergent, Replicated, SQLite (README, main branch)",
+      "exact_locator": "'allows merging different SQLite databases together that have taken independent writes'; Approach 1 'History-free CRDTs: Automatically handles merge conflicts. No options for manual merging'; 'Currently inserts into CRRs are 2.5x slower than inserts into regular SQLite tables'; crsql_changes virtual table API; 'For a stable version, build against a release tag… main may not be 100% stable'",
+      "capture": {"status": 200, "sha256": "83c634554ca3c462dce26601c33b56a9fced2428fb273538cd2497d64cbb87fb", "captured_utc": "2026-10-06T02:57:04Z", "capture_id": "e547237fbfe045bcbb6c87c5b30bf671", "content_type": "text/plain; charset=utf-8", "capture_extent": "complete (15788 bytes); main-branch capture, not a release pin",
+      "note": "Protected-discovery lane: different merge mechanism family (CRDT) deliberately sampled outside the session-extension choice."},
+      "applicability": "Alternative/deferred opportunity (A2): automatic CRDT merge today lacks manual resolution — documented reason it is deferred for geometry."
+    },
+    {
+      "id": "S20",
+      "url": "https://www.rfc-editor.org/rfc/rfc3339.txt",
+      "title": "RFC 3339 — Date and Time on the Internet: Timestamps",
+      "exact_locator": "Section 5.6 Internet Date/Time Format (date-time ABNF); Section 4.3 'If the time in UTC is known, but the offset to local time is unknown, this can be represented with an offset of \"-00:00\"'; Section 5.8 examples",
+      "capture": {"status": 200, "sha256": "9ab2b8864a85dca73a88f49b0927bc7bc85f596926e4fd1890905777924e700a", "captured_utc": "2026-10-06T02:57:05Z", "capture_id": "024cc6c791e547bb83bc92ce417e886b", "content_type": "text/plain;charset=utf-8", "capture_extent": "first 32768 of 35064 bytes (sections 1-5.8 within captured range)"},
+      "applicability": "Time provenance format; -00:00 convention encodes 'offset unknown' honestly instead of guessing a zone."
+    }
+  ]
+}

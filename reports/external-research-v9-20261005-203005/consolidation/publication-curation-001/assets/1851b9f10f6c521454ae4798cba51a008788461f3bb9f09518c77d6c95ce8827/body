@@ -1,0 +1,97 @@
+{
+  "schema": "er9.research.leads.v1",
+  "stage": "I-12-FRESH-DELIVERY-R001-treatment-research-a001 (research role)",
+  "unresolved": [
+    {
+      "id": "L1",
+      "title": "Open DuckDB sniffer/scanner strictness asymmetry (#25824)",
+      "detail": "Issue #25824 (open as of capture 2026-10-06; created 2026-09-17, label 'needs triage', 2 comments) reports that values beyond the sniffer's 20,480-line sample are silently rounded/truncated (1.5->2, timestamps truncated to DATE) although the sniffer itself would have rejected them; reported across 1.1.3..main@2bbfe6f236. No fix or regression test is established; treating it as fixed would be fabrication.",
+      "impact": "The workspace cannot rely on auto-detected types for contract enforcement; declared types (columns=) or all_varchar + explicit validation must be the contract path. Watch the issue for a fix before loosening this.",
+      "source": "S5"
+    },
+    {
+      "id": "L2",
+      "title": "nbclient main-branch capture is partial; release behavior unpinned",
+      "detail": "S3 captured bytes 0..32767 of 49,883 of client.py; the execute_cell internals were not captured, and no release tag was pinned. nbclient README states Python 3.10+ support (S2).",
+      "impact": "The proposal's clean-run semantics (stop-on-error default, dead-kernel detection) are branch-level source facts within the captured range only. P2 pins a release and re-verifies before any implementation dependency.",
+      "source": "S2, S3, witnesses.P2"
+    },
+    {
+      "id": "L3",
+      "title": "dvc.org docs repository organization anomaly",
+      "detail": "GitHub API redirected the requested repo iterative/dvc.org to treeverse/dvc.org at capture time (S4-listing). The captured docs content is coherent, but whether the canonical docs source lives under 'iterative' or 'treeverse' long-term was not resolved.",
+      "impact": "Cite by capture sha256; re-resolve the org if the doc is re-fetched later. Does not affect the DVC mechanism claims, which are from the docs text itself.",
+      "source": "S4-listing, S4"
+    },
+    {
+      "id": "L4",
+      "title": "DuckDB minor doc discrepancy on max_line_size default",
+      "detail": "S7 parameter table lists default 2,000,000 bytes; S8's prose says 2,097,152 bytes (2 MiB).",
+      "impact": "Do not hard-code either default in the contract; declare it explicitly per import. Flag upstream if it matters.",
+      "source": "S7, S8"
+    },
+    {
+      "id": "L5",
+      "title": "Projection-pushdown-dependent row validity",
+      "detail": "DuckDB docs (S8) document that with column projection, a cast error 'would never occur' — row validity can depend on the query's selected columns.",
+      "impact": "The data contract must run its own full-row validation pass (or a validation query touching all declared columns) rather than treating successful query execution as row-level validation. Bounded alternative: force full materialization of the declared schema during import validation only.",
+      "source": "S8"
+    },
+    {
+      "id": "L6",
+      "title": "Execution-boundary mechanism for notebook kernels not demonstrated",
+      "detail": "The brief forbids promising isolation via import blacklists. The admitted isolation here is Bubblewrap/systemd cgroup-based (per execution receipts), but the proposal's per-project kernel sandbox (filesystem allowlist, network off by default, rlimits) was NOT prototyped in this stage.",
+      "impact": "The execution-boundary design is engineering inference + product choice. P7-style check needed before any implementation: run a candidate kernel under a bwrap/cgroup profile and probe denied paths/network. UNEXECUTED.",
+      "source": "witnesses (executed receipts show sandboxed execution exists in the experiment harness; not evidence about a product kernel)"
+    }
+  ],
+  "optional_opportunities": [
+    {
+      "id": "O1",
+      "title": "Rejects-table-driven data quality panel",
+      "detail": "DuckDB's store_rejects/reject_errors schema (line, column_idx, csv_line, error_type, error_message) maps 1:1 to a UI 'data quality' view: count + first N rejects per import, linked from the dataset card. Low cost because the engine already produces the records (S8)."
+    },
+    {
+      "id": "O2",
+      "title": "Notebook-as-stage lockfile reuse (dvc.lock pattern)",
+      "detail": "S4 shows DVC lockfiles already support `jupyter nbconvert --execute` stages; the workspace manifest could adopt the same shape (cmd/deps/outs with hashes) so a future `dvc` or `calka`-style interop is a format mapping, not a rewrite."
+    },
+    {
+      "id": "O3",
+      "title": "Cell-id-based diffing (nbformat v4.5 ids)",
+      "detail": "S1's stable cell ids (v4.5) enable cross-run output diff per cell id rather than positional diff, improving saved-vs-current comparisons after inserts/moves."
+    },
+    {
+      "id": "O4",
+      "title": "Hash-checking pinned environments",
+      "detail": "pip's per-requirement --hash mode (S9) gives machine-verifiable package bytes; a small team can adopt it without building a lock tool. Cost: maintenance of hashes; alternative is recording resolved versions in the manifest and accepting looser replay guarantees."
+    },
+    {
+      "id": "O5",
+      "title": "Deferred: real-time collaboration, hosted service, scheduling, non-Python kernels",
+      "detail": "Explicitly out of minimum scope per brief. The stage/lock design keeps them possible: stages are already headless, so a scheduler is a queue over stage commands; collaboration requires moving the project record to a CRDT/journal, which the current design does not assume."
+    }
+  ],
+  "rejected_alternatives": [
+    {
+      "id": "R1",
+      "title": "pandas-only ingest (read_csv with inferred dtypes)",
+      "reason": "Sample/chunk-based inference caused well-known mixed-dtype surprises; without a declared-schema layer the contract cannot be enforced; out-of-RAM behavior for 5 GB inputs is a known weak spot. Kept as a per-transform tool, not the contract layer."
+    },
+    {
+      "id": "R2",
+      "title": "Full multi-language kernel support at v1",
+      "reason": "Brief: a small team should not build every kernel. Python-only via kernelspec (S1/S2) with the document format leaving room for other kernels later."
+    },
+    {
+      "id": "R3",
+      "title": "Import blacklist as the sandbox",
+      "reason": "Brief explicitly forbids presenting blacklists as isolation; a kernel can open files/sockets without importing obvious modules. Use OS-level sandboxing with allowlists or accept an explicit trust boundary."
+    },
+    {
+      "id": "R4",
+      "title": "Copy datasets into the project on import",
+      "reason": "Duplicates multi-GB files and breaks single-source identity. Reference + hash instead; optional explicit snapshot command when immutability is wanted."
+    }
+  ]
+}

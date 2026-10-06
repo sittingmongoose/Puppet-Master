@@ -1,0 +1,58 @@
+{
+  "inventory_version": "research-stage/1.1-additive",
+  "base_catalog": {
+    "path": "inputs/seed/witness_catalog.json",
+    "sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d",
+    "witness_ids": ["W1-rev1", "W1", "W2", "W3", "W4"],
+    "scope_warning": "The base receipts remain unchanged and retain their original limits. They do not validate this enrichment's engine-source interpretation or runtime claims."
+  },
+  "executed_additions": [],
+  "proposed_unexecuted": [
+    {
+      "id": "PV1",
+      "title": "DuckDB #12596 release-boundary runtime check",
+      "status": "UNEXECUTED",
+      "procedure": "Run the exact tagged test/fixture on DuckDB v1.0.0 and v1.1.0 builds, comparing parallel and serial scans; retain executable/build hashes and complete test output.",
+      "evidence_target": "Whether each built release reproduces or fixes the extra row, and whether any v1.0.x tag contains the guard.",
+      "source_ids": ["S1", "S9", "S11", "S12", "S13", "S23", "S24", "S25"],
+      "limits": "The captured v1.1.0 test file and source are not evidence that a test was run. Endpoint tags alone do not identify the first patched 1.0.x release."
+    },
+    {
+      "id": "PV2",
+      "title": "CSV option-default verification on selected production build",
+      "status": "UNEXECUTED",
+      "procedure": "Query omitted and explicit null_padding, ignore_errors, and store_rejects options on the exact selected engine binary; record results and binary hash.",
+      "evidence_target": "Runtime defaults and their agreement with the pinned option declaration.",
+      "source_ids": ["S1", "S2", "S26"],
+      "limits": "The v1.1.0 source declaration resolves only that source-tree version; the older PR description and current moving documentation do not establish other runtime versions."
+    },
+    {
+      "id": "PV3",
+      "title": "Projection-pushdown contract validation check",
+      "status": "UNEXECUTED",
+      "procedure": "Create a tiny CSV with one valid selected field and one declared integer field containing a bad value; compare a query that selects only the valid field with LabBook's full-schema validation pass.",
+      "evidence_target": "The projected query may omit the bad-column cast, while the contract validator reports it.",
+      "source_ids": ["S2"],
+      "limits": "The current guide documents this behavior; a runtime check must be run against the selected, version-pinned engine."
+    },
+    {
+      "id": "PV4",
+      "title": "Reject-table persistence and resource-bound check",
+      "status": "UNEXECUTED",
+      "procedure": "Enable store_rejects, serialize both temporary reject tables into a project artifact, close/reopen, and verify source bytes, scanner parameters, error fields, and cap behavior.",
+      "evidence_target": "Durable reject provenance after session closure, including rejected-line offsets and explicit limit handling.",
+      "source_ids": ["S2", "S26"],
+      "limits": "DuckDB docs describe temporary tables and a zero/no-limit rejects limit; they do not specify LabBook persistence or quota behavior."
+    },
+    {
+      "id": "PV5",
+      "title": "Cross-cell mutation invalidation policy check",
+      "status": "UNEXECUTED",
+      "procedure": "Run a two-cell mutable-list example and verify that LabBook refuses to label downstream output current unless the mutation dependency is declared or contained within the defining cell.",
+      "evidence_target": "The chosen policy for dependencies that a static references/definitions graph does not track.",
+      "source_ids": ["S6"],
+      "limits": "The captured marimo guide is moving main documentation; this check would validate LabBook's own policy, not marimo release behavior."
+    }
+  ],
+  "not_executed_note": "No DuckDB or marimo code was executed for this enrichment. These validation plans are deliberately separated from the executed W1-W4 receipts in the immutable base witness catalog."
+}

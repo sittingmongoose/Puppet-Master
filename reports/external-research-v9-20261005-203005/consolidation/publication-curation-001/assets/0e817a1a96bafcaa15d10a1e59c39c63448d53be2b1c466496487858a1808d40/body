@@ -1,0 +1,199 @@
+{
+  "catalog": "er9.research.sources.v1",
+  "stage": "research",
+  "captured_utc_window": "2026-10-06T09:18:27Z..2026-10-06T09:21:06Z",
+  "note": "All captures are exact public HTTP response bodies obtained with the stage's admitted public_https_get tool. capture identity = sha256 of the exact response body (source_version). Locator = the specific portion of the capture a proposal claim rests on. Delivery truncation is recorded where the tool returned only the first 32768 bytes of a larger body.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.11.1/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "jupyter/nbformat tag v5.11.1",
+      "title": "Jupyter Notebook v4.5 JSON schema (shipped inside nbformat 5.11.1)",
+      "captured_utc": "2026-10-06T09:21:06Z",
+      "source_version": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "capture_id": "5ee4808cd0774dfa87c431d0bd931ca1",
+      "complete": true,
+      "locators": [
+        "description: 'Jupyter Notebook v4.5 JSON schema.'",
+        "definitions.cell_id: string pattern ^[a-zA-Z0-9-_]+$, minLength 1, maxLength 64",
+        "definitions.code_cell.required: [id, cell_type, metadata, source, outputs, execution_count]",
+        "definitions.code_cell.properties.execution_count.description: 'The code cell's prompt number. Will be null if the cell has not been run.'",
+        "definitions.output: oneOf execute_result | display_data | stream | error",
+        "nbformat_minor minimum 5; nbformat major fixed to 4"
+      ],
+      "applicability": "Mechanism precedent P1: notebook document format pins displayed cell order (cells array), stable cell identity (id), execution order (execution_count) and output payloads as inert data. Establishes what the FORMAT records; it does not establish runtime/session behavior."
+    },
+    {
+      "id": "S2",
+      "url": "https://api.github.com/repos/jupyter/nbformat/releases/latest",
+      "pin": "jupyter/nbformat latest release at capture time",
+      "title": "nbformat v5.11.1 release metadata",
+      "captured_utc": "2026-10-06T09:18:27Z",
+      "source_version": "sha256:94f3a4d49829fddc6967673b46f6c85a809a1c93cef7a68f0faca682e3cf02c5",
+      "capture_id": "c755167b84cb43eca4e87b6c857fd91e",
+      "complete": true,
+      "locators": [
+        "tag_name v5.11.1; published_at 2026-08-17T08:10:55Z; prerelease false",
+        "assets include nbformat-5.11.1-py3-none-any.whl sha256:cc6698fa75f4fab8755ead786317815f13a6fee3b53311c0abb1a8b51d52f7ec"
+      ],
+      "applicability": "Coherent release binding for P1: schema file at tag v5.11.1 is byte-identical (same body sha256) to the main-branch capture, so the v4.5 schema facts are pinned to a released artifact, not a moving branch."
+    },
+    {
+      "id": "S3",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/latest",
+      "pin": "duckdb/duckdb latest release at capture time: v1.5.6",
+      "title": "DuckDB v1.5.6 release metadata",
+      "captured_utc": "2026-10-06T09:18:27Z",
+      "source_version": "sha256:e37bba3e76bfd7e743d3d5397b71e3a833048fa38ab2771efcf557a66fd2a87e",
+      "capture_id": "026c5449bf2a43a5ad7fe684ffa06a59",
+      "complete": false,
+      "delivery_note": "first 32768 of 53225 bytes delivered; tag/publish fields inside delivered portion",
+      "locators": [
+        "tag_name v1.5.6; name 'DuckDB v1.5.6 Bugfix Release'; published_at 2026-09-28T13:35:11Z; prerelease false"
+      ],
+      "applicability": "Coherent release binding for P2: DuckDB engine pin v1.5.6; regression-test pin below uses the same tag."
+    },
+    {
+      "id": "S4",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "pin": "duckdb.org docs channel '1.5 current' (page version selector), matching release v1.5.6",
+      "title": "CSV Import (DuckDB docs)",
+      "captured_utc": "2026-10-06T09:19:10Z",
+      "source_version": "sha256:a65af879f6ac4b784cbaeba7b9a9a7095f837578ec1c914af90d88e4b16efff6",
+      "capture_id": "873e04331f2040fb8b1f1f5f8675d6b3",
+      "complete": false,
+      "delivery_note": "first 32768 of 393313 bytes delivered (nav-heavy Jekyll page); Jekyll SEO meta description is inside the delivered portion",
+      "locators": [
+        "og:description / ld+json description: read_csv examples incl. 'read_csv('flights.csv', delim = '|', header = true, columns = { 'FlightDate': 'DATE', ... })' (explicit user-supplied schema option)",
+        "version selector: '1.5 current' marked current; '1.4 LTS'; '2.0-dev preview'; also 1.3/1.2/1.1/1.0/0.10"
+      ],
+      "applicability": "P2: documented auto-infer vs explicit columns= schema paths; docs-channel pin evidence."
+    },
+    {
+      "id": "S5",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "pin": "duckdb.org docs channel '1.5 current'",
+      "title": "CSV Auto Detection (DuckDB docs)",
+      "captured_utc": "2026-10-06T09:21:05Z",
+      "source_version": "sha256:2b1d565aee5b9b9c9dccb546e2c0ca491e186d62cce8573c6673d5a4d94b0f87",
+      "capture_id": "efd2937c4bdc481fa223fff0671fc94d",
+      "complete": false,
+      "delivery_note": "first 32768 of 372286 bytes delivered; parameter table (sample_size default) lies beyond the delivered portion and was NOT verified in the docs page itself",
+      "locators": [
+        "og:description: 'When using read_csv, the system tries to automatically infer how to read the CSV file using the CSV sniffer... Detect the dialect... Detect the types of each of the columns... options can be individually overridden by the user.'"
+      ],
+      "applicability": "P2: sniffer is documented behavior; sample_size default value is taken from issue S6 (issue-internal claim) and from the v1.5.6 test file S8, not from the docs page excerpt."
+    },
+    {
+      "id": "S6",
+      "url": "https://duckdb.org/docs/current/connect/concurrency",
+      "pin": "duckdb.org docs channel '1.5 current'",
+      "title": "Concurrency (DuckDB docs)",
+      "captured_utc": "2026-10-06T09:19:11Z",
+      "source_version": "sha256:882321c2eb00650a345819817a01aa3c13c9d561bffd21b5a974439d3698dd2f",
+      "capture_id": "b5aff3a430574e419302f69f337f47f9",
+      "complete": false,
+      "delivery_note": "first 32768 of 353861 bytes delivered; the Jekyll SEO meta description containing the concurrency model is inside the delivered portion",
+      "locators": [
+        "og:description: 'Read-write mode: one process can both read and write to the database. Read-only mode: multiple processes can read from the database, but no processes can write (access_mode = 'READ_ONLY'). ... multiple writer threads using a combination of MVCC ... and optimistic concurrency control ... all within that single writer process.'"
+      ],
+      "applicability": "P2 / architecture: defines the multi-process locking model the workspace must plan around (single writer per database file)."
+    },
+    {
+      "id": "S7",
+      "url": "https://api.github.com/search/issues?q=repo:duckdb/duckdb+csv+sniffer+wrong+type&per_page=10",
+      "pin": "GitHub search API response at capture time",
+      "title": "Issue search: duckdb csv sniffer wrong type (5 hits)",
+      "captured_utc": "2026-10-06T09:18:28Z",
+      "source_version": "sha256:02be09c96cd1ffc8bc8021244728e2818aed1827ea977422f594647986bd7818",
+      "capture_id": "854d8e7796e34bb5bc625248a666a2b8",
+      "complete": true,
+      "locators": [
+        "item #25824: 'CSV reader silently rounds/truncates values past the sniffer's sample_size, although the sniffer itself rejects those same strings'; state OPEN; created 2026-09-17; body claims default sample_size 20480 lines, silent rounding of 1.5->2 in BIGINT columns beyond the sample, version matrix 1.1.3..main, sample_size=-1 workaround",
+        "item #1015 (PR): 'CSV Loader would wrongly assume column with all sample values null to be Bool'; pull_request.merged_at 2020-10-16T11:12:26Z",
+        "items #15777, #15576: closed sniffer issues (dateformat AUTO; delimiter mis-sniff)"
+      ],
+      "applicability": "Issue chains C1 (#1015) and C2 (#25824). #25824 details are issue-author claims, independently unverified."
+    },
+    {
+      "id": "S8",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/1015/files",
+      "pin": "duckdb/duckdb PR 1015 (merge commit 921d87713fd5052f5feed541cfdb2723b05a7a9e per blob URLs)",
+      "title": "PR 1015 file diff (fix + regression tests)",
+      "captured_utc": "2026-10-06T09:19:11Z",
+      "source_version": "sha256:9bb42216f94849dc13739fcb777eefd0d7e5a0c4f94a60792d352f06c595e674",
+      "capture_id": "37a70abeff294fb287240908c07e0dfc",
+      "complete": true,
+      "locators": [
+        "src/execution/operator/persistent/buffered_csv_reader.cpp patch hunk @@ -718,8 +719,11 @@: 'if (best_sql_types_candidate.size() == type_candidates.size()) { d_type = LogicalType::VARCHAR; }' plus SQLNULL added to type candidate list (hunk @@ -512)",
+        "test/sql/copy/csv/auto/test_auto_voter.test ADDED (new regression test, expects COUNT(*)=5300 from real/voter.tsv)",
+        "test/sql/copy/csv/auto/test_sample_size.test MODIFIED: 'statement error' flipped to 'statement ok' plus typeof() expectations (regression test updated)",
+        "test/sql/copy/csv/auto/test_type_detection.test MODIFIED: new int_bol.csv case (i INTEGER, b BOOLEAN)",
+        "fixtures added: test/sql/copy/csv/data/auto/int_bol.csv, test/sql/copy/csv/data/real/voter.tsv (5301 added lines)"
+      ],
+      "applicability": "Chain C1 evidence: the fix code and its regression tests in the same merged patch."
+    },
+    {
+      "id": "S9",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/sql/copy/csv/auto/test_sample_size.test",
+      "pin": "duckdb/duckdb tag v1.5.6",
+      "title": "test_sample_size.test at release v1.5.6",
+      "captured_utc": "2026-10-06T09:21:06Z",
+      "source_version": "sha256:0cc5061c4b8030d7c5a1fd304e5c72ee95d6aac9df704563294b342ec04b2863",
+      "capture_id": "592fb210d87f47f2a83015fa207818c7",
+      "complete": true,
+      "locators": [
+        "SAMPLE_SIZE=1 vs SAMPLE_SIZE=-1 blocks on issue_811.csv with differing typeof() expectations (e.g. TestDouble VARCHAR at sample 1, DOUBLE at -1)",
+        "file present at v1.5.6 tag; expectations have evolved since the 2020 version in S8 (BIGINT now expected for TestInteger), showing sniffer behavior is version-sensitive"
+      ],
+      "applicability": "Chain C1 applicability limit: regression file for sniffer sample semantics still exists at the v1.5.6 pin, but its exact expectations changed across versions; therefore the 2020 fix is evidenced as merged, while current-version behavior must be re-tested at the pin (proposed witness P5)."
+    },
+    {
+      "id": "S10",
+      "url": "https://peps.python.org/pep-0751/",
+      "pin": "PEP 751 page (Last-Modified Sat, 03 Oct 2026; Status: Final)",
+      "title": "PEP 751 - A file format to record Python dependencies for installation reproducibility",
+      "captured_utc": "2026-10-06T09:19:12Z",
+      "source_version": "sha256:a73937a1e942c22f3a4c623dd59d3a7008b7f85f1bbf293c50a966e7a1257ce0",
+      "capture_id": "cde5cb054fa644348dbf60259a5578d4",
+      "complete": false,
+      "delivery_note": "first 32768 of 162130 bytes delivered; header + abstract + specification start are inside the delivered portion",
+      "locators": [
+        "Status field: Final; Created 24-Jul-2024; Resolution 31-Mar-2025; Replaces 665",
+        "File Name section: lock file MUST be named pylock.toml or match r\"^pylock\\.([^.]+)\\.toml$\"",
+        "banner: 'This PEP is a historical document. The up-to-date, canonical spec, pylock.toml Specification, is maintained on the PyPA specs page.'",
+        "Abstract: installers should compute what to install without install-time dependency resolution"
+      ],
+      "applicability": "Environment binding standard (P3): pylock.toml as the lock/interchange format; adopting the format does not by itself settle runtime behavior (separate installer concern)."
+    },
+    {
+      "id": "S11",
+      "url": "https://devguide.python.org/versions/",
+      "pin": "CPython Developer's Guide, 'Status of Python versions' (site Last-Modified Thu, 01 Oct 2026)",
+      "title": "Status of Python versions",
+      "captured_utc": "2026-10-06T09:19:12Z",
+      "source_version": "sha256:4f149cdef9239c62ac9e6067db3cbf1d2a33594149dc1c1c201b2dbf0541748c",
+      "capture_id": "a67cd307afc74c8995e2c942e60d4c7f",
+      "complete": false,
+      "delivery_note": "first 32768 of 125357 bytes delivered; release-cycle chart data beyond delivered portion",
+      "locators": [
+        "og:description / page text: 'The main branch is currently the future Python 3.16, and is the only branch that accepts new features.'"
+      ],
+      "applicability": "Python support boundary anchor: at capture time main=3.16, so latest stable is 3.15 and per-version EOL dates still need the full table (lead L2)."
+    },
+    {
+      "id": "S12",
+      "url": "https://jupyter-notebook.readthedocs.io/en/stable/security.html",
+      "pin": "readthedocs project jupyter-notebook, version slug 'stable'",
+      "title": "(failed capture) Jupyter Notebook security docs",
+      "captured_utc": "2026-10-06T09:19:12Z",
+      "source_version": "sha256:fbde61d2180be033f7f6ebdc1ed19a685229175e596c3416af144e072f9135ea",
+      "capture_id": "903445c999ba4d4e87f792b53fa1f3f6",
+      "complete": true,
+      "locators": [
+        "HTTP 404; meta readthedocs-http-status 404; 'The documentation page you requested does not exist or may have been removed.'"
+      ],
+      "applicability": "Negative evidence: the classic Jupyter trust/security page is gone at this URL; the proposal's output-trust stance is grounded in the nbformat schema (S1) plus engineering inference, and finding the successor page is lead L3. No trust-model claim in this proposal is attributed to this URL."
+    }
+  ]
+}

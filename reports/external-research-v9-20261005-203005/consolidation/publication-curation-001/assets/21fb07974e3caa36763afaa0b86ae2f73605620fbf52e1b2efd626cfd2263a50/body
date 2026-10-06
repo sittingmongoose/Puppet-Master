@@ -1,0 +1,123 @@
+{
+  "catalog_schema": "er9.research.sources.v1",
+  "captured_with": "mcp__pm_boundary__public_https_get (exact-response-body capture; sha256 + capture_id recorded by tool)",
+  "stage": "research",
+  "date": "2026-10-06",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "kind": "open-source implementation documentation",
+      "project": "tifffile (Christoph Gohlke)",
+      "pin": "README revision 'Version: 2026.9.20' (as embedded in captured body); master branch at capture time",
+      "locator": "Sections: 'Read and write TIFF files' (capabilities list: reads from 'strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels'), 'Revisions' (2026.9.20 ... 2026.4.11), 'Notes' (BigTIFF 64-bit offsets / 4 GB; ImageJ hyperstack >4 GB single IFD; LSM StripOffsets wrap; MMStack 'metadata ... often corrupted or wrong'; ScanImage 'corrupted non-BigTIFF files > 2 GB'; NDPI partial 64-bit offsets and JPEG >65530 workaround 'performs poorly'; OME-TIFF 'OME-XML metadata found in the ImageDescription tag of the first IFD defines the position of TIFF IFDs'; limitations: OJPEG, chroma subsampling, color space transformations, differing sample types, IPTC/ICC/XMP not implemented), 'Examples' (series.axes 'QYX'; memmap 'does not work with compression or tiling'; imread(..., return_as='zarr'); z['0'][2, 0, 128:384, 256:]; dask.array.from_zarr chunksize (1,1,128,128,3); revisions note 'Update multiscales zarr format 2 fsspec files to NGFF 0.4')",
+      "capture_identity": {"sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "capture_id": "e807f1d56f864cb7bf17ab08686ef630", "captured_utc": "2026-10-06T05:26:33Z", "bytes": 32898, "note": "delivery truncated displayed text at 32768 of 32898 bytes (final example cut); body_complete=true per tool"},
+      "applicability": "Format-boundary precedent: bounded tile/page/zarr reads, explicit axes model incl. anonymous Q axis, verbatim OME-XML location, documented limitations list, BigTIFF >4 GB. Supports F1-F4, support boundary, 3 GB bounded-access plan.",
+      "used_in_findings": ["F1", "F2", "F3", "F4", "S1-revision-churn"]
+    },
+    {
+      "id": "S2",
+      "url": "https://api.github.com/repos/napari/napari/pulls/533",
+      "kind": "public issue/fix history (GitHub API JSON)",
+      "project": "napari/napari",
+      "pin": "PR #533 'add undo/redo to labels layer'; created 2019-09-14T07:25:38Z; merged 2019-09-28T04:16:18Z; merge_commit_sha d09bea9c1b36ef3d78b97b64a159bc36c1b8d9b8; base napari:master dd48e8e61a6a06539664bbc5fb90afefd8a1e9e5; head kne42:undo-redo-labels 9ba94a13eae5c2bbf5b3fd21d67a05c6a07c0cb2; milestone '0.2'; merged_by sofroniewn; +116/-15 across 4 files",
+      "locator": "JSON fields: merged_at, merge_commit_sha, milestone.title, body ('undo/redo is bound to Ctrl+Z/Ctrl+Shift+Z ... the undo/redo stack is reset whenever you change the viewed dimensions')",
+      "capture_identity": {"sha256": "77cfae9cd895ca05e37e09e45a964b70da281812fc0672377b8fd746c0d35747", "capture_id": "97a9b94a61f749da83a480762701c206", "captured_utc": "2026-10-06T05:27:15Z", "bytes": 19493},
+      "applicability": "Issue→fix anchor of the required chain: problem statement + UX contract + merge commit. Release-level applicability limited (see S7).",
+      "used_in_findings": ["F6", "chain-fix"]
+    },
+    {
+      "id": "S3",
+      "url": "https://api.github.com/repos/napari/napari/pulls/533/files?per_page=100",
+      "kind": "fix diff (GitHub API JSON, per-file patches)",
+      "project": "napari/napari",
+      "pin": "same merge as S2 (diff of merge commit d09bea9c1b36ef3d78b97b64a159bc36c1b8d9b8)",
+      "locator": "Files: napari/layers/labels/labels.py (_history_limit=100; _undo_history/_redo_history deques; _save_history appends self.data[self.dims.indices].copy(); _block_saving set on mouse-press / cleared on mouse-release = stroke-grouped undo; _set_view_slice resets stacks; fill() fix self.data[tuple(self.indices)] -> self.data[tuple(self.dims.indices)]); napari/layers/labels/keybindings.py (Labels.bind_key('Control-Z', Labels.undo); Labels.bind_key('Control-Shift-Z', Labels.redo)); napari/tests/test_advanced.py (adds test_labels_undo_redo(qtbot): fill->undo->redo->history_limit=1 cap behavior); napari/_vispy/vispy_image_layer.py (scale_factor sync)",
+      "capture_identity": {"sha256": "f25e5a78db5c8c1117fcd59fb7369b5708295f72e7e8b0f62932527de15e32a4", "capture_id": "fcc8fb43922b4ede8b6ecfc3e4df7228", "captured_utc": "2026-10-06T05:27:16Z", "bytes": 11354},
+      "applicability": "Mechanism + regression test of the chain. Test path at that commit: napari/tests/test_advanced.py, function test_labels_undo_redo.",
+      "used_in_findings": ["F6", "chain-regression-test", "undo-design"]
+    },
+    {
+      "id": "S4",
+      "url": "https://ome-model.readthedocs.io/en/stable/developers/6d-7d-and-8d-storage.html",
+      "kind": "standard documentation (OME data model)",
+      "project": "OME (Open Microscopy Environment), ome-model 'stable' docs",
+      "pin": "stable docs; footer copyright 2000-2025; page last_modified 2025-12-10 (HTTP header)",
+      "locator": "Sections '6D, 7D and 8D storage' (5D structure X,Y,Z,C,T; Modulo annotation namespace openmicroscopy.org/omero/dimension/modulo; Type enum angle|phase|tile|lifetime|lambda|other; 'if an application does not understand the Modulo addition, then it can treat the data as 5D, though the displayed results would need some interpretation'), 'How to order the plane data' ('governed by the value of DimensionOrder on the Pixels element'), 'How to represent tiles' (Plane PositionX/Y per tile)",
+      "capture_identity": {"sha256": "847848bd47a51d88ee298c94d25ea625091544bffff3e1bc2a13ae4f5a9469a1", "capture_id": "deb69285b8cc402e9ebb3f31554eb66b", "captured_utc": "2026-10-06T05:27:17Z", "bytes": 23650},
+      "applicability": "Axis-ambiguity standard-side evidence: extra dimensions are opt-in annotations; justifies explicit map/exclude import decision and verbatim metadata retention.",
+      "used_in_findings": ["F4"]
+    },
+    {
+      "id": "S5",
+      "url": "https://ome-model.readthedocs.io/en/stable/developers/roi.html",
+      "kind": "standard documentation (OME data model)",
+      "project": "OME, ome-model 'stable' docs",
+      "pin": "stable docs; last_modified 2025-12-10 (HTTP header)",
+      "locator": "Sections 'Shape types' ('Each shape is a 2D object that exists within a single Z plane'), 'Shape attributes and simple children' ('TheZ/TheT/TheC - optional, if not specified then all the z-sections/timepoints/channels'; FillColor/StrokeColor/Text; 'Transform - a transformation matrix represented by 6 values'), 'Shape concrete implementations' (Ellipse, Label, Line, Mask 'upper left corner and a BinData block', Point, Polygon, Polyline, Rectangle), '3D ROI' ('Union of Shape objects' per plane)",
+      "capture_identity": {"sha256": "be941d083f99a3fa7d2fa4336fc2fdc37de6f7763ac0c21dec91bff8dc142e59", "capture_id": "15a117d48e0946939ec5ae288ac2c55f", "captured_utc": "2026-10-06T05:27:17Z", "bytes": 12027},
+      "applicability": "Annotation scope convention (absent index = whole extent) and OME-ROI export opportunity; OME mask uses BinData (whole-mask blob), which our chunked mask store improves upon for large volumes.",
+      "used_in_findings": ["F5", "opportunity-ome-roi", "scope-semantics"]
+    },
+    {
+      "id": "S6",
+      "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+labels+undo+in%3Atitle&per_page=20",
+      "kind": "public issue/fix history (GitHub search API JSON)",
+      "project": "napari/napari",
+      "pin": "search executed 2026-10-06T05:26:34Z; total_count=2",
+      "locator": "Item 1: PR #3155 'Proposal: override Labels.data.__setitem__ to support undo', created 2021-08-13 by jni, draft=true, state closed, closed_at 2022-06-28, merged_at=null, body discusses wrapper over array __setitem__ vs adding data_setitem API and emitting layer.events.data. Item 2: PR #533 (see S2).",
+      "capture_identity": {"sha256": "dd7fdf17ff4d7b8aabfcd9d2b0a1e60dc8e1dcfd09b140ebf65a4ab8b20ca5b1", "capture_id": "f377387a3980484d81c2f1e0e9ad7a6d", "captured_utc": "2026-10-06T05:26:34Z", "bytes": 10401},
+      "applicability": "Documents the durability limit of the merged snapshot-undo design (out-of-band data[...] mutations escape history) and that the setitem-wrapper alternative was proposed but never merged.",
+      "used_in_findings": ["F6", "single-write-path-design", "leads-L5"]
+    },
+    {
+      "id": "S7",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.2.0",
+      "kind": "release metadata (negative evidence)",
+      "project": "napari/napari",
+      "pin": "captured 2026-10-06T05:27:17Z",
+      "locator": "HTTP 404 body: {\"message\":\"Not Found\",\"documentation_url\":\".../rest/releases/releases#get-a-release-by-tag-name\",\"status\":\"404\"}",
+      "capture_identity": {"sha256": "010563d2cfb8f1e87f700936ce59ee3a33364da46e3db41b0049227918ece74d", "capture_id": "90f49c975de3431c9ac064887a4d8422", "captured_utc": "2026-10-06T05:27:17Z", "bytes": 133},
+      "applicability": "Limit of the required chain: no GitHub Release object exists for tag v0.2.0, so 'first release containing PR #533' could not be established; applicability stated at commit level (d09bea9) with verification recipe (git merge-base --is-ancestor).",
+      "used_in_findings": ["chain-limit"]
+    },
+    {
+      "id": "S8",
+      "url": "https://napari.org/stable/howtos/layers/image.html",
+      "kind": "product documentation",
+      "project": "napari (docs 'stable', site docs version 0.9.2)",
+      "pin": "captured 2026-10-06T05:26:35Z; content_length_header 1701221 bytes, capture truncated at 524288 bytes (body_complete=false)",
+      "locator": "Captured portion: og:description ('...how to set properties like contrast limits, opacity, colormaps, blending and interpolation'); navigation listing guides 'Scale and unit-aware rendering', 'Axis names in napari', 'Axis directions, data, and handedness', tutorial 'Using Dask and napari to process & view large datasets', howto 'Performance monitoring'. Main article body NOT captured.",
+      "capture_identity": {"sha256": "49ea710161793617aa7fc21bc2ae08903e1184ce4f1804c98eda3bef0f56a45f", "capture_id": "2f6d4624d1be4c799fd9c7b13daa8cc6", "captured_utc": "2026-10-06T05:26:35Z", "bytes": 524288, "truncated": true},
+      "applicability": "LIMITED: evidence that napari documents image-layer display mapping (contrast/gamma/colormap) as layer properties and maintains unit/handedness/dask guides; no deep quotes drawn from this capture. Deep capture listed as lead L6.",
+      "used_in_findings": ["F7"]
+    },
+    {
+      "id": "S9",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/main/README.md",
+      "kind": "open-source implementation documentation",
+      "project": "zarr-python (main branch)",
+      "pin": "main at capture time 2026-10-06T05:26:35Z",
+      "locator": "'What is it?' ('compressed, chunked, N-dimensional arrays that work well for parallel computing and object storage'); Main Features (chunk arrays along any dimension; store in memory/disk/zip/S3; read AND write concurrently from multiple threads or processes; hierarchies via groups)",
+      "capture_identity": {"sha256": "2cf2e111cb92b2b6d6236bca9629e32d901e88234a2bb05b225aede20f817b28", "capture_id": "e5d9e2ddf61d4cf9baa741b242002f34", "captured_utc": "2026-10-06T05:26:35Z", "bytes": 3533},
+      "applicability": "Storage-precedent facts for chunk addressing, cache design, and concurrent reads. Zarr v3 spec details (e.g., chunk digests) NOT captured - lead L9, unverified.",
+      "used_in_findings": ["F8", "mask-chunking"]
+    },
+    {
+      "id": "S10",
+      "url": "https://ome-model.readthedocs.io/en/stable/developers/model-overview.html",
+      "kind": "standard documentation (overview)",
+      "project": "OME, ome-model 'stable' docs",
+      "pin": "stable docs; last_modified 2025-12-10 (HTTP header)",
+      "locator": "Figure captions only (Image/Instrument/ROI/Annotation branches); link to 'current version of the entire Schema' (OME-2016-06); nav listing '6D, 7D and 8D storage', 'ROI model', 'Structured Annotations'",
+      "capture_identity": {"sha256": "0df17127638e3f8bf1e31bac912cfedbace2c02dc452a048917ba53d356d59fb", "capture_id": "9f19e9278b0d406a962b6f21a817e123", "captured_utc": "2026-10-06T05:26:35Z", "bytes": 8941},
+      "applicability": "THIN: existence of model branches and current schema generation only; no load-bearing claim rests on S10 alone.",
+      "used_in_findings": ["context"]
+    }
+  ],
+  "not_captured": [
+    {"target": "QuPath project documentation (stable entry identity via project entries)", "attempted_url": "https://qupath.readthedocs.io/en/stable/docs/project/projects.html", "result": "HTTP 404 captured (sha256 db1e53fdc05e8077c54d774ef158ad816eb4e4e9c776c0b5df39f79143bcab82); claim recorded as UNVERIFIED lead L1."},
+    {"target": "tifffile CHANGES.rst (historical BigTIFF / Q-axes changelog provenance)", "status": "not fetched (time budget); lead L6."},
+    {"target": "Zarr v3 format spec (chunk key grammar, optional digests)", "status": "not fetched; lead L9 - no specific spec claims made anywhere in proposal."}
+  ]
+}

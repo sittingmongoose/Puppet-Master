@@ -1,0 +1,51 @@
+{
+  "catalog_version": "research-stage/1.0",
+  "scope": "Critical component and behavior bindings surfaced by enrichment.md. This is an implementation dependency map, not a package lock or proof of release behavior.",
+  "dependencies": [
+    {
+      "id": "DEP-01",
+      "name": "DuckDB tabular engine build",
+      "role": "CSV/columnar scan, transformations, and optional SQL share a pinned engine; version and build affect parser behavior and output provenance.",
+      "binding": "Record exact engine release/build identity per project and execution event. The current proposal does not select a production release. v1.1.0 is used only as a historical source applicability anchor.",
+      "status": "selection_and_runtime_validation_required",
+      "evidence_source_ids": ["S12", "S13", "S23", "S24", "S25", "S26"],
+      "validation_reference": "PV1 and PV2 in witnesses.json; both UNEXECUTED"
+    },
+    {
+      "id": "DEP-02",
+      "name": "Explicit CSV schema and scanner configuration",
+      "role": "Stable interpretation of column count, types, padding, error handling, date/encoding limits, and parallel path.",
+      "binding": "Persist effective declared schema and effective options, including null_padding, ignore_errors, store_rejects, rejects_limit, maximum line bytes, parallel, autodetection, and date/encoding settings. Never rely on an implicit default for a contract-sensitive import.",
+      "status": "product_binding_required",
+      "evidence_source_ids": ["S1", "S2", "S23", "S24", "S26"],
+      "validation_reference": "PV2 in witnesses.json; UNEXECUTED. null_padding transition is tracked by L2."
+    },
+    {
+      "id": "DEP-03",
+      "name": "Full-column contract validator",
+      "role": "Detect invalid values in declared fields even when an interactive query projects only a subset.",
+      "binding": "Run a full declared-column scan or equivalent validation operation with projection pushdown prevented; bind observed validation behavior to each supported DuckDB release.",
+      "status": "current_documentation_evidence_only_release_check_required",
+      "evidence_source_ids": ["S2"],
+      "validation_reference": "PV3 in witnesses.json; UNEXECUTED. Release applicability tracked by L12."
+    },
+    {
+      "id": "DEP-04",
+      "name": "Durable reject-ledger adapter and resource policy",
+      "role": "Preserve malformed source rows and scanner context across project close/reopen and project exchange.",
+      "binding": "Copy DuckDB's temporary reject_scans and reject_errors data into a versioned project artifact before the engine session closes. Store source identity, effective scan configuration, raw line and byte offsets. Set LabBook storage quotas independently of DuckDB rejects_limit.",
+      "status": "implementation_required_engine_tables_are_not_project_storage",
+      "evidence_source_ids": ["S2", "S26"],
+      "validation_reference": "PV4 in witnesses.json; UNEXECUTED. Persistence/quota decision tracked by L13."
+    },
+    {
+      "id": "DEP-05",
+      "name": "Notebook static dependency and mutation policy",
+      "role": "Invalidate dependent notebook outputs after edits and support provenance/status claims.",
+      "binding": "Treat static refs/defs as a graph over name bindings only. Require cross-cell mutation and external/file dependencies to be declared or unsupported; where the graph cannot account for effects, leave outputs unverified. If marimo is adopted, bind claims to a release rather than moving-main documentation.",
+      "status": "product_policy_required_runtime_validation_unexecuted",
+      "evidence_source_ids": ["S6"],
+      "validation_reference": "PV5 in witnesses.json; UNEXECUTED. Release applicability tracked by L14."
+    }
+  ]
+}

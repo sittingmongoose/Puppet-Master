@@ -1,0 +1,194 @@
+{
+  "catalog_version": "research-stage-1",
+  "captured_at_session": "2026-10-06T00:35-00:41Z",
+  "note": "All entries are exact HTTP response bodies captured by the experiment's public HTTPS tool. 'capture_sha256' identifies the captured bytes; semantic interpretation is the candidate's. Pins are repo commit/tag where obtainable; otherwise the live URL plus capture sha256 serves as the pin of record.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Jupyter nbformat v4.5 JSON schema",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "pin": "jupyter/nbformat @ main (branch pin; schema file), capture sha256 523e3578",
+      "captured_utc": "2026-10-06T00:35:20Z",
+      "capture_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "locator": "definitions/cell_id (pattern ^[a-zA-Z0-9-_]+$, minLength 1, maxLength 64); definitions/code_cell requires id, cell_type, metadata, source, outputs, execution_count; execution_count type [integer,null], minimum 0; root requires nbformat_minor >= 5",
+      "used_for": "Notebook document format: explicit cell identity, output types, execution_count semantics",
+      "applicability": "High — document layer of the proposal. Pin caveat: captured from main, not a release tag (tag-path fetch 404'd; see leads L3)."
+    },
+    {
+      "id": "S2",
+      "title": "nbformat CHANGELOG.md",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/CHANGELOG.md",
+      "pin": "jupyter/nbformat @ main, capture sha256 414e10d3",
+      "captured_utc": "2026-10-06T00:38:16Z",
+      "capture_sha256": "414e10d37deb6c5dffca9a082a923e4bd5dddcbe1e2a999149eaf55f1b3b10ab",
+      "locator": "section '## 5.1.0' → 'Implemented CellIds from JEP-62'; '## 5.1.3' → 'Change id generation to be hash based'; '## 5.5.0' → validate() deprecation of auto-fixing ('validation will fail instead of silently modifying an invalid notebook'); 5.11.0 drops Python 3.8",
+      "used_for": "Version applicability of cell ids; precedent for validation never silently fixing documents",
+      "applicability": "High — pins cell-id mechanism to nbformat 5.1.0 (Nov 2020 release line); supports 'no silent mutation' design rule."
+    },
+    {
+      "id": "S3",
+      "title": "marimo user guide — Running cells (reactivity)",
+      "url": "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/guides/reactivity.md",
+      "pin": "marimo-team/marimo @ main (docs), capture sha256 e75fd969",
+      "captured_utc": "2026-10-06T00:36:40Z",
+      "capture_sha256": "e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f",
+      "locator": "'marimo statically analyzes each cell ... references ... definitions'; 'forms a directed acyclic graph (DAG)'; 'The order cells are executed in is determined by the relationships between cells ... not by the order of cells on the page'; 'Deleting a cell deletes its global variables'; runtime 'can be configured to be lazy ... marking cells as stale'; 'Variable mutations are not tracked'; 'Interrupting a cell also cancels execution of any queued dependent cells'; 'every global variable be defined by only one cell'",
+      "used_for": "Mechanism and semantics for cell dependency graph, stale marking, interrupt propagation",
+      "applicability": "High — source of the freshness state machine design (§6)."
+    },
+    {
+      "id": "S4",
+      "title": "marimo — Coming from Jupyter",
+      "url": "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/guides/coming_from/jupyter.md",
+      "pin": "marimo-team/marimo @ main (docs), capture sha256 bab2761d",
+      "captured_utc": "2026-10-06T00:36:42Z",
+      "capture_sha256": "bab2761d42ee7d9ba6c8a12f2a138a67c5421e84b6d21b7efa66a5752090c1b2",
+      "locator": "'A Jupyter notebook is a REPL ... can easily accumulate hidden state'; 'over a third of Jupyter notebooks on GitHub failing to reproduce' (marimo's claim, secondary); 'marimo stores notebooks as Python, not JSON ... notebook outputs ... are not stored in the file'; 'marimo convert your_notebook.ipynb'",
+      "used_for": "Jupyter hidden-state framing (attributed); marimo file-format trade-off; conversion path for the alternative",
+      "applicability": "Medium-high. The 1/3 reproducibility figure is a vendor-quoted secondary statistic — see lead L5 before citing as fact."
+    },
+    {
+      "id": "S5",
+      "title": "DuckDB docs — CSV Import (v1.5 current)",
+      "url": "https://duckdb.org/docs/current/data/csv/overview.html",
+      "pin": "duckdb.org docs 'current' == 1.5 (fetched 2026-10-06); capture sha256 074901f1",
+      "captured_utc": "2026-10-06T00:35:47Z",
+      "capture_sha256": "074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d",
+      "locator": "page meta description: read_csv with auto-inferred options; read_csv(..., delim='|', header=true, columns={...}); 'create a table without specifying the schema manually' (sniffer path)",
+      "used_for": "CSV scan API surface incl. explicit schema override (columns={...}) used by the contract's strict path",
+      "applicability": "Medium — locator is the page's meta description because the 32 KB capture window shows nav chrome; body text under the same capture sha256."
+    },
+    {
+      "id": "S6",
+      "title": "DuckDB docs — Reading Faulty CSV Files (v1.5 current)",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files.html",
+      "pin": "duckdb.org docs 'current' == 1.5; capture sha256 58b86efc",
+      "captured_utc": "2026-10-06T00:38:16Z",
+      "capture_sha256": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c",
+      "locator": "page meta description: 'DuckDB supports detailed error messages, the ability to skip faulty lines and the possibility of storing faulty lines in a temporary table to assist users with a data cleaning step'",
+      "used_for": "Evidence that skip/rejects policy is an explicit, documented reader feature — the option our contract must not trust blindly (§4, §5.4)",
+      "applicability": "Medium-high; meta-description locator, same caveat as S5."
+    },
+    {
+      "id": "S7",
+      "title": "DuckDB docs — Concurrency (v1.5 current)",
+      "url": "https://duckdb.org/docs/current/connect/concurrency.html",
+      "pin": "duckdb.org docs 'current' == 1.5; capture sha256 21e28d18",
+      "captured_utc": "2026-10-06T00:35:47Z",
+      "capture_sha256": "21e28d18cb785a5b71263a65c2ead890bfbffac8dcc63249c0e06d2a9c2c09c4",
+      "locator": "meta description: 'Read-write mode: one process can both read and write'; 'Read-only mode: multiple processes can read ... (access_mode = 'READ_ONLY')'; MVCC + optimistic concurrency within the single writer process",
+      "used_for": "Project-level single-writer lock + read-only SQL colleague access (§9, §11.8)",
+      "applicability": "High for the concurrency/locking section."
+    },
+    {
+      "id": "S8",
+      "title": "DuckDB — Why DuckDB",
+      "url": "https://duckdb.org/why_duckdb.html",
+      "pin": "duckdb.org (fetched 2026-10-06); capture sha256 9a8498e8",
+      "captured_utc": "2026-10-06T00:39:12Z",
+      "capture_sha256": "9a8498e8e466d61e8c90c4a63abe82e061676234593f8e256783db8f19d9e322",
+      "locator": "'completely embedded within a host process'; 'DuckDB can process foreign data without copying ... queries directly on Pandas data without ever importing or copying any data'; 'single-file database'; ACID via MVCC; 'columnar-vectorized query execution engine'; Parquet/JSON/HTTP(S) as extensions",
+      "used_for": "Engine choice grounds: embedded, no-copy scans, single-file project database, vectorized OLAP",
+      "applicability": "High. Out-of-core/spilling specifics for the 5 GB target are NOT in this capture — see lead L7."
+    },
+    {
+      "id": "S9",
+      "title": "duckdb/duckdb issue #10769 — 'Ignore_errors causes empty result in read_csv'",
+      "url": "https://github.com/duckdb/duckdb/issues/10769",
+      "pin": "issue created 2024-02-20T15:57:10Z; DuckDB 0.10.0; captured via search API capture sha256 3fe3db4a",
+      "captured_utc": "2026-10-06T00:35:48Z",
+      "capture_sha256": "3fe3db4a8a0a0c1ce941ff050213bbc11a2270447e07d194fd90c62a43a42854",
+      "locator": "issue body: read_csv('titanic.csv', ignore_errors=true) → 'empty result set where loading without that option returns data'; labels 'needs triage'; state closed/completed 2024-02-21",
+      "used_for": "Issue side of the followed issue→fix→regression chain",
+      "applicability": "High — primary report of consequential silent data loss."
+    },
+    {
+      "id": "S10",
+      "title": "duckdb/duckdb PR #10777 files — CSV sniffer fix for #10769",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/10777/files",
+      "pin": "merged_at 2024-02-21T08:45:01Z; merge commit 55ce826740694c5887ea648221fbae674fadad9d; capture sha256 aba307c5",
+      "captured_utc": "2026-10-06T00:36:43Z",
+      "capture_sha256": "aba307c577db956b55705474b7b1924e61c52dfd3a7bd41b51b6822c32b23685",
+      "locator": "PR title '[CSV Sniffer] Minor sniffer tweak to give preference to dialects that generate the least errors if ignore_errors = true'; body 'Fix:#10769'; first changed file data/csv/titanic.csv (added, 892 lines) — the exact reproduction dataset from the issue",
+      "used_for": "Fix side of the chain",
+      "applicability": "High. LIMIT: the specific regression-test filename added by the PR was NOT visually confirmed (32 KB window truncated the files payload at the first file) — see lead L1."
+    },
+    {
+      "id": "S11",
+      "title": "duckdb/duckdb issue #11296 — recurrence of #10769 in 0.10.1",
+      "url": "https://github.com/duckdb/duckdb/issues/11296",
+      "pin": "created 2024-03-21T19:08:36Z; DuckDB 0.10.1; captured via search API capture sha256 3fe3db4a",
+      "captured_utc": "2026-10-06T00:35:48Z",
+      "capture_sha256": "3fe3db4a8a0a0c1ce941ff050213bbc11a2270447e07d194fd90c62a43a42854",
+      "locator": "body: 'Same bug as #10769 which was resolved, but it showed up again with a different file'; header has 3 columns, data has 4; ignore_errors=true + null_padding=true → empty result and empty rejects table",
+      "used_for": "Demonstrates the fix was partial; motivates application-level row-count invariants rather than trusting the permissive path",
+      "applicability": "High — the recurrence is the chain's key lesson."
+    },
+    {
+      "id": "S12",
+      "title": "duckdb/duckdb issue #19880 and its comments — later report (v1.4.1), unresolved",
+      "url": "https://github.com/duckdb/duckdb/issues/19880",
+      "pin": "created 2025-11-21T15:23:08Z; DuckDB 1.4.1; comments capture sha256 9d398f72",
+      "captured_utc": "2026-10-06T00:36:43Z",
+      "capture_sha256": "9d398f72a11e006f46fd6cf03890bbb9d0fe2a9fa23782d1031ba33e1a616ea2",
+      "locator": "issue body (via search capture 3fe3db4a): read_csv_auto(ignore_errors=true) → 87,905 rows vs strict 99,999 ('silent, unintended row loss'), persists with ALL_VARCHAR=TRUE; single comment (capture 9d398f72): reporter requests deletion after accidentally uploading proprietary data; no maintainer diagnosis",
+      "used_for": "Shows the defect class reported again ~20 months later; explicitly NOT a fix chain — resolution unestablished",
+      "applicability": "High as a caveat; the proposal does not claim current-release behavior from it."
+    },
+    {
+      "id": "S13",
+      "title": "duckdb/duckdb test/sql/copy/csv directory listing at merge commit 55ce826",
+      "url": "https://api.github.com/repos/duckdb/duckdb/contents/test/sql/copy/csv?ref=55ce826740694c5887ea648221fbae674fadad9d",
+      "pin": "ref=55ce826740694c5887ea648221fbae674fadad9d; capture sha256 014ea0f2",
+      "captured_utc": "2026-10-06T00:39:11Z",
+      "capture_sha256": "014ea0f223c87f8460ff283005fc44638b5a97f9f5d14d2c1b7e579b3d2cc09b",
+      "locator": "directory entries visible in window: 7702.test, auto/ (dir), broken/ (dir), bug_10283.test, csv_external_access.test, csv_null_padding.test, csv_error_message.test, csv_memory_management.test_slow, data/ (dir), ...",
+      "used_for": "Confirms a dedicated CSV regression suite exists at the fix commit (incl. external-access and null-padding tests); establishes where CSV tests live in that era",
+      "applicability": "Medium-high. LIMIT: alphabetical listing truncated before names starting past 'data'; the PR's specific test file was not identified — lead L1."
+    },
+    {
+      "id": "S14",
+      "title": "pip documentation — Secure installs / Hash-checking Mode",
+      "url": "https://pip.pypa.io/en/stable/topics/secure-installs/",
+      "pin": "pip stable docs v26.2.1 (fetched 2026-10-06); capture sha256 c04452b5",
+      "captured_utc": "2026-10-06T00:39:11Z",
+      "capture_sha256": "c04452b5593e8d8d5b1f57c70e02c7349b02c3defe1e4080b48020becafacebe",
+      "locator": "'Added in version 8.0' (hash-checking); 'Hashes are required for all requirements'; 'Hashes are required for all dependencies'; 'Requirements must be pinned'; 'The recommended hash algorithm ... is sha256'; weak hashes (md5/sha1/sha224) excluded",
+      "used_for": "Environment binding mechanism (requirements.lock.txt) and the honest strength limits of 'same lock'",
+      "applicability": "High."
+    },
+    {
+      "id": "S15",
+      "title": "nbclient documentation — Executing notebooks",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": "nbclient latest docs (0.11 series shown in page metadata); capture sha256 b3cb019d",
+      "captured_utc": "2026-10-06T00:39:12Z",
+      "capture_sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a",
+      "locator": "'execute the input cells of an .ipynb notebook file and save the results ... as a .ipynb file'; executed notebook saved to a separate path; timeout traitlet default 30 s; allow_errors default False; on_cell_error / on_cell_executed hooks; CellExecutionError; 'jupyter execute' CLI",
+      "used_for": "Clean-replay engine contract: separate executed artifact, per-cell timeout, error hooks",
+      "applicability": "High."
+    },
+    {
+      "id": "S16",
+      "title": "Frictionless Data Package specification (v1)",
+      "url": "https://specs.frictionlessdata.io/data-package/",
+      "pin": "spec page (Updated 2 May 2017 per page table); capture sha256 084eaf2d",
+      "captured_utc": "2026-10-06T00:35:22Z",
+      "capture_sha256": "084eaf2dcc6a69e3527de6204c79ab010819037b98d5a75dbcb4f4a0eadb48a7",
+      "locator": "'A Data Package consists of: Metadata ... and Resources'; 'The descriptor MUST be a valid JSON object ... MUST be named datapackage.json ... MUST be placed in the top-level directory'; 'The descriptor MUST contain a resources property'",
+      "used_for": "Descriptor shape adopted for datasets.yaml; also the basis for rejecting wholesale adoption (run-provenance is out of its scope)",
+      "applicability": "Medium-high."
+    },
+    {
+      "id": "S17",
+      "title": "DuckDB releases API (latest releases)",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases?per_page=5",
+      "pin": "API response captured 2026-10-06; capture sha256 a5f87ba1",
+      "captured_utc": "2026-10-06T00:35:23Z",
+      "capture_sha256": "a5f87ba176bb1c169b6fa0354b7f9757417b82c0482df1de9a4e2ed0b8a1cd38",
+      "locator": "first release: tag v1.5.6, 'DuckDB v1.5.6 Bugfix Release', published_at 2026-09-28T13:35:11Z, target_commitish 069cc9f9b5be802405797faecc284961b07c70ef",
+      "used_for": "Time-pinning the engine ecosystem state at research date; docs 'current' = 1.5 corroborated by S5–S7 version switchers",
+      "applicability": "Contextual."
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "research-source-catalog.v1",
+  "as_of": "2026-10-06",
+  "capture_semantics": "Captures identify exact public response bytes; they do not by themselves prove semantic interpretation or applicability. Proposal citations name the relevant headings/files and limit claims to that scope.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF Specification 0.5.0",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/0.5/index.md",
+      "pin": {"specification_version": "0.5.0", "source_ref": "0.5"},
+      "exact_locator": ["Storage format", "Images", "axes metadata", "coordinateTransformations metadata", "multiscales metadata", "labels metadata"],
+      "capture": {"id": "a7abcfea85bf47a581aecefea194bf2a", "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0", "format": "exact HTTP response body", "complete": true},
+      "applicability": "Normative/interoperability description of supported OME-Zarr metadata and labels. It does not establish a reader implementation, crash safety, arbitrary affine support, or performance."
+    },
+    {
+      "id": "S2",
+      "title": "tifffile README and usage documentation",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/README.rst",
+      "pin": {"release": "v2026.9.20", "tag_commit": "a14e516c4fa3c0c9ede980ebb3111260347dd213"},
+      "exact_locator": ["Usage: metadata and series", "Zarr interface / region access examples", "Supported formats and limitations", "Optional codec dependencies"],
+      "capture": {"id": "0dfa481fbf544dd2b4712ad1d5f52550", "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "format": "exact HTTP response body", "complete": true},
+      "applicability": "Documents one Python TIFF reader API and examples. The examples are not a performance test or guarantee for all TIFF variants, segment organizations, codecs, or this application's memory behavior."
+    },
+    {
+      "id": "S3",
+      "title": "napari Shapes layer source and API documentation",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.2/src/napari/layers/shapes/shapes.py",
+      "pin": {"release_tag": "v0.9.2", "tag_commit": "595639295a153c84bcb127a9e07d801355440a35"},
+      "exact_locator": ["Shapes class documentation", "constructor parameters for data, shape_type, style, axis_labels, units, affine, and cache"],
+      "capture": {"id": "10f2f28eed594195b0d84402ff4b2521", "sha256": "4e7ac1b7b1c4b3163b34b6e2688e81745beea3a9043629594046894d57247a30", "bytes": 131764, "format": "exact HTTP response body", "complete": true},
+      "applicability": "Evidence for the Shapes layer API/representation in this source revision. It does not establish project persistence, memory limits, accessibility, undo/redo or whole-application performance."
+    },
+    {
+      "id": "S4",
+      "title": "Zarr-Python issue #3514: data loss when writing sharded arrays with Dask",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/issues/3514",
+      "pin": {"issue": 3514, "observed_state": "closed after 2025-10-22; follow-up comment observed 2026-01-28"},
+      "exact_locator": ["issue body / reproducer and reported sums", "issue timeline and initial failure description"],
+      "capture": {"id": "dc7af3d42e6048cdb50d9a4e73191784", "sha256": "4d0130a450b74bb13974bcc9a57d6afc30a520fe74ee120ba4c7684e6732379e", "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "Public user report for a specific Dask-to-Zarr sharded write setup. The issue is not a general statement that Zarr writes lose data."
+    },
+    {
+      "id": "S5",
+      "title": "Comments and follow-up on Zarr-Python issue #3514",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/issues/3514/comments",
+      "pin": {"issue": 3514, "comment_set_captured": "2026-10-06"},
+      "exact_locator": ["comment identifying shard as smallest shared write unit / unsafe concurrent writes", "comment linking Dask #12105", "2026-01-28 follow-up reporting a different bad readback sum"],
+      "capture": {"id": "233a442650ad4a43a3d50d9713592879", "sha256": "981b220c19ec031e826c2383a69c94da462d5d2a49a1d43a25fac3dda6a76468", "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "Discussion links the failure mechanism and later outcome; the later report is not diagnosed by the available comment chain and prevents calling the repair universal."
+    },
+    {
+      "id": "S6",
+      "title": "Dask PR #12105: use shard shape when available in to_zarr",
+      "url": "https://api.github.com/repos/dask/dask/pulls/12105",
+      "pin": {"merged": true, "merge_commit": "d5b07164359d3377fd9d2d0e7eebd134f9a3c31a", "merged_at": "2025-10-22"},
+      "exact_locator": ["PR description", "merge metadata", "statement that `to_zarr` should schedule writes at shard granularity when available"],
+      "capture": {"id": "a460d3fa052f4873a3af856320239b91", "sha256": "bf3652bb1465fa73a0a6ad38a607c93a016928dbb9f05152978e4245f0785196", "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "The merged change adapts Dask write/rechunk granularity using shard shape. This does not prove all sharded arrays, odd tails, stores or concurrent clients are safe."
+    },
+    {
+      "id": "S7",
+      "title": "Changed files for Dask PR #12105",
+      "url": "https://api.github.com/repos/dask/dask/pulls/12105/files",
+      "pin": {"reviewed_commit": "2ea63bbf1a03cc54e1b93865bb0ca472b0c26cd4", "merge_commit": "d5b07164359d3377fd9d2d0e7eebd134f9a3c31a"},
+      "exact_locator": ["dask/array/core.py: `_get_zarr_write_chunks` and both `to_zarr` paths", "dask/array/tests/test_array_core.py: `test_zarr_chunk_shards_mismatch_warns`"],
+      "capture": {"id": "95a5232ae6dd4d5b9374fa32db4831ce", "sha256": "254ef0b5b6963f641bddf990304f294237208a58b24cb5931c3fb67f74901699", "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "Provides the implementation and narrow upstream regression test, including aligned 1D shard/chunk mismatch and data readback. It is not a candidate-executed test and does not cover the later 3D report."
+    },
+    {
+      "id": "S8",
+      "title": "Dask tag 2025.11.0 reference",
+      "url": "https://api.github.com/repos/dask/dask/git/ref/tags/2025.11.0",
+      "pin": {"tag": "2025.11.0", "annotated_tag_object": "f230a80965a5df44a85ab9af6619ea14d3066255"},
+      "exact_locator": ["refs/tags/2025.11.0 object reference"],
+      "capture": {"id": "7209e0763a314eebb757a60ac2f62921", "sha256": "b2b2d6f383a5445bee9790d9aceeb518faf3e93c5dcf66b9595a845a3364a599", "bytes": 331, "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "Identifies the annotated release tag; dereference source S9 and ancestry comparison S10 establish the implementation commit's inclusion."
+    },
+    {
+      "id": "S9",
+      "title": "Dask 2025.11.0 annotated tag object",
+      "url": "https://api.github.com/repos/dask/dask/git/tags/f230a80965a5df44a85ab9af6619ea14d3066255",
+      "pin": {"release": "2025.11.0", "commit": "7ffe1af8192d603fdd1f564626243f5c37075190", "tagged_at": "2025-11-06"},
+      "exact_locator": ["annotated tag target commit"],
+      "capture": {"id": "10a3455e018f49079e397c6a75b62900", "sha256": "b2cd6345cba23121e1bd004ff292f628eb5befe01281e3cfd64ed492bbd9395d", "bytes": 659, "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "Release commit identity; release inclusion of the PR commit is demonstrated by S10's compare ancestry, not merely by date order."
+    },
+    {
+      "id": "S10",
+      "title": "Dask merge commit to 2025.11.0 ancestry comparison",
+      "url": "https://api.github.com/repos/dask/dask/compare/d5b07164359d3377fd9d2d0e7eebd134f9a3c31a...7ffe1af8192d603fdd1f564626243f5c37075190",
+      "pin": {"base_merge_commit": "d5b07164359d3377fd9d2d0e7eebd134f9a3c31a", "release_commit": "7ffe1af8192d603fdd1f564626243f5c37075190", "status": "ahead", "behind_by": 0},
+      "exact_locator": ["GitHub comparison status and merge-base commit"],
+      "capture": {"id": "eb2fba9aa6ca4a9fadf96479450a4d8b", "sha256": "fc4c12d4b531c33ee8444ed79b37b4cdf462c109ea0dd97016902fbc3a792464", "bytes": 234886, "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "Shows that release commit history includes the merged change. It establishes applicability of that code to the named Dask release, not behavior of the proposed app or later unrelated reports."
+    },
+    {
+      "id": "S11",
+      "title": "Zarr-Python release tags",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/tags?per_page=10",
+      "pin": {"candidate_release": "v3.4.0", "commit": "292aeb4edcbbff50ec0ef7a49ff376e267904efc"},
+      "exact_locator": ["v3.4.0 tag record"],
+      "capture": {"id": "0dc38991c59d4c84a9149b6fc9072074", "sha256": "a769f02064c0668d1dc5aecb1817a69dfecf04a386b4efdfb73ec04f5ff8b4c9", "bytes": 4986, "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "Confirms the exact candidate package tag/commit exists. Compatibility with the rest of the candidate stack remains to be tested."
+    },
+    {
+      "id": "S12",
+      "title": "tifffile release tags",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/tags?per_page=10",
+      "pin": {"candidate_release": "v2026.9.20", "commit": "a14e516c4fa3c0c9ede980ebb3111260347dd213"},
+      "exact_locator": ["v2026.9.20 tag record"],
+      "capture": {"id": "66cc8ac87eee46a3a688e480b9498acd", "sha256": "df846d8788843271ba737dfc77a7a3c06a4349a93b92251ece2428313aaa9b3b", "format": "exact GitHub API JSON response", "complete": true},
+      "applicability": "Confirms the exact reader release tag/commit selected for a first integration spike."
+    }
+  ]
+}

@@ -1,0 +1,405 @@
+# Critique review — frozen research proposal "ScopeDesk" (Development Brief A)
+
+- Stage: critique (fresh, same-family candidate; V01 bounded-executable-checking modifier active)
+- Date of critique: 2026-10-06
+- Object under review: `inputs/prior/I-01-treatment-research-a001/research/proposal.md`
+  (sha256 `6fbd62a1545e2877acd298a9a5da247f115ac3427487e97bab0303f95aa83c92`, 462 lines),
+  with catalogs `sources.json` (sha256 `32917cb0…`), `witnesses.json` (sha256 `a6f5c86f…`),
+  `leads.json` (sha256 `10ea0e9f…`), and the brief `inputs/brief.md` (sha256 `27311c71…`).
+- Method: I re-read the brief and the complete frozen proposal, then independently verified the
+  consequential claims against the frozen public-source captures in `inputs/source_context/`
+  (25 bodies; each body's sha256 was cross-checked against both `index.json` and the
+  `capture_identity.sha256` recorded in `sources.json` — all 14 overlapping entries match, e.g.
+  `0008.body` = `7dabd78b…` = S02). I read the raw capture bytes myself rather than trusting the
+  research summaries, including two windows the research itself had flagged as unreviewed
+  (the tail of PR #1255's file list and previously unreviewed CHANGELOG ranges). I did not
+  re-fetch live from the network; the hash-consistent frozen captures are my evidence base,
+  all dated 2026-10-05 (one day before this critique). I then ran three new candidate-authored
+  discriminating checks in the isolated execution sandbox, deriving every expectation by hand
+  from source semantics/IEEE-754/geometry *before* executing (receipts in §5).
+- Status of the earlier research preserved: this review judges content only. It does not
+  upgrade, downgrade, or re-label the research stage's original native status.
+
+## 1. Verdict summary
+
+The proposal is substantively sound and survives verification. Both required evidence chains
+verify end-to-end against the captures, including their stated limits; the four precedents are
+real, independent, and contribute the mechanisms claimed; the data contract's normative anchors
+in NGFF 0.4 are accurate at the MUST level; and the executed witnesses' quantitative results
+reproduce. No finding required rejecting a load-bearing recommendation.
+
+I found **no fabricated sources, no invented repair histories, and no arithmetic errors**. I
+found **two normative-level overstatements** in the data-contract wording (CR-1, CR-2), **one
+citation defect** (CR-3), **three catalog locator/version mis-attributions** (CR-4, CR-5, CR-6),
+**one under-documented witness input** (CR-7), and **two useful confirmations the research
+under-claimed** (CR-8, CR-9). One admitted review gap in the research (an unreviewed ~10 KB tail
+of PR #1255's file list) is now closed (CR-4); the research's honest "no regression test"
+conclusion stands, and is in fact strengthened.
+
+The next candidate should resolve this review by: applying the wording corrections CR-1/CR-2/CR-3
+to §4.2/§4.5 of any successor proposal, correcting the three catalog locators, recording full
+inputs for any re-run of W-1 (CR-7), folding the new critic checks into the witness inventory as
+critique-stage component checks, and keeping everything else as-is.
+
+## 2. Evidence chains — verified
+
+### 2.1 Chain 1: napari #7962 → PR #8098 → regression test → release 0.6.5 — VERIFIED COMPLETE
+
+Checked against `0007.body` (issue API JSON), `0008.body` (PR files JSON, complete, 3273 bytes),
+`0009.body` (release JSON, complete, 37044 bytes):
+
+- Issue #7962: created `2025-05-23T22:01:25Z`, closed `2025-09-24T09:07:56Z`,
+  `state_reason: "completed"`. Body contains the quoted failure verbatim: "the Shapes.extent
+  will be used, so you will get a Labels layer that does not match the size of the image layer"
+  and "you can't paint in certain areas and when you save the layer for using later it doesn't
+  match what you expect".
+- PR #8098 file blobs at commit `9592252d83b45150c04e8f27b0e1eacf1202a360`. The
+  `src/napari/layers/_layer_actions.py` patch changes `data = lay.to_labels()` to
+  `ll_shape = (ll._extent_world_augmented[1] - ll._extent_world_augmented[0])` /
+  `data = lay.to_labels(labels_shape=lay.world_to_data(ll_shape))` — the fix is exactly a
+  world→data coordinate-space conversion, as the proposal states. The same PR adds
+  `test_make_label_from_shape_param` in `src/napari/layers/_tests/test_layer_actions.py`,
+  parametrized over (scale, translate, xfail) with the translated case
+  `pytest.xfail('Converting layers with translations does not work')` and the assertion
+  `np.array_equal(ll[-1].extent.world, ll.extent.world)`.
+- Release v0.6.5: `published_at 2025-10-02T02:18:34Z`, target `d2ec944fee10b7fe0fe5f2dc14493b2601b9df81`;
+  under "## Bug Fixes": "Fix effect of scaling when converting shapes to labels ([#8098])".
+  The proposal's task-manager claim is also verbatim in the release highlights: "We added a new
+  task manager ([#8211]) which automatically registers any running thread_worker, showing a
+  confirmation dialog if you attempt to close napari while a task is running."
+- The proposal's stated chain limits are accurate and are preserved: the merged test xfails the
+  translated case; the fix targets the UI conversion action (`_convert`), not the general
+  `to_labels` API; the issue itself was tagged "contribute:good first issue" and proposed the
+  LayerList.extent approach, i.e. the fix implements the reporter's suggestion.
+
+### 2.2 Chain 2: QuPath #1252 → PR #1255 → PR #1300 → CHANGELOG v0.5.0 — VERIFIED COMPLETE (no regression test; now confirmed against the full file list)
+
+Checked against `0014.body` (issue), `0015.body` (timeline, complete), `0022.body` (PR #1255
+files — **I read all 42,959 bytes; the research had only reviewed the first 32,768**), `0019.body`
+(PR #1300 files, complete), `0011.body` (CHANGELOG):
+
+- Issue #1252: created `2023-03-14T11:51:44Z`, closed `2023-08-24T16:27:45Z`, milestone
+  "v0.5.0-rc1" (the timeline's milestoned event carries the earlier title "v0.5.0"). Body matches
+  the proposal's quotes: "if it is **not** successful then the backup is not automatically
+  restored" and "One approach would be to write a new temporary file, and then only rename if the
+  writing has succeeded"; it links the image.sc thread on a corrupted file.
+- Root cause (maintainer comment `2023-03-14T12:17:14Z` in the timeline): recovery code expected
+  `IOException` but "a NPE can be thrown instead… if we make sure that any NPE that occurs when
+  reading is properly wrapped in an IOException, then QuPath should automatically switch to use
+  the backup file".
+- PR #1255 "JavaFX update and fixes" (body: "Fix for …/issues/1252"), `merged_at
+  2023-03-23T17:35:06Z`. The `qupath-core/src/main/java/qupath/lib/io/PathIO.java` patch is
+  present and matches the proposal: the EOFException branch changes
+  `logger.error(e.getLocalizedMessage(), e)` to `throw e` (when `hierarchy == null`), and a new
+  `catch (Exception e) { if (e instanceof IOException ioe) throw ioe; else throw new
+  IOException(e); }` makes every failure surface as the exception type the backup-restore path
+  catches. The PR also hardens `DefaultProject.readImageData` (`catch (IOException` →
+  `catch (Exception`), consistent with the same lesson.
+- PR #1300 "More bug fixes", `merged_at 2023-08-24T16:27:11Z`, adds exactly the CHANGELOG line
+  "* PathIO doesn't restore backup if writing ImageData fails (…/issues/1252)"; its file list is
+  CHANGELOG.md, Dialogs.java, ProjectImportImagesCommand.java, DefaultScriptEditor.java — no
+  PathIO.java. Bookkeeping-vs-code attribution in the proposal is correct.
+- Release applicability: #1252 appears under "## Version 0.5.0 → Bugs fixed" in the CHANGELOG
+  capture. GPL-3.0 license confirmed by the repo snapshot embedded in the timeline events.
+- **No-regression-test claim (closed gap):** with the full file list now reviewed, PR #1255
+  touches exactly one test file, `qupath-core/src/test/java/qupath/lib/roi/TestROIs.java`, and
+  its entire change is a one-line literal cleanup (`50, 00` → `50, 0`) in an existing ROI area
+  test — unrelated to save/backup behavior. The proposal's "no regression test found; the chain
+  stops at fix + release" is therefore **confirmed on complete evidence**, and its derived
+  obligation (our own recovery scan must get a truncate-to-last-good-record test) stands.
+
+## 3. Corrections and nuances (evidence-backed)
+
+Severity scale: **[material]** changes what a successor should assert or build; **[wording]**
+fixes an overstatement without changing the design; **[catalog]** fixes the source catalog only.
+
+### CR-1 [material] NGFF 0.4 does not *mandate* UDUNITS-2 units or axis types — it SHOULDs them
+- Claim under review: §4.2 "units from the UDUNITS-2 name set that NGFF 0.4 §3.1 **mandates**
+  (e.g. `micrometer`, `millisecond`)"; §2 table row "NGFF-style [F-S11]".
+- Evidence (capture `0001.body`, spec revision `a4c68004fdb8a8d822367205dc12f9574a32ddf8`,
+  updated 2026-10-01, §3.1): axes entries **MUST** contain `name` (unique); they **SHOULD**
+  contain `type` ("SHOULD be one of 'space', 'time' or 'channel', but MAY take other string
+  values for custom axis types"); they **SHOULD** contain `unit` ("The value SHOULD be one of
+  the following strings, which are valid units according to UDUNITS-2"). `micrometer` and
+  `millisecond` are indeed in the §3.1 lists.
+- Correction: replace "mandates" with "recommends (SHOULD) from a fixed UDUNITS-2-valid list".
+  Consequence for the design (which actually strengthens the proposal's own quarantine flow):
+  a *conforming* NGFF 0.4 file may legally omit `unit`, omit `type`, or carry a custom axis
+  type, so the importer must treat missing/out-of-list units and unknown axis types as the
+  "ambiguous axes/calibration → explicit correction dialog, original retained" path by default,
+  not as reader errors. Affected dependencies: §4.2 axes model, §3.2 import refusal reasons,
+  the §3.1 golden-metadata corpus (goldens must encode the SHOULD-level fields explicitly).
+
+### CR-2 [wording] Per-level pyramid anchoring: the common frame NGFF mandates is *physical* space; level-0 sample anchoring is the proposal's own choice
+- Claim under review: §4.2 "Multiresolution pyramids carry per-level scale so **annotations stay
+  in level-0 sample coordinates** regardless of the level displayed — the same convention NGFF
+  mandates for its datasets".
+- Evidence (`0001.body` §3.4): "They MUST contain exactly one `scale` transformation that
+  specifies the pixel size in physical units or time duration [per dataset level]. … It MAY
+  contain exactly one `translation` … If `translation` is given it MUST be listed after `scale`
+  …"; group-level transforms "are applied after them". The spec says nothing about annotations;
+  what it fixes is that each level's arrays map into one shared physical space via per-level
+  scale. (The proposal's "exactly one scale; translation only after scale" phrasing is otherwise
+  **exactly** right at MUST level — preserved.)
+- Correction: reword to "NGFF 0.4 mandates per-level scale transforms into a common physical
+  space; our contract additionally anchors annotation records to **level-0 sample indices**,
+  which is our own convention and must be stated in exported manifests". My executed check
+  K1 (§5) demonstrates the distinction numerically: the same physical location is sample
+  (5,100,200) at level 0 and (5.0,50.0,100.0) at level 1, so level-0 sample anchoring is a
+  convention that must be *declared*, while physical anchoring is what makes it work.
+- Affected dependencies: §4.2 annotation canonical coordinates; §4.7 export manifest (should
+  state the anchoring convention explicitly).
+
+### CR-3 [material] Citation defect: the `contrast_limits`/`gamma` layer-state claim cites the wrong and an over-read source
+- Claim under review: §4.5 "…napari layers keeping `contrast_limits`/`gamma` as layer state
+  distinct from `data`, F-S13/S14".
+- Evidence: F-S13 is the **tifffile** changelog (`0024.body`), which says nothing about napari
+  layer state. S14 (`0023.body`, napari docs page) does exist and its navigation tree does list
+  the claimed API components (see §4), but the research's own catalog records that the parameter
+  reference bodies on that page — where `contrast_limits`/`gamma` would be documented — were
+  **NOT reviewed** (page head only; 253,595 bytes total).
+- Correction: re-cite the omero window shape to F-S11 (verified: §3.5 makes `window` with
+  `min`/`max`/`start`/`end` and `color` mandatory when `omero` is present) and either (a)
+  downgrade the napari layer-state pattern to engineering inference, or (b) verify it against
+  napari source at the pinned version before relying on it. The *design* (display state separate
+  from samples) is a product choice and survives regardless; only the citation is defective.
+  Affected dependencies: §4.5 views-vs-data rationale.
+
+### CR-4 [catalog, plus a strengthened conclusion] QuPath PR #1255 file list — research's unreviewed tail closed; no #1252 test exists
+- Research state: S07 recorded "a residual tail of the file list (~10 KB) was NOT reviewed —
+  absence of tests is claimed only for the reviewed portion".
+- My verification: full body read (two byte windows; `additional_source_bytes_remain: false` on
+  the second). Result: 24 files total; the only `src/test` entry is the incidental TestROIs.java
+  literal cleanup described in §2.2. Proposal text needs no change; the catalog note and the
+  chain-2 "Limits" paragraph can now drop the "reviewed portion" qualifier.
+
+### CR-5 [catalog] S09 locator: TileExporter pixel-size loss (#1516) is listed under v0.6.0, not v0.5.0
+- Evidence (`0011.body`): "TileExporter with ImageJ TIFF can lose pixel size and channel color
+  information (…/issues/1516)" appears in "## Version 0.6.0 → Bugs fixed" (last line). The S09
+  `exact_locator` says "v0.5.0: … TileExporter loses pixel size/channel colors #1516". The
+  proposal's own text (§4.7, §8) states no version for #1516, so only the catalog needs the fix.
+  Same-window confirmation: #1252 is correctly under v0.5.0 "Bugs fixed", and the v0.5.0
+  enhancement "Save/restore display settings in projects" is verbatim present.
+
+### CR-6 [catalog] S09 locator: `UriResource`/`UriUpdater` were introduced in v0.3.0, not v0.6.0
+- Evidence (`0011.body`): v0.3.0 Enhancements: "New `UriResource` and `UriUpdater` classes to
+  support fixing broken paths generally (not just image paths in projects)" (also repeated under
+  v0.3.0 "Code changes"). The S09 locator attaches them to v0.6.0. The proposal's §6.3 use
+  ("QuPath's UriResource/UriUpdater generalizes exactly this") survives — the classes exist for
+  exactly that purpose — but any successor citing them should pin v0.3.0 for introduction.
+  (v0.6.0 *does* contain the verified relocation-adjacent items: #1668 "Self-contained projects
+  … no longer prompt the user to update URIs if moved", the missing-image warning indicator with
+  the "Skip file checks in projects" preference, and symbolic-link support #1586.)
+
+### CR-7 [material, documentation] W-1's receipt does not record its inputs; the prose "y/x swap" is only coherent under zyx axis order
+- Observation: `witnesses.json` W-1 records outputs (`correct_world_um [3.5,166.4,580.5]`,
+  `swapped [3.5,330.24,292.5]`, `swap_error_um 331.3420371760879`) but not the input
+  coordinates, scales, or axis order. The recorded outputs are internally consistent with
+  swapping the **last two** scale entries (I verified: √((330.24−166.4)² + (292.5−580.5)²) =
+  331.342…), and the first component is unchanged — i.e. the swap *did not touch* component 0.
+  "y/x scale-swap" therefore holds only if the axis order was (z,y,x); under (x,y,z) the same
+  outputs would be impossible for a y/x swap (z could not change).
+- Correction: keep the conclusion (axis/scale mis-assignment produces a large, detectable
+  position error — it is real, and my fully-specified K1 check reproduces it independently),
+  but any successor must re-run with recorded inputs, or cite my K1, which fixes axes (z,y,x),
+  scales (1.0, 0.65, 0.25) µm, point (5,100,200), and derives error = √8000 ≈ 89.44 µm by hand.
+- Also preserved from W-1: float64-through-JSON exactness and the float32 2²⁴ boundary —
+  independently re-verified by my K2 (§5), including the sharper statement that binary32
+  spacing above 2²⁴ is 2.0 (2²⁴+2 round-trips, 2²⁴+1 does not).
+
+### CR-8 [confirmation] rename(2) gives the atomic-save story more than the proposal used
+- Evidence (`0013.body`, man-pages 6.19, page dated 2026-02-08): beyond the two quotes the
+  proposal uses (atomic replacement — verbatim correct; NFS BUGS — verbatim correct: "On NFS
+  filesystems, you can not assume that if the operation failed, the file was not renamed"), the
+  page adds: "If newpath exists but the operation fails for some reason, rename() guarantees to
+  leave an instance of newpath in place", and `EXDEV` ("rename() does not work across different
+  mount points"). The EXDEV fact makes the proposal's "write `path.tmp` in the *same directory*"
+  rule load-bearing, not stylistic — worth stating in §6.1 of any successor.
+
+### CR-9 [confirmation] tifffile's changelog supports pinning even more strongly than claimed
+- Evidence (`0024.body`, head 2026.9.20): every cited entry verifies — 2026.5.2 "Update
+  ZarrTiffStore to zarr format 3 and multiscales to NGFF 0.5 (breaking)" and "Update multiscales
+  zarr format 2 fsspec files to NGFF 0.4 (breaking)"; 2025.6.11 "Fix reading images with
+  dimension length 1 through Zarr (#303)"; 2024.12.12 "Zarr 3 is not supported (#272)";
+  2025.5.21 "Require Zarr 3 for Zarr stores and remove support for Zarr 2 (breaking)";
+  2021.7.4 "Read NDPI files > 4 GB (#15)"; 2024.5.3 "Fix reading incompletely written LSM".
+  Two additions: (a) the Zarr-3 position **flip-flopped** (2024.12.12 unsupported → 2025.5.10
+  "Raise ValueError when using Zarr 3 (#296)" → 2025.5.21 required), a textbook argument for the
+  pinned-corpus gate; (b) one paraphrase to fix in the proposal §3.1: the 2026.2.15/16 entries
+  read "Support reading multi-file pyramidal OME TIFF files" / "Optimize reading…", not
+  "Fix reading…". Also note 2026.5.2 alone carries ~9 "(breaking)" entries.
+
+## 4. Verified and preserved (no action needed)
+
+All of the following were checked against raw captures and stand as written:
+
+- **NGFF 0.4 normative core** (`0001.body`): §2.1 layout (`.zgroup`/`.zattrs`, per-level arrays
+  `0…n`, nested chunk-directory layout with the terminal chunk as a file, 2–5 dimensions, "the
+  axis of type time before type channel, before spatial axes", zyx SHOULD); §3.4 datasets rules
+  (exactly one scale per level; translation MAY, after scale; group-level transforms applied
+  after; scale/translation length must equal axes length); §3.5 omero (optional, but if present
+  `channels`[].`color` (6-hex) and `window`{min,max,start,end} are MUST); §3.6/3.7 labels and
+  image-label (`label-value` MUST be unique integers, `rgba` uint8×4, `properties`, `source.image`
+  relative path default "../../"). These carry §4.2, §4.5, §4.7 and Opportunity 1.
+- **QuPath CHANGELOG claims** (`0011.body`, etag-pinned main): v0.5.0 #1252 + display-settings
+  save/restore in projects; v0.5.1 "Add keyboard shortcuts to tooltips" (#1450); v0.6.0
+  OME-Zarr read/write (#1474, incl. convert-ome and File→Export→OME-Zarr), InstanSeg support,
+  #1668 self-contained-project URI behavior, missing-image warning indicator, #1628 "Timepoint
+  data is rarely available (or correct)", #1516 (see CR-5); v0.7.0 #2012 tile-cache-by-path,
+  #2038 reduced arrow-key navigation speed, #1989 multi OME-Zarr import; v0.8.0 #2158 "'Add
+  shape features' wrongly gives 'Length µm' in pixels"; v0.3.0 #748 "Bug in using arrow keys to
+  navigate z-stacks and timeseries"; v0.2.1 #512 "Closing QuPath abnormally can result in broken
+  data files" and #528 "AffineTransformImageServer did not update pixel calibration values";
+  v0.2.2 #543 "Unable to resolve project URIs when moving a project across file systems". The
+  proposal's readings of all of these are accurate.
+- **napari API surface** (`0023.body`): the page's navigation tree lists `napari.layers.{Image,
+  Labels, Layer, Points, Shapes, …}`, `napari.utils.transforms.{Affine, CompositeAffine,
+  ScaleTranslate, Transform, TransformChain}`, `napari.utils.{progress, cancelable_progress}`,
+  `napari.qt.QtViewer`, `napari.qt.threading.{GeneratorWorker, WorkerBase, …}`, and
+  `napari.utils.notifications` — the §5.1 embedding-surface claims stand. The class signature
+  begins `Image(data: ArrayLike | Sequence[ArrayLike], *, affine: … | Affine | None = None, …)`.
+  **Version caveat:** the page's `theme_switcher_version_match`/`docsearch:version` is
+  **0.9.2**, i.e. the stable docs at capture are *newer* than the 0.6.5 release the chains pin.
+  The successor should validate the embedding surface (especially `QtViewer` and the transforms
+  module) against the exact napari version it pins — this folds naturally into existing U-1.
+- **PR #9337** (`0000.body`, search capture): the transform-chain description is verbatim
+  (`tile2data` index 0, `data2physical` index 1, `physical2world` index 2;
+  A_vispy = A_pw ∘ A_dp ∘ A_td), and the units caveat is verbatim: "Correct consideration of
+  units. This PR applies `apply_units_to_transform` … but I have not yet played with units
+  enough to fully validate this." It also states "I have not implemented any proper tests for
+  now" — consistent with keeping it a watch-item (lead L2) and with the proposal's decision to
+  own calibration math in `core` rather than the viewer.
+- **zarr-python README** (`0017.body`): locator text and feature list (chunk along any dimension,
+  concurrent read/write, groups) verbatim.
+- **Witness W-2 arithmetic**: independently re-derived from geometry and reproduced exactly
+  (3070230528 B = 2.859 GiB source; 131,072 B tiles; 64 tiles/plane; 23,424 tiles/volume;
+  16 MiB LRU + 8 MiB plane = 24 MiB; 0.001465 of 16 GiB; 0.008197 of a second full copy) — see
+  K3 receipt. Its scope statement (arithmetic only; no real reader exercised; U-3 still needed
+  for chunk-path form) is honest and stands.
+- **Witness W-3**: the mechanism (same-directory temp + fsync + `os.replace`) matches the
+  verified rename(2) semantics; its stated limits (single file, local FS, no crash-during-rename,
+  no NFS) are correct and unchanged. My K4 extends the *adjacent* journal-tail mechanism.
+- **Leads L1–L9**: all evidence pointers resolve to verified captures (L1 via §3.6/3.7 and
+  CHANGELOG v0.6.0; L2/L8 via PR #9337 body incl. the BigDataViewer discussion; L3 via v0.6.0
+  InstanSeg; L4 via CHANGELOG + GPL-3.0 repo snapshot; L5 via tifffile 2026.5.2; L6 honestly
+  records "no verified source pin yet"; L7/L9 are honest non-claims). Nothing in `leads.json`
+  required correction.
+- **Capture integrity**: `index.json` sha256 values match `sources.json` `capture_identity`
+  sha256 for all overlapping entries; the negative-results list (404s for the guessed napari
+  coordinate-systems path, SimpleITK page, old tifffile `CHANGES` name, napari layers guide) is
+  consistent with the catalog and correctly prevented stale citations.
+
+## 5. Critique-stage executed checks (all: executed by candidate, isolated sandbox, stdlib only)
+
+Expectations for every check were derived by hand **before** execution, from NGFF 0.4 §3.3/3.4
+semantics (frozen capture `0001.body`), IEEE-754 binary32 spacing, the stated tile geometry, and
+the checksum-prefix invariant — not by re-running the research's code (whose code was not
+available; its *outputs* were). Scope for all: isolated component checks of arithmetic and a
+serialization mechanism; none proves any shipped reader, viewer, or application behavior.
+
+### K1 — NGFF scale-transform semantics and pyramid anchoring (supports CR-2, replaces W-1's under-documented swap demo)
+- execution_id `exec-3r6lc18_`, exit 0, stderr empty, code sha256 `7e2c79cad78339f9bb9dff545a09d3277215163ac8e7af467b48a81706df1ecb`.
+- Inputs fully specified in-code: axes (z,y,x); level-0 scale (1.0, 0.65, 0.25) µm; point
+  (5,100,200). Hand-derived expectations: world = (5.0, 65.0, 50.0); y/x-swapped scales give
+  (5.0, 25.0, 130.0); error = √(40²+80²) = √8000 = 89.44271909999159 µm; level-1 (2× downsample
+  in y,x → scale (1.0,1.3,0.5)) sample for the same location = (5.0, 50.0, 100.0).
+- stdout: `{'world': True, 'swapped': True, 'error_um': 89.44271909999159,
+  'error_matches_hand_derivation': True, 'level1_sample_differs_from_level0': True,
+  'physical_anchor_roundtrip': True}`.
+- Reading: the calibration-misassignment hazard is real and detectable with fully documented
+  inputs, and the same location has *different* sample indices at different pyramid levels while
+  physical coordinates round-trip exactly — the numeric demonstration behind CR-2.
+
+### K2+K3 — float32/JSON precision boundary; envelope arithmetic re-derivation (corroborates W-1, W-2)
+- execution_id `exec-5ar7002g`, exit 0, stderr empty, code sha256 `7cf00670c89724d3aa7cf9c8906fe7bb364df9a8bea43e46ad23cb52ddf88152`.
+- stdout: `{'f32(2**24)': 16777216.0, '==': True, 'f32(2**24+1)': 16777216.0, '==2**24': True,
+  'f32(2**24+2)': 16777218.0, '==2**24+2': True, 'json_roundtrip': {…all True…}}` and
+  `{'src_bytes': 3070230528, 'src_GiB': 2.859, 'tile_bytes': 131072, 'tiles_per_plane': 64,
+  'tiles_volume': 23424, 'working_set_MiB': 24.0, 'frac_of_16GiB': 0.001465,
+  'vs_second_copy': 0.008197}`.
+- Reading: W-2's published numbers are exactly reproducible from first principles; the float32
+  hazard claim holds with the sharper boundary (spacing 1.0 at 2²⁴, 2.0 above; 2²⁴+1 is the
+  smallest positive integer loss).
+
+### K4 — checksummed append-only journal torn-tail recovery (component-level; reduces the risk behind U-4)
+- execution_id `exec-84xq7mzu`, exit 0, stderr empty, code sha256 `8263a266ab04efadbf98e48bbac5bb5af4f5930d34240c623ef91427c668acf4`.
+- Mechanism per proposal §6.1: each JSONL record embeds sha256 of its payload; recovery keeps
+  the longest prefix of digest-verifying records and stops at the first bad line.
+- Hand-derived expectation (checksum-prefix invariant): clean input → all records kept, no torn
+  index; crash mid-record-3 → exactly records 1–2 kept, torn at index 2; garbage tail → all 3
+  kept, torn flagged at index 3.
+- stdout: `{'clean_all_kept': (True, None), 'torn_prefix_kept': (True, 2, 'torn len', 37),
+  'garbage_tail_kept': (True, 3)}`.
+- Reading: the §6.1 sentence "journals are append-mostly so a torn tail is detected by checksum
+  and truncated to the last good record" is mechanically sound as specified. Limits: single
+  process, local FS, no concurrent writer, no crash-during-fsync semantics — U-4 remains the
+  real integration test inside M1; K4 only removes "the mechanism cannot work as written" as a
+  risk.
+
+## 6. Plan-obligation coverage audit (brief → proposal)
+
+Every minimum-workflow and obligation item in the brief maps to a proposal section (its §2 table
+is accurate — I re-walked it):
+
+- Project/multi-instrument, N-D axes, channels/time, int/float, calibration → §4.1–4.3 with
+  verified NGFF anchors (CR-1 wording fix applies).
+- Bounded access for >memory files → §5.3–5.4; arithmetic verified (K3); the *system* claim
+  correctly remains UNEXECUTED (U-1) — the research never claims otherwise; preserve that.
+- Views vs data; distinct recorded transform/resample ops → §4.5 (citation defect CR-3 to fix;
+  design unchanged).
+- Annotation scopes, styles, undo/redo → §4.4; scope/extent binding motivated by the verified
+  Chain 1.
+- Import without rewriting originals; metadata/provenance inspection → §3.2, §4.1, §4.6.
+- Explicit coordinate relationship with reopen/export precision → §4.2 (CR-1/CR-2 wording);
+  float64/float32/JSON rules verified (K2, W-1).
+- Unsupported-input safe failure; honest support boundary → §3.1–3.2; boundary is testable-size
+  and the tifffile churn justification verified (CR-9).
+- 8-core/16 GB/3 GB envelope; cancel/progress; recovery on partial import/interrupted save/
+  failed export → §5.4, §5.3, §6.1 (rename semantics verified; EXDEV note available per CR-8).
+- Identity, relocation, bundle-vs-reference trade-off → §4.1, §6.2–6.4; QuPath precedents
+  verified (#1668, missing-image indicator, v0.2.2 #543, v0.2.0-m4 search-for-moved-images).
+- Keyboard operability, legible feedback, original-vs-derived distinction, export honesty →
+  §7, §4.5, §4.7; QuPath keyboard precedents verified (#1450, #748, #2038). §7 is the thinnest
+  section (largely product choice, as the proposal itself flags) — acceptable, since the brief
+  asks for a plan, and the napari/QuPath precedent base for keyboard-first review is real.
+- ≥2 independent precedents; ≥1 chain through fix + regression test + release with limits →
+  §5.2, §8; verified above. Chain 2's "no regression test found" is honest and now fully
+  evidenced (CR-4).
+- Opportunities/alternatives separated from minimum obligations → §10 + `leads.json`; verified.
+
+Weak spots to carry forward (not corrections, priorities): (1) napari embedding is the single
+largest unvalidated architecture dependency — U-1 should be run at a *pinned* napari version and
+the docs-surface evidence re-checked at that version (0.9.2 docs ≠ 0.6.5-era APIs); (2) the
+export-manifest format (§4.7) deserves one concrete JSON example in the successor so the
+"verify what transformed and what remained unchanged" step is testable; (3) quarantine copying
+of a refused *3 GB* file (§3.2 step 2) may be wasteful — consider copy-metadata-only +
+read-only-path reference as a bounded alternative, decided as a product choice.
+
+## 7. What would actually change this plan (priority order)
+
+1. **U-1 fails or is expensive at the pinned napari version** → the bounded alternative already
+   in §9 (thin custom Qt+vispy canvas over an unchanged `core`) becomes primary; the QuPath
+   extension route (lead L4) stays fallback. Nothing in the verified evidence contradicts the
+   embedding plan; nothing confirms it either — it is the plan's main open bet.
+2. **Lab inventory (U-3) shows dotted-key zarr v2 layouts or NGFF 0.5 exports** → adapter key
+   builder and the §3.1 boundary need the documented variants; tifffile 2026.5.2's NGFF 0.5
+   support is zarr-format-3-store-specific, so a 0.4-only reader is still a defensible boundary.
+3. **A vendor-native instrument (CZI/ND2/…) turns out to be primary** → convert-once outside the
+   tool (already planned) vs adding a reader becomes a real fork; the verified changelog churn
+   (CR-9) argues against in-house readers.
+4. **Shared storage is NFS** (per rename(2) BUGS, verified) → rename-based saves get the
+   checksummed-manifest + recovery-scan path as mandatory, not optional; worst case remains
+   detectable conflict, not silent loss.
+
+## 8. Residual uncertainty (honest, preserved)
+
+- I verified against the hash-consistent frozen captures only; no live re-fetch was performed in
+  this stage. Everything above is therefore pinned to "as captured 2026-10-05".
+- The napari `contrast_limits`/`gamma` layer-state pattern remains unverified in either stage
+  (CR-3); treat as inference until checked at the pinned version.
+- W-1's original inputs remain unrecorded (CR-7); its conclusion is preserved via K1 instead.
+- U-1/U-2/U-5/U-6 (and now most of U-4's integration half) remain UNEXECUTED and correctly
+  labeled; K4 executes only the mechanism sketch at component level.
+- Per the standing rule: no component check in this review (K1–K4, W-1–W-3) establishes full
+  application behavior; the 3 GB envelope claim remains an engineering target with U-1 as its
+  test.

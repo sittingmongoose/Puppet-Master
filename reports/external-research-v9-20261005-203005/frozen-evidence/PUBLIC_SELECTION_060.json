@@ -1,0 +1,22 @@
+{
+  "schema": "er9.positive-publication-selection.v1",
+  "observed_utc": "2026-10-06T12:43:21.748916+00:00",
+  "selection": "Exact3 neutral metadata only; no source grades/body/key/private/native exports",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_005.json",
+      "sha256": "19b759814c5a9d93a2783e9c65c825beaac7a37f934eab6e274bd36e30db1e60",
+      "bytes": 137119
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/PUBLICATION_CURATION_OWNER_CLASSIFICATION_001.json",
+      "sha256": "15ed3d69fa6d6ab5cc5a43137af8bff8a89913048490ca08fd9fd5da2e3203c7",
+      "bytes": 3221
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/PUBLICATION_PENDING_TOOL_CONFIG_OWNER_REQUEST_001.json",
+      "sha256": "de3059d94404293ea748525aa1b4a24a45648dec94e7534bc93f653340da7865",
+      "bytes": 103337
+    }
+  ]
+}

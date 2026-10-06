@@ -1,0 +1,229 @@
+# Workbench: a local-first reproducible notebook + data workspace
+## Research-stage proposal (Brief B) — candidate research arm, frozen 2026-10-06
+
+This is a research proposal, not a built product. Every claim is labeled:
+
+- **[SOURCE]** — fact read from a pinned public capture (catalog: `sources.json`, entries `S1`–`S17`; citations below use `S#` + capture sha256 prefix).
+- **[INFERENCE]** — engineering inference from source facts; not directly stated by any source.
+- **[CHOICE]** — product decision this proposal recommends; a later stage may flip it.
+- **[EXECUTED]** — check executed by the candidate in the experiment's isolated executor on tiny synthetic data (receipts in `witnesses.json`). An isolated component check does not establish full application behavior.
+- **[PROPOSED/UNEXECUTED]** — validation designed but not run in this experiment.
+
+---
+
+## 1. Problem being solved
+
+Three analysts share Python notebooks; a colleague occasionally runs SQL against tabular data. Today nobody can answer: *why did this shared notebook produce a different result, what data and environment did it use, and which outputs went stale after a change?* Datasets are CSV, NDJSON, and columnar files; a dataset may exceed RAM on the 8-core / 16 GB workstation envelope. The deliverable defined here is an implementable architecture plus a research-informed support boundary — not a notebook product.
+
+Two failure classes dominate the domain, and both have public primary-source evidence:
+
+1. **Hidden notebook state.** Jupyter's model is a REPL with no understanding of cell relationships; a notebook "can easily accumulate hidden state", and marimo (citing community research) states that over a third of Jupyter notebooks on GitHub fail to reproduce [SOURCE S4, capture bab2761d]. Concretely: displayed cell order ≠ execution order; the kernel's live variable state is invisible in the document; saved outputs survive kernel restarts [SOURCE S4; INFERENCE from S1: an `.ipynb` stores `execution_count` and outputs but no kernel-liveness or epoch information].
+2. **Silent data alteration during ingestion.** DuckDB's CSV reader supports skipping faulty lines and storing them in a rejects table [SOURCE S6, capture 58b86efc], and that permissive path has repeatedly misbehaved: `ignore_errors=true` returned an **empty** result for a file that loads cleanly in strict mode (v0.10.0, issue #10769) [SOURCE S9], and in a 2025 report (v1.4.1) `read_csv_auto(ignore_errors=true)` dropped 12,094 of 99,999 rows that strict mode parsed successfully [SOURCE S12]. Any workspace that treats permissive parsing as a default inherits exactly the "why did we get a different number" problem the team is trying to escape.
+
+---
+
+## 2. Architecture overview [CHOICE, with SOURCE-supported mechanisms]
+
+One folder is the project; five components, each backed by one precedent (§3):
+
+```
+myproject/
+  project.yaml                 # name, schema_version, engine pin
+  notebooks/*.ipynb            # nbformat >= 4.5 documents (cell ids) [S1]
+  transforms/*.sql             # DuckDB-dialect SQL artifacts (SQL colleague's surface)
+  datasets.yaml                # dataset registry + per-dataset data contract (§5)
+  requirements.lock.txt        # hash-pinned environment lock (pip hash-checking) [S14]
+  .workbench/
+    runs/<run_id>/             # execution events (JSONL), executed-notebook copies, output sidecars
+    cache/                     # derived caches keyed by input identity digests
+    project.lock               # single-writer advisory lock
+```
+
+- **Document layer** — nbformat ≥ 4.5 `.ipynb` (stable interchange; every cell carries a unique `id`, code cells carry `execution_count` and outputs) [SOURCE S1, capture 523e3578]. Sharing through ordinary folders stays lossless.
+- **Execution layer** — clean replay via an nbclient-style runner: execute input cells of a `.ipynb` and save results as a separate executed copy; per-cell timeout; `allow_errors=False` default; cell-level error hooks [SOURCE S15, capture b3cb019d].
+- **Data layer** — DuckDB as the embedded tabular engine: in-process, single-file database, columnar-vectorized, scans CSV/NDJSON/Parquet directly, and can query foreign data (e.g. Pandas) without copying [SOURCE S8, capture 9a8498e8]. Concurrency model is documented as one read-write process or multiple read-only processes (`access_mode='READ_ONLY'`) [SOURCE S7, capture 21e28d18].
+- **Contract layer** — Frictionless-style descriptor per dataset inside `datasets.yaml` (descriptor-plus-resources shape follows Data Package v1: a descriptor that names resources with schemas) [SOURCE S16, capture 084eaf2d], extended with execution-relevant policy (§5).
+- **Environment layer** — CPython (3.11–3.12 series only in v1) + venv built from a hash-pinned lock file; pip's hash-checking mode (available since pip 8.0) requires pins and hashes for **all** requirements and transitive dependencies [SOURCE S14, capture c04452b5].
+
+**Independence of the precedents:** the document format (nbformat), the reactive freshness model (marimo), the data engine (DuckDB), the data contract shape (Frictionless), and the environment lock (pip) are five independent mechanisms from five independent projects; each is replaceable without redesigning the others (e.g., SQLite instead of DuckDB, or marimo-format notebooks instead of `.ipynb`), which is why the architecture degrades gracefully. The one deliberate coupling: the notebook layer talks to the data layer through **declared dataset references**, not ad-hoc paths, so that dependency edges for invalidation exist (§6).
+
+---
+
+## 3. Precedents investigated: mechanism each contributes
+
+### 3.1 Jupyter nbformat + nbclient — document format and clean-replay engine
+- **Mechanism contributed:** a stable, widely interoperable notebook interchange where cell identity is explicit (`cell_id` pattern `^[a-zA-Z0-9-_]+$`, 1–64 chars, required on every cell in v4.5) and outputs are typed structures (`execute_result`/`display_data`/`stream`/`error`) with a nullable `execution_count` [SOURCE S1]. Cell ids were introduced by nbformat 5.1.0 ("Implemented CellIds from JEP-62"), with hash-based id generation in 5.1.3 [SOURCE S2, capture 414e10d3]. nbclient defines the clean-run contract: run input cells and save results as a separate `.ipynb`; 30 s default cell timeout; errors stop execution and raise `CellExecutionError` by default; `on_cell_error` hooks exist for capturing failures [SOURCE S15].
+- **What it does *not* give us [INFERENCE from S1/S15]:** the format has no field tying an output to a kernel epoch, an input dataset digest, or an environment lock hash; nbclient replays *all* cells in document order and has no notion of per-output freshness. The format is necessary for interchange but adopting it "does not by itself settle runtime behavior" — exactly the brief's warning.
+
+### 3.2 marimo — reactive cell DAG and stale-marking semantics
+- **Mechanism contributed:** marimo statically analyzes each cell (without running it) for references and definitions, forms a DAG, and runs a cell's transitive dependents on change; execution order is determined by cell relationships, *not* page order; deleting a cell deletes its variables and invalidates or stale-marks dependents; the runtime can be configured lazy to *mark cells stale instead of running them*; variable mutations are explicitly not tracked; global variable names must be unique; interrupting a cell cancels queued dependents [SOURCE S3, capture e75fd969]. This is the closest public design for our freshness state machine (§6) and our "restart must not silently relabel old outputs" requirement.
+- **Trade-off documented by marimo itself:** its file format is Python source, and notebook outputs are *not stored in the file* (an opt-in HTML/ipynb snapshot exists) [SOURCE S4]. For a team that must compare saved vs current results, we need stored outputs — hence we adopt the *semantics* of the DAG but keep `.ipynb` storage, with our own provenance sidecar.
+
+### 3.3 DuckDB — bounded/streaming data path and explicit faulty-row policy
+- **Mechanism contributed:** embedded, no-external-dependency engine; single-file database; vectorized execution; direct scan of CSV/JSON/Parquet; queries over foreign data without copying [SOURCE S8]. Documented single-writer / multi-reader concurrency [SOURCE S7]. Explicit error policy for ingestion: detailed errors, optional skipping of faulty lines, and storage of faulty lines in a rejects table for cleaning [SOURCE S6].
+- **Caveat that shapes our contract:** the permissive path has a real defect history (§4). Our contract therefore makes *strict-by-default, quarantine-with-provenance, never-silent* an application-level rule rather than trusting engine defaults [CHOICE grounded in S9/S12].
+
+### 3.4 Frictionless Data Package — descriptor shape for the data contract
+- **Mechanism contributed:** "a simple container format for describing a coherent collection of data": a required JSON descriptor (`datapackage.json`) with a required `resources` array naming data files, optionally with structured schema information [SOURCE S16]. We adopt the descriptor shape inside `datasets.yaml` and extend it (sampling flags, malformed policy, order-key declaration) because the spec targets packaging, not run provenance [INFERENCE].
+
+### 3.5 pip hash-checking mode — environment binding
+- **Mechanism contributed:** reproducible installs via `--hash=sha256:…` per requirement; all-or-nothing enforcement; hashes required for *all* requirements *and* their dependencies; requirements must be pinned (`==`); sha256 recommended, weak hashes excluded [SOURCE S14]. This gives cross-machine "same lock ⇒ same artifacts" within an interpreter series — the honest strength limit is stated in §9.
+
+---
+
+## 4. Followed issue → fix → regression chain (with evidence limits)
+
+**Issue:** duckdb/duckdb **#10769**, "Ignore_errors causes empty result in read_csv" (opened 2024-02-20; DuckDB 0.10.0, Python client). With `ignore_errors=true`, a titanic.csv file returned an empty DataFrame, while loading without the option returned data [SOURCE S9, capture 3fe3db4a]. This is consequential for Brief B precisely because the option exists to *tolerate* bad rows — here it silently destroyed good ones.
+
+**Fix:** PR **#10777**, "[CSV Sniffer] Minor sniffer tweak to give preference to dialects that generate the least errors if ignore_errors = true", body "Fix:#10769", merged 2024-02-21T08:45:01Z into merge commit `55ce826740694c5887ea648221fbae674fadad9d`. The PR's changed files include the added reproduction dataset `data/csv/titanic.csv` (892 lines — the exact file named in the issue body) [SOURCE S10, capture aba307c5].
+
+**Regression-test status (honest):** the repository at the merge commit contains a dedicated CSV test suite at `test/sql/copy/csv/` with dozens of scenario `.test` files (including `csv_null_padding.test`, `csv_external_access.test`, `bug_10283.test`, …) [SOURCE S13, capture 014ea0f2]. **I could not visually confirm the specific regression-test filename added by PR #10777**: the PR files API payload was truncated at my 32 KB capture window on the first (data) file. The full files payload is preserved under capture `aba307c5…` for a later stage to enumerate. Treat "a regression test was added by this PR" as **plausible but not directly verified** [SOURCE-limited claim].
+
+**Recurrence — the more valuable lesson:** issue **#11296** (2024-03-21, DuckDB 0.10.1) reports "Same bug as #10769 which was resolved, but it showed up again with a different file", again producing empty results and an empty rejects table under `ignore_errors=true` with `null_padding=true` [SOURCE S11]. And in **#19880** (2025-11-21, DuckDB 1.4.1), a reporter showed `read_csv_auto(ignore_errors=true)` returning 87,905 rows where strict mode returned 99,999; the issue was closed at the reporter's request the same day (they had accidentally uploaded proprietary data), so **no fix chain or maintainer diagnosis is established for #19880** [SOURCE S12, captures 3fe3db4a / 9d398f72].
+
+**Version/branch applicability [SOURCE]:** defect observable in 0.10.0 (S9); first fix merged pre-0.10.1 (S10, merged 2024-02-21); defect class still reproducible per user reports in 0.10.1 (S11) and reported in 1.4.1 (S12). Current docs (v1.5, "current") still document skip + rejects-table behavior (S6). Latest DuckDB release at research time: v1.5.6 (2026-09-28) [SOURCE S17, capture a5f87ba1].
+
+**Limits of the evidence:** these are public reports and merges, not a claim about the current v1.5.6 binary's behavior; no issue above establishes *current release* behavior. The design consequence stands regardless of whether each report was ultimately fixed: **an application must never assume a permissive-parse path preserves row counts** — it must verify (§5 invariants, W1/W4).
+
+---
+
+## 5. The data contract (datasets.yaml) [CHOICE, mechanisms SOURCE-backed]
+
+Each registered dataset gets: `name`, `path` (relative) or `url`, `format` (csv | ndjson | parquet), `dialect` (CSV delimiter/quote/escape; NDJSON required-field list), `schema` (Frictionless-style columns: name, type, nullable) [S16], plus workbench extensions:
+
+1. **Schema assumptions.** A preview-derived schema is stored as `schema_hypothesis` with `inferred_from: sample(N)`. It is a hypothesis, never a guarantee — demonstrated in W1: a 20-row preview inferred INTEGER for a column that is TEXT/null later in the file [EXECUTED W1]. A full-pass verification (bounded, streaming) runs before any transform is labeled clean, reconciling every column against the declaration.
+2. **Type conversions.** Coercions must be declared per column (`declared_coercions`); an undeclared coercion is an error, not a warning. Nulls are distinct from empty strings; Unicode passes through as UTF-8; timestamps carry an explicit policy (`assume_utc` vs `keep_string`) because naive timezone coercion is a classic silent alteration [INFERENCE].
+3. **Row/order identity.** Two digests are recorded for every result (W2): a `sequence_digest` (order-sensitive) and a `multiset_digest` (order-insensitive, canonical JSON of sorted rows) [EXECUTED W2]. A dataset declares an `order_key` or states `row_order: undefined`. If order is undefined, product UX must never present row order as meaningful, and result comparison uses the multiset digest plus count.
+4. **Error handling.** `malformed_policy: strict | quarantine` (default quarantine): malformed/missing-field records go to `quarantine.jsonl` with line number, reason, raw length — **never silently deleted**, originals never mutated. Invariant: `kept + quarantined == total` is checked and exported in the manifest [EXECUTED W4: 497 kept + 3 quarantined == 500]. Quarantine above a threshold (default >5% or >10,000 rows) escalates to a hard error.
+5. **Source-data identity.** At import, a streamed SHA-256 + byte size is computed and stored; the file is referenced, not copied (DuckDB can query foreign data without copying [S8]); re-import of unchanged bytes reuses identity. Large-file hashing is one sequential pass — bounded cost, [PROPOSED/UNEXECUTED] for the 5 GB timing.
+6. **Schema evolution.** A changed source identity invalidates dependents (§6); `union_by_name`-style column additions are allowed only when declared; removals/retype of a declared column escalate. [INFERENCE; supported in spirit by DuckDB's combining-schemas facilities (S5 nav) but not source-pinned — see lead L7.]
+7. **Sampling honesty.** Every preview carries `is_sample: true`; any result computed only from preview data is stamped `preview-only` and can never be exported as a manifest-level full-dataset claim [CHOICE; trap demonstrated in W1].
+8. **Caching & invalidation.** Derived caches are keyed by `(input identities, transform hash, engine version)`; any key component change misses the cache and marks affected outputs stale. Cache entries carry their key explicitly so a stale hit is detectable [INFERENCE].
+9. **Large results.** Inline cell outputs are capped (default 64 KiB / 1,000 rows); overflow is materialized to a sidecar (Parquet) referenced by digest, with the inline part truncated and labeled [CHOICE].
+10. **Unsupported inputs.** Undeclared format → import refused (no best-effort guessing into the registry); a dataset larger than the declared global-operation bound (e.g., full sort within 16 GB) is refused with the explicit bound rather than OOM-killed; network fetches from the kernel are denied unless granted (§10).
+
+---
+
+## 6. Notebook semantics: four things the UI must distinguish [CHOICE on S1/S3/S15]
+
+1. **Displayed cell order** — page arrangement, free for the user.
+2. **Execution order** — topological order of the cell DAG (marimo's mechanism: static refs/defs analysis [S3]); clean replay follows the DAG, and display order is irrelevant to it.
+3. **Current kernel state** — invisible in the document; tracked by a monotonic **epoch** counter. Every kernel start/restart bumps the epoch; every output is stamped with the epoch of the run that produced it.
+4. **Provenance of saved outputs** — per output: `{run_id, epoch, cell_source_hash, input dataset digests, env lock hash, status}`. **A saved output is not automatically reproducible**; it is only a record.
+
+**Freshness states** (per visible output), derived mechanically — all four transitions [EXECUTED W3]:
+
+| Event | Own output | Downstream outputs |
+|---|---|---|
+| clean run completed | `current` | `current` |
+| upstream cell edited (not rerun) | edited cell + all dependents `stale` | `stale` |
+| source dataset bytes changed | all reader cells `stale` (dataset is a DAG node) | `stale` |
+| environment lock changed | session flagged; outputs become `unverified` on next session | `unverified` |
+| kernel restart / reopen of old epoch | every old-epoch output `unverified` | `unverified` |
+| cell failed / run interrupted or cancelled | that cell `failed` | dependents `unverified` (never `current`) |
+
+The hard rules, matching the brief: a kernel restart or interrupted execution **must not** silently label old outputs current — with epoch stamping this is structural, not advisory [EXECUTED W3 snapshots 3–4].
+
+---
+
+## 7. Clean replay: what the product can and cannot guarantee [CHOICE]
+
+**Guaranteed by a clean replay** (fresh kernel, epoch bump, DAG order, declared inputs only):
+- the executed notebook is a **separate artifact** from the source notebook (nbclient-style [S15]); source and results are never conflated;
+- outputs are bound to: exact cell source hashes, dataset identity digests, environment lock hash, engine version, epoch, run id;
+- per-cell progress, cancel, timeout, and error capture (timeout and error hooks exist in nbclient [S15]);
+- deterministic-vs-stable ordering discipline: replay sorts carry explicit content tie-breaks, and comparison uses manifest digests (§5.3) [EXECUTED W2];
+- the manifest invariants (kept+quarantined==total; digests recomputed at export).
+
+**Explicitly outside the guarantee** (each replay-eligible but not guaranteed identical): wall-clock/time-dependent code; randomness; unordered iterations whose order varies across versions; unstable sorts without declared tie-break; external network services; undeclared filesystem access; unpinned packages (lock hash mismatch makes the manifest self-declaring as not-reproducible); hardware/BLAS-sensitive numerics; locale/collation differences. The manifest carries an `exclusions` list, and a "reproduced bit-identically" claim is only made when both digests match [CHOICE].
+
+---
+
+## 8. The 5 GB question on the 16 GB envelope [PROPOSED/UNEXECUTED target]
+
+Target: a 5 GB CSV streams through scan → filter → aggregate with `memory_limit` ≈ 8 GB and an explicit `temp_directory` for spilling; full-result materialization is the explicitly-bounded exception. Grounds for plausibility: DuckDB is built for analytical scans over larger-than-memory data with a columnar-vectorized engine and out-of-core design heritage [SOURCE S8], and direct file scans avoid a copy [S8]. **No timing or RSS number is claimed here** — that is validation V1 (§13). Global operations that cannot stream (full sorts of unsorted 5 GB under 16 GB) get an explicit declared bound: either spill-backed execution or refusal with the reason [CHOICE].
+
+---
+
+## 9. Support boundary: Python and SQL [CHOICE]
+
+- **Python:** CPython 3.11–3.12 only in v1, always inside a venv built from the hash-pinned lock [S14]; the kernel is launched from that venv (nbclient `kernel_name`, timeout configurable [S15]). The reproducibility claim is: *same lock hash + same interpreter series ⇒ same package artifacts*; it is **not** cross-OS bit-reproducibility (BLAS/locale differ). nbformat itself has been shedding old interpreters (3.8 dropped by 5.11.0) [SOURCE S2], so a narrow supported band is realistic, not restrictive.
+- **SQL:** DuckDB SQL is adopted as a first-class **transform artifact** (`.sql` files versioned in the project), executed by the *same* engine the notebooks use; the SQL colleague can also open the project database read-only from the DuckDB CLI — supported by the documented multi-reader single-writer model [S7]. We deliberately do **not** build a second notebook kernel stack: one engine + one Python kernel covers the team; adding language kernels is an optional opportunity, not an obligation (echoing marimo's Python-only scope [S4]).
+
+---
+
+## 10. Execution boundary for untrusted notebook code [CHOICE + INFERENCE]
+
+- Kernel runs in a fresh process per clean replay, under an OS sandbox: filesystem allowlist (project dir read-write; registered dataset paths read-only; temp dir), network denied by default with per-run explicit grants, CPU/memory rlimits and a per-cell timeout [S15 provides the timeout mechanism]. The experiment's own isolated executor uses Bubblewrap/systemd isolation with a fresh network namespace and no host secrets — evidence that this pattern is practical at small scale [SOURCE: execution receipts in `witnesses.json`].
+- **Usability trade-offs (stated, not hidden):** strict sandboxing breaks font-cache writes for plotting libraries, runtime package installation, and reading datasets outside the allowlist. The product therefore offers "trusted mode" (sandbox off) whose outputs are permanently stamped `unverified-for-sharing` — the stamp, not a prohibition, carries the consequence.
+- **Explicit non-claim:** an import blacklist, `sitecustomize` guard, or AST filter does **not** supply isolation; Python-level guards are trivially bypassed and are used at most for UX warnings [INFERENCE, aligned with the isolation design of the experiment's own runtime ("kernel isolation supplied by Bubblewrap/systemd, not AST filters", receipts in `witnesses.json`)]. Source browsing (reading a notebook file) is a separate, non-executing code path from running one.
+- Sandboxed v1 targets Linux and macOS; Windows without WSL2 is out of v1 scope (§15 risk).
+
+---
+
+## 11. Minimum workflow coverage [CHOICE; mechanisms cited in §3]
+
+1. **Create project** — `workbench init` writes `project.yaml`, empty `datasets.yaml`, lock scaffold.
+2. **Import & identify data without copying** — register path/URL; streamed sha256 + size; schema hypothesis from bounded preview (labeled as such, W1).
+3. **Author notebook / transform** — `.ipynb` (nbformat ≥ 4.5 [S1]) and/or `.sql` in `transforms/`.
+4. **Preview bounded sample** — engine `LIMIT` preview; `is_sample` stamped; never a full-dataset claim (W1).
+5. **Run selected work interactively** — live kernel with progress, cancel, per-cell errors.
+6. **Request clean replay** — fresh kernel epoch, DAG order, separate executed artifact [S15], manifest per run; per-output states per §6 (W3).
+7. **Compare provenance** — run-diff view: manifest deltas (dataset digests, lock hash, cell hashes, output digests) explain "why did the number change".
+8. **Save** — atomic write with commit marker; interrupted save leaves the previous complete state readable (W4); project-level flock for single writer [consistent with S7's single-writer engine model].
+9. **Reopen / share on another machine, export manifest** — plain folder or `.wbundle` zip (project + manifest + quarantine sidecars + output sidecars; datasets referenced by digest, small ones optionally embedded). Reopen marks all old-epoch outputs `unverified` until a replay or verification pass (W3 semantics).
+
+---
+
+## 12. Executed checks (candidate, isolated) — summary [EXECUTED]
+
+Full code, receipts, stdout digests, and scope limits in `witnesses.json`. All use tiny synthetic data only; **none proves large-dataset or full-runtime behavior**.
+
+- **W1 preview-vs-full inference trap** (exec `exec-lhb85rd5`, exit 0): 20-row preview inferred INTEGER; full scan found 2 TEXT + 1 NULL; conflicting rows quarantined with line numbers; kept+quarantined == total.
+- **W2 deterministic vs stable ordering & identity** (exec `exec-15rdc9md`, exit 0): key-only stable sort is input-order dependent (sequence digests differ across permutations); content tie-break is permutation-invariant; identity scheme = sequence digest + order-insensitive multiset digest.
+- **W3 freshness state machine** (first attempt exec `exec-x8rt9so3` **exit 1** — my check code resolved refs by variable name against cell ids, and one expectation was wrong; corrected rerun exec `exec-9l7v0rcz`, exit 0): clean run all `current`; edit-upstream → edited cell + dependents `stale`; kernel restart → old outputs `unverified` (never `current`); interrupted replay → cell `failed`, dependents `unverified`. Both attempts are recorded.
+- **W4 streaming malformed handling + atomic save** (exec `exec-iv76_h6q`, exit 0): 500 synthetic NDJSON records in 5 chunks; 3 malformed/missing-field lines quarantined with line numbers (none dropped); O(1)-state streaming mean matches the in-memory reference; interrupted save left the previous committed manifest readable, tmp file ignored until the commit marker moved.
+
+---
+
+## 13. Proposed validation — UNEXECUTED [PROPOSED/UNEXECUTED]
+
+- **V1 (5 GB target):** generate 5 GB deterministic CSV (≈50 M rows), run DuckDB scan→filter→aggregate with `memory_limit=8 GB` + temp dir; success = completes, peak RSS < 12 GB, row counts match a chunked reference; record wall time. *Not run in this experiment.*
+- **V2 crash recovery (app-level):** SIGKILL during notebook save in the real app; reopen must show the prior committed state and a flagged partial run (W4 demonstrates the mechanism, not the app).
+- **V3 cross-machine reopen:** same folder + lock install on a second machine; clean replay; manifest diff must be empty for declared-deterministic ops.
+- **V4 state-machine integration:** drive a real nbclient run incl. mid-run interrupt; assert epoch/status transitions match §6 (W3 is a component model only).
+- **V5 boundary checks:** under the sandbox profile, socket creation and out-of-allowlist file reads must fail; assert and log.
+
+---
+
+## 14. Opportunities and alternatives
+
+**Opportunities.**
+- **O1 (useful, cheap):** SQL colleague joins the workflow with zero new code — read-only CLI attach of the project database [S7]; transforms stay versioned `.sql` artifacts.
+- **O2:** run-diff provenance view (§11.7) turns "why did results change" into a readable manifest delta — a natural UI over data we already produce.
+- **O3 (deferred):** marimo-style lazy runtime ("mark stale instead of running") as a project setting [S3]; and real-time collaboration / scheduling remain explicitly optional, non-obligations.
+
+**Plausible alternative (bounded):** make **marimo the authoring surface** instead of `.ipynb`. Pros: the reactive DAG, stale-marking, and no-hidden-state guarantees are the engine's native semantics [S3]; conversion from Jupyter exists (`marimo convert`) [S4]. Rejected as the default because marimo's Python-file format does not store outputs in the notebook file [S4], while our core requirement is comparing saved vs current outputs and sharing them; we adopt its semantics atop `.ipynb` + provenance sidecars instead. This remains the strongest fallback if sidecar-provenance proves too complex.
+
+**Other alternatives considered and rejected:** SQLite as the engine (rejected: columnar-vectorized OLAP + direct CSV/NDJSON/Parquet scan without copying are the requirements that matter at 5 GB [S8]); containers as the default isolation boundary (rejected for 3-analyst local-first usability; kept as opt-in); adopting Frictionless `datapackage.json` wholesale as the project record (rejected: it packages data, not run provenance; we adopt its descriptor shape only [S16]).
+
+---
+
+## 15. Critical dependencies, risks, unsupported inputs
+
+**Critical dependencies:** DuckDB (engine version is recorded in every manifest and pinned in the lock — engine-version drift can change inferred schemas, per §4's history); CPython venv + pip hash-checking [S14]; nbformat/nbclient [S1,S15]; OS sandbox availability.
+
+**Unsupported critical design dependencies (explicit):**
+- *Bit-reproducibility across OS/BLAS* — not provided; manifests declare the exclusion (§7).
+- *Deterministic ties without declared tie-breaks* — not provided; comparison falls back to multiset digests (W2).
+- *Sandboxing on native Windows* — not claimed in v1; WSL2 path or `unverified-for-sharing` stamp.
+- *Engine-behavior invariance across DuckDB versions* — not claimed (§4); pinning + manifest version recording is the mitigation.
+- *Import-blacklist isolation* — explicitly rejected as a security mechanism (§10).
+
+**Unsupported-input behavior (summary):** undeclared formats refused at import; schema conflicts quarantined or errored per policy, never silently dropped (W1/W4); over-RAM global ops refused with an explicit bound (§8); denied network calls raise an auditable error; oversized outputs truncated to sidecars with digests (§5.9); quarantine-threshold escalation to hard error (§5.4).
+
+---
+
+## 16. Source index (pins and capture identities in `sources.json`)
+
+S1 nbformat v4.5 schema · S2 nbformat CHANGELOG · S3 marimo reactivity guide · S4 marimo "Coming from Jupyter" · S5 DuckDB CSV overview (v1.5) · S6 DuckDB Reading Faulty CSV Files (v1.5) · S7 DuckDB Concurrency (v1.5) · S8 Why DuckDB · S9 duckdb#10769 · S10 duckdb PR#10777 files · S11 duckdb#11296 · S12 duckdb#19880 + comments · S13 test/sql/copy/csv listing @ 55ce826 · S14 pip secure-installs · S15 nbclient docs · S16 Frictionless Data Package v1 · S17 DuckDB releases API. Unresolved/optional follow-ups in `leads.json`.

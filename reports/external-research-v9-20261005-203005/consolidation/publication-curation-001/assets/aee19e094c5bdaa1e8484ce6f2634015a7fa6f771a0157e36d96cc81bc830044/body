@@ -1,0 +1,90 @@
+{
+  "schema_version": "er9.research.leads.v1",
+  "evidence_date": "2026-10-06",
+  "leads": [
+    {
+      "id": "L1",
+      "type": "critical qualification dependency",
+      "topic": "DuckDB 1.5.6 and parallel CRCRLF CSV behavior",
+      "status": "unresolved; blocks any claim that the issue is fixed in this release",
+      "known_evidence": ["Issue #25164 reports affected 1.4.4, 1.5.2 and 1.5.5.", "The guard and regression test merged to v2.0-cyanoptera.", "A separate port-to-main PR is closed without merge.", "A source spot-check of v1.5.6 has similar existing carry-on logic but no execution of the exact regression test was performed."],
+      "next_evidence": "Run the pinned 60-row boundary fixture on the exact packaged v1.5.6 binary and supported OSes; inspect release source/test history for equivalent coverage. Until then use parallel=false in the controlled import path and do not claim release qualification.",
+      "source_ids": ["DB1", "DB12", "DB13", "DB14", "DB15", "DB16", "DB17"]
+    },
+    {
+      "id": "L2",
+      "type": "critical implementation dependency",
+      "topic": "Cross-platform OS sandbox/provisioner for interactive and clean Python/SQL execution",
+      "status": "not selected or validated",
+      "known_evidence": "Jupyter kernels are processes with connection specs and interrupt modes; those protocol/process mechanisms do not constrain host filesystem, network, credentials or resources.",
+      "next_evidence": "Select one sandbox backend per supported OS; threat-model kernel and extension paths; test mount permissions, network denial, process/memory/disk quotas, cancellation and recovery. Disable execution on unsupported OSes rather than falling back in-process.",
+      "source_ids": ["NB3"]
+    },
+    {
+      "id": "L3",
+      "type": "critical portability dependency",
+      "topic": "Recreating locked Python environments on different operating systems and architectures",
+      "status": "proposed, not qualified",
+      "known_evidence": "The proposal requires an exact Python/package lock and kernel binding, but this research did not select or test a resolver, binary wheel policy or cross-platform lock format.",
+      "next_evidence": "Choose a lock/resolver, include package artifact hashes and platform markers, and test clean recreation on each supported platform. Missing wheels/native libraries must produce an explicit unsupported-environment state."
+    },
+    {
+      "id": "L4",
+      "type": "optional opportunity",
+      "topic": "Arrow IPC as a portable Python/SQL result interchange boundary",
+      "status": "worth investigating; not adopted as the project’s durable artifact format",
+      "known_evidence": "The pinned DuckDB Python documentation exposes a chunked Arrow record-batch reader. This is an API fact, not a survey of Arrow IPC interchange guarantees or version compatibility.",
+      "next_evidence": "Compare Arrow IPC stream/file with Parquet for nulls, nested types, timestamps/timezones, schemas, streaming, independent SQL readers and folder exchange. Keep Parquet as the initial durable columnar result because the existing design needs file-backed large artifacts.",
+      "source_ids": ["DB6", "DB8"]
+    },
+    {
+      "id": "L5",
+      "type": "plausible alternative",
+      "topic": "Python-first lazy dataframe engine such as Polars in place of DuckDB",
+      "status": "not researched/qualified in this stage",
+      "known_evidence": "No behavior, release, issue or performance claim is made here.",
+      "next_evidence": "Compare Python ergonomics, SQL access for the colleague, out-of-core limits, schema-evolution policy, ordering, result streaming and issue regression behavior using the same fixtures. Do not infer suitability from marketing or API examples alone."
+    },
+    {
+      "id": "L6",
+      "type": "implementation UX lead",
+      "topic": "JupyterLab-based editor and a small provenance extension",
+      "status": "bounded option, frontend integration not investigated",
+      "known_evidence": "The notebook file format and Jupyter execution APIs are independently documented; no JupyterLab extension API/version source was captured in this stage.",
+      "next_evidence": "Pin a JupyterLab version, prototype status badges/run controls with keyboard and screen-reader semantics, and confirm saved outputs can remain associated with the supervisor run index without changing standard notebook validity."
+    },
+    {
+      "id": "L7",
+      "type": "performance/data-management lead",
+      "topic": "Full-file hashing, external references and portability",
+      "status": "design choice with cost not measured",
+      "known_evidence": "The proposal selects full streaming hashes for source identity. No 5 GB hashing time, external drive behavior, modification race or cloud-sync semantics were measured.",
+      "next_evidence": "Measure initial and repeat hash cost, detect source mutation during a scan, test large-file hashing on local filesystems, and decide when a user-selected bundle copies source bytes. Until complete hashes exist, status remains unverified."
+    },
+    {
+      "id": "L8",
+      "type": "unsupported environment boundary",
+      "topic": "Network filesystems, cloud-sync folders and simultaneous writable project sessions",
+      "status": "not supported in the initial proposal",
+      "known_evidence": "DuckDB documentation says one process owns read-write mode and cautions about file locks on shared/network filesystems. The workspace-level atomic rename and lock protocol is an engineering choice, not validated across filesystems.",
+      "next_evidence": "Test lock behavior, atomic rename, fsync and sync-conflict handling on named target filesystems. Until then, require local exclusive write access and close-before-copy exchange.",
+      "source_ids": ["DB11"]
+    },
+    {
+      "id": "L9",
+      "type": "validation limit",
+      "topic": "5 GB input on 8-core/16 GB machine",
+      "status": "target only; not measured",
+      "known_evidence": "DuckDB docs describe out-of-core spill and also list blocking/operator limitations. None of the captured sources is a benchmark for this exact input, operation mix, disk or machine.",
+      "next_evidence": "Execute the matrix in witnesses.json P2; report peak RSS, temp disk, elapsed time, row/schema/output hashes and exact pinned binaries."
+    },
+    {
+      "id": "L10",
+      "type": "source acquisition note",
+      "topic": "Versioned Read the Docs URL for nbformat",
+      "status": "unusable capture; excluded as evidence",
+      "known_evidence": "The attempted URL https://nbformat.readthedocs.io/en/5.10.4/format_description.html returned HTTP 404, capture_id f35c96860a664132bbcb9d34ca63dfef, SHA-256 f5e687d9c56b415578e9c41fac65e35a78c915f0da1ab68e59a4d48da011ce3f.",
+      "next_evidence": "Use the independently captured, pinned upstream raw v5.10.4 document in NB1; the 404 contributes no format claim."
+    }
+  ]
+}

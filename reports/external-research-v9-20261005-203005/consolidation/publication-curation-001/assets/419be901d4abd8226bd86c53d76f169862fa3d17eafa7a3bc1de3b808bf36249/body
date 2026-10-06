@@ -1,0 +1,98 @@
+# Seed enrichment — local biomedical image review workspace
+
+- Stage: `SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001`
+- Base proposal: `inputs/seed/proposal.md`, SHA-256 `b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7` (read-only; not edited)
+- This is an evidence-backed supplement to the frozen proposal, not a replacement and not a claim of scored diagnostic PASS.
+- Supplemental source IDs E01–E11 and witness W4 are defined in the companion catalogs. They are candidate citations, not evaluator labels.
+
+## Findings that change implementation details
+
+### 1. NGFF 0.5 is a bounded coordinate contract, not a general transform engine
+
+**External facts.** The pinned OME-NGFF 0.5 text says an axis name is required and unique; axis type and unit are recommended fields, and custom string axis types are permitted. The listed spatial and time unit names are UDUNITS-2 values. The `dimension_names` attribute in every multiscale Zarr array is required and must match the names in the `axes` metadata. [E01 §2.1]
+
+A multiscale image has 2–5 dimensions. It must have two or three spatial axes, and may add one time axis and one channel or custom/null axis. Axis order follows array order and is time, then channel/custom, then spatial. In multiscales, the dataset paths run from largest to smallest resolution. [E01 §2.4]
+
+The generic `coordinateTransformations` vocabulary includes identity, scale and translation; the latter two may store vectors inline or by a path. For multiscale datasets, the allowed types narrow to scale and translation. Each dataset must contain exactly one scale; translation is optional, at most one, and must follow scale. A multiscale-level transform is applied after the dataset-level transforms. If physical scale is unavailable or inapplicable on an axis, the per-level scale is relative to level 0 and defaults to 1.0 when that axis is not downsampled. [E01 §§2.3–2.4]
+
+**Numerical/data-structure check.** W4 applies this ordered structure to a five-axis `t,c,z,y,x` point. The dataset has scale `[1,1,0.5,0.5,0.5]`, then translation `[0,0,10,20,30]`; the group transform has scale `[0.1,1,1,1,1]`. With input `[2,1,4,8,6]`, the candidate implementation returns `[0.2,1,12,24,33]`. Reversing the three operations returns `[0.2,1,7,14,18]`. This checks the candidate’s stated component convention and vector-length handling; it does not establish that an NGFF reader or application implements the convention correctly.
+
+**Engineering inference.** Keep NGFF import/export validation narrower than the project’s internal frame model. Reject or flag free-form affine transforms, more than five axes, and axis patterns outside the multiscale schema when claiming NGFF 0.5 interchange. Preserve original metadata and use an explicit correction path for data outside that subset. Do not silently discard an unknown axis or map it to space.
+
+**Product choice to add to the plan.** Treat `dimension_names` as a required cross-check when writing/reading NGFF 0.5. The frozen proposal names axes in its project frame, but its summary does not explicitly name this per-array Zarr field; this supplement closes that implementation detail without editing the proposal.
+
+The current official 0.5 page in the captures is dated 2026-10-01, while the raw spec is pinned to commit `d9164040…` dated 2025-01-28. Both are version 0.5; use the pinned raw text for reproducible clauses and the captured official page as a current-page cross-check. Neither capture turns an implementation into a conforming reader. [E01–E02]
+
+### 2. Defaults and precedence are part of data interpretation
+
+**External facts.** The NGFF multiscale section says a sole multiscale is used directly. With multiple entries, the user may choose by `name`; the included Python example falls back to the first entry if the requested name is absent. Dataset levels within a selected multiscale are ordered largest to smallest. [E01 §2.4]
+
+The transitional `bioformats2raw.layout` collection metadata has a branch: if `plate` metadata is present, it takes precedence and readers follow the plate structure. The text also says collections of images and plates cannot currently be mixed. [E01 §2.2]
+
+**Engineering inference.** Record the selected multiscale name/path in project provenance. A parser fallback to the first entry is a documented example, not a safe implicit user choice for a multi-image project: show the available entries and selection. Likewise, make precedence decisions visible in the import report, especially when a `plate` key changes hierarchy interpretation.
+
+### 3. Units, types, and “no unit” need distinct states
+
+**External facts.** NGFF unit metadata is recommended rather than required, and its standard unit vocabulary is bounded; custom axis *types* do not imply that arbitrary unit strings are standard. Tifffile’s TIFF notes enumerate integer and floating TIFF sample types it handles, while explicitly excluding differing sample types within an image. [E01 §2.1; E03 Notes]
+
+Napari’s units guide is a current `main` documentation capture, not a pinned release contract. It says layer units use Pint, omitted units are treated as pixels, `dimensionless` is the explicit no-unit value, and units do not rename axes. The example updates a layer’s units after creation. It also notes that a scale-bar label uses the last displayed axis and warns when displayed axes have inconsistent dimensionality. [E11]
+
+**Engineering inference.** The project schema should keep axis label, sample type, unit state (`known`, `unknown`, or explicitly dimensionless), scale, and origin as separate fields. Do not translate an absent unit into a physical unit, and do not assume that a permissive viewer unit parser makes a unit valid under NGFF 0.5. Treat the napari behavior as a UX precedent until checked against a pinned napari release.
+
+### 4. Raster labels have a narrower domain than the annotation model
+
+**External facts outside the axes/transform excerpt.** The NGFF labels section defines label images as pixel-annotation arrays of integer type (`uint8/int8/uint16/int16/uint32/int32/uint64/int64`). A label image implements multiscales and must have the same number of resolution levels as its source image. It may identify the related source image through `image-label.source.image`; the common relative default is `../../`. The hierarchy allows a label dimension of 1 where that dimension is irrelevant. [E01 §2.6 and image-layout example]
+
+**Engineering inference.** This is useful for masks and segmentation IDs, but it is not the proposal’s vector point/polygon contract. Keep editable points/polygons in the project annotation records; export raster masks as linked label images and preserve source identity, axis frame, and the source-to-derived operation record. Avoid converting a vector shape to a label raster without recording rasterization, overlap/draw order, and resolution.
+
+### 5. Tifffile claims must bind to an exact API generation
+
+**External facts.** The frozen proposal cites the tifffile development README snapshot that identifies itself as version 2026.9.20 and uses `imread(..., return_as='zarr')`. The master changelog says `return_as` was added and `aszarr` deprecated in 2026.5.2. [E03–E04]
+
+The pinned v2026.3.3 README (release commit `503cb4eb…`) shows the earlier form, `imread(..., aszarr=True)`, and Zarr 3.1.5 among the versions tested for its Zarr stores; it says Zarr 2 is not compatible. The v2026.5.2 README (tag resolved to commit `63c5b378…`) uses `return_as='zarr'` and records a tested Zarr 3.2.0. Its changelog requires Zarr >=3.2.0 for Zarr support. [E05–E06]
+
+**Correction/qualification to the frozen plan.** The proposal’s `return_as='zarr'` example is supported by the captured 2026.5.2 release and later development snapshot, but it is not the documented call for the separately pinned v2026.3.3 calibration fix. A reproducible build must select a release and bind the adapter accordingly: use `aszarr=True` with 2026.3.3, or use the newer `return_as` API with 2026.5.2 or later. Do not combine the development README API with a 2026.3.3 pin. The `master` captures do not name an immutable commit; their body hashes and self-reported versions identify the observed snapshots, not a deployable pin. [E03–E06]
+
+**Positive capability, scoped.** The v2026.3.3 README documents reads from strips, tiles, IFD pages, SubIFDs, series, and pyramid levels. Its Zarr example opens a read-only store and selects a region (`z['0'][2, 0, 128:384, 256:]`). This is evidence for a bounded-access mechanism on supported TIFF layouts, not a 3 GB latency or memory guarantee. The released README also describes reading BigTIFF, OME-TIFF, and ImageJ hyperstacks. [E05]
+
+**Negative capability, scoped.** The same README says tifffile does not perform stitching for BIF tiles; it lists OJPEG, chroma subsampling without JPEG, color-space transformations, mixed sample types, and IPTC/ICC/XMP metadata among unsupported TIFF features. These boundaries qualify the proposal’s TIFF-first support boundary. They do not imply that every unlisted feature is supported. [E05, Notes]
+
+**Mutation behavior.** The release README demonstrates tag overwrite and page deletion with `TiffFile(mode='r+')`; deletion is described as irreversible and potentially invalidating metadata. Its Zarr write example opens both `imread` and `zarr.open` with `mode='r+'` before assigning to a slice. The read example uses `mode='r'`. The reader service should open source files and source-backed stores read-only, never pass through a write handle, and direct derived writes to a separate output. This is a design safeguard inferred from the documented API branches, not a claim that all tifffile calls mutate inputs. [E05]
+
+### 6. Read and write capability can differ within one compression family
+
+**External facts.** The v2026.3.3 release notes say CCITT compressed image reading is supported with imagecodecs newer than 2026.1.14. The test commit adds CCITT RLE, Group 3, and Group 4 read cases that assert decoded shapes and boolean arrays; one example asserts 80,000 true pixels in a 400×400 array. The same implementation patch routes CCITT compression codes 2, 3, and 4 to decoder functions and raises `NotImplementedError` on the codec lookup’s `_encode` branch. [E05, E07–E09]
+
+**Scope and limitation.** This supports a positive claim for those tested read paths in that code generation and a negative claim for that specific codec-encoding branch. It is not evidence that tifffile’s entire package can never write CCITT through another route, nor that all files in the family decode. The regression test source references fixtures that are not included in the commit-response capture; this role did not execute those upstream tests. If CCITT is in the local support boundary, pin/test imagecodecs >2026.1.14 and run representative fixtures in the actual application build.
+
+### 7. Calibration repair chain: version scope and commit ordering
+
+The issue body records `PixelSizeX=1.4208036661148071` under 2026.2.20 and `1.4208036661148072e-09` under 2026.2.24 for the reporter’s TVIPS file. The issue title says 2026.2.26, but its body gives 2026.2.24; the captured changelog has a 2026.2.24 heading and the 2026.3.3 fix entry. The fix patch removes the `÷1e9` conversion and says “do not convert nm to m”; the test commit asserts the file-native value and names the unit as nm. [E07–E10]
+
+The captured commit list gives the actual sequence: test commit `7d9eaedd…` is the parent of source-fix commit `edede600…`; changelog update `8c91499…` follows, then release commit `503cb4eb…` for v2026.3.3. Thus the regression test landed immediately before the code change in the commit history, with the repaired source and test both in the release lineage. The 2026.3.3 README/changelog states “Do not convert TVIPS pixel sizes to m (#319).” [E05, E07–E10]
+
+**Applicability limit.** The evidence directly compares 2026.2.20 with 2026.2.24 and establishes the correction by v2026.3.3. It does not establish that every hypothetical/intermediate patch version in the proposal’s broad “2026.2.20–2026.3.2” range was published or affected. The release README at v2026.5.2 and the captured 2026.9.20 development README retain the no-conversion changelog entry, so the observed correction persists in those snapshots. The issue body capture does not include its comment thread; the fix link is corroborated by code comment, issue number in changelog, commit lineage, regression-test URL, and released changelog. The test’s TIFF fixture was not available in the captured patch, so this is source-history evidence, not an independent rerun.
+
+## Recommended delta to the implementation plan
+
+1. Version the TIFF adapter explicitly. Choose a release in a lockfile; keep a compatibility shim only if the project intentionally supports both `aszarr` and `return_as` generations.
+2. For NGFF 0.5, validate rank, axis count/order, exact vector lengths, `dimension_names`, per-level scale/translation ordering, and label-source/pyramid linkage. Keep the project’s richer internal frame model separate from the export subset.
+3. Model point/polygon records and integer mask/label arrays as separate annotation representations. Preserve source hashes and derivation records for both.
+4. Open originals read-only. Test source-byte stability and region reads with representative local files; a documented tile slice proves the mechanism exists, not target performance.
+5. Bind optional codecs by actual format need. CCITT read support requires imagecodecs >2026.1.14 in the cited release note; CCITT encoder behavior is not an advertised minimum feature based on this evidence.
+
+## Validation status and open leads
+
+- **W4 EXECUTED:** isolated Python arithmetic/data-shape check, receipt `exec-ovin1uk1`, exit 0. The code and output are in `witnesses.json`. It validates only the candidate’s component function.
+- **UNEXECUTED:** validate NGFF 0.5 axis/transform/`dimension_names` rules against a real OME-Zarr 0.5 file and a second implementation.
+- **UNEXECUTED:** run region-read, cancel/progress, peak-memory, and source-hash-stability checks on actual representative 3 GB TIFFs and OME-Zarr datasets. The current sources do not establish the 3 GB target.
+- **UNEXECUTED:** run tifffile 2026.3.3 and 2026.5.2 compatibility cases under their documented dependency sets, including CCITT fixtures and the TVIPS calibration fixture.
+- **Lead L13:** add a version-pinned reader adapter test for `aszarr=True` (2026.3.3) and `return_as='zarr'` (2026.5.2+).
+- **Lead L14:** assemble a locally acquired per-instrument calibration fixture set; compare raw vendor metadata, selected units, and physical coordinates across reopen/export.
+- **Lead L15:** implement a small NGFF 0.5 validator for axes/dimension names, transform order/vector lengths, multiscale defaults, and integer label/source linkage.
+- **Lead L16:** assert that every source open path is read-only and that viewing, adjusting display, and editing annotations leaves source bytes unchanged.
+- **Lead L17:** decide whether CCITT is in the maintained support matrix; if yes, test the exact decode variants and keep write support explicitly out unless a separately verified encoder path is selected.
+
+## Catalog and inheritance note
+
+This stage writes supplemental catalogs at the required `out/seed/` paths and identifies the frozen proposal by SHA-256. The proposal references earlier S/W/L identifiers, but the original four catalog files were not available at `inputs/seed/{sources,witnesses,leads,dependencies}.json` or `out/final/` during this run. The new catalogs therefore declare themselves enrichment addenda and do not invent or overwrite the missing earlier records. The source-context index and complete public captures used here remain the authority for their recorded capture IDs and hashes. Reconciliation with differently located original catalogs remains unresolved if such files exist elsewhere.

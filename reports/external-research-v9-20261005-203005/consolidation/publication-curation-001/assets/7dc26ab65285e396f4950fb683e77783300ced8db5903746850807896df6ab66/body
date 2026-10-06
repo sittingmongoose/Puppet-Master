@@ -1,0 +1,131 @@
+{
+  "catalog_version": "research-stage-1",
+  "captured_utc": "2026-10-06T09:34-09:39Z",
+  "capture_tool": "mcp__pm_boundary__public_https_get (exact HTTP response body bytes; sha256 of body recorded per entry)",
+  "notes": "Each entry: url, pin (version/tag/commit), exact locator inside the captured bytes, capture identity (sha256 / capture_id), applicability to this proposal. Failed access attempts are recorded at the end for honesty.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "tifffile README (Read and write TIFF files)",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "tifffile version 2026.9.20 (declared in file); master branch as of 2026-10-06",
+      "capture_identity": {"sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "bytes": 32898, "captured_utc": "2026-10-06T09:34:57Z", "capture_id": "96200856b67944acbac0e83b311463ea"},
+      "exact_locators": [
+        "Section 'Read and write TIFF files' intro: image data readable 'as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels'",
+        "Examples > 'Use Zarr to read parts of the tiled, pyramidal images in the TIFF file': z['0'][2, 0, 128:384, 256:].shape  # read a tile from the base layer",
+        "Examples > 'Memory-map the contiguous image data in the ImageJ hyperstack file': memmap('temp.tif')",
+        "Examples > ImageJ hyperstack write: resolution=(1.0/2.6755,...), metadata spacing/unit/finterval/fps/axes",
+        "Examples > OME-TIFF write: PhysicalSizeX/PhysicalSizeXUnit 'µm', TimeIncrement",
+        "Notes > limitation list: 'OJPEG compression, chroma subsampling without JPEG compression, color space transformations, samples with differing types, or IPTC, ICC, and XMP metadata are not implemented'",
+        "Notes > 'Micro-Manager MMStack ... The TIFF structures and metadata are often corrupted or wrong'",
+        "Notes > Hamamatsu NDPI: 'BitsPerSample, SamplesPerPixel, and PhotometricInterpretation tags may contain wrong values, which can be corrected using the value of tag 65441'",
+        "Notes > NDTiff: 'Version 0 and 1 series, tiling, stitching, and multi-resolution pyramids are not supported'",
+        "Examples > generic series: series.axes == 'QYX' (unidentified dimension 'Q' in a supported file)",
+        "Revisions > 2026.9.15: 'Fix MMStack series when numeric Summary metadata values are strings (#334)'"
+      ],
+      "applicability": "Bounded-access mechanism (per-tile reads) for the 3 GB target; calibration field inventory per format family; testable support boundary and ambiguity evidence ('Q' axis). Anchor for proposal F1, §9."
+    },
+    {
+      "id": "S2",
+      "title": "GitHub issues search: repo:napari/napari 'undo' in title",
+      "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+undo+in%3Atitle&per_page=20",
+      "pin": "GitHub Search API result, captured 2026-10-06T09:34:56Z; total_count 12",
+      "capture_identity": {"sha256": "e7dc7db01bced2cde59fa40ce8606cac833cb9072368e2cef76aee9b9a4a5564", "bytes": 58100, "captured_utc": "2026-10-06T09:34:56Z", "capture_id": "b64ae148ff25438288fae64e7cedfbb8", "note": "delivery showed first 32768 bytes; items #2579, #474, #2379, #3155, #3154, #3203, #2903 visible in delivered range"},
+      "exact_locators": [
+        "item #2579 'Undo/ Redo & Macro Recording' (open, created 2021-04-20): evented-model undo design; warns of 'memory explosion for our data properties which can be large arrays'",
+        "item #474 'Every GUI action in napari should be undoable.' (open, created 2019-08-12): Action base-class checklist",
+        "item #3154 'Bug fix for undo history in 3D painting' merged 2021-08-13T11:46:55Z; body: no undo item added when drag starts outside data volume; fix ensures a 'no op' undo item at drag start",
+        "item #3203 'Ensure we save a *copy* of existing value for undo' merged 2021-08-20T03:37:03Z, milestone 0.4.11"
+      ],
+      "applicability": "Design context and failure reports for the annotation undo/redo mechanism (proposal F3, §4 C5)."
+    },
+    {
+      "id": "S3",
+      "title": "napari PR #3203 API record",
+      "url": "https://api.github.com/repos/napari/napari/pulls/3203",
+      "pin": "merged=true; merged_at 2021-08-20T03:37:03Z; merge_commit_sha f9322732ce6118b9020c946465246e6e1139b38a; head sha a42730cc71e7c45f81f6dbd249fc68f43512eb92; milestone 0.4.11 (id 28, closed 2021-09-07T00:08:35Z); changed_files 1, additions 12, deletions 2; merged_by sofroniewn",
+      "capture_identity": {"sha256": "7fd51c9b6ea9e7ae9fa84983b4654c1cc86d880321c928834beb37cc6cc6d285", "bytes": 19732, "captured_utc": "2026-10-06T09:35:55Z", "capture_id": "0d8c01061fe04d0b908c66da6949ef1f", "etag": "\"7fd51c9b6ea9e7ae9fa84983b4654c1cc86d880321c928834beb37cc6cc6d285\""},
+      "exact_locators": [
+        "body: 'With NumPy, all fancy indexing returns a copy, but with other arrays (specifically, tensorstore arrays), we get a reference, so undoing reduces to \"set layer.data[index] to layer.data[index]\"'",
+        "merge_commit_sha field; milestone.title '0.4.11'"
+      ],
+      "applicability": "Commit/release applicability anchor of the issue→fix chain (proposal F3)."
+    },
+    {
+      "id": "S4",
+      "title": "napari PR #3203 diff",
+      "url": "https://github.com/napari/napari/pull/3203.diff (served via patch-diff.githubusercontent.com)",
+      "pin": "diff of merge f9322732ce6118b9020c946465246e6e1139b38a",
+      "capture_identity": {"sha256": "0fd86465e6ff23fc886980993d579d09d6e8d7130d57e7652dc3c42ed1543b63", "bytes": 1167, "captured_utc": "2026-10-06T09:35:54Z", "capture_id": "8c89685b26a345f7b8d7275796fee5da"},
+      "exact_locators": [
+        "napari/layers/labels/labels.py @@ fill(): self._save_history((match_indices, np.array(self.data[match_indices], copy=True), new_label))",
+        "napari/layers/labels/labels.py @@ paint(): self._save_history((slice_coord, np.array(self.data[slice_coord], copy=True), new_label))"
+      ],
+      "applicability": "The exact fix mechanism (copy-on-history) adopted for C5 (proposal F3). Evidence limit: diff contains no test file."
+    },
+    {
+      "id": "S5",
+      "title": "napari test_labels.py at merge commit f9322732",
+      "url": "https://raw.githubusercontent.com/napari/napari/f9322732ce6118b9020c946465246e6e1139b38a/napari/layers/labels/_tests/test_labels.py",
+      "pin": "tree of merge commit f9322732ce6118b9020c946465246e6e1139b38a",
+      "capture_identity": {"sha256": "96d8ce9868913f56d8c1390936e451ccd2af3880d51c0b633d20230dbd9adfc6", "bytes": 38605, "captured_utc": "2026-10-06T09:36:55Z", "capture_id": "a116a8c6dec04a6f83e6ef0da533ed44", "note": "delivery showed first 32768 bytes; test_undo_redo and test_fill_tensorstore are within the delivered range"},
+      "exact_locators": [
+        "def test_undo_redo(...) parametrized over brush_size/mode(fill,erase,paint)/selected_label/preserve_labels/n_dimensional: edit, layer.undo(), assert_array_equal(layer.data, data_history[0]), layer.redo(), assert equals data_history[1]",
+        "def test_fill_tensorstore(): opens ts.open(...) zarr-file-backed tensorstore, Labels(data), layer.n_edit_dimensions=3, layer.fill((1,4,6,7),4), asserts fill result",
+        "def test_world_data_extent(): check_layer_world_data_extent(layer, extent, (3, 1, 1), (10, 20, 5))",
+        "def test_3d_video_and_3d_scale_translate_then_scale_translate_padded(): comment cites https://github.com/napari/napari/issues/2967; asserts scale=(2,1,1) becomes (1,2,1,1) and translate padded",
+        "def test_paint_3d_negative_scale(...): parametrized negative scale/translate painting"
+      ],
+      "applicability": "Regression-test evidence at the fixed commit (undo/redo behavior covering the fixed fill/paint paths; tensorstore-backed backend exercise) and explicit-coordinate-model evidence (scale/translate/world extent). Anchor for proposal F2, F3."
+    },
+    {
+      "id": "S6",
+      "title": "napari release v0.4.11 notes",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.4.11",
+      "pin": "release id 48932319; tag v0.4.11; published 2021-09-03T00:59:21Z; target_commitish 35d196f66cebb4455b4162685e0ad4519b6bb36d",
+      "capture_identity": {"sha256": "07bae42e860055c96267ef8110633ac942ce370f83de6aa5c5ab563a6d898e28", "bytes": 24754, "captured_utc": "2026-10-06T09:38:34Z", "capture_id": "b9bfa2299cd64b53b59ba34bdc849620"},
+      "exact_locators": [
+        "Improvements: '- Ensure we save a copy of existing value for undo (#3203)'",
+        "Bug Fixes: '- Bug fix for undo history in 3D painting (#3154)'",
+        "Improvements: '- Update new label action to work with tensorstore arrays (#3153)'",
+        "Bug Fixes: '- Fix scale decomp with composite (#2990)', '- Fix Layer.affine assignment and broadcasting (#3056)', '- Fix problem with assigning affine with negative entries to pyramids (#3088)', '- Fix nD anisotropic painting when scale is negative (#2966)'",
+        "UI Changes: '- Update Labels layer keybindings to be more ergonomic (#3072)'",
+        "Build/Tasks: '- Make notification text selectable (#3310)'"
+      ],
+      "applicability": "Release applicability of the F3 chain; secondary evidence that transform/affine code paths regress and are release-note-worthy; accessibility-relevant precedent."
+    },
+    {
+      "id": "S7",
+      "title": "OME-NGFF 0.4 specification (Next-generation file formats)",
+      "url": "https://ngff.openmicroscopy.org/0.4/index.html",
+      "pin": "0.4 published spec; ETag W/\"a34b4d538e29489772eebf7fe832f7c7\"; Last-Modified 2026-10-01",
+      "capture_identity": {"sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269", "bytes": 163120, "captured_utc": "2026-10-06T09:35:55Z", "capture_id": "6290e3f2a2c849eeb5b20c134112ca1e"},
+      "exact_locators": [
+        "TOC: '3.3 \"coordinateTransformations\" metadata' (#trafo-md); '3.4 \"multiscales\" metadata' (#multiscale-md); '3.6 \"labels\" metadata'; '3.7 \"image-label\" metadata'",
+        "Section 2.1 (byte range 65536-81536 of capture): 'All image arrays must be up to 5-dimensional with the axis of type time before type channel, before spatial axes'",
+        "Section 2.1: chunk nested-directory layout and 'chunk coordinate' definition",
+        "Section 2.1 labels: 'Each dimension of the label (t, c, z, y, x) should be either the same as the image, or 1 if that dimension of the label is irrelevant'",
+        "Section 1.3: RFC 2119 keyword conventions; 'transitional' metadata definition"
+      ],
+      "applicability": "Standards vocabulary adopted for the axes/transform data contract and annotation scoping convention (proposal F4, §5). Full §3.3 JSON schema text was not re-extracted this session (lead L3)."
+    },
+    {
+      "id": "S8",
+      "title": "GitHub search: napari 'undo redo' in title (context items)",
+      "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+undo+redo+in%3Atitle&per_page=10",
+      "pin": "captured 2026-10-06T09:34:28Z",
+      "capture_identity": {"sha256": "ccc790dee0fc2f9b88eff1f94fd56f5164f149b295a744a2af2679f8cceae099", "bytes": 9962, "captured_utc": "2026-10-06T09:34:28Z", "capture_id": "d5c524b69cce4d93a385111a4f13c38a"},
+      "exact_locators": [
+        "item napari#533 'add undo/redo to labels layer' (PR, merged 2019-09-28T04:16:18Z, milestone 0.2): 'undo/redo is bound to Ctrl+Z/Ctrl+Shift+Z'; 'the undo/redo stack is reset whenever you change the viewed dimensions'"
+      ],
+      "applicability": "Origin of labels-layer undo and the dimension-change stack-reset rule adopted in C5 (proposal F3)."
+    }
+  ],
+  "failed_or_unresolved_access": [
+    {"url": "https://napari.org/stable/deep_dives/coordinate_systems.html", "result": "HTTP 404 (GitHub Pages 404 body, sha256 b620507312...)", "note": "napari docs restructured; coordinate-systems doc located via code/tests instead (S5); lead L1"},
+    {"url": "https://napari.org/stable/howtos/layers/transforms.html", "result": "HTTP 404", "note": "lead L1"},
+    {"url": "https://scikit-image.org/docs/stable/user_guide/coordinate_conventions.html", "result": "HTTP 404", "note": "row/col vs x/y convention citation not secured this session; covered indirectly by NGFF axis declarations (S7) and tifffile axes strings (S1); lead L2"},
+    {"url": "https://raw.githubusercontent.com/ome/ngff/main/0.4/axes.md and .../transform.md; https://api.github.com/repos/ome/ngff/contents/0.4", "result": "HTTP 404", "note": "spec repo layout differs; published site captured instead (S7)"},
+    {"url": "https://raw.githubusercontent.com/napari/napari/v0.4.11/napari/utils/transforms.py", "result": "HTTP 404", "note": "transforms module path at that tag not confirmed; coordinate model pinned via tests (S5) instead"}
+  ]
+}

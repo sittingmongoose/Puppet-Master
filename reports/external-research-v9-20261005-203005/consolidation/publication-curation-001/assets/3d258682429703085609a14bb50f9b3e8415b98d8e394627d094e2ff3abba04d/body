@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "research_freeze": "2026-10-06",
+  "eligibility": "Independently discovered public primary sources from third-party project documentation, standards, repositories and public history. No campaign, evaluator, other-arm, or prior-candidate materials used.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF v0.5 specification",
+      "url": "https://ngff.openmicroscopy.org/0.5/index.html",
+      "pin": "OME-NGFF specification version 0.5; Zarr v3 layout",
+      "locator": "On-disk layout §1.1; OME-Zarr Metadata §§2.1 axes, 2.3 coordinateTransformations, 2.4 multiscales, 2.6 labels",
+      "capture": {"capture_id": "4f3e3c35e5bd4949b0c93b211be0b09a", "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b", "body_bytes": 158591, "completeness": "full captured body"},
+      "applicability": "Primary format contract for named axes, units, array order, ordered scale/translation transforms, multiscale arrays and labels. Does not prove a particular producer or consumer conforms, or that this application's I/O is correct."
+    },
+    {
+      "id": "S2",
+      "title": "OME-TIFF specification",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "pin": "OME Model documentation 6.2.2",
+      "locator": "OME-TIFF specification: OME-XML metadata, DimensionOrder, TiffData, multi-file OME-TIFF",
+      "capture": {"capture_id": "e1d0cb1c027a4f66a8c675d43567d12c", "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584", "completeness": "captured public page"},
+      "applicability": "Defines metadata mapping of TIFF IFDs to multidimensional planes and UUID references. Supports explicit series/page interpretation; does not establish reader memory bounds or all TIFF compatibility."
+    },
+    {
+      "id": "S3",
+      "title": "napari v0.9.0 release",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.0",
+      "pin": "napari v0.9.0, released 2026-08-25",
+      "locator": "Release title/body, release date, multidimensional viewer description, axis-label and multiscale notes",
+      "capture": {"capture_id": "d44df95d41d3462587558030b2befecd", "sha256": "9202855d87e5de3a040d5034329e5715c44467a463d32afada8d080c7f78c1d6", "completeness": "captured GitHub release API response"},
+      "applicability": "Supports napari as a viewer/interaction candidate and identifies known axis-label caveats. Release notes do not demonstrate this application's workflow, performance or persistence."
+    },
+    {
+      "id": "S4",
+      "title": "napari issue #9338: negative layer scale and adding points",
+      "url": "https://api.github.com/repos/napari/napari/issues/9338",
+      "pin": "napari issue #9338; report describes napari 0.8.1.dev66 environment; closed 2026-08-05",
+      "locator": "Issue report and closing/cross-reference metadata",
+      "capture": {"capture_id": "f0b7c624515042cc887c03a49caa593b", "sha256": "d757579692791657b871de9a1f4bdc25b372e4e737a280b45f83c1970ccc9df5", "completeness": "captured GitHub issue API response"},
+      "applicability": "Reports point addition failing with negative VisPy edge width after a negative layer scale/flip. Evidence of a particular graphics defect, not general coordinate corruption."
+    },
+    {
+      "id": "S5",
+      "title": "napari issue #9338 timeline",
+      "url": "https://api.github.com/repos/napari/napari/issues/9338/timeline",
+      "pin": "Public issue timeline for issue #9338; PR cross-reference on 2026-08-05",
+      "locator": "Timeline event cross-referencing PR #9339 and issue closure",
+      "capture": {"capture_id": "2561652f81cc4c96a59bf206ca93d1f7", "sha256": "dd8d1cadc3fc7b1ed44220d457e1b724b54505b51332502161a253e22823d1a7", "completeness": "captured GitHub issue timeline"},
+      "applicability": "Connects the reported issue to the repair PR; used as one link in the issue-to-fix chain."
+    },
+    {
+      "id": "S6",
+      "title": "napari PR #9339: use magnitude of Layer.scale for points/shape handles",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9339",
+      "pin": "PR #9339; merged 2026-08-05; merge commit 19cba1928282b89eff206cbc4b3fe424b50307f3; milestone v0.9.0",
+      "locator": "PR title/body, merged_at, merge_commit_sha, milestone and issue-closing reference",
+      "capture": {"capture_id": "e673aa5fe0a54ffa892f05aba71c4aad", "sha256": "a376bcbc572044c318d7f4438d29bb0181b44853281ce01dca921e07f2812583", "completeness": "captured GitHub pull request API response"},
+      "applicability": "Establishes merge and release milestone for the repair. PR metadata alone is not treated as proof of implementation; see diff and tagged source/test."
+    },
+    {
+      "id": "S7",
+      "title": "napari PR #9339 changed files and regression tests",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9339/files",
+      "pin": "Diff for PR #9339, merged as 19cba1928282b89eff206cbc4b3fe424b50307f3",
+      "locator": "Diff hunks for points scale, shapes normalized scale, negative-scale point selection, and shape vertex hit tests",
+      "capture": {"capture_id": "faf4fc386b5048be9c03a92acaedb541", "sha256": "ba3681289706fb6d3022207b82f0b780f0cd963ec4f00749a63bf5ad044c178a", "completeness": "captured GitHub changed-files response"},
+      "applicability": "Shows repair code and regression test changes. The tests cover specified hit-testing/size cases, not every coordinate transform or persistence path."
+    },
+    {
+      "id": "S8",
+      "title": "napari v0.9.0 points VisPy layer implementation",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.0/src/napari/_vispy/layers/points.py",
+      "pin": "napari tag v0.9.0",
+      "locator": "Point layer scale and size handling, including absolute scale magnitude",
+      "capture": {"capture_id": "54b7da82ce8b4856a9c8d066cedf159d", "sha256": "4cae066da85471a49910936ca2660e62ff194e6d2e6a0cc240f3ac55c5e04aad", "completeness": "captured tagged source file"},
+      "applicability": "Confirms the fix is present in the proposed release pin for the points rendering path. It does not prove other application geometry paths."
+    },
+    {
+      "id": "S9",
+      "title": "napari v0.9.0 points regression tests",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.9.0/src/napari/_vispy/_tests/test_vispy_points_layer.py",
+      "pin": "napari tag v0.9.0",
+      "locator": "Parameterized negative-scale marker size/edge-width regression tests",
+      "capture": {"capture_id": "c64c997e6dc44556a7be2be26fe2685e", "sha256": "20ac3ea91e4493cb35481425b049fb4b803f32a1cb49a27c03badbd4fbb9266b", "completeness": "captured tagged test file"},
+      "applicability": "Confirms regression tests ship at the chosen pin. These tests are component tests and are not evidence this proposed app passes them or preserves coordinate semantics."
+    },
+    {
+      "id": "S10",
+      "title": "tifffile latest release metadata",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/releases/latest",
+      "pin": "tifffile v2026.9.20, released 2026-09-21 (pin resolved from captured release response)",
+      "locator": "Release tag/date and release body describing TIFF/BigTIFF, OME-TIFF and array/Zarr access from pages, strips, tiles, SubIFDs and pyramids",
+      "capture": {"capture_id": "46deba342a6f46f893c3fa13f98a139a", "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3", "completeness": "captured GitHub latest-release API response; endpoint itself is mutable"},
+      "applicability": "Supports tifffile as a candidate TIFF adapter and reports a specific release. Current/latest endpoint is mutable, so implementation must pin the resolved release. Does not prove bounded memory for every layout or combined dependency compatibility."
+    },
+    {
+      "id": "S11",
+      "title": "tifffile documentation",
+      "url": "https://www.cgohlke.com/docs/tifffile/",
+      "pin": "Documentation identifies tifffile 2026.9.20",
+      "locator": "Opening format/support overview and TIFF subset/support notes in the captured opening portion",
+      "capture": {"capture_id": "18214109afcf4f13a33764f98d21492d", "sha256": "1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a7", "captured_bytes": 524288, "reported_body_bytes": 1139451, "completeness": "truncated capture; only opening sections used"},
+      "applicability": "Opening documentation describes TIFF's large subset and explicitly notes unimplemented/unsupported cases. Only captured opening sections are used; API details later in the page were not relied upon."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite atomic commit in detail",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": "SQLite official documentation as captured 2026-10-06; page does not identify a separately pinned SQLite binary version",
+      "locator": "§1 introduction; §§3 commit and 4 rollback; filesystem and flush assumptions",
+      "capture": {"capture_id": "3fbc77a1af7b4a359ae5de0c13ab74f5", "sha256": "5a5be7b660217c9408a8c81eaf2faa2d08832ed3790f895a0a713916ad856ea1", "completeness": "captured official documentation"},
+      "applicability": "Explains transactional atomicity under documented filesystem/locking/flush assumptions. Those assumptions require validation on deployment filesystems."
+    },
+    {
+      "id": "S13",
+      "title": "SQLite Write-Ahead Logging documentation",
+      "url": "https://www.sqlite.org/wal.html",
+      "pin": "SQLite official documentation as captured 2026-10-06; page does not identify a separately pinned SQLite binary version",
+      "locator": "§§1–4; WAL shared-memory/same-host requirements, network filesystem limitation, and database/WAL/SHM copy requirements",
+      "capture": {"capture_id": "168d2101750e4cdb83a9ce8bf9d6f15f", "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e", "completeness": "captured official documentation"},
+      "applicability": "Supports keeping a live WAL database off shared network storage and copying only a closed/safe snapshot. Does not establish behavior of any particular shared-storage product."
+    },
+    {
+      "id": "S14",
+      "title": "Qt 6 QUndoStack documentation",
+      "url": "https://doc.qt.io/qt-6/qundostack.html",
+      "pin": "Qt GUI documentation version 6.12.0",
+      "locator": "Detailed Description; Undo and Redo Actions; Command Compression and Macros; Clean State",
+      "capture": {"capture_id": "c934aa31ed3e4f0a86451836c66df83c", "sha256": "9b10bfafe9fdac18a127fc492d98bebe549823f9bf6e66e2e450a8eaea76eecf", "completeness": "captured official documentation"},
+      "applicability": "Component API mechanism for command-based undo/redo and save-state tracking. It does not demonstrate persistence or mask memory use in the proposed app."
+    },
+    {
+      "id": "S15",
+      "title": "W3C PROV-O Recommendation",
+      "url": "https://www.w3.org/TR/2013/REC-prov-o-20130430/",
+      "pin": "W3C Recommendation 2013-04-30",
+      "locator": "PROV-O recommendation and provenance entity/activity/agent classes and relations",
+      "capture": {"capture_id": "d977609911d349778ec5b7c4a07458ec", "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348ec5b8b?", "completeness": "captured official W3C page"},
+      "applicability": "Optional vocabulary for expressing source assets, import/correction/derivation activities, and responsible agents. Proposal treats it as a future export option, not a core dependency."
+    },
+    {
+      "id": "S16",
+      "title": "W3C Web Content Accessibility Guidelines 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "pin": "W3C Recommendation 2024-12-12",
+      "locator": "Success criteria 2.1.1 Keyboard, 2.4.7 Focus Visible, and 1.4.3 Contrast (Minimum)",
+      "capture": {"capture_id": "bcfaacd47da84fceb3057b3681180f52", "sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057", "completeness": "captured official W3C page"},
+      "applicability": "A review reference for keyboard, focus and legibility choices. WCAG addresses web content; it is not a native desktop conformance claim."
+    },
+    {
+      "id": "S17",
+      "title": "libvips latest release metadata",
+      "url": "https://api.github.com/repos/libvips/libvips/releases/latest",
+      "pin": "libvips v8.18.7, released 2026-09-26 (pin resolved from captured release response)",
+      "locator": "Release tag and date",
+      "capture": {"capture_id": "27616f2ff16241089a6b7605b64cb99b", "sha256": "026c51ceaad22d290667dee61413a8eb58eee70b7ebfdf2075b6cff71598306b", "completeness": "captured GitHub latest-release API response; endpoint itself is mutable"},
+      "applicability": "Identifies a current release candidate for a possible 2D region-reader route. Release metadata alone does not establish biomedical axis/calibration semantics."
+    },
+    {
+      "id": "S18",
+      "title": "libvips: How it works",
+      "url": "https://www.libvips.org/API/current/how-it-works.html",
+      "pin": "Documentation for libvips 8.18",
+      "locator": "Technical background > Evaluation; VipsRegion, partial-image cache, demand-driven evaluation, tiled TIFF and possible temporary unpacking",
+      "capture": {"capture_id": "d7b26c72a1e141efb31297665465f77a", "sha256": "bc4efc95d5d4a79e64f189b73c52a4a981caa0f8e8a052fcdf60aef24da846b2", "completeness": "captured official documentation"},
+      "applicability": "Supports a distinct partial-region mechanism for large 2D tiled imagery. Its documented width/height/bands image model is less suited to native time and Z axis semantics; candidate alternative only."
+    },
+    {
+      "id": "S19",
+      "title": "OME-NGFF v0.4 specification",
+      "url": "https://ngff.openmicroscopy.org/0.4/index.html",
+      "pin": "OME-NGFF specification version 0.4; Zarr v2 era",
+      "locator": "On-disk layout and OME-Zarr Metadata sections for axes and coordinate transformations",
+      "capture": {"capture_id": "90ab2f47b4564d84af58471def1710e6", "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269", "body_bytes": 163120, "completeness": "full captured body"},
+      "applicability": "Documents a legacy Zarr v2 generation with similar axis/transform concepts. Useful for a possible read-only compatibility adapter; not selected for the initial boundary."
+    }
+  ]
+}

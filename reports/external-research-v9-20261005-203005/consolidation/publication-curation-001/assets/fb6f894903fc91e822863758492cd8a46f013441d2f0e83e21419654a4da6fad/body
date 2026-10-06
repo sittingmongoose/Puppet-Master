@@ -1,0 +1,19 @@
+{
+  "leads_version": "research-1",
+  "unresolved": [
+    {"id": "L1", "title": "Reject regression-test files not fetched", "detail": "Chain A relies on PR-body descriptions of tests (e.g., rejects/csv_rejects_read.test, test_buffer_size_final_row.test). Fetching the test files from duckdb/duckdb would confirm the assertions themselves.", "next_step": "raw.githubusercontent.com/duckdb/duckdb/<tag>/test/sql/copy/csv/rejects/..."},
+    {"id": "L2", "title": "Release applicability of merged PR #25793 (projection-independent rejects)", "detail": "Merged 2026-09-17; unclear whether v1.5.6 (2026-09-28) or only 2.0 builds contain it; current docs still carry the projection-pushdown caveat.", "next_step": "Install v1.5.6, run store_rejects scan with two projections, compare reject counts (subset of V1/V2)."},
+    {"id": "L3", "title": "DuckDB out-of-core spill documentation not captured", "detail": "memory_limit example captured (S20); temp_directory/spill mechanics live beyond the captured 32KB of a 69KB page and were not evidenced.", "next_step": "Capture docs/current/operations_manual or temp_directory settings page."},
+    {"id": "L4", "title": "gVisor as stronger-isolation alternative", "detail": "gvisor.dev fetch failed in this environment (boundary OSError); recorded as alternative, not evidence.", "next_step": "Retry gvisor.dev/docs or fetch github.com/google/gvisor docs from raw."},
+    {"id": "L5", "title": "jupyter-cache maintenance status", "detail": "README captured from main; project activity/archival status not checked. We adopt its preconditions, not its code.", "next_step": "Check repo archived flag / recent commits if adopting any code."},
+    {"id": "L6", "title": "Order preservation for multi-file CSV scans", "detail": "S7 states order preservation for 'the file(s)' read; whether parallel multi-file scans preserve global (file-then-row) order was not independently verified.", "next_step": "Empirical check on pinned release within V1."},
+    {"id": "L7", "title": "DuckDB release-notes bodies truncated at 32KB", "detail": "v0.10.2 body capture stops mid-list; #11512 absence in the captured portion is not proof of absence from the release.", "next_step": "Use the changelog file or pagination to close V6."}
+  ],
+  "optional_opportunities": [
+    {"id": "O1", "title": "Result cache keyed on (dataset hash, contract, SQL/transform text, engine version)", "detail": "Cheap memoization for the repeated-SQL colleague; statuses map onto DVC's 'not in cache / up to date' (S23)."},
+    {"id": "O2", "title": "Remote datasets via HTTP range reads (Parquet footer/stats first)", "detail": "Opt-in; outputs from unverified remote data labeled 'unverified' per §4.2."},
+    {"id": "O3", "title": "Static report export (notebook + manifest)", "detail": "Natural extension of the manifest; not a minimum obligation."},
+    {"id": "O4", "title": "Product study of Positron / Deepnote status surfaces", "detail": "UI precedents for stale/current indicators; not investigated this stage."},
+    {"id": "O5", "title": "Renku/noWorkflow-style automatic provenance capture", "detail": "Could enrich the journal beyond declared dependencies; research-grade tooling, optional."}
+  ]
+}

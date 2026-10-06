@@ -1,0 +1,232 @@
+# Revision — Local Biomedical Image Review Workspace
+
+- Role: authentic unscored candidate revision over the frozen proposal and completed critique
+- Base proposal SHA-256: `b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7`
+- Critique SHA-256: `c3b00093877ccf26a2553c9ed7dbfb21bfe79dbdc1e0e7cd0e69cdf34ff15ef7`
+- Evidence and check records: [sources.json](sources.json), [witnesses.json](witnesses.json), [leads.json](leads.json), [dependencies.json](dependencies.json)
+- This remains a proposal. No complete application, package environment, shared-filesystem recovery test, or scored diagnostic was produced.
+
+## Revision disposition
+
+The critic’s six substantive corrections are accepted where the supplied evidence supports them, with their limits retained:
+
+| Critique item | Revision |
+|---|---|
+| NGFF axes and transforms | Corrected the v0.5 account; state separately the 0.4 and 0.5 Zarr storage generations. Pyramid-relative scale is not treated as physical calibration. |
+| Coordinate and export contract | Replaced the mixed scale/origin/optional-affine rules with one homogeneous affine per frame, explicit axis-name adapters, a declared sample-center convention, and separate display and data transforms. |
+| Save consistency | Replaced “backup after replace” with immutable generations and a single atomically replaced `CURRENT` pointer. Multi-file atomicity and NFS durability are not claimed. |
+| Source identity and portability | Added content hashes for single files and a canonical full-tree manifest hash for directory stores. Quick stat checks are explicitly heuristics. Bundles state which image bytes they contain. |
+| tifffile #319 chain | Retained the issue → test change → code change → release evidence, narrowed the observed bad-version statement to 2026.2.24 versus 2026.2.20, and disclaimed a red/green run or supplied test fixture. |
+| Dependency binding | Added an exact proposed Python/reader/UI version set and format matrix, while marking package resolution, platform qualification, and application compatibility UNVERIFIED. |
+
+Supported precedents and useful optional directions from the frozen proposal are retained. I did not recover the original `sources.json`, `witnesses.json`, or `leads.json` at the proposal’s implied `inputs/seed/` paths; the critique also reports that those files were unavailable during its review. The current catalogs therefore rebuild source records from the attached index/captures and this proposal. They preserve only inherited witness and lead details actually stated in the proposal or critique. Inherited W1–W3 receipts and the complete original L1–L12 records are not represented as recovered.
+
+## 1. Proposal summary
+
+The minimum product is a local desktop workspace for importing, inspecting, annotating, saving, reopening, and exporting microscopy projects. An image source is opened read-only. Its axes, calibration, metadata bytes, identity, and reader version are kept separate from channel display settings and from derived/resampled data. An annotation references a particular source identity and frame. An export declares its coordinate convention, transform history, and which image values or display mappings it contains.
+
+The architecture is a project directory with immutable save generations, a bounded reader service, one explicit frame/coordinate model, a display controller, an annotation store with undo/redo, and a transactional exporter. The first reader profiles target local TIFF/BigTIFF, OME-TIFF, ImageJ TIFF, and local OME-Zarr 0.4/0.5 sources. That is a candidate support boundary, not a compatibility claim: a profile is enabled only after its specific layout, compression, dtype, axis, calibration, and region-read fixtures pass. Very large strips/pages or vendor arrangements that require broad decoding are rejected for the bounded-review path with an actionable explanation.
+
+### Claim labels
+
+- **[FACT SRC-…]** is an external statement in a located public source capture.
+- **[INFER]** is engineering reasoning from those facts and the brief.
+- **[CHOICE]** is a reversible product decision for this proposal.
+- **[EXEC W-…]** is a candidate-authored isolated component check, not full application evidence.
+- **[VALIDATION V-…]** is a proposed check, UNEXECUTED.
+
+## 2. Evidence-backed precedents
+
+These precedents are useful independently: a file-format specification constrains geometry; a viewer documents display and lazy-array patterns; a TIFF reader exposes region-access mechanisms; and a project application documents relocation/export pitfalls. None establishes that this proposed application works.
+
+1. **OME-NGFF 0.5 and 0.4 — data and interchange contract.** The 0.5 specification defines named axes, their ordering and units, and constrained per-resolution transforms. Its multiscale data rule is narrower than the generic transform table: two to five axes, two or three spatial axes, at most one time axis and one channel/custom axis, with axes in array order and grouped by type. Each resolution dataset has exactly one `scale`; `translation`, if present, follows it. `path` is a way to store a transform vector, not another transformation type. For a scale whose physical meaning is missing or inapplicable, the value is a factor relative to the first resolution, defaulting to 1 where there is no downsampling; it is not an invented physical pixel size. Group-level transformations apply after dataset-level transformations. [FACT SRC-NGFF-05, specification §§46–54, 177–190, 272–319.]
+
+   The retrieved 0.4 specification also says the store uses Zarr format 2 and gives the same relevant scale/translation ordering and fallback meaning. The 0.5 specification says Zarr format 3. [FACT SRC-NGFF-04 §“On-disk layout” and multiscales; SRC-NGFF-05 §“Storage format” and multiscales.] The project adopts NGFF’s named-axis and constrained scale/translation semantics at its import/export boundary. The project frame can represent a more general affine internally; it may be exported as NGFF transforms only when that affine is exactly expressible by the NGFF-permitted transforms and the selected NGFF version’s schema is satisfied. Otherwise the exporter refuses an NGFF geometry export or writes a separately identified project-specific transform record; it never drops rotation/shear silently. [CHOICE.]
+
+2. **napari — viewer and annotation design precedent.** The captured image guide says contrast limits change colormap visualization, not underlying image values; it describes NumPy-like lazy arrays, multiscale levels, and channel-axis handling. [FACT SRC-NAPARI-IMAGE §§163–192, 207–267, 269–298, 407–426.] The units guide treats scale and units as layer metadata and distinguishes axis labels from measurement units. [FACT SRC-NAPARI-UNITS §§16–47, 89–100.] Its shapes guide documents NxD vertices, per-shape data, and slice matching, and notes that shape editing in 3D rendering is not available there. [FACT SRC-NAPARI-SHAPES §§429–474, 576–608.] These are mechanisms and sharp edges for our design review, not proof of custom viewer performance, persisted undo, or masks. These pages were captured from `napari/docs@main`; the captures are content-addressed but not pinned to an immutable documentation commit. The claims apply to those captured pages only.
+
+3. **tifffile — TIFF access and bounded-I/O precedent.** Its 2026.9.20 README describes reading TIFF-like image data as NumPy or Zarr arrays/groups from strips, tiles, pages, SubIFDs, higher-order series, and pyramids; it describes memory mapping for some contiguous data and Zarr region reads. It also lists unsupported TIFF features and vendor quirks. [FACT SRC-TIFF-README §§7–31, 67–85, 183–272, 565–583, 759–782.] This is evidence for reader adapters and targeted fixtures; the list of mechanisms does not prove that every file layout is viewport-bounded or fast. The README’s stated tested dependency versions are used as the proposed reader profile below, not as a performance guarantee.
+
+4. **QuPath — project, relocation, and export precedent.** Its captured project guide documents a JSON project registry, stable entry IDs, image URIs, per-entry project data, summary sidecars, and a suggested per-machine project-file pattern when shared-drive image paths differ. [FACT SRC-QUPROJECT §§115–157.] Its export guide states that QuPath shape exports use pixel units and a top-left/full-resolution origin and warns that other software may differ; it also notes ellipse-to-polygon conversion and label overwrite order. [FACT SRC-QUEXPORT §§125–140, 287–292.] These facts motivate explicit source IDs, relocation, and export manifests. They do not establish this project format’s behavior.
+
+### Public issue → fix → regression-test chain: tifffile #319
+
+- **Reported behavior:** the closed issue body gives `PixelSizeX: 1.4208036661148071` with tifffile 2026.2.20 and `1.4208036661148072e-09` with 2026.2.24. The issue title refers to 2026.2.26; its body’s reproducible version label is 2026.2.24. [FACT SRC-TIFF-319.] The example concerns TVIPS metadata and a file linked from the issue; the file bytes are not in the supplied captures.
+- **Regression test addition:** commit `7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938` (2026-03-03 18:56 UTC) adds `test_issue_tvips_pixelsize` and assertions for `PixelSizeX` and `PhysicalPixelSizeY`; the patch also adds values to an existing TVIPS test. The test refers to `tvips/TVIPS_bin4.tif`. The capture does not include those fixture bytes or a test-run receipt. [FACT SRC-TIFF-TEST.]
+- **Corrective code:** commit `edede6002c817f056d75125ade0b20332d549cca` (19:06 UTC) comments out the nm-to-m conversion and names issue #319 in the source comment. Its captured parent is the test commit above. [FACT SRC-TIFF-FIX.]
+- **Release trail:** the captured commit list puts changelog update `8c91499…` after the fix and release commit `503cb4eb74dd28a6acc36a0e4624ba9c2001e021` (v2026.3.3) after that. The release patch says “Do not convert TVIPS pixel sizes to m (#319).” [FACT SRC-TIFF-RELEASE.]
+
+This is a source-backed issue, focused test addition, code correction, changelog, and release sequence. The captures do **not** show the new test failing before and passing after the fix, nor a per-test execution receipt. The directly demonstrated comparison is 2026.2.24 versus 2026.2.20. I do not assert that every intervening release through 2026.3.2 has the same behavior or that the defect affects every instrument. The product lesson is to preserve raw metadata and value/unit pairs, surface ambiguous calibration, pin a reader profile, and add real per-instrument regression fixtures. [INFER from SRC-TIFF-319, SRC-TIFF-TEST, SRC-TIFF-FIX, SRC-TIFF-RELEASE.]
+
+The older issue #54 describes an OME-TIFF/series shape problem reported with Micro-Manager files. The attached changelog/issue captures do not provide a commit-to-regression-test chain I can verify for it. I use it only as a lead for realistic series/axis fixtures, not as proof of a specific repaired behavior. [FACT SRC-TIFF-54; SRC-TIFF-CHANGES.] 
+
+## 3. Minimum workflow and product behavior
+
+1. **Create a project.** Create a project directory, a UUID project ID, an initial committed generation, and an empty annotation registry. Store project data and sources separately. Do not create or modify a source image.
+2. **Import.** Choose `reference` or `copy into project` per source. Register an import attempt in staging. Parse series, axes, dtype, dimensions, sample layout, calibration, pyramid levels, metadata family, and reader version. Keep an exact copy of metadata text/bytes that the reader can expose, plus parsed fields and the parser’s source/precedence. Do not normalize original metadata in place. Cancel or failure leaves the last committed project generation usable; a recoverable unresolved source record may be committed with status `unsupported` or `ambiguous`.
+3. **Inspect and resolve.** Show source identity, format/reader, axis names/order/type, unit and calibration status, level geometry, selected metadata interpretation, and provenance. On conflicting or unsupported axes/calibration, show raw values and choices in text. The user can choose a supported interpretation, treat data as pixel-only, or leave it unresolved. Record the correction and retain the originals; do not silently guess.
+4. **Navigate and display.** Select image, channel(s), time, slice, zoom, and window/level. Persist these as view state, never as a write to source samples. Use explicit contrast limits by default for large data; automatic histogram work is cancellable and disclosed. [CHOICE informed by SRC-NAPARI-IMAGE.] Displayed pyramid level is a view decision, not annotation authority.
+5. **Annotate.** Points, polygons, and masks refer to the source identity and the level-zero frame. Each has an ID, kind, scope, explicit axis selectors/geometry axes, style ID, labels, author/time, and history. Store edits as undoable commands; persist the command history needed for undo/redo across reopen. A mask is an integer label raster/chunk set with identity and frame metadata, not an implicit full-size in-memory array.
+6. **Save, close, reopen.** Save a new coherent generation; reopen verifies the generation manifest and source identities. If paths changed, relocation can bind only after a full identity check. If an external source is absent or changed, preserve the project and annotations as unresolved/suspect rather than attaching them to a different image.
+7. **Export and verify.** Export an annotation CSV as the canonical table and/or an overlay plus a small derived image. Include `export-manifest.json` recording project generation, source identity, frame, coordinate convention, selectors/scope, transformations, interpolation/resampling, channels and display mapping baked into rendered images, dtype conversion, and files/hashes. A sample display image with window/level baked into RGB is a rendered view, never described as unchanged source data.
+
+Keyboard navigation and annotation tools are operable without a mouse. Provide textual, copyable metadata and error values, status that is not color-only, visible selected tool/slice/channel, undo/redo shortcuts, and legible progress/cancellation feedback. Styles are reusable project records. Original, display-derived, geometrically transformed, and exported objects have distinct UI labels and provenance.
+
+## 4. Coordinate and annotation contract
+
+### 4.1 Axes and frame
+
+**[CHOICE]** Every source frame has a stable frame ID, a complete ordered axis list matching the stored array order, explicit axis name/type/unit (or `unknown`), dimension length, and a named mapping from file axis names to workspace x/y/z/t/channel roles. The raw array is never silently transposed. For an array ordered `t,c,z,y,x`, the row/column adapter is `array[y,x]`; the workspace’s 2D geometry order is explicitly `[x,y]`. A screen point `(x=18.25,y=7.5)` therefore indexes the source array as `(row=7.5,column=18.25)` after non-spatial selectors are applied.
+
+The product coordinate convention is **continuous sample-center index coordinates**: integer index 0 denotes the center of the first sample, and pixel-cell edges are at `-0.5` and `size-0.5`. This convention is a product choice; QuPath’s captured convention belongs to QuPath and does not establish a universal pixel origin. It is disclosed in every annotation/export. Polygon vertices can lie on those half-integer edges.
+
+The sole frame-to-world mapping is a finite homogeneous matrix `M_array_to_world`, stored as IEEE-754 binary64, row-major, using column vectors:
+
+`world = M_array_to_world × [array_axis_indices..., 1]ᵀ`.
+
+The matrix dimension is one greater than the number of represented axes. Axis names and the matrix’s declared input/output axis order are mandatory. Its translation includes the origin; scales, orientation, and permitted cross-axis terms are in the matrix. **There are no separate competing `scale`, `origin`, and `affine` authorities.** For every pyramid level, retain that level’s own data-to-world mapping and its relation to level zero. The project annotation authority remains level-zero sample-center coordinates. Convert between levels with the declared matrices, not a guessed downsample ratio.
+
+If physical calibration or an origin is absent, keep it `unknown`; pixel annotation remains possible if axes are unambiguous. Where the sample spacing is known but origin is not, any zero-origin rendering is explicitly `relative` with an arbitrary reference origin, not absolute physical location. If axis order/orientation cannot be resolved, import remains ambiguous until the user supplies a recorded mapping. Keep all original metadata bytes/strings.
+
+For NGFF import, apply its listed transforms sequentially. In this column-vector representation, each next transform left-multiplies the accumulated matrix. Apply dataset transforms first and group transforms afterward. A valid multiscale dataset has exactly one scale, with any translation afterward; its scale can be physical or a level-relative factor as specified by that NGFF version. Keep the latter marked relative. Do not interpret a relative 1.0 as one micrometer. NGFF 0.5 multiscales allow only scale/translation dataset transforms; the generic `identity`/`path` entries are not additional multiscale transform types. [FACT SRC-NGFF-04, SRC-NGFF-05.] A full project affine is an extension for orientation or resampling and cannot be written as an NGFF multiscales transform unless it reduces exactly to the NGFF subset.
+
+### 4.2 Geometry and scope
+
+Geometry coordinates name their axes and are in the fixed order `[x,y]` or `[x,y,z]`, independent of source array order. The scope rules are:
+
+- `plane`: 2D geometry `[x,y]`; exact integer selectors identify applicable non-geometry axes such as z and t.
+- `volume`: 3D geometry `[x,y,z]`; an optional fixed time selector identifies one volume in a time series.
+- `acquisition`: geometry is explicitly 2D or 3D and is shown/applied across every applicable timepoint; a 2D acquisition ROI is repeated in each plane with the same XY coordinates. A 3D ROI spans XYZ. Channels are separately `all` or a declared channel-ID list and are never confused with spatial dimensions.
+
+Unsupported custom axes cannot be dropped or silently assigned to z/time. They remain visible in metadata and block geometry until the user chooses an explicit supported interpretation. Each annotation binds to source ID, full source identity, frame ID, geometry axis names, scope/selectors, channel scope, style, and edit history.
+
+### 4.3 Geometric operations, display, and exports
+
+Display operations (channel visibility, window/level, LUT, compositing, zoom) live in view state. They never modify source samples or annotation coordinates. Resampling, rotation, flipping, cropping, or other geometric changes create a new derived-source ID with input/output identities, operation parameters, interpolation/boundary choices, and a matrix `M_derived_from_source` mapping source level-zero sample-center coordinates to derived sample-center coordinates. Derived annotations/overlays declare which frame they use. Reversing a transform is allowed only when it is invertible and the exporter records the exact mapping; it is never implicit.
+
+Canonical CSV rows contain project/source IDs, full source identity, frame ID, annotation ID/kind, scope/selectors, style/labels, geometry axis names, and binary64 coordinate values (or a JSON coordinate array in one documented CSV field). Pixel coordinates use the source level-zero sample-center convention. Optional world columns are derived through the recorded frame matrix and include each unit and calibration status. Raster overlays declare the output frame, source/derived operation, mask label semantics, priority/overlap rule, bit depth, and whether intensity display was baked in.
+
+GeoJSON may be offered as a secondary 2D interchange export using `[x,y]` pixel coordinates plus a property declaring the workspace pixel-center convention, source identity, and that coordinates are image pixels rather than geographic coordinates. It does not carry our 3D/time scope without a sidecar and is not the canonical lossless format. Ellipses, masks, styles, and transformations must be disclosed if converted or omitted. This choice follows the QuPath lesson that an explicit pixel origin/units and export losses matter; it does not claim downstream GeoJSON consumers interpret image coordinates identically. [FACT SRC-QUEXPORT.]
+
+## 5. Components, source boundary, and dependencies
+
+### 5.1 Architecture choice
+
+**[CHOICE]** Python desktop UI using PySide6 and a VisPy/OpenGL canvas, with a single GUI thread and cancellable worker tasks for I/O, metadata hashing, exports, and large calculations. Use low-level `app`/`gloo` pieces behind our own small canvas abstraction; do not make the project model depend on VisPy scene-graph internals. The captured VisPy package description calls `app` and `gloo` relatively stable and `scene` experimental. [FACT SRC-VISPY-017.] Six users exchanging bundles do not require a service or shared database.
+
+Components:
+
+1. **Project store:** JSON manifests and per-source annotation data within immutable generations; append-only operation/provenance records; independent cache directory.
+2. **Reader service:** read-only adapters for TIFF/BigTIFF/OME-TIFF/ImageJ and local OME-Zarr. `read_region(source, level, fixed_axes, bbox)` reports bytes/tiles and progress and accepts cancellation. Tifffile’s Zarr/region APIs are evaluated only for matching layouts. A failed codec/layout reports unsupported instead of invoking an unbounded whole-image decode behind the user’s back.
+3. **Frame and identity service:** axis mapping, one coordinate transform model, source hashes, metadata provenance, and calibration status.
+4. **View controller:** channel selection, window/level, LUT, plane/time, viewport and derived-view label. Display writes cannot reach source write handles.
+5. **Annotation store:** scoped vectors and masks, styles, source/frame binding, command-stack undo/redo.
+6. **Operation recorder and exporter:** every geometric/data operation and export manifest records inputs, outputs, parameters, tool/dependency version, frame, and hashes. View rendering is recorded distinctly from data resampling.
+7. **Recovery manager:** validates generation manifests, recovers to a prior committed generation, identifies incomplete staging directories and export partials, and offers a textual project-health report.
+
+### 5.2 Proposed dependency profile and support matrix
+
+**[CHOICE]** The initial reader profile is CPython 3.12.10, NumPy 2.5.3, tifffile 2026.9.20, imagecodecs 2026.8.16, and Zarr-Python 3.4.0. Those exact versions appear together in the tifffile README’s “tested requirements and dependencies” list; that is stronger evidence than an unpinned `main` pointer, but still does not prove our app’s compatibility or target latency. [FACT SRC-TIFF-README §§67–85.] The proposed UI pins are PySide6 6.11.2 (whose package metadata requires matching Shiboken6, PySide6_Essentials, and PySide6_Addons 6.11.2) and VisPy 0.17.0. [FACT SRC-PYSIDE6-6112, SRC-VISPY-017.] `dependencies.json` records these as candidate pins, not a resolved lock. No package install/build or cross-library smoke test was run.
+
+| Format profile | Proposed library/format binding | Acceptance condition before calling it supported |
+|---|---|---|
+| TIFF/BigTIFF, OME-TIFF, ImageJ TIFF | tifffile 2026.9.20; imagecodecs 2026.8.16; NumPy 2.5.3 | Separate golden fixtures for axes, dtype, supported compression, metadata precedence, tile/strip/page layout, and calibration; large review path must meet bounded-read limits. |
+| OME-Zarr 0.4 local store | OME-NGFF 0.4 metadata over Zarr format 2; proposed Zarr-Python 3.4.0 reader | Verify with real format-2 fixtures and exact package versions. The Zarr-Python 3.4.0 migration guide says the 3.x implementation supports Zarr formats 2 and 3, but its API has breaking changes; this is not an OME-Zarr app test. [FACT SRC-ZARR-PY-34.] |
+| OME-Zarr 0.5 local store | OME-NGFF 0.5 metadata over Zarr format 3; proposed Zarr-Python 3.4.0 reader | Verify axes, scale/translation composition, chunks/codecs, labels, and transform interoperability with fixtures. [FACT SRC-NGFF-05, SRC-ZARR-PY-34.] |
+| Other formats/stores | No enabled adapter in v1 | Explicit unsupported message and metadata retention; no universal compatibility promise. |
+
+Local OME-Zarr only is in this profile; no HTTP/object-store access. NGFF 0.4/0.5 format support is a product target that must be enabled per fixture matrix, not inferred merely from the format version. Pin transitive packages into platform-specific reproducible locks before building. The PySide6/VisPy/NumPy/OpenGL combination, Python packaging, Linux/Windows/macOS behavior, and GPU/driver behavior are unresolved until those locks and smoke tests exist. This answers the critic’s pin request without converting metadata or release existence into false compatibility evidence.
+
+### 5.3 Deliberate support boundary
+
+**[CHOICE]** First fixtures cover local, single-image TIFF/BigTIFF and OME-TIFF with 2–5 supported named axes, one supported sample dtype per fixture family, and uncompressed/LZW/Deflate paths; ImageJ hyperstack support is limited to explicitly fixture-tested axis/metadata layouts. For large-data review, a tiled/chunked layout or a contiguous layout that the reader can memory-map is a candidate. A strip, page, or compressed segment may require broader reads; it is only accepted for the large-data path when measurement shows that its actual decode granularity fits the memory and latency envelope. A 3 GB file is not promised to be bounded merely because it is TIFF. [INFER from SRC-TIFF-README.]
+
+Local OME-Zarr v0.4/0.5 accepts stores only after the matching version/codec/layout fixture passes. Unsupported v1 cases include >5 axes, incompatible or ambiguous axes, non-spatial axes with no user mapping, unsupported codec/sample layout, stitched/whole-slide vendor families outside the tested profile, OJPEG, nonlocal stores, and a dataset whose source geometry cannot be mapped without an unrecorded guess. For these, preserve the original source and metadata, keep a recoverable project record, show why reading or annotation is blocked, and allow a future adapter/import correction. Never rewrite or discard the original to make it fit. Tifffile’s own README lists TIFF limitations and vendor quirks; its broad format list does not remove our need for a small tested subset. [FACT SRC-TIFF-README §§183–272; CHOICE.]
+
+## 6. Persistence, identity, sharing, and resource envelope
+
+### 6.1 Save generations and recovery
+
+Project layout:
+
+```text
+project/
+  project.json                 # stable project id, schema, display defaults
+  CURRENT                      # committed generation id + manifest hash
+  CURRENT.prev                 # last committed pointer for recovery
+  generations/<generation-id>/ # immutable source registry, annotations, ops, metadata
+    manifest.json              # file hashes, schema and same generation id
+  imported/                    # only sources the user explicitly copies in
+  cache/                       # disposable tiles/previews; outside authority
+  exports/                     # separately generated artifacts/manifests
+  staging/                     # incomplete import/save/export work
+```
+
+**[CHOICE]** A save writes every dirty file to a new generation in a staging directory on the same filesystem. Flush file contents, validate schemas/references/generation IDs and manifest hashes, sync the generation and containing directory where the OS/filesystem exposes those operations, and rename the completed generation into the immutable `generations/` namespace. Then write a temporary `CURRENT` in the project root, flush it, and atomically replace the old `CURRENT`; preserve the prior pointer as `CURRENT.prev` before switching. Every record, manifest, source binding, and export names its generation so a reader cannot accidentally combine files from different saves. Keep at least the current and previous two valid generations.
+
+This uses rename for one pathname only. The captured Linux `rename(2)` documentation says an existing destination can be atomically replaced and `EXDEV` applies across mount points; it also warns NFS clients cannot infer from a failed call that the rename did not happen. [FACT SRC-RENAME §§100–120, 306–311, 370–376.] It does not prove multi-file transactionality, power-loss durability, or NFS/SMB behavior. Before pointer switch, a crash leaves the old generation current and an ignorable staging generation. After pointer switch, open validates the newly named generation; if pointer or manifest is invalid, try the preserved previous pointer and show a recovery report. No automatic “newest timestamp wins” when more than one candidate is valid.
+
+For v1, save in the project’s local working directory; finish and close the project before copying a bundle to ordinary shared storage. Do not support simultaneous editing of a project from several computers. Direct project saves on NFS/SMB remain disabled until kill-at-each-boundary tests pass on that actual filesystem. A failed export writes under a sibling `.partial` name and only replaces the final export after all files/manifests validate. An old export remains available until that publish step.
+
+The base proposal’s earlier order—replace a file and then move the previous good file to backups—could not preserve the just-replaced bytes. The revised design makes previous generations immutable before changing the pointer. The inherited W3 report of local `os.replace` behavior is not evidence for this generation algorithm or a network filesystem.
+
+### 6.2 Source identity and relocation
+
+A regular-file identity is SHA-256 over every source byte plus recorded byte length. A directory-store identity is SHA-256 of a canonical manifest containing every regular file recursively, including metadata and chunks: normalized relative UTF-8 paths, byte lengths, and per-file SHA-256. Sort paths by UTF-8 byte order; serialize canonical JSON as UTF-8 with sorted object keys, compact separators, no trailing newline, no NaN/Infinity. Reject symlinks, special files, invalid/non-normalized paths, path traversal, and normalization collisions in this v1 identity mode. Empty directories carry no bytes and are not identity-bearing.
+
+Hash files by streaming. The source is treated read-only and stable during import/hash. Record the complete manifest. Verify a copy by computing the same manifest after copying. Reopen/relocation uses the same whole-file or whole-tree identity. Size/mtime/path can be used as a quick “possibly changed” check only; it is not identity evidence and cannot authorize silent relocation. Tree hashing can take time, so show cancellable progress. If a mutable store changes during hashing or later review/export, mark drift and block identity-sensitive export until the user resolves it; accepting a new identity marks existing annotations suspect.
+
+This is a candidate format choice, not a supplied standard. **[EXEC W-R02]** checks the small canonical-manifest algorithm for order invariance and content sensitivity; it does not hash an actual OME-Zarr directory or prove filesystem snapshot consistency.
+
+Reference imports store source URI/path and identity; the project remains small but depends on locating the source. Copy imports verify bytes after copy and can relocate with the project at a potentially high storage cost. A `.birw-bundle` archive is called portable only when its bundle manifest says all referenced source bytes are included and their identities verify. A ZIP containing only project JSON while pointing to external 3 GB files is an exchangeable project bundle with external requirements, not a self-contained portable bundle. Bundle manifests list external paths and resolution steps explicitly.
+
+### 6.3 Bounded reads and failure handling
+
+**[INFER]** The 3 GB target requires bounded region reads, a byte-budgeted LRU tile/chunk cache (initial candidate 512 MiB, configurable), viewport-only prefetch, and a limit on concurrent decode work. No default import makes a second full source copy. Mmap is only an option for supported contiguous files and is not treated as proof of low resident memory. Tiled/chunked layouts, strips/pages, compression, pyramid levels, sample type, and storage latency each get separate benchmarks. Show operation progress and a cancel action; cancellation stops queued/decode work promptly and leaves staging artifacts removable on next open.
+
+**[VALIDATION V-R1, UNEXECUTED]** On representative 3 GB tiled, chunked, contiguous/mmap, and strip/page files on an 8-core/16 GB workstation: p95 viewport-tile latency under 100 ms at a fixed review zoom, peak process RSS under 4 GB, cancellation response under 250 ms, no second full decoded array, and no original-file byte changes. The thresholds are proposed product targets, not facts established by tifffile or napari. If one layout misses the gate, that layout is excluded from large-data mode while smaller-file support may remain.
+
+## 7. Derived data, exports, and validation plan
+
+Every derived image operation records source ID and identity, output ID and identity, input/output frames, matrix, resampling method, interpolation, boundaries, dtype/sample conversion, and tool/dependency versions. A channel composite or window/level screenshot is a rendered derivative. A geometric transform is a data operation. The UI and manifests use those terms consistently.
+
+The export manifest records: project and generation IDs; source ID and exact identity scope/hash; frame ID and matrix; coordinate and sample-center convention; axis order/adapter; selectors and annotation scope; annotation IDs and styles; operations applied; output frame/dimensions/dtype; interpolation; channel/window mapping baked into a raster, if any; losses/conversions; output hashes; and unresolved calibration flags. On source drift the default is to refuse an identity-sensitive export and explain how to retain the old unresolved state or explicitly accept a new identity with annotations marked suspect.
+
+| Validation | Proposed check | Status |
+|---|---|---|
+| Coordinate and frame round trip | Non-square scale, nonzero origin, YX storage → XY annotation/export adapter, boundary polygon, 90° rotation plus anisotropic resampling; transform forward and back and compare physical coordinates | **Executed as isolated arithmetic only** (W-R01); application, serializer, and exporter remain UNEXECUTED |
+| Precision | Repeat binary64 coordinates through CSV/JSON on each supported consumer; compare exact serialized decimal and round-trip value; test float32 loss | Base W1 result was reported, but its original code/receipt is unavailable here; consumer check UNEXECUTED |
+| Source tree identity | Reordered file enumeration produces same digest; metadata/chunk byte mutation changes it; symlink/path-collision cases reject | **Executed as small isolated candidate algorithm check only** (W-R02); actual store and filesystem hashing UNEXECUTED |
+| Transform/export interoperability | Same polygon in source and derived frame; CSV/overlay coordinates match manifest; NGFF export only for exactly representable transform subset | UNEXECUTED |
+| Save/recovery | Kill after each file, manifest, generation rename, pointer backup, and pointer switch; reopen one coherent generation and preserve the prior good generation | UNEXECUTED; include local supported filesystems and actual shared-storage test before enabling direct network saves |
+| Relocation/copy | Move project between workstations; match file and directory sources using identical identity algorithm; test external-reference bundle versus fully included bundle | UNEXECUTED |
+| Formats/calibration | Golden fixtures per exact reader matrix, codec, dtype, dimensions, OME/ImageJ/vendor metadata family; include TVIPS values and actual format 0.4/0.5 examples | UNEXECUTED; no proprietary/reporter fixtures supplied |
+| Performance/cancel | V-R1 3 GB profile and UI cancellation/progress | UNEXECUTED |
+| Accessibility | Keyboard-only workflow; readable/copyable errors and metadata; screen-reader/focus order; contrast review | UNEXECUTED |
+
+### Executed isolated check details
+
+**[EXEC W-R01]** Candidate-authored standard-library arithmetic used a 2D source array in YX order, XY export coordinates, non-square physical scale, nonzero origin, and a 90° orientation in one affine. It mapped a four-vertex polygon on the image’s `-0.5`/`size-0.5` boundaries through an anisotropic rotated/resampled derived frame and back. The maximum inverse coordinate error was `0.0`; maximum difference between the source and derived route to world coordinates was `8.881784197001252e-16`. JSON encode/decode preserved the fixture. This tests the example arithmetic only, not every JSON/CSV consumer or an application.
+
+**[EXEC W-R02]** The same isolated execution built a two-file example tree manifest. Reversing enumeration preserved digest `32bbb6ef84344eb8067dbecc5021b2914638733f23f05659d6bfd902d850b48a`; changing one chunk payload changed the digest. This does not establish the proposed on-disk implementation, race-free hashing, or whole-source performance. Receipt: `exec-rvu06tqp`; code SHA-256 `44940354400def26763b1668f61cfd48042e633a1053591539b29437d93b4476`; data SHA-256 `74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b`; exit 0.
+
+The previous proposal’s W1–W3 names/results are recorded as inherited claims in `witnesses.json`, not as checks rerun in this revision. The critique independently reports an arithmetic example for W1 but states that this verifies neither all JSON consumers nor the project. W2’s exact input is not present in the accessible artifact paths. W3’s scratch filesystem cannot qualify local crash recovery or NFS/SMB behavior. V1–V6 from the original proposal remain unexecuted; the plan above retains their goals and adds the missing generation, identity, coordinate, and actual fixture cases.
+
+## 8. Alternatives and future opportunities
+
+- **Opportunity: OME-Zarr for derived images and exchange.** Where the data/transform set fits NGFF 0.4 or 0.5, export a versioned chunked derived image with axes, scale/translation, channel display metadata, and integer label arrays. Keep vector annotation authority and project history in the project store. NGFF labels are raster labels and do not replace vector geometry. [FACT SRC-NGFF-04, SRC-NGFF-05; CHOICE.]
+- **Plausible alternative: build a napari plugin.** It would reuse a viewer’s documented lazy-array, channel, multiscale, units, and shapes mechanisms. A plugin still needs our persistent project/frame/identity/export contract and the cited docs are moving `main`. Keep it as the fallback if maintaining a custom canvas is too costly; do not treat current documentation as a fixed package release. [FACT SRC-NAPARI-IMAGE, SRC-NAPARI-UNITS, SRC-NAPARI-SHAPES; CHOICE.]
+- **Plausible alternative: QuPath as the platform.** QuPath has project/relocation and export conventions and remains a useful fallback if whole-slide breadth becomes dominant. The current group’s volume/time-series focus and Python reader profile make it a secondary option, not a reason to reproduce every QuPath feature. [FACT SRC-QUPROJECT, SRC-QUEXPORT; CHOICE.]
+- **Deferred leads:** automated segmentation/registration, cloud services, multi-writer collaboration, direct shared-drive editing, and broad proprietary format support remain optional investigations, not minimum requirements. See `leads.json` for conditions and follow-up.
+
+## 9. Critical assumptions and open limits
+
+1. The proposed exact package set resolves on the team’s operating systems and supports Qt/OpenGL on their drivers. The PyPI/source metadata proves releases and declared requirements only; compatibility is UNVERIFIED.
+2. Tifffile/Zarr region reads for actual files meet latency/RSS targets. The source docs show mechanisms and examples, not this product’s performance.
+3. The directory-store manifest can be computed consistently while sources are stable; network shares do not mutate them during hashing. Hashes provide byte identity, not biological identity or trusted provenance.
+4. The team can accept reference-mode source dependencies or pay the storage cost of copies; external bundles require path resolution. The tool does not modify originals in place.
+5. Direct project saving on shared NFS/SMB is outside the initial qualified boundary until filesystem-specific fault tests establish behavior. Close-before-copy bundle exchange remains the intended first workflow.
+6. Source calibration may be absent, relative, conflicting, or wrong. The UI can record choices but cannot independently establish the physical truth of an instrument calibration.
+7. `main`/`stable` documentation captures for napari and QuPath are captured evidence rather than immutable implementation pins. Claims do not extend beyond those exact captures. Several alternate URLs in the original index returned 404; they support no positive claim for those missing URL/version combinations. The added exact NGFF 0.4 and Zarr-Python v3.4.0 captures address the specific Zarr version question; other unsupported source/version combinations remain unresolved.
+
+This plan is research software for scientific image review and annotation; it is not a patient diagnostic product. All package pins, algorithms, and checks are candidate work. A green component arithmetic check does not constitute a full-application build, a semantic qualification, or a scored diagnostic pass.

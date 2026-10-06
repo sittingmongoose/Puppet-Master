@@ -1,0 +1,104 @@
+{
+  "schema": "er9.research.witness-inventory.v1",
+  "stage": "I-12-FRESH-DELIVERY-R001-treatment-research-a001 (research role)",
+  "labels": {
+    "executed_by_candidate": "Run via the experiment's admitted isolated python_execute capability on tiny synthetic data with candidate-authored code. An isolated component check does NOT establish full application behavior, DuckDB/Jupyter/DVC runtime behavior, or large-dataset correctness.",
+    "proposed_unexecuted": "Planned validation for an implementation phase. Not run in this stage. No receipts exist."
+  },
+  "executed": [
+    {
+      "id": "W1",
+      "title": "Miniature type-inference asymmetry and quarantine-not-delete contract",
+      "status": "executed by candidate",
+      "execution_id": "exec-ls7i22e0",
+      "executed_utc": "2026-10-06T11:19:19Z",
+      "code_sha256": "a36914e8ea6930f5a61f560a921314e7bb9ae93429b78a4272e826d2318e6f0f",
+      "data": "4 sampled prefix rows 'id,N,1' + late rows: '5,1.5,epsilon', '6,007,zeta', '7,abc,eta', '8,,theta' (in-code); data JSON variable {case: mini-sniffer, sample_rows: 4} (data_sha256 70a7761e18463b4e02367df1341e2793b5f793175e436e64e2410898497ea834)",
+      "expected": "Sample ['1','1','1','1'] infers INT; a late '1.5' is silently converted (defect class of DuckDB #25824: sniffer infers from a sample, read path converts non-strictly), '007' silently becomes 7, 'abc' fails hard and is quarantined with its raw line retained (never deleted), an empty field becomes NULL, and an all-NULL sampled column is treated as unconstrained and defaults to VARCHAR (mechanism class of DuckDB PR #1015).",
+      "observed_stdout": "W1 sampled prefix: ['1', '1', '1', '1'] / W1 inferred type from sample: INT / W1 late-row results: [2, 7, '<QUARANTINED>', None] / W1 silently mutated values (defect class #25824): [{'line': 6, 'written': 2, 'raw': '1.5'}] / W1 quarantined (never deleted, raw kept): [{line 6 csv_line '5,1.5,epsilon' SILENT_ROUNDING value 2}, {line 8 csv_line '7,abc,eta' CAST value 'abc'}] / W1 all-NULL sampled column inference: VARCHAR(UNCONSTRAINED) / W1 exit 0",
+      "exit_code": 0,
+      "stderr": "(empty)",
+      "scope_limits": [
+        "Hand-written miniature in stdlib Python; it reimplements the mechanism CLASS, not DuckDB's code. It does not prove DuckDB behavior; the DuckDB behaviors it mirrors are evidenced by S5/S6/S7/S8.",
+        "The quarantine list deliberately records the silently-rounded row as a provenance entry too; only the hard CAST failure ('abc') was excluded from the output rows. Every excluded row has a retained raw-bytes record.",
+        "Tiny synthetic data; says nothing about 5 GB inputs or real sniffer heuristics."
+      ]
+    },
+    {
+      "id": "W2",
+      "title": "Notebook document model: display order vs execution order, and output status under edit/restart",
+      "status": "executed by candidate",
+      "execution_id": "exec-f_qnu248",
+      "executed_utc": "2026-10-06T11:19:20Z",
+      "code_sha256": "7f1ab3c3403d901658ec9967e650ae8c6eca29dd56829fe0443c42e1f84136a9",
+      "data": "In-code nbformat-v4.5-shaped JSON with three code cells (ids cell-a/b/c) with execution_counts 3/2/1; fingerprint = sha256 of (cell source + [dataset_sha, env_tag] + upstream cell fingerprints in execution order). data JSON variable {case: notebook-order-provenance} (data_sha256 50dd782962f9de0ed63c7c7c32ac6dcf96e40de6464d70acaf70c1ab4e09661e)",
+      "expected": "Display order [cell-a,cell-b,cell-c] differs from execution order [cell-c,cell-b,cell-a]; with fingerprints recorded at run time, status is current; editing cell-a source marks affected outputs stale while matching fingerprints elsewhere stay current; after a kernel restart all outputs must be relabeled unverified even with matching fingerprints (kernel state no longer exists).",
+      "observed_stdout": "W2 display order: ['cell-a', 'cell-b', 'cell-c'] / W2 actual execution order: ['cell-c', 'cell-b', 'cell-a'] (counts: [1, 2, 3]) / W2 display order == execution order? False / W2 state1 (nothing changed, kernel alive): {'cell-a': 'current', 'cell-b': 'current', 'cell-c': 'current'} / W2 state2 (cell-a edited): {'cell-a': 'stale', 'cell-b': 'current', 'cell-c': 'current'} / W2 state3 (source restored but kernel restarted): {'cell-a': 'unverified(kernel-restart)', 'cell-b': 'unverified(kernel-restart)', 'cell-c': 'unverified(kernel-restart)'} / W2 exit 0",
+      "exit_code": 0,
+      "stderr": "(empty)",
+      "scope_limits": [
+        "The document shape follows field names captured in S1 (id, execution_count, outputs, kernelspec); the status labeling is candidate-authored product logic, demonstrated on toy data.",
+        "The execution-order graph here is the global execution_count order; a real product must also handle out-of-order partial runs, which this witness does not model.",
+        "No real kernel was started; 'kernel restart' is a simulated flag."
+      ]
+    },
+    {
+      "id": "W3",
+      "title": "Content-hash stage invalidation, streaming bounded path, and stable vs deterministic ordering",
+      "status": "executed by candidate",
+      "execution_id": "exec-i8zyixpa",
+      "executed_utc": "2026-10-06T11:19:21Z",
+      "code_sha256": "c58953748ffd61101ccac0641c57e97ac58f9cb4c482fa3c1a1704dfcd6122a4",
+      "data": "In-code stage manifest {deps: {raw.csv: sha256(v1)}, outs: {clean.csv: '9f2c1'}}; 12 clean rows + 2 late rows (one malformed 'e,notanumber', one empty field), streamed line-by-line; sort examples with ties. data JSON variable (data_sha256 6c79de66e26f3b7339b52e0b53a7c7ec805a9f5d043e4264b097fe709ae6decc)",
+      "expected": "Dep-hash match reports unchanged; a one-value edit flips to invalidated->re-run (DVC-mechanism class); streaming keeps exactly 1 row resident while counting all rows; preview holds only the first K rows and is explicitly not proof of a full-dataset property; the malformed row is quarantined with raw text; a stable sort on a non-total key preserves input order (differs across input shuffles) while a total key (key,row-id) is order-independent.",
+      "observed_stdout": "W3 A status before edit: unchanged / W3 A status after edit: invalidated->re-run / W3 B processed rows (streamed): 13 | max rows resident: 1 / W3 B preview (first 2 rows only): [{row 1 v 1}, {row 2 v 2}] / W3 B preview_proof_of_full_dataset: False / W3 B quarantined (raw preserved): [{line 14, csv_line 'e,notanumber', error_type CAST}] / W3 B rows_counted_from_stream_vs_preview: {streamed: 13, preview: 2} / W3 C stable sort (ties keep input order): [(r1,1),(r2,1),(r3,2),(r4,2)] / W3 C deterministic total-key sort: identical here / W3 C equal_on_same_input: True | equal_across_row_shuffle: False | deterministic_equal_across_shuffle: True / W3 exit 0",
+      "exit_code": 0,
+      "stderr": "(empty)",
+      "scope_limits": [
+        "Hashes over toy strings; DVC's real md5-of-content semantics were not executed (no DVC installed in isolation). Mechanism class only (grounded in S4).",
+        "'5 GB streaming' is demonstrated at toy scale (max_resident=1 row); it does not verify the 16 GB / 8-core envelope target.",
+        "Python's sorted() stability is used as the stable-sort example; results on other runtimes may differ, which is exactly the point of requiring a total key for cross-machine determinism."
+      ]
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "P1",
+      "title": "5 GB streaming benchmark on the 8-core/16 GB envelope",
+      "plan": "Generate a ~5 GB CSV/NDJSON/Parquet corpus; run declared-schema ingest + filter + aggregate through the chosen engine (DuckDB embedded) with memory tracing; record peak RSS, wall time, output truncation behavior; repeat with sniffer on/off.",
+      "success_criteria": "Peak RSS well under 16 GB; no full materialization of the input for streaming-safe operations; explicit error (not OOM) for a global sort/unique exceeding a declared spill budget.",
+      "status": "proposed/UNEXECUTED — the 5 GB target in the brief is a target to investigate, not a verified result."
+    },
+    {
+      "id": "P2",
+      "title": "Clean-replay integration check with nbclient at a pinned release",
+      "plan": "In an isolated env, run nbclient (pinned tag) on a tiny synthetic notebook: verify stop-on-first-error default (allow_errors=False), dead-kernel path (kill kernel mid-run -> CellExecutionError/DeadKernelError, and NO outputs silently labeled current), timeout + interrupt_on_timeout behavior; save the executed notebook and confirm execution_count/language_info recorded per S1/S3 semantics.",
+      "success_criteria": "A killed or timed-out run never produces a saved notebook whose visible outputs are marked current; the run is marked failed/interrupted.",
+      "status": "proposed/UNEXECUTED"
+    },
+    {
+      "id": "P3",
+      "title": "Cross-machine reopen of a portable project bundle",
+      "plan": "Create a project with relative dataset references + content hashes + env lock; move the folder to a different path/machine (or fresh container); reopen; verify data identity re-verification (hash match -> current; mismatch -> explicit stale/unverified, never silent acceptance) and env fingerprint mismatch warning.",
+      "status": "proposed/UNEXECUTED"
+    },
+    {
+      "id": "P4",
+      "title": "Interrupted-save recovery",
+      "plan": "Kill the process during notebook/project save repeatedly (fault injection); verify temp-file + atomic rename leaves either the previous good state or a complete new state, and the journal flags the last run unverified; no partially written .ipynb is ever loaded as current.",
+      "status": "proposed/UNEXECUTED"
+    },
+    {
+      "id": "P5",
+      "title": "DuckDB store_rejects end-to-end at a pinned release",
+      "plan": "Pin a DuckDB release; read a small faulty CSV with strict_mode default, then with store_rejects=true; verify reject_errors rows carry line/column/raw-line/error_type and that zero rejects are reported when the sniffer silently coerces (mirroring the S5 #25824 report), demonstrating why the contract layer adds its own declared-type validation instead of trusting reader acceptance.",
+      "status": "proposed/UNEXECUTED"
+    },
+    {
+      "id": "P6",
+      "title": "Concurrent open / file locking",
+      "plan": "Two workspace processes open one project; verify a lock file (or equivalent) blocks the second writer, staleness detection notices external dataset edits via hash re-check, and no interleaved writes corrupt the project record.",
+      "status": "proposed/UNEXECUTED"
+    }
+  ]
+}

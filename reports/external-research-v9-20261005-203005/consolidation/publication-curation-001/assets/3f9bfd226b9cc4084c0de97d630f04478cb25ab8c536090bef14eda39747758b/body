@@ -1,0 +1,43 @@
+{
+  "schema": "er9.research.witnesses.v1",
+  "stage": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "kind": "isolated component check",
+      "question": "Does a small candidate-authored parser/contract example retain missing versus explicit null, retain an invalid row with its source line and raw record, preserve Unicode/source bytes, and vary the cache key when the source identity varies?",
+      "expected_behavior": "Exit 0 after asserting two valid records, one rejected invalid timestamp at source line 3 with raw input retained, Unicode α, one explicit-null field and one missing field distinguished, stable source-line ordinals, unchanged in-memory input byte digest, and distinct cache key for changed source identity. Expected stdout: valid=2 rejected=1 null-vs-missing=preserved unicode=α source-lines=stable source-unchanged=true cache-source-invalidation=true",
+      "code": "import hashlib, json\nfrom datetime import datetime\n\nlines = data[\"lines\"]\nraw_bytes = b\"\\n\".join(line.encode(\"utf-8\") for line in lines) + b\"\\n\"\nsource_digest = hashlib.sha256(raw_bytes).hexdigest()\nvalid = []\nrejected = []\nfor ordinal, line in enumerate(lines, 1):\n    record = json.loads(line)\n    try:\n        if not isinstance(record.get(\"id\"), str) or not record[\"id\"]:\n            raise ValueError(\"id must be a non-empty string\")\n        if not isinstance(record.get(\"amount\"), str):\n            raise ValueError(\"amount must be an explicit string\")\n        amount = __import__(\"decimal\").Decimal(record[\"amount\"])\n        timestamp = datetime.fromisoformat(record[\"timestamp\"].replace(\"Z\", \"+00:00\"))\n        valid.append({\"id\": record[\"id\"], \"amount\": str(amount), \"timestamp\": timestamp.isoformat(),\n                      \"note_state\": \"missing\" if \"note\" not in record else (\"null\" if record[\"note\"] is None else \"value\"),\n                      \"source_line\": ordinal})\n    except (KeyError, ValueError, __import__(\"decimal\").InvalidOperation) as exc:\n        rejected.append({\"source_line\": ordinal, \"raw\": line, \"error\": str(exc)})\nassert len(valid) == 2 and len(rejected) == 1\nassert valid[0][\"id\"] == \"α\" and valid[0][\"note_state\"] == \"null\"\nassert valid[1][\"note_state\"] == \"missing\"\nassert rejected[0][\"source_line\"] == 3 and \"not-a-time\" in rejected[0][\"raw\"]\nassert hashlib.sha256(raw_bytes).hexdigest() == source_digest\ncontract = {\"source\": source_digest, \"schema\": [\"id:string\", \"timestamp:timestamp-tz\", \"amount:decimal-string\"]}\nkey1 = hashlib.sha256(json.dumps(contract, sort_keys=True).encode()).hexdigest()\nkey2 = hashlib.sha256(json.dumps({**contract, \"source\": \"changed\"}, sort_keys=True).encode()).hexdigest()\nassert key1 != key2\nprint(\"valid=2 rejected=1 null-vs-missing=preserved unicode=α source-lines=stable source-unchanged=true cache-source-invalidation=true\")",
+      "input": {
+        "lines": [
+          "{\"id\":\"α\",\"timestamp\":\"2025-01-01T00:00:00Z\",\"note\":null,\"amount\":\"1.20\"}",
+          "{\"id\":\"β\",\"timestamp\":\"2025-01-02T00:00:00Z\",\"amount\":\"2.30\"}",
+          "{\"id\":\"γ\",\"timestamp\":\"not-a-time\",\"amount\":\"3.40\"}"
+        ]
+      },
+      "receipt": {
+        "execution_id": "exec-juq1a2kz",
+        "execution_label": "executed by candidate",
+        "completed_utc": "2026-10-06T05:00:32.530204+00:00",
+        "code_sha256": "f9a4282574211b506cb13d81af37f9054a78d4b08907d633ea61f6c2d2ce1b00",
+        "input_sha256": "4947908f99a7cdffdc6b4d258fc40d46e0529595b58c3f2c5c231d5877e8029e",
+        "exit_code": 0,
+        "stdout": "valid=2 rejected=1 null-vs-missing=preserved unicode=α source-lines=stable source-unchanged=true cache-source-invalidation=true\n",
+        "stderr": "",
+        "stdout_sha256": "c682709249112e9d41e6585c2d56a5268a3c2a4b0b17940c5ec1ba24f8347a2e",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "stream_bytes_each": 32768, "network": "new empty namespace"},
+        "resource_placement": "Runner receipt reports actual component limits matched and Bubblewrap/systemd isolation; see execution tool receipt for full placement and cleanup telemetry."
+      },
+      "scope_and_limits": "Tiny in-memory synthetic component check only. The source-unchanged assertion hashes an immutable in-memory byte string; it does not prove filesystem immutability. The example does not exercise DuckDB, real CSV/NDJSON/Parquet files, production error behavior, notebook replay, application code, a 5 GB dataset, or the proposed product sandbox. It does not prove semantic correctness beyond its assertions."
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "PV1", "status": "proposed/UNEXECUTED", "check": "Adversarial CSV/NDJSON/Parquet parser, contract, malformed-record and schema-evolution corpus using exact qualified engine builds."},
+    {"id": "PV2", "status": "proposed/UNEXECUTED", "check": "8-core/16 GB machine measurement on generated 5 GB inputs, including RSS, temp disk, streaming and global-operation limits."},
+    {"id": "PV3", "status": "proposed/UNEXECUTED", "check": "Notebook replay state/provenance invalidation, restart, cancellation, process death, save recovery and cross-machine exchange matrix."},
+    {"id": "PV4", "status": "proposed/UNEXECUTED", "check": "Linux sandbox boundary audit and separate qualification for any additional supported OS."},
+    {"id": "PV5", "status": "proposed/UNEXECUTED", "check": "Accessibility review for status/error announcements, keyboard navigation, progress/cancel and partial-output disclosure."}
+  ]
+}

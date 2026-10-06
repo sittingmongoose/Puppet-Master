@@ -1,0 +1,88 @@
+{
+  "catalog": "er9.research.witnesses.v1",
+  "stage": "research",
+  "labels": {
+    "executed-by-candidate": "run by this candidate in the experiment's admitted isolated Python execution capability (fresh empty sandbox, no network, stdlib only, cgroup-limited). An isolated component check does not establish full application behavior.",
+    "proposed-unexecuted": "planned validation; never run in this stage. No receipt exists for these."
+  },
+  "executed_by_candidate": [
+    {
+      "id": "W1",
+      "title": "Preview-sample type inference diverges from full-file inference; malformed rows are quarantined, never silently deleted",
+      "execution_ids": [
+        {"execution_id": "exec-a0u1a6uc", "exit_code": 1, "outcome": "failed iteration: toy sniffer never promoted first-evidence type; assertion caught it"},
+        {"execution_id": "exec-c7f95t4_", "exit_code": 1, "outcome": "failed iteration: wrong expected full-type (VARCHAR); actual widening is INTEGER+decimal -> DOUBLE"},
+        {"execution_id": "exec-mbd_3xbb", "exit_code": 0, "outcome": "PASS (receipt used below)"}
+      ],
+      "final_receipt": {
+        "execution_id": "exec-mbd_3xbb",
+        "completed_utc": "2026-10-06T09:25:02Z",
+        "code_sha256": "0f2a6b5e02305139d318ed39738367ce6798cefd9ec2ca3ede03a625d4e03c0d",
+        "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "exit_code": 0,
+        "stdout_sha256": "1bb71eccbcd3e43c6cf93986d11732080beb1a19062e2c4e197725aba824fa28",
+        "stderr": "(empty)",
+        "limits": "wall 5s, cpu 3s, mem 256MiB, no network, stdlib only"
+      },
+      "input": "6 candidate-authored CSV rows (Unicode city name, empty field, leading-zero integer, late decimal, one unparseable timestamp row); header + 3-row sample window",
+      "expected_behavior": "Type inferred from the 3-row sample (INTEGER) differs from type inferred over all kept rows (DOUBLE, mirroring duckdb#25824's shape); the unparseable row is quarantined with reasons; total row accounting is preserved; Unicode preserved.",
+      "observed": "sample_inferred_type=INTEGER, full_inferred_type=DOUBLE, divergent=true, quarantined_count=1 (rowid 5, ISO-8601 reason), kept 5 + quarantined 1 = 6 original rows, unicode_preserved=true; exit 0",
+      "scope_limits": "Stdlib reimplementation of a sniffer on 6 synthetic rows; demonstrates the inference-fragility mechanism and the quarantine contract only. Says nothing about DuckDB, pandas, or any real engine's behavior at scale."
+    },
+    {
+      "id": "W2",
+      "title": "Interrupted-save recovery via tmp-file + atomic commit; stable vs deterministic ordering",
+      "execution_ids": [
+        {"execution_id": "exec-dk81lqfj", "exit_code": 0, "outcome": "PASS on first run (receipt used below)"}
+      ],
+      "final_receipt": {
+        "execution_id": "exec-dk81lqfj",
+        "completed_utc": "2026-10-06T09:21:56Z",
+        "code_sha256": "4d24c839b87bdba1d6748d8664187272a5b5a2c6976daa63205be9679dde68bc",
+        "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "exit_code": 0,
+        "stdout_sha256": "c9adce3fa04e87b84a05a20afa188951e457d9972a8a3d9ca912d2c542de46d7",
+        "stderr": "(empty)",
+        "limits": "wall 5s, cpu 3s, mem 256MiB, no network, stdlib only"
+      },
+      "input": "In-memory filesystem emulation; manifest v1 committed; v2 save simulated to crash after writing 60% of the tmp file; retried save; records sorted by non-unique key (stable) and by (key,rowid) (total order).",
+      "expected_behavior": "A torn tmp file is never applied: committed manifest remains v1 byte-identical after the crash; retry atomically yields v2; stable sort preserves input order within ties and the total order is deterministic.",
+      "observed": "loaded_v1=true; after_crash_transform_id=t-001 with after_crash_unchanged_bytes=true and torn tmp (130 bytes) quarantined; after_retry_transform_id=t-002; stable_order_ties_preserve_input=true; deterministic_total_order=true; exit 0",
+      "scope_limits": "In-memory emulation of write-tmp/rename semantics, not a real OS crash or real filesystem durability test; ordering claims are about the candidate's code plus Python's documented stable sort, not about any database engine."
+    }
+  ],
+  "executed_only_by_evaluator": [],
+  "proposed_unexecuted": [
+    {
+      "id": "P1",
+      "title": "5 GB CSV streaming pass on the 8-core/16 GB envelope",
+      "detail": "Import a generated ~5 GB CSV via DuckDB v1.5.6 in streaming fashion (no CREATE TABLE materialization, bounded preview via LIMIT), record peak RSS, wall time, and quarantine counts; repeat with a full aggregate (GROUP BY) with spill enabled. UNEXECUTED: no 5 GB dataset was processed in this stage.",
+      "justified_expected": "Aggregate+filter+project operations are streamable/spillable in a columnar engine; count and preview should complete within RAM; unbounded global sorts may spill to disk or require an explicit bound."
+    },
+    {
+      "id": "P2",
+      "title": "Cross-machine project reopen",
+      "detail": "Zip a project folder (notebooks, .repro/ journal, dataset refs + digests, pylock.toml), open on a second machine, verify dataset digest match, env lock install, and identical output-status derivation. UNEXECUTED."
+    },
+    {
+      "id": "P3",
+      "title": "Clean-replay determinism suite",
+      "detail": "Run a pinned notebook twice in fresh kernel processes with fixed seeds; assert byte-identical text outputs and status=current, then mutate an upstream cell and assert downstream statuses flip to stale. UNEXECUTED."
+    },
+    {
+      "id": "P4",
+      "title": "Two-process write-lock conformance test",
+      "detail": "Open one DuckDB file read-write from process A and read-only from B concurrently; expect the documented single-writer behavior (S6) to reject/handle the conflict; verify the workspace's project lock file prevents the situation. UNEXECUTED."
+    },
+    {
+      "id": "P5",
+      "title": "duckdb#25824 reproduction at pin v1.5.6",
+      "detail": "Rebuild the issue's self-contained SQL repro (20,479 rows of '1' then one '1.5') on the v1.5.6 CLI and record whether the silent-rounding behavior is present at the exact pin; re-check after any engine upgrade (L1, L8). UNEXECUTED: the issue's reproduction was not rerun in this stage."
+    },
+    {
+      "id": "P6",
+      "title": "Unicode/null/timestamp corpus round-trip",
+      "detail": "Golden-corpus import/export (NFC/NFD strings, embedded quotes/newlines, BOM, RFC3339 offsets, null sentinels) through the full data contract; assert byte-stable exports and correct quarantine accounting. UNEXECUTED."
+    }
+  ]
+}

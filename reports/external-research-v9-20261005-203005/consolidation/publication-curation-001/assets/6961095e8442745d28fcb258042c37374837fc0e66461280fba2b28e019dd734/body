@@ -1,0 +1,56 @@
+{
+  "inventory": "Executed and proposed witnesses for the ER9 H1 research stage",
+  "labels": {
+    "executed_by_candidate": "code + data + expected behavior + stdout/exit recorded below, run in the admitted bounded isolation (python_execute sandbox). Isolated component checks do NOT establish full-application behavior.",
+    "proposed_unexecuted": "planned validation, not run in this stage. Must not be cited as evidence that the design works."
+  },
+  "executed_by_candidate": [
+    {
+      "id": "E1",
+      "title": "Canonical sample-rate mapping, drift-freedom, and cue-anchor round-trip",
+      "revision": "rev3 (final)",
+      "execution_id": "exec-048uj230",
+      "code_sha256": "2f60ba68174a8c33ca5277ad1deab3e426616f584ff263fc5812957ed39cab52",
+      "stdout_sha256": "a125da5aa6022da1eb31e936fd6ed07ded62d63a866610aac374d3fc00855722",
+      "stderr": "empty", "exit_code": 0, "elapsed_seconds_reported_by_receipt": 0.356,
+      "inputs": "constants only: 44100/48000 Hz, 2 h = 317520000 source frames; cue anchors {0,1,12345678,123456789,total-1}",
+      "expected_behavior_justification": "Half-up integer mapping (x*dst+src//2)//src must equal exact rational rounding floor(Fraction(x,src)*dst + 1/2); a partition mapped by boundary differences must sum to map(total) because the boundary sequence telescopes; a naive mapping of per-chunk lengths must drift when chunk length does not divide the ratio; the display-only inverse map must return anchors within 1 source sample.",
+      "stdout_summary": "map(total)=345600000; boundary-difference partition sums exactly; 48k->44.1k naive per-chunk (1000-frame chunks) total = 317606400 vs exact 317520000 -> drift 86400 samples = 1.959 s; inverse round-trip errors [0,0,0,0,0]; half-up == Fraction check passed.",
+      "scope_limits": "Pure integer/Fraction arithmetic on invented numbers in a stdlib-only sandbox. Does NOT execute libsoxr/libsndfile, does not read or assemble real audio, and is not evidence that a rendered file is correct; it only validates the rounding/boundary contract the proposal commits to implement.",
+      "revision_history": [
+        {"execution_id": "exec-9pf_w08_", "exit_code": 1, "note": "rev1 assertion design error: expected drift for uniform 44100-frame second-chunks at 44.1k->48k, which map exactly (48000 each); run aborted on that wrong assertion. Its printed invariants (map(total), partition sums) were consistent with rev3."},
+        {"execution_id": "exec-fif0rhjm", "exit_code": 1, "note": "rev2 used a broken hand-written ceil-style half-up formula for the exactness cross-check; superseded by Fraction-based check in rev3. rev2's drift and round-trip measurements already matched rev3."}
+      ]
+    },
+    {
+      "id": "E2",
+      "title": "Edit/cue accounting across trim+gap+crossfade; render-state invariants; memory arithmetic",
+      "revision": "rev3 (final)",
+      "execution_id": "exec-a2srjayj",
+      "code_sha256": "614e8e867df2492054b920aebe7760d0dfb7ef3ab81399e3b0a439605105dd93",
+      "stdout_sha256": "32b72c901c2232e8c6df77ad45d45c048d857404c0dd2e83d8ccc32f11025138",
+      "stderr": "empty", "exit_code": 0, "elapsed_seconds_reported_by_receipt": 0.342,
+      "inputs": "toy timeline: one 44.1 kHz source; clipA source [1000,50000), clipB [50000,90000); gap 9600 project samples; crossfade 1200 project samples; six cue anchors covering body/trim-start/orphan/other-clip/crossfade cases",
+      "expected_behavior_justification": "Membership must be tested in the source domain and derived project positions must use the E1 mapping; a trim-start anchor is included (half-open) and maps to project 0; anchors are immutable by edits; a cue inside the crossfade region must reference both clips; a cancelled render must be unable to transition to complete and must be excluded from the export listing; 2 h stereo float32 full-load (345600000*8 B) must exceed 2 GiB while a 256-frame-block peaks cache stays under 32 MiB.",
+      "stdout_summary": "cue table printed (k2 proj=0; k3,k4 orphan; k6 crossfade applies_to {cA,cB}); 'cancelled render cannot become complete' invariant held; export listing contained only the completed render; full float32 load 2.57 GiB vs peaks 5.15 MiB.",
+      "scope_limits": "State machine and cue accounting are candidate-authored toy models, not the future application's code. Memory figures are arithmetic consequences of the stated layout, not measurements of any running system.",
+      "revision_history": [
+        {"execution_id": "exec-enmt9_3j", "exit_code": 1, "note": "rev1 mixed source-domain anchors with project-domain boundaries (compare 1000 < mapped 1088), flagging an in-range cue orphan; caught by the run itself."},
+        {"execution_id": "exec-qlccqivo", "exit_code": 1, "note": "rev2 gave clipB an overlapping source range [20000,40000), so cue 30000 legitimately referenced both clips and the 'cB only' assertion failed; rev3 uses sequential non-overlapping ranges and additionally records the multi-reference rule for future overlapping cases."}
+      ]
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "P01", "title": "2 h real-file import: peaks + Merkle hash single pass, timing, progress/cancel, resume", "target": "<= 60 s on a laptop-class SSD for ~2 GB WAV; cancel responsive <= 500 ms; resume completes remaining blocks only", "status": "UNEXECUTED"},
+    {"id": "P02", "title": "Render cancellation drill: kill mid-render; assert .part file, manifest status=cancelled, excluded from export listing, re-render reproduces byte-identical output", "status": "UNEXECUTED"},
+    {"id": "P03", "title": "Save/close/reopen round-trip incl. kill during save; recovery from project.json.tmp + .bak + editlog.ndjson replay", "status": "UNEXECUTED"},
+    {"id": "P04", "title": "Bundle exchange between two machines/folder layouts: relink by source id; ID-mismatch refusal; missing-media placeholder flow; originals untouched (checksums before/after)", "status": "UNEXECUTED"},
+    {"id": "P05", "title": "libsoxr preview/render quality & latency on hardware: 44.1->48k audition, measured latency vs the ~20 ms README figure", "status": "UNEXECUTED"},
+    {"id": "P06", "title": "Qt6 keyboard-only task completion + screen-reader (NVDA/Orca) audit of transcript panel and error announcements", "status": "UNEXECUTED"},
+    {"id": "P07", "title": "Malformed-header corpus (including #687-class absurd BlockAlign/channels) against pinned libsndfile 1.2.2: must return structured error, never crash", "status": "UNEXECUTED"},
+    {"id": "P08", "title": "Seek latency to any cue over 2 h project; scrub continuity; underrun behavior at 8 GB RAM with browsers/office apps resident", "status": "UNEXECUTED"},
+    {"id": "P09", "title": "Cue-table export vs project.json vs rendered file: sample-level spot check that export cue positions point at the same acoustic events (works with a synthetic source containing impulses at cue anchors)", "status": "UNEXECUTED"},
+    {"id": "P10", "title": "RF64 >4 GiB source handling; >2 channel (4/6 ch) field-recorder import with explicit channel map", "status": "UNEXECUTED"}
+  ],
+  "honesty_notes": "Two full execution-receipt sets (4 earlier run IDs) are preserved in revision_history rather than hidden; they document candidate-authored check bugs (wrong drift expectation, domain mixing, overlapping fixture ranges) — itself a demonstration of the brief's warning that plausible-looking timing arithmetic is not evidence until the invariants are stated and checked."
+}

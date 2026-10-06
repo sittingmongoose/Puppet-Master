@@ -1,0 +1,187 @@
+{
+  "stage": "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+  "captured_utc_range": "2026-10-06T08:40:39Z..2026-10-06T08:43:54Z",
+  "notes": "All captures are exact HTTP response bodies taken by the platform boundary tool during this stage. 'delivered_bytes' reflects the partial text window shown to the candidate where the tool capped delivery; sha256/capture_id identify the full captured body. Section pins use the page's own anchors/headings plus quoted locator phrases.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "The SQLite R*Tree Module (sqlite.org)",
+      "url": "https://www.sqlite.org/rtree.html",
+      "capture_id": "971baedad28c4200a4e6fd65a32e0a50",
+      "sha256": "de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55",
+      "captured_utc": "2026-10-06T08:40:39.076415+00:00",
+      "http": {"status": 200, "last_modified": "2026-09-11T11:09:53Z", "response_bytes": 41813},
+      "delivered_bytes": 32768,
+      "pins": [
+        {"locator": "§3 Using the R*Tree Module + §3.1", "quote_fragment": "min/max-value pair columns are stored as 32-bit floating point values ... silently converts it to the required type"},
+        {"locator": "§3.4 Roundoff Error", "quote_fragment": "expand their contained-within query boxes slightly (by 0.000012%)"},
+        {"locator": "§3.5 Reading And Writing At The Same Time", "quote_fragment": "fail with a SQLITE_LOCKED \"database table is locked\" error"},
+        {"locator": "§4.1 Auxiliary Columns (version 3.24.0) and §7.2 rtreecheck()", "quote_fragment": "Integrity Check using the rtreecheck() SQL function"}
+      ],
+      "applicability": "Spatial-index mechanism for bounded viewport access; 32-bit/silent-coercion semantics justify keeping authoritative coordinates out of the index; rtreecheck for open-time integrity."
+    },
+    {
+      "id": "S2",
+      "title": "Write-Ahead Logging (sqlite.org)",
+      "url": "https://www.sqlite.org/wal.html",
+      "capture_id": "0af5f0f6cf29468c8196740f468d8e0d",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "captured_utc": "2026-10-06T08:40:39.319313+00:00",
+      "http": {"status": 200, "last_modified": "2026-09-11T11:09:53Z", "response_bytes": 42143},
+      "delivered_bytes": 32768,
+      "pins": [
+        {"locator": "§2 How WAL Works", "quote_fragment": "A COMMIT occurs when a special record indicating a commit is appended to the WAL"},
+        {"locator": "§4 The WAL File", "quote_fragment": "If a database file is separated from its WAL file, then transactions that were previously committed to the database might be lost"},
+        {"locator": "§2.3 Performance Considerations (synchronous=NORMAL)", "quote_fragment": "transactions are no longer durable and might rollback following a power failure or hard reset"},
+        {"locator": "§1 disadvantages list", "quote_fragment": "WAL does not work over a network filesystem"}
+      ],
+      "applicability": "Interrupted-save/recovery contract: committed vs uncommitted after crash; bundle must checkpoint before packing; durability requires synchronous=FULL at commit."
+    },
+    {
+      "id": "S3",
+      "title": "OGC GeoPackage Encoding Standard, Version 1.4 (geopackage.org/spec/)",
+      "url": "https://www.geopackage.org/spec/",
+      "capture_id": "7570865f6ae246fb87a0e2faa19022c5",
+      "sha256": "97037ee88b22f9a8899e4e35b67b036a6379064c551f07b5edc17d60c25be2e0",
+      "captured_utc": "2026-10-06T08:40:39.723742+00:00",
+      "http": {"status": 200, "last_modified": "2024-11-25T18:18:30Z", "content_length": 1496441},
+      "delivered_bytes": 524288,
+      "delivery_truncated": true,
+      "pins": [
+        {"locator": "document header block (id=ogcheading)", "quote_fragment": "External identifier of this OGC® document: http://www.opengis.net/doc/IS/geopackage/1.4 ... Internal reference number: OGC 12-128r19; Version: 1.4"},
+        {"locator": "§ License Agreement", "quote_fragment": "Permission is hereby granted by the Open Geospatial Consortium ... free of charge ... to implement, use, copy, modify, merge, publish, distribute"}
+      ],
+      "applicability": "Royalty-free standard for the GeoPackage-shaped bundle format and future full compliance; only the head of the document was delivered/truncated — detailed table specs remain a lead (L8)."
+    },
+    {
+      "id": "S4",
+      "title": "pyproj 3.7.2 documentation — Transformer API",
+      "url": "https://pyproj4.github.io/pyproj/stable/api/transformer.html",
+      "capture_id": "ac1e79901d6646d19463d6c4b9070b89",
+      "sha256": "86ca34e1956d0a431a5b47814ba3440885a62252c56c1cd2db02c2045304a2a8",
+      "captured_utc": "2026-10-06T08:40:40.153166+00:00",
+      "http": {"status": 200, "last_modified": "2026-09-16T12:28:06Z", "response_bytes": 176949},
+      "delivered_bytes": 32768,
+      "pins": [
+        {"locator": "page <title> and sidebar brand", "quote_fragment": "Transformer - pyproj 3.7.2 documentation"},
+        {"locator": "axis-order warning admonition", "quote_fragment": "The axis order may be swapped if the source and destination CRS's are defined as having the first coordinate component point in a northerly direction"},
+        {"locator": "Transformer.from_crs parameter table", "quote_fragment": "always_xy (bool, default=False) – If true ... longitude, latitude for geographic CRS and easting, northing for most projected CRS"},
+        {"locator": "Transformer.accuracy property", "quote_fragment": "Expected accuracy of the transformation. -1 if unknown."},
+        {"locator": "from_crs versionadded list", "quote_fragment": "3.1.0: authority, accuracy, allow_ballpark ... 3.5.0: only_best"}
+      ],
+      "applicability": "Projection engine binding: axis-order authority, always_xy policy, accuracy=-1 surfacing, ballpark/only_best knobs for the 'no silent guess' import rule."
+    },
+    {
+      "id": "S5",
+      "title": "OpenStreetMap — Copyright and License page",
+      "url": "https://www.openstreetmap.org/copyright",
+      "capture_id": "c5366c5323c1454491ddaf44650a5e0a",
+      "sha256": "fdefeec06736fb9479a2eaa8d31ebc17a052a6dbda3446cc958bd1e52d914729",
+      "captured_utc": "2026-10-06T08:40:57.958922+00:00",
+      "http": {"status": 200, "response_bytes": 21314, "body_complete": true},
+      "delivered_bytes": 21314,
+      "pins": [
+        {"locator": "§ OpenStreetMap licensing", "quote_fragment": "licensed under the Open Data Commons Open Database License (ODbL) ... as long as you credit OpenStreetMap ... If you alter or build upon our data, you may distribute the result only under the same license"},
+        {"locator": "§ How to credit OpenStreetMap", "quote_fragment": "Provide credit ... Make clear that the data is available under the Open Database License"},
+        {"locator": "§ Additional services", "quote_fragment": "we cannot provide a free-of-charge map API or map tiles for third-parties"}
+      ],
+      "applicability": "OSM data usable only under ODbL attribution+share-alike; OSMF does not provide free tiles/API for third parties — supports excluding live OSM tiles from v1 and requiring license verification for OSM-derived offline extracts."
+    },
+    {
+      "id": "S6",
+      "title": "Natural Earth — Terms of Use",
+      "url": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "capture_id": "249e4677ba9e471a8f292a0dce466c1c",
+      "sha256": "b1838d281f70b2afa397ce3d686b00c0242f867e765bfb5f68ed64cb38383b85",
+      "captured_utc": "2026-10-06T08:40:58.463261+00:00",
+      "http": {"status": 200, "response_bytes": 38013},
+      "delivered_bytes": 32768,
+      "pins": [
+        {"locator": "post 'Terms of Use' (post-26), first paragraph", "quote_fragment": "All versions of Natural Earth raster + vector map data found on this website are in the public domain ... No permission is needed to use Natural Earth. Crediting the authors is unnecessary."}
+      ],
+      "applicability": "The selected bundled basemap source is public domain, so offline bundling with no attribution obligation is legitimate; no proprietary licensed data needed."
+    },
+    {
+      "id": "S7",
+      "title": "PouchDB guide — Conflicts (PouchDB v9.0.0 site)",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "capture_id": "89ff1d4536be45239f0d0091d3ff2a13",
+      "sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "captured_utc": "2026-10-06T08:40:58.731771+00:00",
+      "http": {"status": 200, "last_modified": "2026-08-05T20:39:13Z", "response_bytes": 28467, "body_complete": true},
+      "delivered_bytes": 28467,
+      "pins": [
+        {"locator": "§ Two types of conflicts", "quote_fragment": "immediately, when you try to commit a new revision, or later, when two peers have committed changes to the same document"},
+        {"locator": "§ Eventual conflicts", "quote_fragment": "CouchDB will choose an arbitrary winner based on a deterministic algorithm ... the doc will be returned with a _conflicts attribute"},
+        {"locator": "§ Eventual conflicts (resolution)", "quote_fragment": "To mark a conflict as resolved, all you need to do is remove() the unwanted revisions"},
+        {"locator": "§ Accountants don't use erasers", "quote_fragment": "you never update or remove existing documents – you only create new documents"}
+      ],
+      "applicability": "Offline-sync precedent: eventual-conflict model, deterministic winner + retrievable losers, explicit resolution; ledger/append-only pattern basis for Fieldbook edit-events and undo."
+    },
+    {
+      "id": "S8",
+      "title": "EPSG.io — EPSG:3857 WGS 84 / Pseudo-Mercator",
+      "url": "https://epsg.io/3857",
+      "capture_id": "614c61cc1abc4db5a87da3fbc915f681",
+      "sha256": "5884f26fd1637825824a4a5b8ebd6732c1da5a26a50dbd93fd139cd1e40c93d6",
+      "captured_utc": "2026-10-06T08:41:28.817130+00:00",
+      "http": {"status": 200, "last_modified": "2026-09-26T23:47:33Z", "response_bytes": 86899, "body_complete": true},
+      "delivered_bytes": 32768,
+      "pins": [
+        {"locator": "meta description / Attributes panel", "quote_fragment": "Projected coordinate system for World between 85.06°S and 85.06°N. Not a recognised geodetic system"},
+        {"locator": "Attributes: Coordinate system", "quote_fragment": "Cartesian 2D CS. Axes: easting, northing (X,Y). Orientations: east, north. UoM: m."},
+        {"locator": "Projected bounds / WGS84 bounds block", "quote_fragment": "-20037508.34 -20048966.1 / 20037508.34 20048966.1 ... WGS84 bounds: -180.0 -85.06 / 180.0 85.06"},
+        {"locator": "OGC WKT2 definition USAGE", "quote_fragment": "USAGE[SCOPE[\"Web mapping and visualisation.\"],AREA[\"World between 85.06°S and 85.06°N.\"],BBOX[-85.06,-180,85.06,180]]"}
+      ],
+      "applicability": "Display-CRS domain boundary (±85.06°, ±20,037,508.34 m), axis order and units for the display layer; basis for edge-case validation (W3)."
+    },
+    {
+      "id": "S9",
+      "title": "GitHub issues search — repo:pyproj4/pyproj 'axis order' (API JSON)",
+      "url": "https://api.github.com/search/issues?q=repo%3Apyproj4%2Fpyproj%20axis%20order",
+      "capture_id": "1cc4939f737e4265be1d4fd49649b7e1",
+      "sha256": "3c92641078394175ffcfde341120cfdd2e7255371aa5f2b07b00e7aefcf29088",
+      "captured_utc": "2026-10-06T08:41:29.500266+00:00",
+      "http": {"status": 200, "response_bytes": 186530, "body_complete": true, "total_count": 86},
+      "delivered_bytes": 32768,
+      "pins": [
+        {"locator": "items[] entry number 1157", "quote_fragment": "\"title\":\"+R_A appears to have no effect in Geod() and CRS()\" ... \"created_at\":\"2022-10-04T00:29:24Z\" ... \"state_reason\":\"reopened\""},
+        {"locator": "items[] entry number 1610 (pull_request)", "quote_fragment": "\"title\":\"BUG: Honour PROJ spherification parameters in Geod (issue #1157)\" ... \"merged_at\":null ... \"milestone\"...\"3.8.1\" ... \"Verification: 14 new tests, all failing before the change and passing after ... Built against PROJ 9.8.1.\"},
+        {"locator": "items[] entry number 1548", "quote_fragment": "\"title\":\"Hash/Equality contract violation\" ... \"a == b) produce different hash values after a round-trip through WKT\" ... milestone 3.8.1, state open"}
+      ],
+      "applicability": "Issue-chain discovery: #1157→PR #1610 root cause + regression tests; #1548 CRS hash instability informs identity/cache-key design. Only first items within delivered window used."
+    },
+    {
+      "id": "S10",
+      "title": "GitHub API — PR pyproj4/pyproj#1610 changed files (complete JSON)",
+      "url": "https://api.github.com/repos/pyproj4/pyproj/pulls/1610/files",
+      "capture_id": "74912a5982a5481299e82daeb30ee7ab",
+      "sha256": "a70e29c01d5ee611b0aeab6daf2bd00cd438d8c91f3acf429b7f969bf1c81b38",
+      "captured_utc": "2026-10-06T08:43:54.216567+00:00",
+      "http": {"status": 200, "response_bytes": 12753, "body_complete": true, "last_modified": "2026-10-06T08:37:10Z"},
+      "delivered_bytes": 12753,
+      "pins": [
+        {"locator": "file docs/history.rst, hunk @@ -3,6 +3,7 @@", "quote_fragment": "+- BUG: Honour the ``+R_A`` ... spherification parameters in :class:`pyproj.Geod` (issue #1157) — placed under 'Latest', after the 3.8.0 entry"},
+        {"locator": "file pyproj/geod.py, hunk @@ -198,20 +325,30 @@", "quote_fragment": "old code: \"if kvpair.find(\\\"=\\\") == -1: continue\" — silently discarded valueless parameters such as +R_A; PR collects _SPHERIFICATION_KEYS before the discard"},
+        {"locator": "file test/test_geod.py, hunk @@ -953,3 +954,74 @@", "quote_fragment": "test_geod__spherification (8-case radius table), test_geod__spherification__changes_result citing issue #1157, mutual-exclusion and invalid-latitude GeodError tests"}
+      ],
+      "applicability": "Exact fix + regression-test locator set; establishes release applicability (unmerged, under 'Latest', milestone 3.8.1 → not in pyproj 3.7.2/3.8.0 as of capture)."
+    },
+    {
+      "id": "S11",
+      "title": "OSMF Tile Usage Policy (ATTEMPTED — UNREACHABLE)",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "capture_id": null,
+      "capture_identity": "3 fetch attempts 2026-10-06T08:40:57Z/08:41:47Z/08:41:48Z each returned boundary 'OSError'; no bytes captured",
+      "applicability": "No claim is made about the policy's text. The v1 design excludes live OSM tile fetching; the linked-from-S5 fact ('cannot provide a free-of-charge ... tiles for third-parties') is cited from S5's own captured text."
+    },
+    {
+      "id": "S12",
+      "title": "OSM Wiki — Slippy Map Tilenames (ATTEMPTED — UNREACHABLE)",
+      "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+      "capture_id": null,
+      "capture_identity": "2 fetch attempts 2026-10-06T08:40:58Z/08:41:48Z each returned boundary 'OSError'; no bytes captured",
+      "applicability": "Web-Mercator latitude-limit facts instead cited from the captured EPSG:3857 registry page (S8)."
+    }
+  ]
+}

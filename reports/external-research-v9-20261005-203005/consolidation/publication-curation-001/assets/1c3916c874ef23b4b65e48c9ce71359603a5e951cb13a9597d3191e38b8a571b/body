@@ -1,0 +1,342 @@
+# Proposal: Local Biomedical Image Review Workspace ("Slidebench", working name)
+
+Research & proposal stage. Date of freeze: 2026-10-05.
+Standalone document; source pins are cataloged in `sources.json` (keys `[S1]`…`[S16]`), executed/proposed checks in `witnesses.json` (`[W#]` executed, `[P#]` proposed), deferred ideas in `leads.json`.
+
+**Label legend used throughout**
+
+- **[FACT]** — external claim backed by a captured public source (pin + capture SHA-256 in `sources.json`).
+- **[INFERENCE]** — engineering conclusion I draw from facts and ordinary practice; not itself source-proven.
+- **[CHOICE]** — a product decision this group could reasonably take differently.
+- **[VALIDATION-exec]** — small check executed by the candidate in an isolated sandbox; receipts in `witnesses.json`. An isolated component/arithmetic check does **not** establish full-application behavior.
+- **[VALIDATION-proposed / UNEXECUTED]** — designed check not run here.
+
+---
+
+## 1. Executive summary
+
+We propose an incrementally buildable desktop workspace for a six-person university imaging group: a **project bundle** (JSON manifest + sidecars, original image files never rewritten), a **pure-Python core** (project model, coordinate algebra, annotation command stack, provenance graph — fully testable headless), a **bounded-access image layer** (tifffile/Zarr chunk reads with an LRU cache, worker threads with cancellation), and a **Qt viewer** (napari embedded first, custom vispy canvas as the bounded fallback). Two independently useful precedents anchor the design:
+
+1. **napari** contributes the *coordinate mechanism*: per-layer, composable, invertible transforms separating data, world (physical), and display coordinates — and a fully traced failure lesson (issue #1830 → PR #1839 → regression test `test_repeat_shear_setting` → shipped in v0.4.1) showing that coordinate algebra without parametrized round-trip tests silently corrupts geometry. napari's still-open general undo/redo issue (#2579) tells us undo must be owned by the project layer, not the viewer.
+2. **QuPath** contributes the *persistence mechanism*: a project that references external image files by URI, per-image data files with `.bkp` backups, read-time fallback to the backup, and a URI-updater relocation flow — including a real durability bug (issue #1252: a failed save left the backup unrestored because a non-`IOException` escaped the recovery path) fixed in commit `651964b9` and shipped via the v0.5.0 milestone changelog. No automated regression test was found for that fix; we record that honestly and it motivates our own kill-safe save tests.
+
+The data contract stores all geometry in **float64 micrometers/seconds** with **explicit per-source scale+translation maps** (NGFF 0.4-style ordered `[scale, translation]`), annotations anchored to a slice, volume, or whole acquisition, and treats every geometric/resampling operation as a **recorded derived-source node** so "what transformed and what did not" is inspectable and exportable. Executed checks demonstrate lossless float64/JSON coordinate round-trips vs. measurable float32 loss, bounded per-plane reads for a 3.36 GB source, non-mutating window/level display mapping, and the specific way naive GeoJSON export misrepresents physical coordinates under RFC 7946.
+
+---
+
+## 2. Minimum obligations (from the brief) and where this proposal meets them
+
+| Brief obligation | Section |
+|---|---|
+| Create project; import without rewriting originals | §5.1, §5.2, §7 |
+| Inspect metadata & provenance; original metadata retained verbatim | §5.1, §7 |
+| Navigate/display (channels, window/level, slice, time) | §5.5, §6 |
+| Annotate points/polygons/masks; slice/volume/acquisition anchoring | §5.4 |
+| Explicit coordinate relationship; precision sufficient to reopen/export | §5.3 (+[W1]) |
+| Save/close/reopen on another machine | §5.2, §5.6 |
+| Export annotation table/overlay + small derived image; state what transformed | §5.7 (+[W4]) |
+| Display edit never alters samples; geometric ops recorded | §5.5 (+[W3]) |
+| Unsupported/ambiguous axes or calibration: explicit, non-destructive | §7 |
+| 3 GB image via bounded access, no second full in-memory copy | §6.3 (+[W2]) |
+| Cancel + progress; interrupted save/import/export recoverable | §5.6, §6.4 |
+| Atomic save/recovery; source identity; relocation; bundle vs. reference trade-off | §5.2, §5.6 |
+| Styles, keyboard navigation, undo/redo, original-vs-derived visibility, honest exports, accessibility | §5.4, §5.7, §8 |
+
+---
+
+## 3. Support boundary (formats a small team can actually test)
+
+**[CHOICE]** Version-1 read support: **TIFF (classic + BigTIFF), OME-TIFF, ImageJ hyperstack TIFF** (read-only), and **OME-Zarr NGFF 0.4** (read). Write support for derived outputs: **OME-TIFF** and **OME-Zarr 0.4** only. Everything else fails closed (§7).
+
+**[FACT]** tifffile 2026.9.20 (BSD-3-Clause) reads TIFF, BigTIFF, OME-TIFF, ImageJ hyperstack and other bioimaging TIFF-likes; reads image data "as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels"; writes OME-TIFF single-file. The same README states the boundary explicitly: OJPEG compression, chroma subsampling without JPEG, color space transformations, samples with differing types, and IPTC/ICC/XMP metadata are **not implemented** [S14].
+
+**[FACT]** OME-TIFF carries up-to-8-dimensional data with UTF-8 OME-XML in the first IFD's ImageDescription [S14]; tifffile's own OME-TIFF writing example shows the calibration attributes `PhysicalSizeX` / `PhysicalSizeXUnit: 'µm'` [S14].
+
+**[FACT]** NGFF 0.4 (final community specification, 2023-05-25) defines the metadata this project adopts for its own coordinate contract: `axes` (unique `name`, `type` of space/time/channel, `unit` from UDUNITS-2 such as `micrometer`), `coordinateTransformations` restricted (in 0.4) to `identity`/`translation`/`scale` applied sequentially in order, and the multiscales rule that each dataset has exactly one `scale` and at most one `translation`, with translation **listed after scale** "to ensure that it is given in physical coordinates" [S13].
+
+**[INFERENCE]** A two-person-week-format surface (TIFF family + OME-Zarr) is the largest a 6-person group can regression-test per release; proprietary natives (CZI/LSR/VSI…) are deferred to leads. tifffile already reads many of them, but each added reader multiplies test surface; the brief explicitly does not ask for universal compatibility.
+
+**[FACT]** Even NGFF moves: the ome/ngff repository already contains specification trees for 0.5, 0.6 and dev alongside 0.4 [S16], and tifffile's 2026.5.2 changelog records breaking Zarr/NGFF-0.5 store changes [S14]. **[INFERENCE]** therefore: pin exact component versions per project file (`format_version`, dependency versions in a lock file); treat NGFF 0.4 as a fixed target for v1 and revisit 0.5+ as a planned migration, not a silent upgrade.
+
+---
+
+## 4. Precedents investigated
+
+The brief requires at least two *independently useful* implementation precedents. Independence here = different codebases, languages, and concerns; each contributes a distinct mechanism this design adopts. (A component, standard, or library can be a precedent; whole products are not privileged.)
+
+### 4.1 Precedent A — napari: coordinate algebra and viewer separation
+
+**Independence.** napari is a Python/Qt/VisPy multi-dimensional viewer; its transforms/dims subsystem is an independent implementation of exactly the "user-visible vs stored vs physical coordinate" problem in the brief.
+
+**Mechanism contributed.** napari's `Affine`/`ScaleTranslate` transforms compose, invert, slice to visible dimensions (`set_slice`), and expand dimensions (`expand_dims`) — i.e., a single n-dimensional affine model that the viewer slices per rendered plane. The test suite at tag v0.4.1 pins these semantics in writing: composition order (`transform_b.compose(transform_a)` ≡ apply a then b), inverse round-trips, and slice/expand behavior [S5]. **[INFERENCE]** We adopt the same three-space model (§5.3) and the same property set as our acceptance tests (compose/inverse/slice/expand round-trip).
+
+**Traced failure lesson (issue → fix → regression test → release) — complete chain.**
+
+- **Failure [FACT]:** napari issue #1830, "Affine transform upper triangular shear matrix values are looking wrong" (opened 2020-11-04): the shear produced through `Affine(shear=…)` did not match the angle-derived shear matrix; a maintainer's comment identifies the root cause class — `shear_matrix_from_angle` produces a lower-triangular matrix while `Affine` constructs/decomposes upper-triangular by default [S1].
+- **Fix [FACT]:** PR #1839 "Fix lower triangular shear values", merged 2020-11-16T10:42:19Z, merge commit `27ed631ae503add400912cfff24d999576d9d10e` (head `c42a18a3483f849421f5302c0c33c09f67f21cc2`), 4 files, +176/−24. The fix detects whether a supplied shear matrix is upper- or lower-triangular (`is_matrix_upper/lower_triangular`), decomposes with `scipy.linalg.qr`/`rq` accordingly, and raises a clear `ValueError` for non-triangular input [S2][S3].
+- **Regression tests [FACT]:** the same PR adds `test_repeat_shear_setting` ("Test repeatedly setting shear with a lower triangular matrix… Note this test is needed to check lower triangular decomposition of shear is working") in `napari/utils/transforms/_tests/test_transforms.py`, plus parametrized `test_decompose_linear_matrix(upper_triangular)` and triangularity tests in `test_transform_utils.py`; the patch contents are captured [S2], and `test_repeat_shear_setting` is verified present in the file as shipped at tag `v0.4.1` [S5].
+- **Release applicability [FACT]:** napari 0.4.1, published 2020-11-25T01:05:17Z, lists under Bug Fixes: "Fix lower triangular shear values (#1839)" [S4]. The same release also carries "Fix TransformChain.__init__() (#1809)", "Fix affine composition order (#1884)", and "Fix affine warning (#1886)" [S4].
+- **Limits of the chain.** I verified issue, PR diff, merge commit, the regression tests, and the release-notes line, each by direct capture. I did not run napari 0.4.0/0.4.1 to reproduce the bug, and the release *notes* line is the (standard, but secondary) evidence that the merge landed in the release. The bug concerns shear parameterization only; it does not demonstrate any error in napari's current releases.
+
+**Lesson adopted [INFERENCE].** Coordinate code fails *silently* in parameterization corners (triangularity, composition order); the defense is parametrized round-trip tests (compose∘invert=id, set∘get=id, slice∘expand=id) run on every transform change — mirroring exactly the tests the napari fix added.
+
+**Second napari lesson [FACT].** General undo/redo remains an open feature issue in napari: #474 (2019, "Every GUI action in napari should be undoable", open) and #2579 (2021, "Undo/Redo & Macro Recording", open, still updated 2025-10); napari ships partial undo for labels painting, itself the subject of a merged fix (#3154, 3D-paint undo bug, merged 2021-08-13) [S6]. **[INFERENCE]** We must not depend on the viewer for undo: the project layer owns a command stack (§5.4).
+
+### 4.2 Precedent B — QuPath: project persistence, identity, relocation, recovery
+
+**Independence.** QuPath is a Java/JavaFX desktop bioimage-analysis application; its project subsystem solves persistence, source-identity, relocation, and crash recovery — concerns napari deliberately does not own.
+
+**Mechanisms contributed.**
+
+- **Project = manifest + per-image data files + references, not pixel copies.** QuPath's project stores per-image "image data" files alongside a project entry that *references* the image via URI; the project does not duplicate pixels. This is visible in the recovery code path itself: `DefaultProject.readImageData` reads an entry's data file, and on error falls back to a `.bkp` backup [S7][S9].
+- **Backup-on-save with read-time fallback.** The pre-fix behavior, quoted with exact code location in the issue body (PathIO.java, line ~538 at commit `1368912885c1a191beaea32c28d85a3707f657f8`): when writing a `.qpdata` file, the previous file is backed up and deleted only after a successful write — but if writing fails, the backup is **not** restored [S7].
+- **Real failure and repair (issue → diagnosis → fix → changelog → milestone).**
+  - **Failure [FACT]:** QuPath issue #1252, "PathIO doesn't restore backup if writing ImageData fails" (filed 2023-02-27 by the maintainer; linked image.sc report of a corrupted-read outcome) [S7].
+  - **Diagnosis [FACT]:** maintainer comment 2023-03-14: the restore path in `DefaultProject.java` (~line 698) catches `IOException`, but a corrupt/truncated file can surface as a `NullPointerException` instead, so the automatic fallback to backup never triggered [S8].
+  - **Fix [FACT]:** commit `651964b9df859110dbd427c7f5499aa7580bbbc4` (2023-03-23), "Better exception handling deserializing qpdata — Addresses #1252": `PathIO` rethrows/wraps *any* deserialization exception as `IOException`; `DefaultProject.readImageData` catches `Exception` so the backup path is taken. The commit message prescribes a manual test recipe (truncate a `.qpdata` against a complete `.qpdata.bkp` in a Groovy script) [S9].
+  - **Changelog/milestone [FACT]:** commit `15e715de813cf97a26ebec36600d2f76379f75fc` (2023-08-24) adds to CHANGELOG.md: "* PathIO doesn't restore backup if writing ImageData fails (#1252)" in the in-progress next-release section; issue #1252 was closed 2023-10-27 into milestone "v0.5.0-rc1" [S10][S7]. I did not capture a v0.5.0 tag-level manifest; applicability to the v0.5.0 release rests on the changelog entry plus the milestone, which I state explicitly.
+  - **Regression-test status: not established [FACT + honesty note].** The fix commit adds no automated test [S9]. `qupath-core/src/test/java/qupath/lib/io/TestPathIO.java` at tag `v0.5.0` (captured in full) tests zip-extension handling and deserialization filtering — it contains **no** backup-restore case, and no `qupath/lib/projects` test directory exists at that path [S11]. Per the brief's honesty rule: the chain issue→diagnosis→fix→changelog→milestone is established; an associated *automated regression test is not*, and I do not claim one.
+- **Relocation across machines.** QuPath surfaces broken image links through a "URI updater" flow with multiple public repairs: issue #1213 (cancelling URI search threw NPE; v0.4.1) fixed by PR #1214 (merged 2023-01-18, milestone v0.4.2); PR #1668 (merged 2024-10-03, milestone v0.6.0) auto-updates URIs for self-contained projects using relative links inside the project directory; PR #1889 (merged 2025-06-03, milestone v0.6.0) makes missing local files flagged consistently across Windows/Linux/macOS [S12]. **[FACT]** These captures document the mechanism (store URIs; offer search/relink on open; relative links for self-contained projects). I did not verify regression tests for these individual fixes.
+
+**Lesson adopted [INFERENCE].** (a) References to large external files beat duplication, but require: identity recorded at import (we add SHA-256), relative-path hints, and an explicit re-link flow at open. (b) "Backup on save" is necessary but not sufficient — the *fallback decision* must catch every failure mode (QuPath's NPE), and the atomic-rename pattern (write temp → verify → rename) is strictly safer than write-then-backup; we implement temp+rename+rotation (§5.6). (c) Recovery paths need automated crash simulations, because upstream shipped this class of bug without one.
+
+### 4.3 Component precedents: OME-NGFF 0.4, tifffile, RFC 7946 (GeoJSON)
+
+- **OME-NGFF 0.4 [FACT]** [S13] contributes the *stored coordinate contract*: axes with names/types/UDUNITS-2 units; ordered `scale` then `translation` mapping array indices to physical space; multiscale datasets each carrying exactly one scale; and a transitional `omero` block that stores *display* state (channel color, and a window `{min,max,start,end}`) separately from pixel data — direct precedent for our "display state is data about the view, not about the image" rule (§5.5). It also defines `labels`/`image-label` metadata for segmentation-like masks, which we target for derived-mask export.
+- **tifffile [FACT]** [S14] contributes the *bounded access mechanism*: page/tile-level reads (`imread(key=…)`, `page.asarray()`), a Zarr interface reading single tiles from pyramidal OME-TIFF (`z['0'][2, 0, 128:384, 256:]`), dask chunk exposure, `memmap()` for contiguous stacks, threaded I/O (`ioworkers`), plus an explicit non-implemented list (§3). Pinned at version 2026.9.20; note its changelog records breaking changes (e.g., 2026.5.2), so the project lockfile pins it.
+- **RFC 7946 (GeoJSON) [FACT]** [S15] contributes the *export honesty mechanism*: positions are "longitude and latitude … precisely in that order" (§3.1.1); the CRS is fixed to WGS84 decimal degrees and alternative CRSs were removed because they "proven to have interoperability issues" (§4); digit count "MUST NOT be interpreted as an indication to the level of uncertainty" (§3.1.10). Captured range covers §§1–9; §11.2's decimal-place guidance was **not** captured and is not relied upon. Combined with check [W4], this is why our primary annotation export is a unit-explicit table, not GeoJSON (§5.7).
+
+---
+
+## 5. Data contract
+
+### 5.1 Project bundle layout
+
+**[CHOICE]** A project is a directory (optionally zipped for exchange):
+
+```
+myproject.slide/
+  project.json            # manifest: format_version, sources[], annotations[], styles[], views[], ops[] (provenance), app_history
+  originals/              # OPTIONAL copies of small source files (user choice at import)
+  derived/                # outputs of recorded ops (resample/rotate/crop), OME-TIFF or OME-Zarr
+  exports/                # staged export bundles (temp + manifest)
+  backups/                # rotating project.json.bak.N (N=1..5)
+  .tmp/                   # in-progress writes; quarantined imports; crash-recovery candidates
+  meta/<source_id>/       # verbatim imported metadata sidecar (raw OME-XML, TIFF tags, NGFF .zattrs) + normalized view
+```
+
+**[FACT→INFERENCE]** Layout precedent: QuPath's project directory with per-entry data files and backups [S7][S9]. Originals are opened read-only; the application never writes into a source file (brief requirement). Every import stores the *verbatim* original metadata sidecar plus a normalized interpretation, so ambiguous inputs keep their original metadata even after a user correction (brief requirement; NGFF's bioformats2raw transitional layout similarly preserves OME-XML alongside converted data [S13]).
+
+### 5.2 Source identity, relocation, bundle-vs-reference
+
+**[CHOICE]** At import, Slidebench records for each source: absolute `file://` URI, relative-path hint (if inside/near the bundle), byte size, and **SHA-256 of the original file bytes** (computed once at import; large files hashed in streaming chunks). **[INFERENCE]** SHA-256 is the *identity* used to (a) detect that a re-linked file is the same acquisition after relocation, (b) warn on mismatch rather than silently annotating a different image, and (c) stamp exports ("annotations refer to source sha256:…").
+
+**[FACT]** Precedent for URI-based referencing with an explicit repair flow at open time: QuPath's URI updater, including the self-contained relative-link mode [S12]. **[CHOICE]** Relocation protocol for us: on open, missing sources trigger one dialog listing all broken entries; the user picks a search root or maps an old root to a new root; candidates are verified by size + SHA-256 (fast path: size + prefix/suffix hash), never auto-accepted on name match alone.
+
+**[CHOICE] Bundle vs external references.** Default: *reference* (no pixel copying — a 3 GB file duplicated per project is unacceptable on shared storage). Optional *copy-in* for files ≤ ~100 MB when the user wants a portable bundle. Exports that must be portable (annotation table + overlay + small derived image) are fully self-contained by construction; the *project* is portable only if copy-in was chosen or the relative structure is preserved. This mirrors the QuPath trade-off (self-contained relative links vs external URIs) [S12].
+
+### 5.3 Coordinate spaces and precision
+
+**[FACT]** The physical mapping is NGFF-0.4-shaped: per source, ordered per-dataset transforms `scale` (µm/px per axis, s/frame for time) then optional `translation`, axis list with `{name, type, unit}` (space=`micrometer` canonicalized at import; time=`second`); transformations apply sequentially in order [S13]. **[CHOICE]** Internally we store exactly one canonical ordered pair per source: `physical_map = {axes:[{name,type,unit}…], scale:[…], translation:[…]}` — no implicit defaults anywhere in the file.
+
+Three spaces, with explicit, invertible maps (napari mechanism [S5]):
+
+1. **Sample/index space** — integer array indices per axis (t, z, y, x; channel is never a spatial axis).
+2. **Physical space** — float64 micrometers / seconds, obtained via `physical = index * scale + translation` per axis.
+3. **Display space** — transient view transform (zoom/pan/rotation) per view; never persisted into annotation coordinates.
+
+**[VALIDATION-exec W1]** float64 coordinates round-trip losslessly through JSON (`json.loads(json.dumps(x)) == x` for all sampled values); float32 storage of a 34.567891 µm vertex quantizes by ≈3.8×10⁻⁴ µm (measured, idempotent over repeated round-trips but lossy); unit canonicalization (mm→µm) of the sampled value was exact in float64 (0.1 mm → exactly 100.0 µm as stored). Receipt `exec-pcttegac`. **Scope limit:** arithmetic/logic-level check in an isolated sandbox; it validates the storage-precision *policy*, not any shipped component. **[CHOICE]** Consequences: stored coordinates are float64 JSON numbers in canonical units; conversions happen once at import/display, never on save; float32 is acceptable only inside GPU rendering.
+
+Annotation **frame anchoring** (brief requirement):
+
+- `slice`: `{t: i, z: j}` — belongs to one plane;
+- `volume`: `{t: i, z: [j0, j1]}` or all-z at one time — describes the stack at a time point;
+- `acquisition`: `{}` — describes the whole acquisition.
+
+Coordinates are always physical; anchoring is metadata next to them, so "does this annotation still refer to the same image after transformation?" is answered by provenance (§5.5), not by guesswork.
+
+### 5.4 Annotations, styles, undo
+
+**[CHOICE]** Annotation types v1: point set, polygon (open/closed), raster mask (stored in `derived/` as OME-Zarr label per NGFF `image-label` conventions [S13]); each has: `id` (UUID), `source_id`, `frame` anchor, `style_id`, `coordinates` (float64 µm) or `mask_ref`, user `properties`, `created/modified` history entries. **[CHOICE]** Styles are named, reusable objects in `project.json` (color, width, fill, z-order, keyboard shortcut) — brief requirement — referenced by `style_id` so restyling is one edit.
+
+**[FACT]** Undo/redo cannot be delegated to the viewer: napari's general undo/redo is an open feature issue (#474 since 2019; #2579 since 2021, updated 2025-10), with a fixed 3D-paint undo bug (#3154) showing even the partial path needed repair [S6]. **[CHOICE]** Slidebench owns a command stack (Qt `QUndoStack`-pattern in the core, UI-independent): every annotation mutation is a command with `do/undo`, coalesced per stroke; geometry-heavy undos store inverse deltas (vertex lists, or dirty mask tile patches), not array copies. **[VALIDATION-proposed P1/UNEXECUTED]** Property test: for randomized command sequences, `undo^n ∘ do^n = id` and redo determinism, including mask-tile patches.
+
+Keyboard navigation (brief requirement): all view commands (slice/time step, channel toggle, zoom presets, annotation mode switching, undo/redo, cancel) have assignable keys; no mouse-only capability. **[FACT]** Accessibility precedent: napari's own release notes treat contrast/accessibility fixes as release-worthy items (0.4.1 welcome-screen contrast fix) [S4] — we treat WCAG-legible UI as a normal bug class.
+
+### 5.5 Display state vs. data operations (the provenance rule)
+
+**[FACT]** Precedent for separating rendering state from pixels: NGFF 0.4's transitional `omero` metadata stores per-channel color and window `{min,max,start,end}` as *metadata about display*, alongside — not inside — the image data [S13].
+
+- **Display mapping** (visible channels, window/level, gamma, LUT) lives in `views[]` of `project.json`. It is a pure function samples→rendered bytes. **[VALIDATION-exec W3]** A window/level mapping over uint16-like samples left the source values bit-identical (checksum 126562 before/after) while two settings produced different rendered outputs. Receipt `exec-kunl_it0`. **Scope limit:** design-contract demonstration, not component behavior proof. Saving a view never touches samples; there is no code path from display settings to file writes.
+- **Geometric/resampling operations** (rotate, resample, crop, bin) are **recorded data operations**: they create a new node in `ops[]` + a file in `derived/` (OME-TIFF/OME-Zarr), with inputs, parameter block, code version, timestamp, and — critically — a declared output `physical_map` computed from the input map and the op. The provenance graph is the answer to the group's recurring dispute: "exported annotations still refer to the same image after transformations" because each derived source carries `parent_id` + op record, and annotations cite the `source_id` they were drawn on. **[INFERENCE]** Transform *annotations with the image* is v1 behavior for display-only transforms (annotation coordinates stay physical, so they remain correct under any display transform without rewriting); re-exporting a *geometrically transformed* image re-projects annotation references via the recorded op chain (P3).
+
+### 5.6 Save, recovery, interruption
+
+**[CHOICE]** Protocol per write of `project.json` (the only frequently-written file; annotation masks are content-addressed files written once):
+
+1. serialize → `project.json.new` in `.tmp/`; fsync file;
+2. `os.replace()` to `project.json` (atomic on POSIX; same-volume rename on Windows);
+3. keep previous as `backups/project.json.bak.1`, rotating 5 deep;
+4. open-time recovery: if `project.json` unparsable → try `.new`, then `bak.1..5`, report which; leave evidence files for diagnosis.
+
+**[FACT]** This is the pattern QuPath's own issue #1252 recommends in passing ("write a new temporary file, and then only rename if the writing has succeeded") after its write-then-backup scheme proved fragile when a non-`IOException` escaped recovery [S7][S8][S9]. We additionally wrap **every** deserialization error into our `ProjectReadError` (no exception-type leakage decides whether recovery triggers — the exact bug class of #1252), and we test recovery by *simulated crash* (P2), because upstream shipped this bug without an automated test [S11].
+
+- **Partial import:** import copies nothing by default; it writes the sidecar + manifest entry last. An interrupted import leaves only `.tmp/` quarantine; the project either has the source fully registered or not at all.
+- **Failed export:** exports stage into `exports/<id>-tmp/` with a manifest, then a single rename to final; a failure leaves the tmp dir and an error record, never a half-named export.
+- **Long-op cancellation:** all workers are cooperative (checked cancel flag between tiles/planes); a cancelled op discards its partial derived file and writes nothing to the manifest.
+
+### 5.7 Exports and the honest preservation statement
+
+**[CHOICE]** v1 exports:
+
+1. **Annotation table** — CSV + JSON sidecar: one row per annotation (id, kind, source_id, source_sha256, frame anchor, coordinates in **µm with the unit named in the header**, style, properties, app version, export UTC time). This is the primary interchange; nothing is lost silently.
+2. **Overlay PNG** (small, per the brief's "small derived image") rendered from original samples + annotations, with a JSON sidecar recording the exact window/level, visible channels, display transform, and the physical extent — so the overlay is reproducible and its provenance is explicit.
+3. **Derived image** — OME-TIFF or OME-Zarr 0.4 with a `physical_map` and parent provenance.
+
+Every export emits a **preservation statement** (machine-readable + human panel): what is preserved (coordinates+units, frame anchors, styles, source identity hashes, provenance chain), what is *not* (raw pixel data except where exported explicitly, display state unless the overlay sidecar is included, undo history).
+
+**[FACT + VALIDATION-exec W4]** GeoJSON is **not** a v1 annotation interchange: RFC 7946 fixes CRS to WGS84 lon/lat degrees and position order to [lon, lat] [S15]; check [W4] (receipt `exec-b195f0gu`) demonstrates that naive µm coordinates either fall outside the valid WGS84 range (500 µm → "longitude 500°", invalid) or — worse — pass *silently* as absurd degrees (2.5 µm → "2.5°"), and that axis-order flips change the point with no error. **[INFERENCE]** If GeoJSON output is ever needed (leads), it must go through an explicit, documented projected mapping, never raw µm. (RFC §6.1 "foreign members" are explicitly outside GeoJSON semantics and may be ignored by consumers — so a "units" sidecar member is not a safe fix.)
+
+---
+
+## 6. Architecture
+
+### 6.1 Components
+
+**[CHOICE]** Four packages with one-way dependencies:
+
+1. `core` (pure Python, no Qt): project model, schema validation, coordinate algebra, annotation command stack, provenance graph, import/export logic. 100% headless-testable — this is where our regression discipline lives (§4.1 lesson).
+2. `access` (pure Python): source adapters over **tifffile** (TIFF/OME-TIFF/ImageJ: page/tile reads, Zarr interface, memmap for contiguous stacks [S14]) and **zarr** (OME-Zarr 0.4 chunk reads); LRU chunk cache; worker threads; progress/cancel events.
+3. `viewer`: Qt (PySide6) host + **napari embedded as the canvas** (Qt widget, dims/layer API). Fallback bounded alternative: custom Qt+vispy tiled canvas (§6.5).
+4. `app`: windows, panels (metadata inspector showing verbatim + normalized sidecar, provenance graph, export dialogs), keyboard map, accessibility.
+
+**[INFERENCE]** The napari-embed decision is isolated behind the `viewer` interface (set source+map, set view, deliver annotation edits), so swapping to a custom canvas is a bounded change, not a rewrite.
+
+### 6.2 Why napari as viewer, concretely
+
+**[FACT]** napari is built for browsing/annotating large multi-dimensional images on Qt+VisPy (its own release description) [S4]; its dims/transform model matches §5.3 [S5]; it renders points/shapes/labels layers we can bind to our annotation model. **[FACT]** Its gaps we must cover are equally documented: no project persistence (QuPath's role), partial undo only [S6]. **[INFERENCE]** Embedding buys years of rendering engineering (tiled/multiscale, channel compositing, 3D) for a 6-person group; we do not modify napari internals, we drive its public API.
+
+### 6.3 Memory plan (the 3 GB target)
+
+**[VALIDATION-exec W2]** Modeled source: uint16, T=2, Z=200, Y=2048, X=2048 = 3.355 GB. One XY plane = 8 MiB = 0.25% of the source; a 256×256 tile = 128 KiB; a 1 GiB LRU cache holds 128 planes. Receipt `exec-vfni4c27`. **Honest discriminator:** the check *refuted* my initial capacity framing — even 3 full copies (10.07 GB) still fit in 16 GiB (5 copies fit). **[INFERENCE]** The bounded-access rule is therefore adopted not because capacity forces it at exactly 3 GB, but because: (a) *latency* — decoding one plane (8 MiB) must not wait on a 3.4 GB decode; (b) upconversion to float32 for processing doubles every buffer (6.7 GB/copy) and is avoided — samples stay native dtype end-to-end; (c) headroom — cache + viewer + annotation masks + OS should coexist comfortably, and the same design must survive the 20 GB stack the group acquires next year. Design rule: **no full-array materialization on any interactive path**; whole-array reads occur only in explicit, cancelable, progress-reported batch ops (export derived image, mask resample).
+
+### 6.4 Concurrency, cancellation, progress
+
+**[CHOICE]** Read path: bounded thread pool (default 2 I/O + 2 decode workers) issuing tile/plane jobs; every job carries a cancel token; UI shows per-op progress (bytes/stages) and a cancel button that takes effect between tiles (≤128 KiB granularity for tiles, ≤8 MiB for plane decodes). **[FACT]** Mechanism precedent: tifffile exposes threaded read knobs (`ioworkers`, `maxworkers`) and per-tile decode via `page.decode()` on raw offsets [S14].
+
+### 6.5 Bounded alternatives (recorded, not pursued first)
+
+- **Alt-V1: custom Qt+vispy tiled canvas.** More control, less dependency risk; costs the multiscale/3D machinery napari provides. Kept viable by the `viewer` interface boundary.
+- **Alt-A2: build on QuPath as a plugin platform (Java).** Reuses project+viewer+persistence outright. Costs: Java stack for a Python-lab team, annotation model fit (pathology-oriented), and license compatibility must be evaluated before any code reuse (license text not captured in this study — **unverified**, must be checked before adoption).
+- **Alt-A3: napari plugin only (no standalone persistence).** Rejected for v1: it inherits napari's open undo/persistence gaps [S6] and cannot own the project contract the brief demands.
+
+---
+
+## 7. Unsupported or ambiguous input: fail closed, keep everything
+
+**[CHOICE]** Import pipeline: probe → classify → (if needed) explicit correction dialog → register.
+
+1. **Probe** (never writes): read structure/metadata via tifffile/zarr; extract axes guess, dtype, shape, calibration (`PhysicalSizeX(+Unit)` for OME-TIFF [S14]; NGFF `axes`+`coordinateTransformations` for Zarr [S13]); capture verbatim metadata sidecar.
+2. **Classify**: OK / ambiguous / unsupported.
+   - *Ambiguous* (missing or unitless calibration; unusual axis sets like multi-time+multi-channel+4D-space beyond 5D; inconsistent multi-file series): the import dialog shows the raw evidence and asks the user to choose (enter µm spacing explicitly; choose axis interpretation; or proceed "uncalibrated", permanently flagged `calibration_status: user_declared` vs `from_metadata`). Original metadata stays verbatim regardless of the correction (brief requirement).
+   - *Unsupported* (formats outside §3; tifffile's documented non-implemented features [S14]): import refuses with a specific message; **project state is untouched** (no partial manifest entries — registration is the last step); the file is not modified.
+3. **Register**: SHA-256, URI, sidecar, manifest entry in one atomic `project.json` write (§5.6).
+
+**[FACT]** The refusal message cites the boundary in the captured sources (e.g., "OJPEG/chroma-subsampled/color-transformed/samples-with-differing-types TIFF is outside tifffile's implemented subset" [S14]) so users see *why*, legibly (accessibility requirement).
+
+---
+
+## 8. Accessibility and interaction
+
+**[CHOICE]** Non-negotiables: every command keyboard-reachable; visible focus; window/level and slice state announced in a status line (screen-reader-friendly text); metadata/error panels are selectable text (no screenshot-only errors); color-independent annotation styling (pattern/dash variants); contrast checked like any other bug (precedent: napari fixed welcome-screen contrast as a release item [S4]); legal-range validation with explicit messages on import numbers (units, spacing).
+
+---
+
+## 9. Assumptions, unsupported cases, risks
+
+**Critical assumptions [INFERENCE — each could change the plan]:**
+
+1. tifffile's TIFF/Zarr access stays API-stable across our pinned version (its changelog shows breaking changes [S14]) → mitigate with lockfile + adapter tests on upgrade.
+2. napari's embedding API (widget + layer model) remains public and Qt-compatible → mitigate with the viewer boundary (§6.5 Alt-V1).
+3. Shared-storage filesystems give us atomic-enough `os.replace()` within a project directory → mitigate with backups + recovery scan (§5.6); NFS rename atomicity is a real risk to test on the group's actual storage (P5).
+4. NGFF 0.4 remains the interop target long enough for v1 (0.5/0.6 already exist in the repo [S16]) → planned, explicit migration only.
+5. SHA-256 at import cost (~3.4 GB ≈ seconds-to-tens-of-seconds) is acceptable once per source → offer "defer hash" for huge files with a `hash_status` field (identity warnings until hashed).
+
+**Explicitly unsupported in v1 [CHOICE]:** writing/rewriting source files; proprietary formats beyond the §3 read set; cloud/remote sources (local files only; OME-Zarr over object storage deferred); concurrent multi-writer projects (bundle exchange is copy-and-merge-by-hand; single writer per bundle); registration/segmentation automation; patient data / clinical use (research tool only, per brief).
+
+**Risks:** annotation-mask storage size for large volumes (mitigate: chunked OME-Zarr labels, dirty-tile undo); napari API churn; Windows path/URI corner cases (QuPath's URI PRs show real cross-platform URI breakage [S12] — we store POSIX-normalized relative hints + absolute URIs and test the Windows case P4).
+
+---
+
+## 10. Opportunity and alternative
+
+**Opportunity (adopted) [INFERENCE].** Make **OME-Zarr 0.4 the project's derived-data and exchange format** (derived images, mask layers): it is a captured, stable public spec [S13] with ecosystem readers (napari consumes it; tifffile writes NGFF-conformant zarr [S14]) — the group gets free interop with the tools it already uses (napari, and later OMERO/web viewers), and our export path doubles as an archive path. This turns a storage decision into an interoperability asset rather than a lock-in.
+
+**Plausible alternative (documented, not chosen) [CHOICE].** *Extend QuPath instead of building Slidebench:* the project/persistence/relocation/recovery mechanisms already exist and are battle-tested (§4.2), and it has a mature annotation UI. This is genuinely viable if the group accepts the Java toolchain and QuPath's annotation semantics; blockers to verify first: license compatibility for any code reuse (unverified here), fit of its measurement model to microscopy (vs pathology) workflows, and our float64-µm/NGFF contract — we would need a bridge either way. **[INFERENCE]** For a 6-person Python-centric lab, owning a small core on napari/tifffile is the lower long-run cost; but if the group later adopts digital-pathology workflows, QuPath becomes the stronger base — this is why §5's contract is tool-agnostic (JSON + NGFF + CSV), so the *data* survives a platform switch.
+
+**Deferred ideas** (recorded, not obligations): see `leads.json` — GeoJSON overlay under a documented mapping, pyramid generation, ImageJ/NDTiff read support, macro recording (napari #2579 direction), OMERO/web export, batch annotation QA tooling.
+
+---
+
+## 11. Validation summary
+
+**Executed by candidate** (receipts: `witnesses.json`; isolated arithmetic/logic checks — they do not establish full-application behavior):
+
+- **[W1] Coordinate precision policy** — float64 JSON round-trip exact; float32 lossy (≈3.8e-4 µm on the sampled vertex); mm→µm canonicalization exact for the sampled value. `exec-pcttegac`.
+- **[W2] Bounded-access arithmetic** — 3.355 GB uint16 model: plane read = 8 MiB (0.25% of source); 1 GiB cache = 128 planes; honest refutation of the "3 copies exceed 16 GiB" capacity framing (they don't at this size). `exec-vfni4c27`.
+- **[W3] Display mapping purity** — window/level changes rendered bytes, checksum of samples unchanged. `exec-kunl_it0`.
+- **[W4] GeoJSON export semantics** — naive µm coordinates are invalid or silently misread as WGS84 degrees under RFC 7946; axis flip undetectable. `exec-b195f0gu`.
+
+**Proposed / UNEXECUTED** (designed, with pass criteria, in `witnesses.json`):
+
+- **[P1]** Undo-stack property test (do/undo/redo idempotence incl. mask patches).
+- **[P2]** Crash-recovery test: kill save at randomized points; assert reopen always yields a parseable project or triggers documented recovery; modeled on QuPath #1252's failure class [S7][S9].
+- **[P3]** Transform bookkeeping round-trip: derived op chain replays to a byte-identical derived file and re-projects annotation references correctly.
+- **[P4]** Cross-platform relocation: move bundle + sources between roots/OSes; re-link flow resolves by SHA-256; mismatch warns (QuPath URI issues as precedent [S12]).
+- **[P5]** NFS/SMB rename-atomicity probe on the group's real storage.
+- **[P6]** NGFF 0.4 conformance spot-check of derived outputs against the spec examples [S13].
+- **[P7]** Large-file interaction budget test on target hardware (plane decode + first paint < latency budget), per §6.3.
+
+---
+
+## 12. Source-backed findings that could change this plan (priority order)
+
+1. **tifffile breaking changes & NGFF 0.5 store shift [FACT, S14]** — if our pinned tifffile moves, the Zarr access layer changes; lockfile + adapter tests are mandatory.
+2. **NGFF 0.5/0.6 existence [FACT, S16]** — a 0.4-only v1 is defensible, but derived-output interop targets must be revisited before release.
+3. **napari undo/persistence gaps [FACT, S6]** — if napari ships full project+undo, the `core` ownership decision (§5.4) should be re-evaluated.
+4. **QuPath recovery architecture [FACT, S7–S11]** — validates temp+rename over write-then-backup; if we ever adopt Java/QuPath (§10), its mechanisms transfer.
+5. **Windows URI breakage history [FACT, S12]** — relocation testing must be cross-platform from day one (P4).
+
+---
+
+## 13. Incremental milestones
+
+1. **M1 (core):** project schema + atomic save/recovery + import probe/classifier (headless, fully tested).
+2. **M2 (access):** tifffile adapter + LRU cache + cancel/progress on 2D TIFF; verify [W2]-style budget on real hardware (P7).
+3. **M3 (viewer):** napari embed; channels/window/slice/time bound to `views[]`; original-vs-derived badge.
+4. **M4 (annotate):** points/polygons/masks + styles + keyboard + command-stack undo (P1).
+5. **M5 (exchange):** exports + preservation statement; OME-Zarr derived outputs (P3, P6); relocation flow (P4).
+6. **M6 (robustness):** crash/cancel simulations (P2, P5), accessibility pass, format-boundary error messages (§7).
+
+---
+
+## 14. Source index (pins; full catalog with capture hashes in `sources.json`)
+
+- [S1] napari issue #1830 (+maintainer root-cause comment), 2020-11-04.
+- [S2] napari PR #1839 file patches (fix + regression tests), merged 2020-11-16; head `c42a18a3483f849421f5302c0c33c09f67f21cc2`.
+- [S3] napari PR #1839 metadata: `merge_commit_sha=27ed631ae503add400912cfff24d999576d9d10e`, milestone 0.4.1.
+- [S4] napari release v0.4.1 (published 2020-11-25): "Fix lower triangular shear values (#1839)"; related transform fixes #1809/#1884/#1886.
+- [S5] `napari/utils/transforms/_tests/test_transforms.py` at tag v0.4.1 (contains `test_repeat_shear_setting`).
+- [S6] napari issues #474 & #2579 (open undo/redo) and PR #3154 (3D paint undo fix, merged 2021-08-13) — captured via search API.
+- [S7] QuPath issue #1252 (2023-02-27) incl. exact pre-fix code link.
+- [S8] QuPath issue #1252 maintainer diagnosis comment (2023-03-14), DefaultProject.java ~L698.
+- [S9] QuPath commit `651964b9df859110dbd427c7f5499aa7580bbbc4` (2023-03-23) — full diff; no automated test added.
+- [S10] QuPath commit `15e715de813cf97a26ebec36600d2f76379f75fc` (2023-08-24) — CHANGELOG entry for #1252.
+- [S11] `qupath-core/src/test/java/qupath/lib/io/TestPathIO.java` at tag v0.5.0 — full capture; no backup-restore test.
+- [S12] QuPath URI-handling issue set: #1213→PR #1214 (v0.4.2), PR #1668 (v0.6.0), PR #1889 (v0.6.0) — captured via search API.
+- [S13] OME-NGFF specification version 0.4, ome/ngff-spec tree `a4c68004fdb8a8d822367205dc12f9574a32ddf8`, `index.md` (2023-05-25, W3C CG-FINAL); captured with truncation at 32768/36817 bytes (tail = plate/well metadata beyond our use).
+- [S14] tifffile README at version 2026.9.20 (BSD-3-Clause), captured with truncation at 32768/32898 bytes (tail = fsspec example).
+- [S15] RFC 7946 (GeoJSON), captured §§1–9 (32768/49143 bytes); §11.2 not captured and not relied upon.
+- [S16] ome/ngff repository listings: `specifications/` contains 0.1–0.6 + dev; 0.4 is a gitlink to the ngff-spec tree pinned above.
+
+*Every claim labeled [FACT] above is backed by an HTTP capture with SHA-256 recorded in `sources.json`; captures marked truncated note which sections fall outside the captured range. No execution receipt or repair history in this document is invented; where a chain could not be fully established (QuPath automated regression test), that limit is stated in place.*

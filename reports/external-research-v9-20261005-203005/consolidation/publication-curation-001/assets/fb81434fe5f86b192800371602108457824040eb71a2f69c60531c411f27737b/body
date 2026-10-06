@@ -1,0 +1,175 @@
+{
+  "schema": "er9.candidate-source-catalog.addendum.v1",
+  "catalog_role": "enrichment addendum for the frozen proposal",
+  "base_proposal": {
+    "path": "inputs/seed/proposal.md",
+    "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7"
+  },
+  "inheritance_status": "Earlier source catalog files were not located at inputs/seed/sources.json or out/final/sources.json during this run. Entries E01-E13 contain the evidence used by this addendum; they do not claim to reproduce unavailable earlier catalog records or identifiers.",
+  "entries": [
+    {
+      "id": "E01",
+      "title": "OME-NGFF specification 0.5, pinned source",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "version_or_commit": "ome/ngff-spec@d9164040dd61b3e4688494de1a58a69251b13f24 (v0.5; document date 2025-01-28)",
+      "capture_path": "inputs/source_context/0022.body",
+      "capture_id": "f6ab4397d26f460d957dc7603fbf08b9",
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "body_complete": true,
+      "locators": ["axes metadata", "coordinateTransformations", "multiscales", "labels metadata"],
+      "use": "Axis and unit domain, transform types/order/defaults, multiscale choice example, label image limits."
+    },
+    {
+      "id": "E02",
+      "title": "OME-Zarr specification 0.5 official page capture",
+      "url": "https://ngff.openmicroscopy.org/0.5/index.html",
+      "version_or_commit": "current 0.5 page captured 2026-10-05; content pinned by body SHA-256",
+      "capture_path": "inputs/source_context/0000.body",
+      "capture_id": "5e1577f1e24b483f9c9faa1821988023",
+      "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+      "body_complete": true,
+      "locators": ["sections 2.1-2.6; page identifies itself as Final Community Group Report dated 2026-10-01"],
+      "use": "Cross-check of the pinned 0.5 text against the currently captured official page.",
+      "limitation": "URL is a named version page, not a source-control commit; cite E01 for immutable specification text."
+    },
+    {
+      "id": "E03",
+      "title": "tifffile development README snapshot",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "version_or_commit": "master snapshot; README self-reports version 2026.9.20; no commit SHA in capture",
+      "capture_path": "inputs/source_context/0023.body",
+      "capture_id": "820a5a9673af4adaa05c9da2031ae009",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "body_complete": true,
+      "locators": ["Version and Requirements", "Notes", "Use Zarr to read parts of tiled pyramidal images"],
+      "use": "Identifies the newer return_as example and contemporary capability wording.",
+      "limitation": "Mutable branch capture, not a deployable pin."
+    },
+    {
+      "id": "E04",
+      "title": "tifffile development changelog snapshot",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "version_or_commit": "master snapshot, captured 2026-10-05; no commit SHA in capture",
+      "capture_path": "inputs/source_context/0006.body",
+      "capture_id": "ec24d46c000041ec8ba96ce6b742a6a2",
+      "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "body_complete": true,
+      "locators": ["2026.5.2", "2026.3.3"],
+      "use": "Shows return_as addition/aszarr deprecation and release history in the development snapshot.",
+      "limitation": "Mutable branch capture; used with exact release README captures, not as a release pin."
+    },
+    {
+      "id": "E05",
+      "title": "tifffile v2026.3.3 README at release commit",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/503cb4eb74dd28a6acc36a0e4624ba9c2001e021/README.rst",
+      "version_or_commit": "tifffile@503cb4eb74dd28a6acc36a0e4624ba9c2001e021 (release v2026.3.3)",
+      "capture_path": "public_captures/b0bf746c21330e9f9f81f40ab9873b0ffe3a3afb14a17a1e6199bcb7a4fc960c.body",
+      "capture_id": "741ad86300ca47ab8beb3b49399069cf",
+      "sha256": "b0bf746c21330e9f9f81f40ab9873b0ffe3a3afb14a17a1e6199bcb7a4fc960c",
+      "body_complete": true,
+      "locators": ["Version and Requirements", "Notes", "read-only aszarr example", "r+ mutation examples"],
+      "use": "Release-specific TIFF/Zarr API, documented read/write scope, support limits, and dependency versions."
+    },
+    {
+      "id": "E06",
+      "title": "tifffile v2026.5.2 README at release tag",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.5.2/README.rst",
+      "version_or_commit": "v2026.5.2 tag resolved to commit 63c5b378a838e7b61579373bb929b6c6e01595b7",
+      "capture_path": "public_captures/126b2de64dff6e656746d0c82aa27f083ebf8454927d8ed7649a6761158cced0.body",
+      "capture_id": "2bd53d37695747ab8beb3b49399069cf",
+      "sha256": "126b2de64dff6e656746d0c82aa27f083ebf8454927d8ed7649a6761158cced0",
+      "body_complete": true,
+      "pin_evidence": [
+        {"capture_id": "502ec3ea52a44065a609599e39179bc1", "path": "public_captures/74b87296d5dab8aac2669477d5f46e815fb9feaf407187a4f9b90c901463b064.body", "sha256": "74b87296d5dab8aac2669477d5f46e815fb9feaf407187a4f9b90c901463b064", "relation": "tag ref v2026.5.2 -> annotated tag object 48e2d9ba0bac802339839dab511e47a7d315e8fc"},
+        {"capture_id": "06446faa61ad4bf9a121764339d84473", "path": "public_captures/de10cdeb1aae01752ed071f81f52fdc66d1f0532b8a1c17aecfacc48edaa1ecb.body", "sha256": "de10cdeb1aae01752ed071f81f52fdc66d1f0532b8a1c17aecfacc48edaa1ecb", "relation": "annotated tag object -> commit 63c5b378a838e7b61579373bb929b6c6e01595b7"}
+      ],
+      "locators": ["Version and Requirements", "2026.5.2 changelog", "return_as Zarr example", "Notes"],
+      "use": "Exact released API after return_as was introduced; tested Zarr version and minimum in changelog."
+    },
+    {
+      "id": "E07",
+      "title": "tifffile issue #319",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/319",
+      "version_or_commit": "issue opened 2026-02-26; closed 2026-03-03",
+      "capture_path": "inputs/source_context/0010.body",
+      "capture_id": "174a2677b4974899b581e6ee07336961",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "body_complete": true,
+      "locators": ["issue title and body; reporter's v2026.2.20 vs v2026.2.24 PixelSizeX comparison"],
+      "use": "Reported TVIPS calibration change.",
+      "limitation": "Capture contains issue body, not the comment thread or reporter's TIFF bytes."
+    },
+    {
+      "id": "E08",
+      "title": "tifffile TVIPS fix commit",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/edede6002c817f056d75125ade0b20332d549cca",
+      "version_or_commit": "commit edede6002c817f056d75125ade0b20332d549cca; parent 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "capture_path": "inputs/source_context/0016.body",
+      "capture_id": "d98ef66b18794ac185c756b87ce37766",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "body_complete": true,
+      "locators": ["patch: CCITT codec branch; read_tvips_header conversion removal"],
+      "use": "Source-level evidence for decode/encode branching and reversal of silent TVIPS unit conversion."
+    },
+    {
+      "id": "E09",
+      "title": "tifffile regression-test commit",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "version_or_commit": "commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938; parent of fix commit E08",
+      "capture_path": "inputs/source_context/0017.body",
+      "capture_id": "744343a38392409d8b360a9308828c88",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "body_complete": true,
+      "locators": ["test_issue_tvips_pixelsize", "test_read_ccitt_rle", "test_read_ccitt_g3_multistrip", "test_read_ccitt_g4"],
+      "use": "Test assertions and fixture/API scope for TVIPS and CCITT readers.",
+      "limitation": "Commit response contains test patch, not test fixture bytes or execution results."
+    },
+    {
+      "id": "E10",
+      "title": "tifffile commit history around issue #319 and v2026.3.3",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "version_or_commit": "commit list captured for 2026-02-26 through 2026-03-06",
+      "capture_path": "inputs/source_context/0013.body",
+      "capture_id": "2d0da64bb8a749f28bf0fae816d19089",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "body_complete": true,
+      "locators": ["7d9eaedd test -> edede600 source fix -> 8c91499 changelog -> 503cb4eb release"],
+      "use": "Commit ancestry and release applicability."
+    },
+    {
+      "id": "E11",
+      "title": "napari scale and unit-aware rendering guide",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "version_or_commit": "napari/docs main snapshot; no commit SHA in capture",
+      "capture_path": "inputs/source_context/0026.body",
+      "capture_id": "911f1a111be642d9a525568f9ea56e4a",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "body_complete": true,
+      "locators": ["Scale and units live on layers", "How the scale bar gets its units", "What units do not do"],
+      "use": "Unit and axis-label behavior as a viewer documentation precedent.",
+      "limitation": "Current main docs are not a pinned napari release API contract."
+    },
+    {
+      "id": "E12",
+      "title": "Git tag ref for tifffile v2026.5.2",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/git/ref/tags/v2026.5.2",
+      "version_or_commit": "refs/tags/v2026.5.2 -> annotated tag object 48e2d9ba0bac802339839dab511e47a7d315e8fc",
+      "capture_path": "public_captures/74b87296d5dab8aac2669477d5f46e815fb9feaf407187a4f9b90c901463b064.body",
+      "capture_id": "502ec3ea52a44065a609599e39179bc1",
+      "sha256": "74b87296d5dab8aac2669477d5f46e815fb9feaf407187a4f9b90c901463b064",
+      "body_complete": true,
+      "use": "Tag resolution input for E06."
+    },
+    {
+      "id": "E13",
+      "title": "Annotated tag object for tifffile v2026.5.2",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/git/tags/48e2d9ba0bac802339839dab511e47a7d315e8fc",
+      "version_or_commit": "tag v2026.5.2 -> commit 63c5b378a838e7b61579373bb929b6c6e01595b7",
+      "capture_path": "public_captures/de10cdeb1aae01752ed071f81f52fdc66d1f0532b8a1c17aecfacc48edaa1ecb.body",
+      "capture_id": "06446faa61ad4bf9a121764339d84473",
+      "sha256": "de10cdeb1aae01752ed071f81f52fdc66d1f0532b8a1c17aecfacc48edaa1ecb",
+      "body_complete": true,
+      "use": "Immutable release commit resolution for E06."
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+# Critique review — frozen research proposal, Brief A (local biomedical image review workspace)
+
+Stage: critique (fresh ER9 role). Date: 2026-10-06. Reviewer: same-family fresh candidate, no private context from the research stage.
+Reviewed artifact: `inputs/prior/research/research/proposal.md` (sha256 `f8025b08ed6d0d7bbdd99baf7c8b5f31c31787faf41d9e8d5ec8f8ca67250aea`, 26,989 bytes) with its catalogs `sources.json` (`7dc26ab6…`), `witnesses.json` (`5e583c8b…`), `leads.json` (`cbb2f9d3…`), and `inputs/brief.md` (`27311c71…`, confirmed identical to the objective text).
+
+## 0. Method
+
+I re-fetched each consequential primary source independently with the admitted public-HTTP tool and compared the capture SHA-256 against the research catalog. For large captures I read specific byte ranges of the captured body. I also ran one independent arithmetic/mechanism check (CW1 below) and probed two unresolved leads. The required deliverable is this file; all critique-stage captures are registered in §9.
+
+Statuses used: **SUPPORTED** (independently confirmed; no change needed), **CORRECTION** (specific wording/fact must change; evidence given), **QUALIFIED** (true but needs a stated condition sharpened), **UNRESOLVED** (could not be established; do not invent).
+
+## 1. Verdict summary
+
+The proposal is source-grounded and survives verification at the byte level where it matters most. All five captures supporting the F3 issue→fix→release→test chain (napari undo-copy bug) were re-captured byte-identically or field-verified, and the chain's stated limits are accurate. F1 (tifffile) and F4 (NGFF 0.4) verify in full, including every quoted locator I checked. The executed witness W1's numeric core replicates independently. Three corrections are needed — two citation-precision fixes (milestone id vs number; F2 sentence conflates two tests) and one engineering-precision fix (the atomic-save recipe's Windows/durability caveat) — plus two lead updates: lead L4 (atomic-save authority) is now partially resolved by a captured SQLite primary source, and lead L1 (napari coordinate docs) remains unresolved after a further 404 probe. The proposal covers every brief obligation at plan level; W2–W5 must remain labeled UNEXECUTED. Nothing found undermines the architecture or the two-precedent structure.
+
+## 2. Claim-by-claim verification
+
+| Research claim | Research anchor | Critique evidence (this stage) | Status |
+|---|---|---|---|
+| F1: tifffile 2026.9.20 README — per-tile Zarr reads (`z['0'][2, 0, 128:384, 256:]`), memmap, `PhysicalSizeX(+Unit)`/`TimeIncrement`, ImageJ `resolution`/`spacing`/`unit`/`finterval`, XResolution tag 282, unsupported list (OJPEG, chroma subsampling without JPEG, mixed sample types, IPTC/ICC/XMP), MMStack "often corrupted or wrong", NDPI tag-65441 correction, NDTiff v0/1 unsupported, generic series `axes == 'QYX'`, revision 2026.9.15 `#334` | S1, sha `cdd8ac84…` | Re-captured **byte-identical** (same sha256, 32,898 bytes, 2026-10-06T11:11:36Z); every locator above found verbatim in the delivered range; `:Version: 2026.9.20` confirmed | **SUPPORTED** |
+| F2: test file at merge commit `f9322732…` shows per-layer `scale`/`translate`, world-vs-data extent helper, issue #2967 padding test | S5, sha `96d8ce98…` | Re-captured **byte-identical** (38,605 bytes). `test_world_data_extent` calls `check_layer_world_data_extent(layer, extent, (3, 1, 1), (10, 20, 5))`; `test_3d_video_and_3d_scale_translate_then_scale_translate_padded` cites issue #2967 and asserts `scale=(2,1,1)→(1,2,1,1)`, `translate=(5,5,5)→(0,5,5,5)`; negative scale/translate in `test_paint_3d_negative_scale` | **SUPPORTED**, wording correction R2 |
+| F3 design context: #474, #2579 open; #2579 memory-explosion warning; #3154 merged 2021-08-13 | S2, sha `e7dc7db0…` | Re-captured **byte-identical** (58,100 bytes, total_count 12). #474 open 2019-08-12; #2579 open 2021-04-20 with the verbatim "might lead to a memory explosion for our `data` properties" warning; #3154 PR merged 2021-08-13T11:46:55Z, body describes the "no op" undo item at drag start | **SUPPORTED** |
+| F3 failure: PR #3203 by jni, opened 2021-08-19; tensorstore reference-returning `__getitem__`; merged 2021-08-20T03:37:03Z; merge `f9322732…`; head `a42730cc…`; +12/−2, 1 file; merged_by sofroniewn; milestone 0.4.11 | S3 | Re-captured (sha `9018b2d2…` — differs from S3's `7fd51c9b…` because GitHub API bodies embed mutable repo/star metadata; all claimed fields verified): created 2021-08-19T02:14:02Z, merged 2021-08-20T03:37:03Z, additions 12, deletions 2, changed_files 1, body quotes the NumPy-copy/tensorstore-reference sentence verbatim | **SUPPORTED**, correction R1 |
+| F3 fix: diff wraps `fill()` and `paint()` history saves in `np.array(..., copy=True)`; no test in diff | S4, sha `0fd86465…` | Re-captured **byte-identical** (1,167 bytes); exactly the two hunks in `napari/layers/labels/labels.py`; no test file | **SUPPORTED** |
+| F3 release: v0.4.11 lists "Ensure we save a copy of existing value for undo (#3203)" (Improvements), "Bug fix for undo history in 3D painting (#3154)" (Bug Fixes), #3153, #3310; release id 48932319, published 2021-09-03T00:59:21Z, target `35d196f6…` | S6, sha `07bae42e…` | Re-captured **byte-identical** (24,754 bytes); all items found in the stated sections (#3310 under "Build Tools, Tests, Documentation, and other Tasks"); 3D annotation items #3037/#3074/#3108/#3023/#3140 also present (supports lead L7) | **SUPPORTED** |
+| F3 tests at merge commit: parametrized `test_undo_redo` asserts data equals pre-edit after `undo()` and post-edit after `redo()`; `test_fill_tensorstore` opens zarr-file-backed tensorstore and checks `fill` result | S5 | Verified in byte-identical recapture; both tests match the proposal's description exactly | **SUPPORTED** |
+| F3 origin: PR #533, merged 2019-09-28, milestone 0.2, Ctrl+Z/Ctrl+Shift+Z, stack reset on viewed-dimension change | S8, sha `ccc790de…` | Re-captured **byte-identical** (9,962 bytes); all fields verbatim | **SUPPORTED** |
+| F3 stated limit: fix PR added no test; no dedicated reference-vs-copy regression test established | S3/S4/S5 | Confirmed: diff is labels.py only; `test_undo_redo` and `test_fill_tensorstore` exist at the merge commit; nothing in my captures establishes a dedicated regression test. The proposal's honest limit is correct | **SUPPORTED** |
+| F4: NGFF 0.4 — up to 5-D, time before channel before spatial; axes name/type/unit; §3.3 coordinateTransformations; §3.4 multiscales; labels dims same-or-1 | S7, sha `ca4780a3…` | Re-captured **byte-identical** (163,120 bytes); read byte ranges 65536–131072: §2.1 comment "All image arrays must be up to 5-dimensional with the axis of type time before type channel, before spatial axes"; labels comment "either the same as the corresponding dimension of the image, or `1` if that dimension of the label is irrelevant"; §3.1 axes fields (name MUST unique; type SHOULD space/time/channel, MAY custom; unit SHOULD, UDUNITS-2); §3.3 types identity/translation/scale with `path` or vector; §3.4 datasets MUST contain exactly one `scale`, MAY one `translation` listed after `scale` | **SUPPORTED** |
+| F5 / W1: float32 loses the 4 nm offset at 231000.004 µm (ulp 2⁻⁶ µm ≈ 15.6 nm); index 2²⁴+1 collapses; float64 JSON round-trips | W1, receipt `exec-jehhegi9` | Independently replicated by critique check CW1 (below): float32 → 231000.0, abs error 0.003999999986262992, ulp 15.625 nm; index loss 1.0; JSON round-trip exact | **SUPPORTED** |
+| §3 independence of P1 (napari, app layer) and P2 (tifffile, library) | — | Mechanism independence holds (coordinate/editing model vs format I/O; different failure modes per F1 vs F3). Nuance: they share an ecosystem — the 0.4.11 release notes include "Use compression=('zlib', 1) for new tifffile (#3040)". Worth one sentence of acknowledgment, not a structural change | **QUALIFIED** |
+
+## 3. Corrections
+
+**R1 — Milestone identifier (proposal F3 sentence "The 0.4.11 milestone (id 28)"; sources.json S3 pin "milestone 0.4.11 (id 28 …)").**
+Evidence: PR #3203 API record shows the milestone object with `"id": 6864831` and `"number": 28`, title "0.4.11", state closed, closed_at 2021-09-07T00:08:35Z, `closed_issues: 217`. Same object is visible in the S2 search capture. Required change: say "milestone number 28 (GitHub milestone id 6864831)". The "217 closed issues" figure is correct (`closed_issues: 217`). Affected dependencies: F3 wording, sources.json S3 pin. Trivial, but pin fields should be exact.
+
+**R2 — F2 sentence conflates two distinct tests.**
+The proposal reads as if `scale=(1, 2, 1, 1)`, `translate=(5, 5, 5)` construction and the `check_layer_world_data_extent(layer, extent, (3, 1, 1), (10, 20, 5))` assertion are one test. They are two: `test_world_data_extent` constructs `Labels(data)` *without* explicit scale/translate and calls the helper; the explicit scale/translate constructions appear in `test_3d_video_and_3d_scale_translate_then_scale_translate_padded` (with the #2967 comment) and in `test_get_value_ray_3d` / `test_paint_3d_negative_scale` (translate `(-200, 100, 100)` with negative scales). Both facts are individually true at commit `f9322732…`; only the merged sentence is imprecise. Required change: attribute each fact to its test. Affected dependencies: F2 wording only; the architectural lesson (per-axis transforms on the layer; round-trip tests) is unchanged.
+
+**R3 — Atomic-save recipe needs sharper failure conditions (proposal §7, assumption A2, lead L4).**
+The recipe "write `tmp/<artifact>.new`, fsync, `os.replace`, manifest last" is sound on POSIX same-volume targets, but the stated caveat is incomplete in three ways, now source-informed: (a) durability requires the *content* fsync to precede the rename and the containing-directory entry to survive the crash — SQLite's "Atomic Commit" documentation (captured this stage, sha `5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1`, Last-Modified 2026-09-11) documents the canonical journal → flush → write → flush → commit-point ordering, and warns in its Hardware Assumptions section that "the flush and fsync primitives are broken on some versions of Windows and Linux", which is precisely why the proposal's generation-counter + hash-audit-on-open mitigation must stay; (b) on Windows, `os.replace` is atomic for same-volume targets but fails while another process holds the destination open (sharing violation), so the writer needs a retry, not just a "same-volume" note; (c) SQLite's document is about its own rollback-journal design, not about `rename(2)` semantics — it supports the *ordering pattern*, not the POSIX rename claim, which remains engineering inference. Required change: rewrite §7's caveat per (a)–(c), add the SQLite source to the catalog, and require W4 (kill test) to run on the team's actual shared-storage filesystem before A2 is trusted. Affected dependencies: §7, A2, L4, W4.
+
+**R4 (record-keeping) — S3 capture identity drift.**
+S3's recorded sha256 (`7fd51c9b…`) can no longer be reproduced byte-for-byte because GitHub API responses embed mutable fields; my recapture is `9018b2d2…` with all claimed fields verified. This is not a defect, but sources.json should note that S3's identity is field-level, not byte-stable, so a future verifier does not misread the mismatch as fabrication.
+
+## 4. Lead updates
+
+- **L4 (atomic save authority): PARTIALLY RESOLVED** — see R3. Remaining gap: a normative `rename(2)`/`ReplaceFile` reference and network-share (NFS/SMB) ordering behavior are still uncaptured; keep the shared-storage clause of L4 open.
+- **L1 (napari coordinate-systems docs): STILL UNRESOLVED.** I additionally probed the hyphenated variant `https://napari.org/stable/deep-dives/coordinate-systems.html` on 2026-10-06T11:15:06Z: HTTP 404, GitHub Pages body sha256 `b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368` — the same 404 body the research stage recorded for the underscore variant. Both variants fail; do not fabricate a docs URL. F2 stays pinned to the code/tests at `f9322732…`, which is sufficient.
+- **L5 (OME-Zarr opportunity): corroborated** by the tifffile README Revisions 2026.5.2 entries ("Update ZarrTiffStore to zarr format 3 and multiscales to NGFF 0.5", "Update multiscales zarr format 2 fsspec files to NGFF 0.4"), byte-verified this stage.
+- L2, L3, L6–L10: no contradictions found; L3 (extracting NGFF §3.3/§3.4 schema text) is now materially easier since this stage verified those sections lie within capture bytes 98304–131072.
+
+## 5. Critique-executed check CW1
+
+- **Status:** EXECUTED_BY_CANDIDATE (critique stage). Receipt `exec-1yi3q5n0`, exit 0, completed 2026-10-06T11:16:40Z. Code sha256 `4d51da78cfb1b9a9fcd12df5b57cb361ae68ffcf0bd5c332dba814aa57fe1b5d`; no external input. (First attempt `exec-58jnxce8` failed, exit 1, due to a slice-iteration bug in my own code; corrected and rerun.)
+- **Expected behavior and justification:** IEEE-754 binary32 has a 24-bit significand; at 231000.004 µm ∈ [2¹⁷, 2¹⁸) the ulp is 2⁻⁶ µm = 15.625 nm, so a 4 nm offset must round away and 2²⁴+1 must collapse to 2²⁴; CPython's `json` emits shortest-repr strings so float64 must round-trip. A backend whose `__getitem__` returns a live view (the tensorstore behavior described in napari PR #3203's body) makes reference-storing undo a no-op; copy-storing undo restores prior values.
+- **Observed (stdout, exit 0):** `float32_value_um: 231000.0`; `float32_abs_error_um: 0.003999999986262992`; `ulp_nm: 15.625`; `index_in_float32: 16777216.0` (loss 1.0); `json_float64_roundtrip_equal: true` (repr `"231000.004"`); `undo_without_copy_sees: [99.0, 99.0]`; `undo_with_copy_restores: [1.0, 2.0]`. stdout sha256 `5ecf74e6e7c02e1f23a9bef2fb050668e47842eb60214c8733b78476b6cb3ea1`.
+- **Result:** replicates W1's numeric findings exactly (via `struct`-based binary32 rounding rather than NumPy — same IEEE-754 semantics, different mechanism) and demonstrates the #3203 mechanism class in isolation, supporting the proposal's W5 design.
+- **Scope limits:** pure-Python sandbox check; proves IEEE-754/CPython-JSON behavior and the reference-vs-copy mechanism class only. It does not establish that any application stores coordinates any particular way, and it is not evidence of tifffile, napari, or the proposed application's behavior. No tensorstore or NumPy was executed.
+
+## 6. Preserved supported claims (no change)
+
+F1 in full, including the support boundary and axis-ambiguity evidence; the entire F3 chain with its stated limits; F4's vocabulary adoption; W1's numeric core; the C1–C8 component split, §5 contract rules, §6 workflow mapping, §9 boundary cut, and §11 opportunity/alternative are consistent with the verified facts and are clearly labeled CHOICE/INFER. The catalog's honesty items (recorded 404s, truncated-delivery notes, W2–W5 UNEXECUTED labels) check out.
+
+## 7. Brief-coverage audit
+
+All brief obligations are present in the research proposal: minimum workflow table (§6); data contract with explicit coordinate chain and float64 rule (§5, backed by F5/CW1); components and bounded alternative (§4, §11); pinned sources (catalog + inline); assumptions/unsupported cases (§13); styles, keyboard operation, undo/redo with the #3203/#533 lessons, original-vs-derived distinction, export honesty and verification (§4 C5–C7, §8, §10); accessibility (§10); atomic save/recovery/identity/relocation/bundle trade-off (§7); support boundary and fail-closed unsupported-input contract (§9); optional ideas separated into leads.json; two precedents with independence arguments (§3); one deep issue→fix→release→test chain with limits (F3). Residual gaps to carry forward, none blocking:
+1. The 3 GB bounded-access target remains assumption A1 with W2 UNEXECUTED — keep labeled; do not promote to fact.
+2. W3–W5 remain UNEXECUTED; §8's verification procedure is a design, not a demonstrated behavior.
+3. The P1/P2 independence sentence should acknowledge the shared ecosystem (R-nuance in §2, last row).
+4. The napari/scikit-image doc anchors (L1, L2) remain unresolved; the code/test pins are the evidence base and are sufficient.
+
+## 8. Actionable edits for the next candidate (self-contained)
+
+1. Proposal F3: change "(id 28)" to "milestone number 28, GitHub milestone id 6864831" (R1).
+2. Proposal F2: split the scale/translate fact from the world-extent-helper fact and attribute each to its test (R2).
+3. Proposal §7 / §13 A2: apply R3's three-part caveat; add SQLite atomic-commit source (sha `5a5be7b6…`) to the catalog; keep L4's network-share clause open; require W4 on real shared storage.
+4. sources.json S3: add a field-level (non-byte-stable) identity note (R4); optionally append this stage's captures (§9).
+5. leads.json: mark L4 partially resolved per R3; append L1's additional 404 probe (hyphenated URL, 404 body sha `b6205073…`); add L5 corroboration pointer (README Revisions 2026.5.2).
+6. witnesses.json: add CW1 as an independent critique-stage replication of W1 plus the #3203 mechanism demo; keep W2–W5 PROPOSED_UNEXECUTED.
+
+## 9. Critique-stage capture register
+
+All captured 2026-10-06 with `public_https_get` (exact response-body bytes; sha256 of body):
+
+| URL | sha256 | captured_utc (UTC) | vs research catalog |
+|---|---|---|---|
+| raw.githubusercontent.com/cgohlke/tifffile/master/README.rst | `cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48` | 11:11:36 | byte-identical to S1 |
+| api.github.com/repos/napari/napari/pulls/3203 | `9018b2d2e2bf1e8492c82568151abf8148b2dae8ba3f407a1144ec6032df7663` | 11:11:38 | fields identical; bytes differ (mutable API metadata) — see R4 |
+| github.com/napari/napari/pull/3203.diff | `0fd86465e6ff23fc886980993d579d09d6e8d7130d57e7652dc3c42ed1543b63` | 11:11:39 | byte-identical to S4 |
+| raw.githubusercontent.com/napari/napari/f9322732…/napari/layers/labels/_tests/test_labels.py | `96d8ce9868913f56d8c1390936e451ccd2af3880d51c0b633d20230dbd9adfc6` | 11:11:39 | byte-identical to S5 |
+| api.github.com/repos/napari/napari/releases/tags/v0.4.11 | `07bae42e860055c96267ef8110633ac942ce370f83de6aa5c5ab563a6d898e28` | 11:12:37 | byte-identical to S6 |
+| ngff.openmicroscopy.org/0.4/index.html | `ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269` | 11:12:38 | byte-identical to S7 (spec text verified at capture bytes 65536–131072) |
+| api.github.com/search/issues?q=repo:napari/napari+undo+in:title | `e7dc7db01bced2cde59fa40ce8606cac833cb9072368e2cef76aee9b9a4a5564` | 11:12:38 | byte-identical to S2 |
+| api.github.com/search/issues?q=repo:napari/napari+undo+redo+in:title | `ccc790dee0fc2f9b88eff1f94fd56f5164f149b295a744a2af2679f8cceae099` | 11:12:39 | byte-identical to S8 |
+| www.sqlite.org/atomiccommit.html | `5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1` | 11:15:06 | new (resolves L4 partially; key text in capture bytes 0–32768) |
+| napari.org/stable/deep-dives/coordinate-systems.html | `b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368` | 11:15:06 | new 404 probe (L1 still unresolved) |
+
+This review is standalone: every correction above carries its own evidence, and no claim here depends on information outside the frozen inputs, the re-captured public sources, or the receipt `exec-1yi3q5n0`.

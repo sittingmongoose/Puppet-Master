@@ -1,0 +1,310 @@
+{
+  "schema": "er9.candidate-source-catalog.v1",
+  "status": "authentic unscored candidate revision",
+  "purpose": "Evidence inventory for out/seed/revision.md. These source records identify captured bytes and bound claims; they do not qualify application behavior.",
+  "base_artifacts": {
+    "proposal": {
+      "path": "inputs/seed/proposal.md",
+      "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7"
+    },
+    "completed_critic": {
+      "path": "inputs/prior/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/seed/critique.md",
+      "sha256": "c3b00093877ccf26a2553c9ed7dbfb21bfe79dbdc1e0e7cd0e69cdf34ff15ef7"
+    },
+    "source_index": {
+      "path": "inputs/source_context/index.json",
+      "sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+      "entries": 33
+    }
+  },
+  "inheritance_and_capture_limits": [
+    "The original sources.json, witnesses.json, and leads.json were not available at the checked inputs/seed paths; the completed critic also records their absence. This catalog is reconstructed from proposal citations, source_context/index.json, attached public captures, and new exact-context public captures. IDs here are revision-local and do not assert a recovered mapping to legacy S1-S16.",
+    "The source index includes complete 404 response captures. A 404 is recorded as an unavailable URL/version attempt and is not positive source evidence.",
+    "napari and QuPath documentation captures point to moving main/stable pages. Their local content hashes pin the captured statements, not an immutable implementation or release.",
+    "Captures establish source text and commit/release records. They do not establish that every cited implementation works in this proposed application or that a regression test passed in a runtime."
+  ],
+  "sources": [
+    {
+      "source_id": "SRC-NGFF-05",
+      "title": "OME-NGFF specification 0.5",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "pin": "Git commit d9164040dd61b3e4688494de1a58a69251b13f24; capture SHA-256 below",
+      "capture": {
+        "path": "inputs/source_context/0022.body",
+        "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Specification lines 46-54 (storage), 177-190 (axes), 272-287 (transform types), 290-319 (multiscales).",
+      "supports": [
+        "NGFF 0.5 uses Zarr format 3.",
+        "Multiscales constrain axis count/types/order and dataset transforms; a dataset has exactly one scale, optional translation follows it, and group transforms follow dataset transforms.",
+        "Scale may be relative to the first resolution when physical scaling is not available; path describes transform-vector storage rather than a transform type."
+      ],
+      "limits": "Specification evidence only. Does not demonstrate reader or exporter interoperability."
+    },
+    {
+      "source_id": "SRC-NGFF-04",
+      "title": "OME-NGFF specification 0.4",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/0.4/index.md",
+      "pin": "Version path 0.4; captured full body",
+      "capture": {
+        "path": "public_captures/fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211.body",
+        "sha256": "fc39309d1ea85bfcebd469008e3111951a605870cc8292301c0de165767b0211",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "On-disk layout and multiscales/transform sections; captured complete body.",
+      "supports": [
+        "NGFF 0.4 specifies Zarr format 2.",
+        "Relevant scale/translation order and relative-scale distinction used in the proposal."
+      ],
+      "limits": "Specification evidence only; no 0.4 reader fixture was executed."
+    },
+    {
+      "source_id": "SRC-NAPARI-IMAGE",
+      "title": "napari image layer documentation",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "pin": "Captured main-branch content hash; no immutable documentation commit supplied",
+      "capture": {
+        "path": "inputs/source_context/0020.body",
+        "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Lines 163-192 (lazy arrays/display), 207-267 (multiscale), 269-298 (channels), 407-426 (contrast limits and data).",
+      "supports": [
+        "Viewer precedent for lazy array and multiscale concepts, channel display, and contrast limits separate from underlying values."
+      ],
+      "limits": "Documentation snapshot only. It does not establish performance, persistence, undo, or behavior of the proposed viewer."
+    },
+    {
+      "source_id": "SRC-NAPARI-UNITS",
+      "title": "napari units documentation",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "pin": "Captured main-branch content hash; no immutable documentation commit supplied",
+      "capture": {
+        "path": "inputs/source_context/0026.body",
+        "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Lines 16-47 (scale/units) and 89-100 (axis labels versus units).",
+      "supports": ["Viewer precedent for treating scale, units, and axis labels as explicit layer metadata."],
+      "limits": "Documentation snapshot only; not an application data contract."
+    },
+    {
+      "source_id": "SRC-NAPARI-SHAPES",
+      "title": "napari shapes layer documentation",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "pin": "Captured main-branch content hash; no immutable documentation commit supplied",
+      "capture": {
+        "path": "inputs/source_context/0027.body",
+        "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Lines 429-474 (N-dimensional shapes) and 576-608 (3D display/editing constraints).",
+      "supports": ["Viewer precedent for N×D shape geometry and slice matching; documents a 3D editing limitation."],
+      "limits": "Documentation snapshot only; does not prove the proposed editor's interaction or persistence."
+    },
+    {
+      "source_id": "SRC-TIFF-README",
+      "title": "tifffile README at captured master snapshot; package release 2026.9.20",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "Package version named in captured README: 2026.9.20; source file itself is a moving master snapshot pinned only by content hash",
+      "capture": {
+        "path": "inputs/source_context/0023.body",
+        "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Lines 7-31 (reading and access mechanisms), 67-85 (tested requirements), 183-272, 565-583, 759-782 (limits and features).",
+      "supports": [
+        "TIFF access mechanisms include arrays, Zarr-style access, strips/tiles/pages/SubIFDs and pyramids, with memory mapping for some layouts.",
+        "The README lists tested versions CPython 3.12.10, NumPy 2.5.3, imagecodecs 2026.8.16, and Zarr 3.4.0."
+      ],
+      "limits": "Mechanisms do not prove viewport-bounded decoding or latency for every layout; the listed versions are a candidate profile, not an application compatibility result."
+    },
+    {
+      "source_id": "SRC-TIFF-CHANGES",
+      "title": "tifffile change history capture",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "pin": "Moving master history snapshot; content-hash pinned",
+      "capture": {
+        "path": "inputs/source_context/0006.body",
+        "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Lines 54-82 (Zarr changes); lines 92-98 (2026.3.3 TVIPS note).",
+      "supports": ["History records the relevant Zarr format changes and the 2026.3.3 statement not to convert TVIPS pixel sizes."],
+      "limits": "Changelog alone is not a runtime test or a full repair chain."
+    },
+    {
+      "source_id": "SRC-TIFF-319",
+      "title": "tifffile issue 319 report",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/319",
+      "pin": "GitHub issue 319 capture",
+      "capture": {
+        "path": "inputs/source_context/0010.body",
+        "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Issue body reports PixelSizeX for tifffile 2026.2.20 and 2026.2.24; issue title mentions 2026.2.26.",
+      "supports": ["A concrete TVIPS metadata value discrepancy was reported: 1.4208036661148071 versus 1.4208036661148072e-09."],
+      "limits": "The title and body version differ. The linked file bytes are absent. This establishes reported behavior, not a reproduced defect or all intervening versions."
+    },
+    {
+      "source_id": "SRC-TIFF-TEST",
+      "title": "tifffile regression-test commit for issue 319",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "pin": "Commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938, 2026-03-03 18:56 UTC",
+      "capture": {
+        "path": "inputs/source_context/0017.body",
+        "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Patch adds test_issue_tvips_pixelsize and assertions involving PixelSizeX and PhysicalPixelSizeY; fixture path tvips/TVIPS_bin4.tif.",
+      "supports": ["A focused regression test was added before the captured fix commit."],
+      "limits": "Fixture bytes and test execution receipt are absent; no red/green run is established."
+    },
+    {
+      "source_id": "SRC-TIFF-FIX",
+      "title": "tifffile corrective-code commit for issue 319",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/edede6002c817f056d75125ade0b20332d549cca",
+      "pin": "Commit edede6002c817f056d75125ade0b20332d549cca, 2026-03-03 19:06 UTC; captured parent is test commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "capture": {
+        "path": "inputs/source_context/0016.body",
+        "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Patch comments out the nm-to-m conversion and names issue 319.",
+      "supports": ["A code change addressing the cited TVIPS conversion is present and follows the test commit."],
+      "limits": "Commit evidence is not proof of test execution or package behavior in this project."
+    },
+    {
+      "source_id": "SRC-TIFF-RELEASE",
+      "title": "tifffile issue 319 changelog and release trail",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "pin": "Captured commit list; changelog commit 8c91499… and release commit 503cb4eb74dd28a6acc36a0e4624ba9c2001e021 (v2026.3.3)",
+      "capture": {
+        "path": "inputs/source_context/0013.body",
+        "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Commit sequence after corrective code; release patch says not to convert TVIPS pixel sizes to metres (#319).",
+      "supports": ["The fix is followed by a changelog and release commit identifying v2026.3.3."],
+      "limits": "Sequence supports issue-to-test/code/changelog/release provenance, not a red/green test result or universal version-bound behavior."
+    },
+    {
+      "source_id": "SRC-TIFF-54",
+      "title": "tifffile issue 54, Micro-Manager OME-TIFF/series lead",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/54",
+      "pin": "GitHub issue 54 capture",
+      "capture": {
+        "path": "inputs/source_context/0009.body",
+        "sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Issue report concerning Micro-Manager OME-TIFF series shape/dimensionality.",
+      "supports": ["Useful lead for a realistic series and axis fixture."],
+      "limits": "No verified linked repair/test chain; not evidence of current behavior."
+    },
+    {
+      "source_id": "SRC-QUPROJECT",
+      "title": "QuPath project structure documentation",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "pin": "Captured stable documentation bytes; not an immutable QuPath release pin",
+      "capture": {
+        "path": "inputs/source_context/0031.body",
+        "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Lines 115-157 (project entries, URIs, identifiers, and sidecars).",
+      "supports": ["Project/relocation precedent for a registry, image URIs, stable entry IDs, and per-machine path handling."],
+      "limits": "Documentation snapshot only; not behavior of this proposed format."
+    },
+    {
+      "source_id": "SRC-QUEXPORT",
+      "title": "QuPath annotation export documentation",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "pin": "Captured stable documentation bytes; not an immutable QuPath release pin",
+      "capture": {
+        "path": "inputs/source_context/0030.body",
+        "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Lines 125-140 (pixel units and origin/export differences), 287-292 (label overwrite order).",
+      "supports": ["Export geometry and origin/unit conventions can vary; shape conversion and label-order losses should be explicit."],
+      "limits": "Documentation snapshot only; downstream consumer interpretation remains unverified."
+    },
+    {
+      "source_id": "SRC-RENAME",
+      "title": "Linux rename(2) manual page",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "pin": "Captured manual page by content hash; applies to documented Linux interface",
+      "capture": {
+        "path": "inputs/source_context/0032.body",
+        "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Lines 100-120 (atomic destination replacement), 306-311 (EXDEV), 370-376 (NFS caveat).",
+      "supports": ["Rename replacement concerns one pathname; cross-device and NFS outcomes require explicit handling."],
+      "limits": "Linux documentation does not qualify Windows, macOS, SMB, all NFS implementations, or power-loss durability."
+    },
+    {
+      "source_id": "SRC-ZARR-PY-34",
+      "title": "Zarr-Python 3.4.0 migration guide",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/v3.4.0/docs/user-guide/v3_migration.md",
+      "pin": "Git tag v3.4.0",
+      "capture": {
+        "path": "public_captures/3018e430ceef3a7cd42de88b451be1ec12e884686575fadd4bdd34e9cb59a269.body",
+        "sha256": "3018e430ceef3a7cd42de88b451be1ec12e884686575fadd4bdd34e9cb59a269",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Migration guide discussion of Zarr format 2 and 3 support, format-2 creation, and breaking API changes.",
+      "supports": ["Zarr-Python 3.4.0 documents support for Zarr formats 2 and 3 and migration/API changes."],
+      "limits": "It does not prove OME-NGFF reader compatibility or our package matrix; matching format fixtures remain required."
+    },
+    {
+      "source_id": "SRC-PYSIDE6-6112",
+      "title": "PySide6 6.11.2 package metadata",
+      "url": "https://pypi.org/pypi/PySide6/6.11.2/json",
+      "pin": "PyPI release 6.11.2, uploaded 2026-08-18",
+      "capture": {
+        "path": "public_captures/95d186b76e5cbee7ff624d737a7437156e4825d5b6ea10651812a858f465a451.body",
+        "sha256": "95d186b76e5cbee7ff624d737a7437156e4825d5b6ea10651812a858f465a451",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Release metadata: Python requirement and exact Shiboken6, PySide6_Essentials, and PySide6_Addons requirements.",
+      "supports": ["The release exists, requires Python >=3.10,<3.15, and declares matching 6.11.2 Qt packages."],
+      "limits": "Package metadata does not establish installation, platform availability, or compatibility with VisPy and target graphics drivers."
+    },
+    {
+      "source_id": "SRC-VISPY-017",
+      "title": "VisPy 0.17.0 package metadata",
+      "url": "https://pypi.org/pypi/vispy/0.17.0/json",
+      "pin": "PyPI release 0.17.0",
+      "capture": {
+        "path": "public_captures/73a5576833f7df67fd638a1d3ecd49bb8e25a62897626be519e18925187122fb.body",
+        "sha256": "73a5576833f7df67fd638a1d3ecd49bb8e25a62897626be519e18925187122fb",
+        "http_status": 200,
+        "body_complete": true
+      },
+      "locator": "Release description and metadata for Python requirement, core dependencies, and app/gloo/scene maturity statements.",
+      "supports": ["Release metadata for version 0.17.0 and its stated Python/dependency requirements; captured release description characterizes app/gloo as relatively stable and scene as experimental."],
+      "limits": "Package metadata and description do not establish Qt backend integration, runtime compatibility, or application rendering performance."
+    }
+  ]
+}

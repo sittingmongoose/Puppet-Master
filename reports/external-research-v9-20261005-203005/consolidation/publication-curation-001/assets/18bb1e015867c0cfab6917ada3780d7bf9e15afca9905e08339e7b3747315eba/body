@@ -1,0 +1,104 @@
+# Critique review — C-03-CONFIRMATION-CLOCK-FRESH-R001 (critique stage, a001)
+
+- Role: fresh source-grounded critique (same arm H1: offline audio review/edit exchange for an oral-history team).
+- Written: 2026-10-06. Stage allocation 900 s; this review was written under that clock (initial remaining ≈ 868 s).
+- Intended target: the frozen research-stage proposal and catalogs attached by ops under `inputs/prior/`.
+- Actual result: **the predecessor artifacts are absent.** This review therefore (a) documents that absence with its probe evidence, (b) delivers the independently executed source verification and pins this stage could still produce, and (c) provides a complete, self-contained verification contract so the next fresh same-family candidate can research, and a later critic can review, without any private context.
+
+Execution labels used below:
+- **[EXECUTED-by-candidate]** — a check this stage actually ran via the admitted tools, with capture identity or tool receipt.
+- **[INFERRED]** — engineering/semantic inference from executed observations; not a source fact.
+- **[UNEXECUTED]** — proposed or required-but-not-performed; preserve as open.
+
+---
+
+## 1. Finding C-0 (blocking): predecessor research artifacts are absent from `inputs/prior/`
+
+**Status: [EXECUTED-by-candidate] (probe log), conclusion [INFERRED] from FileNotFoundError pattern.**
+
+The brief states ops attaches the full same-arm predecessor under `inputs/prior/`. That directory exists (direct reads return a boundary `ValueError`, consistent with an existing directory; a nonexistent path returns `FileNotFoundError`), but no artifact could be located. Probes performed, all returning `FileNotFoundError` unless noted:
+
+- Files: `inputs/prior/manifest.json`, `proposal.md`, `sources.json`, `witnesses.json`, `leads.json`, `navigation.json`, `index.json`, `research-proposal.md`, `research_proposal.md` (implied by directory probes), `prior.md`, `NAVIGATION.md`, `README.md`
+- Directories: `inputs/prior/research`, `inputs/prior/out`, `inputs/prior/artifacts`, `inputs/prior/proposal`, `inputs/prior/bundle`, `inputs/prior/critique`
+- Nested: `inputs/prior/out/research/proposal.md`, `inputs/prior/out/research/sources.json`, `inputs/prior/research/proposal.md`, `inputs/prior/research/proposal/proposal.md`
+- Adjacent roots: `inputs/proposal.md`, `inputs/research/proposal.md`, `inputs/NAVIGATION.md` (workspace-root `NAVIGATION.md` is outside the admitted case-file root and unreadable; recorded, not used)
+
+Only `inputs/STAGE_CLOCK.json` (sha256 `a719156cc3eaf69528ff8798cfa9133cef1b5fde964b1f2fa53e5d99f3e1f386`, 687 bytes) was present and readable.
+
+**Limits of this finding:** the error-code semantics (ValueError ⇒ directory/ENOTDIR, FileNotFoundError ⇒ absent) are inferred from observed tool behavior, not documented by the tool. A file could theoretically exist under a name outside my 26 guesses; I cannot enumerate the directory with admitted tools. **I did not invent, reconstruct, or simulate a predecessor.** No claim-level verification of a research proposal was possible, and none is claimed.
+
+**Consequences and instructions (binding for the next same-family candidate):**
+1. There is **no frozen research proposal to preserve or correct**. Do not cite `out/research/proposal.md` contents, its catalogs, its findings IDs, or its sources as if they existed. The final proposal must be built fresh from the brief.
+2. The catalogs `sources.json` / `witnesses.json` / `leads.json` do not exist anywhere in this arm's current outputs; whoever produces the final proposal must create them under their stage's required paths, and may reuse the three pins in §2 (public bytes, independently re-fetchable).
+3. §3 is the review/verification contract the next candidate must satisfy; a later critic should review against it claim by claim.
+
+---
+
+## 2. Independently executed evidence gathered this stage
+
+All captures are exact HTTP response bodies obtained via the admitted `public_https_get`, with sha256 capture identity. Per the tool's own disclosure, a captured response does not by itself establish semantic understanding; the quotes below are located excerpts read from the delivered bytes. Labels: source facts (S), inference for our plan (I).
+
+### 2.1 Audacity manual — "Managing Audacity Projects" (AUP3)
+- URL `https://manual.audacityteam.org/man/audacity_projects.html`, HTTP 200, captured 2026-10-06T08:11:05Z, sha256 `59c7f2d1620a96cbe81172b57ef012229b3f6d88d5889c91b60beb9cef5ee5f1` (37,614 bytes; first 32,768 bytes delivered inline, remainder in `public_captures/59c7f2d1….body`). Page renders under MediaWiki 1.28.2.
+- S: A project is a single `.aup3` file; saving preserves tracks/clips/labels/envelopes/gain/pan, but the **undo history is not saved with the project** — history starts afresh on reopen.
+- S: Two temp files (`*-wal`, `*-shm`) accompany an open project; deleting/moving them while open "will destroy the project"; they are removed on close.
+- S: On close/exit the project is **compacted** (undo/temporary space removed) with a progress dialog; crash recovery is automatic on relaunch and "you may lose the very last thing you were doing."
+- S: Trim is nondestructive — trimmed audio is retained but hidden, which can cause "project bloat"; there is no built-in command to purge hidden audio.
+- S: AUP3 cannot be opened by versions prior to 3.0.0 (forward-compatibility break at a format migration).
+- I (lesson for our data contract): a unitary project file that folds undo history and edit buffers into the same store creates bloat, fragile sidecar files, and version-lock. Our proposal should keep: original media **referenced by content hash**, an append-only journal for the edit graph, undo as derivable graph history (not stored audio), and a separate rendered-export store.
+
+### 2.2 Audacity manual — "Error: Unsuitable drive"
+- URL `https://manual.audacityteam.org/man/error_unsuitable_drive.html`, HTTP 200, captured 2026-10-06T08:11:23Z, sha256 `8e3697cfd5538151a7372b31254bcfba126cfa8762d73ab00c1a7d6b01e1b1e0` (18,298 bytes, complete). Footer: "This version created on 2026-09-02".
+- S: FAT/FAT32 single-file limit 4 GB ≈ "about 3 hours 22 minutes of stereo at default settings"; Audacity **blocks** live projects on FAT/FAT32 and also blocks a temp directory there; edits/undo can push even short projects past 4 GB.
+- S: Exports to FAT/FAT32 are allowed but size-capped (~6 h 45 m stereo 16-bit WAV); on failure "clicking OK will remove the partially exported file" — i.e. a failed/oversized export does **not** leave a file that looks complete.
+- S: WAV/AIFF always capped at 4 GB, and the forecast size "can be accurately calculated in advance."
+- I (lessons): (a) the two-hour-interview envelope must be sized with explicit numbers — at 48 kHz/24-bit/stereo float internal, 2 h ≈ 2.7 GB raw, so any bundle design that inlines rendered audio must respect a 4 GB portable-media boundary or split volumes; (b) "cancelled/failed ⇒ no artifact labeled complete" is an established best practice we should adopt: cancelled renders must delete or mark the partial file, and the export manifest must carry a completion record.
+
+### 2.3 FFmpeg resampler documentation (libswresample)
+- URL `https://www.ffmpeg.org/ffmpeg-resampler.html`, HTTP 200, captured 2026-10-06T08:11:24Z, sha256 `388a98a22ef074c5463f2c8660c7e53f0478ff3637d4ce291238ec2604533f42` (16,865 bytes, complete), `Last-Modified: Mon, 05 Oct 2026 16:22:41 GMT`.
+- S: The resampler handles resampling, channel-layout **rematrixing**, and format/packing conversion; engines `swr` (native) and `soxr` (where available); `rematrix_maxval` "a value of 1.0 prevents clipping" during downmix; dither methods (triangular, Shibata, …) apply when reducing bit depth; `first_pts` allows padding/trimming at stream start; `exact_rational`/`phase_shift` govern phase accuracy.
+- I (anchors for the time model): rate conversion is not position-neutral — an integer source-sample position maps to a non-integer output position, and compensation/padding options exist precisely because sample counts drift. Our contract must therefore carry cue anchors in **source sample positions at the source's own rate** and derive project positions by one declared, integer-exact rule, never store cues in project time only.
+
+### 2.4 What was *not* executed this stage
+- **[UNEXECUTED]** The brief's issue→fix→regression investigation (one consequential real public issue traced through its fix commit and regression test with exact commit/release applicability). The predecessor's catalog would normally have nominated candidates; with it absent and ~9 minutes of stage time consumed by discovery, no issue chain was verified this stage. Next candidate must do this against primary GitHub/GitLab sources (issue page, fix commit, regression test file, release notes), quoting locators, and must state causal limits (a single fixed example does not establish complete behavior). Candidate classes worth chasing, none verified here: project-file corruption on network/removable drives in unitary-format editors; partial-export-on-failure handling; resampler length/latency mismatches at clip boundaries.
+- **[UNEXECUTED]** Two independently useful implementation precedents in depth (this stage pinned only the Audacity precedent from primary manual pages plus the FFmpeg component doc). Next candidate needs at least one more precedent with concrete lessons (e.g., a marker/label model or a deferred-render architecture from a primary source such as Ardour's or Spek's documentation/repos), verified by capture.
+- **[UNEXECUTED]** Any benchmark/measure of the 8 GB / two-hour target; any candidate-authored audio-array or timing check (none were run; none may be cited).
+
+---
+
+## 3. Verification contract for the next same-family candidate
+
+Derived solely from the brief; each item states what a compliant proposal must pin, and the evidence class a critic will accept. This section is the stage's principal useful content given the missing predecessor.
+
+**V1. Data contract (nondestructive vs display-only vs rendered).** The proposal must define three distinct, named state classes — edit graph (nondestructive), view/preview state (display-only, e.g. preview gain, zoom, solo/mute), and rendered artifacts (explicitly invoked operations with their own manifest) — and state which of them a save persists. Common failure: preview gain leaking into exports, or undo state silently lost/persisted without disclosure (compare §2.1: Audacity discards undo history on reopen — a legal product choice, but ours must be *declared*, not accidental). Evidence class: design text + at least one source-precedent anchor.
+
+**V2. Time model.** Must define: source sample position (at source rate) ↔ clip-local position ↔ project time ↔ displayed timecode ↔ exported cue position; a single integer-exact mapping rule with declared rounding (recommend: cues anchored at source-sample positions; project position derived `round(pos_src × (project_rate / source_rate))` with a declared tie rule, e.g. floor/nearest-even — choice is a product decision but must be stated); behavior of cues at trims (cue inside a trimmed region ⇒ explicitly clamped, hidden, or flagged, never silently shifted), inserted gaps (cue rides its clip, not absolute project time), and transitions (cue placement relative to crossfade start/end). Anchors: §2.3 (resampling is not position-neutral; padding/trim options exist because sample counts drift). Evidence class: formulas plus at least one tiny bounded isolation check of the rounding rule, labeled as component-only.
+
+**V3. Metadata honesty.** Absent/contradictory/unsupported source metadata ⇒ keep original values, expose ambiguity in UI and project, never silently rewrite. Evidence class: rule statement + one failure-mode example from primary docs (e.g., codec/bit-depth claims from a format spec).
+
+**V4. Resource envelope.** Two-hour interview, 8 GB RAM laptop, bounded waveform access, progress + cancel for indexing/rendering. Must show arithmetic (e.g., §2.2-style: bytes/sec per format; peak vs resident memory for tiled waveform pyramids), a cache identity scheme keyed by (source content hash, edit-graph version, pyramid parameters) with invalidation triggers, seek behavior, and buffer limits. Anchors: §2.1/§2.2 sizing facts. Evidence class: arithmetic + cited per-format rates; no component's marketing claim presented as a met target.
+
+**V5. Cancel/interrupt semantics.** Cancelled render ⇒ not labeled complete (delete or quarantine partial output, manifest records `cancelled`); interrupted import/save ⇒ resumable or discarded via journal/backup with originals untouched. Anchor: §2.2 partial-export removal; §2.1 WAL/SHM fragility (argument for not hand-rolling a single-file DB unless the recovery story is explicit). Evidence class: state machine or write-ordering description.
+
+**V6. Exchange.** Portable bundle or folder with: source files or content hashes + relocation search by hash, explicit `missing` state (no silent substitutes), read-only originals (never written in place), recovery path when a bundle is interrupted mid-copy. Anchor: §2.1 unitary-format cautions (USB/network), §2.2 4 GB boundary. Evidence class: layout spec + explicit non-goals.
+
+**V7. UI/a11y duties.** Keyboard navigation, legible transcript, error feedback, undo/redo, solo/mute/channel choice, current-edit indication, timing/provenance inspector (must surface source hash, metadata provenance, cue anchor type). Evidence class: concrete bindings/inspector fields, not aspiration.
+
+**V8. Support boundary honesty.** A declared input/output matrix (formats, sample representations, channel counts) with an explicit unsupported list and the behavior when hit; resampling/transition/clipping quality addressed only as needed for honesty (e.g., §2.3 `rematrix_maxval=1.0` as the precedent for declared clipping prevention on downmix). Evidence class: table + fallback behavior.
+
+**V9. Mandatory investigation duties carried forward.** ≥2 independently useful precedents (primary sources, captured+pinned); ≥1 real public issue traced through fix + regression test with exact commit/release applicability and causal limits; all validation labeled executed vs proposed/UNEXECUTED; catalogs written at the stage-required paths.
+
+---
+
+## 4. Product choices recommended for continuity (labeled as choices, not findings)
+
+1. Referenced-original media + content-hash identity + append-only edit journal (lesson §2.1) — **product choice**; the bounded alternative is a unitary single-file project like AUP3, acceptable only with an explicit compaction, locking, and recovery story.
+2. Cues anchored in source samples, project positions derived (§V2) — **product choice**; alternative is project-time anchors with mandatory revalidation on any rate conversion (worse, but workable if revalidation is enforced).
+3. Cancel ⇒ quarantine partial render + completion record in export manifest (§V5) — **product choice** consistent with §2.2 precedent.
+
+## 5. Limits of this review
+
+- No frozen proposal existed to verify; nothing here validates or refutes any predecessor claim. Blanket rejection of a nonexistent proposal would be meaningless; instead this review fixes the acceptance criteria (§3) and the verified anchors (§2).
+- The three §2 sources are manual/documentation pages captured today; they evidence what the documents state at capture time, not runtime behavior of any release. Manual pages change; the sha256 pins fix what was seen.
+- Directory-listing was impossible with admitted tools, so C-0's "absent" is "absent from every plausible path probed," not an exhaustive proof of emptiness.
+- All §3 items are review criteria; none have been checked against an actual proposal yet.

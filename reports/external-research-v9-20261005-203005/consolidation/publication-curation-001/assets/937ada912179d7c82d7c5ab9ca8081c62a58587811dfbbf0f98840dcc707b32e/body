@@ -1,0 +1,98 @@
+# Critique review — frozen research proposal, Brief A (local biomedical image review workspace)
+
+**Stage:** critique (failed-parent warm continuation, stage_id `I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001`).
+**Reviewed artifacts (frozen, sha256-verified reads):** `inputs/prior/I-01-FRESH-DELIVERY-R001-treatment-research-a001/research/{proposal.md, sources.json, witnesses.json, leads.json}` plus all 32 public captures under `inputs/source_context/.../` and their `index.json`.
+**Date of critique:** 2026-10-06. **Time-box disclosure:** verification was performed within the stage action window (~900 s class); live re-fetching of current upstream versions was not performed — every verification below is against the exact captured public bytes of the versions the research stage cited (capture identity re-checked by SHA-256 on every read).
+
+---
+
+## 1. Method and scope of this critique
+
+1. **Pin re-verification.** I re-read the captured bytes for the load-bearing sources and checked the pinned quotes/locators inside them: S2 (napari 0.4.18 release notes, two ranges), S3 (napari 0.5.0 release notes, two ranges), S4 (issue #4926 HTML, tail range), S5 (PR #5004 `.diff`, full), S5b (PR #6636 `.diff`, full), S8 (QuPath project structure, full), S10 (QuPath image concepts, full).
+2. **Capture integrity.** Every read returned the file SHA-256 recorded in both `prior_file_index.json` and `sources.json` (verified for S2, S3, S4, S5, S5b, S8, S10). `index.json` shows all 13 cited sources (S1–S13) were HTTP 200 captures; the failed fetches in the record (raw.githubusercontent tifffile README ×2, napari.org sitemaps ×3, `napari/napari/main` transform_utils path guesses ×2, `ome/ngff/main/0.4/*` path guesses ×2, GitHub API 403 ×2, wrong QuPath paths ×3) are **not cited** in `sources.json` — no cited source is a failed capture. Capture hygiene is honest.
+3. **Executable checks (V01).** Three independent discriminating checks were authored and run in the admitted isolated sandbox (receipts in §4): an audit of W1 (transform precision), W2 (memory-budget arithmetic), and W3 (rank-map mechanism). Each derives its expectation from an independent implementation or a priori bounds, not by re-running the questioned formula unchanged.
+4. **Not re-verified (disclosed).** Content quotes inside S1 (NGFF 0.4 spec body), S6 (RFC 7946 body), S7 (transform_utils at v0.5.0), S9, S11, S12, S13 were **not** re-read in this stage; for those, capture identity (200 + SHA-256 match) is verified but the pinned wording is not independently re-confirmed by this critic. Items relying on them are marked U-1 below.
+
+**Bottom line:** the proposal's required issue→fix→regression-test chain is **fully verified end-to-end**; its two executed witnesses W1 and W3 are **confirmed** (one trivial numeric nuance); executed witness W2 contains a **real internal inconsistency** in its recorded numbers (correction C-1) whose feasibility conclusion nonetheless survives with wide margin. The plan's obligations against the brief are covered; four smaller design caveats and one atomicity gap should be resolved by the next candidate.
+
+---
+
+## 2. Verification of the required issue→fix→regression-test chain (proposal §3.1) — SUPPORTED
+
+Every link was checked against the captured public bytes:
+
+- **Issue** (S4 = `0001.body`, sha256 `5017f5df…`): page tail contains heading "3D scaling does not match axis order"; body sentence "Images with non-trivial scale factors are not correctly visualized if (visible) axis order is changed"; reproducer `data = np.zeros([100, 100, 50])`, `scale = (1, 1, 2)`, "Toggle 3D view on", "Press the 'change visible axis order button'"; "Expected behavior: Images should be scaled correctly independently of the axis order"; opened by **Steffen-Wolf on Aug 12, 2022**; labels **bug** and **priority:high**; assignee **andy-sweet**; environment `napari 0.1.dev2406+g9ea0159`, VisPy 0.11.0. All match the proposal's §3.1 and the S4 pin exactly.
+- **Fix + regression tests** (S5 = `0005.body`, PR #5004 unified diff, full): confirms (a) `reorder_after_dim_reduction` **moved out of** `napari/components/dims.py` (old body = single argsort via `sorted(range(len(order)), key=...)`) **into** `napari/utils/misc.py`, reimplemented as `tuple(_argsort(_argsort(order)))` with the literal comment "A single argsort works for strictly increasing/decreasing orders, but not for arbitrary orders"; (b) `Image._get_order` in `napari/layers/image/image.py` now routes `self._dims_displayed` through it before transposing; (c) **new test file** `napari/_vispy/_tests/test_vispy_image_layer.py` with exactly **four** permutation-parametrized tests (three over `permutations((0,1,2))`, one over `permutations((0,1,2,3))`), each docstring citing `https://github.com/napari/napari/issues/4926`; (d) new parametrized `test_reorder_after_dim_reduction` in `napari/components/_tests/test_dims.py` with 10 cases including `((2,0,1),(2,0,1))` and `((4,0,1),(2,0,1))`. The proposal's §3.1 description is accurate in every particular.
+- **Release applicability** (S2 = `0004.body`, release notes captured at tag v0.4.18): under "## Bug Fixes" — "Fix display of order and scale combinations ([napari/napari/#5004])"; sibling entries verified verbatim: "Enforce that contrast limits must be increasing (#5036)", "Fix editing shape data above 2 dimensions (#5383)", "Refactor Main Window status bar to improve information presentation (#5451)", and (under "## New Features") "Add cancellation functionality to progress (#5728)"; "Fix copy/paste of points (#5795)" verified in the Bug Fixes tail. All quotes used in proposal §§3.1, 4.4, 5.1, 11 are present as cited.
+
+**Chain limits (preserved from the proposal, restated):** this establishes napari's own history only; the regression tests verify napari's internal consistency, not cross-application interchange, and not our application. The proposal already states this correctly.
+
+## 3. Verification of the second chain (proposal §3.2, S5b) — SUPPORTED
+
+PR #6636 diff (`0024.body`, full): `decompose_linear_matrix` rewritten with `scale_with_sign`/`normalize` per-axis sign handling replacing the `det<0` branch; new tests `test_decompose_linear_matrix_3d` (`arr*5` → rotate preserved, `scale=[5,5,5]`, `upper_triangular=False`) and `test_affine_rotate_3d` (`Affine(rotate=90, ndim=3)`); existing `test_world_extent_mixed_flipped` expectation changed `(1,-1)` → `(1,1)`; `_on_matrix_change` simplified (`np.dot` → `@`). Release anchor verified in S3 Bug Fixes: "Fix decomposition function to properly work with more than 2x2 matrices (#6636)". The proposal's honesty about **not** tracing a standalone upstream issue is correct and must be preserved — do not let a later stage "upgrade" this to a full issue→PR chain.
+
+Also verified in S3: the Highlights sentence "Currently, napari is *not* using this information, but we will in upcoming versions" (#6979 axis names/units) — the load-bearing reason the proposal declines napari as coordinate authority; "Add layer slicer base class for async slicing (#5170)" and "Replace old async loading with new approach (#5816)"; "Expose theme `font_size` as an `Appearance` setting (#6113)"; "[UX/UI] flip the default for the reader plugin dialog to *not* have the Remember box checked (#7016)" (see caveat D-2); "[bugfix] Warn if float image data being saved to non-tiff (#6884)" (see caveat D-3).
+
+QuPath pins verified verbatim: S8 (serverBuilder / unique entryID / imageName / randomizedName UUID; per-entry `data/<entryID>/` with `data.qpdata`, `thumbnail.jpg`, `summary.json`; shared-drive tip authorizing per-computer `.qpproj` path variants; warning "may inadvertently result in adding different images with the same IDs") and S10 (LUT separation "without changing the underlying pixel values"; "the pixel values are the raw data in scientific imaging. These need to be preserved unchanged"; "Scientific image analysis is not photo editing!" warning about photo editors; "Pixel size information is **not** guaranteed to be a) present, or b) correct within a file!" with the TIFF dots-per-inch trap and "always sanity-check pixel sizes"; "Objects (e.g. annotations, cells) also should remember which plane they belong to").
+
+---
+
+## 4. Executable checks by this critic (V01) — receipts and results
+
+All three were run in the admitted isolated sandbox (`python_execute`, stdlib only, exit 0, no stderr). Receipt identities (execution_id / code sha256 / stdout sha256) are recorded here; they are isolated component checks and prove nothing about any full application.
+
+### E-1 Audit of W3 (rank-map mechanism) — **exec-06beynl_**, code `b3fd8dea…`, exit 0, stdout `1df31d3d…`
+Independent implementation: counting-based rank map `r[i] = #{j : x[j] < x[i]}` (no argsort), compared against double-argsort over **all permutations n ≤ 6**: equal, and both equal the identity on full permutations. All 12 expected cases from the captured diff (incl. docstring `(2,0)→(1,0)`, `(4,0,2)→(2,0,1)`; test cases `(2,0,1)`, `(4,0,1)`) reproduce. Single argsort diverges exactly on non-monotonic orders. New purpose-level check: full order `(1,3,0,2)`, hide axis 1 → remaining `(3,0,2)` → correct re-rank `(2,0,1)`; double argsort correct, single argsort `(1,2,0)` wrong. **W3's claim and recorded table are correct** (provenance nuance: W3's `(4,0,2)` row comes from the new function's *docstring*, not the parametrized test, which uses `(4,0,1)` — both verified present in the diff; harmless, worth a wording note).
+
+### E-2 Audit of W1 (float64 vs float32 round-trip) — **exec-g3dnjxh9**, code `3330c43b…`, exit 0, stdout `ab9c0247…`
+Independent re-derivation: exact-integer 90° rotation (orthonormal ⇒ inverse = transpose, no generic solve), float32 simulated by `struct` rounding. Reproduced exactly: `phys64 = [249787.112, −179893.608, 12024.4]`; `phys32 = [249787.109375, −179893.609375, 12024.400390625]` (all three are the correctly rounded float32 neighbors); **float64 round-trip error 7.16227e-11 voxels — identical to W1's recorded value** and below the a-priori 1-ulp bound (2.8e-10 voxels). Float32 per-axis decomposition: x = 0.02524, y = 0.01322, z = 0.00098 voxels; round-trip max **0.02524** vs W1's recorded **0.0252686** (0.11 % relative difference, likely because W1's round-trip rounded additional quantities; both lie far below the a-priori float32 bound of half-ulp(≈2.5e5 µm)/sampling = 0.0751 voxels, and two orders above float64). **Conclusion of W1 and the float64-storage rule stand.**
+
+### E-3 Audit of W2 (memory-budget arithmetic) — **exec-i4b92fo8**, code `e11e53b4…`, exit 0, stdout `c6c2231a…`
+**Found a real internal inconsistency (correction C-1).** Volume and budget arithmetic all reproduce: 2048×2048×362 uint16 = 3,036,676,096 B = 2.828 GiB; chunk 64×256×256 = 8 MiB; headroom 16 − 4 − 0.5 − 0.0625 = 11.4375 GB ("11.438" ✓). But the recorded `chunk_grid [32,8,2]` / `chunks_total 512` corresponds to chunk **(64, 256, 256) over (y, x, z)**, under which a 512×512 in-plane viewport touches **16 chunks (128 MiB) per step** — not the recorded "4 chunks (≈33 MiB)". The "4 chunks" figure is only true for chunk **(256, 256, 64)**, which yields grid (8, 8, 6) = **384 chunks** and cache coverage **16.67 %**, not 12.5 %. Additionally the recorded `full_plane_bytes = 1,482,752` equals 2048×362×2 — a **y–z slab**, not a full xy plane (8,388,608 B). The recorded stdout therefore mixes two incompatible chunk geometries and cannot be simultaneously true.
+
+**Scope of the correction:** the *feasibility conclusion survives* — worst case in either layout is ≤ 32 chunks × 8 MiB = **256 MiB** working set against **11.44 GB** headroom, an order-plus of margin; but proposal §9's "512 chunks total", "12.5 % coverage", and "4 chunks (≈33 MiB) per step" and witnesses W2's recorded stdout must be restated with one consistent geometry (recommended: in-plane-friendly (256, 256, 64) chunks → 384 chunks, 16.7 % coverage, 4 chunks/step, and W2 must be re-run per real acquisition shape as already promised).
+
+---
+
+## 5. Findings
+
+### Corrections (must be applied by the next candidate)
+- **C-1 (executed evidence, E-3).** W2 recorded stdout internally inconsistent; affected: `witnesses.json` W2 `stdout`/`observed`, proposal §9 numbers ("512 chunks total", "12.5 % coverage", "4 chunks (≈33 MiB)"), and any downstream re-use of those figures. Fix by choosing one chunk layout and re-deriving; keep the (correct) feasibility conclusion and the re-run-per-shape caveat. Correcting C-1 does not by itself prove the replacement numbers — re-run W2 after fixing.
+- **C-2 (executed evidence, E-2, minor).** W1's recorded float32 max voxel error 0.0252686 vs independently recomputed 0.02524 (Δ 0.11 %). All other W1 numbers reproduce exactly. Fix the recorded figure or document which quantities were float32-rounded in the round-trip; the storage rule is unaffected.
+
+### Preserved valid claims (verified by this critique — do not reopen)
+- **P-1.** The full #4926 → #5004 → 0.4.18 release-notes chain, including all quoted issue metadata, diff contents, test names, and parametrizations (§2).
+- **P-2.** The #6636 chain *with its honestly stated limit* (no standalone issue traced; PR + tests + release note only) (§3).
+- **P-3.** W1's float64 result and W3's mechanism result, as audited by E-2/E-1, including the JSON round-trip claims' supporting role for canonical hashing.
+- **P-4.** QuPath-derived claims verified verbatim (S8, S10) used in §§2.2, 4.4, 4.5, 7.2, 7.3, 8 — including the identity hazard and the pixel-size admonition.
+- **P-5.** napari 0.5.0 limits quote (#6979 "not using this information") justifying "we own the calibration data model" (§2.1).
+- **P-6.** Capture integrity of the whole catalog (all cited sources are 200 captures with matching SHA-256; failed fetches uncited).
+
+### Design caveats (small, specific; keep the underlying recommendation)
+- **D-1.** §4.2/§4.3's GeoJSON consequence and the NGFF normative sentences ("exactly one `scale`", "translation … after `scale`", 2–5 dims, `omero` window fields) rest on S1/S6 pins **not re-verified here** (U-1). The next candidate should either re-verify those two pins or carry them forward marked as verified-by-capture-identity only.
+- **D-2.** #7016 is cited as "precedent that remember-my-choice defaults on ambiguous input are a known hazard". Verified line: an Improvements entry flipping a dialog default. No documented failure backs "known hazard"; soften to "napari judged this default harmful enough to flip it" or find a real report.
+- **D-3.** #6884 ("Warn if float image data being saved to non-tiff") is a *save-path* warning; §4.5 uses it under display-vs-data separation. Keep, but phrase it as a save/convert honesty precedent, not a display precedent.
+- **D-4 (brief-derived gap).** The brief requires a *failed export* to leave a recoverable project state; §7.1 covers project saves and §10 defines export content, but nowhere states that export/derived outputs are written temp+rename and never partially overwrite an existing export. One sentence in §10 adopting the §7.1-A writer for export outputs closes this.
+- **D-5.** tifffile pin "2026.9.20" and its quoted README behaviors (tile/zarr/memmap, OJPEG/chroma-subsampling "not implemented", MMStack "corrupted or wrong") were not re-read here (S12 body unchecked, U-1); the version-pinning recommendation itself is sound given the cataloged "breaking" 2026.5.2 revision claim — same U-1 condition.
+
+### Uncertainty inventory
+- **U-1.** Un-re-verified quote bodies: S1, S6, S7, S9, S11, S12, S13 (identity-verified only). No indication of error was found; this is a scope statement, not a defect report.
+- **U-2.** No live re-fetch: statements are true *of the captured versions* (e.g., fix present at tag v0.4.18 notes; code at tag v0.5.0). Currency at later upstream versions is untested in this stage.
+- **U-3.** W4–W7 remain correctly labeled proposed/UNEXECUTED; nothing in this critique executes them or reduces their necessity.
+
+### Affected dependencies
+C-1 affects proposal §9 and any sizing argument re-using W2's coverage/working-set figures (not the architecture choice); C-2 affects only the W1 receipt text; D-4 affects §10 and the M4 milestone; D-2/D-3 affect §4.5/§8 wording only. No correction touches the component architecture (§5), data contract (§4), support boundary (§8), or export contract (§10) decisions themselves.
+
+---
+
+## 6. Brief-obligation coverage audit of the proposal
+
+Minimum workflow §6 table: all ten steps mapped to mechanisms with evidence — covered. Two independently useful precedents: napari (Python/Qt/VisPy viewer) and QuPath (Java/JavaFX project+annotation store), different codebases/languages/teams, distinct mechanisms (transform-chain display vs project-directory/export-honesty) — requirement met. Chain requirement: met and now end-to-end verified. Calibration/coordinate contract, identity+relocation+bundle trade-off, atomic save options, support boundary with explicit failure containment, cancellation/progress, undo/redo, keyboard model, original-vs-derived distinction, accessibility, opportunities/alternatives, deferred leads: all present in §§4–13 and `leads.json`. FACT/INFER/CHOICE/VALIDATION separation is applied consistently. Executed vs UNEXECUTED labeling in `witnesses.json` is accurate (after C-1/C-2 text fixes).
+
+## 7. Resolution guidance for the next fresh candidate (no private context needed)
+
+1. Apply C-1 (pick one chunk geometry, restate §9 + W2, optionally re-run W2) and C-2 (fix or annotate the W1 float32 figure).
+2. Make the D-4 one-sentence export-atomicity addition to §10 and the D-2/D-3 wording softenings.
+3. Either re-verify the S1 §3.3–3.5 and S6 §4 pins (D-1/U-1) or carry them explicitly marked "capture-identity-verified only".
+4. Preserve P-1…P-6 and the proposal's own chain-limit statements verbatim in spirit; do not upgrade the #6636 chain to a claimed issue→PR link.
+5. Everything else in the proposal can stand as frozen.

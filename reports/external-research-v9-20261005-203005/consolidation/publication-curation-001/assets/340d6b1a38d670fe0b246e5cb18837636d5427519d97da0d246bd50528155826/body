@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0",
+  "stage": "research",
+  "as_of": "2026-10-06",
+  "critical_unresolved_dependencies": [
+    {
+      "lead_id": "U01",
+      "topic": "Pinned desktop dependency and lazy-viewer integration",
+      "priority": "critical before user trial",
+      "status": "open; proposed pins only",
+      "known_evidence": "tifffile 2026.9.20 lists Zarr 3.4.0 and imagecodecs 2026.8.16 among tested requirements; Zarr-Python 3.4.0 API exposes format-2 and format-3 operations; napari v0.9.2 release marks itself a Meso release.",
+      "decision_needed": "Resolve a complete lockfile and prove the pinned tifffile regional array, Zarr-Python format-2 project array, Qt runtime, and napari adapter work together on each supported OS.",
+      "resolution_witness": "W-PIN-LOCK-AND-FORMAT-02",
+      "source_ids": ["S02", "S03", "S05"]
+    },
+    {
+      "lead_id": "U02",
+      "topic": "3 GB access, RSS, interaction latency, cache caps, and cancel behavior",
+      "priority": "critical before claiming workstation target",
+      "status": "open; no application benchmark",
+      "known_evidence": "Component docs show region/slice APIs, but they do not show this app's memory use or responsiveness.",
+      "decision_needed": "Benchmark representative 3 GB tiled/striped sources on an 8-core/16 GB workstation; adjust the proposed 2-worker, 64 MiB task-buffer, 512 MiB cache, and latency/RSS targets from observed data.",
+      "resolution_witness": "W-3GB-MEMORY-05",
+      "source_ids": ["S02", "S04"]
+    },
+    {
+      "lead_id": "U03",
+      "topic": "Atomic rename, flush, locking, and conflict behavior on the lab shared storage",
+      "priority": "critical before team bundle exchange",
+      "status": "open; filesystem behavior unknown",
+      "known_evidence": "No inspected source establishes the lab share's transactional or durability semantics.",
+      "decision_needed": "Fault-inject import/save/export on each supported local filesystem and the actual share; require closed-bundle exchange and conflict-copy recovery if single-writer guarantees cannot be established.",
+      "resolution_witness": "W-RECOVERY-SHARE-06",
+      "source_ids": []
+    },
+    {
+      "lead_id": "U04",
+      "topic": "Sample-center, axis-order, unit, and calibration interoperability",
+      "priority": "critical before calibrated annotation export",
+      "status": "open; application convention proposed",
+      "known_evidence": "NGFF 0.4 specifies named axes and sequential scale/translation metadata. The proposal's zero-based center convention is an application choice, not established by the isolated arithmetic check.",
+      "decision_needed": "Validate labeled sample coordinates through each reader, napari display, table import/export, and an independent NGFF/TIFF reader; define behavior for unsupported affine orientations.",
+      "resolution_witness": "W-COORD-APP-03",
+      "source_ids": ["S01", "S05", "S09"]
+    },
+    {
+      "lead_id": "U05",
+      "topic": "Actual instrument formats and codec whitelist",
+      "priority": "critical before finalizing support statement",
+      "status": "open; laboratory fixture survey needed",
+      "known_evidence": "tifffile describes a broad but incomplete TIFF subset and records format-specific limitations; no instrument files were available in this research stage.",
+      "decision_needed": "Collect de-identified, representative fixture metadata and small test images for each instrument; select only formats/layouts/codecs that pass sample, axes, calibration, and error-path checks.",
+      "resolution_witness": "W-SAMPLE-PRESERVATION-04",
+      "source_ids": ["S02"]
+    }
+  ],
+  "optional_or_deferred_leads": [
+    {
+      "lead_id": "L01",
+      "topic": "OME-NGFF 0.5 format migration",
+      "status": "public endpoint captured; semantic review incomplete",
+      "disposition": "Keep NGFF 0.4 for the first bounded profile. Assess 0.5 only if a required reader/writer or coordinate feature makes migration worthwhile; compare metadata and reader interoperability before changing the project contract.",
+      "source": {
+        "url": "https://ngff.openmicroscopy.org/0.5/",
+        "pin": "Versioned OME-NGFF endpoint 0.5",
+        "capture_id": "ba9f311873dd4fdc96b1746eeb445d27",
+        "body_sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+        "bytes": 158591,
+        "http_status": 200,
+        "body_complete": true,
+        "captured_utc": "2026-10-06T01:26:54.456708+00:00",
+        "review_limit": "Only the delivered document prefix was inspected; no claim about 0.5 metadata, compatibility, or behavior is made."
+      }
+    },
+    {
+      "lead_id": "L02",
+      "topic": "Bio-Formats or bioformats2raw as an alternate importer",
+      "status": "not researched in this stage",
+      "disposition": "Consider if the lab's instrument survey reveals a needed format outside the TIFF/NGFF profile. First compare exact format coverage, output axes/calibration fidelity, Java deployment and cancellation behavior using lab fixtures. Do not advertise universal compatibility."
+    },
+    {
+      "lead_id": "L03",
+      "topic": "External-source reference mode",
+      "status": "included as a bounded alternative",
+      "disposition": "Use when shared source paths are stable and a portable canonical copy is too large. Keep source hash verification, path relocation, missing/changed warnings, and exact reader pins. Portable canonical bundles remain the simpler reopen path when storage allows."
+    },
+    {
+      "lead_id": "L04",
+      "topic": "Live collaboration or annotation merging",
+      "status": "deferred",
+      "disposition": "The six researchers initially exchange closed bundles. Add merge semantics only after stable annotation IDs, transform identity, conflict UX, and shared-storage concurrency behavior have been validated."
+    },
+    {
+      "lead_id": "L05",
+      "topic": "Cloud/object-store projects and remote streaming",
+      "status": "deferred",
+      "disposition": "Local workstation and ordinary shared storage meet the stated workflow. Revisit only with access-control, retry, cache, network-interruption, and provenance requirements; no cloud dependency is required for v1."
+    },
+    {
+      "lead_id": "L06",
+      "topic": "Automatic segmentation and registration",
+      "status": "deferred",
+      "disposition": "Not required for manual review/annotation. If adopted later, each output must be a distinct derived asset or annotation result with tool/version, parameters, parent identities, and any spatial transform recorded."
+    },
+    {
+      "lead_id": "L07",
+      "topic": "GPU acceleration",
+      "status": "optional after profiling",
+      "disposition": "Use CPU as the baseline. Profile display bottlenecks first; any GPU cache must remain bounded and optional, and must not change canonical samples or export identity."
+    },
+    {
+      "lead_id": "L08",
+      "topic": "Alternative viewer adapter",
+      "status": "bounded contingency",
+      "disposition": "If napari v0.9.2 fails the pinned lazy-array, displayed-axis, keyboard, or dependency checks, replace the viewport adapter with a Qt/VisPy or Qt/pyqtgraph view while keeping the project schema and storage contract."
+    }
+  ]
+}

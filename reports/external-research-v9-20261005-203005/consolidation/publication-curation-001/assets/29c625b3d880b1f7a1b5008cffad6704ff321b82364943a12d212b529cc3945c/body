@@ -1,0 +1,100 @@
+{
+  "catalog_version": "research-stage-1",
+  "conventions": {
+    "executed_by_candidate": "run via the stage's isolated python_execute sandbox; receipts record code/data sha256, stdout/stderr sha256, exit code, and limits. An isolated component check does NOT establish full-application behavior.",
+    "proposed_unexecuted": "designed but not run in this stage; labeled UNEXECUTED. No receipts are invented."
+  },
+  "witnesses": [
+    {
+      "id": "W1",
+      "kind": "executed_by_candidate",
+      "execution_id": "exec-vg14yg6k",
+      "title": "Coordinate storage precision: float64+JSON vs float32",
+      "claim": "Stored annotation coordinates in float64, serialized as JSON numbers, round-trip exactly at biomedical-image magnitudes; float32 quantization error grows with coordinate magnitude and reaches a full pixel near 2^24 px.",
+      "code_sha256": "1091c00acc7cd1f6899a1d1cfb8fb38c193d6cf95a83e791e8db444829eb2697",
+      "data": {"pixel_size_um": 0.25, "samples": [{"x": 30000.37}, {"x": 200123.456}, {"x": 16777216.37}]},
+      "data_sha256": "27ce291cb2a739f0b75d51316ea5d683e4d341a80c8b7393af0cbd253fad6307",
+      "expected_justification": "IEEE-754 float32 has a 24-bit significand, so its ULP near 2^24 is 1.0; float64 and Python's shortest-repr JSON round-trip are exact for these decimal inputs.",
+      "observed": {
+        "exit_code": 0,
+        "stdout_sha256": "5891f9c71a4e8e30897e899ec31903c679186563e57b1d438c22c65c144ac75b",
+        "key_results": "30000.37 -> f32 err 0.000859 px (0.000215 um); 200123.456 -> f32 err 0.002875 px (0.000719 um); 16777216.37 -> f32 err 0.370 px (0.0925 um); float64 err 0 and JSON round-trip exact at all three magnitudes."
+      },
+      "scope_limits": "Pure arithmetic on Python floats via struct; no image data, no libraries, no persistence layer. Supports the format-encoding decision only."
+    },
+    {
+      "id": "W2",
+      "kind": "executed_by_candidate",
+      "execution_id": "exec-smpnx7xc",
+      "title": "Transform composition order, identity display composition, JSON round-trip",
+      "claim": "Affine composition order changes the mapped result (napari #1841/#1884 lesson); a separate identity display transform composes exactly harmlessly; composition is associative; float64 matrices round-trip exactly through JSON.",
+      "code_sha256": "14128cbb7f40b3da990a6513ed505a5b0e2fb98cb45bfcd9979aaa9a159933bd",
+      "data": {},
+      "data_sha256": "n/a (empty object)",
+      "expected_justification": "For R=rot90, S=diag(2,5), Sh=shear(3): R@S@Sh != R@Sh@S; applying the composed fixed-order matrix equals stepwise S then Sh then R; I@M == M exactly; json.loads(json.dumps(M)) == M for float64 entries.",
+      "observed": {
+        "exit_code": 0,
+        "stdout_sha256": "b473baadd45c6574fa52ee65b4f81ee2d155457df9e2b4e1b6a9b1ffd7fe267b",
+        "key_results": "max_abs_diff_buggy_vs_fixed = 9.0; matrices_differ = true; fixed_order_point_semantics_match = true; identity_display_compose_is_exact = true; composition_associative = true; json_roundtrip_exact = true."
+      },
+      "scope_limits": "Pure 3x3 matrix arithmetic in stdlib Python; mirrors the mechanism of napari's regression test but does not execute napari itself."
+    },
+    {
+      "id": "W3",
+      "kind": "executed_by_candidate",
+      "execution_id": "exec-u_m7zfek",
+      "title": "3 GB source / 16 GB RAM envelope arithmetic (tile cache design)",
+      "claim": "A 3.02 GB two-channel uint16 source is handleable with bounded memory: 512 KiB tiles, a 128 MiB LRU cache, ~12 tiles per full-res viewport; estimated resident set ~1.16 GB, well under 16 GB.",
+      "code_sha256": "3949cb6ff807ee9e881ae31b63c0b8ff188e56c362057a43f3a22eec27126d86",
+      "data": {"image": {"x_px": 49152, "y_px": 15360, "channels": 2, "dtype_bytes": 2}, "tile": {"x": 512, "y": 512}, "viewport": {"x": 1920, "y": 1080}, "cache_tiles": 256, "assumed_read_Bps": 1000000000, "assumed_app_baseline_GB": 1.0},
+      "data_sha256": "e29bf2e89ece9a786b7ec97bcad95f6919d2fb73eb6dd5beab7d12665d7d1efc",
+      "expected_justification": "Straight integer arithmetic on tile/grid counts and byte budgets; assumes 1 GB/s sequential read as a stated parameter.",
+      "observed": {
+        "exit_code": 0,
+        "stdout_sha256": "dfc6de48921693d7a6fa792eff4a4d25dac64d788a7bd17e2dcdc339774a40ad",
+        "key_results": "source_bytes_GB=3.02; tiles_total=5760; tile 512 KiB; cache 128.0 MiB; viewport 12 tiles / 7.91 MiB; read-time floor 6.29 ms at assumed 1 GB/s; resident_total_GB_estimate=1.16; fits_envelope=true."
+      },
+      "scope_limits": "Arithmetic design check only — no image I/O, no decompression, no GUI. The assumed 1 GB/s read rate and 1 GB app baseline are parameters, not measurements. Real benchmark = W4 (UNEXECUTED)."
+    },
+    {
+      "id": "W4",
+      "kind": "proposed_unexecuted",
+      "title": "Bounded-access benchmark on a real ~3 GB OME-TIFF (8-core/16 GB envelope)",
+      "claim_to_test": "Windowed tile reads via the pinned tifffile zarr interface keep panning responsive (target: warm <50 ms, cold <300 ms per viewport) with peak RSS < 2 GB, and worker cancellation stops within one tile of work.",
+      "method": "Generate a 49152x15360x2ch uint16 tiled OME-TIFF; scripted random viewport reads cold/warm; record latency percentiles and RSS; issue cooperative cancel mid-read; repeat with compression enabled.",
+      "status": "UNEXECUTED — requires the pinned library stack and a real file; could falsify the W3 envelope conclusion if decode or random-access dominates."
+    },
+    {
+      "id": "W5",
+      "kind": "proposed_unexecuted",
+      "title": "Crash-injection recovery test (atomic save / partial import / failed export)",
+      "claim_to_test": "kill -9 during manifest save, annotation append, derived-op write, and export leaves: manifest valid or backup fallback, journal replayable to last complete record, sources unmodified (sha256 unchanged), no partial commit visible on reopen.",
+      "method": "Wrapper script spawns the persistence core, kills it at randomized offsets inside each write phase, reopens, and asserts invariants; run on POSIX first, then Windows for os.replace semantics.",
+      "status": "UNEXECUTED — needs OS process control unavailable in the sandbox."
+    },
+    {
+      "id": "W6",
+      "kind": "proposed_unexecuted",
+      "title": "Cross-machine reopen and relocation",
+      "claim_to_test": "Bundle moved to a new root (with referenced external source moved likewise) reopens with all annotations; identity re-verification by sha256 succeeds; broken reference surfaces a re-link dialog and never a silent substitution.",
+      "method": "Copy bundle + source to a second mount path, change host overlay, reopen headlessly, compare annotation sets and hashes.",
+      "status": "UNEXECUTED — needs multi-mount filesystem control."
+    },
+    {
+      "id": "W7",
+      "kind": "proposed_unexecuted",
+      "title": "Export round-trip + hostile-geometry exporter test (QuPath #2115-inspired)",
+      "claim_to_test": "Export->re-import preserves coordinates and frame descriptors exactly (float64); an annotation with a geometry the GUI cannot create (disconnected multi-segment polyline) either exports correctly or fails loudly with a typed error — never recurses, corrupts the file, or damages the project.",
+      "method": "Round-trip equality on coordinates/frames; adversarial geometry fixtures; exhaustive-dispatch unit test asserting the default branch throws.",
+      "status": "UNEXECUTED — implementation-stage regression suite."
+    },
+    {
+      "id": "W8",
+      "kind": "proposed_unexecuted",
+      "title": "Undo history survives slice/time changes (anti-goal vs napari documented limitation [S06])",
+      "claim_to_test": "Paint/annotate on z=0, switch to z=5, edit, undo twice: state equals pre-edit z=0 with the z=5 edit removed; history depth 200 honored.",
+      "method": "Headless command-journal test driving the annotation store directly.",
+      "status": "UNEXECUTED — implementation-stage regression suite."
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "catalog_version": "1.0",
+  "scope": "Candidate-authored research witnesses and planned checks. Execution receipts are copied from the admitted isolated execution tool; no application behavior is implied.",
+  "witnesses": [
+    {
+      "id": "W01",
+      "label": "executed by candidate",
+      "title": "Synthetic NDJSON contract and provenance-key component check",
+      "tool": "pm_execution.python_execute",
+      "execution_id": "exec-zrt2sbhm",
+      "code": "import hashlib, json\nfrom datetime import datetime\n\npayload = data[\"ndjson\"].encode(\"utf-8\")\noriginal_sha = hashlib.sha256(payload).hexdigest()\nlines = data[\"ndjson\"].splitlines()\naccepted, rejects = [], []\nfor ordinal, raw in enumerate(lines, 1):\n    try:\n        row = json.loads(raw)\n        if \"id\" not in row or \"note\" not in row or \"when\" not in row:\n            raise ValueError(\"required field missing\")\n        if row[\"note\"] is not None and not isinstance(row[\"note\"], str):\n            raise ValueError(\"note must be string or null\")\n        stamp = datetime.fromisoformat(row[\"when\"].replace(\"Z\", \"+00:00\"))\n        accepted.append({\"source_record\": ordinal, \"id\": row[\"id\"], \"note\": row[\"note\"], \"when\": stamp.isoformat()})\n    except Exception as exc:\n        rejects.append({\"source_record\": ordinal, \"raw\": raw, \"reason\": str(exc)})\nassert len(lines) == 4\nassert [r[\"source_record\"] for r in accepted] == [1, 2]\nassert accepted[0][\"note\"] == \"café ☕\" and accepted[1][\"note\"] is None\nassert rejects[0][\"raw\"] == lines[2] and \"required field missing\" in rejects[0][\"reason\"]\nassert rejects[1][\"raw\"] == lines[3] and \"Invalid isoformat\" in rejects[1][\"reason\"]\nassert hashlib.sha256(payload).hexdigest() == original_sha\n\ndef canonical_hash(value):\n    b = json.dumps(value, sort_keys=True, separators=(\",\", \":\"), ensure_ascii=False).encode(\"utf-8\")\n    return hashlib.sha256(b).hexdigest()\ndef output_key(cell, inputs, schema, environment, params):\n    return canonical_hash({\"cell\": cell, \"inputs\": inputs, \"schema\": schema, \"environment\": environment, \"params\": params})\nbase = output_key(\"cell-v1\", {\"source\": original_sha}, {\"id\": \"string\", \"note\": \"nullable-string\", \"when\": \"timestamp-tz\"}, \"python-lock-A\", {\"seed\": 7})\nassert output_key(\"cell-v1\", {\"source\": original_sha}, {\"id\": \"string\", \"note\": \"nullable-string\", \"when\": \"timestamp-tz\"}, \"python-lock-A\", {\"seed\": 7}) == base\nassert output_key(\"cell-v2\", {\"source\": original_sha}, {\"id\": \"string\", \"note\": \"nullable-string\", \"when\": \"timestamp-tz\"}, \"python-lock-A\", {\"seed\": 7}) != base\nassert output_key(\"cell-v1\", {\"source\": \"changed\"}, {\"id\": \"string\", \"note\": \"nullable-string\", \"when\": \"timestamp-tz\"}, \"python-lock-A\", {\"seed\": 7}) != base\nassert output_key(\"cell-v1\", {\"source\": original_sha}, {\"id\": \"string\", \"note\": \"nullable-string\", \"when\": \"timestamp-tz\"}, \"python-lock-B\", {\"seed\": 7}) != base\nprint(json.dumps({\"accepted\": len(accepted), \"rejected_preserved\": len(rejects), \"missing_note_is_distinct_from_null\": True, \"unicode_roundtrip\": accepted[0][\"note\"], \"original_sha256_unchanged\": True, \"provenance_key_changes_for_cell_data_environment\": True}, ensure_ascii=False, sort_keys=True))",
+      "input": {
+        "ndjson": "{\"id\":\"α\",\"note\":\"café ☕\",\"when\":\"2025-03-08T12:00:00Z\"}\n{\"id\":\"β\",\"note\":null,\"when\":\"2025-03-09T12:00:00+00:00\"}\n{\"id\":\"γ\",\"when\":\"2025-03-10T12:00:00Z\"}\n{\"id\":\"δ\",\"note\":\"broken\",\"when\":\"not-a-timestamp\"}\n"
+      },
+      "expected_behavior": {
+        "accepted_records": 2,
+        "rejected_records_preserved_verbatim": 2,
+        "missing_note_differs_from_explicit_null": true,
+        "unicode_preserved": true,
+        "source_digest_unchanged": true,
+        "canonical_key_same_for_same_inputs_and_different_for_cell_source_or_environment_change": true
+      },
+      "expectation_basis": "Candidate-authored contract assertions for a tiny synthetic fixture; this is a component check of the proposed invariants, not an external application oracle.",
+      "receipt": {
+        "code_sha256": "be18010dc01fe2a09bd35b5710e97382cc66e979440458b09085c35833c86f56",
+        "data_sha256": "c1962d08869a4b1fd4ae5bedfe29d81c210527be414d948ff261fd80d08d05fb",
+        "stdout": "{\"accepted\": 2, \"missing_note_is_distinct_from_null\": true, \"original_sha256_unchanged\": true, \"provenance_key_changes_for_cell_data_environment\": true, \"rejected_preserved\": 2, \"unicode_roundtrip\": \"café ☕\"}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "stdout_sha256": "f69b9c25868c6de480ce09e98e54b9e6be74b9163e1bee765e3dfae2082dff29",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 212,
+        "stderr_bytes": 0,
+        "elapsed_seconds": 0.2064397869980894,
+        "limits": {
+          "wall_seconds": 5,
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "tasks": 16,
+          "stream_bytes_each": 32768,
+          "network": "new empty namespace"
+        },
+        "cleanup_confirmed": true,
+        "tool_scope_limitations": [
+          "Isolated component check only; fresh filesystem and no network/credentials/case files.",
+          "Standard-library assertions do not prove product code or data-engine behavior.",
+          "Receipt does not establish semantic correctness or candidate consumption.",
+          "No notebook, nbclient, DuckDB, sandbox policy, large file, or cross-machine replay was exercised."
+        ]
+      }
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "W02",
+      "label": "proposed/UNEXECUTED",
+      "check": "Run upstream issue #25164 regression fixture and extended buffer-boundary/quoted-newline matrix against the exact DuckDB wheel/binary digest shipped; compare row counts, distinct IDs and raw rejects.",
+      "reason": "No DuckDB binary or test harness was executed in this stage; exact release applicability is a design gate."
+    },
+    {
+      "id": "W03",
+      "label": "proposed/UNEXECUTED",
+      "check": "Run 5 GB generated CSV/NDJSON/Parquet workloads on 8 cores and 16 GB, measuring peak RSS, spill/temp use, correctness and cancellation across streaming and global operators.",
+      "reason": "The workstation envelope is a target; no large-file or engine performance result is available."
+    },
+    {
+      "id": "W04",
+      "label": "proposed/UNEXECUTED",
+      "check": "Exercise real notebooks through nbclient: out-of-order interactive execution, clean replay, upstream edits, source/lock changes, restart, timeout, cancellation, output diff and reopen status.",
+      "reason": "The witness did not exercise a notebook runtime or the proposed event/status implementation."
+    },
+    {
+      "id": "W05",
+      "label": "proposed/UNEXECUTED",
+      "check": "Review and test the exact Linux bubblewrap policy, mount set, no-network behavior, process cleanup and CPU/memory/disk limits; verify fail-closed behavior when sandbox prerequisites are absent.",
+      "reason": "Bubblewrap documentation was researched, but no host sandbox was run or validated in this candidate check."
+    },
+    {
+      "id": "W06",
+      "label": "proposed/UNEXECUTED",
+      "check": "Crash-inject blob/event/manifest writes and run concurrent project open/save tests on supported local filesystems; reopen the folder or portable bundle at a different path.",
+      "reason": "Atomic save, locking and portability are proposed mechanisms, not observed implementation behavior."
+    }
+  ]
+}

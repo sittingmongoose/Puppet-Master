@@ -1,0 +1,297 @@
+# Proposal — Local Biomedical Image Review Workspace (research stage)
+
+Stage: fresh native integrated candidate — research & proposal.
+Date of capture/pins: 2026-10-05. This document is the research-stage deliverable; criticism and final authoring occur in later stages.
+
+**Labeling convention.** Claims are labeled:
+- `[FACT]` — external fact verified against a public primary source; citation `[Sxx]` refers to `sources.json` (URL, pin, locator, capture sha256 there).
+- `[INFERENCE]` — engineering inference by the candidate, not directly stated by any source.
+- `[CHOICE]` — product/design decision this proposal recommends; alternatives noted.
+- `[VALIDATION]` — proposed check. Executed checks carry a witness id `Wx` from `witnesses.json`; anything not executed is explicitly `UNEXECUTED`.
+- Isolated component checks executed here are arithmetic/logic checks only. They do **not** establish any full application's behavior.
+
+---
+
+## 1. Problem restatement and scope decisions
+
+A six-person university imaging group needs a desktop workspace to review and annotate microscopy/biomedical images exchanged as project bundles over shared storage. Observed pain (from the brief): lost calibration context, repeated annotation work after reopening, and disagreement about whether exported annotations still refer to the same image after transformations.
+
+Scope decisions for the first useful version:
+
+- `[CHOICE]` Single-user desktop application with a **directory-based project bundle** as the only collaboration mechanism. No cloud, no live co-editing, no server. Bundle exchange over ordinary shared storage is the collaboration boundary (brief obligation).
+- `[CHOICE]` Read-only treatment of source image files: import, annotate, and derive never rewrite the originals (brief: in-place modification out of scope). All user-visible intensity adjustments are display-only; all geometric operations are recorded, separate derived artifacts.
+- `[CHOICE]` Incremental delivery: the plan is layered so that a coordinate/persistence core without the viewer is already useful (annotation QA via exports), matching the brief's "plan to implement incrementally".
+- `[CHOICE]` Deliberately **not** converting competitor breadth into requirements: no universal format support, no automatic segmentation, no registration, no OMERO/web layer in v0 (deferred leads L1–L10).
+
+## 2. Evidence base: precedents and the mechanisms each contributes
+
+### 2.1 Precedent A — napari (interactive multi-dimensional viewer)
+
+`[FACT]` napari v0.9.2 is the current release (2026-09-29, "Meso" EffVer release; monthly release policy) [S01].
+`[FACT]` napari's image layer accepts NumPy-like lazy arrays (dask, zarr, xarray); "napari will also wait until just before it displays data onto the screen to actually generate a NumPy array", enabling browsing of very large datasets (docs demonstrate >100 GB lattice light-sheet data); multiscale/pyramid images are supported for extremely large 2D/3D data [S05].
+`[FACT]` Contrast limits (window/level): "the values set in the contrast limits do not change the underlying values of the image, only the visualization of the colormap" [S05]. This is the mechanism that satisfies the brief's "editing an intensity display setting must not silently alter original samples".
+`[FACT]` Multichannel display: `channel_axis` splits channels into independently styled layers (name/colormap/contrast per channel) [S05].
+`[FACT]` Labels-layer editing: paintbrush, fill bucket, polygon tool, brush-size keys `[`/`]`, `n_edit_dimensions` (paint across neighboring slices), numeric keyboard tool selection (2 = paintbrush, 3 = polygon, 4 = fill, 5 = picker, 6 = pan/zoom) [S06].
+`[FACT]` Undo/redo exists for paint/fill events "up to 100 events in the past", **with a documented limitation**: "If you have multidimensional data, adjusting the currently viewed slice will cause the undo history to be reset" [S06]. We treat that limitation as an anti-goal (§4.6).
+`[FACT]` Mechanism contributed: per-layer data→world coordinate transforms (scale/translate/affine/shear/rotate) with world coordinates as the shared annotation space; a real composition-order bug and its fix are fully traceable (§3.1) — napari is our precedent for the **coordinate-transform and display-mapping architecture**.
+
+### 2.2 Precedent B — QuPath (desktop annotation/persistence/calibration)
+
+`[FACT]` QuPath v0.7.0 released 2026-03-02 (latest as of capture) [S02].
+`[FACT]` Project layout: a `project.qpproj` JSON file (project entries with `serverBuilder` that names a reader library + URI, unique `entryID`, human name, `randomizedName` UUID), a per-entry `data/` directory containing `data.qpdata` (object hierarchy) plus `summary.json` ("should be written at the same time as data.qpdata" — a preview mechanism that avoids opening the large file), `scripts/`, `classifiers/` [S08]. Mechanism contributed: **project-bundle persistence with per-entry data files and preview summaries**.
+`[FACT]` Multi-machine path handling is an explicit documented pattern: duplicate the `.qpproj` file, keep per-computer copies with different image paths, choose at open time [S08]. Mechanism contributed: **per-machine path overlay for external references** (§5.4).
+`[FACT]` Export coordinates contract: "All of the shape export methods ... define coordinates in pixel units, taking the origin (0, 0) as the top left corner of the full-resolution image"; GeoJSON is the preferred exchange ("preserves quite a lot of information"); documented losses: "ellipses become polygons"; labeled-image export: label draw order decides overlap winners ("if Tumor and Stroma annotations overlap ... Stroma will win"); WSI-size label exports need `downsample` and OME-TIFF pyramids [S09]. Mechanism contributed: **honest export contract with explicit unit/origin statement and documented lossy mappings**.
+`[FACT]` Display vs data: LUT separation means "changing the brightness/contrast ... without changing the underlying pixel values", with the warning "Scientific image analysis is not photo editing!" [S11].
+`[FACT]` Calibration realism: "Pixel size information is **not** guaranteed to be a) present, or b) correct within a file"; generic formats (JPEG/PNG) usually lack it; TIFF may carry print-DPI instead; users must sanity-check [S11]. Mechanism contributed: **calibration uncertainty is a first-class state** (§6.3).
+`[FACT]` Annotation plane scope: for z-stacks/time series, "Objects (e.g. annotations, cells) also should remember which plane they belong to" [S11].
+`[FACT]` Keyboard operability: single-key tool shortcuts (M/R/O/L/P/V/B/W/.), Alt/Shift modifiers for select/erase/append, display toggles (H/A/G/C/F, numeric keys toggle channels), with a documented focus caveat ("these shortcuts only work whenever the viewer is 'in focus'") [S10].
+
+### 2.3 Component precedents — tifffile (bounded image access) and OME-NGFF/Zarr (storage & coordinate metadata)
+
+`[FACT]` tifffile v2026.9.20 reads TIFF/BigTIFF/OME-TIFF and many bio-TIFF variants; image data can be read "as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher order series, and pyramidal levels"; the README demonstrates reading a single tile of a pyramidal OME-TIFF through the Zarr interface (`z['0'][2, 0, 128:384, 256:].shape`) and dask over the same store; `memmap` exists for contiguous data [S04].
+`[FACT]` tifffile documents metadata unreliability it tolerates: "Micro-Manager MMStack ... The TIFF structures and metadata are often corrupted or wrong"; NDPI "BitsPerSample, SamplesPerPixel, and PhotometricInterpretation tags may contain wrong values"; tifffile's "shaped/truncated" TIFF extensions are readable by tifffile alone ("No other software besides Tifffile supports the truncated format") [S04]. These are concrete precedents that ambiguous metadata must be surfaced, not silently normalized.
+`[FACT]` OME-NGFF 0.4 (W3C CG-FINAL, 2023-05-25, pinned tree `a4c68004…`): `axes` metadata (unique names; type space/time/channel; units SHOULD be UDUNITS-2 strings); `coordinateTransformations` (identity/translation/scale, "applied sequentially and in order"); `multiscales` (2–5 axes; order MUST be time, then channel/custom, then space; zyx SHOULD for 3D stacks; per-level `datasets` ordered highest→lowest resolution; exactly one `scale` per level; `translation` MUST follow `scale`; whole-image transformations apply after per-level ones); `omero` display window (`min/max/start/end` per channel — display defaults stored beside data, not instead of data); `image-label` overlap semantics ("SHOULD ignore all except the last entry") [S07]. Mechanism contributed: **a small, testable coordinate-frame metadata schema we can mirror in the project format**.
+`[FACT]` tifffile's zarr stores target NGFF 0.4/0.5 (2026.5.2 revision notes), so OME-Zarr is a realistic interchange and internal derived-data format [S04]. QuPath 0.7.0 gained zarr import paths (PRs #1989, #1991, pyramidal zarr writer #1964) [S02]; napari reads zarr natively [S05]. `[INFERENCE]` Therefore an NGFF-shaped internal storage choice creates future interoperability at no v0 cost.
+
+### 2.4 Independence of the two main precedents
+
+`[INFERENCE]` napari (Python/Qt/VisPy, interactive n-D viewing) and QuPath (Java/JavaFX, slide-oriented analysis with project persistence) are independent in codebase, language/ecosystem, data model, and maintainer community: no shared implementation, and they fail in different ways (§3), which is what makes their agreement on coordinate-space separation and display/data separation strong evidence. Their roles are complementary, not overlapping: napari contributes the **viewing/coordinate/annotation-interaction mechanism**, QuPath the **project persistence/export/calibration mechanism**. tifffile and the NGFF spec are further independent (a single-maintainer I/O library and a community format specification).
+
+## 3. Investigated issue → fix → regression-test chains
+
+### 3.1 Chain A (complete, with regression test): napari affine composition order
+
+- **Issue**: napari #1841 "Affine matrix composition order", opened 2020-11-05, labeled `bug`, milestone 0.4.1. Reporter (lattice light-sheet deskewing, shear+scale affine) showed `compose_linear_matrix` composed `full_rotate @ full_scale @ full_shear`, contradicting the standard scale-first order; rendered deskewed overlays did not match [S12].
+- **Maintainer diagnosis** (comment, 2020-11-16): confirms the order is "a little odd", notes decomposition must change in lockstep with composition [S13].
+- **Fix**: PR #1884 "Fix affine composition order" (merged 2020-11-17T03:51:15Z; head commit `76b1fb4` per file-list capture). Changes `transform_utils.py`: composition becomes `full_rotate @ full_shear @ full_scale`, and `decompose_linear_matrix` is reworked (reflection handling; `tri_normalized = tri @ np.linalg.inv(np.diag(scale))`) so compose/decompose round-trips stay consistent [S14].
+- **Regression test**: same PR adds `test_composition_order` to `napari/utils/transforms/_tests/test_transform_utils.py`, asserting `compose_linear_matrix(rotate, scale, shear) == rotate @ shear @ np.diag(scale)` [S14].
+- **Release applicability**: napari v0.4.1 (published 2020-11-25) lists under Bug Fixes: "Fix affine composition order (#1884)" [S15]. Applies to napari ≥ 0.4.1; versions before 0.4.1 compose in the wrong order.
+- **Limits of the chain**: verified from the public issue, timeline, PR file list (full patch captured), and release notes; napari was **not executed** here. The attempt to re-locate the file at tag v0.9.2 returned 404 for both `napari/utils/transforms/transform_utils.py` and the test path — the module layout has changed since 0.4.x — so persistence of the exact file/test at the newest tag is **UNVERIFIED** [S24]. The lesson stands on the 2020 chain alone.
+
+**Lesson adopted** [INFERENCE → design rule in §4.2]: composition order of stored affine maps is a silent-corruption hazard; the project format must pin the order, version it, and carry a compose/decompose round-trip regression test from day one. Our arithmetic check W2 reproduces the mechanism (order changes the result by up to 9.0 in matrix entries in the test case; identity display composition is exactly harmless; float64 matrices round-trip through JSON exactly).
+
+### 3.2 Chain B (complete as issue→fix, **no regression test found**): QuPath GeoJSON export crash
+
+- **Issue**: QuPath #2115 "StackOverflowError at ROITypeAdapters.writeCoordinates when exporting large number of geometries", opened 2026-03-30 against QuPath 0.6.0: `QP.exportObjectsToGeoJson` over ~300k geometries dies with infinite recursion in `writeCoordinates` [S16].
+- **Root cause** (maintainer comment, 2026-03-31): "the issue is with exporting GeoJSON objects that contain multiple disconnected lines. You can't draw these in QuPath, but you can create them in other ways (e.g., merging annotations)", with a minimal two-polyline `RoiTools.union` → `gson.toJson` reproduction [S17].
+- **Fix**: PR #2117 "Fix export of multiline strings" (merged 2026-03-31T12:53:18Z; fix commit `4b2b80df4eb14849baf4f3acb532812abfea8041` referenced by the issue-close event on qupath/qupath; milestone **v0.8.0**). The patch replaces the shape-based overload dispatch with distinct per-type methods (`writeCoordinatesMultiLineString` etc.), iterates MultiLineString components explicitly, adds a guard that throws `IllegalArgumentException` for an unexpected nested geometry instead of recursing, and renames the methods "to reduce the risk of making the same mistake again" [S18].
+- **Regression test**: **none in the PR** — the captured file list contains only `qupath-core/src/main/java/qupath/lib/io/ROITypeAdapters.java` (+33/−21) [S18]. The `qupath-core` io test directory contains `TestGsonTools`, `TestPathIO`, `TestPathObjectIO`, `TestPointIO` — none named for `ROITypeAdapters`; whether `TestPathObjectIO` exercises MultiLineString GeoJSON export is UNVERIFIED [S25]. Per the stage contract, we state plainly: **the issue→fix link is established; an issue→fix→regression-test chain for #2115 could not be established** and no repair history is invented.
+- **Release applicability**: as of capture (2026-10-05) the latest QuPath release is still v0.7.0 (2026-03-02) [S19]; the fix is on `main` ahead of v0.8.0 (milestone open at capture: 7 open / 55 closed issues [S17]). So every tagged release ≤ 0.7.0 lacks the fix; only snapshots contain it.
+- **Limits**: Java application not executed here; applicability bounded to the GeoJSON serialization path for MultiLineString-valued ROIs created outside the drawing tools.
+
+**Lessons adopted** [INFERENCE → design rules in §5.2/§8]: (a) export paths need an **exhaustive, default-throwing type dispatch** — unknown geometry must fail loudly, not recurse or fall back to a generic serializer; (b) a fix without a regression test leaves recurrence risk (the maintainer mitigated by renaming overloads) — our exporter's regression suite must include a "geometry the GUI cannot create" case (W7, UNEXECUTED); (c) a failed export must not damage the project — exports go through the same temp-file + atomic-rename discipline as saves.
+
+## 4. Data contract
+
+### 4.1 Coordinate spaces
+
+`[CHOICE]` Three named spaces, with one canonical storage space:
+
+1. **`pixel_index`** (canonical storage): axis-aligned index space of the full-resolution source array, axes in source order, float64 values. Origin convention: **pixel centers at integer coordinates + 0.5**, i.e. coordinate (0.5, 0.5) is the center of the first pixel; document the equivalent corner convention alongside. `[^]` This mirrors QuPath's documented export origin (top-left of the full-resolution image) [S09] while keeping the half-pixel convention explicit instead of implicit.
+2. **`physical`**: acquisition space with units (e.g. µm, s). Mapping from `pixel_index` is **per-axis scale then translation**, stored exactly in NGFF-0.4 shape (lists of floats; translation after scale) [S07], plus an optional general affine for orientation/shear (rare in v0) — see 4.2.
+3. **`display`**: per-viewport 2D affine (pan/zoom/rotate for screen). Never persisted as part of the data contract, never applied to stored samples or annotation coordinates; annotations are stored in `pixel_index` and mapped to `display` at render time. `[FACT]` precedents keep display and data separate (napari contrast limits [S05]; QuPath LUTs [S11]); W2 verifies an identity display transform composes exactly harmlessly.
+
+Every annotation carries `space: "pixel_index"` plus a **frame descriptor** (the image id + its calibration version), so "do exported annotations still refer to the same image after transformations?" is answered by comparing image identity and the recorded transform chain, not by convention (§4.7, §8).
+
+### 4.2 Axes, calibration, and precision
+
+- Axis schema per image: ordered list `{name, type: space|time|channel|custom, unit?}` (NGFF-compatible), 2–5 dims, time before channel before space, zyx preferred for volumes [S07]. `unit` uses UDUNITS-2-style strings when known [S07].
+- Calibration: per-space-axis `scale` (+ optional `translation`) in physical units; time axis spacing in seconds. Missing or implausible calibration ⇒ image is **uncalibrated** (visible state), not silently defaulted (§6.3).
+- Precision: coordinates and matrix entries are **float64** and serialized as JSON numbers (Python `repr` round-trip is exact). `[VALIDATION]` W1 (executed): float32 storage of a 30000.37 px coordinate errs by 8.6e-4 px, at 200123.456 px by 2.9e-3 px, and at 2²⁴ px by 0.37 px; float64 and its JSON round-trip are exact at all three magnitudes. Since QuPath-style full-slide coordinates reach ~10⁵ px and stitched/montage data can exceed 10⁶, float32 is rejected for storage. `[FACT]` NGFF stores scale/translation as float lists [S07].
+- **Transform composition order is pinned and versioned**: general affine stored as `(rotate, shear, scale, translation)` composed as **R ∘ Sh ∘ S then translate**, matching the napari-0.4.1-fixed order (§3.1); the format version field records this rule so future readers can detect pre-fix data. `[VALIDATION]` W2 (executed) shows order changes the mapped result and that compose→apply equals stepwise apply.
+- `[CHOICE]` Axis order, origin convention, composition order, and unit vocabulary each get a dedicated regression test at the persistence layer (proposed; the W1/W2 receipts are the first instances of these checks).
+
+### 4.3 Annotation model and scope
+
+`[CHOICE]` Annotation record (JSON, per image entry):
+
+```json
+{
+  "id": "uuid4",
+  "kind": "point | polygon | mask",
+  "image_id": "img-uuid",
+  "space": "pixel_index",
+  "scope": {"type": "slice | volume | acquisition",
+            "axes": {"z": 3, "t": 0}},
+  "coords": [[1034.5, 2022.25], "...float64 pairs; mask = zarr chunk ref + dtype + value"],
+  "frame": {"calibration_version": 3,
+            "axes": ["y", "x"],
+            "units": ["micrometer", "micrometer"],
+            "scale": [0.25, 0.25],
+            "origin": "pixel-center",
+            "source_sha256": "…"},
+  "style_id": "nuclei-outline",
+  "properties": {"class": "tumor"},
+  "created_by": "user", "created_utc": "…",
+  "edit_rev": 42
+}
+```
+
+- `[FACT]` Plane-scoped annotations are an established need ("annotations ... should remember which plane they belong to" [S11]); volume/acquisition scope covers the brief's whole-stack annotations. Scope is explicit per annotation — no implicit "current slice" capture.
+- Mask annotations reference chunked arrays in the project store (same format as derived data, §4.7) rather than inline pixel lists.
+- Overlap semantics for painted/label-style masks adopt the NGFF image-label rule as default: readers resolve overlaps by last-writer order, recorded explicitly [S07]; `[FACT]` QuPath documents the same class of order-dependent behavior for labeled export ("Stroma will win") [S09].
+
+### 4.4 Styles
+
+`[CHOICE]` Reusable named styles (color, line width, fill opacity, point size, z-order) live in `styles.json` at project level; annotations reference `style_id`. Editing a style updates all its annotations — this is the mechanism that prevents "repeat annotation work" when only appearance changed.
+
+### 4.5 Undo/redo
+
+`[CHOICE]` Event-sourced per image entry: every annotation mutation is a command record (inverse included) appended to an edit journal (§5.2); undo/redo = walking the journal. Depth limit 200. **History survives slice/time-point changes** — the explicit anti-goal derived from napari's documented reset-on-slice-change warning [S06]. `[VALIDATION]` W8 (UNEXECUTED) — scripted test: annotate, paint on z=0, switch z=5, paint, undo twice, assert state matches pre-paint z=0 plus removal of the z=5 stroke.
+
+### 4.6 Derived data, recorded operations, provenance
+
+- `[CHOICE]` Any geometric transform/resampling is a **recorded operation** producing a new derived artifact under `derived/`, with an op record: `{op_id, op: "affine|resample|projection", inputs: [artifact ids + content hashes], parameters (incl. transform matrices and interpolation kind), output: {path, sha256, shape, axes, calibration}, created_by/utc}`. Derived artifacts are never written back onto sources.
+- Display settings (channel visibility, window/level, LUT, gamma, slice/time position) are **viewport state** persisted per user/project for convenience, and are structurally incapable of touching samples (they live in the display stage only). `[FACT]` Both precedents guarantee this separation [S05, S11].
+- `[CHOICE]` Original-vs-derived is visible: the layer list badges every layer as `SRC` or `DERIVED` (with op id), and the status bar shows the active layer's kind. This is the brief's "visible distinction between original data and derived views".
+- Provenance UI: image inspector shows raw parsed metadata verbatim (sidecar `originals/<image>.meta.json`), parsed calibration, and the op chain for derived data.
+
+### 4.7 Identity of source data
+
+`[CHOICE]` Import computes sha256 + byte size of each source file and stores `{uri, sha256, size, imported_utc, reader: "ometiff@<libversion>", raw_metadata_ref}`. Exports and derived ops reference `image_id + source_sha256`; the "does this still refer to the same image" check compares hashes and the recorded transform chain. `[INFERENCE]` Hashing a 3 GB file once at import (~3–10 s on shared storage) is acceptable v0 behavior; re-verification is offered, not forced.
+
+## 5. Project layout, atomicity, recovery
+
+### 5.1 Bundle layout
+
+`[CHOICE]` Directory bundle:
+
+```
+project/
+  manifest.json           # schema_version, project id, image entries, styles, calibration
+  manifest.backup.json    # previous good manifest (rotated on each commit)
+  images/…                # copies, if the user chose "copy into project"
+  originals/<img>.meta.json   # verbatim parsed metadata sidecar per image
+  annotations/<img>.jsonl     # annotation records + appended edit journal (§4.3/4.5)
+  derived/<op_id>/…           # derived artifacts (zarr or ome-tiff) + op.json
+  cache/                      # disposable tile cache (safe to delete)
+  views/<user>.json           # per-user viewport state (display only)
+```
+
+### 5.2 Atomic save and recovery
+
+`[CHOICE]` All logical saves follow: write `file.tmp` → `flush` + `fsync` → atomic `os.replace` → directory fsync. Manifest updates additionally rotate the previous manifest to `manifest.backup.json` first. Annotation edits append to a JSONL journal (append + fsync is atomic enough for crash-recovery purposes; compaction rewrites via the same tmp+rename path). On open: if `manifest.json` is invalid, fall back to the backup; if a journal tail is torn, truncate at the last complete record and report it. Partial imports never touch `manifest.json` (staging directory; commit = single manifest rename), so a failed import leaves the previous project state intact. Interrupted derived ops write to `derived/<op_id>.partial/` and are discarded/restarted. Failed exports write `export.tmp` and never replace an existing good export (Chain B lesson, §3.2).
+
+`[FACT]` Precedent for per-entry dual artifacts written together: QuPath's `data.qpdata` + `summary.json` written at the same time [S08]. `[VALIDATION]` W5 (UNEXECUTED): kill -9 during save/import/export; assert manifest+backup valid, journal replays, no source file modified (hash check).
+
+### 5.3 Sources: external references vs portable bundles
+
+`[CHOICE]` v0 supports both, per image: `mode: "reference"` (default for large files) or `mode: "copy"` (opt-in for small files; enforced copy budget per project, e.g. ≤ 200 MB total).
+
+- **References**: no duplication of multi-GB data; risk = broken paths when machines differ.
+- **Portable bundles**: fully self-contained; cost = duplication and sync traffic.
+- `[FACT]` QuPath's documented multi-computer pattern — duplicated project files with machine-specific image paths, chosen at open [S08] — is adopted as: `manifest.json` stores canonical **relative** paths; a per-machine overlay `views/paths-<host>.json` may remap roots; open-time resolution order: relative → overlay → last-known-absolute (with a broken-link report, never a silent substitution) → user re-link dialog. `[VALIDATION]` W6 (UNEXECUTED): move the bundle + external source to a new root on a second mount; reopen; assert hash match and zero annotation loss.
+- Trade-off recorded explicitly: `copy` mode trades storage for robustness; `reference` mode is default because the group's images exceed 3 GB each (brief envelope).
+
+## 6. Image access layer and support boundary
+
+### 6.1 Reader interface
+
+`[INFERENCE]` One internal interface: `open(uri) → {axes[], shape, dtype, calibration, chunks, metadata_ref}` plus `read_window(spec, level) → ndarray` and `read_tile(level, idx)`. Readers are behind this interface so the viewer never knows file formats.
+
+### 6.2 Supported formats (v0) and explicit non-goals
+
+`[CHOICE]` Support boundary a 6-person team can actually test:
+
+| Class | Format | Reader (pinned) | Notes |
+|---|---|---|---|
+| Primary | OME-TIFF / tiled / pyramidal TIFF | tifffile v2026.9.20 [S03,S04] | window/tile reads via zarr interface |
+| Primary | OME-Zarr NGFF 0.4 | zarr (pinned at implementation time) | also our derived-artifact format [S07] |
+| Convenience | plain 2D TIFF/PNG (small) | tifffile / imageio | calibration usually absent ⇒ uncalibrated state [S11] |
+| Explicit non-goal v0 | vendor natives (CZI/ND2/LSM/NDPI native stacks), WSI (SVS/NDPI/BIF), DICOM | — | fails closed at import (§6.3); revisit via leads L11 |
+
+`[FACT]` tifffile itself reads many vendor TIFF-likes [S04], so the boundary is about **what we test and promise**, not what is theoretically parseable; `[^]` the brief forbids promising universal compatibility. `[FACT]` Known-real metadata hazards even inside the boundary: MMStack "structures and metadata are often corrupted or wrong"; NDPI wrong tag values [S04].
+
+### 6.3 Unsupported or ambiguous input
+
+`[CHOICE]` Fail-closed, project-safe: an import that cannot determine axes/calibration creates a **visible "needs attention" entry** carrying the verbatim parsed metadata sidecar, the specific ambiguity (e.g. "YX axes, no physical unit; TIFF resolution = 72 DPI likely print-DPI"), and an import dialog offering: import as uncalibrated 2D / let user type scale+unit / abort. Original metadata is never normalized away. The project remains loadable; other entries are unaffected. `[FACT]` Justified by QuPath's "pixel size not guaranteed present or correct" warning [S11] and tifffile's documented corrupted-metadata formats [S04].
+
+### 6.4 Bounded access, caching, cancellation, progress
+
+- `[CHOICE]` Tile size 512×512 per channel; LRU tile cache (default 256 tiles ≈ 128 MiB for uint16); decode/read worker pool (2–4 threads) with cooperative cancellation tokens; every long op (import, pyramid build, export, big window read) reports progress and is cancellable; cancel leaves partial artifacts in staging (no partial commits).
+- `[FACT]` Bounded access is precedent-backed: tifffile serves single tiles of a pyramidal OME-TIFF through zarr [S04]; napari renders from lazy dask/zarr arrays and only materializes the displayed data [S05].
+- `[VALIDATION]` W3 (executed, arithmetic): a 49152×15360×2ch uint16 source (3.02 GB) decomposes into 5760 tiles of 512 KiB; a 256-tile cache is 128 MiB; one full-res 1920×1080 viewport touches 12 tiles (≈7.9 MiB, ≈6.3 ms read floor at an assumed 1 GB/s); estimated resident set ≈1.16 GB ≪ 16 GB. `fits_envelope: true`. **Scope: arithmetic only — no image I/O was performed.**
+- `[VALIDATION]` W4 (UNEXECUTED): real benchmark on a 3 GB OME-TIFF on the 8-core/16 GB envelope: measure cold/warm window-read latency and peak RSS via tifffile zarr windows, with a worker-cancel test. This is the check that could falsify the envelope claim; it needs the pinned library stack and is proposed for the implementation stage.
+
+## 7. Display pipeline (v0)
+
+`[CHOICE]` Render loop: for each visible channel-layer → read visible tiles (from cache or reader) → apply per-channel window/level + LUT + gamma → composite with opacity/blending → draw annotation overlays (map `pixel_index`→`display` via viewport affine) → HUD (scale bar in physical units from calibration; "UNCALIBRATED" warning if absent). `[CHOICE]` Canvas: start with CPU compositing (QPainter over cached tiles); a GPU path (e.g. VisPy) is a later optimization if W4-class benchmarks show need — recorded as bounded alternative (L1 relates: embedding napari outright).
+
+`[FACT]` Interpolation honesty: QuPath defaults to nearest-neighbor display partly so "the blocky appearance serves as a useful warning that our images do not contain perfect detail" [S11]; `[CHOICE]` we default to nearest for source data and label interpolation only for explicitly derived (recorded) resamples.
+
+## 8. Export and the honest preservation statement
+
+`[CHOICE]` v0 exports:
+
+1. **Annotation table** (CSV): one row per annotation/vertex-option, with mandatory frame columns: `image_id, source_sha256, space=pixel_index, axes, units, scale, origin, scope(type+axes), style_id, properties`.
+2. **Annotation GeoJSON** (QuPath-compatible flavor [S09]): `FeatureCollection`; every Feature's `properties` embed the same frame descriptor block; coordinates in full-resolution `pixel_index` with documented origin (top-left of full-res image, pixel-center convention stated in-file via a top-level `properties.frame` member).
+3. **Overlay PNG** (viewport render with burn-in frame note) and **small derived image** (OME-TIFF or PNG) produced only through the recorded-op pipeline (§4.6).
+
+Every export writes a sibling `<name>.preservation.json`:
+
+```json
+{"preserves": ["pixel_index coordinates float64", "frame descriptor per feature", "classes/properties"],
+ "does_not_preserve": ["display settings", "styles (only style_id names)", "undo history",
+                       "ellipse curves (emitted as polygons)", "mask soft edges (thresholded)"],
+ "transform_note": "annotations are in source pixel_index; the image itself was not transformed; derived artifact <id> carries matrix M (R∘Sh∘S), interpolation=bilinear"}
+```
+
+`[FACT]` Lossy mappings are precedent-normal: GeoJSON turns QuPath ellipses into polygons [S09]; NGFF label overlap has documented last-entry semantics [S07]. `[VALIDATION]` W7 (UNEXECUTED): export→re-import round-trip equality test on coordinates/frames, plus a hostile case: an annotation whose geometry type our GUI cannot produce (multi-segment disconnected line, per QuPath #2115 [S16,S17]) must export or fail loudly — never corrupt the file or recurse.
+
+## 9. Minimum workflow trace
+
+| Brief step | Mechanism | Where |
+|---|---|---|
+| Create project | `manifest.json` v0 + empty entries | §5.1 |
+| Import without rewriting originals | reader probes; sha256; sidecar metadata; staging commit | §4.7, §5.2, §6 |
+| Inspect metadata/provenance | inspector over `originals/*.meta.json` + op chain | §4.6 |
+| Navigate/adjust display | viewport state; window/level display-only | §7 |
+| Annotate | annotation records + styles + journal undo | §4.3–4.5 |
+| Save/close | atomic manifest rotation + journal fsync | §5.2 |
+| Reopen on another machine | relative paths + host overlay + hash identity check | §5.3 |
+| Export table/overlay/derived | frame-carrying exports + preservation statement | §8 |
+| Verify what transformed | op chain + source_sha256 comparison; W7 | §4.6, §8 |
+| Display edits never alter samples | display-stage-only mapping | §4.6, §7 |
+| Transform = distinct recorded op | derived artifacts + op records | §4.6 |
+| Unsupported/ambiguous input | fail-closed entry + explicit choice + retained metadata | §6.3 |
+| Recoverable failures | tmp+rename+journal+backup; W5 | §5.2 |
+| 3 GB bounded access | tile cache + windowed reads; W3 executed, W4 UNEXECUTED | §6.4 |
+| Styles, keyboard nav, undo | §4.4–4.5, §10 | |
+| Original vs derived visible | SRC/DERIVED badges | §4.6 |
+
+## 10. Accessibility and operability
+
+- `[CHOICE]` All tools reachable by single-key shortcuts and via menus (keyboard operability); `[FACT]` precedents: QuPath single-key tool/display shortcuts with focus caveat [S10]; napari numeric tool keys and brush-size keys [S06]. Our bindings ship a printable cheat-sheet and a "keyboard-only walkthrough" test script.
+- `[CHOICE]` Legible metadata/error feedback: errors carry code + human sentence + next action (e.g. "CAL-UNCERTAIN: TIFF resolution looks like print DPI — confirm or enter µm/px"); the metadata inspector renders raw values verbatim. Screen-reader-friendly: status changes also mirrored in a log pane (not canvas-only text).
+- `[FACT]` Contrast as an accessibility fix shipped by precedent: napari 0.4.1 "Enhance accessibility by ensuring welcome screen contrast meets required standards (#1863)" [S15]; `[CHOICE]` our default theme meets WCAG AA text contrast and offers a high-contrast annotation palette.
+
+## 11. Critical assumptions, unsupported cases, risks
+
+1. `[ASSUMPTION]` The 3 GB/16 GB envelope is achievable with tile-cache design (W3 arithmetic says yes; W4 must confirm with real I/O — if decompression dominates, fall back to precomputed pyramid levels as mandatory for sources > 1 GB).
+2. `[UNSUPPORTED v0]` Vendor-native formats and WSI (§6.2) — fail closed; original metadata retained. Registration, segmentation, cloud — out of scope (leads).
+3. `[UNSUPPORTED v0]` Concurrent multi-writer editing of one bundle on shared storage — last-writer-wins on manifest with pre-rename backup; documented as unsafe; single-writer-per-project etiquette (leads L7 for real concurrency later). `[INFERENCE]` This matches the brief's "exchange bundles" model rather than shared-live editing.
+4. `[RISK]` Calibration trust: precedents show files lie about pixel size [S11, S04]; our uncalibrated-state design reduces but cannot remove wrong-number risk; mitigation = prominent scale bar + one-click "show raw metadata".
+5. `[RISK]` OME-Zarr/NGFF evolves (0.5/0.6 exist [S20/S21]); we pin 0.4 for v0 reads/writes of derived data and version-stamp everything; 0.5+ adoption is a lead (L5).
+6. `[RISK]` Windows/macOS atomic-rename semantics: `os.replace` is atomic on POSIX and Windows same-volume; cross-volume moves are staged same-volume first `[INFERENCE]` (standard practice; platform test included in W5).
+7. `[LIMIT]` All executed checks (W1–W3) are isolated arithmetic/logic component checks; they do not establish behavior of napari, QuPath, tifffile, or any built application.
+
+## 12. Opportunity and alternatives
+
+**Opportunity (recommended to adopt early): make derived artifacts NGFF-0.4 OME-Zarr.** `[FACT]` tifffile already speaks zarr/NGFF [S04], QuPath 0.7.0 imports zarr images [S02], napari reads zarr natively [S05]. `[INFERENCE]` Storing pyramids/masks/derived data as NGFF-0.4 costs little in v0 (the writer is a chunked-directory writer + a `.zattrs` we already schema) and buys: free interop for reviewers using existing tools, a path to cloud later, and one format to test instead of two. This is the single highest-leverage source-backed choice in the plan.
+
+**Plausible alternative (recorded, not chosen for v0): embed napari as the canvas** instead of building our own tile compositor. Pros: instant multiscale/lazy rendering, coordinate-transform and annotation layers already built [S01, S05]; Cons: Qt-binding and dependency weight per workstation, UI/UX constrained by napari's layer model, project-persistence and export contracts still ours to build anyway, and long-term API churn (monthly releases, "Meso" breaking-change class [S01]). `[CHOICE]` Keep as L1: revisit if the W4 benchmark shows CPU compositing cannot meet responsiveness.
+
+**Alternative also recorded**: single-file SQLite project container (atomic transactions out of the box) — rejected for v0 because per-entry side files (annotation JSONL, zarr chunks, sidecars) keep the bundle diffable/syncable over shared storage and avoid DB corruption handling for large blobs; revisit if journal compaction becomes a burden.
+
+## 13. Validation plan (status)
+
+Executed by candidate (isolated arithmetic/logic component checks; receipts in `witnesses.json`):
+- **W1** coordinate precision: float64+JSON exact; float32 loses up to ~1 px near 2²⁴ px (exit 0).
+- **W2** transform contract: composition order changes results; identity display composes exactly; JSON round-trip exact (exit 0).
+- **W3** 3 GB envelope arithmetic: 3.02 GB source → 5760×512 KiB tiles; 128 MiB cache; ~12 tiles per viewport; resident ≈1.16 GB (exit 0).
+
+Proposed / UNEXECUTED (need the real stack or OS process control): **W4** I/O latency+RSS benchmark on a real 3 GB OME-TIFF incl. cancellation; **W5** crash-injection recovery (kill -9 during save/import/export; platform matrix); **W6** cross-machine relocation and identity re-verification; **W7** export round-trip + hostile-geometry exporter test (QuPath #2115-inspired); **W8** undo history surviving slice changes (napari-limitation anti-goal check); plus persistence-layer regression tests for axis order, origin convention, and composition order (§4.2).
+
+## 14. Source discipline
+
+Every load-bearing external claim above cites a catalog id `[Sxx]`; `sources.json` records URL, version pin, exact locator, capture identity (sha256 of the exact HTTP response body captured on 2026-10-05, capture id, and whether the capture is complete — four captures were truncated by the fetch cap and are marked, with the used content verified inside the captured range). Search-result captures are used only as locators to issue/timeline captures. No repair history is asserted beyond what the captured commits/releases show; the QuPath chain is explicitly reported as fix-without-found-regression-test and unreleased as of the capture date.

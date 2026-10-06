@@ -1,0 +1,101 @@
+{
+  "catalog": "research-stage source catalog",
+  "captured_utc": "2026-10-06",
+  "notes": "All captures are exact HTTP response bodies obtained with the admitted public_https_get tool; capture identity = server sha256 of captured bytes as reported by the tool receipt. Locators are exact sections/paths within the captured bytes.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF (Next-generation file format) specification, version 0.4 — rendered specification page",
+      "url": "https://ngff.openmicroscopy.org/0.4/index.html",
+      "pin": "0.4 release; page states 'This is the 0.4 release of this specification'; copyright 2020-2026 OME; HTTP Last-Modified 2026-10-01",
+      "locator": "Sections: 'Status of this document'; 2.1 Images (layout: nested chunk dirs, 2-5 dims, labels group); 3.1 'axes' metadata (unique name MUST; type space/time/channel; UDUNITS-2 units; length MUST equal dims; time->channel->space ordering; zyx SHOULD); 3.3 'coordinateTransformations' ('The transformations in the list are applied sequentially and in order.'); 3.4 'multiscales' ('If translation is given it MUST be listed after scale'); 3.5 'omero' (channels[].color 6-hex, window min/max/start/end); 3.6/3.7 labels/image-label; no orientation/direction-cosine field appears in the captured sections",
+      "capture_identity": "sha256:ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269; 163120 bytes; complete body",
+      "applicability": "Data contract of the proposal: axis table, index->physical transform convention (scale then translation), channel display-window schema, label/mask storage, and the absence of an orientation field"
+    },
+    {
+      "id": "S2",
+      "title": "Zarr Storage Specification Version 2 (zarr-specs repository, docs/v2/v2.0.rst)",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-specs/main/docs/v2/v2.0.rst",
+      "pin": "main branch, captured 2026-10-06; document itself marked 'Status: This specification has been superseded'",
+      "locator": "Storage (get/set/delete key-value interface); Metadata (.zarray MUST keys); Chunks (keys '0.0', nested '0/0'; uninitialized chunk = fill_value; no transactional/atomic multi-key operations anywhere in the text); Hierarchies (groups, path normalization); Attributes (.zattrs)",
+      "capture_identity": "sha256:422bd5f5fb27269bcc30da125f0b116c29e5008a5360bb5a5bb77f14b93acea7; 20907 bytes; complete",
+      "applicability": "Chunk addressing = bounded access unit; absence of atomicity guarantees justifies application-level atomic save design"
+    },
+    {
+      "id": "S3",
+      "title": "ome-zarr-py issue #122: 'write_image assumes particular axisorder'",
+      "url": "https://github.com/ome/ome-zarr-py/issues/122",
+      "pin": "opened 2021-10-21T14:05:42Z by k-dominik; closed 2021-11-08T14:16:27Z state_reason=completed",
+      "locator": "Issue body: array (100,200,1) uint8 with axes 'yxc'; 'The scaler, however, will assume a certain axisorder. This leads to weird errors that are not super obvious'",
+      "capture_identity": "GitHub API JSON, sha256:6375552c6ba7c4b143df85e24f1dc506967a5dd98c6ab34095ae0d2d4b296d4e; 3796 bytes; complete",
+      "applicability": "Start of the issue->fix->regression chain; archetype of silent axis-order assumptions"
+    },
+    {
+      "id": "S4",
+      "title": "ome-zarr-py PR #123: 'Validate axes for writer' (fix for #122)",
+      "url": "https://github.com/ome/ome-zarr-py/pull/123",
+      "pin": "merged 2021-11-08T14:16:27Z by sbesson; merge_commit_sha 89fcd20e82d85b94923853eec5edc6abd06ef2cd; head sha af4f882895d3a8498f3c183fa5392e727bce6285; changed_files=2, additions=118, deletions=20",
+      "locator": "PR body: 'Fixes #122'; validation code reused from ome-ngff-prototypes commit 05b55d2516941e2eaf8fa82b722cad4371f99b5f; docstrings updated to require (t,c,z,y,x) order",
+      "capture_identity": "GitHub API JSON, sha256:60a542da85b0d0fd420346c991d49654228b99a3bb370bceace99db1edc9db37; 17312 bytes; complete",
+      "applicability": "Fix commit for the chain; release containment beyond 'post-2021-11-08 master' NOT verified"
+    },
+    {
+      "id": "S5",
+      "title": "PR #123 changed files (patch): ome_zarr/writer.py and tests/test_writer.py",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/pulls/123/files",
+      "pin": "same merge as S4; file blobs at head sha af4f8828...",
+      "locator": "writer.py: new _validate_axes_names() enumerating allowed per-ndim orders, called before Scaler ('# check axes before trying to scale'), new x/y size-1 downsample guard; test_writer.py: new test_dim_names() with pytest.raises(ValueError) for axes=None(3D), 'yx'(len mismatch), 'yxt', ['x','y'], 'xyzct', and end-to-end write_image(axes='xyz')",
+      "capture_identity": "GitHub API JSON with unified patches, sha256:69835b0272e620c4c37ef85da0039eda4a104cd3ec8ff902089188251759153c; 8226 bytes; complete",
+      "applicability": "The regression test that pins the fix; template for our import-time axis validation"
+    },
+    {
+      "id": "S6",
+      "title": "ome-zarr-py releases (GitHub API list, first 50)",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/releases?per_page=50",
+      "pin": "captured 2026-10-06; latest v0.20.1 published 2026-10-05T13:13:47Z",
+      "locator": "Release notes: v0.15.0 'BREAKING CHANGE: Deprecate writing v01, v02 and v03'; v0.18.0 'Include translations in multiscales' (#590); v0.19.0 'Ready for 06' (#605); v0.20.x current",
+      "capture_identity": "GitHub API JSON, sha256:1e9c1e973f722f2f8350400447d53ae4ad8513a6a5369c0d71c81e2b7bb53a6f; 104228 bytes; complete",
+      "applicability": "Evidence of active/breaking ecosystem churn motivating pins and conformance tests"
+    },
+    {
+      "id": "S7",
+      "title": "ome-zarr-py release tag v0.3.1 (GitHub API)",
+      "url": "https://api.github.com/repos/ome/ome-zarr-py/releases/tags/v0.3.1",
+      "pin": "created 2022-03-16T10:35:17Z, published 2024-01-17T09:08:42Z, empty release body",
+      "locator": "Whole JSON object",
+      "capture_identity": "GitHub API JSON, sha256:d133826e0af63b766df32a872748aa4d3541e320e30909ed9907f419facf5156; 1721 bytes; complete",
+      "applicability": "Documents the LIMIT of the issue chain: earliest release object postdates the fix and was back-published; tag containment of merge commit 89fcd20e... unverified"
+    },
+    {
+      "id": "S8",
+      "title": "napari documentation — Image layer (raw markdown source, napari/docs)",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "pin": "main branch, captured 2026-10-06; matches rendered docs version 0.9.2 era",
+      "locator": "Section 'Adjusting contrast limits': 'the values set in the contrast limits do not change the underlying values of the image, only the visualization of the colormap'; gamma 0.20-2.00; 'NumPy-like arrays' (dask/zarr lazy; '>100GB of lattice lightsheet data stored in a zarr file'); 'Multiscale images'; big-image advice to set contrast limits explicitly; channel_axis; xarray inherits scale/translate/units",
+      "capture_identity": "sha256:2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963; 20309 bytes; complete",
+      "applicability": "Precedent P1: display-vs-data separation, out-of-core viewing, multiscale, keyboard/GUI control inventory"
+    },
+    {
+      "id": "S9",
+      "title": "napari documentation — Shapes layer (raw markdown source, napari/docs)",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "pin": "main branch, captured 2026-10-06",
+      "locator": "'shapes layer allows ... a list of an NxD arrays'; slice rule: 'all of its non-displayed coordinates must match the coordinates of that view slice'; copy/paste across slices updates non-visible coordinates; tool keybindings p/r/e/l/t/a/Esc/ctrl+y; per-shape face/edge color and edge width",
+      "capture_identity": "sha256:d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e; 24597 bytes; complete",
+      "applicability": "Precedent P1: nD annotation scoping (slice vs volume), copy-across-slices semantics, keyboard operability baseline"
+    },
+    {
+      "id": "S10",
+      "title": "tifffile README (raw RST, cgohlke/tifffile)",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "version 2026.9.20, BSD-3-Clause, captured 2026-10-06 (first 32768 of 32898 bytes; trailing 130 bytes not captured)",
+      "locator": "Format list; 'Image data can be read as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels'; ImageJ hyperstack (>4GB one IFD, Latin-1 ImageDescription); OME-TIFF up to 8D with OME-XML; 'The TIFF structures and metadata are often corrupted or wrong' (MMStack); NDPI wrong tag values; TIFF6 subset limits ('OJPEG ... color space transformations, samples with differing types ... are not implemented'); zarr tile read examples; dask from_zarr; memmap for contiguous data",
+      "capture_identity": "sha256:cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48 (whole file); delivered bytes sha256 827cb54df8743ffae1a16134f3775a7cb53660965d13f99237cab1639e6b46bb",
+      "applicability": "Precedent P3: bounded windowed reads for reference mode; documented wrong-metadata formats driving the ambiguous-calibration flow; explicit support boundary"
+    }
+  ],
+  "unverified_references": [
+    {"topic": "WCAG 2.1 (keyboard operability standard) — proposed as accessibility target; not fetched/pinned this stage", "status": "UNVERIFIED lead"},
+    {"topic": "QuPath project/annotation model (sidecar precedent) — not fetched this stage", "status": "UNVERIFIED lead"}
+  ]
+}

@@ -1,0 +1,218 @@
+# Critique review — fresh same-arm source-grounded critique stage (I-11-FRESH-DELIVERY-R001-treatment)
+
+Reviewer: critique-stage native delivery, 2026-10-06. Object under review: the frozen research-stage
+proposal and catalogs under `inputs/prior/research/research/` (exact SHA256s recorded in
+`inputs/prior/MANIFEST.json`; all five files hash-verified against that index before use).
+
+**Status vocabulary in this review:** VERIFIED-BY-CRITIQUE = I independently retrieved and checked
+the public source myself this stage (capture sha256 given); REPRODUCED = I re-executed the arithmetic
+myself (execution receipt id given); INHERITED = claim rests on the prior stage's authorized capture
+which I did not re-retrieve; OPEN = unresolved, with the blocking evidence recorded.
+
+---
+
+## 1. Verdict (TL;DR)
+
+The proposal is substantively sound and its evidence chain is real. I independently re-fetched every
+load-bearing source: all nine prior captures are **byte-identical** to today's live responses (same
+sha256), every quoted sentence I checked exists verbatim, the issue→fix→regression chain (ome-zarr-py
+#122 → PR #123 → `test_dim_names`) is confirmed at the level of merge commit, diff hunks, and test
+assertions, and both executed checks (W1 float precision, W2 transform order) reproduce exactly.
+I found **no substantive factual error** in the proposal. What follows are small evidence-backed
+clarifications (axis-type vocabulary, §3.3 vs §3.4 transform-type wording, docs-version pinning,
+ULP probe hygiene), one confirmed-open limit (release-tag containment), one coverage gap worth
+closing before the final stage (visible original-vs-derived distinction lacks a concrete UI
+affordance), and preserved claims the final author should carry forward unchanged.
+
+---
+
+## 2. What I checked and how
+
+Inputs read in full: `inputs/brief.md` (sha256 27311c71…), `inputs/output_contract.md` (233c7ea2…),
+`inputs/prior/research/research/proposal.md` (8451f2ce…), `sources.json` (16793628…),
+`witnesses.json` (ceed1821…), `leads.json` (aa7cc33d…), plus `inputs/prior/MANIFEST.json` (7b59e031…).
+
+Method: (a) re-fetch each prior-pinned public URL myself with the admitted `public_https_get` and
+compare response sha256 against the prior catalog's capture identity; (b) read targeted byte ranges
+of the full captured NGFF 0.4 page (my own capture, stored at
+`public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body`) to verify
+normative quotes; (c) re-run the two executed witnesses' arithmetic in the isolated Python executor;
+(d) audit proposal obligations against the brief item by item.
+
+---
+
+## 3. Independent verification matrix
+
+| # | Proposal claim (location) | Prior pin | Critique evidence | Verdict |
+|---|---|---|---|---|
+| V-1 | Issue #122 "write_image assumes particular axisorder", k-dominik, 2021-10-21, `(100,200,1)` uint8 `yxc`, "The `scaler`, however, will assume a certain axisorder…" (§4, S3) | sha 6375552c… | My fetch of `api.github.com/repos/ome/ome-zarr-py/issues/122` returned sha 6375552c6ba7c4b143df85e24f1dc506967a5dd98c6ab34095ae0d2d4b296d4e — byte-identical; title/author/timestamps/body quote all match | VERIFIED-BY-CRITIQUE |
+| V-2 | PR #123 "Validate axes for writer", "Fixes #122", will-moore; merged 2021-11-08T14:16:27Z by sbesson; merge sha 89fcd20e82d85b94923853eec5edc6abd06ef2cd; head af4f8828…; +118/−20, 2 files; reuses constantinpape code at ome-ngff-prototypes commit 05b55d25… (§4, S4) | sha 60a542da… | My fetch of `…/pulls/123` returned sha 60a542da85b0d0fd420346c991d49654228b99a3bb370bceace99db1edc9db37 — byte-identical; every field matches, including the PR-body URL pinning ome-ngff-prototypes `05b55d2516941e2eaf8fa82b722cad4371f99b5f` | VERIFIED-BY-CRITIQUE |
+| V-3 | Regression test `test_dim_names`: `pytest.raises(ValueError)` for axes=None (3-D), `"yx"` (len), `"yxt"`, `["x","y"]`, `"xyzct"`, and end-to-end `write_image(axes="xyz")`; `_validate_axes_names()` called with comment "# check axes before trying to scale" before the Scaler; new x/y size-1 guard; docstrings now require (t,c,z,y,x) (§4, S5) | sha 69835b02… | My fetch of `…/pulls/123/files` returned sha 69835b0272e620c4c37ef85da0039eda4a104cd3ec8ff902089188251759153c — byte-identical; all six negative cases, the positive pass-through cases, the exact source comment, the `if image.shape[-1] == 1 or image.shape[-2] == 1` guard, and the docstring lines are present in the patch | VERIFIED-BY-CRITIQUE |
+| V-4 | v0.3.1 release object created 2022-03-16, (re)published 2024-01-17, empty body; used to bound release attribution (§4, S7) | sha d133826e… | My fetch of `…/releases/tags/v0.3.1` returned sha d133826e0af63b766df32a872748aa4d3541e320e30909ed9907f419facf5156 — byte-identical (`created_at` 2022-03-16T10:35:17Z, `published_at` 2024-01-17T09:08:42Z, `body: ""`) | VERIFIED-BY-CRITIQUE |
+| V-5 | Latest ome-zarr-py release v0.20.1 published 2026-10-05 (F8, S6) | sha 1e9c1e97… (full list, not re-fetched) | My fetch of `…/releases?per_page=1` (sha e4624567335f658f57ad0b9e32e37cff2b53e1cbd784cc06f4b0569ab7418d3a) shows tag v0.20.1, `published_at` 2026-10-05T13:13:47Z | VERIFIED-BY-CRITIQUE (latest release only; the v0.15.0 "BREAKING CHANGE…" / v0.18.0 #590 / v0.19.0 #605 release-note quotes remain INHERITED from the prior full-list capture) |
+| V-6 | napari image.md: "the values set in the contrast limits do not change the underlying values of the image, only the visualization of the colormap"; gamma 0.20–2.00; ">100GB of lattice lightsheet data stored in a zarr file"; multiscale + advice to set contrast limits explicitly on big data; xarray inherits scale/translate/units; float RGB outside 0–1 clipped (F1, F2, S8) | sha 2897310c… | My fetch returned sha 2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963 — byte-identical; every quote verified verbatim, including "can be adjusted from a minimum of 0.20 to a maximum of 2.00" and "if working with big images, it is recommended to explicitly set the contrast limits" | VERIFIED-BY-CRITIQUE |
+| V-7 | napari shapes.md: "list of an NxD arrays"; "for a multidimensional shape to be displayed on a given view slice, all of its non-displayed coordinates must match the coordinates of that view slice"; copy/paste rewrites non-visible coordinates; keybindings p/r/e/l/t/a/Esc/ctrl+y; per-shape face/edge color and edge width (F3, S9) | sha d1c391de… | My fetch returned sha d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e — byte-identical; slice rule, paste semantics ("the rest of the coordinates will be updated with the new slice values"), and all cited keybindings verified | VERIFIED-BY-CRITIQUE |
+| V-8 | Zarr v2: key/value get/set/delete; `.zarray` MUST keys; chunk keys "0.0"/nested "0/0"; uninitialized chunk = `fill_value`; "This specification has been superseded"; no multi-key transaction/atomic rename anywhere (F6, S2) | sha 422bd5f5… | My fetch returned sha 422bd5f5fb27269bcc30da125f0b116c29e5008a5360bb5a5bb77f14b93acea7 — byte-identical; full text read confirms there is no transactional/atomicity language anywhere in the spec | VERIFIED-BY-CRITIQUE |
+| V-9 | tifffile v2026.9.20 BSD-3; reads NumPy/Zarr arrays "from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels"; ImageJ >4 GB = one IFD, Latin-1 ImageDescription; OME-TIFF up to 8-D with OME-XML; MMStack "The TIFF structures and metadata are often corrupted or wrong"; NDPI BitsPerSample/SamplesPerPixel/PhotometricInterpretation "may contain wrong values"; TIFF6 OJPEG/color-space/mixed-types/IPTC-ICC-XMP not implemented; BIF and Trestle read but no stitching; 2026.5.2 "Update ZarrTiffStore to zarr format 3 and multiscales to NGFF 0.5 (breaking)"; related libs include bioio/aicsimageio (F7, F8, S10) | whole-file sha cdd8ac84…, delivered-window sha 827cb54d… | My fetch returned the same whole-file sha cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48 and the same 32,768-byte delivered window (sha 827cb54df8743ffae1a16134f3775a7cb53660965d13f99237cab1639e6b46bb; trailing 130 bytes beyond the tool's 32 KiB window, same as the prior capture) — all listed claims verified in the delivered text | VERIFIED-BY-CRITIQUE (window-scoped) |
+| V-10 | NGFF 0.4: axes unique `name` MUST; `type` SHOULD be space/time/channel; `unit` SHOULD be UDUNITS-2 (micrometer/millisecond listed); axes length MUST equal dimensionality, 2–5 dims; entries MUST be ordered time → channel-or-custom → space; `zyx` SHOULD for 3-D; §3.3 "The transformations in the list are applied sequentially and in order."; §3.4 "If `translation` is given it MUST be listed after `scale` to ensure that it is given in physical coordinates."; datasets transforms MUST only be `translation` or `scale`, exactly one `scale`, at most one `translation`; §3.5 omero (transitional): `color` 6-hex MUST, `window` min/max/start/end MUST; §3.6/§3.7 labels/image-label; nested chunk layout (F1, F4, F5, S1) | sha ca4780a3… | My fetch of `ngff.openmicroscopy.org/0.4/index.html` returned sha ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269 (163,120 bytes, HTTP Last-Modified 2026-10-01) — byte-identical to the prior capture. Byte-range reads of my own capture verified every listed normative sentence verbatim, including the §3.3 and §3.4 section numbers (`data-level="3.4"` "multiscales", §3.5 "omero" marked "(transitional)") | VERIFIED-BY-CRITIQUE |
+| V-11 | W1: float32 collapses 60000.001 → 60000.0 (error ≈ −0.001 px); vertices 0.0003 px apart collide in float32; float64 JSON round-trips exactly (§5.1, §10) | witness receipt | My own re-execution (receipt `exec-thif_bgu`, exit 0): x_float32 = 60000.0, error −0.000999999996565748; collision True; JSON round-trip exact | REPRODUCED |
+| V-12 | W2: s=0.5, t=10, i=2 → 11.0 µm (scale-then-translate) vs 6.0 µm (reverse); wrong-order inverse of 11.0 gives index 12 instead of 2 (§5.1, §10) | witness receipt | Same receipt: 11.0 / 6.0 / differ True; (11−10)/0.5 = 2.0; 11/0.5−10 = 12.0 | REPRODUCED |
+| V-13 | Release containment of merge commit 89fcd20e… in tag v0.3.1 — proposal explicitly does NOT claim it (§4) | — | I attempted the GitHub compare API (`/compare/v0.3.1...89fcd20e…`) and received HTTP 403 "API rate limit exceeded for 68.238.255.31" (capture sha 8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369). Containment remains OPEN | OPEN (blocking evidence recorded) |
+
+The prior stage's catalog honesty is itself verified: capture identities in `sources.json` match
+today's live bytes exactly in all nine cases I re-fetched — no stale or invented pins were found.
+
+---
+
+## 4. Corrections and clarifications (evidence-backed)
+
+**C1 — Axis-type vocabulary is wider than space/time/channel (low severity; affects axis-table
+schema and the import gate, proposal §5.2/§8).** NGFF 0.4 §3.1 says `type` "SHOULD be one of
+'space', 'time' or 'channel', but MAY take other string values for custom axis types", and §3.4
+allows "one additional entry of 'type:channel' **or a null / custom type**" (both verbatim in my
+capture). The proposal's F4/§5.2 is not wrong (it uses SHOULD), but its import gate must define
+behavior for *custom/null axis types*, which it currently does not mention: recommend pass-through
+with the original value retained, `provenance: instrument_metadata`, and a UI flag — not rejection —
+since conforming 0.4 writers may emit them. Without this, a valid NGFF 0.4 input could hit the
+"unsupported axes" path and confuse users.
+
+**C2 — Transform-type claim should cite §3.4's restriction, not §3.3 alone (cosmetic; affects §5.1
+wording).** The proposal (F5) says the spec "offers only `identity`/`translation`/`scale` types".
+What I directly verified: §3.4 restricts multiscale *dataset* transformations to `translation` or
+`scale` only ("The transformation MUST only be of type `translation` or `scale`" — verbatim), with
+exactly one `scale` and at most one `translation`. The `identity` type belongs to the general §3.3
+vocabulary; the identity table row itself was not inside my read windows (bytes 66,000–131,072 of
+163,120), so that one row remains INHERITED. The project convention (scale then translation) is
+unaffected; export-conformance claims should reference §3.4's MUST.
+
+**C3 — Release containment stays OPEN; the proposal's honesty is correct and should be kept
+(affects §4's release-applicability sentence).** The proposal bounds applicability to
+"post-2021-11-08 master, release object record sparse" and refuses to claim v0.3.1 containment. My
+compare-API attempt failed on a shared-IP rate limit (403; V-13). Keep the proposal's wording.
+Bounded resolution path for a later stage: from any unrestricted client, run
+`git merge-base --is-ancestor 89fcd20e82d85b94923853eec5edc6abd06ef2cd v0.3.1` on a clone, or hit
+the compare API without the shared-IP limit, and record `status`/`ahead_by`/`behind_by`. Do not
+write a containment claim until one of those succeeds.
+
+**C4 — ULP-probe hygiene in W1 (low severity; affects `witnesses.json` notes and the V-plan).**
+The research witness's "ULP" line printed 0.0 (its 2⁻⁹ offset is below half a float32 ULP at
+60,000, so it round-trips — its honest_notes already say this), and my own first spacing probe was
+also miswritten (it printed 0.5, the first power-of-two step I tested that changes the value — a
+probe bug, not a finding; visible in my receipt `exec-thif_bgu`). The correct float32 spacing at
+60,000 is 2⁻⁸ = 0.00390625 by IEEE-754 arithmetic (60,000 ∈ [2¹⁵, 2¹⁶), 24-bit significand),
+consistent with the witness's "about 0.0039" justification. The load-bearing W1 results (collapse,
+collision, round-trip) are correct and reproduced. Recommend the final stage replace ad-hoc ULP
+probes with `struct`-based nextafter spacing computation so no degenerate line needs defending.
+
+**C5 — PR #123 prose vs merged code (informational).** The PR body says invalid axes "should throw
+an `AssertionError`"; the merged code and `test_dim_names` raise/expect `ValueError`. The proposal's
+description (ValueError) matches the code, which is what matters; note this only so a future reader
+of the PR body is not confused.
+
+**C6 — napari docs pin is content-sha, not version (low severity; affects source hygiene).** S8's
+pin "matches rendered docs version 0.9.2 era" is unverifiable from the raw-markdown capture (the
+markdown carries no version). Today's main-branch bytes are identical to the prior capture, but
+docs-main is a moving target: e.g. it now documents `locked_data_level` pyramid-level locking,
+which postdates older rendered docs. Keep the sha256 as the real pin (as `sources.json` already
+does) and drop or mark UNVERIFIED the "0.9.2 era" phrasing in the final proposal. Same caution
+applies to S9.
+
+---
+
+## 5. Coverage audit against the brief
+
+| Brief obligation | Where covered | Verdict |
+|---|---|---|
+| Create project; import without rewriting originals | §7 layout; copy/reference modes; originals verbatim | Covered |
+| Inspect metadata/provenance; retain original metadata verbatim | §5.4 append-only provenance log; F7 wrong-metadata motivation | Covered |
+| Navigate/adjust display; window/level never touching samples | F1/S8 separation; display-state `kind:"display"` | Covered |
+| Annotate (points/polygons/masks); slice vs volume vs acquisition scopes | §5.3; napari slice rule (V-7) | Covered |
+| Explicit index/physical/display relationship; precision | §5.1 three spaces; float64 policy (W1); NGFF transform algebra (W2, V-10) | Covered |
+| Geometric transform/resampling as distinct recorded op | §5.4 `kind:"data-op"` with checksums | Covered |
+| Save/close/reopen on another machine | §7; V1/V7 proposed | Covered (validation UNEXECUTED, correctly labeled) |
+| Export table/overlay + derived image; "what transformed" honesty | §5.4 export header (sha, op chain, both coordinate forms) | Covered |
+| Unsupported/ambiguous axes/calibration → explicit choice, originals retained | §5.5, §8; MMStack/NDPI caveats (V-9) | Covered; add C1 custom-axis case |
+| Support boundary a small team can test; safe failure | §8 format gate + per-entry isolation | Covered |
+| 3 GB bounded access, no second full copy | §6 design target; V3 gate; honestly UNVERIFIED | Covered as target (see §7 risks) |
+| Cancel/progress | §6 worker threads, per-chunk cancel token; V5 | Covered |
+| Partial import / interrupted save / failed export recoverable | §7 staging + atomic rename; V4 | Covered (UNEXECUTED) |
+| Atomic save options; identity; relocation; bundle-vs-reference trade-off | §7; sha256-verified relocation; size-threshold default | Covered |
+| Undo/redo for annotation edits | §6 command stack | Covered (display changes deliberately not undoable — defensible CHOICE) |
+| Reusable annotation styles | §5.3 style table | Covered |
+| **Visible distinction original vs derived** | §5.4 provenance kinds; `originals/` vs `data/` layout | **PARTIAL** — the data model distinguishes them, but no concrete UI affordance is specified. Recommend an explicit product requirement in the final proposal: every canvas/export carries a visible "derived" marker (e.g. badge + mandatory different default colormap/title suffix) bound to the last `data-op` id. This is the one brief item I could not trace to a checkable contract. |
+| Honest account of export preservation | §5.4 | Covered |
+| Accessibility: keyboard operability, legible feedback | F3 keybindings; §8 error messages; WCAG deferred (L3, honest) | Covered; WCAG pin still OPEN by design |
+| ≥2 independent precedents + mechanisms | P1 napari / P2 NGFF+Zarr+ome-zarr-py / P3 tifffile; independence argued (application vs storage spec vs reader lib) | Covered |
+| ≥1 issue→fix→regression chain with commit/release applicability and limits | §4; verified V-1..V-4; limits honest (C3) | Covered |
+| ≥1 opportunity + ≥1 alternative | O1 NGFF-native; A1 sidecar/reference mode | Covered |
+| Facts/inferences/choices/validation separated | FACT/INF/CHOICE/VAL-EXEC/VAL-PROP labels throughout | Covered |
+| Discriminating checks where numbers matter | W1, W2 executed and reproduced; others UNEXECUTED | Covered (C4 hygiene note) |
+| Optional ideas separate from minimum obligations | §9 "later options" + leads.json | Covered |
+
+No brief obligation is missing. One item is only partially contracted (original-vs-derived UI
+marker); everything else is traceable to a section, a source, or a labeled validation item.
+
+---
+
+## 6. Preserved valid claims (carry forward unchanged)
+
+The final stage should preserve, with their existing pins: the three-space coordinate contract and
+float64 storage policy (W1/W2 stand as reproduced); the NGFF 0.4 transform convention and axis
+table (V-10 verified verbatim, including both section-number references §3.3/§3.4, which I
+confirmed are correct in the rendered page); the Zarr-v2-has-no-atomicity inference motivating
+application-level atomic saves (V-8); the tifffile-based reader boundary and its documented
+wrong-metadata formats (V-9); the display/data separation and n-D annotation scoping precedents
+(V-6, V-7); the complete §4 chain including its refusal to claim release containment (C3);
+the executed/proposed validation split; and the leads catalog's separation of deferred ideas
+(L1–L12), including the honest "unverified_this_stage" statuses.
+
+---
+
+## 7. Residual risks and open dependencies (explicit)
+
+1. **3 GB bounded-access target is unmeasured** (proposal §6/§11, V3). Nothing in any fetched
+   source measures RSS for the proposed cache design; napari/tifffile docs support the *pattern*
+   only. This remains the single engineering assumption most likely to force redesign.
+   Bounded alternative already in reach: tifffile documents `memmap` for contiguous data (V-9
+   window) — a fallback access path for ImageJ-style files if windowed RSS overshoots.
+2. **Release containment OPEN** (C3): the chain's *code-level* completeness is fully verified; only
+   its *release attribution* is open. Resolution path specified in C3.
+3. **tifffile single-maintainer risk**: unchanged; fallback readers (bioio/aicsimageio) are pinned
+   only as README references, not evaluated. Keep behind the reader-gate interface.
+4. **napari/ome-zarr-py docs-and-release churn** (F8, C6): pins must remain content-sha based;
+   v0.20.1 (2026-10-05) and tifffile 2026.9.20 are the current versions as of this critique.
+5. **Custom/null NGFF axis types** (C1) were an unhandled input class in the proposal's gate.
+6. **No concurrent-writer support** (§11): accepted scope limit, detected only post hoc via
+   checksums; unchanged.
+7. WCAG 2.1 pin and QuPath precedent remain unverified leads (L1, L3) — correctly labeled in
+   `leads.json`; do not promote them to sourced claims without capture.
+
+---
+
+## 8. Proposed additional validation (all UNEXECUTED here)
+
+- **W3 (proposed):** replace W1's ULP probe with a `struct` nextafter-based float32-spacing
+  computation at 60000.0; expected 0.00390625 (2⁻⁸). Closes C4.
+- **W4 (proposed):** axis-gate unit test mirroring `test_dim_names` for *our* import gate, extended
+  with a custom-axis-type case (`{"name":"m","type":"custom"}`) exercising C1 pass-through.
+- V1–V7 as proposed in the research stage, unchanged in priority: V3 (RSS target) and V4
+  (kill-mid-save) remain the highest-information gates.
+
+---
+
+## 9. Handoff notes for the next same-family candidate
+
+All decisions below are resolvable from this review plus the frozen proposal; no private context
+needed. (1) Apply C1 and C2 as wording/schema amendments to §5.2/§5.5/§8 and F5 respectively —
+they are clarifications, not reversals. (2) Keep §4 as written; optionally add the C3 resolution
+procedure and the rate-limit evidence (403 capture sha 8ef2b336…) as the current state of the
+containment question. (3) Add the derived-view UI affordance requirement flagged in §5 of this
+review so the brief's "visible distinction" obligation has a checkable contract. (4) Fix the W1
+ULP probe per C4/W3 and keep `honest_notes` as-is (they were accurate). (5) Re-pin napari docs by
+content sha only (C6). (6) Do not invent containment, WCAG, or QuPath claims — they stay
+OPEN/lead-labeled. Everything else in the proposal survived verification and should stand.
+
+*Critique-stage evidence: independent captures for issues/PRs/releases (GitHub API), napari docs,
+Zarr v2 spec, tifffile README, and the full NGFF 0.4 page (163,120 bytes, byte-range reads at
+66,000–131,072); re-execution receipt `exec-thif_bgu`; all capture sha256 values are embedded in
+§3. This review is an isolated-stage judgment and does not establish any full-application behavior.*

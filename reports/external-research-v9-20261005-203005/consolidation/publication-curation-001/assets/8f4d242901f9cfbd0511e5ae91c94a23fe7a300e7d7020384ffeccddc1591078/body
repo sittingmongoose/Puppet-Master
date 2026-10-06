@@ -1,0 +1,272 @@
+# Research proposal — H1: offline audio review & edit exchange for an oral-history team
+
+Stage: research (research-and-proposal stage deliverable, frozen under `out/research/`).
+Date: 2026-10-06. Author: candidate research arm (fresh, brief-only start).
+Companion catalogs: `sources.json` (pinned evidence), `witnesses.json` (executed + proposed checks), `leads.json` (unresolved/optional work).
+
+## 0. How to read this document — evidence labels
+
+- **[F-Sn]** external fact from a pinned public source (see `sources.json`, id S1–S14). Quotes are from captured bytes; capture identity (sha256, capture id, UTC timestamp) is in the catalog.
+- **[I-n]** engineering inference by the candidate from cited facts (reasoned, but not itself a source fact).
+- **[C-n]** product choice made for this proposal (could be chosen differently; chosen to satisfy the brief).
+- **[W-n]** check **executed by candidate** in the admitted isolated Python sandbox; receipts (execution id, code/stdout sha256, exit code, limits) are in `witnesses.json`. These are tiny component checks and **do not** prove whole-application behavior.
+- **[V-n]** proposed validation, **UNEXECUTED** in this stage.
+
+Exactly four checks were executed (W1–W4). Every performance, quality, or integration claim outside W1–W4 is proposed and labeled UNEXECUTED. No receipt or source chain is invented; where evidence is missing, the gap is stated and carried in `leads.json`.
+
+## 1. Product framing and minimum workflow
+
+The product is an offline desktop workspace for a four-editor oral-history team on ordinary laptops (8 GB RAM baseline). Editors exchange **project folders** (or zipped bundles) containing a human-readable manifest plus references to read-only source recordings. It is an editorial/research tool, not a live broadcast system. [C-1]
+
+Minimum workflow (v1 obligation, from the brief):
+
+1. **Import** several long recordings with differing sample rates, channel counts, and sample representations (typical project: one voice recording, one backup recording, environmental noise).
+2. **Inspect metadata** (rate, channels, sample format, declared vs observed duration, header anomalies) in a provenance panel.
+3. **Listen and scrub** with bounded memory access; navigate by waveform, transcript, and keyboard.
+4. **Add named regions and transcript cues** anchored to source content.
+5. **Trim** a passage (nondestructive), **join** selected clips with an optional short transition, **insert** explicit gaps.
+6. Set **preview gain** (display/playback only).
+7. **Save, close, reopen** (project round-trip, including relocated media).
+8. **Export** a review mix plus a cue table. Original recordings remain unchanged on disk (sources opened read-only; exports written only under `exports/`). [C-2]
+
+Three operation classes are kept distinct everywhere (data model, undo, save, export):
+- **View state** (preview gain, mute/solo, zoom, selections): local, not undoable, never exported.
+- **Edit operations** (trim, join, gap, regions, cues, channel routing): nondestructive metadata, undoable, versioned, exchanged.
+- **Render operations** (export mix, cue table, bounce): file-producing jobs with explicit state machine (`rendering → complete | cancelled | failed`); a cancelled render is never labeled complete. [C-3]
+
+## 2. Supported input/output boundary (honest, bounded)
+
+**Tier-1 decode/encode — libsndfile.** v1 accepts, as fully supported sample-exact sources: WAV (PCM 8/16/24/32, float32/float64, ULAW/ALAW), AIFF, FLAC, RF64, W64, and Ogg/Vorbis — these are listed as libsndfile major formats/subtypes (SF_FORMAT_WAV … SF_FORMAT_RF64 "RF64 WAV file", SF_FORMAT_MPEG, subtypes PCM_16/24/32, FLOAT, DOUBLE, VORBIS, OPUS, ALAC) [F-S9]. Channels are capped by the library at 1024 [F-S9]. Reads are seekable frame-random-access (`sf_seek`, `sf_readf_*` frames API) [F-S9]. libsndfile's own docs warn they "can and do fall behind the behaviour of the library" [F-S9] — therefore format claims are pinned to the behavior of a specific library version at packaging time (dependency pin, §13), not to the doc page.
+
+**Tier-2 decode — optional wide ingest.** Formats outside tier-1 (MP4/M4A containers, Opus, MP3 variants) may be ingested via a decodebin3-based pipeline: decodebin3 "auto-magically constructs a decoding pipeline using available decoders and demuxers via auto-plugging. The output is raw audio" [F-S10]. Tier-2 sources are **transcoded at import into a FLAC/RF64 staging copy** inside the project folder, and the manifest records the original file's digest alongside the staged copy. Rationale: tier-2 decode is not guaranteed sample-deterministic across library versions, so the project must not depend on re-decoding it forever. [C-4, I-1]
+
+**Explicitly out of scope for v1** (rejected, not silently missing): write support for MP3/AAC/Opus; arbitrary channel layouts beyond discrete routing (no automatic 5.1 downmix); every codec on earth. Unsupported input produces a clear rejection naming the format, plus a retained raw-header dump (§5). [C-5]
+
+**Outputs (v1):**
+- Review mix: WAV 24-bit (or float32 on request); **RF64 when the data chunk would exceed 4 GiB** — RF64 is a supported libsndfile major format [F-S9]. (Motivating defect: §11.)
+- Cue table: CSV/TSV with all time bases (§4), plus **Praat TextGrid** exchange. TextGrid's documented invariants (positive duration; adjacency of intervals; strictly increasing point times) are validated before export [F-S2]. ELAN EAF export is a lead (L1), not a v1 promise; ELAN is "an annotation tool for audio and video recordings" with tier-based, time-aligned annotations stored as XML (EAF) [F-S12].
+
+## 3. Data contract: media / timeline / project
+
+### 3.1 Media object (per source recording)
+
+```
+media_id          : ULID (content-independent identity)
+path              : relative path from project root (never absolute on export)
+tier              : 1 | 2 (§2)
+original_filename : as imported
+size_bytes, mtime : relocation hints
+header_digest     : sha256(first 64 KiB + last 64 KiB)  (cheap identity, no full scan)
+sha256_full       : optional; computed during background "verify" job
+native            : { sample_rate, channels, sample_format }   # as decoded by the tier engine
+declared_frames   : from container header
+observed_frames   : counted during import scan
+flags             : { missing, contradictory, unsupported, truncated, clamped_header, ... }
+raw_header        : retained dump of container header for forensics
+channel_route     : explicit per-channel routing (§4.5); unrouted channels block export
+```
+
+Sources are opened **read-only**; no import step writes into the source directory. [C-2]
+
+### 3.2 Timeline model
+
+The timeline is an ordered list of entries, each either a **clip**, a **blank gap**, or a **join** (transition) record — following the structural lesson of MLT's playlist, which is "a sequential container of producers and blank spaces," exposes per-clip `frame_in / frame_out / frame_count / length`, and materializes a transition as its own mix entry rather than hidden overlap [F-S7]. Gaps are first-class entries (MLT `blank`), not empty clips. A join with transition of length L is a record `{left_clip, right_clip, type: linear|equal_power, length}`; it does not shift sample identity of either clip (§4.4). [C-6]
+
+```
+clip = {
+  clip_id, media_id,
+  source_in, source_out,      # integer samples at the media's native rate; [in, out) half-open
+  timeline_start,             # integer samples at project rate
+  rate_map                    # {src_rate, proj_rate, engine, params, algo_id} if a conversion applies
+}
+```
+
+### 3.3 Project document
+
+```
+project/
+  manifest.json          # canonical document; versioned; atomic writes (§7.4)
+  media/                 # staged copies for tier-2 sources only; originals stay outside
+  annotations.json       # regions, cues, transcript text (also merged into manifest for small projects)
+  edit_log.jsonl         # append-only provenance: {ts, editor, op, targets} per edit
+  cache/                 # waveform pyramids; NOT exchanged (rebuilt from sources)
+  exports/               # render outputs only
+  imports-staging/       # temp area for interrupted imports
+```
+
+Manifest references are **relative paths + digests**, never absolute paths. The undo stack is in-memory only; like Audacity — whose manual states the undo history "is not saved with the project" — reopening starts a fresh history [F-S1]. This is acceptable here because edits are tiny metadata and the append-only `edit_log.jsonl` preserves what-was-done for the next editor. [C-7]
+
+## 4. Time, rounding, boundaries, channels, cues
+
+This section is the core contract. All positions are **integers in samples** at a named rate; project rate is 48,000 Hz. Floats are never used for positions. [C-8]
+
+### 4.1 The five time bases and one mapping function
+
+1. **Source sample position** `s` (native rate of `media_id`) — the only identity-bearing base.
+2. **Clip-local position** `p = s − clip.source_in` (native rate).
+3. **Project time** `x` (project-rate samples) — derived, never stored as cue identity.
+4. **Displayed timecode** — `HH:MM:SS.mmm`, computed on render of the UI from `x` by integer arithmetic: `ms = round_half_even(x × 1000 / 48000)`.
+5. **Exported cue positions** — for each cue, the table emits *all* bases: `(media_id, s)`, project sample `x`, seconds at 6 decimals, TextGrid seconds, (ELAN ms in lead L1).
+
+Mapping (the single implementation of source→project):
+
+```
+x = clip.timeline_start + clamp(
+        round_half_even((s − clip.source_in) × proj_rate / src_rate),
+        0, clip.timeline_length)          # clip.timeline_length = round_half_even((source_out−source_in) × proj_rate / src_rate)
+```
+
+`round_half_even` on exact integer rationals (ties to even). This function is the **only** place the conversion exists; display, export, and cue resolution all call it, so no consumer can drift. [C-9]
+
+**Executed evidence.** W1 [W-1] ran this mapping at 44.1k→48k: source samples `[0, 22050, 44100, 88200, 2646000]` map to `[0, 24000, 48000, 96000, 2880000]`, monotone, with the 1.000 s cue landing exactly on project sample 48000. W1 also shows the reverse hazard: at 96k→48k, source samples 1000 and 1001 both round to project sample 500 — **project time alone cannot identify content near boundaries**; hence cue identity lives on the source side. Scope: integer-arithmetic component check only; it proves the mapping property, not the application.
+
+### 4.2 Cue anchoring (the anti-drift rule)
+
+A **point cue** is stored as `{cue_id, anchor: (clip_id, source_sample), text, author, ts}`. An **interval cue / transcript segment** is stored as an ordered list of `{clip_id, s_start, s_end}` segments, split at clip boundaries when created or edited — so an edit never silently re-points a cue.
+
+A cue's project position is *recomputed* through §4.1 whenever the timeline changes. Consequences (by construction, and demonstrated in W2 [W-2]): inserting a 3 s gap shifts the *displayed* position of a content-anchored cue from 12 s to 15 s but its referenced content is unchanged; a naive time-stamped cue left at 12 s resolves into the inserted gap — i.e., different (silence) content. W2 is a component check on a two-clip toy timeline; it demonstrates the failure mode and the fix, not the shipped editor.
+
+### 4.3 Boundary semantics
+
+- All source ranges are **half-open** `[source_in, source_out)`; a clip occupies project samples `[timeline_start, timeline_start + timeline_length)`.
+- A cue at exactly a clip's end boundary belongs to the **following** region (gap or next clip). Boundary membership is deterministic and documented in the cue inspector. [C-10]
+- **Trim**: removing source samples that contain a cue anchor does **not** delete the cue. The cue is flagged `orphaned`, moved to the nearest surviving boundary, listed in the save report and the exchange `edit_log`, and drawn with a distinct glyph. No silent re-pointing. [C-11]
+- **Join with transition**: cue anchors inside the crossfade region are flagged `in_transition`; exports emit them with both neighbors' identities so a reviewer can see the cue sits on mixed content. [C-12]
+- **Rate conversion** never moves cue identity: the `rate_map` is stored per clip; conversions are applied only at playback and render (same engine/params both places, §4.4), so W1's deterministic mapping holds for cue display in both contexts.
+
+### 4.4 Resampling, transitions, clipping — honesty bounds
+
+- Resampling is applied **only** at playback and render, never written back into sources or into cue anchors. Engine: libsoxr if present, else FFmpeg swr; the chosen engine, version, and parameters are recorded in each clip's `rate_map`. Documented knobs from primary docs: soxr `precision` (default 20 bits; 28 = "Very High Quality"), dither methods (e.g., Shibata) when writing 16-bit, and `rematrix_maxval=1.0` which "prevents clipping" during channel rematrixing [F-S11]. No listening-quality claims are made — only parameter determinism and sample-count determinism (proposed test V1).
+- Transition choice is material-state-aware, per W3 [W-3]: a **linear** fade keeps amplitude-sum constant (join of *identical/correlated* audio, e.g., voice + its backup, comes out at unity, no dip); an **equal-power** (cos²/sin²) fade keeps power-sum constant (join of *different/uncorrelated* takes avoids a −3 dB midpoint dip, at the cost of +3 dB when material is identical). v1 default: linear for joins of the same source material, equal-power for joins of different sources; both exposed in the join dialog. W3 is a numeric gain-table check only.
+- Clipping: mixing is float32; the renderer accumulates the true peak and **reports** any sample > 1.0 in the export report. No automatic limiting is applied (nothing silent). Preview gain is view-only and mathematically cannot affect exports (§1). [C-13]
+
+### 4.5 Channel mapping
+
+Per-media `channel_route` is an explicit table `source_channel → {L, R, both, silence}` with defaults: mono→both; stereo→L/R; N>2 → ch1→L, ch2→R, remaining channels **unrouted**. Export is blocked while unrouted channels exist unless the user confirms "route remaining as silence." No implicit downmix ever occurs; multichannel sources remain multichannel in the project model. (libsndfile accepts up to 1024 channels [F-S9]; WAVEFORMATEXTENSIBLE-style layout metadata is retained in `raw_header`.) [C-14]
+
+## 5. Metadata: absent, contradictory, unsupported
+
+Rules, applied at import and re-validated at open:
+- **Absent** (e.g., RAW or headerless): import requires the user to supply rate/channels/format; the manifest stores `flags.missing` and the user-supplied values with provenance ("user-declared").
+- **Contradictory** (declared data-chunk size ≠ file bytes; clamped/wrapped 4 GiB headers; codec tag vs actual stream mismatch): keep **both** declared and observed values, set the matching flag, badge the clip in the UI, and require acknowledgement before export. Executed at parser level: W4 [W-4] builds a minimal WAV in-memory, parses `fmt `/`data` chunks, confirms declared vs observed frame consistency, and raises the ambiguity flag on a simulated truncated copy (declared 100 frames, observed 97). Scope: chunk-parser check, not the full media layer.
+- **Unsupported** (unknown container/codec): import refuses, offers tier-2 staging (§2), and always retains `raw_header` so nothing is lost by the refusal.
+The project never rewrites source metadata. [C-15]
+
+## 6. Architecture choice and bounded alternatives
+
+**CHOICE (primary): Python 3.11+ / PySide6 desktop app.**
+- Media I/O: `python-soundfile` over libsndfile (tier-1); optional GStreamer decodebin3 worker for tier-2 staging [F-S10].
+- DSP arrays: NumPy, chunked (32,768-frame blocks ≈ 256 KiB/channel-pair at float32; ≤ 8 blocks in flight, ~2 MiB).
+- Jobs (import scan, pyramid build, verify, render): QThreadPool workers with cooperative cancel; all loops chunked so cancel latency is one chunk. [C-16]
+
+**ALTERNATIVE A (bounded fallback): C++/Qt rewrite** with the same data contract (libsndfile + soxr native). Trigger to switch (measurable): if the Python build cannot index a 2 h source in < 60 s, keep RSS < 350 MiB, or render faster than 2× realtime on an i5-class/8 GB laptop (V4). Chosen-not-default because development cost is higher and no executed evidence yet shows Python failing the targets. [I-2]
+
+**ALTERNATIVE B (rejected for v1): MLT (or GES) as the timeline engine.** MLT's playlist model is instructive (§3.2), but its positions are integer **frames** with a per-clip `fps` float [F-S7] — a frame-quantized time base cannot host sample-exact cue anchors without re-introducing the drift the brief forbids. Its *structural* lessons (explicit blanks, materialized mix entries) are adopted; the engine is not. Revisit only if the cue contract is relaxed. [C-17]
+
+## 7. Resources: memory, cache, seeking, progress/cancel, interruption
+
+### 7.1 Memory bounds (8 GB laptop, 2 h interview)
+
+Two hours stereo at 48 kHz float32 is ≈ 1.29 GiB — **never fully resident**. All access streams: decode buffers ~2 MiB total; UI waveform arrays are per-view decimated data (a screenful of L1 peaks ≈ a few thousand points). Playback uses a bounded ring of blocks. Budget ceiling: 350 MiB RSS (V4, UNEXECUTED). [I-3]
+
+### 7.2 Waveform pyramid and cache identity
+
+Per media, a min/max peak pyramid is built on disk in `cache/`: L0 = per-512-sample peaks (2 h stereo ≈ 5.4 MB), L1 = per-8192 (full-project view, ≈ 0.34 MB). Zoom views read the coarsest tier that has ≥ 1 bucket per pixel, same as Sonic Visualiser's "view the same data at multiple time resolutions simultaneously (for close-up and overview)" [F-S8]. SV's own design goal is exactly the constraint here: "work with long audio files on machines with modest CPU and memory where reasonable. (Disk space is another matter. Sonic Visualiser eats that.)" [F-S8] — we accept disk spend for cache, RAM discipline for audio. [I-4]
+
+**Cache identity/invalidation:** cache filename = `sha256(media identity ‖ tier params ‖ CACHE_FORMAT_VERSION)`, where media identity = `header_digest + size_bytes + mtime` (full `sha256_full` when available). Key mismatch → rebuild with progress + cancel. mtime alone never validates a cache. Edits do **not** invalidate media caches (edits are metadata; pyramids are per-source). Changing source files (relocated/verified-different digest) does. [C-18]
+
+### 7.3 Seeking and scrubbing
+
+Scrub = `sf_seek` to the mapped source frame, then sequential chunk reads; libsndfile exposes frame-accurate seeking on seekable sources [F-S9]. Scrub-ahead prefetch is one block; cancel of a scrub discards the pending block. Tier-2 sources scrub through their staged FLAC copy only. [C-19]
+
+### 7.4 Save / render / import interruption
+
+- **Save:** `manifest.json.tmp` → fsync → atomic rename; a crash mid-save leaves the previous manifest valid. Imports stage into `imports-staging/`, rename into place, and only then add the manifest entry; a crash leaves an orphaned staging file that the next open offers to clean (with user confirmation). [C-20]
+- **Render:** the export job writes `exports/<name>.wav.inprogress` and sets manifest state `rendering`. Cancel (or crash) renames to `*.cancelled` and sets state `cancelled`; only fsync + final rename + recorded output digest flips state to `complete`. **A cancelled render is never listed as a complete export** — the export list shows state and digest for every artifact. [C-3]
+- **Recovery:** no partial-mix resume in v1 (a cancelled/failed render restarts from zero); resume is lead L7. Undo history is not persisted (§3.3).
+
+## 8. Project exchange: identity, relocation, missing media, recovery
+
+- Exchange unit = project folder (zipped with zip64 for > 4 GiB bundles; media copies inside a bundle are FLAC/RF64 so they survive the 4 GiB-class container limits — see §11 for the motivating failure). [C-21]
+- Media resolution on open, in order: (1) `sha256_full` match anywhere in the search paths; (2) `size_bytes + header_digest` match; (3) filename match — flagged "unverified" until (1) or (2) confirms. Multiple candidates → user dialog listing digests; ambiguous or none → project opens **degraded**: timeline and annotations visible, missing regions marked, exports blocked. [C-22]
+- Unpack/restore never overwrites: a bundle requires an empty or new directory; an existing project file is never silently replaced. Original recordings are never written by any code path (§3.1). [C-2]
+- The exchanged `edit_log.jsonl` plus per-cue author fields give the next editor the "who heard/decided what" story the brief asks for; view state (gain/zoom) is not exchanged. [C-7]
+
+## 9. Editor experience obligations
+
+- **Keyboard-first:** documented map — Space play/pause; J/K/L shuttle; ←/→ ±1 s, Shift+←/→ ±0.1 s; Home/End; `[`/`]` set region bounds; M cue; Enter add cue from transcript selection; Tab cycles transcript ↔ timeline focus; `?` shows the map. Every action reachable without mouse. [C-23]
+- **Transcript pane:** native text widget honoring OS font scaling, minimum 12 pt equivalent, high-contrast theme, no color-only status (glyph + text), cue list synchronized with playback.
+- **Error feedback:** non-blocking status line + collapsible log with copyable messages; every rejected import/export names the exact cause (format, unrouted channel, ambiguity flag).
+- **Undo/redo:** command pattern over edit operations only (view state excluded); text edits coalesce on idle; every command writes `edit_log`.
+- **Solo/mute/channel choice:** per-clip solo/mute and the §4.5 route table; states visible in one panel.
+- **Current-edit indication:** after each edit, affected clips are highlighted and a status line states the operation; the provenance inspector shows for any cue/clip its `media_id`, digests, source path history, anchor chain, and last edits from `edit_log`. [C-24]
+- Optional, **not** v1 obligations: automatic transcription, noise reduction, simultaneous multi-user editing, cloud accounts (see §12/L5, L6).
+
+## 10. Implementation precedents investigated (≥ 2 independently useful)
+
+**P1 — Audacity (project persistence & exchange).** Facts: project is a single `.aup3` SQLite database; while open it has `-wal`/`-shm` sidecars and "Do not delete them or move these temporary files while the project is open as this will destroy the project"; moving/renaming/copying an open project is forbidden; the undo history is not saved; trimmed audio is retained hidden (project bloat with no purge command); FAT/FAT32 destinations are blocked (4 GB single-file limit); saving active projects to network/cloud storage is advised against; crash recovery runs at relaunch [F-S1]. Lessons adopted: (a) our exchange unit is a **folder of small human-readable files**, not a stateful single-file database — no lock-state sidecars can be forgotten in a copied folder; (b) save is cheap atomic manifest rename rather than database compaction; (c) hidden-audio bloat is avoided because trims reference, never copy, audio. Lesson noted but *not* adopted: single-file portability convenience — the Audacity model buys it at exactly the fragility above. [I-5]
+
+**P2 — MLT framework (timeline data contract).** Facts: playlist = sequential producers + blanks; clip info carries `frame_in/frame_out/frame_count/length` and a **float** `fps` per clip; transitions are materialized via `mlt_playlist_mix` as their own entries; blank entries are explicit (`mlt_playlist_blank`, `pad_blanks`, `consolidate_blanks`) [F-S7]. Lessons adopted: first-class gaps and materialized joins (§3.2). Lesson that drove a rejection: integer-frame/float-fps time base is incompatible with sample-exact cue anchoring → Alternative B rejected (§6). [I-6]
+
+**P3 — Sonic Visualiser (annotation + long-file budget).** Facts: labelled time points, segments, point values, curves as annotation layers over waveform; multiple simultaneous time resolutions; explicit design goal of long files on modest machines, spending disk freely [F-S8]. Lessons adopted: layer model separating annotations from audio (our cues/regions mirror it); multi-tier waveform overview; disk-hungry/RAM-lean caching. [I-7]
+
+**P4 — Praat TextGrid & ELAN (cue exchange formats).** Facts: TextGrid files carry real-number second times with strong invariants — interval tiers must have positive duration and adjacency (end of interval n = start of n+1), point tiers strictly increasing — plus defined encodings (UTF-8/UTF-16) and doubled-quote escaping; Praat may refuse or *attempt repair* of violating files, and repair "is not guaranteed" [F-S2]. ELAN stores tiered, time-aligned annotations as EAF XML [F-S12]. Lessons adopted: we validate adjacency/increasing-time before TextGrid export and never rely on reader-side repair; we additionally keep sample-exact anchors in our own format because seconds-float exchange formats alone cannot guarantee identity (§4). EAF export deferred to L1. [I-8]
+
+## 11. Investigated defect chain: libsndfile WAV 4 GiB header wrap (issue #930 → fix → release)
+
+**Failure (consequential for this brief):** long oral-history sessions exceed 4 GiB easily (2 h × 4 ch × 96 kHz × 24-bit ≈ 8.3 GiB). RIFF/WAV header fields are uint32; libsndfile tracks lengths internally as int64 but wrote the header fields without clamping, so oversized WAVs got **wrapped (corrupt) size fields**. Reported in PR/issue libsndfile#930, "Clamp wav header filelength and datalength," filed 2023-04-27 by an engineer at Nomono (a maker of oral-history field recorders), who states the library "allows writing the PCM data beyond this" 4 GiB limit and currently produces "the wrap around we get today" [F-S4].
+
+**Fix:** commit `cd10c8a455746820e061ec929daff15db68a9d17` ("Clamp wav header filelength and datalength (#930)", 2023-08-05, GPG-signed, parent `ec104e36…`) — a 3-line change in `src/wav.c` writing `SF_MIN(psf->filelength − 8, UINT32_MAX)` and `SF_MIN(psf->datalength, UINT32_MAX)` in `wav_write_header` [F-S6]. **Release applicability:** merged into milestone v1.2.1 and shipped in libsndfile **1.2.1** (2023-08-13), whose notes list "WAV format related bug, thanks @magnus-nomono (issue #930)" [F-S3]. Anyone using ≤ 1.2.0 to write > 4 GiB WAV gets wrapped headers; ≥ 1.2.1 gets clamped fields.
+
+**Regression-test status and causal limits (preserved honestly):** a commit search for "930" in the repository returns **total_count = 1** — the fix commit itself [F-S5] — and the commit's file list contains only `src/wav.c` [F-S6]. So, on this captured evidence, **no dedicated in-repo regression test accompanied the fix**; the only release-level corroboration is the 1.2.1 note [F-S3]. Further limits: the change is **write-side only** (read-side behavior when opening wrapped pre-fix files is not established here — lead L3); clamping to `UINT32_MAX` mitigates wrap-around but a > 4 GiB classic WAV remains out of the original RIFF design; the conventional meaning of an all-ones size field ("unknown/streamed, consult RF64 machinery") is attributed here to RF64 practice (EBU Tech 3306, **not captured in this stage** — inference pending L2). **Design consequences adopted:** pin libsndfile ≥ 1.2.1 (§13); prefer **RF64** for > 4 GiB exports [F-S9]; treat `data_size == 0xFFFFFFFF ∧ file > 4 GiB` on import as an ambiguity flag requiring acknowledgement (§5), since it may be either a clamped post-1.2.1 file or a wrapped pre-fix file. [I-9]
+
+One sentence of boundary humility from the same catalog: libsndfile 1.2.0 had to *remove* an artificial 655350 Hz samplerate cap introduced in 1.1.0 (issue #850) [F-S3] — support boundaries of even mature components move between releases, which is why every format claim here is pinned to a version.
+
+## 12. Opportunity and alternatives (explicit)
+
+- **Opportunity (useful, optional):** local offline automatic transcription via whisper.cpp as a suggestion engine that writes *proposed* cues into a separate `suggestions` layer; an editor promotes them to real cues. Fully offline, fits the team's constraints, never silently mutates the transcript. Status: lead L5, not investigated in this stage. [C-25]
+- **Alternative (bounded, real):** make tier-2 GStreamer ingest the default decode path for *all* inputs (fewer moving parts than two engines). Rejected for v1 because tier-2 decode determinism across library versions is unestablished (L8), and a sample-exact cue contract is safer on a frozen staging copy. [C-4]
+- **Alternatives already covered:** C++/Qt rewrite (Alt A, §6); MLT engine (Alt B, rejected, §6).
+
+## 13. Critical dependencies
+
+| Dependency | Role | Pin / note | Unsupported-dependency risk |
+|---|---|---|---|
+| libsndfile (+ python-soundfile) | tier-1 I/O | ≥ 1.2.1 (gets #930 clamp [F-S3, F-S6]) | read-side wrapped-header behavior unverified (L3); format list moves between releases [F-S3] |
+| PySide6 | UI, audio sink, worker pools | current LTS-line at build time | audio backend differences per OS — V-test on all three OS |
+| NumPy | chunk DSP | any modern 1.x/2.x | none identified |
+| libsoxr (or FFmpeg swr) | resample at render/playback | params recorded per clip (`rate_map`) [F-S11] | exact output sample-count determinism across engines → V1 |
+| GStreamer decodebin3 (optional) | tier-2 staging only [F-S10] | optional at runtime; absence = tier-1-only builds | determinism (L8) — mitigated by staging copies [C-4] |
+| SQLite (stdlib) | not used for exchange documents (folder-of-files, §3.3) | n/a | avoided by design after P1 [F-S1] |
+
+No critical dependency rests on an unverified claim without a bounded fallback: tier-2 is optional; soxr/swr are interchangeable with recorded parameters; C++ rewrite (Alt A) exists if Python misses V4 targets.
+
+## 14. Validation plan
+
+**Executed by candidate (W, in admitted isolation; receipts in `witnesses.json`):**
+- **[W-1]** source→project integer mapping: monotonicity, exact 1.000 s case, round-half-even tie behavior, and the downsampling collision (1000,1001 → 500) proving source-side anchoring. Scope: arithmetic check, no media/GUI.
+- **[W-2]** gap-insertion drift: naive time-anchored cue resolves into inserted silence (`None`), content-anchored cue survives at 15.0 s. Scope: two-clip toy model.
+- **[W-3]** crossfade gain tables: linear keeps amplitude-sum 1 (identical material unity), equal-power keeps power-sum 1 (−3 dB vs +3 dB cases). Scope: numeric gain tables only; no listening claims.
+- **[W-4]** WAV chunk parse: fmt/data consistency on a generated file; truncated copy raises the declared-vs-observed ambiguity flag. Scope: stdlib parser demo, not the libsndfile-based media layer.
+
+**Proposed / UNEXECUTED (V; required before any release):**
+- **[V-1]** golden-content render: synthetic sources → trim/gap/join(transition) → export; assert exported samples equal an independently computed sample-exact concatenation including the transition region; assert resample output sample count matches `round_half_even` prediction.
+- **[V-2]** save/close/relocate/reopen: all cue anchors bit-identical after digest-based media resolution; orphan flags only where trims removed anchors.
+- **[V-3]** cancel render mid-write → manifest state `cancelled`, artifact named `*.cancelled`, export list shows no `complete`.
+- **[V-4]** 2 h synthetic import + render on 8 GB-class hardware: RSS < 350 MiB, index < 60 s, cancel latency < 1 s, render ≥ 2× realtime. (Gate for Alt A trigger, §6.)
+- **[V-5]** > 4 GiB export produces RF64; import of a clamped-header (and a wrapped-header) WAV raises the §5 flag. (Wrapped-header sample generation pending L3 evidence.)
+- **[V-6]** contradiction handling: truncated/contradictory media blocks export until acknowledged (extends W4 to the app).
+- **[V-7]** two-editor exchange drill: folder copied, media moved, one editor resolves by digest, `edit_log` conveys prior edits; no original file mtime/bytes changed (checksum audit).
+- **[V-8]** keyboard-only walkthrough + screen-reader label audit on one OS.
+- **[V-9]** startup dependency assertion: libsndfile runtime version ≥ 1.2.1 else refuse large-file writes.
+
+## 15. Limits of this research (not established here)
+
+- No application, GUI, or libsndfile call was executed in this stage; W1–W4 are isolated component checks. All architectural performance numbers are proposals gated by V4.
+- The #930 chain establishes the write-side fix and its release; read-side behavior, RF64 semantics of the all-ones size field (L2), and existence/absence of any later test coverage beyond commit-search evidence (L3) remain open.
+- Tier-2 decode determinism (L8), ELAN EAF details (L1), transcription/noise-reduction opportunities (L5, L6) are leads, not findings.
+- Two requested catalog URLs 404'd during discovery (Sonic Visualiser reference manual path; MLT `main` branch header) and are recorded as negative evidence (S13, S14); the substitute sources used are pinned.
+
+## 16. Brief coverage map
+
+workflow §1 · nondestructive/display/render separation §1, §3.3 · input/output boundary §2 · five time bases, rounding, boundary, channels, cue-at-edit §4 · metadata absent/contradictory/unsupported §5 · 8 GB / 2 h, cache identity, seeking, interruption, cancel-not-complete §7 · exchange identity/relocation/missing/recovery §8 · keyboard/legibility/feedback/undo/solo-mute/current-edit/provenance §9 · precedents with lessons §10 · real issue→fix→release with causal limits §11 · opportunity + alternatives §12 · dependencies §13 · executed-vs-proposed validation §14 · preserved limitations §15.

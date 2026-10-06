@@ -1,0 +1,217 @@
+# Proposal — Local Biomedical Image Review Workspace (research stage)
+
+Date: 2026-10-06. Stage: research (fresh candidate, brief A). This document is standalone: it restates the needed context, separates external facts from inference, and ties every load-bearing recommendation to a pinned source (catalog: `sources.json`, entries `[S1]`–`[S10]`; executed checks: `witnesses.json`, `W1`–`W7`; deferred ideas: `leads.json`).
+
+Claim tags used inline: **[EF]** external fact from a captured public source; **[EI]** engineering inference from those facts; **[PC]** product choice (could be decided differently); **[PV]** proposed validation, UNEXECUTED; **[EX]** executed witness (isolated mechanism check only).
+
+---
+
+## 1. Summary
+
+A small lab (6 researchers, ordinary 8-core/16 GB workstations, shared-storage exchange of project bundles) needs a desktop review/annotation workspace that survives close/reopen/machine-move without losing calibration or annotations, and can prove what an export preserved. The plan:
+
+1. **Project as a directory bundle** with one authoritative `project.json` manifest, an append-only annotation journal, and per-image provenance records. Saves are atomic (write temp → fsync → rename) and recoverable. **[PC]**, mechanism verified by **[EX W2]**.
+2. **Strict separation of four coordinate/display spaces**: stored annotation coordinates (voxel indices, float64), physical mapping (per-axis scale + origin + orientation, float64), display transform (pan/zoom, session-only), and intensity display mapping (window/level — never touches samples). **[PC]** built on **[EF S4, S5, S8]**; float64 requirement justified by **[EX W1]**.
+3. **Bounded image access via a two-adapter source layer**: OME-TIFF/TIFF through `tifffile`'s tile/page/zarr reads, and Zarr stores natively, both read-only; a byte-budgeted tile cache; no second full in-memory copy. Precedent: tifffile reads "from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels" **[EF S1]**.
+4. **Undo/redo at the command layer with stroke grouping**, modeled on napari's merged fix PR #533 (commit `d09bea9…`), which added slice-snapshot undo with a per-stroke `_block_saving` guard and shipped with regression test `test_labels_undo_redo` **[EF S2, S3]**; the later unmerged PR #3155 documents why all mutation entry points must be funneled **[EF S6]**.
+5. **A declared, testable support boundary** (OME-TIFF incl. BigTIFF, plain multi-page TIFF with explicit user axis/calibration confirmation, Zarr v2/v3, PNG for small rasters). Unsupported or ambiguous input enters a quarantine flow that retains raw metadata verbatim and never mutates the project or the source file. **[PC]** on **[EF S1, S4]**.
+6. **Export with an honest receipt**: each export records source identity (sha256, size), calibration in force, the transform chain applied, and which numbers moved vs. stayed in original voxel coordinates. OME-ROI XML is the interoperability opportunity **[EF S5]**.
+
+Two independently useful implementation precedents are compared in §5: **tifffile** (format boundary, bounded IO — a standalone C-accelerated library with no viewer) and **napari** (viewer-layer data/display separation and annotation undo — a Qt/vispy application that consumes array-likes and has no format opinions). They have different maintainers, different languages/stacks, and no dependency on each other; each contributes a mechanism the plan adopts.
+
+---
+
+## 2. Problem restatement and scope
+
+Users annotate points/polygons/masks on 2D images and volumes (multi-channel, time series, int/float samples, physical calibration, up to ≥3 GB per file) across instruments; projects move between machines via ordinary shared storage. Minimum workflow: create project → import (originals untouched) → inspect metadata/provenance → navigate/adjust display → annotate → save → close → reopen elsewhere → export annotation table/overlay + small derived image → verify what transformed and what did not. Out of minimum scope: in-place source modification, cloud collaboration, automatic segmentation/registration, DICOM services. **[PC: boundary = brief §3, §4]**
+
+Success criteria for v1 (testable): (a) reopen on a second machine reproduces geometry to float64 exactness; (b) display-setting edits provably leave sample values unchanged; (c) kill during save leaves the previous project state loadable; (d) unsupported file import leaves the project openable and stores the raw metadata. **[PC]**
+
+---
+
+## 3. Source-backed findings (external facts)
+
+- **F1 — Bounded access exists at the reader level.** tifffile (v2026.9.20, BSD-3-Clause) reads "image data … as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels"; its README demonstrates tile-level access (`z['0'][2, 0, 128:384, 256:]`) and dask chunked views (`dask.array.from_zarr(store, '0')`, chunk `(1,1,128,128,3)`) over an OME-TIFF. **[EF, S1]** → the 3 GB target does not require novel IO engineering; it requires the workspace to *stay on* this path (no `imread()` of whole files).
+- **F2 — The >4 GB zone is where TIFF-family formats are least trustworthy.** Same README: BigTIFF "uses different file header, IFD, and tag structures with 64-bit offsets" to exceed 4 GB; ImageJ hyperstacks >4 GB keep one IFD; Zeiss LSM "wrap[s] around 32-bit StripOffsets" above 4 GB; ScanImage "optionally allows corrupted non-BigTIFF files > 2 GB"; Hamamatsu NDPI stores partial 64-bit offsets and can carry wrong tags, and its oversized JPEG tiles decode "poorly" via an MCU workaround; Micro-Manager MMStack metadata is "often corrupted or wrong". **[EF, S1]** → identity must be content-hash based, and first-contact parsing results must be surfaced to the user, not trusted silently.
+- **F3 — OME-TIFF semantics live in the first IFD.** "The UTF-8 encoded OME-XML metadata found in the ImageDescription tag of the first IFD defines the position of TIFF IFDs in the high-dimensional image data" (up to 8D). **[EF, S1]** → losing that XML loses the array mapping; our importer must capture it verbatim into provenance at import time.
+- **F4 — The OME data model is 5D; extra dimensions are an opt-in annotation.** The 6D/7D/8D note: extra dimensions (types `angle, phase, tile, lifetime, lambda, other`) ride inside Z/T/C via the optional `openmicroscopy.org/omero/dimension/modulo` XML annotation, and "if an application does not understand the Modulo addition, then it can treat the data as 5D, though the displayed results would need some interpretation"; plane order is governed by `DimensionOrder`. tifffile surfaces uninterpretable extents as anonymous `Q` axes (README example: `series.axes == 'QYX'` for a generic series). **[EF, S4 + S1]** → our axis model must (a) keep original per-file axis semantics verbatim, (b) show `Q`/Modulo axes explicitly, and (c) force an explicit user decision (map to a named axis / keep as opaque index / exclude) before annotations can attach — this is exactly the brief's "ambiguous axes must be shown clearly".
+- **F5 — OME-ROI defines the annotation-scope convention we need.** Shapes (Point, Polygon, Polyline, Line, Rectangle, Ellipse, Label, Mask with BinData) are 2D, attached via optional `TheZ`/`TheT`/`TheC` — "if not specified then all the z-sections/timepoints/channels"; each Shape may carry a 6-value affine Transform, Fill/Stroke colors, and Text; 3D ROIs are a Union of per-plane shapes. **[EF, S5]** → adopt "index fields absent = applies to whole extent" as our scope semantics, and use OME-ROI as an export target.
+- **F6 — A real issue→fix→regression-test chain exists for annotation undo (napari).** See §4. **[EF, S2, S3, S6, S7]**
+- **F7 — Viewer-side display mapping is layer state, separate from data.** napari's Image-layer documentation describes contrast limits, opacity, colormaps, blending, interpolation as layer *properties*; napari's docs also maintain dedicated guides for "Scale and unit-aware rendering", "Axis names", and "Axis directions, data, and handedness". **[EF, S8 — captured page header/navigation only; deep quotes not captured]** → window/level-as-view-state is an established pattern we adopt; the deeper unit/handedness docs are a lead (L6).
+- **F8 — Chunked storage with concurrent access is a solved storage primitive.** Zarr: "compressed, chunked, N-dimensional arrays", chunkable along any dimension, concurrently readable/writable from multiple threads/processes, hierarchies via groups, storable on disk/zip/S3. **[EF, S9]** → per-chunk addressing is what makes bounded IO + cache eviction tractable; our derived masks reuse the same chunking idea.
+
+**Priority discovery that could change this plan:** F4. If any routinely acquired image in this lab carries Modulo/`Q` axes (spectral lambda, phase, tiles), the annotation scoping model must be extended beyond T/Z/C before v1, or those images must be explicitly excluded. Proposed check **[PV W7]**.
+
+---
+
+## 4. The required issue → fix → regression-test chain (napari labels undo)
+
+**Problem state.** napari's Labels layer (paint/fill on a label image) had no undo. PR #533 "add undo/redo to labels layer" (opened 2019-09-14 by kne42) states the gap and the UX contract: undo/redo on `Ctrl+Z`/`Ctrl+Shift+Z`; "the undo/redo stack is reset whenever you change the viewed dimensions" **[EF, S2]**
+
+**Fix.** PR #533 was merged 2019-09-28T04:16:18Z; merge commit `d09bea9c1b36ef3d78b97b64a159bc36c1b8d9b8` onto `master` (base `dd48e8e6…`), 4 files, +116/−15, merged by sofroniewn **[EF, S2]**. The diff **[EF, S3]** shows the mechanism, which is the transferable lesson:
+- `napari/layers/labels/labels.py`: `_history_limit = 100`; two deques `_undo_history`/`_redo_history`; `_save_history()` pushes `self.data[self.dims.indices].copy()` (a snapshot of the *currently displayed slice*, not the whole array — memory-bounded) and clears redo; `undo()/redo()` pop and swap snapshots; `_set_view_slice()` resets both stacks when dimensions change (consistent with the stated UX contract).
+- The subtle UX part: `_block_saving` is set on mouse-press and cleared on mouse-release, so an entire paint stroke — even one that calls `paint()` hundreds of times along an interpolated path — is a **single undo step**.
+- `napari/layers/labels/keybindings.py`: binds `Control-Z` / `Control-Shift-Z` to `Labels.undo`/`Labels.redo` (keyboard operability by default).
+- The same PR also fixed `fill()` writing to `self.data[tuple(self.indices)]` → `self.data[tuple(self.dims.indices)]` (the new code path exposed a stale attribute).
+
+**Regression test.** The same PR adds `test_labels_undo_redo(qtbot)` to `napari/tests/test_advanced.py`: fill → data changed; undo → equals original; redo → equals filled; set `_history_limit = 1`, one more fill, one undo succeeds, a second undo is a no-op ("cannot undo as limit exceded") **[EF, S3]**. So the chain is issue-level PR (problem statement in PR body) → merged fix commit → in-repo regression test asserting both behavior and the memory cap.
+
+**Release applicability and limits of the chain.** Milestone "0.2"; the fix landed 2019-09-28, three days before napari's Bioimage Informatics 2019 demo per the milestone description **[EF, S2]**. I could **not** establish the exact first release containing it: `GET /releases/tags/v0.2.0` returned 404 (no GitHub Release object for that tag) **[EF, S7]**. Applicability is therefore stated at **commit level** (`d09bea9…`, base `dd48e8e…`) — anyone can verify presence with `git merge-base --is-ancestor d09bea9 <ref>` — while release-level attribution is UNCONFIRMED. I did not invent a release note.
+
+**Second, unmerged datapoint.** PR #3155 "Proposal: override Labels.data.__setitem__ to support undo" (2021-08-13, draft, closed unmerged 2022-06-28) discusses wrapping `Labels.data` so *any* `data[i] = v` (including from plugins) lands in the undo queue, versus adding a separate `data_setitem` API **[EF, S6]**. Its unmerged status documents a durable weakness of the merged design: mutations that bypass the layer's own methods escape history. Our design consequence: undo commands are recorded by the annotation *model* API, and the model forbids out-of-band geometry mutation (single write path). **[EI]**
+
+**Limits of transfer.** napari's snapshot-undo is per-layer, in-RAM, and unbounded in object count for shapes/points (it only covers Labels). Our annotation store is persistent, so we adopt the mechanism (slice snapshots + stroke grouping + stack reset on dimension change + hard cap with regression test) inside a command journal, not as the whole design. **[EI]**
+
+---
+
+## 5. Precedent comparison (independence and contributed mechanisms)
+
+| | P1: `tifffile` [S1] | P2: `napari` layers [S2, S3, S6, S8] | P3: `zarr` [S9] (supporting) |
+|---|---|---|---|
+| What it is | Python library (C-accelerated via imagecodecs), TIFF-family reader/writer | Qt/vispy desktop viewer; Layer abstractions (Image, Labels, Shapes, Points) | Chunked N-D array storage format + Python implementation |
+| Maintainer/stack | C. Gohlke, independent; pip/conda; v2026.9.20 | napari org (community, Chan Zuckerberg Initiative lineage); Python/Qt | zarr-developers org; Python + format spec at zarr.dev |
+| Depends on the other? | No viewer, no napari dependency | No format opinions; consumes array-likes | Independent format |
+| Mechanism adopted | Bounded tile/page reads; explicit axes model incl. anonymous `Q`; verbatim OME-XML capture; documented limitations list; BigTIFF for >4 GB | Data/display separation (contrast/gamma as view state); stroke-grouped slice-snapshot undo with cap + regression test; keyboard bindings as first-class | Chunk-key addressing for cache/eviction and derived-mask storage |
+| What it deliberately does *not* give us | No project model, no undo, no annotation identity | No file-format boundary; labels undo not persistent | No annotation semantics |
+| Independence rationale | Format boundary vs. presentation layer: adopting both does not couple their versioning; each can be replaced (e.g., bioio/aicsimageio for reading, or a custom canvas) without touching the other | | |
+
+Independence claim **[EI]**: the two primary precedents solve disjoint layers of the stack (bytes↔array vs. array↔user), come from unrelated maintainers, and are connected in the wild only through optional glue (tifffile can emit zarr; napari can consume dask/zarr). The plan borrows mechanisms, not code, from both.
+
+---
+
+## 6. Proposed architecture
+
+Six components, each independently testable. **[PC]**
+
+1. **Project store** — directory bundle (§7). Owns atomic save, journal, recovery, relocation.
+2. **Source adapters** — `read_shape_dtype_axes()`, `read_tile(tile_key)`, `raw_metadata()`, `identity()`. v1 adapters: `ome_tiff` (tifffile), `zarr_store`, `plain_tiff` (tifffile + mandatory user axis/calibration confirmation), `png_small`. Read-only; no adapter may open a source writable. **[EF S1 → EI]**
+3. **Tile cache** — process-wide LRU with a byte budget (default 1.5 GB), keyed `(image_id, level, tile_key)`; decode happens once per tile; cache is disposable state, never authoritative. **[EI]** on **[EF S1, S9]**
+4. **View state** — per-image per-session: visible channels, window/level (lo/hi), gamma, colormap, slice indices, pan/zoom. Persisted in `views.json` (convenience, re-creatable), strictly separated from samples and from annotation geometry; UI marks this panel "display only — does not change data". **[PC]** on **[EF S8]**
+5. **Annotation model** — typed records (§8) with a single write API; command-pattern undo/redo (§4 mechanism); styles as named reusable records (`styles.json`) referenced by id.
+6. **Export engine** — table/overlay/derived-image writers; every export writes a machine-readable receipt (§9). Cancelable and resumable via tile-count progress tokens.
+
+UI layer (Qt, mirroring napari's precedent of keyboard-first tool switching **[EF S3]**) sits above 2–5 and holds no authoritative state.
+
+**Alternative considered (bounded):** embed everything in a single SQLite file (`project.qproj`) — one-file portability and transactional journaling for free. Rejected for v1 because (a) 3 GB-class blobs in SQLite fight the OS page cache, (b) users exchange bundles with rsync/Explorer and benefit from a directory they can inspect, (c) a corrupt single file is a total loss, while the bundle's manifest-plus-journal recovers (W2 mechanism). Kept as fallback if journal-replay proves fragile. **[PC]**
+
+---
+
+## 7. Project container, atomicity, identity, relocation
+
+Layout **[PC]**:
+
+```
+project/
+  project.json                  # authoritative manifest (schema_version, images[], styles, provenance)
+  project.json.tmp-<pid>        # atomic-save staging (deleted/renamed at commit)
+  annotations.jsonl             # append-only journal of committed annotation commands
+  annotations.snapshot-<n>.json # periodic compaction of the journal
+  images/<uuid>.meta.json       # per-image: source ref, identity, axes, calibration, import decisions, raw metadata
+  cache/ exports/ logs/         # disposable / receipts / human-readable event log
+```
+
+- **Atomic save**: manifest to temp → flush+fsync → `os.replace` onto `project.json`; annotation edits are appended+fsynced to the journal per command. Recovery on open: load manifest, replay journal tail into the newest snapshot, verify counts; if the manifest is unreadable, fall back to a retained previous manifest (`project.json.bak`, written during the same save). **[EI]** — rename-atomicity mechanism executed in **[EX W2]**: an interrupted writer (truncated temp file) left the original intact and the truncated temp parseable-rejected (JSONDecodeError); a completed temp+`os.replace` swapped in the new state and removed the temp. Scope limits: user-space single-process simulation on POSIX; no power-loss, no kernel-page-cache-loss, and no directory-fsync test — the design therefore also fsyncs the directory after replace, which remains **[PV W6]** (OS-level SIGKILL/dirty-shutdown test).
+- **Identity of source data**: at import, stream-compute sha256 + size (progress shown; ~10–20 s for 3 GB on HDD-class storage is a one-time cost **[EI]**); record path (absolute + project-relative), size, hash, acquisition mtime, and the verbatim metadata block (e.g., full OME-XML per **[EF S3]** locator in F3). Optional deferred hashing for huge files with `identity_status: pending` shown in the UI. **[PC]**
+- **Relocation**: on open, a missing source path is resolved by trying project-relative path, then sibling directories, then a user-chosen file; a candidate is auto-accepted only if size+sha256 match, and the relink is journaled as an event. Mismatch ⇒ the image is marked `identity_changed`: annotations are preserved, the image is not displayed until the user accepts the new file explicitly. This is the direct answer to "do exported annotations still refer to the same image after transformations?" — identity is the content hash, not the path. **[PC]** (A whole-product precedent for stable entry identity — QuPath projects — was identified but its docs URL 404'd at capture time; recorded as lead L1, claim UNVERIFIED.)
+- **Partial import / failed export**: imports stage into `images/<uuid>.importing/` + a draft meta record committed only on success; failure leaves a `status: failed_import` record with the raw metadata retained and the project loadable. Exports write to `exports/<id>/` and are atomically renamed into place with a receipt; a failed export leaves the receipt with `status: failed` and no partial output at the final path. **[EI]**
+- **Bundle vs. external reference (the trade-off)**: `import_mode: copy` (small files; bundle is self-contained) vs. `reference` (default for ≥512 MB sources; avoids duplicating 3 GB per bundle). A bundle with references is not self-contained; `verify_bundle` tool lists referenced files with hashes so a receiver knows what must travel together. **[PC]** — brief explicitly asks for this trade-off; we choose explicit mode per image, never silent copying.
+- In-place modification of sources is forbidden v1; adapters open read-only. **[PC]**
+
+---
+
+## 8. Data contract (coordinates, axes, calibration, annotations)
+
+**Axis grammar** **[PC]** built on **[EF S1, S4]**: per image, store `source_axes` verbatim from the adapter (e.g., `TZCYXS` or `QYX`), a `canonical_axes` list of only `{T,Z,Y,X,C}` after explicit user confirmation, and an `uninterpreted_axes` list (each `Q`/Modulo extent with its raw meaning, per **[EF S4]**). Any axis not in `{T,Z,Y,X,C}` blocks annotation attachment until the user maps or excludes it (§3 F4).
+
+**Coordinate spaces (all float64; the contract forbids float32 persistence)** **[PC]**:
+1. `voxel` — stored geometry lives here: indices in the source array's natural (Z,Y,X) frame with per-annotation integer index fields for T/C (and Z for scopes), following the OME convention: **index present = pinned to that slice; field omitted = applies to whole extent** **[EF S5]**.
+2. `physical` — `physical = origin_um + orientation · (voxel ∘ scale_um)`, with `scale_um` per-axis float64 (µm; SI-multiples only), `origin_um` float64[3], and `orientation` a 3×3 direction-cosine matrix (row-major, float64) with declared handedness. Populated from source metadata (e.g., OME `PhysicalSizeX/Y` + units) or user input; edits to calibration are import decisions recorded as `(old, new, reason, source)` — originals kept in provenance. Left-handed/right-handed flips (e.g., Z toward viewer vs. stage) are explicit, never implicit **[EI]** (napari maintains a handedness guide — **[EF S8]** shallow, lead L6).
+3. `display` — pan/zoom/rotation of the canvas; session state, never persisted into geometry; exports can *report* it but do not bake it in.
+
+**Precision justification [EX W1]** (isolated stdlib check; not an application test): storing 0.0645 µm in float32 yields 0.06449999660253525 (rel. err 5.27e-8); a voxel-index coordinate of 2^24 + 0.25 collapses to 16777216.0 in float32 (**absolute drift 0.25 voxel** — a quarter-pixel annotation shift on large tiles); float64 round-trips exactly. Hence: manifest/annotation floats are JSON numbers with float64 round-trip checks in the writer, and any adapter that only offers float32 calibration raises an explicit warning record rather than silently storing. **[EI]**
+
+**Annotation record** **[PC]** (JSON sketch):
+
+```json
+{"id":"a-0f93…","image_id":"img-71c2…","kind":"polygon",
+ "scope":{"t":3,"z":null,"c":null},"scope_kind":"slice_t_only",
+ "geometry":{"type":"polygon","coords":[[1024.5,512.25],[…]]},
+ "mask":null,"style_id":"st-nuclei","label":"mitotic","notes":"",
+ "created":"2026-10-06T05:20:11Z","author":"rk","rev":7}
+```
+
+- `kind ∈ {point, polygon, polyline, rectangle, ellipse, mask}` — the OME shape set minus Line/Label text shapes at v1 **[EF S5 → PC]**; `mask` stores a chunked label array under `annotations/masks/<a-id>/` with per-chunk keys (zarr-style addressing **[EF S9]**), plus the chunk grid and dtype in the record.
+- `scope_kind ∈ {slice, volume, acquisition}`; `slice` pins T/Z(/C) indices; omitted fields = whole extent (OME convention). The UI renders "this annotation covers the whole volume" explicitly.
+- Every annotation references its image by uuid; the image record pins the source hash, so "same image" is checkable (§7 relocation; §9 receipts).
+
+**Display-vs-data proof point**: changing window/level writes only to `views.json`/session state; a test asserts sample arrays and annotation geometry are bit-identical before/after (proposed **[PV W5]**, extended from W2's harness).
+
+---
+
+## 9. Minimum workflow, mapped
+
+1. **Create project** — empty bundle + manifest v1. **[PC]**
+2. **Import** — adapter probe → axes/calibration confirmation dialog showing raw metadata verbatim (F3/F4) → identity hash → manifest entry; originals never touched. Ambiguous axes (Q/Modulo) force the explicit map/exclude decision here. **[EF S1, S4]**
+3. **Inspect metadata/provenance** — metadata panel renders the structured fields plus the raw block; every import decision and calibration edit is listed with old/new values and reason. Keyboard-focusable, text-legible (accessibility §11).
+4. **Navigate & adjust display** — channel toggles, window/level, slice/time stepping; all keyboard operable; display state visibly labeled "display only". **[EF S8]**
+5. **Annotate** — points/polygons/masks with styles; undo/redo per §4 (stroke grouping, cap 100, reset on dimension change — contract copied from the merged napari fix **[EF S2, S3]**); scope selector per record.
+6. **Save** — journal append + manifest `os.replace` (W2); close is safe at any point.
+7. **Reopen elsewhere** — relocation by hash (§7); missing sources render as `reference_missing` placeholders with annotations intact.
+8. **Export** — (a) annotation table (CSV/JSON, coordinates in voxel + a columns block with calibration, scope fields, source hash); (b) overlay PNG/WebP with a sidecar JSON of the exact display mapping used (honesty: overlay encodes view state, table does not); (c) small derived image (downsample/crop/resample) written with a derivation record `{source_hash, operation, parameters, output_hash}`; a geometric transform/resample is a **distinct recorded operation type**, never a side effect of viewing. **[PC]**
+9. **Verify** — each export receipt lists: what moved (derived image geometry, dtype, origin), what did not (annotation coordinates remain in source voxel space; source hash unchanged), and how to re-verify (recompute sha256; spot-check source values under annotations). OME-ROI XML export (opportunity §12) carries scope + transform in an interoperable form **[EF S5]**.
+
+---
+
+## 10. Support boundary and failure semantics
+
+**Tested/maintained at v1** **[PC]**: OME-TIFF (classic + BigTIFF) via tifffile; plain multi-page TIFF (uint/float, uncompressed or deflate/packbits/LZW) with mandatory axis+calibration confirmation; Zarr v2/v3 stores (read); PNG ≤64 MB for small 2D imports.
+**Best-effort, opt-in flag recorded in provenance** **[PC]**: other tifffile-readable vendor formats (ImageJ hyperstack, LSM, NDPI, STK…), because **[EF S1/F2]** documents corruption/wrong-metadata modes in exactly these; the import dialog shows the specific README-documented risk for the detected format.
+**Out at v1**: OME-TIFF *writing* beyond single-series, DICOM, multi-file vendor databases (NDTiff pyramids), stitching (BIF/Trestle tiles are decoded but not stitched — same as tifffile's own boundary **[EF S1]**).
+**Failure without destruction**: adapter probes read-only and raise typed errors before any manifest mutation; the attempted import becomes a `failed_import` provenance record retaining the raw metadata block verbatim; project stays openable (journal/manifest unaffected); user choice recorded ("keep record / delete record"). No universal-format claim is made anywhere in UI or docs. **[PC]** on **[EF S1]**
+
+---
+
+## 11. Accessibility and operability
+
+All tools keyboard-reachable: tool cycling (e.g., `V/P/L/M`), slice/time arrows, `Ctrl+Z`/`Ctrl+Shift+Z` (precedent: napari binds undo in keybindings.py **[EF S3]**), Enter to commit a point, Esc to cancel in-progress geometry, keyboard-adjustable window/level. Metadata, errors, and calibration warnings are plain text in a focusable log panel plus a status line (screen-reader legible; no color-only signaling); high-contrast annotation styles; focus indicators on all panels. Original-vs-derived distinction: derived views get a persistent border badge + tab tint + a one-line derivation sentence in the status bar. **[PC]**
+
+---
+
+## 12. Opportunity and alternatives
+
+- **Opportunity (recommended)**: OME-ROI XML export. It maps 1:1 onto our record model (Point/Polygon/Polyline/Rectangle/Ellipse/Mask, `TheZ/TheT/TheC` scope semantics, 6-value affine Transform, text/styles) **[EF S5]**, immediately interops with ImageJ/OMERO ecosystems, and forces us to keep the scope semantics honest. Cost: an XML writer + schema spot-tests. **[PC]**
+- **Alternative for portability**: Zarr/NGFF as the bundle's derived-image format from day one (chunked, cloud-tolerant; tifffile already targets NGFF 0.4/0.5 in zarr output per its 2026 revision notes **[EF S1]**), with PNG only as a convenience render. Deferred for v1 masks (plain chunked files suffice) to bound the dependency surface. **[PC, deferred — lead L2]**
+- **Alternative for reading**: `bioio`/`aicsimageio` instead of tifffile — rejected v1 because tifffile's documented limitation list **[EF S1]** is exactly the kind of explicit boundary a 6-person team can test; revisit if OME-TIFF coverage proves insufficient.
+- **Not adopted** (kept as leads): array-`__setitem__`-interception undo (napari PR #3155 — unmerged, API-risky **[EF S6]**, L5); single-file SQLite project (§6).
+
+---
+
+## 13. Performance plan vs. the 3 GB target
+
+Envelope: 8 cores, 16 GB RAM, optional GPU; engineering target only — **no component here is evidence of meeting it** (brief §4). Plan **[EI on EF S1, S9]**: viewport-driven tile reads only (tifffile tile/page reads + dask/zarr chunk views are the precedent mechanism, F1); single decode per tile into the LRU cache; pyramids from file SubIFDs when present, else cached derived overviews (recorded as derived data); window/level applied on the cached display copy at render time; cooperative cancellation tokens threaded through tile loops; progress = tiles done/total. Manifest-save latency is independent of image size (annotations only). The unbounded-copy hazards to police: whole-file `imread`, float64 upcasting of sample caches, and per-undo full-volume snapshots (napari's lesson generalized: snapshot the *slice*, not the array **[EF S3]**).
+
+**Validation [PV — all UNEXECUTED]**: W3 3 GB OME-TIFF: peak RSS < ~3 GB while paging a 10-minute scripted tour; W4 bundle reopen+relocation on a second machine with hash verification; W5 display-edit isolation + float64 round-trip test; W6 OS-level kill-during-save dirty-shutdown test (extends W2); W7 Q/Modulo-axis corpus test (F4 consequence).
+
+---
+
+## 14. Assumptions, unsupported cases, risks
+
+- **Assumption [EI]**: tifffile's read path over OME-TIFF keeps per-tile RSS bounded — supported by its documented strip/tile/zarr access **[EF S1]** but not yet measured by us (**W3 UNEXECUTED**).
+- **Assumption [EI]**: sha256-at-import is an acceptable identity cost (one-time, ~10–20 s/3 GB). If not, deferred hashing + size+mtime pre-check is the fallback **[PC]**.
+- **Unsupported case 1**: images with Modulo/`Q` axes — annotations blocked until explicit mapping (F4); no silent 5D reinterpretation.
+- **Unsupported case 2**: uncalibrated sources — workspace shows "uncalibrated"; physical exports refuse or stamp `uncalibrated` (user choice recorded). **[PC]**
+- **Unsupported case 3**: float32-only calibration in source files — stored as original, workspace copy upcast to float64 with a warning record (**W1**).
+- **Risk**: napari's `contrast_limits`-style defaults (S8, shallow capture) suggest auto-windowing on first view; if we adopt auto-window we must persist it as view state *with provenance of the percentile parameters* or reopen fidelity suffers. **[EI, low confidence — deeper napari docs capture needed, lead L6]**
+- **Risk**: journal corruption on shared storage without fsync guarantees (NFS/SMB). Bounded alternative: fsync + directory fsync + `verify_project` repair from journal+snapshot (W2 mechanism); worst case the bundle loses the last commands, never the manifest. **[EI]**
+
+---
+
+## 15. Executed witnesses and proposed validation (inventory in `witnesses.json`)
+
+- **[EX W1] float32 precision drift** — executed by candidate (isolated stdlib sandbox, `exec-0dds09qa`, exit 0). Code + output recorded. Demonstrates the float64 contract; does **not** establish any application behavior.
+- **[EX W2] interrupted save vs. atomic replace** — executed by candidate (same run). Truncated writer left original intact; `os.replace` completed swap. POSIX user-space scope only; directory-fsync and power-loss untested (**W6** proposed).
+- **[PV W3–W7]** — proposed, UNEXECUTED (§13, §14). No receipts invented.
+
+## 16. Sources
+
+Inline keys `[S1]`–`[S10]` map to `sources.json`, which records URL, version pin, exact locator, capture identity (sha256 + capture id + UTC timestamp from the capture tool), and applicability for each. Summary: S1 tifffile README v2026.9.20; S2 napari PR #533 (API JSON); S3 PR #533 changed-files JSON (patches incl. regression test); S4 OME 6D/7D/8D storage note; S5 OME ROI model; S6 napari issue-search JSON (incl. unmerged PR #3155); S7 napari v0.2.0 release 404 (limit evidence); S8 napari image-layer docs page (truncated capture, header/nav only); S9 zarr README (main); S10 OME data-model overview (thin capture).
