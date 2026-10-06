@@ -1,0 +1,129 @@
+{
+  "schema": "er9.positive-raw-source-selection.v1",
+  "created_utc": "2026-10-06T00:28:35.363866Z",
+  "evaluation_id": "ER9-EVAL-INDEPENDENT-PIPELINE-2-I05-001",
+  "scope": "15 evaluator public primary captures only; no private/native logs/candidate history",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S1.body",
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "bytes": 163120,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S1",
+      "url": "https://ngff.openmicroscopy.org/0.4/"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S2.body",
+      "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+      "bytes": 48745,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S2",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S3.body",
+      "sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+      "bytes": 34722,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S3",
+      "url": "https://pypi.org/pypi/tifffile/2025.5.10/json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S4.body",
+      "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "bytes": 15402,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S5.body",
+      "sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+      "bytes": 11419,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S5",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S6.body",
+      "sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+      "bytes": 5801,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S6",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S6-related.body",
+      "sha256": "aa8c06456dc0f2dce6ec65351ab69be0933d3daa2c19bfee6e31987ba5fb80fa",
+      "bytes": 10370,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S6-related",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085/comments"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S7.body",
+      "sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+      "bytes": 5042,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S7",
+      "url": "https://github.com/napari/napari/pull/8256.patch"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S7-related.body",
+      "sha256": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+      "bytes": 20154,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S7-related",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8256"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S8.body",
+      "sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+      "bytes": 31495,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S8",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/pyproject.toml"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S9.body",
+      "sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+      "bytes": 8505,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S9",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S9-related.body",
+      "sha256": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+      "bytes": 14404,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S9-related",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515/comments"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S10.body",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S10",
+      "url": "https://www.sqlite.org/atomiccommit.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S11.body",
+      "sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+      "bytes": 261500,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S11",
+      "url": "https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S12.body",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "bytes": 139778,
+      "role": "evaluator-retrieved public primary source body",
+      "source_id": "S12",
+      "url": "https://www.sqlite.org/pragma.html"
+    }
+  ],
+  "archive_destination_authority": "parent/evidence archive owner; do not commit raw captures in product repository"
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "er9.luna.resource-version-preservation.v1",
+  "old_v1_2_pin_sha256": "958820ea74f56c2cab0faf57ef2eeda39925e7bc2e8b29ad4643dda988ec5b6b",
+  "old_runtime_files_unchanged": {
+    "controls.py": true,
+    "native_driver.py": true,
+    "projector.py": true,
+    "host_guard.py": true,
+    "stage_runner.py": true,
+    "selected-sources.json": true,
+    "restricted-luna-catalog.json": true,
+    "item-contract.json": true,
+    "client_tool_relay.py": true,
+    "dynamic_driver.py": true,
+    "dynamic_projector.py": true,
+    "dynamic_stage_runner.py": true,
+    "tool_release.py": true,
+    "CLIENT_RELAY_TEST_RESULTS.json": true,
+    "versions/v1.2/completion_driver.py": true,
+    "versions/v1.2/projection.py": true,
+    "versions/v1.2/dynamic_stage_runner.py": true,
+    "versions/v1.2/completion_policy.py": true,
+    "owned_scope_proof.py": true,
+    "test_owned_scope_proof.py": true,
+    "OWNED_SCOPE_REGRESSION.json": true
+  },
+  "old_tool_source_pins_sha256": "9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34",
+  "original_results_and_grades_mutated": false,
+  "native_goal_starts": 0,
+  "scope": "only owned prospective v1.3 resource sources; old/live runtime preservation"
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "er9.eval2-exact-cost-clocks.v1",
+  "created_utc": "2026-10-06T00:28:35.363866Z",
+  "evaluation_id": "ER9-EVAL-INDEPENDENT-PIPELINE-2-I05-001",
+  "phase1": {
+    "event": "FINISHED",
+    "started_utc": "2026-10-05T23:59:31.893206Z",
+    "started_monotonic_ns": 75190750246329,
+    "finished_utc": "2026-10-06T00:07:08.998665Z",
+    "finished_monotonic_ns": 75647855684662,
+    "elapsed_seconds": 457.105438333
+  },
+  "phase2": {
+    "started_utc": "2026-10-06T00:16:34.581388Z",
+    "started_monotonic_ns": 76213438440611,
+    "finished_utc": "2026-10-06T00:25:21.756714Z",
+    "finished_monotonic_ns": 76740613758666,
+    "elapsed_seconds": 527.175318055,
+    "event": "FINISHED"
+  },
+  "report_write": {
+    "event": "FINISHED",
+    "started_utc": "2026-10-06T00:25:21.756714Z",
+    "started_monotonic_ns": 76740613758666,
+    "finished_utc": "2026-10-06T00:28:35.363866Z",
+    "finished_monotonic_ns": 76934220940070,
+    "elapsed_seconds": 193.607181404
+  },
+  "whole_assessment_elapsed_seconds": 1549.863512337,
+  "whole_review_including_report_seconds": 1743.470693741,
+  "interphase_wait_and_report_prep_seconds": 565.582755949,
+  "observed_pre_source_seconds_since_reservation": 1548.893206,
+  "scope_policy": "Whole intervals contain phase slices; do not add slices again. Pre-source observed reservation/prep/wait is separate and not a claim about unobserved dispatch start. Native/freeze elapsed overlap. Imported existing Goal costs are not duplicate charges.",
+  "candidate_existing_goal_id": "01a10e6d-7d6e-7603-9c16-7e60a1a76acd",
+  "candidate_usage_reference": {
+    "inputTokens": 5203609,
+    "cachedInputTokens": 4887296,
+    "outputTokens": 59681,
+    "reasoningOutputTokens": 31736,
+    "totalTokens": 5263290
+  },
+  "candidate_native_receipt_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+    "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0"
+  },
+  "candidate_native_elapsed_seconds": 585.563808303,
+  "candidate_freeze_elapsed_seconds": 585.649430624,
+  "unknown": [
+    "Evaluator provider/model/billing tokens and money.",
+    "Candidate physical provider/inference payload/HTTP attempts and money.",
+    "Sandbox measured time (caps are not observations)."
+  ],
+  "phase1_judgment_sha256": "1c58b51987bcadeee4bbfb7358cb074bd668c941d80648fd5dd5f1fe1cff1a07",
+  "quality": "FAIL_SCREEN",
+  "coverage": "PARTIAL",
+  "no_clock_reset_or_extension": true
+}

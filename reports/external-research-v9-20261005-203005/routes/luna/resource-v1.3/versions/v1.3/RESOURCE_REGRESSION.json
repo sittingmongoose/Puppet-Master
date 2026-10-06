@@ -1,0 +1,1157 @@
+{
+  "schema": "er9.luna.resource-zero-inference-regression.v1",
+  "tests_run": 7,
+  "passed": true,
+  "elapsed_seconds": 3.660413157005678,
+  "failures": 0,
+  "errors": 0,
+  "native_goal_starts": 0,
+  "test_sha256": "891c29f2720f3f8ffc8653bf005d472e1ca32f462301e1642838a85fdb2d7e86",
+  "observations": [
+    {
+      "test": "__main__.ResourceTests.test_actual_complete_envelope_and_overlap",
+      "actual_component_proofs": [
+        {
+          "component": "outer_worker",
+          "unit": "er9-luna-ebc7bd63b7bb47359803cb485f4bb6b7.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110069",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memb5b7bda106df443fbaff33e5e00eb9a0.slice/er9-luna-ebc7bd63b7bb47359803cb485f4bb6b7.service",
+            "MemoryPeak": "3342336",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "3338240",
+            "memory.peak": "3342336",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "20144128",
+            "memory.peak": "20144128",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75391520184727,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "native",
+          "unit": "er9-luna-10c7bf88e25842ba8e3b5769c2003c80.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110071",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memb5b7bda106df443fbaff33e5e00eb9a0.slice/er9-luna-10c7bf88e25842ba8e3b5769c2003c80.service",
+            "MemoryPeak": "3338240",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "3338240",
+            "memory.peak": "3338240",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "20930560",
+            "memory.peak": "20930560",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75391552960204,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_boundary",
+          "unit": "er9-luna-7d01b1c1303244399481ce53f9673f92.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110073",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memb5b7bda106df443fbaff33e5e00eb9a0.slice/er9-luna-7d01b1c1303244399481ce53f9673f92.service",
+            "MemoryPeak": "3342336",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "3342336",
+            "memory.peak": "3342336",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "20877312",
+            "memory.peak": "20930560",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75391583585803,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_execution",
+          "unit": "er9-luna-9a0c634df3bd4aa7899664bb2fb96514.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110075",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memb5b7bda106df443fbaff33e5e00eb9a0.slice/er9-luna-9a0c634df3bd4aa7899664bb2fb96514.service",
+            "MemoryPeak": "3399680",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "3346432",
+            "memory.peak": "3399680",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "20824064",
+            "memory.peak": "20930560",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75391613536523,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "sandbox",
+          "unit": "er9-luna-1d7f97236be34155a7d9eecf5bba443f.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110077",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memb5b7bda106df443fbaff33e5e00eb9a0.slice/er9-luna-1d7f97236be34155a7d9eecf5bba443f.service",
+            "MemoryPeak": "3399680",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "3346432",
+            "memory.peak": "3399680",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "20766720",
+            "memory.peak": "20930560",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75391641200056,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "sandbox",
+          "unit": "er9-luna-62714594a67a46de9471c85524d75187.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110079",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memb5b7bda106df443fbaff33e5e00eb9a0.slice/er9-luna-62714594a67a46de9471c85524d75187.service",
+            "MemoryPeak": "3403776",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "3346432",
+            "memory.peak": "3403776",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "20766720",
+            "memory.peak": "20930560",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75391670862783,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        }
+      ],
+      "model_starts": 0
+    },
+    {
+      "test": "__main__.ResourceTests.test_actual_complete_envelope_and_overlap",
+      "release": {
+        "slice_unit": "er9memb5b7bda106df443fbaff33e5e00eb9a0.slice",
+        "before": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "active",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memb5b7bda106df443fbaff33e5e00eb9a0.slice",
+          "MemoryPeak": "20930560",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "20766720",
+          "memory.peak": "20930560",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "stop_returncode": 0,
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "ControlGroup": "",
+          "MemoryPeak": "20930560",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "release_monotonic_ns": 75391729050678,
+        "scope": "private owned slice only; no sibling/global mutation"
+      }
+    },
+    {
+      "test": "__main__.ResourceTests.test_guard_deadline_and_controller_loss",
+      "mode": "deadline",
+      "record": {
+        "unit": "er9-luna-57c18abb4c3e49eea3b5ca44cb0072f7.service",
+        "immutable_stop_monotonic_ns": 75393099262025,
+        "native_host_pid": 2110110,
+        "native_host_pgid": 2110110,
+        "guard_pid": 2110105,
+        "bounded_descendants": "private aggregate resource slice +unit cgroup",
+        "resource_slice_unit": "er9mem30c1ee7fac314f058adc5eed1ad34491.slice",
+        "resource_slice_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice",
+        "memory_max_bytes": 805306368,
+        "guard_outer_resource_placement": {
+          "component": "outer_worker",
+          "unit": "er9-luna-a253665330f147dababae735220bc616.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110104",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-a253665330f147dababae735220bc616.service",
+            "MemoryPeak": "22724608",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "21676032",
+            "memory.peak": "22724608",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "21676032",
+            "memory.peak": "22663168",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75392017104148,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        "service_runner_pid": 2110108,
+        "control_group": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-57c18abb4c3e49eea3b5ca44cb0072f7.service",
+        "active_state": "active",
+        "sub_state": "running",
+        "resource_bound_verification": {
+          "component": "native",
+          "unit": "er9-luna-57c18abb4c3e49eea3b5ca44cb0072f7.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110110",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-57c18abb4c3e49eea3b5ca44cb0072f7.service",
+            "MemoryPeak": "8728576",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "8728576",
+            "memory.peak": "8728576",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "32817152",
+            "memory.peak": "33820672",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75392200945179,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        "stop_reason": "deadline",
+        "terminal_kernel_memory": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "8728576",
+          "memory.peak": "8728576",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "service_runner_exit_code": 255,
+        "terminal_unit_observation": {
+          "native_host_pid": 0,
+          "control_group": "",
+          "active_state": "failed",
+          "sub_state": "failed"
+        },
+        "resource_terminal_status": {
+          "Result": "signal",
+          "ExecMainStatus": "9",
+          "MemoryPeak": "8728576"
+        },
+        "cgroup_absent_or_empty": true,
+        "closed_monotonic_ns": 75393163886109
+      },
+      "retained_helper_placements": [
+        {
+          "pid": 2110105,
+          "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-a253665330f147dababae735220bc616.service",
+          "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-a253665330f147dababae735220bc616.service",
+          "actual_owned_placement": true,
+          "verified_monotonic_ns": 75392241681345
+        },
+        {
+          "pid": 2110108,
+          "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-a253665330f147dababae735220bc616.service",
+          "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-a253665330f147dababae735220bc616.service",
+          "actual_owned_placement": true,
+          "verified_monotonic_ns": 75392241798513
+        }
+      ],
+      "owned_scope_proof": {
+        "schema": "er9.luna.private-slice-owned-scope-proof.v1.3",
+        "resource_slice_unit": "er9mem30c1ee7fac314f058adc5eed1ad34491.slice",
+        "observation_monotonic_ns": 75393269995734,
+        "observation_epoch": 1791244974.4130058,
+        "thread_id": null,
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "native_receipt_sha256": "be6ff9d849574dbf05b4f5cb525a0ac9633393188d86d2186a900b789bc3c3fc",
+        "services": [
+          {
+            "component": "host-process",
+            "unit": "er9-luna-57c18abb4c3e49eea3b5ca44cb0072f7.service",
+            "record_sha256": "03f61391edfe912d19d962935d8f0654538ab7e19767134ce34cdd479a532f53",
+            "original_recorded_pgid": 2110110,
+            "pgid_not_used_for_ownership_or_cleanup": true,
+            "unit_observation": {
+              "query_returncode": 0,
+              "load_state": "loaded",
+              "active_state": "failed",
+              "sub_state": "failed",
+              "main_pid": 0,
+              "control_group": ""
+            },
+            "original_cgroup_observation": {
+              "control_group": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-57c18abb4c3e49eea3b5ca44cb0072f7.service",
+              "absent_or_empty": true,
+              "state": "absent"
+            },
+            "current_cgroup_observation": {
+              "control_group": "",
+              "absent_or_empty": true
+            },
+            "exact_pid_observations": [
+              {
+                "pid": 2110105,
+                "state": "absent",
+                "terminated": true
+              },
+              {
+                "pid": 2110110,
+                "state": "absent",
+                "terminated": true
+              },
+              {
+                "pid": 2110108,
+                "state": "absent",
+                "terminated": true
+              }
+            ],
+            "quiet": true
+          }
+        ],
+        "execution_units": [],
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true,
+        "mutations_performed": false,
+        "scope": "exact trusted named units, original cgroups and exact PIDs only; no PGID release or source grade",
+        "receipt_sha256": "b2818e722a6e48b1fb48963f8a2841177bb60c990c6361c008e004bced1198e1"
+      }
+    },
+    {
+      "test": "__main__.ResourceTests.test_guard_deadline_and_controller_loss",
+      "mode": "controller_eof",
+      "record": {
+        "unit": "er9-luna-a703ef3359674dd8adaf6c2544a8299e.service",
+        "immutable_stop_monotonic_ns": 75398445641192,
+        "native_host_pid": 2110152,
+        "native_host_pgid": 2110152,
+        "guard_pid": 2110147,
+        "bounded_descendants": "private aggregate resource slice +unit cgroup",
+        "resource_slice_unit": "er9mem30c1ee7fac314f058adc5eed1ad34491.slice",
+        "resource_slice_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice",
+        "memory_max_bytes": 805306368,
+        "guard_outer_resource_placement": {
+          "component": "outer_worker",
+          "unit": "er9-luna-53331b714dfa4a84b106b23dd28b74c6.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110135",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-53331b714dfa4a84b106b23dd28b74c6.service",
+            "MemoryPeak": "22949888",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "21970944",
+            "memory.peak": "23212032",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "22454272",
+            "memory.peak": "34426880",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75393564264816,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        "service_runner_pid": 2110150,
+        "control_group": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-a703ef3359674dd8adaf6c2544a8299e.service",
+        "active_state": "active",
+        "sub_state": "running",
+        "resource_bound_verification": {
+          "component": "native",
+          "unit": "er9-luna-a703ef3359674dd8adaf6c2544a8299e.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2110152",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-a703ef3359674dd8adaf6c2544a8299e.service",
+            "MemoryPeak": "8732672",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "8732672",
+            "memory.peak": "8732672",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "34598912",
+            "memory.peak": "35590144",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 75393733733741,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        "stop_reason": "controller_eof_or_native_exit",
+        "terminal_kernel_memory": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "8732672",
+          "memory.peak": "8732672",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "service_runner_exit_code": 255,
+        "terminal_unit_observation": {
+          "native_host_pid": 0,
+          "control_group": "",
+          "active_state": "failed",
+          "sub_state": "failed"
+        },
+        "resource_terminal_status": {
+          "Result": "signal",
+          "ExecMainStatus": "9",
+          "MemoryPeak": "8732672"
+        },
+        "cgroup_absent_or_empty": true,
+        "closed_monotonic_ns": 75393835836848
+      },
+      "retained_helper_placements": [
+        {
+          "pid": 2110147,
+          "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-53331b714dfa4a84b106b23dd28b74c6.service",
+          "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-53331b714dfa4a84b106b23dd28b74c6.service",
+          "actual_owned_placement": true,
+          "verified_monotonic_ns": 75393781919910
+        },
+        {
+          "pid": 2110150,
+          "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-53331b714dfa4a84b106b23dd28b74c6.service",
+          "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-53331b714dfa4a84b106b23dd28b74c6.service",
+          "actual_owned_placement": true,
+          "verified_monotonic_ns": 75393782089919
+        }
+      ],
+      "owned_scope_proof": {
+        "schema": "er9.luna.private-slice-owned-scope-proof.v1.3",
+        "resource_slice_unit": "er9mem30c1ee7fac314f058adc5eed1ad34491.slice",
+        "observation_monotonic_ns": 75393952337543,
+        "observation_epoch": 1791244975.0953462,
+        "thread_id": null,
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "native_receipt_sha256": "be6ff9d849574dbf05b4f5cb525a0ac9633393188d86d2186a900b789bc3c3fc",
+        "services": [
+          {
+            "component": "host-process",
+            "unit": "er9-luna-a703ef3359674dd8adaf6c2544a8299e.service",
+            "record_sha256": "606c5fb2b0536f516ab9b86f8f24cd883e65cad8cd6fb586fded69fdd96eeba2",
+            "original_recorded_pgid": 2110152,
+            "pgid_not_used_for_ownership_or_cleanup": true,
+            "unit_observation": {
+              "query_returncode": 0,
+              "load_state": "loaded",
+              "active_state": "failed",
+              "sub_state": "failed",
+              "main_pid": 0,
+              "control_group": ""
+            },
+            "original_cgroup_observation": {
+              "control_group": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice/er9-luna-a703ef3359674dd8adaf6c2544a8299e.service",
+              "absent_or_empty": true,
+              "state": "absent"
+            },
+            "current_cgroup_observation": {
+              "control_group": "",
+              "absent_or_empty": true
+            },
+            "exact_pid_observations": [
+              {
+                "pid": 2110147,
+                "state": "absent",
+                "terminated": true
+              },
+              {
+                "pid": 2110152,
+                "state": "absent",
+                "terminated": true
+              },
+              {
+                "pid": 2110150,
+                "state": "absent",
+                "terminated": true
+              }
+            ],
+            "quiet": true
+          }
+        ],
+        "execution_units": [],
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true,
+        "mutations_performed": false,
+        "scope": "exact trusted named units, original cgroups and exact PIDs only; no PGID release or source grade",
+        "receipt_sha256": "9a9573cf623be739cef2f73ac2dd559205d20d5ace71828b2f955ba975eac340"
+      }
+    },
+    {
+      "test": "__main__.ResourceTests.test_guard_deadline_and_controller_loss",
+      "release": {
+        "slice_unit": "er9mem30c1ee7fac314f058adc5eed1ad34491.slice",
+        "before": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "active",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem30c1ee7fac314f058adc5eed1ad34491.slice",
+          "MemoryPeak": "35590144",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "1019904",
+          "memory.peak": "35590144",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "stop_returncode": 0,
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "ControlGroup": "",
+          "MemoryPeak": "35590144",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "release_monotonic_ns": 75393997189691,
+        "scope": "private owned slice only; no sibling/global mutation"
+      }
+    },
+    {
+      "test": "__main__.ResourceTests.test_private_slice_observer_exact_recursive_scope",
+      "release": {
+        "slice_unit": "er9mem5a8641695a24465eaabb70fc0d8eea58.slice",
+        "before": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "active",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5a8641695a24465eaabb70fc0d8eea58.slice",
+          "MemoryPeak": "2617344",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "229376",
+          "memory.peak": "2617344",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "stop_returncode": 0,
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "ControlGroup": "",
+          "MemoryPeak": "2617344",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "release_monotonic_ns": 75394131092801,
+        "scope": "private owned slice only; no sibling/global mutation"
+      }
+    },
+    {
+      "test": "__main__.ResourceTests.test_profile_pin_permissions_and_clock",
+      "release": {
+        "slice_unit": "er9mem2778a6a6670e4822928c83f4d3dde9c8.slice",
+        "before": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "active",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem2778a6a6670e4822928c83f4d3dde9c8.slice",
+          "MemoryPeak": "0",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "stop_returncode": 0,
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "ControlGroup": "",
+          "MemoryPeak": "[not set]",
+          "MemoryMax": "infinity",
+          "MemorySwapMax": "infinity"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "release_monotonic_ns": 75394198154978,
+        "scope": "private owned slice only; no sibling/global mutation"
+      }
+    },
+    {
+      "test": "__main__.ResourceTests.test_required_cli_and_helper_placement_fail_closed",
+      "release": {
+        "slice_unit": "er9meme5ec9518b9a549a68c6ede304b3d5d32.slice",
+        "before": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "active",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9meme5ec9518b9a549a68c6ede304b3d5d32.slice",
+          "MemoryPeak": "0",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "stop_returncode": 0,
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "ControlGroup": "",
+          "MemoryPeak": "[not set]",
+          "MemoryMax": "infinity",
+          "MemorySwapMax": "infinity"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "release_monotonic_ns": 75394398190496,
+        "scope": "private owned slice only; no sibling/global mutation"
+      }
+    },
+    {
+      "test": "__main__.ResourceTests.test_wrong_cap_and_outside_placement_fail_closed",
+      "release": {
+        "slice_unit": "er9memcf72188540de4260952f05b7362dc732.slice",
+        "before": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "active",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memcf72188540de4260952f05b7362dc732.slice",
+          "MemoryPeak": "3657728",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "3657728",
+          "memory.peak": "3657728",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "stop_returncode": 0,
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "ControlGroup": "",
+          "MemoryPeak": "3657728",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "release_monotonic_ns": 75394652141478,
+        "scope": "private owned slice only; no sibling/global mutation"
+      }
+    },
+    {
+      "test": "__main__.TinyOOMTest.test_actual_aggregate_kernel_oom_and_quiet",
+      "synthetic_cap_bytes": 16777216,
+      "aggregate_kernel_limits": {
+        "memory.max": "16777216",
+        "memory.swap.max": "0",
+        "memory.current": "114688",
+        "memory.peak": "16777216",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "38",
+          "oom": "1",
+          "oom_kill": "1",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "0",
+          "frozen": "0"
+        }
+      },
+      "unit_observation": {
+        "LoadState": "loaded",
+        "ActiveState": "failed",
+        "SubState": "failed",
+        "MainPID": "0",
+        "Result": "oom-kill",
+        "ControlGroup": "",
+        "MemoryPeak": "16936960",
+        "MemoryMax": "67108864",
+        "MemorySwapMax": "0"
+      },
+      "exit_code": 1,
+      "research_fit": "UNKNOWN",
+      "model_starts": 0
+    }
+  ]
+}

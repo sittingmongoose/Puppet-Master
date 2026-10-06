@@ -1,0 +1,75 @@
+[
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/P2_I05_SINGLE_FINAL_ALIAS_001.json",
+    "sha256": "4de9a9944020bb13feec2d2f22731644cd2b6377dfdddeafca2587799a466a01",
+    "role": "post-judgment private selected-final alias/freeze/native metadata"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+    "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0",
+    "role": "positively selected actual final native result"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/frozen-output/critique/review-r4-corrected.md",
+    "relative_path": "critique/review-r4-corrected.md",
+    "sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+    "bytes": 15747,
+    "role": "selected same-lineage corrected critique for preservation check"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/MANIFEST.json",
+    "sha256": "5e064d59da1dd6126f4ac92a3470fc37f6a0972e7b2e1c5c2de1bc1090041425",
+    "role": "selected exact final-stage execution files manifest"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/code.py",
+    "sha256": "45027cbb498cd2672342977c282c4d34b9178854369e4c9c4ccdcef29b29217d",
+    "role": "candidate_code",
+    "execution_id": "exec-62cuo0t6"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/data.json",
+    "sha256": "8bbf56c7f229dc30f661254b86c30c1e9ecb2b050b93a43ca37cecfd164baaaa",
+    "role": "candidate_input",
+    "execution_id": "exec-62cuo0t6"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/stdout.bin",
+    "sha256": "7fbeb94a6f554fd3599e4cea5acee84a6c02a162c76a9e484f19d7617a383048",
+    "role": "candidate_stdout",
+    "execution_id": "exec-62cuo0t6"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/stderr.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "role": "candidate_stderr",
+    "execution_id": "exec-62cuo0t6"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/execution-facts.json",
+    "sha256": "6b25fc93218d8c27688d4c04072753c7efab005b271a4dcb7141b1b16d0ed17d",
+    "role": "candidate_execution_receipt",
+    "execution_id": "exec-62cuo0t6"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/MANIFEST.json",
+    "sha256": "cf9b584107a68be0b37c9b0068e47cdd59cee5e73346790347140a9cdc8cd8bd",
+    "role": "selected final lifecycle and exact same-freeze critique manifest"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/A/critique/review.md",
+    "sha256": "b6af2b724c244bca2f386392f64c32694ccb261743caa8682ea3c24831c805ed",
+    "original_sha256": "b6af2b724c244bca2f386392f64c32694ccb261743caa8682ea3c24831c805ed",
+    "role": "selected same-final-freeze critique",
+    "source_relative_path": "critique/review.md",
+    "byte_policy": "exact bytes; no preservation interpretation by courier"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/A/critique/review-r4-corrected.md",
+    "sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+    "original_sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+    "role": "selected same-final-freeze critique",
+    "source_relative_path": "critique/review-r4-corrected.md",
+    "byte_policy": "exact bytes; no preservation interpretation by courier"
+  }
+]

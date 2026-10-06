@@ -1,0 +1,63 @@
+{
+  "schema": "er9.tools.verification.v1",
+  "version": "v1.3",
+  "status": "READY_FOR_PROSPECTIVE_RESOURCE_ROUTE",
+  "verified_utc": "2026-10-06T00:06:01.359816+00:00",
+  "snapshot_sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621",
+  "checks": [
+    {
+      "command": "python3 -B dev/tools/versions/v1.3/test_resource.py",
+      "exit_code": 0,
+      "tests": 5,
+      "elapsed_seconds": 0.971,
+      "scope": [
+        "exact slice-name/cap/reader profile pin boundaries",
+        "private file mode/symlink/candidate namespace rejection",
+        "operator-only argument config with unchanged five tools",
+        "actual live parent2304MiB/Swap0 and sandbox256MiB/Swap0 placement before candidate bootstrap",
+        "negative parent2303MiB blocks bootstrap",
+        "private test slices positively quiet after release"
+      ]
+    },
+    {
+      "command": "python3 -B dev/tools/versions/v1.3/test_framing.py",
+      "exit_code": 0,
+      "tests": 6,
+      "elapsed_seconds": 3.853
+    },
+    {
+      "command": "python3 -B dev/tools/versions/v1.3/test_tools.py",
+      "exit_code": 0,
+      "tests": 9,
+      "elapsed_seconds": 11.536
+    },
+    {
+      "command": "source_capture/test_source_capture.py",
+      "exit_code": 0,
+      "tests": 14,
+      "reuse": "Source adapter/server/test exact bytes from previously tested immutable versions; unchanged source coalesced framing is also exercised."
+    }
+  ],
+  "positive_actual_placement": {
+    "path": "dev/tools/versions/v1.3/LOCAL_RESOURCE_PLACEMENT.json",
+    "sha256": "964851b5692b024133bbf643ab1d7f66ac73b1e80489a938bd8a67ca1eddfbb7"
+  },
+  "trusted_reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+  "candidate_model_calls": 0,
+  "native_goals_started": 0,
+  "full_route_fit": "UNKNOWN; sandbox-only local proof, complete outer/native/source/adapter cap admission is route owner responsibility.",
+  "adoption": {
+    "wholly_unstarted_only": true,
+    "preserve_existing_job_and_pair_pins": true,
+    "new_config_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+    "new_keyword": "resource_profile_path",
+    "mandatory_for_complete_luna_route": true,
+    "generic_none_compatible": true,
+    "aggregate_memory_max_bytes": 2415919104,
+    "sandbox_memory_max_bytes": 268435456,
+    "swap_max_bytes": 0,
+    "original_deadlines_retained": true,
+    "candidate_tools_and_args_unchanged": true
+  },
+  "prior_versions_preserved": true
+}

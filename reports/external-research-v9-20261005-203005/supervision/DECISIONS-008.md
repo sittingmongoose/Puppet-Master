@@ -1,0 +1,13 @@
+# ER9 complete prospective Luna memory envelope 008
+
+Approve the proposed isolated 2304 MiB / 2.25 GiB hard job envelope for wholly unstarted symmetric versions. Root expressly authorized ordinary engineering adoption; no extra root phase or model-probe gate is required. This is a bound, not evidence that full research fits it.
+
+The old declared 2.5 GiB summed three 768 MiB sibling services and a 256 MiB sandbox while omitting the outer worker. It was not a complete per-job ceiling. The observed outer peak was 449,900,544 bytes (about 429.06 MiB); native/source full-research peaks and final RSS remain unknown. Canary snapshots are not research peak or fit proof. Preserve old records and costs.
+
+The new envelope accounts for outer worker 768, native service 768, source adapter 256, execution adapter 256 and execution sandbox 256 MiB. Enforce a private aggregate `MemoryMax=2304 MiB` and `MemorySwapMax=0`, with the actual outer/controllers/guards/native/source/adapter/sandbox units and every retained per-job helper beneath it. Verify actual kernel limits and placement before initial inference. Per-unit limits remain enforced. Aggregate enforcement covers sandbox overlap; if multiple sandbox units can exist, describe 256 MiB as per-sandbox rather than an unproved combined sandbox-pool limit.
+
+A short shared allocation/launch request that finishes before inference may remain in the protected host control-plane reserve. No retained per-job runtime/controller/helper may escape the aggregate. Positive owned closure remains mandatory after timeout/OOM; never kill a shared process group or alter sibling work. Local finite limit/placement checks and small synthetic kernel OOM checks can establish enforcement without a model canary or live-job changes. They do not establish research fit.
+
+Keep the 3 GiB host reserve and outstanding reservations unchanged. One job therefore needs at least 5.25 GiB headroom before other reservations; at the reported 3 GiB available, no positive job can be admitted. Use actual unrounded admission values. Do not lower the reserve, count canary RSS as a bound or infer that a smaller declaration permits immediate launch.
+
+Version/pin the changed launch/resource binding only for wholly unstarted symmetric jobs. Preserve full task/source/tool/model/effort/time scope. Do not truncate required meaning to avoid OOM. Record/charge OOM and infrastructure failures explicitly, with source quality unassessed where appropriate. A failed lower-cap job is not a source-quality rejection. Source/ops owners have the implementation instructions; READY depends on their actual enforcement/pins, not this approval alone. No Goals, probes or live changes were performed by this supervisor.

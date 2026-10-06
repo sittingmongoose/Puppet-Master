@@ -1,0 +1,1087 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-INDEPENDENT-PIPELINE-2-I05-001",
+  "status": "FROZEN_PHASE1_JUDGMENT",
+  "decision": "FAIL",
+  "case_outcome": "FAIL_SCREEN",
+  "assessment_mode": "screen_fail",
+  "scope": "one_actual_final_single_lineage",
+  "actual_designated_final_quality": "FAIL_SCREEN_PARTIAL_SOURCE_ASSESSMENT",
+  "full_pass_eligible": false,
+  "snapshot_created_utc": "2026-10-06T00:07:08.997471Z",
+  "source_started_utc": "2026-10-05T23:59:31.893206Z",
+  "budget": {
+    "screen_max_seconds": 1200,
+    "history_execution_reserve_seconds": 600,
+    "hard_max_seconds": 1800,
+    "budget_frozen_utc": "2026-10-05T23:48:34.336521Z",
+    "start_rule": "STARTED immediately before first candidatebody read; task preflight/wait excluded, no reset"
+  },
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/dispatch.json",
+    "sha256": "4bea09417d1b53de048e11c7c53e2ca70758966044f41b632f720423b4044e3d"
+  },
+  "received_inputs": {
+    "task": {
+      "brief": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/brief.md",
+        "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+      },
+      "coverage_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/coverage_map.json",
+        "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+      },
+      "common_criteria": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/common_criteria.json",
+        "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+      },
+      "source_access": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/source_access.json",
+        "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+      },
+      "output_contract": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/output_contract.md",
+        "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+      },
+      "important_checks": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/important_checks.json",
+        "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75"
+      }
+    },
+    "anonymous_output": {
+      "alias": "A",
+      "designated_final": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+        "sha256": "74451358445cc270646e76d6b6ccbb1c9ea33aea67ca4bfb8f1cdb94b2f81abb"
+      },
+      "source_catalog": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/outputs/A/final/sources.json",
+        "sha256": "e7400d1ccc17e3606272795238087ff0ef945497ad446665a81178614b6173ac"
+      },
+      "witness_catalog": null,
+      "leads": null,
+      "additional_anonymous_evidence": [],
+      "missing_catalogs": [
+        "final/witnesses.json",
+        "final/leads.json"
+      ]
+    },
+    "neutral_integrity_proof": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/integrity-proof.json",
+      "sha256": "973f940afb8b79c790fe1adae3e0e585b86a5d7211fe8b546d815beb6246cf99"
+    }
+  },
+  "blinding": {
+    "identity_known_before_judgment": true,
+    "hints": [
+      "Task reservation named I05 and Luna.",
+      "Ops exact freeze path exposed control-recovery lineage.",
+      "Unsolicited pre-source operations message exposed treatment terminal failure/control critic completion, elapsed seconds and Goal counts; not used as semantic evidence.",
+      "Proposal line3/source catalog stage repeats explicit named control-recovery stage."
+    ],
+    "phase2_history_alias_economics_not_opened": true,
+    "perfect_blinding_claimed": false
+  },
+  "anonymous_output_results": [
+    {
+      "alias": "A",
+      "decision": "FAIL",
+      "phase1_decision": "FAIL",
+      "assessment_state": "partial",
+      "full_pass_eligible": false,
+      "obligations": [
+        {
+          "obligation_id": "A01",
+          "actual_requirement": "Minimum import/inspect/navigation/annotation/save/reopen/export workflow, with preservation of originals and bounded support scope",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "130-142"
+            }
+          ],
+          "reason": "The planned minimum workflow, preserved originals, safe refusals, reopen and three export lanes are explicit."
+        },
+        {
+          "obligation_id": "A02",
+          "actual_requirement": "Explicit axis, coordinate, orientation, physical calibration and annotation scope contract; transformations and units qualified",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "37-47,72-96"
+            }
+          ],
+          "reason": "Principal axis/calibration and named-coordinate facts verified; all proposed geometry/inverse/conversion edge cases not audited."
+        },
+        {
+          "obligation_id": "A03",
+          "actual_requirement": "Distinguish intensity display from sample mutation and recorded resampling; exported annotation/derived-image meaning",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "90-100,134-142"
+            }
+          ],
+          "reason": "Display is separate planned state; transformed assets and export loss are explicit. No implementation/roundtrip claimed; all operation cases not audited."
+        },
+        {
+          "obligation_id": "A04",
+          "actual_requirement": "Large-data access/cache responsiveness, progress/cancel and investigated resource target without unsupported performance promises",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "23-29,122-126"
+            }
+          ],
+          "reason": "Regional/lazy mechanisms verified and resource/latency numbers explicitly proposed. Composed memory/scheduling feasibility not fully assessed."
+        },
+        {
+          "obligation_id": "A05",
+          "actual_requirement": "Project identity, portability/external-path relocation, metadata provenance and save/recovery behavior",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "102-120,133"
+            }
+          ],
+          "reason": "Identity, linked-source mutation limits, bundle/reference tradeoffs and staged recovery are explained; cross-resource crash/durability cases not fully assessed."
+        },
+        {
+          "obligation_id": "A06",
+          "actual_requirement": "Usable annotation styles, undo/redo, keyboard/accessibility and legible status/unsupported-input feedback",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "94-100,132,163"
+            }
+          ],
+          "reason": "Styles, annotation undo/redo, keyboard operability and legible/non-color-only feedback are planned explicitly."
+        },
+        {
+          "obligation_id": "A07",
+          "actual_requirement": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "23-25,31,49-62"
+            }
+          ],
+          "reason": "Distinct TIFF regional-reader and viewer layer/slicing mechanisms independently verified; SQLite provides an additional storage precedent."
+        },
+        {
+          "obligation_id": "A08",
+          "actual_requirement": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "27"
+            }
+          ],
+          "reason": "Issue #7085, PR #8256 code/test patch, merge record and selected v0.6.5 implementation/test form a real applicable chain. Narrow test scope is preserved."
+        },
+        {
+          "obligation_id": "A09",
+          "actual_requirement": "At least one useful opportunity and one plausible alternative; optional adoption distinguished from requirements",
+          "assessment_state": "complete",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "144-150"
+            }
+          ],
+          "reason": "NGFF-label opportunity and bounded conversion alternative are separated from adoption; unsupported integration stays open."
+        },
+        {
+          "obligation_id": "A10",
+          "actual_requirement": "Coherent component/architecture choice or bounded alternatives with critical dependencies and support/validation limits",
+          "assessment_state": "partial",
+          "finding": "supported",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "9-13,49-70,165"
+            }
+          ],
+          "reason": "Architecture is coherent at proposal level and dependency/support gates are explicit; all adapter feasibility claims not fully assessed."
+        },
+        {
+          "obligation_id": "A11",
+          "actual_requirement": "Consequential numerical/coordinate/storage/export checks discriminate claimed behavior; executed/proposed labels and component/full-app scope are honest",
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "152-163"
+            }
+          ],
+          "reason": "W1 and W7 are claimed executed, but no witness inventory or code/input/results appears in selected Phase1 packet. Actual execution reserved for Phase2; no false-run inference."
+        },
+        {
+          "obligation_id": "A12",
+          "actual_requirement": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and keeps unresolved leads separately accessible",
+          "assessment_state": "partial",
+          "finding": "contradicted",
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "150,152-154,167-179"
+            }
+          ],
+          "reason": "Actual selected final lacks required witnesses.json and leads.json; separately accessible inventories asserted/required are not delivered. Historical preservation remains unassessed."
+        }
+      ],
+      "consequential_claims": [
+        {
+          "claim_id": "C01",
+          "claim": "Candidate package baseline and dependency metadata are plausible but unresolved",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "9-13,53-62"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S3",
+            "S8"
+          ],
+          "reason": "Release/dependency metadata matches the stated version boundary; no integrated lock or performance is asserted."
+        },
+        {
+          "claim_id": "C02",
+          "claim": "OME-NGFF v0.4 dimensionality/axis order and dataset transform constraints",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "19,38"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S1"
+          ],
+          "reason": "Specified dimension/order and scale-plus-optional-translation rules match the actual v0.4 text. Custom-role refusal is a narrower product boundary."
+        },
+        {
+          "claim_id": "C03",
+          "claim": "NGFF standard metadata cannot encode arbitrary affine and label source link is optional",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "19,140,146"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S1"
+          ],
+          "reason": "The cited transform types exclude rotation/shear; label source/image fields are optional. Sidecar/interchange qualification is correctly scoped."
+        },
+        {
+          "claim_id": "C04",
+          "claim": "OME-TIFF TiffData and DimensionOrder govern plane assignment",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "21,37,45"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S2"
+          ],
+          "reason": "Primary specification allows explicit assignments overriding rasterization; page number alone is insufficient."
+        },
+        {
+          "claim_id": "C05",
+          "claim": "Pinned tifffile documentation supplies regional Zarr2/Dask access and limits",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "23,54,62"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S3"
+          ],
+          "reason": "Actual release examples and compatibility notes support the reader mechanism and stated exclusions; they do not prove application resources."
+        },
+        {
+          "claim_id": "C06",
+          "claim": "Pinned napari wraps direct Zarr slicing with Dask and propagates split metadata",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "25,60"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S4"
+          ],
+          "reason": "Actual selected-tag functions inspected, including channel metadata and split_rgb route."
+        },
+        {
+          "claim_id": "C07",
+          "claim": "Real issue/fix/test chain applies to selected napari tag with narrow coverage",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "27"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S4",
+            "S5",
+            "S6",
+            "S6-related",
+            "S7",
+            "S7-related"
+          ],
+          "reason": "Patch commits, issue association, merge and tagged source/test match. No broad affine/persistence/export result inferred."
+        },
+        {
+          "claim_id": "C08",
+          "claim": "Issue9515 is an open version-specific risk report, not proof of this stack or repair",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "29"
+          },
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "S9",
+            "S9-related"
+          ],
+          "reason": "Causal caution is sound. Minor precision: environment header says0.9.1 while plugin entry says0.6.1rc1.dev1; proposal abbreviates the latter as displayed environment."
+        },
+        {
+          "claim_id": "C09",
+          "claim": "SQLite recovery is conditional and does not cover external pixels/shared storage",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "31,56,116-120"
+          },
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "S10",
+            "S12"
+          ],
+          "reason": "Local editing and separate-resource limitations are explicit. FULL rollback-mode power-loss durability remains filesystem-dependent; selected OS qualification is unexecuted."
+        },
+        {
+          "claim_id": "C10",
+          "claim": "OME pixel-size/timing/stage fields have distinct meanings and defaults",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "45-47,86"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S11"
+          ],
+          "reason": "Actual schema confirms default units and per-plane field meanings; no universal lab affine is promised."
+        },
+        {
+          "claim_id": "C11",
+          "claim": "Named sample-center source/derived coordinate and annotation contract",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "72-96"
+          },
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Reviewed as a proposed application contract, not a library fact. All projection/resampling/inverse/2D-embedding edge cases remain unassessed."
+        },
+        {
+          "claim_id": "C12",
+          "claim": "Window/level display is chosen state separate from sample mutation",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "98-100"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Formula defines the product mapping; no existing implementation success is asserted. Unexecuted tests are retained."
+        },
+        {
+          "claim_id": "C13",
+          "claim": "Source identity, tree hashing and portable/reference relocation semantics",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "104-112"
+          },
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Plan explicitly conditions strong identity on snapshots/copies and flags mutable links. Full algorithm/race audit not performed."
+        },
+        {
+          "claim_id": "C14",
+          "claim": "Staged artifacts plus local DB pointers support proposed recovery",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "114-120,142"
+          },
+          "assessment_state": "partial",
+          "finding": "unresolved",
+          "source_ids": [
+            "S10",
+            "S12"
+          ],
+          "reason": "Logical crash states are described. Full target filesystem durability/locking and two-resource implementation remains unqualified, as the proposal acknowledges."
+        },
+        {
+          "claim_id": "C15",
+          "claim": "Cache/concurrency/latency numbers are proposed qualification targets",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "124-126"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S3",
+            "S4",
+            "S9"
+          ],
+          "reason": "No measured 3GB/RSS/latency result is claimed; actual whole-app feasibility remains unassessed."
+        },
+        {
+          "claim_id": "C16",
+          "claim": "Styles, undo/redo, keyboard/error/progress behavior are minimum plan requirements",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "94-100,130-134,163"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [],
+          "reason": "Required planned behavior is covered; application build is not required by the brief."
+        },
+        {
+          "claim_id": "C17",
+          "claim": "Table/overlay/derived export meaning and loss are explicit",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "134-142"
+          },
+          "assessment_state": "partial",
+          "finding": "supported",
+          "source_ids": [
+            "S1"
+          ],
+          "reason": "Required export lanes and loss reports are present; all numerical/roundtrip cases remain unassessed."
+        },
+        {
+          "claim_id": "C18",
+          "claim": "Useful opportunity, conversion alternative and deferred leads are optional",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "144-150"
+          },
+          "assessment_state": "complete",
+          "finding": "supported",
+          "source_ids": [
+            "S1"
+          ],
+          "reason": "Required research lanes are covered without claiming an unpinned conversion integration."
+        },
+        {
+          "claim_id": "C19",
+          "claim": "W1 and W7 are candidate-executed consequential checks",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "152-154"
+          },
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Labels are actual claims only; actual receipt/code/input/expected/stdout/stderr/exit and scope not yet opened."
+        },
+        {
+          "claim_id": "C20",
+          "claim": "Companion witness inventory and separately accessible leads are delivered",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "150,154"
+          },
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [],
+          "reason": "Positive final freeze/integrity proof enumerates only proposal and source catalog; required witness/leads files are absent."
+        },
+        {
+          "claim_id": "C21",
+          "claim": "Source catalog records valid exact response-body SHA256 pins",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "169-174; sources.json109-110"
+          },
+          "assessment_state": "complete",
+          "finding": "contradicted",
+          "source_ids": [
+            "S5"
+          ],
+          "reason": "S5 catalog sha256 has32 hex digits and disagrees with the64-digit fetched/body-guide hash. Tagged test itself is real and body guide gives the correct hash."
+        },
+        {
+          "claim_id": "C22",
+          "claim": "Current final preserves supported history while correcting actual prior errors",
+          "output_locator": {
+            "artifact": "A/designated_final",
+            "lines": "whole final"
+          },
+          "assessment_state": "unassessed",
+          "finding": "unresolved",
+          "source_ids": [],
+          "reason": "Current source conditions assessed; same-lineage prior/critique history deliberately unopened until frozen judgment."
+        }
+      ],
+      "dimensions": [
+        {
+          "id": "Q1",
+          "name": "Required question and plan-obligation coverage",
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A01",
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A06",
+            "A09",
+            "A10",
+            "A12"
+          ],
+          "finding": "Required planned coverage broadly present, with incomplete final delivery."
+        },
+        {
+          "id": "Q2",
+          "name": "Correct source interpretation, version, conditions, normative force and applicability",
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A07",
+            "A08",
+            "A10",
+            "A11",
+            "A12"
+          ],
+          "finding": "Principal source/version/condition claims verified; local pin/precision defects and remaining scope explicit."
+        },
+        {
+          "id": "Q3",
+          "name": "Justified inference, component choice and plan consequences",
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A01",
+            "A02",
+            "A03",
+            "A04",
+            "A05",
+            "A06",
+            "A07",
+            "A08",
+            "A09",
+            "A10"
+          ],
+          "finding": "Choices distinguished from facts and composed-stack qualification left open; full consequences not audited."
+        },
+        {
+          "id": "Q4",
+          "name": "Verified useful discovery, alternatives, failures and breadth",
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A07",
+            "A08",
+            "A09"
+          ],
+          "finding": "Distinct useful precedents, actual failure chain, opportunity and alternative established."
+        },
+        {
+          "id": "Q5",
+          "name": "Correctness and scope of executed witnesses and proposed validation",
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A02",
+            "A03",
+            "A08",
+            "A11"
+          ],
+          "finding": "Narrow source regression scope respected; actual W1/W7 execution and full proposed-check expectations unassessed."
+        },
+        {
+          "id": "Q6",
+          "name": "Supported semantic preservation and no new consequential errors",
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A12"
+          ],
+          "finding": "Current valid conditions preserved; historical preservation unassessed."
+        },
+        {
+          "id": "Q7",
+          "name": "Honest uncertainty, scope/refusal and critical dependencies",
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A01",
+            "A04",
+            "A05",
+            "A09",
+            "A10",
+            "A11",
+            "A12"
+          ],
+          "finding": "Support/resource/identity/interchange uncertainty is substantially explicit."
+        },
+        {
+          "id": "Q8",
+          "name": "Reproducible final delivery; economics and execution evidence reported separately",
+          "assessment_state": "partial",
+          "obligation_ids": [
+            "A11",
+            "A12"
+          ],
+          "finding": "Required companion inventories missing; actual execution/economics deferred."
+        }
+      ],
+      "supported_findings_delivered": [
+        "Applicable real transform-loss issue/fix/regression chain with correctly limited test scope.",
+        "Independent TIFF-region and viewer-layer mechanisms plus separate storage precedent.",
+        "Correct principal NGFF/OME calibration and transform boundaries.",
+        "Explicit source/derived identity, mutable-link assumptions and export loss reporting.",
+        "Minimum workflow/usability and qualified resource targets covered.",
+        "Useful mask interchange opportunity and honest unpinned conversion alternative preserved."
+      ],
+      "defects": [
+        {
+          "defect_id": "P2-D01",
+          "severity": "major",
+          "kind": "omission",
+          "obligation_ids": [
+            "A11",
+            "A12"
+          ],
+          "claim_ids": [
+            "C19",
+            "C20"
+          ],
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "150,152-154"
+            }
+          ],
+          "source_ids": [],
+          "reason": "The actual output contract requires final/witnesses.json and final/leads.json. The positive selected final delivers neither, despite claiming a companion witness inventory and two executed checks. This is incomplete reproducible final delivery; it does not prove the two checks were never executed. Required procedures/results and separate lead access cannot be recovered from the standalone selected final.",
+          "screen_decisive": true,
+          "evidence": [
+            "dispatch anonymous_outputs[0].missing_catalogs",
+            "integrity-proof.json copied_artifact_count=2",
+            "output_contract task pin"
+          ]
+        },
+        {
+          "defect_id": "P2-D02",
+          "severity": "minor",
+          "kind": "error",
+          "obligation_ids": [
+            "A12"
+          ],
+          "claim_ids": [
+            "C21"
+          ],
+          "output_locators": [
+            {
+              "artifact": "A/source_catalog",
+              "lines": "109-110"
+            },
+            {
+              "artifact": "A/designated_final",
+              "lines": "174"
+            }
+          ],
+          "source_ids": [
+            "S5"
+          ],
+          "reason": "S5 capture path/SHA256 uses a32-hex identifier instead of the64-hex response-body digest. Independently retrieved tagged test hashes to3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e, also correctly printed in the proposal. Local catalog reproducibility defect, not a fabricated test chain.",
+          "screen_decisive": false
+        },
+        {
+          "defect_id": "P2-D03",
+          "severity": "minor",
+          "kind": "error",
+          "obligation_ids": [
+            "A07",
+            "A12"
+          ],
+          "claim_ids": [
+            "C08"
+          ],
+          "output_locators": [
+            {
+              "artifact": "A/designated_final",
+              "lines": "29"
+            },
+            {
+              "artifact": "A/source_catalog",
+              "lines": "230"
+            }
+          ],
+          "source_ids": [
+            "S9"
+          ],
+          "reason": "The primary issue Environment header names napari0.9.1; the plugin entry names0.6.1rc1.dev1. Final abbreviates only the plugin value as the environment. Neither is the selected0.6.5 stack, so the cautious performance inference remains valid.",
+          "screen_decisive": false
+        }
+      ],
+      "witnesses": [
+        {
+          "witness_id": "W1",
+          "execution_label": "candidate_executed",
+          "receipt_refs": [],
+          "assessment_state": "unassessed",
+          "finding": "Final claims candidate execution; no actual receipt opened and no credit yet."
+        },
+        {
+          "witness_id": "W7",
+          "execution_label": "candidate_executed",
+          "receipt_refs": [],
+          "assessment_state": "unassessed",
+          "finding": "Final claims candidate execution; no actual receipt opened and no credit yet."
+        }
+      ],
+      "remaining_unassessed": [
+        "Actual W1/W7 code/input/independent expected values/stdout/stderr/exit and failed executions.",
+        "Same-lineage method uptake and historical preservation.",
+        "Full coordinate/projection/resampling/inverse/embedding edge-case correctness.",
+        "Full tree-hash race/collision and two-resource durability/crash-case consequences.",
+        "Complete composed-reader/viewer buffer/scheduling feasibility and integration qualification.",
+        "Any further granular consequential implementation claims within those clusters."
+      ],
+      "critical_dependencies": [
+        {
+          "dependency": "Integrated candidate environment, codecs/Qt/OS packaging",
+          "state": "correctly qualified release gate, not verified"
+        },
+        {
+          "dependency": "Mutable linked source identity and target filesystem durability",
+          "state": "conditional limits disclosed; complete audit unassessed"
+        },
+        {
+          "dependency": "Downstream full-affine sidecar support",
+          "state": "explicitly unknown; standard-only loss/derived resampling alternative acknowledged"
+        }
+      ],
+      "whole_case_pass_basis": null
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "A-P1",
+      "assessment_state": "complete",
+      "finding": "supported",
+      "reason": "Two distinct mechanisms and real applicable issue/fix/tagged-test chain verified."
+    },
+    {
+      "check_id": "A-P2",
+      "assessment_state": "partial",
+      "finding": "supported",
+      "reason": "Principal pinned-source behavior/calibration/transform claims verified; full proposed coordinate/storage/adapter consequences remain unassessed."
+    },
+    {
+      "check_id": "A-P3",
+      "assessment_state": "partial",
+      "finding": "unresolved",
+      "reason": "All current execution labels inspected: W1/W7 claimed run; others proposed. Actual run evidence is deferred, not inferred."
+    },
+    {
+      "check_id": "A-P4",
+      "assessment_state": "partial",
+      "finding": "contradicted",
+      "reason": "Missing required inventories establish final-delivery failure; valid source conditions retained. History-dependent preservation unassessed."
+    },
+    {
+      "check_id": "A-P5",
+      "assessment_state": "complete",
+      "finding": "supported",
+      "reason": "Same minimum workflow/resource/portability/recovery/usability/opportunity/alternative coverage present at proposal level, without optional-adoption requirement."
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "S1",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "candidate_capture_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "pin": "OME-NGFF 0.4",
+      "retrieved_utc": "2026-10-06T00:00:58.510949Z",
+      "status": 200,
+      "response_url": "https://ngff.openmicroscopy.org/0.4/",
+      "response_bytes": 163120,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S1.body",
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "capture_hash_matches_candidate": true,
+      "locator": "Sections 2, 3.1, 3.3-3.7; normalized text lines 130-133,225-232,326-346,448-481",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S2",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "candidate_capture_sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+      "pin": "OME Model documentation 6.2.2",
+      "retrieved_utc": "2026-10-06T00:00:58.512850Z",
+      "status": 200,
+      "response_url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "response_bytes": 48745,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S2.body",
+      "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+      "capture_hash_matches_candidate": true,
+      "locator": "DimensionOrder and TiffData; normalized text lines 57-107,199-227,230-250",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S3",
+      "url": "https://pypi.org/pypi/tifffile/2025.5.10/json",
+      "candidate_capture_sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+      "pin": "tifffile==2025.5.10",
+      "retrieved_utc": "2026-10-06T00:00:58.514136Z",
+      "status": 200,
+      "response_url": "https://pypi.org/pypi/tifffile/2025.5.10/json",
+      "response_bytes": 34722,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S3.body",
+      "sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+      "capture_hash_matches_candidate": true,
+      "locator": "Release info.version and description Requirements/Notes/examples; description lines 79-80,210-214,663-681",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "candidate_capture_sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "pin": "napari tag v0.6.5",
+      "retrieved_utc": "2026-10-06T00:00:58.515275Z",
+      "status": 200,
+      "response_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "response_bytes": 15402,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S4.body",
+      "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "capture_hash_matches_candidate": true,
+      "locator": "slice_from_axis lines 20-55; split_channels 58-180; split_rgb 269-292 at v0.6.5",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S5",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "candidate_capture_sha256": "3441d184e4ad44c1878282967bb655c4",
+      "pin": "napari tag v0.6.5; regression associated with PR #8256",
+      "retrieved_utc": "2026-10-06T00:00:58.516584Z",
+      "status": 200,
+      "response_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "response_bytes": 11419,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S5.body",
+      "sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+      "capture_hash_matches_candidate": false,
+      "locator": "test_split_rgb lines 41-71 at v0.6.5",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S6",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085",
+      "candidate_capture_sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+      "pin": "Issue #7085; report against napari 0.4.16.dev1413+ga4fa1fa0; closed 2025-09-26",
+      "retrieved_utc": "2026-10-06T00:00:58.518356Z",
+      "status": 200,
+      "response_url": "https://api.github.com/repos/napari/napari/issues/7085",
+      "response_bytes": 5801,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S6.body",
+      "sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+      "capture_hash_matches_candidate": true,
+      "locator": "Issue #7085 title, report body, environment, closed_at",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S6-related",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085/comments",
+      "candidate_capture_sha256": "aa8c06456dc0f2dce6ec65351ab69be0933d3daa2c19bfee6e31987ba5fb80fa",
+      "pin": "Issue #7085; report against napari 0.4.16.dev1413+ga4fa1fa0; closed 2025-09-26",
+      "retrieved_utc": "2026-10-06T00:00:58.639053Z",
+      "status": 200,
+      "response_url": "https://api.github.com/repos/napari/napari/issues/7085/comments",
+      "response_bytes": 10370,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S6-related.body",
+      "sha256": "aa8c06456dc0f2dce6ec65351ab69be0933d3daa2c19bfee6e31987ba5fb80fa",
+      "capture_hash_matches_candidate": true,
+      "locator": "Issue comments showing initial failing test and PR association",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S7",
+      "url": "https://github.com/napari/napari/pull/8256.patch",
+      "candidate_capture_sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+      "pin": "Code commits 2b51110e65af469863697797921ff12aa668d301, 3f994d36130e5d673ce059a1a0d66fac9cca03b0, 9f262998cbe464e0ec826eae691e487af752658c; merge afd1bb88f296726fe98bc0a94119a51bba6870c4",
+      "retrieved_utc": "2026-10-06T00:00:58.650002Z",
+      "status": 200,
+      "response_url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/8256.patch",
+      "response_bytes": 5042,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S7.body",
+      "sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+      "capture_hash_matches_candidate": true,
+      "locator": "Three code-bearing patch commits, implementation change and added test",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S7-related",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8256",
+      "candidate_capture_sha256": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+      "pin": "Code commits 2b51110e65af469863697797921ff12aa668d301, 3f994d36130e5d673ce059a1a0d66fac9cca03b0, 9f262998cbe464e0ec826eae691e487af752658c; merge afd1bb88f296726fe98bc0a94119a51bba6870c4",
+      "retrieved_utc": "2026-10-06T00:00:58.656066Z",
+      "status": 200,
+      "response_url": "https://api.github.com/repos/napari/napari/pulls/8256",
+      "response_bytes": 20154,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S7-related.body",
+      "sha256": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+      "capture_hash_matches_candidate": true,
+      "locator": "PR body Closes #7085; merged_at; merge_commit_sha; milestone.title",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S8",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/pyproject.toml",
+      "candidate_capture_sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+      "pin": "napari tag v0.6.5",
+      "retrieved_utc": "2026-10-06T00:00:58.755808Z",
+      "status": 200,
+      "response_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/pyproject.toml",
+      "response_bytes": 31495,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S8.body",
+      "sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+      "capture_hash_matches_candidate": true,
+      "locator": "pyproject.toml requires-python line38, dependencies44/69, Qt extras96-109, optional zarr122",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S9",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515",
+      "candidate_capture_sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+      "pin": "Issue #9515, opened 2026-09-16; open as captured 2026-10-05",
+      "retrieved_utc": "2026-10-06T00:00:58.786805Z",
+      "status": 200,
+      "response_url": "https://api.github.com/repos/napari/napari/issues/9515",
+      "response_bytes": 8505,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S9.body",
+      "sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+      "capture_hash_matches_candidate": true,
+      "locator": "Issue #9515 body script and Environment/plugin version blocks; state",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S9-related",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515/comments",
+      "candidate_capture_sha256": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+      "pin": "Issue #9515, opened 2026-09-16; open as captured 2026-10-05",
+      "retrieved_utc": "2026-10-06T00:00:58.795388Z",
+      "status": 200,
+      "response_url": "https://api.github.com/repos/napari/napari/issues/9515/comments",
+      "response_bytes": 14404,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S9-related.body",
+      "sha256": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+      "capture_hash_matches_candidate": true,
+      "locator": "Reporter local-data comment and maintainers request for measurements; no repair/test chain",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S10",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "candidate_capture_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "pin": "Live SQLite documentation captured 2026-10-05; unversioned page",
+      "retrieved_utc": "2026-10-06T00:00:58.896895Z",
+      "status": 200,
+      "response_url": "https://www.sqlite.org/atomiccommit.html",
+      "response_bytes": 77968,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S10.body",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "capture_hash_matches_candidate": true,
+      "locator": "Sections 2-4 and 9.1-9.3; filesystem/VFS/flush assumptions and recovery",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S11",
+      "url": "https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd",
+      "candidate_capture_sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+      "pin": "OME schema release 2016-06; exact captured body hash",
+      "retrieved_utc": "2026-10-06T00:00:58.922870Z",
+      "status": 200,
+      "response_url": "https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd",
+      "response_bytes": 261500,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S11.body",
+      "sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+      "capture_hash_matches_candidate": true,
+      "locator": "OME2016-06 schema lines324-342,432-475,528-589; pixel-size/default-unit and per-plane fields",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    },
+    {
+      "source_id": "S12",
+      "url": "https://www.sqlite.org/pragma.html",
+      "candidate_capture_sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "pin": "Live SQLite documentation captured 2026-10-05; unversioned page",
+      "retrieved_utc": "2026-10-06T00:00:58.961263Z",
+      "status": 200,
+      "response_url": "https://www.sqlite.org/pragma.html",
+      "response_bytes": 139778,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/sources/S12.body",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "capture_hash_matches_candidate": true,
+      "locator": "PRAGMA synchronous; normalized lines1345-1376; unknown pragmas30-32",
+      "evidence_role": "evaluator_retrieved_primary_source",
+      "not_candidate_execution": true
+    }
+  ],
+  "phase2": {
+    "opened": false,
+    "completed": false
+  },
+  "limitations": [
+    "Early decisive final-delivery screen preserves useful supported body content; this is not an exhaustive semantic audit.",
+    "One independent recovery actual final; no comparison with unaffected original or other recovery output.",
+    "Missing catalogs are actual missing artifacts, not evidence of absent execution.",
+    "No candidate repair/research or new candidate/canary run performed."
+  ],
+  "source_ledger": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/source-ledger.json",
+    "sha256": "f0d62e9230697b1596efa2f451278b5e60ce9900bf87fc816378faa4359dd6a1"
+  }
+}

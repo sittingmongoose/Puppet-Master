@@ -1,7 +1,7 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "authentic-imports-and-lifecycle-007",
-  "publication_snapshot_at": "2026-10-05T23:49:15.829086+00:00",
+  "cohort": "locked-recovery-resource-008",
+  "publication_snapshot_at": "2026-10-06T00:28:52.582415+00:00",
   "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
   "research_stages_published": 5,
   "operationally_complete_research_stages": 2,
@@ -37,7 +37,7 @@
   "first_d14_native_metered_tokens": 19152242,
   "first_d14_cancelled_tail_usage": "UNKNOWN",
   "first_d14_semantic_assessment": "NOT_PUBLISHED_IN_THIS_COHORT",
-  "campaign_accounting_snapshot": "accounting/cohort-006/snapshot.safe.json",
+  "campaign_accounting_snapshot": "accounting/cohort-007/snapshot.safe.json",
   "accounting_snapshot_is_live_or_final": false,
   "independent_I02_research_verdicts": [
     "FAIL_SCREEN",
@@ -53,7 +53,7 @@
   "method_winner": null,
   "native_goal_status_source": "execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
   "earlier_accounting_native_goal_status_erratum": "GLM001..003 fields held router statuses; do not infer native Goal from those. Direct saved status evidence separate.",
-  "I01_R001_publication_scope": "Frozen neutral prompts/configs/admission only; no live outputs",
+  "I01_R001_publication_scope": "Frozen current research artifact and independent screen; missing partner/finals remain UNASSESSED",
   "completed_matched_comparison_claim": false,
   "independent_screen_bundles_published": 3,
   "diagnostic_original_boundary_reports_published": 4,
@@ -63,7 +63,7 @@
   "research_stage_count_scope": "Four original I01/I02 published artifact sets plus one R001 available research set; missing R001 partner is a separate attempted stage. Not full campaign attempts/occupancy.",
   "research_stage_operational_count_source": "Per-stage frozen evidence; I01 earlier native-status interpretation is corrected by separate direct status source.",
   "I01_scored_stages_observed_in_phase2": 4,
-  "accounting_snapshot_scope": "37 candidate deployments/29known starts at accounting004 own capture timestamp; later live/retest/recovery outcomes may differ.",
+  "accounting_snapshot_scope": "65 deployments/57 known candidate Goals/161759973 known cache-inclusive tokens plus3 unknown usage rows at accounting007 capture; not final billing or current liveness.",
   "DEC006_import_scope": {
     "neutral_locators": 622,
     "unique_contents": 405,
@@ -95,5 +95,24 @@
     "native_starts": 2
   },
   "original_I01_I02_published_research_artifact_sets": 4,
-  "R001_research_artifact_sets_published": 1
+  "R001_research_artifact_sets_published": 1,
+  "locked_confirmation_prepared": {
+    "pairs": 4,
+    "pipelines": 8,
+    "stages": 22,
+    "native_starts_by_preparer": 0
+  },
+  "development_recovery_prepared": {
+    "slots": 11,
+    "arm_lineages": 20,
+    "stages": 50
+  },
+  "complete_resource_v1_3": "Prospective unstarted symmetric 2304MiB aggregate/swap0; local tests pass; native fit UNKNOWN",
+  "I05_independent_single_final": {
+    "quality": "FAIL_SCREEN",
+    "coverage": "PARTIAL",
+    "full_pipeline_credit": false,
+    "paired_method_effect": "UNASSESSED",
+    "isolated_coordinate_execution": "Confirmed; W1/W7 label binding and earlier history UNASSESSED"
+  }
 }

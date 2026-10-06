@@ -1,0 +1,299 @@
+{
+  "catalog_version": 1,
+  "stage": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+  "evidence_cutoff": "2026-10-05",
+  "sources": [
+    {
+      "id": "S1",
+      "kind": "primary specification",
+      "title": "OME-NGFF specification 0.4",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "OME-NGFF 0.4",
+      "locators": [
+        {"section": "2", "heading": "On-disk format", "anchor": "#on-disk"},
+        {"section": "3.1", "heading": "Axes", "anchor": "#axes-md"},
+        {"section": "3.3", "heading": "Coordinate transformations", "anchor": "#trafo-md"},
+        {"section": "3.4", "heading": "Multiscale images", "anchor": "#multiscale-md"},
+        {"section": "3.5", "heading": "Display settings", "anchor": "#omero-md"},
+        {"section": "3.6", "heading": "Labels", "anchor": "#labels-md"},
+        {"section": "3.7", "heading": "Image labels", "anchor": "#label-md"}
+      ],
+      "capture": {
+        "id": "0171cbba87044524a1c0f23fc544d209",
+        "path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+        "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "captured_at": "2026-10-05T23:38:07.778443+00:00",
+        "response_bytes": 163120,
+        "complete": true
+      },
+      "applicability": "Defines the v0.4/Zarr v2 axis, multiscale, transform, display-hint and integer image-label conventions. Dataset transforms are scale plus optional translation; source.image for image labels is optional. Does not establish a parser implementation or viewer behavior."
+    },
+    {
+      "id": "S2",
+      "kind": "primary specification",
+      "title": "OME-TIFF specification",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "pin": "OME Model documentation 6.2.2",
+      "locators": [
+        {"heading": "OME-TIFF specification", "anchor": "#ome-tiff-specification"},
+        {"heading": "DimensionOrder", "anchor": "#dimensionorder"},
+        {"heading": "The TiffData element", "anchor": "#the-tiffdata-element"},
+        {"heading": "Multi-file OME-TIFF", "anchor": "#multi-file-ome-tiff"}
+      ],
+      "capture": {
+        "id": "10af8019e8534a2fa50076d02db2817b",
+        "path": "public_captures/fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584.body",
+        "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+        "captured_at": "2026-10-05T23:38:25.526092+00:00",
+        "response_bytes": 48745,
+        "complete": true
+      },
+      "applicability": "Defines OME-XML plane-to-IFD assignment and rasterization semantics. Supports the requirement to interpret TiffData and DimensionOrder rather than equate page number with application axes. The proposal qualifies only a one-file subset."
+    },
+    {
+      "id": "S3",
+      "kind": "release metadata and project documentation",
+      "title": "tifffile 2025.5.10 release metadata and description",
+      "url": "https://pypi.org/pypi/tifffile/2025.5.10/json",
+      "pin": "tifffile==2025.5.10",
+      "locators": [
+        {"json_pointer": "/info/version"},
+        {"heading": "Requirements"},
+        {"heading": "Notes"},
+        {"heading": "Use Zarr 2 to read parts of TIFF files"},
+        {"heading": "OME-TIFF"}
+      ],
+      "capture": {
+        "id": "5145e5587ed649fc88dff8b3a9a942ee",
+        "path": "public_captures/d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b.body",
+        "sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+        "captured_at": "2026-10-05T23:38:26.980771+00:00",
+        "response_bytes": 34722,
+        "complete": true
+      },
+      "applicability": "Documents OME-TIFF reading, an aszarr=True regional interface with Zarr 2, and a Dask adapter example. It lists Zarr 2.18.7 as tested and Zarr 3 as incompatible for this path; multi-file pyramidal OME-TIFF is an explicit limitation. Documentation/examples do not prove this application's performance."
+    },
+    {
+      "id": "S4",
+      "kind": "open-source implementation at release tag",
+      "title": "napari stack and channel utilities",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "pin": "napari tag v0.6.5",
+      "locators": [
+        {"symbol": "slice_from_axis"},
+        {"symbol": "split_channels"},
+        {"symbol": "split_rgb"}
+      ],
+      "capture": {
+        "id": "601fa6f9cba74de5ae9f9b4064e848e8",
+        "path": "public_captures/e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572.body",
+        "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+        "captured_at": "2026-10-05T23:38:28.658941+00:00",
+        "response_bytes": 15402,
+        "complete": true
+      },
+      "applicability": "Source shows Dask wrapping of direct Zarr arrays for slicing and metadata propagation through split_channels/split_rgb. It is viewer/layer implementation evidence, not project persistence, complete application fidelity or a memory-bound result."
+    },
+    {
+      "id": "S5",
+      "kind": "regression test at release tag",
+      "title": "napari test_layer_actions.py at v0.6.5",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "pin": "napari tag v0.6.5; regression associated with PR #8256",
+      "locators": [
+        {"test": "test_split_rgb", "assertion": "resulting affine.affine_matrix matches the original"},
+        {"parameters": "no transform, scale, translate, Affine(translate=...)"}
+      ],
+      "capture": {
+        "id": "d6a073e762db40be9035ac1ac688d5c2",
+        "path": "public_captures/3441d184e4ad44c1878282967bb655c4.body",
+        "sha256": "3441d184e4ad44c1878282967bb655c4",
+        "captured_at": "2026-10-05T23:38:30.331275+00:00",
+        "response_bytes": 11419,
+        "complete": true
+      },
+      "applicability": "Regression checks affine matrix equality for identity, scale, translation and an Affine wrapper around translation. It does not assert general affine, rotation/shear, persistence, project reopen or export."
+    },
+    {
+      "id": "S6",
+      "kind": "public issue report and discussion",
+      "title": "napari issue #7085: Split RGB loses affine",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085",
+      "pin": "Issue #7085; report against napari 0.4.16.dev1413+ga4fa1fa0; closed 2025-09-26",
+      "locators": [
+        {"locator": "issue title and opening report"},
+        {"locator": "body environment and reproduction steps"},
+        {"locator": "maintainer discussion in comments"}
+      ],
+      "capture": {
+        "id": "fd46868c646b4437bfb0d1c10cffd5d2",
+        "path": "public_captures/23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3.body",
+        "sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+        "captured_at": "2026-10-05T23:38:31.722638+00:00",
+        "response_bytes": 5801,
+        "complete": true
+      },
+      "related_capture": {
+        "id": "ee264f67427945688f93a6eaae8479bf",
+        "path": "public_captures/aa8c06456dc0f2dce6ec65351ab69be0933d3daa2c19bfee6e31987ba5fb80fa.body",
+        "sha256": "aa8c06456dc0f2dce6ec65351ab69be0933d3daa2c19bfee6e31987ba5fb80fa",
+        "captured_at": "2026-10-05T23:38:33.003000+00:00",
+        "response_bytes": 10370,
+        "complete": true,
+        "url": "https://api.github.com/repos/napari/napari/issues/7085/comments"
+      },
+      "applicability": "Establishes a reported real transform-loss failure and maintainer discussion. Patch and tagged test are separate sources; the issue alone does not prove the repair."
+    },
+    {
+      "id": "S7",
+      "kind": "public fix patch and merge record",
+      "title": "napari PR #8256: handle affine layer metadata when splitting RGB images",
+      "url": "https://github.com/napari/napari/pull/8256.patch",
+      "pin": "Code commits 2b51110e65af469863697797921ff12aa668d301, 3f994d36130e5d673ce059a1a0d66fac9cca03b0, 9f262998cbe464e0ec826eae691e487af752658c; merge afd1bb88f296726fe98bc0a94119a51bba6870c4",
+      "locators": [
+        {"commit": "2b51110e65af469863697797921ff12aa668d301", "change": "switch split_rgb to split_channels and propagate transforms"},
+        {"commit": "3f994d36130e5d673ce059a1a0d66fac9cca03b0", "change": "add scale/translate/affine regression test"},
+        {"commit": "9f262998cbe464e0ec826eae691e487af752658c", "change": "set rgb false in split metadata"},
+        {"merge": "afd1bb88f296726fe98bc0a94119a51bba6870c4", "merged": "2025-09-26", "milestone": "0.6.5"}
+      ],
+      "capture": {
+        "id": "52c9b326dfa647e99a12665c56d4e597",
+        "path": "public_captures/8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df.body",
+        "sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+        "captured_at": "2026-10-05T23:38:34.870070+00:00",
+        "response_bytes": 5042,
+        "complete": true
+      },
+      "related_capture": {
+        "id": "059c365a786e4bacb7fa48a86070f783",
+        "path": "public_captures/d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67.body",
+        "sha256": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+        "captured_at": "2026-10-05T23:38:36.616664+00:00",
+        "response_bytes": 20154,
+        "complete": true,
+        "url": "https://api.github.com/repos/napari/napari/pulls/8256",
+        "locator": "merge commit, merge date, release milestone and PR description"
+      },
+      "applicability": "Patch establishes the code/test changes; PR API establishes merge and milestone; S4/S5 establish selected v0.6.5 tag applicability. Tagged test coverage is narrow and is not application-level persistence/export evidence."
+    },
+    {
+      "id": "S8",
+      "kind": "release dependency metadata",
+      "title": "napari v0.6.5 pyproject.toml",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/pyproject.toml",
+      "pin": "napari tag v0.6.5",
+      "locators": [
+        {"dependency": "dask[array]>=2021.10.0"},
+        {"dependency": "tifffile>=2022.7.28"},
+        {"optional dependency": "zarr>=2.12.0"},
+        {"requires-python": ">=3.10"},
+        {"Qt extras": "PySide2, PySide6, PyQt6, PyQt5"}
+      ],
+      "capture": {
+        "id": "7eebe7e2d1124747947121c069479bfd",
+        "path": "public_captures/b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354.body",
+        "sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+        "captured_at": "2026-10-05T23:38:49.118468+00:00",
+        "response_bytes": 31495,
+        "complete": true
+      },
+      "applicability": "Makes the candidate component pins plausible but does not lock Qt, codecs, SQLite runtime, transitive dependencies, OS packaging or an integrated app."
+    },
+    {
+      "id": "S9",
+      "kind": "open public issue report and comments",
+      "title": "napari issue #9515: multidimensional multiscale Zarr slicing reports over-fetching in 2D display",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515",
+      "pin": "Issue #9515, opened 2026-09-16; open as captured 2026-10-05",
+      "locators": [
+        {"locator": "issue body and reproduction script"},
+        {"locator": "displayed environment version block"},
+        {"locator": "maintainer comments asking for measurement"}
+      ],
+      "capture": {
+        "id": "590f0ede70ca44aca80176e36daae19f",
+        "path": "public_captures/54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6.body",
+        "sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+        "captured_at": "2026-10-05T23:38:38.312052+00:00",
+        "response_bytes": 8505,
+        "complete": true
+      },
+      "related_capture": {
+        "id": "754a9280f43649eb9b49e319dcd01ed6",
+        "path": "public_captures/a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d.body",
+        "sha256": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+        "captured_at": "2026-10-05T23:38:39.655738+00:00",
+        "response_bytes": 14404,
+        "complete": true,
+        "url": "https://api.github.com/repos/napari/napari/issues/9515/comments"
+      },
+      "applicability": "Open, version-specific report: inline reproducer requirements name napari 0.9.1 and Zarr >=3, while the displayed environment says napari 0.6.1rc1.dev1 and Dask 2026.8.0. It is not the candidate 0.6.5/Zarr 2.18.7 stack. No repair history was established; use only to motivate measurement."
+    },
+    {
+      "id": "S10",
+      "kind": "primary technical documentation",
+      "title": "SQLite Atomic Commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": "Live SQLite documentation captured 2026-10-05; unversioned page",
+      "locators": [
+        {"heading": "Hardware Assumptions", "anchor": "#_hardware_assumptions"},
+        {"heading": "Creating a rollback journal file", "anchor": "#_creating_a_rollback_journal_file"},
+        {"heading": "Flushing the rollback journal file to mass storage", "anchor": "#_flushing_the_rollback_journal_file_to_mass_storage"},
+        {"heading": "Deleting the rollback journal", "anchor": "#deleting_the_rollback_journal"},
+        {"heading": "Rollback", "anchor": "#_rollback"},
+        {"heading": "Things that can go wrong", "anchor": "#_things_that_can_go_wrong"}
+      ],
+      "capture": {
+        "id": "2d84ab4df731439e9b143ab728f60971",
+        "path": "public_captures/5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1.body",
+        "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "captured_at": "2026-10-05T23:38:42.559713+00:00",
+        "response_bytes": 77968,
+        "complete": true
+      },
+      "applicability": "Explains atomic commit/recovery under documented filesystem/VFS lock, flush and operation assumptions. The article's rollback-journal treatment is not a shared-storage test and WAL uses a different mechanism."
+    },
+    {
+      "id": "S11",
+      "kind": "primary schema",
+      "title": "OME XML schema 2016-06",
+      "url": "https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd",
+      "pin": "OME schema release 2016-06; exact captured body hash",
+      "locators": [
+        {"element": "Pixels", "attributes": ["PhysicalSizeX/Y/Z", "PhysicalSizeXUnit/YUnit/ZUnit", "TimeIncrement", "TimeIncrementUnit", "SizeX/Y/Z/C/T", "DimensionOrder"]},
+        {"element": "Plane", "attributes": ["TheZ/TheT/TheC", "PositionX/Y/Z", "PositionXUnit/YUnit/ZUnit", "DeltaT", "DeltaTUnit"]},
+        {"documentation": "Pixels notes about TIFF structural values overriding conflicting OME-XML values in readers"}
+      ],
+      "capture": {
+        "id": "a2366170930649a08ae305ffffab4bb0",
+        "path": "public_captures/64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee.body",
+        "sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+        "captured_at": "2026-10-05T23:37:37.730677+00:00",
+        "response_bytes": 261500,
+        "complete": true
+      },
+      "applicability": "Distinguishes pixel-size values and their schema-default units from per-plane stage position and timing fields. Schema defaults need to be distinguished from literal source attributes and parser-effective values. These fields do not alone define a universal oriented lab affine."
+    },
+    {
+      "id": "S12",
+      "kind": "primary technical documentation",
+      "title": "SQLite PRAGMA statements",
+      "url": "https://www.sqlite.org/pragma.html",
+      "pin": "Live SQLite documentation captured 2026-10-05; unversioned page",
+      "locators": [
+        {"heading": "PRAGMA journal_mode", "anchor": "#pragma_journal_mode"},
+        {"heading": "PRAGMA synchronous", "anchor": "#pragma_synchronous"},
+        {"heading": "Unknown pragma behavior", "locator": "Introduction"}
+      ],
+      "capture": {
+        "id": "ee51472f883f416ba8850b308472c826",
+        "path": "public_captures/b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d.body",
+        "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+        "captured_at": "2026-10-05T23:43:04.393404+00:00",
+        "response_bytes": 139778,
+        "complete": true
+      },
+      "applicability": "Documents DELETE journaling and synchronous levels. EXTRA adds a containing-directory sync after rollback-journal unlink in DELETE mode. FULL may not make the latest rollback-journal transaction durable across power loss, depending on the filesystem. PRAGMA readback is important because unknown pragmas may be ignored. Documentation is not a test of this project's runtime/filesystems."
+    }
+  ]
+}

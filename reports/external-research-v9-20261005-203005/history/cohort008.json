@@ -1,0 +1,479 @@
+{
+  "cohort": "locked-recovery-resource-008",
+  "snapshot_at": "2026-10-06T00:21:50.530726+00:00",
+  "sources": [
+    {
+      "source": "supervision/DECISIONS-007.md",
+      "published": "supervision/DECISIONS-007.md",
+      "source_sha256": "dbe929a69ae6ae4d2c9c7706bbfffa2ae598244091496514db11a0f48e03f0d8",
+      "public_sha256": "dbe929a69ae6ae4d2c9c7706bbfffa2ae598244091496514db11a0f48e03f0d8",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "supervision/DECISIONS-007.json",
+      "published": "supervision/DECISIONS-007.json",
+      "source_sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778",
+      "public_sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "supervision/DECISIONS-007-RECIPE-LOCK.json",
+      "published": "supervision/DECISIONS-007-RECIPE-LOCK.json",
+      "source_sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db",
+      "public_sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "supervision/DECISIONS-007-RECOVERY-SELECTION.json",
+      "published": "supervision/DECISIONS-007-RECOVERY-SELECTION.json",
+      "source_sha256": "675f9020644865a7c0361b595187de1ba5833faeba356b07bd1c5a4e0d8cd5de",
+      "public_sha256": "675f9020644865a7c0361b595187de1ba5833faeba356b07bd1c5a4e0d8cd5de",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "supervision/DECISIONS-007-evidence.json",
+      "published": "supervision/DECISIONS-007-evidence.json",
+      "source_sha256": "3911dc0b920c60017db084a34db8c72c7d5f34a050080feaf99f17bca4e4f3f2",
+      "public_sha256": "3911dc0b920c60017db084a34db8c72c7d5f34a050080feaf99f17bca4e4f3f2",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "supervision/DECISIONS-008.md",
+      "published": "supervision/DECISIONS-008.md",
+      "source_sha256": "3794380c904dae2479dc678724c867bebd6d507ef03e936e0b556e826393de73",
+      "public_sha256": "3794380c904dae2479dc678724c867bebd6d507ef03e936e0b556e826393de73",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "supervision/DECISIONS-008.json",
+      "published": "supervision/DECISIONS-008.json",
+      "source_sha256": "944d74c9b2ea236a0f65d98453ab27e4bd53e475907c9490a12c85f5b722132f",
+      "public_sha256": "944d74c9b2ea236a0f65d98453ab27e4bd53e475907c9490a12c85f5b722132f",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "supervision/DECISIONS-008-evidence.json",
+      "published": "supervision/DECISIONS-008-evidence.json",
+      "source_sha256": "99133191b23864b9d807ce6735ce9be0b4c6f2cb0c345e5c08aebdf1ca8d4e95",
+      "public_sha256": "99133191b23864b9d807ce6735ce9be0b4c6f2cb0c345e5c08aebdf1ca8d4e95",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "supervision/DECISIONS-007-008-PUBLICATION.json",
+      "published": "supervision/DECISIONS-007-008-PUBLICATION.json",
+      "source_sha256": "a83bd4c2e35f9ddba1c1a7cdb3f48af89c4ecee3f51fb8af172eeb512cec8327",
+      "public_sha256": "a83bd4c2e35f9ddba1c1a7cdb3f48af89c4ecee3f51fb8af172eeb512cec8327",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/resource_slice.py",
+      "published": "routes/luna/resource-v1.3/resource_slice.py",
+      "source_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "public_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/dynamic_stage_runner.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/dynamic_stage_runner.py",
+      "source_sha256": "1abc05178a843bf3eb8ae4205a11ba41964cd6fdef9293c687ae54a36bebc0c6",
+      "public_sha256": "1abc05178a843bf3eb8ae4205a11ba41964cd6fdef9293c687ae54a36bebc0c6",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/completion_policy.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/completion_policy.py",
+      "source_sha256": "7222abf50cec47416455b9178a5f4e5dec115c0b94f16f1b8ec90057b19030bc",
+      "public_sha256": "7222abf50cec47416455b9178a5f4e5dec115c0b94f16f1b8ec90057b19030bc",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/completion_driver.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/completion_driver.py",
+      "source_sha256": "0d4ad5013a2afbf8e03eb938aea2258269555b24ac2c05b17e52e3c75a102e3f",
+      "public_sha256": "0d4ad5013a2afbf8e03eb938aea2258269555b24ac2c05b17e52e3c75a102e3f",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/projection.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/projection.py",
+      "source_sha256": "1ea8c8c7de7010eb1a183172e2731ea36f97f5fc9235f4437ea4ea20432b81c5",
+      "public_sha256": "1ea8c8c7de7010eb1a183172e2731ea36f97f5fc9235f4437ea4ea20432b81c5",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/resource_host_guard.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/resource_host_guard.py",
+      "source_sha256": "0210b2eb1d8a84b5e43d5eff0548a4b73f2d4103f56944d3afe097f13d0c7c22",
+      "public_sha256": "0210b2eb1d8a84b5e43d5eff0548a4b73f2d4103f56944d3afe097f13d0c7c22",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/resource_native_driver.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/resource_native_driver.py",
+      "source_sha256": "88c951e1823051456f060e0347391517bc607163b8a15478aec2604291b61899",
+      "public_sha256": "88c951e1823051456f060e0347391517bc607163b8a15478aec2604291b61899",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/resource_dynamic_driver.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/resource_dynamic_driver.py",
+      "source_sha256": "737e7dd3f0f0dc7065f386bb2179c80e098e13315c7d16b6d3666d4463078f65",
+      "public_sha256": "737e7dd3f0f0dc7065f386bb2179c80e098e13315c7d16b6d3666d4463078f65",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/resource_client_relay.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/resource_client_relay.py",
+      "source_sha256": "dcdedcb141fa54149fe176447a239505ae74d611f80b57d5b87f34b7ebd78115",
+      "public_sha256": "dcdedcb141fa54149fe176447a239505ae74d611f80b57d5b87f34b7ebd78115",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/resource_tool_release.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/resource_tool_release.py",
+      "source_sha256": "d97b0a242e0794771c837776236cdd4ccf8c9094e0a2640304cff564ad5e8cae",
+      "public_sha256": "d97b0a242e0794771c837776236cdd4ccf8c9094e0a2640304cff564ad5e8cae",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/resource_owned_scope_proof.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/resource_owned_scope_proof.py",
+      "source_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "public_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/test_resource_profile.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/test_resource_profile.py",
+      "source_sha256": "891c29f2720f3f8ffc8653bf005d472e1ca32f462301e1642838a85fdb2d7e86",
+      "public_sha256": "891c29f2720f3f8ffc8653bf005d472e1ca32f462301e1642838a85fdb2d7e86",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/test_resource_relay.py",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/test_resource_relay.py",
+      "source_sha256": "c2994017702a24a70034815702ba9573a77e6aa9e4d13d4cab6a58eb31cd1cf7",
+      "public_sha256": "c2994017702a24a70034815702ba9573a77e6aa9e4d13d4cab6a58eb31cd1cf7",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/RESOURCE_REGRESSION.json",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/RESOURCE_REGRESSION.json",
+      "source_sha256": "c6fb15985cd6e00bbfcc08c3a7300654eb188dcab21abce22e42b5900041983e",
+      "public_sha256": "c6fb15985cd6e00bbfcc08c3a7300654eb188dcab21abce22e42b5900041983e",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/RESOURCE_RELAY_REGRESSION.json",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/RESOURCE_RELAY_REGRESSION.json",
+      "source_sha256": "fbeb367e8df9700b3a251f70f47cd08ac864e0c90693116c919f1c899cb3aefe",
+      "public_sha256": "fbeb367e8df9700b3a251f70f47cd08ac864e0c90693116c919f1c899cb3aefe",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/PRESERVATION.json",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/PRESERVATION.json",
+      "source_sha256": "132994a793a096735bf761c2de1985075e2f1abd8189ceab05409acba4aaac62",
+      "public_sha256": "132994a793a096735bf761c2de1985075e2f1abd8189ceab05409acba4aaac62",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/RESOURCE_CONTRACT.json",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/RESOURCE_CONTRACT.json",
+      "source_sha256": "903f792c57c654d37dd4d0e290bf3c005dd7a3fc7f8442e05fac12c2cdcb8d3f",
+      "public_sha256": "903f792c57c654d37dd4d0e290bf3c005dd7a3fc7f8442e05fac12c2cdcb8d3f",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/README.md",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/README.md",
+      "source_sha256": "05b9e923d89c196349cfe950449638c2e288ff5853b2c54866313c75e654792f",
+      "public_sha256": "05b9e923d89c196349cfe950449638c2e288ff5853b2c54866313c75e654792f",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.3/PIN.json",
+      "published": "routes/luna/resource-v1.3/versions/v1.3/PIN.json",
+      "source_sha256": "721c86a4d742d821ae05d5d910158372f1beb22e65abcee1565ff9c0e1b54227",
+      "public_sha256": "721c86a4d742d821ae05d5d910158372f1beb22e65abcee1565ff9c0e1b54227",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/luna-route/PUBLICATION_CLOSURE_RESOURCE_V1_3.json",
+      "published": "routes/luna/resource-v1.3/PUBLICATION_CLOSURE_RESOURCE_V1_3.json",
+      "source_sha256": "c760dbbabb37d047c46dc62d07a8f080433e3704f25f70aac1a73ea7fb9914f4",
+      "public_sha256": "c760dbbabb37d047c46dc62d07a8f080433e3704f25f70aac1a73ea7fb9914f4",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/config.py",
+      "published": "tools/versions/v1.3/config.py",
+      "source_sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3",
+      "public_sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/execution_server.py",
+      "published": "tools/versions/v1.3/execution_server.py",
+      "source_sha256": "1fc5774bbab9c1a041b7210a00265d0de5575c85372413758f9fd38eb6fc8f83",
+      "public_sha256": "1fc5774bbab9c1a041b7210a00265d0de5575c85372413758f9fd38eb6fc8f83",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/test_tools.py",
+      "published": "tools/versions/v1.3/test_tools.py",
+      "source_sha256": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+      "public_sha256": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/source_capture/boundary.py",
+      "published": "tools/versions/v1.3/source_capture/boundary.py",
+      "source_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "public_sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/source_capture/tool_server.py",
+      "published": "tools/versions/v1.3/source_capture/tool_server.py",
+      "source_sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "public_sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/source_capture/test_source_capture.py",
+      "published": "tools/versions/v1.3/source_capture/test_source_capture.py",
+      "source_sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "public_sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/README.md",
+      "published": "tools/versions/v1.3/README.md",
+      "source_sha256": "3c3bd557d6b2bccd5596d7ed40ca45a0e18fc45afa77d86ab7f2617b27a7dd6a",
+      "public_sha256": "3c3bd557d6b2bccd5596d7ed40ca45a0e18fc45afa77d86ab7f2617b27a7dd6a",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/test_framing.py",
+      "published": "tools/versions/v1.3/test_framing.py",
+      "source_sha256": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+      "public_sha256": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/resource_profile.py",
+      "published": "tools/versions/v1.3/resource_profile.py",
+      "source_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "public_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/resource_gate.py",
+      "published": "tools/versions/v1.3/resource_gate.py",
+      "source_sha256": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96",
+      "public_sha256": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/test_resource.py",
+      "published": "tools/versions/v1.3/test_resource.py",
+      "source_sha256": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67",
+      "public_sha256": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/SOURCE_PINS.json",
+      "published": "tools/versions/v1.3/SOURCE_PINS.json",
+      "source_sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621",
+      "public_sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/VERIFICATION.json",
+      "published": "tools/versions/v1.3/VERIFICATION.json",
+      "source_sha256": "6f66199f6dd9ad07b02107c347cba44ceb3b7ec535cad031386aa4e49093cfa9",
+      "public_sha256": "6f66199f6dd9ad07b02107c347cba44ceb3b7ec535cad031386aa4e49093cfa9",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/tools/versions/v1.3/LOCAL_RESOURCE_PLACEMENT.json",
+      "published": "tools/versions/v1.3/LOCAL_RESOURCE_PLACEMENT.json",
+      "source_sha256": "964851b5692b024133bbf643ab1d7f66ac73b1e80489a938bd8a67ca1eddfbb7",
+      "public_sha256": "964851b5692b024133bbf643ab1d7f66ac73b1e80489a938bd8a67ca1eddfbb7",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/diagnostic-runner/recovery/prepare_confirmations.py",
+      "published": "recovery-preparation/code/recovery/prepare_confirmations.py",
+      "source_sha256": "3873bd7357d5d04ba4c40866c8bdebc5d4afc5c08bea3cc24c86c54decd98969",
+      "public_sha256": "3873bd7357d5d04ba4c40866c8bdebc5d4afc5c08bea3cc24c86c54decd98969",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/diagnostic-runner/recovery/prepare_integrated.py",
+      "published": "recovery-preparation/code/recovery/prepare_integrated.py",
+      "source_sha256": "6e94e492ba5295e0731cc2c658fcd4d147586359d0e263994f39a037cf72eea3",
+      "public_sha256": "6e94e492ba5295e0731cc2c658fcd4d147586359d0e263994f39a037cf72eea3",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/diagnostic-runner/recovery/prepare_integrated_v2.py",
+      "published": "recovery-preparation/code/recovery/prepare_integrated_v2.py",
+      "source_sha256": "5054dd96f47a918937802ff10344c2b5f1168d5e657a683b8054b4ac8b4054df",
+      "public_sha256": "5054dd96f47a918937802ff10344c2b5f1168d5e657a683b8054b4ac8b4054df",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/diagnostic-runner/recovery/test_packets.py",
+      "published": "recovery-preparation/code/recovery/test_packets.py",
+      "source_sha256": "9d8fdd3d6fd1799ee65bd413c3f16c78535dbcbb7c1e3c5434e57c1b1cff2030",
+      "public_sha256": "9d8fdd3d6fd1799ee65bd413c3f16c78535dbcbb7c1e3c5434e57c1b1cff2030",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/diagnostic-runner/recovery/PUBLICATION_SELECTION_005.json",
+      "published": "recovery-preparation/PUBLICATION_SELECTION_005.json",
+      "source_sha256": "3d48ce5e817f5d0da012bf6a6d25f3602d2057bb3bdfa19b1320ff3a034bf870",
+      "public_sha256": "3d48ce5e817f5d0da012bf6a6d25f3602d2057bb3bdfa19b1320ff3a034bf870",
+      "transform": "byte-identical exact owner-frozen positive selection"
+    },
+    {
+      "source": "dev/diagnostic-runner/recovery/PUBLICATION_SELECTION_005.json",
+      "published": "recovery-preparation/LOCKED_RECOVERY_CONFIRMATION_BUNDLE.json",
+      "source_sha256": "3d48ce5e817f5d0da012bf6a6d25f3602d2057bb3bdfa19b1320ff3a034bf870",
+      "transform": "901 pinned neutral/released locators deduplicated; original hashes +path labels; no live runtime workspace trees"
+    }
+  ],
+  "lock_verified": true,
+  "neutral_locator_count": 901,
+  "unique_neutral_contents": 635,
+  "released_brief_count": 2,
+  "original_grades_failures_costs_preserved": true,
+  "no_full_pipeline_or_winner_claim": true,
+  "exclusions": [
+    "Raw source/native bodies, private HOME/auth/db, vendor/catalog/schema bundles, live output workspaces.",
+    "Sealed generator/expected answers/evaluator bodies injected into candidates."
+  ],
+  "additive_accounting": "accounting/cohort-007/PUBLIC_SELECTION.json",
+  "recovery_addendum": "recovery-preparation/PUBLICATION_SELECTION_005_ADDENDUM_01.json",
+  "budget_definition_addendum": "supervision/DECISIONS-007-BUDGET-DEFINITION-ADDENDUM-001.json",
+  "archive": "archive/PARTIAL_ARCHIVE.json",
+  "I05_independent_review_selector_sha256": "b51287da18f7900e10fa44c69a5c4a0b5aea3a18859bc1d2d5a4a72e5879a388",
+  "I05_courier_evidence": [
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/dispatch.json",
+      "source_sha256": "4bea09417d1b53de048e11c7c53e2ca70758966044f41b632f720423b4044e3d",
+      "public_sha256": "1a3c14a8b7357740ec1893a628adeb9b9d423d00d96ebc0da6f950ece8866003",
+      "transform": "LAB_ROOT path labels in JSON"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/integrity-proof.json",
+      "source_sha256": "973f940afb8b79c790fe1adae3e0e585b86a5d7211fe8b546d815beb6246cf99",
+      "public_sha256": "973f940afb8b79c790fe1adae3e0e585b86a5d7211fe8b546d815beb6246cf99",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "source_sha256": "74451358445cc270646e76d6b6ccbb1c9ea33aea67ca4bfb8f1cdb94b2f81abb",
+      "public_sha256": "74451358445cc270646e76d6b6ccbb1c9ea33aea67ca4bfb8f1cdb94b2f81abb",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/outputs/A/final/sources.json",
+      "source_sha256": "e7400d1ccc17e3606272795238087ff0ef945497ad446665a81178614b6173ac",
+      "public_sha256": "e7400d1ccc17e3606272795238087ff0ef945497ad446665a81178614b6173ac",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/task/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/task/common_criteria.json",
+      "source_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "public_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/task/coverage_map.json",
+      "source_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "public_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/task/important_checks.json",
+      "source_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "public_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/task/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/packets/P2-I05-SINGLE-FINAL-001/task/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/code.py",
+      "source_sha256": "45027cbb498cd2672342977c282c4d34b9178854369e4c9c4ccdcef29b29217d",
+      "public_sha256": "45027cbb498cd2672342977c282c4d34b9178854369e4c9c4ccdcef29b29217d",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/data.json",
+      "source_sha256": "8bbf56c7f229dc30f661254b86c30c1e9ecb2b050b93a43ca37cecfd164baaaa",
+      "public_sha256": "8bbf56c7f229dc30f661254b86c30c1e9ecb2b050b93a43ca37cecfd164baaaa",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/execution-facts.json",
+      "source_sha256": "6b25fc93218d8c27688d4c04072753c7efab005b271a4dcb7141b1b16d0ed17d",
+      "public_sha256": "6b25fc93218d8c27688d4c04072753c7efab005b271a4dcb7141b1b16d0ed17d",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/stderr.bin",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/stdout.bin",
+      "source_sha256": "7fbeb94a6f554fd3599e4cea5acee84a6c02a162c76a9e484f19d7617a383048",
+      "public_sha256": "7fbeb94a6f554fd3599e4cea5acee84a6c02a162c76a9e484f19d7617a383048",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/evidence/P2-I05-FINAL-EXECUTION-001/MANIFEST.json",
+      "source_sha256": "5e064d59da1dd6126f4ac92a3470fc37f6a0972e7b2e1c5c2de1bc1090041425",
+      "public_sha256": "5e064d59da1dd6126f4ac92a3470fc37f6a0972e7b2e1c5c2de1bc1090041425",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/A/critique/review-r4-corrected.md",
+      "source_sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+      "public_sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/A/critique/review.md",
+      "source_sha256": "b6af2b724c244bca2f386392f64c32694ccb261743caa8682ea3c24831c805ed",
+      "public_sha256": "b6af2b724c244bca2f386392f64c32694ccb261743caa8682ea3c24831c805ed",
+      "transform": "exact candidate/neutral bytes"
+    },
+    {
+      "published": "frozen-evidence/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/MANIFEST.json",
+      "source_sha256": "cf9b584107a68be0b37c9b0068e47cdd59cee5e73346790347140a9cdc8cd8bd",
+      "public_sha256": "34b459ec8f5050f554475e2ad363494036b642b4b15a40b84b0dd84093418f28",
+      "transform": "LAB_ROOT path labels in JSON"
+    }
+  ]
+}

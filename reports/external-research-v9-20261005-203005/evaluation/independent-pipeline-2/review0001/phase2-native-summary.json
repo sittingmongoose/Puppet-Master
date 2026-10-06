@@ -1,0 +1,125 @@
+{
+  "schema": "er9.eval2-phase2-native-positive-summary.v1",
+  "native_receipt_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+    "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0"
+  },
+  "final_freeze_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/OUTPUT_FREEZE.json",
+    "sha256": "1d338c61bad6f671bd46af1490c5c8f7fa7819f49871018f8cbe34acaa318f50"
+  },
+  "candidate_request": {
+    "model": "gpt-6-luna",
+    "reasoning_effort": "max",
+    "physical_provider_telemetry": "UNKNOWN",
+    "actual_inference_tool_payload": "UNOBSERVED"
+  },
+  "native_goal_id": "01a10e6d-7d6e-7603-9c16-7e60a1a76acd",
+  "host_goal_starts": 1,
+  "native_activation_observed": true,
+  "native_outcome": "HOLD",
+  "native_error_class": "TimeoutError",
+  "native_error": "original native stop reached",
+  "native_goal_status_before_cleanup": "active",
+  "last_saved_goal_status": "paused",
+  "turn_statuses": [
+    {
+      "method": "turn/started",
+      "status": "inProgress"
+    },
+    {
+      "method": "turn/completed",
+      "status": "interrupted"
+    }
+  ],
+  "registry_job_status": "FAILED",
+  "operational_complete": false,
+  "semantic_quality": "independent FAIL_SCREEN; not inferred from native/job status",
+  "native_quiescence": {
+    "native_cgroup_quiet": true,
+    "held_process_groups_absent": true,
+    "client_tool_cgroups_quiet": true,
+    "client_tool_process_groups_absent": true,
+    "execution_units_quiet": true
+  },
+  "native_elapsed_seconds": 585.563808303,
+  "freeze_elapsed_seconds": 585.649430624,
+  "known_usage_totals": {
+    "inputTokens": 5203609,
+    "cachedInputTokens": 4887296,
+    "outputTokens": 59681,
+    "reasoningOutputTokens": 31736,
+    "totalTokens": 5263290
+  },
+  "usage_policy": "Input+output is total; cached input is subset of input and reasoning output is subset of output. Existing Goal/deployment cost reference, not another charge.",
+  "http_attempts": "UNKNOWN",
+  "money_cost": "UNKNOWN",
+  "tool_completed_counts": {
+    "pm_boundary.read_file": 26,
+    "pm_boundary.mechanical": 2,
+    "pm_boundary.public_https_get": 17,
+    "pm_execution.python_execute": 1,
+    "pm_boundary.write_file": 4
+  },
+  "tool_attempt_counts": {
+    "pm_boundary.read_file": 28,
+    "pm_boundary.mechanical": 4,
+    "pm_boundary.public_https_get": 17,
+    "pm_execution.python_execute": 1,
+    "pm_boundary.write_file": 5
+  },
+  "tool_failed_counts": {
+    "pm_boundary.read_file": 2,
+    "pm_boundary.mechanical": 2,
+    "pm_boundary.write_file": 1
+  },
+  "actual_failed_tool_call_receipts": [
+    {
+      "namespace": "pm_boundary",
+      "tool": "read_file",
+      "call_id": "call_f8f44daddf3d49e8aec2f84fc16e18ad",
+      "argument_sha256": "aeb77176b731fd98b02fe906cc97406604022f505b3ac88984966cdaa6c7ebda",
+      "response_sha256": "e7e97dcc1fd4a824af3d240c66405c8e473c3637542eb6984628fe48a2d8c0c7",
+      "response_bytes": 82,
+      "success": false
+    },
+    {
+      "namespace": "pm_boundary",
+      "tool": "mechanical",
+      "call_id": "call_1d48c3cf5add4c6190684d19e1c98dde",
+      "argument_sha256": "54eafb42a1824580f588d10dcda6657e19a6430e669ea0e5edd86896b0e2363b",
+      "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+      "response_bytes": 87,
+      "success": false
+    },
+    {
+      "namespace": "pm_boundary",
+      "tool": "read_file",
+      "call_id": "call_9f7eb55c61dd4675ad7bf4a68679347c",
+      "argument_sha256": "b1677ae441590f4c520575352e644a839343455065074071aeff80539a90f3af",
+      "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+      "response_bytes": 89,
+      "success": false
+    },
+    {
+      "namespace": "pm_boundary",
+      "tool": "write_file",
+      "call_id": "call_a30583d9a87b4b02b430f692bcf8e110",
+      "argument_sha256": "7108c66b0adb70f18c4ffa34e9e2f5d4fd347fb04aedbf2b3f7a40eb91424bda",
+      "response_sha256": "7ab650ca60f66170dccba382b39edf184b394d63941f53428c1e4decead1587c",
+      "response_bytes": 87,
+      "success": false
+    },
+    {
+      "namespace": "pm_boundary",
+      "tool": "mechanical",
+      "call_id": "call_af546cb6077742e391d4f2003beab498",
+      "argument_sha256": "fe6721f1653b2dbf905f225429cff40529da5a2088ce4229932e5860f1fbcce3",
+      "response_sha256": "7ab650ca60f66170dccba382b39edf184b394d63941f53428c1e4decead1587c",
+      "response_bytes": 87,
+      "success": false
+    }
+  ],
+  "failed_tool_response_body_assessment": "UNASSESSED; exact IDs/argument/response hashes and failed status preserved. No cause invented.",
+  "code_execution_scope": "Trusted selected current-final namespace contains one actual execution, independently verified below. Earlier original witness lineage not audited."
+}

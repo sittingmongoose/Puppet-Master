@@ -1,0 +1,225 @@
+{
+  "schema": "er9.eval2-post-judgment-phase2-addendum.v1",
+  "created_utc": "2026-10-06T00:24:03.112934Z",
+  "immutable_phase1_judgment_sha256": "1c58b51987bcadeee4bbfb7358cb074bd668c941d80648fd5dd5f1fe1cff1a07",
+  "phase1_decision_unchanged": "FAIL_SCREEN",
+  "coverage": "PARTIAL",
+  "source_judgment_rewritten": false,
+  "actual_execution_assessments": [
+    {
+      "witness_id": "exec-62cuo0t6",
+      "execution_label": "candidate_executed",
+      "receipt_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/MANIFEST.json",
+        "sha256": "5e064d59da1dd6126f4ac92a3470fc37f6a0972e7b2e1c5c2de1bc1090041425"
+      },
+      "code_sha256": "45027cbb498cd2672342977c282c4d34b9178854369e4c9c4ccdcef29b29217d",
+      "data_sha256": "8bbf56c7f229dc30f661254b86c30c1e9ecb2b050b93a43ca37cecfd164baaaa",
+      "stdout_sha256": "7fbeb94a6f554fd3599e4cea5acee84a6c02a162c76a9e484f19d7617a383048",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "bootstrap_started": true,
+      "cleanup_confirmed": true,
+      "assessment_state": "complete",
+      "finding": "supported in isolated scope",
+      "independent_expected_value_basis": [
+        "For source (14,21), derived x = -0.5*14+7 =0 and derived y =2*21-40 =2.",
+        "Inverse x = -2*0+14 =14 and inverse y =0.5*2+20 =21.",
+        "Source-to-world offset gives (14+10,21+20) =(24,41) micrometres. These are independent direct substitutions, not reliance on passed:true."
+      ],
+      "evaluator_verification_mode": "Independent symbolic/arithmetic derivation; evaluator did not execute candidate code or create a candidate run.",
+      "scope": "One synthetic 2D point, supplied homogeneous maps including reflection/scaling/translation, source-coordinate roundtrip and source-world arithmetic.",
+      "limits": [
+        "No actual image/calibration import, viewer adapter, annotation identity/UUID, persistence, export or full application was exercised.",
+        "No general rotation/shear, near-singularity, large coordinates, resampling or precision envelope established.",
+        "Cleanup stop code5 refers to collected/absent unit, not candidate program failure; actual program exit0 and stderr empty."
+      ],
+      "final_W1_W7_mapping": "UNRESOLVED: final claims W1/W7 but missing witness inventory supplies no authoritative mapping. Corrected critique requests a new coordinate witness; that is consistent with this run but not a complete label binding."
+    }
+  ],
+  "candidate_execution_failure_boundary": {
+    "selected_final_store": "One actual execution exported including code/data/streams/exit; no failed code execution dropped from that selected store.",
+    "same_lineage_critic_store": "Courier metadata-only observation: exact store exists with zero exec-* folders. A standalone enumeration pin was not available at bounded closure; this is not proof about earlier-original W1 or that a run never happened.",
+    "earlier_original_W1": "UNASSESSED; no earlier-original audit or selected actual code/input/results available. Not treated as never executed.",
+    "native_failed_boundary_tools": [
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_f8f44daddf3d49e8aec2f84fc16e18ad",
+        "argument_sha256": "aeb77176b731fd98b02fe906cc97406604022f505b3ac88984966cdaa6c7ebda",
+        "response_sha256": "e7e97dcc1fd4a824af3d240c66405c8e473c3637542eb6984628fe48a2d8c0c7",
+        "response_bytes": 82,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_1d48c3cf5add4c6190684d19e1c98dde",
+        "argument_sha256": "54eafb42a1824580f588d10dcda6657e19a6430e669ea0e5edd86896b0e2363b",
+        "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+        "response_bytes": 87,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_9f7eb55c61dd4675ad7bf4a68679347c",
+        "argument_sha256": "b1677ae441590f4c520575352e644a839343455065074071aeff80539a90f3af",
+        "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+        "response_bytes": 89,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_a30583d9a87b4b02b430f692bcf8e110",
+        "argument_sha256": "7108c66b0adb70f18c4ffa34e9e2f5d4fd347fb04aedbf2b3f7a40eb91424bda",
+        "response_sha256": "7ab650ca60f66170dccba382b39edf184b394d63941f53428c1e4decead1587c",
+        "response_bytes": 87,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_af546cb6077742e391d4f2003beab498",
+        "argument_sha256": "fe6721f1653b2dbf905f225429cff40529da5a2088ce4229932e5860f1fbcce3",
+        "response_sha256": "7ab650ca60f66170dccba382b39edf184b394d63941f53428c1e4decead1587c",
+        "response_bytes": 87,
+        "success": false
+      }
+    ],
+    "failed_response_bodies": "UNASSESSED; failed status, IDs and exact argument/response hashes preserved without inventing causes."
+  },
+  "within_bundle_preservation": [
+    {
+      "finding_id": "P2-H01",
+      "assessment_state": "complete",
+      "finding": "Supported durability correction is not integrated into selected final text.",
+      "severity": "major for preservation/completeness of successful-save durability meaning; no observed target-system data loss",
+      "obligation_ids": [
+        "A05",
+        "A12"
+      ],
+      "current_output_locator": "final/proposal.md116-118",
+      "history_locators": [
+        "critique/review.md39-45",
+        "critique/review-r4-corrected.md39-45"
+      ],
+      "source_ids": [
+        "S12"
+      ],
+      "reason": "The corrected critique replaces DELETE/FULL with DELETE/EXTRA plus PRAGMA readback and states that FULL may lose the latest commit after power loss on some filesystems. Primary documentation independently supports that condition. The selected final still chooses FULL and calls the pointer commit durable, without that specific caveat/readback. Its general OS/filesystem qualification is preserved, so this does not prove corruption or loss on a particular host.",
+      "timeline_limit": "Two selected critique versions are in the same final freeze; no comprehensive earlier-input consumption or whole-method uptake claim is inferred."
+    },
+    {
+      "finding_id": "P2-H02",
+      "assessment_state": "partial",
+      "finding": "Current selected final aligns with useful R1/R2/R3/R5/R6 conditions.",
+      "reason": "Calibration defaults/plane fields, source/derived anchoring, stable-byte identity limits, strict NGFF boundary and narrow napari chain appear in final and match independently inspected primary facts or explicit product choices.",
+      "timeline_limit": "This checks consistency/preservation within selected same-lineage bundle, not an exhaustive diff of unselected original research or a causal method attribution."
+    }
+  ],
+  "method_uptake": {
+    "assessment_state": "partial",
+    "finding": "Only same-final-freeze critique consistency assessed; generic method/recipe uptake and earlier original semantic preservation remain UNASSESSED."
+  },
+  "native_status_assessment": {
+    "requested_family_model": "gpt-6-luna/max",
+    "physical_provider_telemetry": "UNKNOWN",
+    "native_goal_status_before_cleanup": "active",
+    "last_saved_goal_status": "paused",
+    "native_outcome": "HOLD",
+    "registry_job_status": "FAILED",
+    "all_five_quiet_flags": {
+      "native_cgroup_quiet": true,
+      "held_process_groups_absent": true,
+      "client_tool_cgroups_quiet": true,
+      "client_tool_process_groups_absent": true,
+      "execution_units_quiet": true
+    },
+    "quality_status": "Independent FAIL_SCREEN; not inferred from Goal/job/native completion flags."
+  },
+  "remaining_unassessed": [
+    "Earlier original W1 code/input/independent expected values/results.",
+    "Exact delivered W1/W7 witness label mapping.",
+    "Full original-to-final preservation and causal method/recipe uptake.",
+    "Failure response-body causes beyond actual failed native call IDs/hashes.",
+    "All Phase1 remaining geometry/identity/filesystem/composed-stack scope."
+  ],
+  "input_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/P2_I05_SINGLE_FINAL_ALIAS_001.json",
+      "sha256": "4de9a9944020bb13feec2d2f22731644cd2b6377dfdddeafca2587799a466a01",
+      "role": "post-judgment private selected-final alias/freeze/native metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+      "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0",
+      "role": "positively selected actual final native result"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/frozen-output/critique/review-r4-corrected.md",
+      "relative_path": "critique/review-r4-corrected.md",
+      "sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+      "bytes": 15747,
+      "role": "selected same-lineage corrected critique for preservation check"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/MANIFEST.json",
+      "sha256": "5e064d59da1dd6126f4ac92a3470fc37f6a0972e7b2e1c5c2de1bc1090041425",
+      "role": "selected exact final-stage execution files manifest"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/code.py",
+      "sha256": "45027cbb498cd2672342977c282c4d34b9178854369e4c9c4ccdcef29b29217d",
+      "role": "candidate_code",
+      "execution_id": "exec-62cuo0t6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/data.json",
+      "sha256": "8bbf56c7f229dc30f661254b86c30c1e9ecb2b050b93a43ca37cecfd164baaaa",
+      "role": "candidate_input",
+      "execution_id": "exec-62cuo0t6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/stdout.bin",
+      "sha256": "7fbeb94a6f554fd3599e4cea5acee84a6c02a162c76a9e484f19d7617a383048",
+      "role": "candidate_stdout",
+      "execution_id": "exec-62cuo0t6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "candidate_stderr",
+      "execution_id": "exec-62cuo0t6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P2-I05-FINAL-EXECUTION-001/A/exec-62cuo0t6/execution-facts.json",
+      "sha256": "6b25fc93218d8c27688d4c04072753c7efab005b271a4dcb7141b1b16d0ed17d",
+      "role": "candidate_execution_receipt",
+      "execution_id": "exec-62cuo0t6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/MANIFEST.json",
+      "sha256": "cf9b584107a68be0b37c9b0068e47cdd59cee5e73346790347140a9cdc8cd8bd",
+      "role": "selected final lifecycle and exact same-freeze critique manifest"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/A/critique/review.md",
+      "sha256": "b6af2b724c244bca2f386392f64c32694ccb261743caa8682ea3c24831c805ed",
+      "original_sha256": "b6af2b724c244bca2f386392f64c32694ccb261743caa8682ea3c24831c805ed",
+      "role": "selected same-final-freeze critique",
+      "source_relative_path": "critique/review.md",
+      "byte_policy": "exact bytes; no preservation interpretation by courier"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/A/critique/review-r4-corrected.md",
+      "sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+      "original_sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+      "role": "selected same-final-freeze critique",
+      "source_relative_path": "critique/review-r4-corrected.md",
+      "byte_policy": "exact bytes; no preservation interpretation by courier"
+    }
+  ],
+  "assessment_completed_with_partial_coverage": true
+}

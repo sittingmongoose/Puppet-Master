@@ -1,0 +1,16 @@
+{
+  "schema": "er9.single-final-neutral-integrity-proof.v1",
+  "alias": "A",
+  "selected_final_freeze_sha256": "1d338c61bad6f671bd46af1490c5c8f7fa7819f49871018f8cbe34acaa318f50",
+  "final_stage_confirmed": true,
+  "native_quiescence_confirmed": true,
+  "designated_final_selector": "final/proposal.md",
+  "exact_final_sha256": "74451358445cc270646e76d6b6ccbb1c9ea33aea67ca4bfb8f1cdb94b2f81abb",
+  "copied_artifact_count": 2,
+  "source_evidence_count": 0,
+  "missing_catalogs": [
+    "final/witnesses.json",
+    "final/leads.json"
+  ],
+  "identity_native_history_cost_uptake": "withheld until Phase 1 judgment saved"
+}

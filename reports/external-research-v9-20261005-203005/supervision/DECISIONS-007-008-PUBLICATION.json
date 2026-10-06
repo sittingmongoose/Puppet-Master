@@ -1,0 +1,41 @@
+{
+  "schema": "er9.safe_authored_publication_selector.v1",
+  "recorded_utc": "2026-10-06T00:15:30.381710+00:00",
+  "selector_sha256": "22407c33fbcb646bb2a2adc52ae2a671f65391a6279910f19a57ba7aeecbd4ac",
+  "selector_encoding": "UTF-8 compact sorted-key JSON array of path+sha256 in listed order, no newline",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.md",
+      "sha256": "dbe929a69ae6ae4d2c9c7706bbfffa2ae598244091496514db11a0f48e03f0d8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+      "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+      "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECOVERY-SELECTION.json",
+      "sha256": "675f9020644865a7c0361b595187de1ba5833faeba356b07bd1c5a4e0d8cd5de"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-evidence.json",
+      "sha256": "3911dc0b920c60017db084a34db8c72c7d5f34a050080feaf99f17bca4e4f3f2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-008.md",
+      "sha256": "3794380c904dae2479dc678724c867bebd6d507ef03e936e0b556e826393de73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-008.json",
+      "sha256": "944d74c9b2ea236a0f65d98453ab27e4bd53e475907c9490a12c85f5b722132f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-008-evidence.json",
+      "sha256": "99133191b23864b9d807ce6735ce9be0b4c6f2cb0c345e5c08aebdf1ca8d4e95"
+    }
+  ],
+  "excluded": "all candidate bodies/private evaluator content/sealed brief contents/vendor/live/raw captures; external source pointers are provenance only"
+}

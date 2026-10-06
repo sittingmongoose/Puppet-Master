@@ -1,0 +1,46 @@
+{
+  "schema": "er9.confirmation.budget-definition-addendum.v1",
+  "addendum_id": "ER9-DEC007-BUDGET-DEFINITION-001",
+  "author": "/root/max_supervision (GPT-6.1 Sol Max)",
+  "authored_utc": "2026-10-06T00:26:11.923806+00:00",
+  "authority": "Root requested bounded additive definition adjudication; authored and SHA-pinned, no cryptographic key/signature setup",
+  "original_lock": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+    "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db",
+    "bytes_modified": false
+  },
+  "neutral_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/input/ER9/ER9_EXECUTE_HANDOFF.md",
+    "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a",
+    "line": 176,
+    "meaning": "Generic full-pipeline bounds distinguish 2700 critical-path candidate seconds from an outer 5400 occupied-candidate-second ceiling, with finite stage allocations inside them"
+  },
+  "definition": "The original occupied_seconds_per_arm=5400 is the inherited generic outer occupied-work ceiling. It is not a second executable allocation, an extra locked recovery allowance, or an additional stage bound. It numerically equals the locked two-arm pair stage sum, but the handoff ceiling itself is per pipeline; do not silently rewrite the original field as a pair-total measurement.",
+  "concrete_locked_allocation": {
+    "A_seconds": [
+      1200,
+      900,
+      600
+    ],
+    "B_seconds": [
+      1200,
+      1500
+    ],
+    "control_seconds": [
+      1200,
+      900,
+      600
+    ],
+    "one_active_Goal_per_pipeline": true,
+    "stage_allowance_sum_seconds_per_arm": 2700,
+    "stage_allowance_sum_seconds_per_pair": 5400,
+    "unallocated_additional_stage_or_recovery_seconds_from_scalar": 0
+  },
+  "operating_rule": "Execute only the already-frozen stage requests under their exact existing operator/controller clocks, cleanup rules and role caps. The larger outer ceiling supplies no additional time, role, helper, duplicate Goal or recovery assignment. DEC007 continuation fits the scheduled remaining allowances; outside-allowance recovery remains separate lineage and cannot count as locked-arm completion.",
+  "reporting_rule": "Report 2700 as the prescribed sum of stage allowances per arm and 5400 as the prescribed two-arm pair sum. If retaining the original per-arm 5400 field, label it inherited outer occupied-work ceiling, not provisioned stage allowance or observed cost. Measure actual wall/occupied candidate time, startup/service waits, interruptions, cleanup and all failed/recovery costs from receipts; neither budget scalar substitutes for observed cost, and overlapping time is not double-counted.",
+  "recipe_source_criteria_model_tools_and_execution_budgets_changed": false,
+  "original_lock_and_earlier_decisions_unchanged": true,
+  "candidate_or_sealed_brief_bodies_read": false,
+  "native_Goals_or_live_changes_by_supervisor": 0,
+  "new_approval_or_execution_stop_required": false
+}

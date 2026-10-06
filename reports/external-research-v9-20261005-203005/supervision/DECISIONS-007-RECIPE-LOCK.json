@@ -1,0 +1,118 @@
+{
+  "schema": "er9.confirmation.recipe-policy-lock.v1",
+  "lock_id": "ER9-DEC007-LOCK-001",
+  "status": "LOCKED",
+  "locked_utc": "2026-10-05 23:56:07 UTC",
+  "authority": "Root expressly authorized early diagnostic lock and delegated preparation; execution follows terminal initial development outcomes",
+  "policy_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+  "sealed_inputs": {
+    "manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/confirmation/SEALED_MANIFEST.json",
+    "manifest_sha256": "930286d197f82d98eb30666c211cc4940b844029c71c6b0de60c83b101606fe2",
+    "brief_contents_read_before_lock": false,
+    "verify_manifest_and_each_sealed_brief_hash_before_release": true
+  },
+  "common_criteria": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/common_criteria.json",
+    "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+  },
+  "source_access": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+    "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+  },
+  "basis": "Actual tool/delivery failures and partly assessed development uncertainty support prospective diagnostics; no qualified winner or demonstrated bundle interactions",
+  "actual_family": "GLM",
+  "requested_model": "GLM 5.3 Flash",
+  "effort": "max",
+  "actual_native_binding_recorded_before_dispatch": true,
+  "one_account": true,
+  "active_Goals_needed_per_pipeline": 1,
+  "paired_parallelism_optional": 2,
+  "common_treatment_bundle": [
+    "V14 protected 30% discovery-effort instruction inside research; uptake observed, not assumed",
+    "V10 early coherent release/artifact/API binding",
+    "Candidate-authored discriminating execution where useful with matched tools",
+    "V16 complete decision-focused current proposal and catalogs"
+  ],
+  "A": {
+    "label": "three-stage neutral bundle",
+    "stages": [
+      "research",
+      "fresh_critic",
+      "fresh_final_author"
+    ],
+    "seconds": [
+      1200,
+      900,
+      600
+    ]
+  },
+  "B": {
+    "label": "same bundle with V08 two-stage topology",
+    "stages": [
+      "research",
+      "fresh_critic_and_complete_final"
+    ],
+    "seconds": [
+      1200,
+      1500
+    ]
+  },
+  "control_each_pair": {
+    "label": "competent practical ordinary three-stage workflow",
+    "stages": [
+      "research",
+      "fresh_critic",
+      "fresh_final_author"
+    ],
+    "seconds": [
+      1200,
+      900,
+      600
+    ],
+    "same_tools_scope_quality_and_total_allowance": true,
+    "no_forced_padding_or_wrong_versions": true
+  },
+  "critical_path_seconds_per_arm": 2700,
+  "occupied_seconds_per_arm": 5400,
+  "exact_final_artifacts": [
+    "out/final/proposal.md",
+    "out/final/sources.json",
+    "out/final/witnesses.json",
+    "out/final/leads.json"
+  ],
+  "all_candidate_stages_genuine_fresh_native_Goals": true,
+  "full_brief_obligations_and_source_discovery_preserved": true,
+  "independent_implementation_precedents_min": 2,
+  "real_issue_fix_regression_chain_required": true,
+  "private_grades_source_answers_prior_development_or_other_arm_outputs_in_candidate_inputs": false,
+  "code_tool_identity_and_resource_pins": "Freeze actual same admitted configuration/bounds for both arms before dispatch/output; mechanical safety repair cannot change locked source meaning, method factors or allowance",
+  "continuation_policy": "DECISIONS-007 common rule in scheduled remaining fixed allowances; separate outside-allowance recovery never rewrites locked completion",
+  "pairs": [
+    {
+      "pair": "C-01",
+      "recipe": "A",
+      "holdout": "H1"
+    },
+    {
+      "pair": "C-02",
+      "recipe": "A",
+      "holdout": "H2"
+    },
+    {
+      "pair": "C-03",
+      "recipe": "B",
+      "holdout": "H1"
+    },
+    {
+      "pair": "C-04",
+      "recipe": "B",
+      "holdout": "H2"
+    }
+  ],
+  "preparation_and_brief_opening_after_this_lock_authorized": true,
+  "execution_gate": "All initial I-01..I-12 slots have terminal development outcomes, verified by sole ops; recovery accounting separate",
+  "terminal_failures_count_as_delivered_pipelines": false,
+  "all_32_diagnostics_or_quality_PASS_required_before_execution": false,
+  "cancel_or_retune_after_first_confirmation_FAIL": false,
+  "further_root_Go_required": false
+}

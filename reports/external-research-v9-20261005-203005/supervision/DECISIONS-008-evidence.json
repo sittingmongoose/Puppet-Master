@@ -1,0 +1,48 @@
+{
+  "schema": "er9.supervision.evidence.v1",
+  "recorded_utc": "2026-10-06T00:15:30.381710+00:00",
+  "scope": "complete prospective job-memory envelope; local enforcement tests owner-reported, research fit UNKNOWN",
+  "owner_reported_ready": "v1.3 frozen; seven real resource checks and actual source/execution relay integration; zero Codex/Goal",
+  "actual_job_admission_verified_by_supervisor": false,
+  "host_reserve_GiB": 3,
+  "prior_decisions_modified": false,
+  "native_Goals_launched": 0,
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource-feasibility/PROPOSAL.json",
+      "sha256": "53b664277d68cb42b576e4183f0ec06e0aacfe7269e2813d5226a0878a7f88af",
+      "bytes": 3357,
+      "scope": "owner proposal/evidence or source-owner version pin; no candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource-feasibility/EVIDENCE.json",
+      "sha256": "df1509c04676ceee82d86a3cea99b695cb2769af51fefcab23185928d1d8c204",
+      "bytes": 8651,
+      "scope": "owner proposal/evidence or source-owner version pin; no candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/PIN.json",
+      "sha256": "721c86a4d742d821ae05d5d910158372f1beb22e65abcee1565ff9c0e1b54227",
+      "bytes": 4760,
+      "scope": "owner proposal/evidence or source-owner version pin; no candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/RESOURCE_CONTRACT.json",
+      "sha256": "903f792c57c654d37dd4d0e290bf3c005dd7a3fc7f8442e05fac12c2cdcb8d3f",
+      "bytes": 2779,
+      "scope": "owner proposal/evidence or source-owner version pin; no candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-008.md",
+      "sha256": "3794380c904dae2479dc678724c867bebd6d507ef03e936e0b556e826393de73",
+      "bytes": 2732,
+      "scope": "authored prospective approval; implementation readiness remains source/ops custody"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-008.json",
+      "sha256": "944d74c9b2ea236a0f65d98453ab27e4bd53e475907c9490a12c85f5b722132f",
+      "bytes": 1935,
+      "scope": "authored prospective approval; implementation readiness remains source/ops custody"
+    }
+  ]
+}

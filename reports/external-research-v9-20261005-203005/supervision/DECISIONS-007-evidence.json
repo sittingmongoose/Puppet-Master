@@ -1,0 +1,70 @@
+{
+  "schema": "er9.supervision.evidence.v1",
+  "recorded_utc": "2026-10-06T00:15:30.381710+00:00",
+  "policy_locked_utc": "2026-10-05 23:56:07 UTC",
+  "scope": "delivery recovery and diagnostic recipe lock; no candidate bodies, source answers, private evaluator facts or sealed brief contents",
+  "prior_decisions_modified": false,
+  "native_Goals_launched": 0,
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/input/ER9/ER9_EXECUTE_HANDOFF.md",
+      "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a",
+      "bytes": 58697,
+      "scope": "neutral campaign contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+      "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778",
+      "bytes": 4654,
+      "scope": "authored prospective policy, selection or locked recipe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+      "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db",
+      "bytes": 4462,
+      "scope": "authored prospective policy, selection or locked recipe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECOVERY-SELECTION.json",
+      "sha256": "675f9020644865a7c0361b595187de1ba5833faeba356b07bd1c5a4e0d8cd5de",
+      "bytes": 34548,
+      "scope": "authored prospective policy, selection or locked recipe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/DELIVERY_OBJECTIVE_V1.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "bytes": 2275,
+      "scope": "neutral common scope or delivery contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/RESEARCH_INVENTORY_001.json",
+      "sha256": "91542e57632122f393250b9677b956c611715682bfdfc2de7468114942976090",
+      "bytes": 53057,
+      "scope": "neutral role/hash/status metadata only; no candidate bodies or grades"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/confirmation/SEALED_MANIFEST.json",
+      "sha256": "930286d197f82d98eb30666c211cc4940b844029c71c6b0de60c83b101606fe2",
+      "bytes": 1077,
+      "scope": "HASH ONLY; sealed contents not inspected"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521,
+      "scope": "neutral common scope or delivery contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751,
+      "scope": "neutral common scope or delivery contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.md",
+      "sha256": "dbe929a69ae6ae4d2c9c7706bbfffa2ae598244091496514db11a0f48e03f0d8",
+      "bytes": 5987,
+      "scope": "authored explanation of already-frozen policy/lock"
+    }
+  ]
+}

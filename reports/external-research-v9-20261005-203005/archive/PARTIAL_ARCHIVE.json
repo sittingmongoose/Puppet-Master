@@ -1,0 +1,18 @@
+{
+  "scope": "External partial evidence archive only; not complete queue coverage or final cleanup. No raw bodies committed.",
+  "artifact_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/d4d821ac105528766e49adbc390413f3770006df1a184561fadf7168eecf69ba/MANIFEST.json",
+    "sha256": "f519f01268b2d84f525998181267a5b1f7b1454b99ffd79f8938b50b9746e908",
+    "files": 265,
+    "bytes": 1252478
+  },
+  "response_body_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/response-bodies/949aae0057c9c63e84bfa47fbb1b18af9299a731acca9ee46563ffed235db0c5/MANIFEST.json",
+    "sha256": "5b716b0abca338cfa7f420a3c96d346614192ca02ef252cde6a9cd153b4699fc",
+    "files": 86,
+    "bytes": 5956423,
+    "non200": 1,
+    "truncated_or_incomplete": 1
+  },
+  "exclusions": "Raw public bodies stay external; no private/native/auth/vendor/live workspaces selected."
+}

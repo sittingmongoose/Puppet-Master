@@ -1,0 +1,61 @@
+{
+  "schema": "er9.tools.source-pins.v1",
+  "version": "v1.3",
+  "created_utc": "2026-10-06T00:06:01.325748+00:00",
+  "predecessor_source_pins_sha256": "9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34",
+  "files": {
+    "config.py": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3",
+    "execution_server.py": "1fc5774bbab9c1a041b7210a00265d0de5575c85372413758f9fd38eb6fc8f83",
+    "test_tools.py": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+    "source_capture/boundary.py": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+    "source_capture/tool_server.py": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+    "source_capture/test_source_capture.py": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+    "README.md": "3c3bd557d6b2bccd5596d7ed40ca45a0e18fc45afa77d86ab7f2617b27a7dd6a",
+    "test_framing.py": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+    "resource_profile.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+    "resource_gate.py": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96",
+    "test_resource.py": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67"
+  },
+  "copied_upstream": {
+    "boundary.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v8-20261001-2140/dev/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "destination": "source_capture/boundary.py",
+      "byte_identical": true
+    },
+    "tool_server.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v8-20261001-2140/dev/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "destination": "source_capture/tool_server.py",
+      "byte_identical": true
+    },
+    "test_source_capture.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v8-20261001-2140/dev/source-capture-v1/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "destination": "source_capture/test_source_capture.py",
+      "byte_identical": true
+    },
+    "resource_profile.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py",
+      "sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "destination": "resource_profile.py",
+      "byte_identical": true
+    }
+  },
+  "runtime_binaries": {
+    "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+    "/usr/bin/bwrap": "a85b0ff8664c52ab923e0daf7e20cbc394272cd3831cc492ab144105d8091361",
+    "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42",
+    "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab"
+  },
+  "pin_scope": "tool code/config/copied implementation/runtime executables; existing OS standard library is runtime, not newly installed",
+  "changed_files": [
+    "config.py",
+    "execution_server.py",
+    "README.md",
+    "resource_profile.py",
+    "resource_gate.py",
+    "test_resource.py"
+  ],
+  "change_scope": "Trusted optional resource profile config, exact private slice placement and actual aggregate/sandbox cap acknowledgement before candidate bootstrap; no source/tool/candidate privilege expansion."
+}

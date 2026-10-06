@@ -1,0 +1,683 @@
+{
+  "schema": "er9.structural_recovery_selection.v1",
+  "frozen_utc": "2026-10-06T00:02:15.430623+00:00",
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+    "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+  },
+  "inventory_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/RESEARCH_INVENTORY_001.json",
+    "sha256": "91542e57632122f393250b9677b956c611715682bfdfc2de7468114942976090"
+  },
+  "selection": "first compatible same-arm material by chronological native birth; no body/grade selection",
+  "rows": [
+    {
+      "source_slot": "I-01",
+      "arm": "control",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-01-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "3dfadfdbcc76c641b7bcd9ee8b8bdfd706a3235f6c15f3f1567a313246a9268e"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+        "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1"
+      },
+      "original_status_preserved": "COMPLETED",
+      "original_operational_complete_preserved": true,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-01",
+      "arm": "treatment",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-01-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "e84d6ebe150eb9c61797b22182d47d6e9f00f27f3c5e54639afed879ef98e5b5"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-treatment-research-a001/native/receipt.json",
+        "sha256": "eeffaeebf3d0725d20b8fcb902066f5dde0b4faea564b9269df38d27577421e7"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-02",
+      "arm": "control",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-02-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "bddbdfc24437aab9ab72ec3c7b64922cbb56631a00013c70ba2222879613cd36"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-control-research-a001/native/receipt.json",
+        "sha256": "be01c7b65f2fed0c9db16e291c971dbd95ed64d8573a8e5532f3868486535614"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-02",
+      "arm": "treatment",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-02-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "589b950c8f2a763bd04d6e555def07bc002b676297353784b371a53f0f51b3dc"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/native/receipt.json",
+        "sha256": "9ef7870e0f98db079ad14bfe62351534bb001cdcec963a7abc5caae679031df3"
+      },
+      "original_status_preserved": "COMPLETED",
+      "original_operational_complete_preserved": true,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-03",
+      "arm": "control",
+      "action": "FIXED_SAME_ARM_RESEARCH_CONSOLIDATION_OF_MISSING_ROLES_THEN_DECLARED_STAGES",
+      "selected_origin_job_id": "I-03-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-03-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "04cd4dd65d5e3869b122b7234215ba86248a01dbc819ca55efb9ba48b93c9758"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-03-control-research-a001/native/receipt.json",
+        "sha256": "d0a02f152ae031b8fe432d38a86a5704b3d6b66498e59080fe05ee1060d92dd7"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-03",
+      "arm": "treatment",
+      "action": "FIXED_SAME_ARM_RESEARCH_CONSOLIDATION_OF_MISSING_ROLES_THEN_DECLARED_STAGES",
+      "selected_origin_job_id": "I-03-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-03-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "22fc89a600a8bf317dba40da73c31d3893aaae947b9042d67e08936c4254fd01"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-03-treatment-research-a001/native/receipt.json",
+        "sha256": "3460a004e724e604f8e3157b7ac27cf3ac0bbd5802b355475adda4a0bb40f748"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-04",
+      "arm": "control",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-04-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-04-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "b30eac5677873a7aa5f84c3e65ef3e16fc7d5c90522a808e8183f80580919503"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-04-control-research-a001/native/receipt.json",
+        "sha256": "6177120829ca07256c60fcf8f250650337b75f95230b96ad26d99ab1858ed580"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-04",
+      "arm": "treatment",
+      "action": "FRESH_SCOPE_CORRECT_RESEARCH_VERSION_NO_MAP_AS_PROPOSAL",
+      "selected_origin_job_id": "I-04-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-04-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "a0d140c87e36d2e7e5bb0f307331e7cb9e591cc328b00c084e8a64d64aa93418"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-04-treatment-research-a001/native/receipt.json",
+        "sha256": "94b2172548a18009079ceb100c7d8d0307db5cd74ad22c4ed07ab4b30ebfa67b"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": false,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-05",
+      "arm": "control",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-05-LUNA-S1-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "cafac66d87a94e4e6125cb9ed1582938417ee2245a346c69e3c38eb888f397e9"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-control-research-a001/native/result.json",
+        "sha256": "b8d62d167f9a525292f78edd9857e60f3ca2f584f773e20f6615f4e444cd2397"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "L",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-05",
+      "arm": "treatment",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-05-LUNA-S1-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "c66b82e4ec13b8b5a507cab509781d6a71326047e64ee7f78af975e59e8781c5"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-treatment-research-a001/native/result.json",
+        "sha256": "53762d097cbf064a1ff00904bf1065c151edc41ef935f3b44f225a3b6cb8a2ef"
+      },
+      "original_status_preserved": "COMPLETED",
+      "original_operational_complete_preserved": true,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "L",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-06",
+      "arm": "control",
+      "action": "FRESH_SCOPE_CORRECT_RESEARCH_VERSION_NO_MAP_AS_PROPOSAL",
+      "selected_origin_job_id": "I-06-LUNA-S1-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-S1-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "3fcd864f511f89e409218a85535bfc3da2327e611d2e10586270ab3e6ef3b0d3"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-S1-control-research-a001/native/result.json",
+        "sha256": "c0d0bf6bcb4ba8bb5ff4fbe63245e91ade731b897b9ef90c3b600feeb0e69278"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": false,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "L",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-06",
+      "arm": "treatment",
+      "action": "FIXED_SAME_ARM_RESEARCH_CONSOLIDATION_OF_MISSING_ROLES_THEN_DECLARED_STAGES",
+      "selected_origin_job_id": "I-06-LUNA-S1-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-S1-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "365a7c60e77ff01dc7cd95ad3126da7a897108764eb1bd87f4d448423542f433"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-S1-treatment-research-a001/native/result.json",
+        "sha256": "c60f9202874d43af5cb9cbad56b1db51bc7c379159d33889bf4edb1ce4381eac"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "L",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-07",
+      "arm": "control",
+      "action": "FRESH_SCOPE_CORRECT_RESEARCH_VERSION_NO_MAP_AS_PROPOSAL",
+      "selected_origin_job_id": "I-07-LUNA-S1-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-S1-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "35ae9cbb0ff2cffb753f08d9ee9bb1138e4530399a016cca1eac807c7958897d"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-S1-control-research-a001/native/result.json",
+        "sha256": "4745e9d06ee7c893ae5ae6fa87a9f1db53e483e0e840019dd335e8c5c96b7661"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": false,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "L",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-07",
+      "arm": "treatment",
+      "action": "FRESH_SCOPE_CORRECT_RESEARCH_VERSION_NO_MAP_AS_PROPOSAL",
+      "selected_origin_job_id": "I-07-LUNA-S1-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-S1-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "30f32b4665b0d822b3a78d0ce0e6dec031d29c9e8acf367fbec5cb622c58b3b9"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-S1-treatment-research-a001/native/result.json",
+        "sha256": "35dc00749a8666be9b61737e50f89b4a890fd86bbc7c185d8a5a4fed97090c2e"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": false,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "L",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-08",
+      "arm": "control",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-08-LUNA-S1-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-S1-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "1f2a89ab6e65069a746b04e77f6ad524e1e6fcf88a361e116dd59a471764295b"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-S1-control-research-a001/native/result.json",
+        "sha256": "d7c06708ed8144c251c2454989fe3e2f9957865a2ec49eb4a385118763c3f337"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "L",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-08",
+      "arm": "treatment",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-08-LUNA-S1-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-S1-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "9da032685a5a5a12c91f3fa7e93898dc8352c193f176b96d45fae43ef8506693"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-S1-treatment-research-a001/native/result.json",
+        "sha256": "5160efcf4f7603152728ec27bbd815d03c3f20c2dfaad2e0a37d8fc5c577f03d"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "L",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-09",
+      "arm": "control",
+      "action": "FRESH_SCOPE_CORRECT_RESEARCH_VERSION_NO_MAP_AS_PROPOSAL",
+      "selected_origin_job_id": "I-09-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "47df2a678e3c4ba3d51f17f5a02b0b86b7dfc8108abf27252867c76f3894386f"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-control-research-a001/native/receipt.json",
+        "sha256": "37c9d1209ce66c07af25dc13b9afdd8f78ee82ae1e857e75422be9fa2ada73dc"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": false,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-09",
+      "arm": "treatment",
+      "action": "FRESH_SCOPE_CORRECT_RESEARCH_VERSION_NO_MAP_AS_PROPOSAL",
+      "selected_origin_job_id": "I-09-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "7ddd76cf2567c2090ec7ddb85c5536a86a2c03c9349d20b733d379328aa66704"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-treatment-research-a001/native/receipt.json",
+        "sha256": "3678150203795a11e7afb90ed9128871bdf69a038416d7838e9512adf6cd6e6e"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": false,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-10",
+      "arm": "control",
+      "action": "AWAIT_CURRENT_ORIGINAL_TERMINAL_FREEZE_NO_DUPLICATE",
+      "selected_origin_job_id": null,
+      "origin_freeze": null,
+      "origin_native_receipt": null,
+      "original_status_preserved": null,
+      "original_operational_complete_preserved": null,
+      "role_presence": null,
+      "actual_family_code_preserved": null,
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-10",
+      "arm": "treatment",
+      "action": "FIXED_SAME_ARM_RESEARCH_CONSOLIDATION_OF_MISSING_ROLES_THEN_DECLARED_STAGES",
+      "selected_origin_job_id": "I-10-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "37c4586852825afa3fb57ab98068491cd9bcc3650fb382d295fceba082c63f5e"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-treatment-research-a001/native/receipt.json",
+        "sha256": "045b689ef52ec3a6946491e4e45d9771af2594943d9831012f6639e334d00283"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": true,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-11",
+      "arm": "control",
+      "action": "CARRY_RESEARCH_TO_COMPATIBLE_CRITIC_AND_FINAL",
+      "selected_origin_job_id": "I-11-control-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "15198f4d0cbd5986cbe302c420eadd522416c9b56896e9664212f26767bbb228"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-control-research-a001/native/receipt.json",
+        "sha256": "34fac08b0e73bc11dc07680630037f8c7d23e3a936a2b17db8a8b0367ba1808b"
+      },
+      "original_status_preserved": "COMPLETED",
+      "original_operational_complete_preserved": true,
+      "role_presence": {
+        "proposal": true,
+        "sources": true,
+        "witnesses": true,
+        "leads": true
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-11",
+      "arm": "treatment",
+      "action": "FRESH_SCOPE_CORRECT_RESEARCH_VERSION_NO_MAP_AS_PROPOSAL",
+      "selected_origin_job_id": "I-11-treatment-research-a001",
+      "origin_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "2a859764d1a0336abec2afce406578889f38fbb7c8b5ce6aaa3011260e726971"
+      },
+      "origin_native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-treatment-research-a001/native/receipt.json",
+        "sha256": "c2a9df0844126d6dd488f47c0df453946996eb162a01dcf2daf2ec0036f9890a"
+      },
+      "original_status_preserved": "FAILED",
+      "original_operational_complete_preserved": false,
+      "role_presence": {
+        "proposal": false,
+        "sources": false,
+        "witnesses": false,
+        "leads": false
+      },
+      "actual_family_code_preserved": "Z",
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-12",
+      "arm": "control",
+      "action": "AWAIT_CURRENT_ORIGINAL_TERMINAL_FREEZE_NO_DUPLICATE",
+      "selected_origin_job_id": null,
+      "origin_freeze": null,
+      "origin_native_receipt": null,
+      "original_status_preserved": null,
+      "original_operational_complete_preserved": null,
+      "role_presence": null,
+      "actual_family_code_preserved": null,
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    },
+    {
+      "source_slot": "I-12",
+      "arm": "treatment",
+      "action": "AWAIT_CURRENT_ORIGINAL_TERMINAL_FREEZE_NO_DUPLICATE",
+      "selected_origin_job_id": null,
+      "origin_freeze": null,
+      "origin_native_receipt": null,
+      "original_status_preserved": null,
+      "original_operational_complete_preserved": null,
+      "role_presence": null,
+      "actual_family_code_preserved": null,
+      "source_context_and_authentic_activation_verify_before_release": true,
+      "reuse_existing_critic_only_if_genuine_immutable_and_exact_same_arm_ancestry": true,
+      "await_any_active_existing_recovery_no_duplicate": true,
+      "caps": "exact source card stage allocations, no blanket replacement",
+      "new_carrier_applied_retrospectively": false,
+      "fresh_matched_credit_from_recovery": false
+    }
+  ],
+  "genuine_critic_and_final_role_inventory": "sole ops/case checks existing compatible completions before registering work; active original/recovery never duplicated",
+  "I05_specific": "preserve live control final; treatment final absence remains failed. After terminal state, reuse actual compatible completed critic or schedule missing role; actual final4 required. No retroactive carrier credit",
+  "quality_claim": null,
+  "candidate_or_source_bodies_read": false,
+  "native_Goals_launched": 0
+}

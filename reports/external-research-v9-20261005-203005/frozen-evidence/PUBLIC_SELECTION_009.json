@@ -1,0 +1,66 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_009_P2_I05_SINGLE_FINAL",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/dispatch.json",
+      "sha256": "4bea09417d1b53de048e11c7c53e2ca70758966044f41b632f720423b4044e3d",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/dispatch.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/integrity-proof.json",
+      "sha256": "973f940afb8b79c790fe1adae3e0e585b86a5d7211fe8b546d815beb6246cf99",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/integrity-proof.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "sha256": "74451358445cc270646e76d6b6ccbb1c9ea33aea67ca4bfb8f1cdb94b2f81abb",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/outputs/A/final/proposal.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/outputs/A/final/sources.json",
+      "sha256": "e7400d1ccc17e3606272795238087ff0ef945497ad446665a81178614b6173ac",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/outputs/A/final/sources.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/task/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/task/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/coverage_map.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/task/coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/task/important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/task/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P2-I05-SINGLE-FINAL-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/P2-I05-SINGLE-FINAL-001/task/source_access.json"
+    }
+  ],
+  "scope": "one_actual_final_single_lineage; exact6neutraltaskpins+actualdesignatedfinalproposal/sourcecatalog+neutralquiescenceintegrityproof",
+  "missing_catalogs": [
+    "final/witnesses.json",
+    "final/leads.json"
+  ],
+  "exclusions": [
+    "private/**",
+    "history/Goals/nativeI/O/economics/auth/rawsourcebodies/criticdrafts"
+  ],
+  "semantic_assessment": "NOT_PERFORMED_BY_COURIER; not implicitlypairedagainstoriginal"
+}

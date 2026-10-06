@@ -1,0 +1,47 @@
+{
+  "schema": "er9.luna.complete-owned-resource-contract.v1",
+  "profile_id": "luna_complete2304_v1_3",
+  "scope": "wholly unstarted symmetric versions or explicit new lineages only",
+  "aggregate_memory_max_bytes": 2415919104,
+  "aggregate_memory_max_kib": 2359296,
+  "aggregate_memory_swap_max_bytes": 0,
+  "component_memory_max_bytes": {
+    "outer_worker": 805306368,
+    "native": 805306368,
+    "pm_boundary": 268435456,
+    "pm_execution": 268435456,
+    "sandbox": 268435456
+  },
+  "sandbox_limit_scope": "per sandbox; aggregate bounds all concurrent sandbox overlap",
+  "all_retained_helpers": "outer worker cgroup; actual PID placement verified before inference",
+  "shared_control_plane": "short allocation/launch request finishes before inference and remains within protected host reserve",
+  "required_host_reserve_bytes": 3221225472,
+  "fit": "UNKNOWN",
+  "oom_policy": "charge original attempt; never silently retry, increase resources, reset clock or substitute model",
+  "allocation_entrypoint": "dev/luna-route/resource_slice.py allocate",
+  "allocation_inputs": ["label", "original_birth_monotonic_ns", "finite_max_seconds", "fresh_private_profile_json"],
+  "allocation_output": "fresh mode-600 profile with exact unique slice, actual systemd/kernel aggregate proof and original clock",
+  "outer_launcher": {
+    "Slice": "allocated profile.slice_unit",
+    "MemoryMax": 805306368,
+    "MemorySwapMax": 0,
+    "KillMode": "control-group",
+    "RuntimeMaxSec": "remaining time to original_total_stop; no added clock or cleanup extension"
+  },
+  "stage_entrypoint": "dev/luna-route/versions/v1.3/dynamic_stage_runner.py",
+  "stage_required_new_argument": "--resource-profile ABS_ALLOCATED_PROFILE_JSON",
+  "stage_required_same_clock_argument": "--birth-monotonic-ns ORIGINAL_NS",
+  "before_inference_required": [
+    "actual outer worker cap and slice placement",
+    "actual native/source/adapter caps and slice placement",
+    "actual retained guard and systemd-run helper PID placement",
+    "original native_stop not expired"
+  ],
+  "before_python_bootstrap_required": ["actual private aggregate2304MiB/swap0", "actual sandbox256MiB/swap0", "exact sandbox unit cgroup"],
+  "stage_quiet_scope": "native/source/adapter/execution; does not imply outer worker exit or aggregate release",
+  "external_release_entrypoint": "dev/luna-route/resource_slice.py release --profile FILE --out FRESH_JSON",
+  "resource_permit_release_required": ["outer worker terminal", "exact slice stopped", "recursive cgroup populated0 or absent", "aggregate peak/events captured"],
+  "native_goal_starts_for_validation": 0,
+  "model_tools_time_source_semantics": "unchanged from admitted v1.2; no source-quality exemption",
+  "historical_statuses_costs_and_live_bytes": "preserved"
+}

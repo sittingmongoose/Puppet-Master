@@ -1,0 +1,69 @@
+{
+  "schema": "er9.positive-phase2-final-lifecycle-critique.v1",
+  "prepared_utc": "2026-10-06T00:17:39.000574+00:00",
+  "phase1_judgment_sha256": "1c58b51987bcadeee4bbfb7358cb074bd668c941d80648fd5dd5f1fe1cff1a07",
+  "parent_dispatch_sha256": "4bea09417d1b53de048e11c7c53e2ca70758966044f41b632f720423b4044e3d",
+  "final_freeze_sha256": "1d338c61bad6f671bd46af1490c5c8f7fa7819f49871018f8cbe34acaa318f50",
+  "native_receipt_pin": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+    "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0"
+  },
+  "native_saved_structural_projection": {
+    "schema": "er9.luna.client-dynamic-stage.v1.2",
+    "outcome": "HOLD",
+    "native_goal_status_before_cleanup": "active",
+    "elapsed_seconds": 585.563808303,
+    "closed_before_original_total_stop": true,
+    "mechanical_route_pass": false,
+    "metrics": {
+      "goal_status_final": "paused",
+      "native_responses": "UNKNOWN",
+      "native_turns_started": 1,
+      "native_turns_completed": 0,
+      "native_model_response_cap_enforced": false,
+      "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+      "component_outcome": "HOLD"
+    },
+    "turn_statuses": [
+      {
+        "method": "turn/started",
+        "status": "inProgress"
+      },
+      {
+        "method": "turn/completed",
+        "status": "interrupted"
+      }
+    ],
+    "last_saved_goal_status": "paused",
+    "actual_five_quiet_flags": {
+      "native_cgroup_quiet": true,
+      "held_process_groups_absent": true,
+      "client_tool_cgroups_quiet": true,
+      "client_tool_process_groups_absent": true,
+      "execution_units_quiet": true
+    },
+    "registry_job_status": "FAILED",
+    "native_job_sourcequality_distinction": "actual saved Goal status/worker outcome/quality are separate; no completion or quality inference"
+  },
+  "critique_files": [
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/A/critique/review.md",
+      "sha256": "b6af2b724c244bca2f386392f64c32694ccb261743caa8682ea3c24831c805ed",
+      "original_sha256": "b6af2b724c244bca2f386392f64c32694ccb261743caa8682ea3c24831c805ed",
+      "role": "same-lineage frozen critique preservation evidence",
+      "source_relative_path": "critique/review.md",
+      "byte_policy": "exact bytes; no preservation interpretation by courier"
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/phase2/P2-I05-LIFECYCLE-CRITIQUE-001/A/critique/review-r4-corrected.md",
+      "sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+      "original_sha256": "709fdf4b36b1c16b7bcb69c45e16c688d7fb0cca86bab133ecc5ced132e6ca38",
+      "role": "same-lineage frozen critique preservation evidence",
+      "source_relative_path": "critique/review-r4-corrected.md",
+      "byte_policy": "exact bytes; no preservation interpretation by courier"
+    }
+  ],
+  "history_selection": "only two exact named critique artifacts in selected final freeze; no earlier original/candidate research/otheroutputs",
+  "execution_absence_boundary": "one actual final-stage execution found in trusted receipt-only namespace; W1/W7 mapping not inferred; no separate expected-results file invented",
+  "semantic_assessment": "NOT_PERFORMED_BY_COURIER; original judgment immutable"
+}
