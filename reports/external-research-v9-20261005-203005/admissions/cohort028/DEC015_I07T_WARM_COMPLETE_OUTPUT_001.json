@@ -1,0 +1,102 @@
+{
+  "schema": "er9.warm-current-complete-output-positive-selection.v1",
+  "observed_utc": "2026-10-06T06:37:44.805045+00:00",
+  "job_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+  "pair_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "source_slot": "I-07",
+  "arm": "treatment",
+  "stage": "critic_final",
+  "native_goal_starts": 1,
+  "direct_native_goal_status": "complete",
+  "operational_complete": true,
+  "native_quiescent": true,
+  "permit_release_confirmed": true,
+  "freeze_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/OUTPUT_FREEZE.json",
+    "sha256": "d33c145f742c56d37e934386af9f70017bc0eb066e8f7ce3fb6895cc0902ce08"
+  },
+  "native_receipt_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+    "sha256": "b702ac2964633db4dac50640876ac05a881716ada3b9e3a4a8238ca158f01e31"
+  },
+  "stage_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/stage.json",
+    "sha256": "d5a2f4911f67bef44688694d1a5a535970ea57aa304f17f2229b8c9c8ed4b2d7"
+  },
+  "card_ref": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/card.json",
+    "sha256": "93a82390556e35a4c3177b244bf8fa1863b676150bc6a59be11cdd9bca20c142"
+  },
+  "owner_registration": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/registration.json",
+    "sha256": "4e9f4853b2da708dfb7d1a54ff5456f4f20a30d41dfd47f01744f38bd8f4dc7d",
+    "family": "L",
+    "requested_model": "GPT-6 Luna",
+    "requested_effort": "max"
+  },
+  "release_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/PRIVATE_SLICE_RELEASE.json",
+    "sha256": "de00f2e5fc40cd22c90c91e6964f625f48b61261ea914b956e239e445ec5ca50"
+  },
+  "artifact_metadata": [
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/critique/probe.json",
+      "relative_path": "critique/probe.json",
+      "sha256": "015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862",
+      "bytes": 7
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/critique/review.md",
+      "relative_path": "critique/review.md",
+      "sha256": "097161a135911b7afa6a2f59f20c725c1721e7cb3e2a294ba548ef7f3d6e2f92",
+      "bytes": 6377
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/critique/review_addendum.md",
+      "relative_path": "critique/review_addendum.md",
+      "sha256": "f41713ffe0a72c18257eafbf310093eed5bdd82bdeb4939e79bb98ba6eeea19f",
+      "bytes": 1297
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/final/DELIVERY_MANIFEST.json",
+      "relative_path": "final/DELIVERY_MANIFEST.json",
+      "sha256": "20432ba048d4338e19e2585571942509f6beb9ffdd334163a100186d9e694231",
+      "bytes": 2212
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/final/leads.json",
+      "relative_path": "final/leads.json",
+      "sha256": "daca58eee7b901cdc1851e4ec360603283db835893f78dcb8ab8a76d06927af0",
+      "bytes": 1039
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/final/proposal.md",
+      "relative_path": "final/proposal.md",
+      "sha256": "b5a03d1c40945dc86df288f9714de92c08d7449bc81e74e59718bc04a91f7a19",
+      "bytes": 8838
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/final/sources.json",
+      "relative_path": "final/sources.json",
+      "sha256": "61a6867322e7da26883cfe3477082f23c18904a7ffa81e7259bc2b84bff8d8ea",
+      "bytes": 4491
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/final/witnesses.json",
+      "relative_path": "final/witnesses.json",
+      "sha256": "49d3b1db7b046b3b5f13f03a408e95996d994c9020fc37294ecd4f36ee55a877",
+      "bytes": 2562
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/frozen-output/final_bundle.json",
+      "relative_path": "final_bundle.json",
+      "sha256": "bf1ab42b00d709d5141be794aa09bbc911fbf2ad1c12a26b9b93ae9a52391e2b",
+      "bytes": 17840
+    }
+  ],
+  "missing_required_artifacts": [],
+  "elapsed_seconds": 762.536825938,
+  "candidate_report_provenance": "Candidate authored in SAME combined native Goal, not independent review",
+  "extra_fresh_or_matched_target_credit": false,
+  "source_quality": "PENDING_INDEPENDENT_SOURCE_REVIEW"
+}

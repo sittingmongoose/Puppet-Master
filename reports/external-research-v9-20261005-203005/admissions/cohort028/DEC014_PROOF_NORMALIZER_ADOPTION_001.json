@@ -1,0 +1,34 @@
+{
+  "schema": "er9.future-descendant-proof-normalizer-adoption.v1",
+  "observed_utc": "2026-10-06T07:00:02.719314+00:00",
+  "updated_unstarted_descendant_job_ids": [
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001"
+  ],
+  "source_pin": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/SOURCE_PIN.json",
+    "sha256": "04f37c0074e2f98fd1754ef640461e928f2c8be25295f92f035f13d3e1dfa803"
+  },
+  "contract_ref": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/CONTRACT.json",
+    "sha256": "f38c665abb6d857ec30f18018014ac6ce6bb83b3bf964c84e701a00725673acb"
+  },
+  "old_source_bytes_and_firstR_packets_preserved": true,
+  "post_firstR_metadata_join_repair_disclosed": true,
+  "scientific_runtime_tools_Task_budget_Goal_choices_changed": false,
+  "new_native_starts": 0,
+  "duplicate_research": false,
+  "first_rejected_preflight": "Included entered firstR by overly broad source-contract filter; failed before any registry write; corrected to stage_index>0 only"
+}

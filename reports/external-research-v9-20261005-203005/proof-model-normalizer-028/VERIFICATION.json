@@ -1,0 +1,29 @@
+{
+  "actual_capsule_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/strict-role-birth/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001/CAPSULES.json",
+    "sha256": "a2d460645d3f16f3c3c92546118ac682acb2c1dafd1a273de11bf0ab60d4b105"
+  },
+  "actual_tuple_accepted_without_inference": true,
+  "already_entered_stage_mutations": 0,
+  "candidate_or_native_modelIO_bodies_read": false,
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v test_normalizer",
+  "fresh_target_or_scientific_credit": false,
+  "full_guard_fixture": "Actual administrative metadata only with labelled synthetic artifact bytes; subprocesses blocked",
+  "native_model_provider_Goal_calls": 0,
+  "negative_variants": [
+    "explicit different provider",
+    "wrong model",
+    "missing provider/model",
+    "null/typed wrong fields",
+    "unsupported shorthand",
+    "conflicting tuple/extra alias",
+    "wrong arm/cohort/effort/family",
+    "incomplete/ nonquiet/GoalID mismatch",
+    "missing expected role/artifactSHA drift/context notquiet"
+  ],
+  "old_source_files_verified": 6494,
+  "result": "PASS",
+  "schema": "er9.exact-observed-model-dto-source-verification.v1",
+  "tests": 5,
+  "verified_utc": "2026-10-06T06:56:54.179518+00:00"
+}

@@ -1,0 +1,318 @@
+{
+  "schema": "er9.independent-phase1-input-pins.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/reservation.json",
+      "sha256": "3b0ae043927c84721ecba6a3d9c3569d51731b9800fb64127d33179374dbf4ec",
+      "bytes": 609,
+      "kind": "reservation"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/source_start.json",
+      "sha256": "795827f1cb64810272012f6dbb029d7c2df092af240e08b86d4949221fa68957",
+      "bytes": 460,
+      "kind": "clock"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/inputs/dispatch.json",
+      "sha256": "6a120b77b2d9b105b92a1f0aa3333094615cc9fb4dd66ed88d99284b33566b24",
+      "bytes": 9608,
+      "kind": "dispatch"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "bytes": 5830,
+      "kind": "task:brief",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521,
+      "kind": "task:common_criteria",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751,
+      "kind": "task:source_access",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/targeted_coverage_map.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577,
+      "kind": "task:targeted_coverage_map",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577,
+      "kind": "task:full_brief_obligations",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "bytes": 1952,
+      "kind": "task:common_important_checks",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062,
+      "kind": "task:output_contract",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/targeted-card.json",
+      "sha256": "883ca1fecc61250c9660299ec145ee81a8d4da2278930dd1edcd7e26dc8a92e2",
+      "bytes": 3003,
+      "kind": "task:targeted_card",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/actual_launched_task_A.md",
+      "sha256": "f9d20e9334550c560401850f6ffe949a9c891b8f47354bdb95e64eb02da8c2ef",
+      "bytes": 4049,
+      "kind": "task:actual_launched_task_A",
+      "semantic_scope": "full body read; identical full obligation map read twice"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/final/proposal.md",
+      "sha256": "6ece8a7b5d6d34177df1ba125c56061f3e01922d42bd8eadd1d5da4e910c8cab",
+      "bytes": 10914,
+      "kind": "current:designated_final",
+      "semantic_scope": "full current body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/final/sources.json",
+      "sha256": "d7001cc38e8707ba503f49c94bd986d6400ef8f8ad6061ce7212f38c2b7396be",
+      "bytes": 6486,
+      "kind": "current:source_catalog",
+      "semantic_scope": "full current body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/final/witnesses.json",
+      "sha256": "b08cb6fe6aa07867180f41b49fca346d59c933ca1c65ceeb3bc47272115849d7",
+      "bytes": 2556,
+      "kind": "current:witness_catalog",
+      "semantic_scope": "full current body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/final/leads.json",
+      "sha256": "e0b878aabf2d70ba8d13e4d7f172ede29aa7c7a113f8d40f07dcd93045aa2809",
+      "bytes": 1726,
+      "kind": "current:leads",
+      "semantic_scope": "full current body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/critique/review.md",
+      "sha256": "bf8cd91618a1f08701bf4c5153c7383f3b7c92b290d9da2ba0a7da0361533c80",
+      "bytes": 6727,
+      "kind": "current:candidate_self_report",
+      "semantic_scope": "full current body read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/integrity-proof.json",
+      "sha256": "abd7356acbcaceb0bd523136d6db4d202f98c3a5009ca5402f57c4303529fb5e",
+      "bytes": 839,
+      "kind": "neutral_integrity",
+      "semantic_scope": "positive projected metadata only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503.body",
+      "sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503",
+      "bytes": 51110,
+      "kind": "current_public_source:S1",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a.body",
+      "sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a",
+      "bytes": 36686,
+      "kind": "current_public_source:S2",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/5bb82479525a94241c95f7c7d1118dde258c0e2751c4d07253880a62a5cca532.body",
+      "sha256": "5bb82479525a94241c95f7c7d1118dde258c0e2751c4d07253880a62a5cca532",
+      "bytes": 372286,
+      "kind": "current_public_source:S3",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/1734b7a1ee4c88b24f4c6122027a7b1f18975d21ab51fade8621713221de4e75.body",
+      "sha256": "1734b7a1ee4c88b24f4c6122027a7b1f18975d21ab51fade8621713221de4e75",
+      "bytes": 376006,
+      "kind": "current_public_source:S4",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/2f6e6fdfdbbc5147e7360065f03019f04a237d50b5e9da26aa3be025432ba98b.body",
+      "sha256": "2f6e6fdfdbbc5147e7360065f03019f04a237d50b5e9da26aa3be025432ba98b",
+      "bytes": 352549,
+      "kind": "current_public_source:S5",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/9bdbc37de89f6e9a8b1ff60bcae278c7bfc1d7afd5e23a30954da6b9dcf2afac.body",
+      "sha256": "9bdbc37de89f6e9a8b1ff60bcae278c7bfc1d7afd5e23a30954da6b9dcf2afac",
+      "bytes": 353861,
+      "kind": "current_public_source:S6",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/49e1381c3fb98390306d364eb15668e55be0d21e9a86471770e43c8bc4fd3550.body",
+      "sha256": "49e1381c3fb98390306d364eb15668e55be0d21e9a86471770e43c8bc4fd3550",
+      "bytes": 368625,
+      "kind": "current_public_source:S7",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b.body",
+      "sha256": "55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b",
+      "bytes": 79569,
+      "kind": "current_public_source:S8",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/5f4eaa37f7808de2006a6eb3caba3fd952ca82309d250598053796ff3d3ee375.body",
+      "sha256": "5f4eaa37f7808de2006a6eb3caba3fd952ca82309d250598053796ff3d3ee375",
+      "bytes": 9082,
+      "kind": "current_public_source:S9",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/2a67a40093df9948ab37ea4f626cdea01d6b8d89e11f17273460becbd1419c0e.body",
+      "sha256": "2a67a40093df9948ab37ea4f626cdea01d6b8d89e11f17273460becbd1419c0e",
+      "bytes": 4446,
+      "kind": "current_public_source:S10",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/1dca2803653a7bed950fdfb66f778b8d0a79d9e347253c0b427d24a7f5d379a4.body",
+      "sha256": "1dca2803653a7bed950fdfb66f778b8d0a79d9e347253c0b427d24a7f5d379a4",
+      "bytes": 18622,
+      "kind": "current_public_source:S11",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/public_captures/d0591b20fef0c49438bfa218576430a5d8eca5deed1c2af763dd40f01f44e30b.body",
+      "sha256": "d0591b20fef0c49438bfa218576430a5d8eca5deed1c2af763dd40f01f44e30b",
+      "bytes": 8632,
+      "kind": "current_public_source:S12",
+      "semantic_scope": "Full body SHA verified; only claim-relevant parsed excerpts/JSON fields/diff inspected. One batched output truncated about 658 tokens; no full-comprehension credit."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/operation_receipts/executions/exec-1ekbg2gd/code.py",
+      "sha256": "5370dad01e21792db13b2a7c7eb56f3b32c219b2ba7aed35f6c44a16e612c195",
+      "bytes": 2042,
+      "kind": "current_witness:W1",
+      "semantic_scope": "full body read; static inspection only, no rerun"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/operation_receipts/executions/exec-1ekbg2gd/data.json",
+      "sha256": "1daa91f99cdba9fc5503c4e96db66c07ba366920eba0ab06ebe3f18f61425923",
+      "bytes": 308,
+      "kind": "current_witness:W1",
+      "semantic_scope": "full body read; static inspection only, no rerun"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/operation_receipts/executions/exec-1ekbg2gd/stdout.bin",
+      "sha256": "c19e37a74234823c85a5b01b602562311fe676d11b66d199803034147f1c61c8",
+      "bytes": 584,
+      "kind": "current_witness:W1",
+      "semantic_scope": "full body read; static inspection only, no rerun"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/operation_receipts/executions/exec-1ekbg2gd/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "current_witness:W1",
+      "semantic_scope": "full body read; static inspection only, no rerun"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001/final/proposal.md",
+      "sha256": "5164b2a92302c0f6c8edacf3f7d2aadbcaf39d37cbfd649605ddeeaf6f855a19",
+      "bytes": 17137,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001/final/sources.json",
+      "sha256": "4b280c682f740afb52c841323604673ea2f88bb6e572e5d43153730e8e0c4187",
+      "bytes": 11635,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001/final/witnesses.json",
+      "sha256": "caddbcc8f2afb4b37dbc96ae7725dfdf03e9fd551a2e966c873a1e6c0ef06282",
+      "bytes": 4633,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001/final/leads.json",
+      "sha256": "b8d84b2d55306bc5990f80a5fbeeffb44d6170e350ac39c1899887694032d959",
+      "bytes": 3642,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/research/proposal.md",
+      "sha256": "0663101c1306d46aae665458088220d2883e0f89695bee253301349226b821ea",
+      "bytes": 22487,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/research/sources.json",
+      "sha256": "4b280c682f740afb52c841323604673ea2f88bb6e572e5d43153730e8e0c4187",
+      "bytes": 11635,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/research/witnesses.json",
+      "sha256": "3f9bfd226b9cc4084c0de97d630f04478cb25ab8c536090bef14eda39747758b",
+      "bytes": 5832,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/research/leads.json",
+      "sha256": "e23344ec7272c558f23826446738149ceb541fcea611bc6cc6acb32f1e80fd60",
+      "bytes": 5932,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/prior/I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/critique/review.md",
+      "sha256": "91724bff08f5e5fd493866a71982a5ce4a51ddbb9dffd59044f5f282b2bc92c7",
+      "bytes": 23504,
+      "kind": "admitted_recursive_preservation",
+      "semantic_scope": "Revision final four read fully. Research proposal inspected claim-relevant paragraphs; research catalog identical bytes to final. Research witnesses/leads full. Prior candidate critic inspected preservation/validation/heading paragraphs, not an independent evaluator grade."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/independent_public/primary_web_round5.json",
+      "sha256": "5f912f50ef1ad180e018fdc2d8d992939bb213aefdce6d288fd08e23a9b6361c",
+      "bytes": 32221,
+      "kind": "independent_public_web",
+      "semantic_scope": "tool returned content, not raw HTML; live check corroborates exact S6 capture"
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/storage_exception.json",
+      "sha256": "54b1ec09c6dff83f02c8da19bf3d650f966ba6edca95954ecf6c5d208197352a",
+      "bytes": 1389,
+      "kind": "storage"
+    }
+  ],
+  "supplemental_courier_mode": "Direct read-only exact positive allowlists after ENOSPC; no directory traversal or raw provenance reads"
+}

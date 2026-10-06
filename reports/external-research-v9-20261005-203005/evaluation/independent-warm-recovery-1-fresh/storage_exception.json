@@ -1,0 +1,27 @@
+{
+  "schema": "er9.evaluator-storage-exception.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "original_output_directory": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh",
+  "temporary_report_directory": "/tmp/er9-independent-warm-recovery-1-fresh",
+  "authorization": "/root explicitly authorized uniquely owned tiny /tmp report staging after ENOSPC; parent confirmed",
+  "input_relocation": false,
+  "sandbox_expansion": false,
+  "reset": false,
+  "source_start_receipt_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/source_start.json",
+  "source_start_sha256": "795827f1cb64810272012f6dbb029d7c2df092af240e08b86d4949221fa68957",
+  "utc": "2026-10-06T07:11:42.474208+00:00",
+  "monotonic_ns": 101121331156544,
+  "source_elapsed_seconds": 937.790977714,
+  "source_remaining_seconds": 262.20902228600005,
+  "whole_remaining_seconds": 862.209022286,
+  "storage_errors": [
+    "report draft write failed ENOSPC",
+    "small gzip of own redundant independent web return failed ENOSPC"
+  ],
+  "own_scratch_cleanup": [
+    "zero-byte report_draft.md",
+    "redundant independent web returns rounds 3/4",
+    "round2 raw independent web return removed during failed gzip attempt"
+  ],
+  "current_input_pins_unchanged": true
+}

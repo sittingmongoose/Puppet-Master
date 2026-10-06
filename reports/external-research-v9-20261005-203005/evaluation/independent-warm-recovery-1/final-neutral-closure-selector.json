@@ -1,0 +1,38 @@
+{
+  "schema": "er9.positive-publication-selector.v1",
+  "evaluation_id": "independent-warm-recovery-1",
+  "selector_kind": "final_neutral_unstarted_reservation_closure",
+  "created_utc": "2026-10-06T06:47:46.635202+00:00",
+  "root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1/reservation.json",
+      "relative_path": "reservation.json",
+      "sha256": "bd5f4fb752b38827b204e177bb11bf1c463ac1908fd91aa3bf41805b91270af7",
+      "bytes": 988
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1/pre_source_limitation.json",
+      "relative_path": "pre_source_limitation.json",
+      "sha256": "8410cc868960a23eef17dc5a31b17cdd86c9db2d6c7ae524f1e994e151eec05a",
+      "bytes": 552
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1/closure.json",
+      "relative_path": "closure.json",
+      "sha256": "b3ecdf39fd2ef77fbecadcda752cfa45de524fda0af0d8f9391b52fe81230dda",
+      "bytes": 2393
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1/final-neutral-closure.json",
+      "relative_path": "final-neutral-closure.json",
+      "sha256": "f2ac4ae30eb8355f524b98e579411f98884ac23f6fd2bdfcb47ee442c1bf04a4",
+      "bytes": 1574
+    }
+  ],
+  "selection_limit": "Exact four neutral files only; every private file and raw roster response excluded; no recursive selection.",
+  "scientific_grade_present": false,
+  "prior_selector_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1/neutral-closure-selector.json",
+  "prior_selector_sha256": "96514f4eb41f142fbc52ff3c955826f7e2fd8cf3600311c6631323c1af402c80",
+  "prior_selector_unchanged": true
+}

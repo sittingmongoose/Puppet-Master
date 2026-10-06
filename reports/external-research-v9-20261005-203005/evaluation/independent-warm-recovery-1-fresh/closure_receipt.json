@@ -1,0 +1,90 @@
+{
+  "schema": "er9.independent-evaluator-neutral-closure-receipt.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "receipt_scope": "neutral actual clocks, exact report hashes, storage mirrors and completed handoff routes only; contains no scientific finding/grade/winner/disposition",
+  "closure_utc": "2026-10-06T07:21:14.714425+00:00",
+  "closure_monotonic_ns": 101693571413676,
+  "source_start_utc": "2026-10-06T06:56:04.683140+00:00",
+  "source_start_monotonic_ns": 100183540178830,
+  "phase1_freeze_utc": "2026-10-06T07:14:16.912559+00:00",
+  "phase1_freeze_monotonic_ns": 101275769547187,
+  "source_elapsed_seconds": 1092.229368357,
+  "phase2_elapsed_including_wait_check_report_handoffs_seconds": 417.801866489,
+  "whole_elapsed_including_report_handoffs_seconds": 1510.031234846,
+  "phase2_literal_limit_seconds": 600,
+  "phase2_literal_stop_utc": "2026-10-06T07:24:16.912559Z",
+  "whole_stop_utc": "2026-10-06T07:26:04.683140Z",
+  "phase2_deadline_monotonic_ns": 101875769547187,
+  "within_original_bounds": true,
+  "reset": false,
+  "checking_anchor_distinct": true,
+  "science_handoff_routes_completed_before_this_anchor": [
+    "/root",
+    "/root/publisher"
+  ],
+  "neutral_handoff_route": "/root/frozen_exports",
+  "cost_route_scope": "neutral clocks only; no ACK wait",
+  "source_body_review_after_freeze": false,
+  "original_grade_or_roster_exposure": false,
+  "new_Goal_candidate_execution_retest_repair_feedback": false,
+  "input_mode_qualification_preserved": "45 SHA/lengths courier verified;20 readonly/25 writable-mode terminal positive inputs; frozen reports readonly; no input byte mutation",
+  "storage_qualification_preserved": "LAB ENOSPC occurred; root explicitly authorized small /tmp report staging; byte-identical mirror copy at07:20:09.569110Z; original /tmp paths/times authoritative",
+  "report_pins": [
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1_freeze.json",
+      "sha256": "cf3616248889f0dec176be5264fa881a0a9407d7fb4d77d63499564248918147",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1_freeze.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/input_pins.json",
+      "sha256": "1842316ad42cb462f58aa5f2c62ca1fffbe2db2bf4f1eac811d8bb16091e7f8f",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/input_pins.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/judgment.json",
+      "sha256": "433df474bb2077d153716b78c14683f93a0c8bef9c0ee14825319836d0046d7b",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/judgment.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/report.md",
+      "sha256": "35f3a939645493b38e225ebf126b4ed7057f630ac58b113e87b1dddd74c3180f",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/report.md",
+      "mirror_byte_identical": true
+    },
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/phase2/checking_start.json",
+      "sha256": "d6dac9b1a670a56a133c3aa4bf97f43d1d2e39bae6c375a5f9f74954a1f9a7d7",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase2/checking_start.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/phase2/result.json",
+      "sha256": "dc61aa0197a5b9a33280f7bf0cbaf6e515a35ac5795dd045e3fcfc79ea31d50b",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase2/result.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/phase2/report.md",
+      "sha256": "b9a945ef7c868e8ea7518124c2ec9c170659e3b55e640ad5f06984a3d346594f",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase2/report.md",
+      "mirror_byte_identical": true
+    },
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/public_selector.json",
+      "sha256": "b410b71517cbd47ebc4d6b6511915910dd80e3df265dac8fd9c8bb49ceeb9cc5",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/public_selector.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "authoritative_path": "/tmp/er9-independent-warm-recovery-1-fresh/mirror_receipt.json",
+      "sha256": "5bbb5cfe2f7d7ec04d1d4c6ccf88f711079180339cb9c066dc4a02ddb42551f1",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/mirror_receipt.json",
+      "mirror_byte_identical": true
+    }
+  ],
+  "mailbox_end_check": "no unread mail"
+}

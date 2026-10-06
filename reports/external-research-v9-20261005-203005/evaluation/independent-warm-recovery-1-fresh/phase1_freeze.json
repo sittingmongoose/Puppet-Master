@@ -1,0 +1,45 @@
+{
+  "schema": "er9.independent-phase1-freeze.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "immutable": true,
+  "freeze_utc": "2026-10-06T07:14:16.912559+00:00",
+  "freeze_monotonic_ns": 101275769547187,
+  "source_start_utc": "2026-10-06T06:56:04.683140+00:00",
+  "source_start_monotonic_ns": 100183540178830,
+  "source_elapsed_seconds": 1092.229368357,
+  "source_phase_limit_seconds": 1200,
+  "whole_limit_seconds": 1800,
+  "phase2_literal_limit_seconds": 600,
+  "phase2_deadline_monotonic_ns": 101875769547187,
+  "phase2_includes": [
+    "key wait",
+    "courier verification",
+    "checking",
+    "report creation",
+    "report handoffs"
+  ],
+  "checking_anchor": "must be distinct later timestamp; does not reset freeze-based deadline",
+  "reset": false,
+  "outputs": [
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/input_pins.json",
+      "sha256": "1842316ad42cb462f58aa5f2c62ca1fffbe2db2bf4f1eac811d8bb16091e7f8f",
+      "bytes": 23966
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/judgment.json",
+      "sha256": "433df474bb2077d153716b78c14683f93a0c8bef9c0ee14825319836d0046d7b",
+      "bytes": 14281
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/report.md",
+      "sha256": "35f3a939645493b38e225ebf126b4ed7057f630ac58b113e87b1dddd74c3180f",
+      "bytes": 3718
+    }
+  ],
+  "all_input_pins_independently_verified_by_evaluator": true,
+  "courier_verification_before_key": "REQUIRED_PENDING",
+  "storage_receipt_path": "/tmp/er9-independent-warm-recovery-1-fresh/storage_exception.json",
+  "no_key_or_prior_scientific_grade_read": true
+}

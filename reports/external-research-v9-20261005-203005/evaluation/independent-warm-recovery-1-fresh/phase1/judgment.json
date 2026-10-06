@@ -1,0 +1,284 @@
+{
+  "schema": "er9.independent-current-warm-source-judgment.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "assessed_alias": "A",
+  "stage": "critic_final",
+  "source_quality": "FAIL_SCREEN",
+  "full_pipeline_quality": "UNASSESSED",
+  "coverage_state": "PARTIAL",
+  "source_outcome_basis": "D1 is a decisive current, source-grounded concurrency support-condition error. This stops any whole-case PASS; remaining all-claim/ancestor semantic scope explicitly UNASSESSED. D2/D3 separately describe witness delivery and preservation/coverage gaps.",
+  "actual_counts": {
+    "full_brief_obligations": 12,
+    "common_dimensions": 8,
+    "important_checks": 5,
+    "target_checks": 0,
+    "three_targeted_checks": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF"
+  },
+  "no_weighted_or_aggregate_score": true,
+  "obligations": [
+    {
+      "id": "B01",
+      "coverage": "PARTIAL",
+      "finding": "Broad workflow and Python/optional SQL path present; detailed accessible progress/result difference and full runtime feasibility not completely assessed."
+    },
+    {
+      "id": "B02",
+      "coverage": "PARTIAL",
+      "finding": "Visible conversion/reject, input immutability, sample limits and row identity proposed; predecessor explicit Unicode normalization, missing-v-null/empty and schema-evolution rules are reduced to unspecified user-confirmed policies."
+    },
+    {
+      "id": "B03",
+      "coverage": "PARTIAL",
+      "finding": "Document/runtime/provenance distinction and fresh replay limits supported; complete dependency capture and selected installed runtime unqualified."
+    },
+    {
+      "id": "B04",
+      "coverage": "PARTIAL",
+      "finding": "Stale/unverified changes and restart/interruption are proposed; explicit failed state, not-reached-cell transition and conservative later-cell invalidation from predecessor are absent."
+    },
+    {
+      "id": "B05",
+      "coverage": "PARTIAL",
+      "finding": "Folder manifest/input/environment/run/output identities and export present; strong identity before current and cross-platform executable boundary less explicit than predecessor."
+    },
+    {
+      "id": "B06",
+      "coverage": "PARTIAL",
+      "finding": "Bounded operation-specific scale, order, caches/cancel/save recovery proposed; consequential source defect D1 fails concurrency support condition."
+    },
+    {
+      "id": "B07",
+      "coverage": "PARTIAL",
+      "finding": "Python OS/container threat boundary proposed; accessible status/error specifics from predecessors are omitted, chosen platform/sandbox remains unqualified and optional SQL boundary not fully specified."
+    },
+    {
+      "id": "B08",
+      "coverage": "PARTIAL",
+      "finding": "Jupyter format/execution and DuckDB engine mechanisms are independently useful precedents. Docs/capture versions are not a compatible installed lock; full implementation applicability left unassessed after screen."
+    },
+    {
+      "id": "B09",
+      "coverage": "PARTIAL",
+      "finding": "Current real report/open PR/patch/regression-test chain verified with stated limits; no executed test or released fix is claimed. Removed prior #14464 merge/release chain source truth remains unassessed pending its recursive captures."
+    },
+    {
+      "id": "B10",
+      "coverage": "PARTIAL",
+      "finding": "Useful portable-manifest/SQL handoff and plausible plain-Jupyter alternative present; component compatibility and concurrency condition unresolved/incorrect."
+    },
+    {
+      "id": "B11",
+      "coverage": "PARTIAL",
+      "finding": "W1 actual code/input/stdout/stderr verified and narrow synthetic expectations supported by static inspection. Standalone catalog lacks code, complete input and stdout; D2 delivery gap. All product checks honestly proposed/unexecuted."
+    },
+    {
+      "id": "B12",
+      "coverage": "PARTIAL",
+      "finding": "Current complete final files and honest access caveat exist. Fresh rewrite does not deliver requested claim-by-claim repair/preservation; D3 and unassessed ancestor source facets remain."
+    }
+  ],
+  "common_dimensions": [
+    {
+      "id": "Q1",
+      "coverage": "PARTIAL",
+      "finding": "Broad minimum workflow retained but concrete data/status/accessibility requirements weakened."
+    },
+    {
+      "id": "Q2",
+      "coverage": "PARTIAL",
+      "finding": "Multiple narrow source conditions verified; D1 materially misstates actual S6 mode."
+    },
+    {
+      "id": "Q3",
+      "coverage": "PARTIAL",
+      "finding": "Coherent bounded composition, but lock-for-writers inference does not cure D1."
+    },
+    {
+      "id": "Q4",
+      "coverage": "PARTIAL",
+      "finding": "Two useful precedents, bounded issue chain and alternatives present; removed ancestor discovery truth not fully reviewed."
+    },
+    {
+      "id": "Q5",
+      "coverage": "PARTIAL",
+      "finding": "W1 static expectation/results inspected, no evaluator execution; product validations honest. D2 reproducible packaging gap."
+    },
+    {
+      "id": "Q6",
+      "coverage": "PARTIAL",
+      "finding": "Broad supported ideas remain but D3 loses explicit predecessor conditions and preservation is not performed."
+    },
+    {
+      "id": "Q7",
+      "coverage": "PARTIAL",
+      "finding": "Many compatibility/performance/access uncertainties honestly qualified; current concurrency condition still incorrect."
+    },
+    {
+      "id": "Q8",
+      "coverage": "PARTIAL",
+      "finding": "Four canonical finals and same-Goal report byte-authenticated; witness bundle incomplete. Native/status/model/money held separately."
+    }
+  ],
+  "important_checks": [
+    {
+      "id": "B-P1",
+      "coverage": "PARTIAL",
+      "finding": "Two documented independent mechanisms and real proposed-fix/test chain present with honest release limits."
+    },
+    {
+      "id": "B-P2",
+      "coverage": "PARTIAL",
+      "finding": "Sampling/document/security facts checked; design support condition D1 fails; full current-claim assessment stopped."
+    },
+    {
+      "id": "B-P3",
+      "coverage": "PARTIAL",
+      "finding": "Only W1 executed claim: actual permitted evidence is consistent; no app/runtime/scale credit; D2 packaging gap."
+    },
+    {
+      "id": "B-P4",
+      "coverage": "PARTIAL",
+      "finding": "Current source error D1 and failed preservation task D3 prevent verified correction/completeness."
+    },
+    {
+      "id": "B-P5",
+      "coverage": "PARTIAL",
+      "finding": "Broad workflow/resources/portability/alternative present; D1 concurrency error and D3 concrete omissions."
+    }
+  ],
+  "targeted_checks": [],
+  "defects": [
+    {
+      "id": "D1",
+      "severity": "CONSEQUENTIAL",
+      "kind": "source_condition_error",
+      "current_locator": "proposal.md:28",
+      "current_sha256": "6ece8a7b5d6d34177df1ba125c56061f3e01922d42bd8eadd1d5da4e910c8cab",
+      "claim": "one writer process with multiple read-only processes",
+      "source_id": "S6",
+      "source_sha256": "9bdbc37de89f6e9a8b1ff60bcae278c7bfc1d7afd5e23a30954da6b9dcf2afac",
+      "source_url": "https://duckdb.org/docs/current/connect/concurrency",
+      "source_locator": "Handling Concurrency / Single Process",
+      "source_condition": "In-process read-write: one process reads/writes; alternatively multi-process read-only excludes writers. Threads within one process are distinct. Other remote/catalog modes exist but are not chosen here.",
+      "consequence": "A lock serializing writers alone does not support a simultaneous writer and other read-only processes. Current chosen in-process concurrency boundary is therefore incorrect. No application failure or performance measurement is inferred.",
+      "obligations": [
+        "B06",
+        "B10",
+        "B12"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q6"
+      ],
+      "check_ids": [
+        "B-P2",
+        "B-P4",
+        "B-P5"
+      ]
+    },
+    {
+      "id": "D2",
+      "severity": "DELIVERY_GAP",
+      "kind": "standalone_witness_not_replayable",
+      "current_locator": "witnesses.json W1 / receipt_limit; review.md remaining unknown 4",
+      "evidence": "Actual code/data/stdout/stderr SHA-pinned and read; current standalone catalog only hashes/summaries, missing authored code, complete data and stdout. Candidate honestly admits bundle cannot independently replay.",
+      "consequence": "Narrow actual witness claims are supportable; required standalone executable evidence packaging is incomplete. No guessed receipt, extra execution or retroactive candidate repair credit.",
+      "obligations": [
+        "B11"
+      ],
+      "dimensions": [
+        "Q5",
+        "Q8"
+      ]
+    },
+    {
+      "id": "D3",
+      "severity": "COVERAGE_PRESERVATION_GAP",
+      "kind": "new_rewrite_does_not_preserve_claim_level_conditions",
+      "current_locator": "proposal.md:3,51; review.md access check and remaining unknowns",
+      "predecessor_sha256": "5164b2a92302c0f6c8edacf3f7d2aadbcaf39d37cbfd649605ddeeaf6f855a19",
+      "evidence": "Admitted predecessors retain explicit missing/null/empty/Unicode conversion and schema-evolution choices, clean-only current and failed state, conservative downstream invalidation, accessible feedback/diff, disabled execution on unqualified hosts and complete small witness text. Current rewrite omits or weakens those concrete supported brief-facing conditions and expressly does not assess preservation.",
+      "qualification": "No assumption that lost external facts are true: ancestor #14464 release chain, SQLite/Bubblewrap/uv/protocol claims await recursive primary-source verification and remain UNASSESSED. Candidate lack-of-access report is disclosure, not independent preservation proof. Actual availability/cause is post-freeze provenance.",
+      "obligations": [
+        "B02",
+        "B04",
+        "B07",
+        "B11",
+        "B12"
+      ],
+      "dimensions": [
+        "Q1",
+        "Q6",
+        "Q8"
+      ]
+    }
+  ],
+  "supported_current_facets": [
+    "nbformat document source/outputs/execution count do not by themselves prove runtime provenance",
+    "nbclient execution/save mechanism is useful, with product behavior kept proposed",
+    "CSV default sample 20480, sample_size=-1, nonseekable beginning sample conditions",
+    "structural CSV errors default to stop; skip/reject options not assumed safe whole-product behavior",
+    "OOM/buffer manager/insertion-order tradeoffs correctly qualified",
+    "Jupyter server access arbitrary code; authentication not treated as sandbox",
+    "open issue #25825 and unmerged #26195 patch/test presence are not released or executed proof",
+    "W1 four synthetic lines: three JSON objects, malformed line 3, bounded first two preview; Unicode/null/mixed types and unique offset-based keys on this input",
+    "portable manifest/SQL handoff opportunity and plain-Jupyter separate-SQL alternative",
+    "all product/performance/replay/security checks explicitly proposed and unexecuted",
+    "self-report expressly candidate-authored in same combined Goal, not independent evaluator/Sol or a source grade"
+  ],
+  "witness_scope": {
+    "executed_claims": 1,
+    "actual_static_inspection": "code.py/data.json/stdout.bin/stderr.bin exact hashes verified; no reexecution",
+    "independently_justified_expectation": "Input has 3 valid JSON object lines and one malformed third physical line; preview limit 2 selects first two; values are integer, null, string. Byte offset reported is consistent with encoded preceding lines. Row-key material includes source digest, offset and raw line.",
+    "limits": "In-memory component only, entire tiny data materialized. Byte unchanged assertion compares an in-memory value, not disk immutability. No timestamp validation, actual data contract completeness, notebooks, DuckDB, files, sandbox audit, scale or full replay established.",
+    "receipt_provenance": "Positive parent projection: candidate, bootstrap_started true, exit 0, cleanup_confirmed true/collected unit absent; CPU3s/memory268435456/tasks16/wall5s/new empty network namespace. Raw result and nested private provenance not opened.",
+    "raw_result_sha256_not_opened": "a7f43eb73945032940c8e1ce41bff680eac4c5679226fcea8eb86b869a06d6a8"
+  },
+  "delivery": {
+    "four_required_current_final_files": "PRESENT_BYTE_VERIFIED",
+    "candidate_report": "PRESENT_BYTE_VERIFIED_SAME_CANDIDATE_GOAL_SELFREPORT",
+    "mandatory_source_preservation_task": "INCOMPLETE_DISCLOSED",
+    "native_completion": "HELD_UNTIL_POSTFREEZE",
+    "scientific_quality_not_inferred_from_delivery": true
+  },
+  "independence": {
+    "assigned_evaluator_model": "gpt-6.1-sol",
+    "assigned_effort": "xhigh",
+    "fork_turns": "none",
+    "physical_provider": "UNKNOWN",
+    "unavoidable_hints": [
+      "assignment pair/stage/WARM labels",
+      "exact original card pair includes LUNA name",
+      "actual launched task labels",
+      "same-Goal candidate selfreport provenance"
+    ],
+    "roster_or_sibling_or_original_grade_reads": false,
+    "held": [
+      "private key",
+      "original scientific grades",
+      "raw role manifest",
+      "nested origin model/Goal/native/status/history/economics"
+    ],
+    "candidate_report_not_independent_sol_grade": true
+  },
+  "comparison_boundary": {
+    "derivative_warm_single_output_only": true,
+    "missing_partner_science": "UNASSESSED",
+    "original_scientific_grades": "NOT_SUPPLIED_NOT_REPLACED",
+    "new_logical_case_credit": false,
+    "fresh_credit": false,
+    "matched_credit": false,
+    "target_credit": false,
+    "causal_winner_credit": false,
+    "winner": "NOT_APPLICABLE"
+  },
+  "remaining_unassessed": [
+    "all-claim/full-case proof beyond decisive D1 screen",
+    "recursive primary sources for predecessor #14464 release chain, SQLite/Bubblewrap/uv/Jupyter protocol",
+    "claimed inaccessible predecessors actual source-access provenance until postfreeze",
+    "native completion/model/physical provider/money/opaque Goal ID until authorized key/provenance"
+  ],
+  "storage_qualification": "LAB ENOSPC; root explicitly authorized few-MB unique /tmp report staging. Inputs neither relocated nor modified; original clocks retained. Removed only own redundant scratch. No unpersisted work credited."
+}

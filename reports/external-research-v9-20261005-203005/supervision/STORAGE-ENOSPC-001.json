@@ -1,0 +1,23 @@
+{
+  "cursor_nfs_available_GiB_rounded": 5.7,
+  "effect": "fresh warm reviewer report write ENOSPC; ops temporarily stopped new own dispatcher admission while active G2 kept original clocks",
+  "initial_local_capacity": {
+    "available_GiB": 0,
+    "bytes_exhausted": true,
+    "filesystem": "local root",
+    "inodes_used_percent": 21,
+    "size_GiB_rounded": 489,
+    "used_GiB_rounded": 468
+  },
+  "later_capacity_cause": "UNKNOWN external change; ops had not deleted anything",
+  "later_observed_available_GiB_rounded": 2.5,
+  "no_campaign_cutoff": true,
+  "no_clock_reset": true,
+  "own_lab_GiB_rounded": 21.4,
+  "recorded_utc": "2026-10-06T07:14:52.284125+00:00",
+  "recovery_authorized": "SHA-verified compressed offload only terminal owned redacted protocol/modelIO; preserve all auth/live/proof/usage/donor/artifact bytes and durable archive locators",
+  "root_goal_state": "ACTIVE",
+  "schema": "ER9-infrastructure-observation-v1",
+  "sibling_or_canon_cleanup": false,
+  "small_report_staging": "uniquely owned /tmp report files only, tiny bounded use; inputs/execute permissions/original deadlines unchanged"
+}

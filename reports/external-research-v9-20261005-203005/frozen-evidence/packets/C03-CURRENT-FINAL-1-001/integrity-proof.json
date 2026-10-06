@@ -1,0 +1,14 @@
+{
+  "schema": "er9.actual-current-final-integrity.v1",
+  "arms": [
+    {
+      "alias": "A",
+      "exact_current_final_freeze_sha256": "2dee8ae658ca77bb05c044a90578150bbb89730542c920a45b7f6d2d1f9840fb",
+      "native_receipt_sha256": "bc1f7330f9950bf71e2a32680566e032478765a85cf48e35bf30cbfbf152669c",
+      "outer_release_sha256": "45037461a307ca899d82121fff273d5f9b020da402a4cf0465823b9780be585c",
+      "positive_actual_quiet": "exactnative cleanup/exited/remaininggroupempty andresourcecomponentsquiet +actualouter allprivate-slice descendantsquiet; not wrapperinference",
+      "body_bytes_hash_verified": true
+    }
+  ],
+  "model/nativeGoal/status/history/cost": "HELD_PHASE2"
+}

@@ -1,0 +1,42 @@
+{
+  "all_scientific_runtime_profile_actor_choices_unchanged": true,
+  "contract_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/CONTRACT.json",
+    "sha256": "f38c665abb6d857ec30f18018014ac6ce6bb83b3bf964c84e701a00725673acb"
+  },
+  "entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/role_birth.py",
+    "sha256": "7b8de1118a9753225b1ee14da521d281f544ab9b9caf998712120799e806bdc2"
+  },
+  "files": {
+    "CONTRACT.json": "f38c665abb6d857ec30f18018014ac6ce6bb83b3bf964c84e701a00725673acb",
+    "OLD_SOURCE_BYTE_SNAPSHOT.json": "0751030b55042b06f3902b1613f7f9ecb66eb88504c50892b5f8db12aac24f0e",
+    "README.md": "8009feb6058e98e1434ae31518c4bbdd7ca55a8374e7dcd216e6b22b5de3d26b",
+    "VERIFICATION.json": "9de5bc3b9fc0583a85aff580f82e7b02364ad7330041846bc42b888c4fc77728",
+    "normalizer.py": "7e5890ce521730b6de72df1ecb14ab8e3bf51ae3894dde56c917aea6602c1234",
+    "role_birth.py": "7b8de1118a9753225b1ee14da521d281f544ab9b9caf998712120799e806bdc2",
+    "seal.py": "b660d19906430110b589c00e36771e5848b1a1aa96e9e19d20704fcfa0aa5808",
+    "test_normalizer.py": "4bb60a29f7577bec66d18314bf53319add6155e3842e761f4ee7f103037d9c02"
+  },
+  "frozen_utc": "2026-10-06T06:56:54.179518+00:00",
+  "model_proof_normalizer_changed_after_first_research": true,
+  "native_calls": 0,
+  "original_source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/SOURCE_PIN.json",
+    "sha256": "834cc935df4272109376299ad80a5423eb4874fc2d83b092bb9232f8ca9254d6"
+  },
+  "root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001",
+  "schema": "er9.proof-model-dto-normalizer-source-pin.v1",
+  "source_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/prepare.py": "3b0df6050b5642ac351c8bd49a653203e0f4f4792ea22eecd8cdc3c89b7540ca",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/role_birth.py": "4870654f74d365f06af651e225407746330b3158f5bd478c2c0f0c25163e4d5f",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_successors.py": "ba45f3c3507c10e4339f78f6270dd9b56f5e23bdfb03984475d6f9dca94b9673",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/normalizer.py": "7e5890ce521730b6de72df1ecb14ab8e3bf51ae3894dde56c917aea6602c1234",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/role_birth.py": "7b8de1118a9753225b1ee14da521d281f544ab9b9caf998712120799e806bdc2"
+  },
+  "status": "READY_ZERO_INFERENCE_METADATA_ONLY",
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/VERIFICATION.json",
+    "sha256": "9de5bc3b9fc0583a85aff580f82e7b02364ad7330041846bc42b888c4fc77728"
+  }
+}

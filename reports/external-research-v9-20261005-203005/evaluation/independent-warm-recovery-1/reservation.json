@@ -1,0 +1,27 @@
+{
+  "schema": "er9.independent-evaluator-reservation.v1",
+  "eval_id": "independent-warm-recovery-1",
+  "evaluation_id": "independent-warm-recovery-1",
+  "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "assigned_model": "gpt-6.1-sol",
+  "assigned_reasoning_effort": "xhigh",
+  "fork_turns": "none",
+  "physical_provider": "UNKNOWN",
+  "source_status": "SOURCE_NOT_STARTED",
+  "reviewer_task": "/root/frozen_exports/assessment_warm1",
+  "review_kind": "derivative_warm_single_output",
+  "candidate_selector": "critic_final actualauthoredfinal4 + samecandidateGoalreport",
+  "source_start_utc": null,
+  "source_start_monotonic_ns": null,
+  "created_utc": "2026-10-06T06:40:30.459374+00:00",
+  "created_monotonic_ns": 99249316415186,
+  "original_I06_grade_supplied": false,
+  "original_I06_grade_changed": false,
+  "independent_candidate_run": false,
+  "credit_constraints": {
+    "extra_logical_32_12_4": false,
+    "fresh": false,
+    "matched": false,
+    "winner": false
+  }
+}

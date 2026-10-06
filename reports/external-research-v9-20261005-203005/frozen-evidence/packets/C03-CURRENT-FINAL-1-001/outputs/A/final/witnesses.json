@@ -1,0 +1,113 @@
+{
+  "schema": "er9.final.witnesses.v1",
+  "stage": "critic_final",
+  "labels": {
+    "executed_by_candidate": "Candidate-authored check run in the admitted isolated python_execute sandbox during this critic_final stage; receipted by the runtime. Isolated component check only; does NOT establish full application behavior.",
+    "disclosed_failure": "A receipt whose output shows FAILED is preserved and disclosed, not hidden; it documents the check process honestly.",
+    "adopted_research_stage_receipt": "Executed by the research-stage candidate of the same arm; receipts adopted from the frozen research catalog under inputs/prior/. Not re-run in this stage; independently corroborated where noted. Attribution is explicit; no receipt is invented.",
+    "proposed_unexecuted": "Planned implementation-stage validation; NOT run in any stage so far. No receipt exists."
+  },
+  "witnesses": [
+    {
+      "id": "FW1",
+      "name": "Clip/cue mapping arithmetic re-verification and structure result",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-0myc811x",
+      "completed_utc": "2026-10-06T05:49:35Z",
+      "exit_code": 0,
+      "code_sha256": "2a6608d71e5ede57d23d9685cd295b82b8a5453961f145af99352bc614583903",
+      "stdout_sha256": "d66cfc5f8e2fc79a6122b308016258519ab298f568e8e6608d477fb0a135e721",
+      "scope": "Floor mapping p(s) = q + floor((s-t)*Rproj/Rsrc), inverse s(p) = t + floor((p-q)*Rsrc/Rproj), Lproj = len*Rproj//Rsrc: 1:1 involutivity over a full clip; boundary exactness (trim start to clip head, final sample to last project frame, one-past-end to first orphan position); 44.1k to 48k roundtrip failures 4516 of 4547 probes; new structure result: roundtrip succeeds if and only if the source offset is divisible by 147 (= 44100 / gcd(44100, 48000)); Lproj(441000) = 480000.",
+      "justified_expected_behavior": "At integer 1:1 ratio the mapping must be exactly involutive and boundary-exact; at 44100 to 48000 most samples cannot roundtrip, which is the documented justification for anchoring cues in source samples; the divisibility structure follows from gcd arithmetic.",
+      "stdout_summary": "A1 True; A2 head->2000 tail->6999 one-past-end->7000; B1 4516 of 4547; B2 True (period 147); C1 480000; FW1 OK.",
+      "corroboration": "Independently reproduces research-stage RW1 (4516/4547) and strengthens it with the mod-147 structure.",
+      "limits": "Pure integer arithmetic; no audio I/O, no libsndfile/libsamplerate, no application code. Proves properties of the proposed formula only."
+    },
+    {
+      "id": "FW2R1",
+      "name": "Timecode rule check rev 1 (disclosed failed-expectation receipt)",
+      "label": "disclosed_failure",
+      "execution_id": "exec-78dc_jg2",
+      "completed_utc": "2026-10-06T05:49:36Z",
+      "exit_code": 0,
+      "code_sha256": "cab563da3ba28bdf565bea1d909f4000ea75ce9bc8075b8f191713832dab2d48",
+      "stdout_sha256": "39de75100136ec210eebf2ad6b7e674ca73b8d72e13af26f7ff0c859f5d7da1b",
+      "scope": "Same formula as FW2; five expected constants in the check itself were wrong (half-second probe points mistaken for half-millisecond cases), so the output ends FW2 FAILED although the formula outputs shown were correct.",
+      "justified_expected_behavior": "Not applicable to the formula; retained to disclose the revision history per honest-labeling rules, mirroring the research stage's RW1 rev-1 disclosure.",
+      "stdout_summary": "5 FAIL lines all traced to wrong candidate expectations; formula behavior consistent with nearest-ms rounding.",
+      "limits": "Superseded by FW2 rev 2; kept as disclosure."
+    },
+    {
+      "id": "FW2",
+      "name": "Display timecode rounding rule checks (rev 2)",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-hg56emxu",
+      "completed_utc": "2026-10-06T05:50:25Z",
+      "exit_code": 0,
+      "code_sha256": "aaa798e402e35dbde313c0303d78d14551afb533e8220bc7e984da5c4d641ad6",
+      "stdout_sha256": "d4276683ec801472aedf9a915c05697e02f1893bc61143fb6a30b905a26ffa7f",
+      "scope": "ms = (p*1000 + rate//2) // rate with negative clamp: zero; single frame truncates to 0 ms; 24 frames at 48 kHz = exact half millisecond rounds UP to 1 ms; 23 frames stays 0; one frame under one second displays 01.000 (nearest-ms); half a second exactly 00.500; one frame before two hours ALSO displays 02:00:00.000 (C2 display property); negative clamps to 00:00:00.000; float pitfall preserved (2.675 formats as 2.67).",
+      "justified_expected_behavior": "The brief requires defined rounding and boundary behavior for displayed timecodes; nearest-ms half-up integer math is deterministic and the display-property case shows why timecodes must never be anchors.",
+      "stdout_summary": "11 PASS lines; FW2 OK (rev 2).",
+      "corroboration": "Consistent with research-stage RW2; adds the one-frame-before-two-hours display case.",
+      "limits": "Arithmetic-only isolated check; no GUI, playback, or export integration."
+    },
+    {
+      "id": "FW3",
+      "name": "Size census, memory arithmetic, and cache-size correction",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-w43eak5o",
+      "completed_utc": "2026-10-06T05:50:26Z",
+      "exit_code": 0,
+      "code_sha256": "ef47034d2bb6f24942725f9312a43d2c1869c9335a0bab23c3c10bbf5345c6c3",
+      "stdout_sha256": "2bea18319736fe95dbb7f0be3608c346894e87730449fbc1217b7736cbf4b011",
+      "scope": "2 h at 48 kHz = 345,600,000 frames; RIFF data-chunk bytes for 24-bit at 1/2/4/8 channels versus 4,294,967,295 (1,036,800,000 fits; 2,073,600,000 fits; 4,147,200,000 fits; 8,294,400,000 exceeds); whole-file float32 stereo footprint 2,764,800,000 bytes = 2.5749 GiB; 2 s stereo window 768,000 bytes = 750 KiB; corrected cache math: 1,350,000 min/max points at 256 spp = 5,400,000 bytes = 5.15 MiB; research-stage 6.7M-frame figure is 51.6x low.",
+      "justified_expected_behavior": "These constants size the export RF64 refusal boundary, the forbidden whole-file access pattern, the permitted window size, and the corrected per-source cache footprint (correction C1).",
+      "stdout_summary": "channels table with over-flag only at 8; whole-file 2.5749 GiB; window 750 KiB; corrected cache 5.15 MiB; FW3 OK.",
+      "corroboration": "Matches research-stage RW3 on every shared constant; corrects only proposal section 7.2's prose estimate, which RW3 had never asserted.",
+      "limits": "Arithmetic only; does not measure a real renderer or the libsndfile RF64 writer."
+    },
+    {
+      "id": "FW4",
+      "name": "Join lengths and equal-power crossfade property",
+      "label": "executed_by_candidate",
+      "execution_id": "exec-tbwyokfw",
+      "completed_utc": "2026-10-06T05:50:46Z",
+      "exit_code": 0,
+      "code_sha256": "e43ebaf6b73cf516192c3d431c92b5fe4cc340fb9fee12c04faff99e3bfc60ba",
+      "stdout_sha256": "36da0f6575625718158d8b46676ee2cbff49af1c4f4b6199095b2eb93f916dda",
+      "scope": "Butt join length = lenA + lenB (240,000 frames); crossfade length = lenA + lenB - D (239,760 at D = 240); cos/sin equal-power ramps have power sum 1 across the fade within 1e-9; edge gains correct (1,0 to 0.0065, 1.0); worst-case in-phase full-scale peak through the fade is 1.414214.",
+      "justified_expected_behavior": "Equal-power definition implies unit power sum; the 1.414 in-phase peak justifies making the export clipping census mandatory (correction C5).",
+      "stdout_summary": "butt 240000; xfade 239760; power sum True; edges True; peak 1.414214; FW4 OK.",
+      "limits": "Formula-level only; no claim about perceived transition quality."
+    },
+    {
+      "id": "RW1",
+      "name": "Research-stage mapping checks (adopted)",
+      "label": "adopted_research_stage_receipt",
+      "execution_id": "exec-skw8qxd4",
+      "origin": "frozen research catalog: inputs/prior/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/research/witnesses.json; includes disclosed rev-1 failure exec-dztmovzi",
+      "corroboration": "Independently reproduced by FW1 this stage (identical 4516/4547 and Lproj constant).",
+      "limits": "As stated in the research catalog: arithmetic only."
+    },
+    {
+      "id": "RW2",
+      "name": "Research-stage timecode checks (adopted)",
+      "label": "adopted_research_stage_receipt",
+      "execution_id": "exec-y6407e0b",
+      "origin": "frozen research catalog (same path)",
+      "corroboration": "Consistent with FW2 rev 2; FW2 adds the display-property case.",
+      "limits": "Arithmetic only."
+    },
+    {
+      "id": "RW3",
+      "name": "Research-stage RIFF/memory/window arithmetic (adopted)",
+      "label": "adopted_research_stage_receipt",
+      "execution_id": "exec-6qrpmckx",
+      "origin": "frozen research catalog (same path)",
+      "corroboration": "Independently reproduced by FW3 on every shared constant.",
+      "limits": "Arithmetic only."
+    }
+  ],
+  "proposed_unexecuted_summary": "All implementation-stage validation (property tests, golden renders, interrupt and cancel simulations, memory soak, accessibility audit, format matrix, lossy-seek roundtrip, metadata retention, render-path separation) is PROPOSED/UNEXECUTED and enumerated in proposal.md section 11; no receipts exist for it in any stage."
+}

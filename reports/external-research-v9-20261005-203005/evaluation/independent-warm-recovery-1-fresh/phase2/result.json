@@ -1,0 +1,303 @@
+{
+  "schema": "er9.independent-current-warm-phase2-result.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "phase1_judgment_sha256": "433df474bb2077d153716b78c14683f93a0c8bef9c0ee14825319836d0046d7b",
+  "phase1_source_quality_unchanged": "FAIL_SCREEN",
+  "postfreeze_source_rechecking": false,
+  "original_scientific_grade_reads": false,
+  "prior_grade_replacement": false,
+  "key_identity_check": {
+    "matches_actual_current_A": true,
+    "job_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "arm": "treatment",
+    "four_current_final_pins": [
+      {
+        "artifact": "proposal.md",
+        "sha256": "6ece8a7b5d6d34177df1ba125c56061f3e01922d42bd8eadd1d5da4e910c8cab",
+        "bytes": 10914,
+        "matches_phase1": true
+      },
+      {
+        "artifact": "sources.json",
+        "sha256": "d7001cc38e8707ba503f49c94bd986d6400ef8f8ad6061ce7212f38c2b7396be",
+        "bytes": 6486,
+        "matches_phase1": true
+      },
+      {
+        "artifact": "witnesses.json",
+        "sha256": "b08cb6fe6aa07867180f41b49fca346d59c933ca1c65ceeb3bc47272115849d7",
+        "bytes": 2556,
+        "matches_phase1": true
+      },
+      {
+        "artifact": "leads.json",
+        "sha256": "e0b878aabf2d70ba8d13e4d7f172ede29aa7c7a113f8d40f07dcd93045aa2809",
+        "bytes": 1726,
+        "matches_phase1": true
+      }
+    ],
+    "sameGoal_candidate_selfreport_matches": true,
+    "selection": "Chronological first current WARM single output; no quality selection/comparator inferred"
+  },
+  "courier_gate": {
+    "all45_sha_lengths_verified": true,
+    "readonly_outputs_verified": true,
+    "all_input_pins_readonly": false,
+    "input_mode_qualification": "20/45 readonly;25/45 terminal source-store files writable mode. No input-byte change. This qualification is retained, not silently converted to all-readonly."
+  },
+  "native_and_delivery_separate": {
+    "four_final_artifacts": "PRESENT_BYTE_VERIFIED",
+    "canonical_commit_distinct_from_native_Goal_completion": true,
+    "operational_complete_from_current_freeze": false,
+    "native_outcome": "HOLD",
+    "native_goal_status_before_cleanup": "blocked",
+    "native_goal_status_final": "paused",
+    "saved_goal_set": {
+      "createdAt": 1791267624,
+      "status": "active",
+      "timeUsedSeconds": 0,
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "updatedAt": 1791267624
+    },
+    "first_direct_goal": {
+      "createdAt": 1791267624,
+      "status": "active",
+      "timeUsedSeconds": 0,
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "updatedAt": 1791267624
+    },
+    "last_direct_goal": {
+      "createdAt": 1791267624,
+      "status": "paused",
+      "timeUsedSeconds": 592,
+      "tokenBudget": null,
+      "tokensUsed": 427309,
+      "updatedAt": 1791268217
+    },
+    "runner_error": "native Goal stopped before completion",
+    "runner_error_class": "RuntimeError",
+    "held_process_exit_code": 0,
+    "one_current_Goal_start": 1,
+    "Goal_replacements_observed": 0,
+    "native_turns_started": 3,
+    "native_turns_completed": 2,
+    "native_turns_interrupted": 1,
+    "all_owned_scopes_quiet": true,
+    "actual_original_quiet_flags": {
+      "client_tool_cgroups_quiet": true,
+      "client_tool_process_groups_absent": true,
+      "execution_units_quiet": true,
+      "held_process_groups_absent": true,
+      "native_cgroup_quiet": true
+    },
+    "host_terminal_projections": [
+      {
+        "component": "host-process",
+        "original_cgroup_absent_or_empty": true,
+        "service_runner_exit_code": 255,
+        "sha256": "2b289bb27019927daac774283521ed7005c28ed70e83d450bb0f8da212233eae",
+        "terminal_cgroup_empty": true,
+        "terminal_state": {
+          "active_state": "failed",
+          "native_host_pid": 0,
+          "sub_state": "failed"
+        }
+      },
+      {
+        "component": "pm_boundary-host-process",
+        "original_cgroup_absent_or_empty": true,
+        "service_runner_exit_code": 255,
+        "sha256": "827491de3d1fe593e3971e017de34c9babb0156b22d7653e6a9f2d76e981e9b1",
+        "terminal_cgroup_empty": true,
+        "terminal_state": {
+          "active_state": "failed",
+          "native_host_pid": 0,
+          "sub_state": "failed"
+        }
+      },
+      {
+        "component": "pm_execution-host-process",
+        "original_cgroup_absent_or_empty": true,
+        "service_runner_exit_code": 255,
+        "sha256": "1fdc0d6381a06ed68d27708c2787aba2018a6fdacd1a217f718aa8ddb9d14abd",
+        "terminal_cgroup_empty": true,
+        "terminal_state": {
+          "active_state": "failed",
+          "native_host_pid": 0,
+          "sub_state": "failed"
+        }
+      }
+    ],
+    "closed_before_original_total_stop": true,
+    "does_not_prove_source_correctness": true
+  },
+  "model_provenance": {
+    "requested_candidate_model": "gpt-6-luna",
+    "requested_candidate_effort": "max",
+    "observed_software_identity": {
+      "effort": "max",
+      "model": "gpt-6-luna"
+    },
+    "physical_provider_runtime_attestation": "UNKNOWN",
+    "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+    "API_thread_session_id_not_a_nativeGoalID": true,
+    "evaluator_assignment": "gpt-6.1-sol/xhigh; physical provider UNKNOWN"
+  },
+  "resource_provenance": {
+    "aggregate_memory_max_bytes": 2415919104,
+    "memory_swap_max_bytes": 0,
+    "component_memory_max_bytes": {
+      "outer_worker": 805306368,
+      "native": 805306368,
+      "pm_boundary": 268435456,
+      "pm_execution": 268435456,
+      "sandbox": 268435456
+    },
+    "resource_oom_observed": false,
+    "observed_complete_job_memory_peak_bytes": 373448704,
+    "fit": "UNKNOWN",
+    "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+    "original_birth_monotonic_ns": 98038371701294,
+    "original_total_stop_monotonic_ns": 99538371701294,
+    "original_allocation_seconds": 1500.0,
+    "private_slice_release_monotonic_ns": 98642278281729,
+    "private_slice_descendants_quiet": true,
+    "selected_profile_sha256": "368effbcef0dc0396449e2a9d524e0d174b9fb35880704e3e5f1c5c31b695441",
+    "selected_proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+    "embedded_pre_enrichment_receipt_sha256": "2c4c20bc696ec51c901d87fdd54239c3a2d15657e91943d93dc15d217a0e5c79",
+    "final_enriched_native_sha256": "dc189cf2d79c7f6eb3dff4e63208b3149eb215e4991d91eac5b919190310c808",
+    "proof_chain_scope": "Exactselected current proof-reader hash matches actualproof+launchseal; embedded referenced receipt hash and enriched final native hash distinct. Source-order enrichment sequence and separately retained preembeddingbytes UNKNOWN unless exact additional current source-order proof supplied; never reconstructed.",
+    "no_source_grade_or_fit_inference_from_resource_closure": true
+  },
+  "current_witness_execution_provenance": [
+    {
+      "execution_id": "exec-1ekbg2gd",
+      "original_result_sha256": "a7f43eb73945032940c8e1ce41bff680eac4c5679226fcea8eb86b869a06d6a8",
+      "positive_fields": {
+        "schema": "er9.execution.result.v1",
+        "actor": "candidate",
+        "execution_id": "exec-1ekbg2gd",
+        "execution_label": "executed by candidate",
+        "exit_code": 0,
+        "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+        "limits": {
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "network": "new empty namespace",
+          "stream_bytes_each": 32768,
+          "tasks": 16,
+          "wall_seconds": 5
+        },
+        "bootstrap_started": true,
+        "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+        "code_sha256": "5370dad01e21792db13b2a7c7eb56f3b32c219b2ba7aed35f6c44a16e612c195",
+        "data_sha256": "1daa91f99cdba9fc5503c4e96db66c07ba366920eba0ab06ebe3f18f61425923",
+        "stdout_bytes": 584,
+        "stdout_sha256": "c19e37a74234823c85a5b01b602562311fe676d11b66d199803034147f1c61c8",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "cleanup_confirmed": true,
+        "cleanup_classification": "collected_unit_absent",
+        "control_group_absent_after_stop": null,
+        "control_group_populated_after_stop": null,
+        "unit_active_state_after_stop": "inactive",
+        "unit_load_state_after_stop": "not-found",
+        "cleanup_state_returncode": 0,
+        "cleanup_stop_returncode": 5,
+        "stopped_by_adapter": null
+      }
+    }
+  ],
+  "execution_inventory_scope": "exact current selected terminal trusted execution store; all existing attempt folders enumerated, no evaluator retest",
+  "current_operation_counts": {
+    "attempts": {
+      "pm_boundary.mechanical": 1,
+      "pm_boundary.public_https_get": 17,
+      "pm_boundary.read_file": 64,
+      "pm_boundary.write_file": 3,
+      "pm_execution.python_execute": 1
+    },
+    "completed": {
+      "pm_boundary.public_https_get": 17,
+      "pm_boundary.read_file": 31,
+      "pm_boundary.write_file": 2,
+      "pm_execution.python_execute": 1
+    },
+    "failed": {
+      "pm_boundary.mechanical": 1,
+      "pm_boundary.read_file": 33,
+      "pm_boundary.write_file": 1
+    },
+    "no_guessed_execution": true,
+    "actual_admitted_input_pin_count": 69,
+    "source_access_cause": "Input hashes confirm admitted predecessor/source namespaces existed; candidate access failure was disclosed. Exact read-path/capability causation remains UNASSESSED; no correction of frozen scientific judgment from provenance."
+  },
+  "economics_separate": {
+    "usage_notification_count": 92,
+    "observed_cumulative_usage": {
+      "cachedInputTokens": 6400512,
+      "inputTokens": 6762114,
+      "outputTokens": 65707,
+      "reasoningOutputTokens": 50924,
+      "totalTokens": 6827821
+    },
+    "native_HTTP_attempts": "UNKNOWN",
+    "native_responses": "UNKNOWN",
+    "billing_dollars": "UNKNOWN",
+    "accounting_definitions": "native usage notifications are observed cumulative accounting; cached/reasoning scopes are nested only where selected runtime defines them; unknown inclusion semantics retained otherwise; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+    "direct_final_Goal_scalar_usage": 427309,
+    "no_sum_with_parent_UI_provider_or_baseline_attempts": true,
+    "money_UNKNOWN": true,
+    "request_cache_cancelled_tail_inclusion_UNKNOWN_where_unexposed": true
+  },
+  "limits_and_credit": {
+    "single_derivative_WARM": true,
+    "no_fresh_matched_logical_target_or_causal_credit": true,
+    "original_scientific_grades_not_supplied_not_replaced": true,
+    "missing_partner_science": "UNASSESSED",
+    "winner": "NOT_APPLICABLE",
+    "sameGoal_report_not_independentSol_grade": true,
+    "no_candidate_rerun_repair_or_newGoal": true,
+    "no_raw_native_modelIO_auth_conversation_or_OS_source_reads": true
+  },
+  "pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/INDEPENDENT-WARM-RECOVERY-1-FRESH_PHASE2_KEY_001.json",
+      "sha256": "b4f6b66caaffa1f58e607b912e11558cce896a516ef4edd30fc497b7a7b428c3",
+      "bytes": 40074
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/WARM1_FRESH_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+      "sha256": "674c96240623323a28cb3da3edb94d7f11a3a3107d7d81bcafdcd00ae43623d7",
+      "bytes": 1112
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/WARM1_FRESH_CURRENT_SINGLE_RUNTIME_001.json",
+      "sha256": "c952c99f122236433c215c23afae96d179aaed6e157efab6fee69321e39a951d",
+      "bytes": 56018
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/WARM1_FRESH_CURRENT_SINGLE_RESOURCE_EXECUTION_001.json",
+      "sha256": "0e35da80a72614d89f8557c9a6a2e7972db42e1b995fb6ad064e33d6d2054bfa",
+      "bytes": 6309
+    }
+  ],
+  "timing": {
+    "source_start_utc": "2026-10-06T06:56:04.683140+00:00",
+    "phase1_freeze_utc": "2026-10-06T07:14:16.912559+00:00",
+    "phase1_source_elapsed_seconds": 1092.229368357,
+    "checking_start_utc": "2026-10-06T07:15:49.168137+00:00",
+    "checking_anchor_distinct_from_phase2_budget_start": true,
+    "phase2_report_written_utc": "2026-10-06T07:18:31.607493+00:00",
+    "phase2_report_written_monotonic_ns": 101530464481149,
+    "phase2_elapsed_including_wait_seconds": 254.694933962,
+    "whole_elapsed_seconds": 1346.924302319,
+    "literal_phase2_deadline_monotonic_ns": 101875769547187,
+    "report_handoff_must_be_recorded_before_deadline": true,
+    "reset": false
+  },
+  "storage": "Original ENOSPC and authorized temporary staging preserved by exact storage receipt; no input relocation or permission expansion."
+}

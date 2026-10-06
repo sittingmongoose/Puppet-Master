@@ -1,0 +1,43 @@
+{
+  "schema": "er9.independent-evaluator-final-neutral-closure.v1",
+  "evaluation_id": "independent-warm-recovery-1",
+  "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "final_closure_anchor_utc": "2026-10-06T06:47:46.635202+00:00",
+  "final_closure_anchor_monotonic_ns": 99685492190970,
+  "source_status": "SOURCE_NOT_STARTED",
+  "source_seconds": "NOT_STARTED",
+  "phase1_frozen": "NOT_CREATED",
+  "phase2_seconds": "NOT_STARTED",
+  "whole_source_clock_seconds": "NOT_STARTED",
+  "known_prep_anchor_utc": "2026-10-06T06:40:30.459374+00:00",
+  "known_prep_seconds_through_required_handoffs": 436.175775784,
+  "whole_actual_agent_prep_seconds": "UNKNOWN",
+  "agent_initial_dispatch_utc": "UNKNOWN",
+  "exposure_actual_timestamp_utc": "UNKNOWN",
+  "exposure_utc_bounds": {
+    "not_before": "2026-10-06T06:40:30.459374+00:00",
+    "not_after": "2026-10-06T06:42:57.074238+00:00"
+  },
+  "exposure_monotonic_ns_bounds": {
+    "not_before": 99249316415186,
+    "not_after": 99395931293794
+  },
+  "required_handoffs_sent_before_anchor": [
+    "/root",
+    "/root/publisher",
+    "/root/cost_accounting",
+    "/root/frozen_exports"
+  ],
+  "ack_wait": false,
+  "exact_final_token_or_delivery_utc": "UNKNOWN",
+  "physical_provider": "UNKNOWN",
+  "usage_tokens": "UNKNOWN",
+  "actual_cost": "UNKNOWN",
+  "candidate_goal_identifier": "UNKNOWN",
+  "source_budget_reset": false,
+  "original_I06_grade_changed": false,
+  "scientific_grade_created": false,
+  "new_candidate_run_or_retest": false,
+  "prior_selector_verified_readonly": true,
+  "neutral_only_parent_final": true
+}

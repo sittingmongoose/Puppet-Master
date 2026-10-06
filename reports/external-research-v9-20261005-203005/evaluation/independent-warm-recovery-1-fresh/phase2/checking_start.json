@@ -1,0 +1,13 @@
+{
+  "schema": "er9.independent-phase2-checking-anchor.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "checking_start_utc": "2026-10-06T07:15:49.168137+00:00",
+  "checking_start_monotonic_ns": 101368025125109,
+  "phase1_freeze_utc": "2026-10-06T07:14:16.912559+00:00",
+  "phase1_freeze_monotonic_ns": 101275769547187,
+  "phase2_elapsed_including_wait_seconds": 92.255577922,
+  "phase2_deadline_monotonic_ns": 101875769547187,
+  "reset": false,
+  "gate_received": "Parent independently verified all45 input SHA/lengths and frozen readonly report/freeze/input-pin/storage hashes before current key release",
+  "input_mode_qualification": "25/45 terminal positive source-store files are writable mode;20/45 readonly. Frozen report outputs readonly. No input-byte change established."
+}

@@ -1,0 +1,776 @@
+{
+  "schema": "er9.confirmation-clock-first-paired-native-activation.v1",
+  "observed_utc": "2026-10-06T06:37:44.801197+00:00",
+  "cursor_observed_utc": "2026-10-06T06:37:44.224048+00:00",
+  "active_by_family": {
+    "M": 0,
+    "Z": 2,
+    "L": 3
+  },
+  "confirmed_native_starts": 217,
+  "pair_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001",
+  "rows": [
+    {
+      "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+      "arm": "control",
+      "native_goal_starts": 1,
+      "activation_metadata": {
+        "start_utc": "2026-10-06T06:35:50.646205+00:00",
+        "activation_utc": "2026-10-06T06:35:56.695187+00:00",
+        "goal_target_id": "target_muwb1rbd_14ab0a2e-c8bf-43b3-90a3-3c131cb6bb7c",
+        "observed_model": {
+          "modelId": "GLM-5.3-Flash",
+          "providerId": "builtin:zai-coding-plan"
+        },
+        "observed_effort": "max",
+        "pre_activation_seconds": 8.448647291006637
+      },
+      "startedTurn": true,
+      "original_clock": {
+        "original_birth_monotonic_ns": 98967103543632,
+        "original_total_stop_monotonic_ns": 100167103543632,
+        "native_stop_monotonic_ns": 100137103543632,
+        "guard_stop_monotonic_ns": 100162103543632
+      },
+      "resource_placements_before_goal": {
+        "component_placements": [
+          {
+            "component": "native",
+            "unit": "er9-glm-0cf653f172cc4451872d7c5a6743c84d.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2715650",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-0cf653f172cc4451872d7c5a6743c84d.service",
+              "MemoryPeak": "436158464",
+              "MemoryMax": "805306368",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "805306368",
+              "memory.swap.max": "0",
+              "memory.current": "432005120",
+              "memory.peak": "436158464",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "520769536",
+              "memory.peak": "523747328",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 98974096887696,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          },
+          {
+            "component": "pm_boundary",
+            "unit": "er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2715652",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+              "MemoryPeak": "13004800",
+              "MemoryMax": "268435456",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "268435456",
+              "memory.swap.max": "0",
+              "memory.current": "12333056",
+              "memory.peak": "13004800",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "519622656",
+              "memory.peak": "523747328",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 98974128237994,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          },
+          {
+            "component": "pm_execution",
+            "unit": "er9-glm-531fc5a0dae141abbd9d5e01dc273644.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2715651",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-531fc5a0dae141abbd9d5e01dc273644.service",
+              "MemoryPeak": "12288000",
+              "MemoryMax": "268435456",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "268435456",
+              "memory.swap.max": "0",
+              "memory.current": "11636736",
+              "memory.peak": "12288000",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "499441664",
+              "memory.peak": "523747328",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 98974159196411,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          }
+        ],
+        "retained_helper_placements": [
+          {
+            "pid": 2715640,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974097027877
+          },
+          {
+            "pid": 2715649,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974097128267
+          },
+          {
+            "pid": 2715650,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-0cf653f172cc4451872d7c5a6743c84d.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-0cf653f172cc4451872d7c5a6743c84d.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974097217268
+          },
+          {
+            "pid": 2715636,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974128317019
+          },
+          {
+            "pid": 2715648,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974128379440
+          },
+          {
+            "pid": 2715652,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974128465558
+          },
+          {
+            "pid": 2715638,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974159278673
+          },
+          {
+            "pid": 2715647,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974159343300
+          },
+          {
+            "pid": 2715651,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-531fc5a0dae141abbd9d5e01dc273644.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-531fc5a0dae141abbd9d5e01dc273644.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974159405997
+          }
+        ],
+        "all_existing_private_job_pids": [
+          {
+            "pid": 2715651,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-531fc5a0dae141abbd9d5e01dc273644.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-531fc5a0dae141abbd9d5e01dc273644.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974160262568
+          },
+          {
+            "pid": 2715650,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-0cf653f172cc4451872d7c5a6743c84d.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-0cf653f172cc4451872d7c5a6743c84d.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974160552016
+          },
+          {
+            "pid": 2715624,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974160796985
+          },
+          {
+            "pid": 2715636,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974160869923
+          },
+          {
+            "pid": 2715638,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974160928248
+          },
+          {
+            "pid": 2715640,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974161001415
+          },
+          {
+            "pid": 2715647,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974161077122
+          },
+          {
+            "pid": 2715648,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974161151832
+          },
+          {
+            "pid": 2715649,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-203005-c-01-confirmation-clock-fresh-r001-control-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974161214423
+          },
+          {
+            "pid": 2715652,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974161527132
+          },
+          {
+            "pid": 2715659,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974161595232
+          },
+          {
+            "pid": 2715665,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem5f778cbc81514e6d8f4ab05ecbf77715.slice/er9-glm-b54a840c53b24a208c56b427d3c1e46c.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98974161681913
+          }
+        ],
+        "aggregate_memory_max_bytes": 2415919104,
+        "swap_max_bytes": 0,
+        "verified_before_native_goal": true,
+        "fit": "UNKNOWN"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/native/receipt.json",
+        "sha256": "2639fdca1c13989f0e6ee031081b71e3f046617c4d463d750b59885f9ed1e380"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/stage.json",
+        "sha256": "03485120e153d1befda4fe8bb0ace2ae0eda60778034c48be882208896fd365e"
+      },
+      "launch_seal_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/LAUNCH_SEAL.json",
+        "sha256": "3129f0f258339af79c8a1333509bce27fae4a3cdfa8ba68c91d0a850fb120fdf"
+      },
+      "resource_config_binding_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/RESOURCE_CONFIG_BINDING.json",
+        "sha256": "ea813dd86a8613ecafea0405b98002543c81b6b95889b4cd8c66e9edbde34b36"
+      },
+      "whole_both_arm_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-01-CONFIRMATION-CLOCK-FRESH-R001/PIPELINE_CLOSURE.json",
+        "sha256": "1219fc48dc0284c2fe6a0879885d35a689ca3097f5e4011373d597b52012d0c6"
+      },
+      "ops_actual_both_arm_closure": {
+        "path": "LAB_ROOT/ops/dispatcher/fresh-closures/C-01-CONFIRMATION-CLOCK-FRESH-R001.json",
+        "sha256": "563628897795eb6555854290df0570f105c2f6895cbdc34585f3f190624632c0"
+      }
+    },
+    {
+      "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+      "arm": "treatment",
+      "native_goal_starts": 1,
+      "activation_metadata": {
+        "start_utc": "2026-10-06T06:32:37.593519+00:00",
+        "activation_utc": "2026-10-06T06:32:42.876753+00:00",
+        "goal_target_id": "target_muwaxlxu_0fe5a8ec-f797-442f-945b-803989626919",
+        "observed_model": {
+          "modelId": "GLM-5.3-Flash",
+          "providerId": "builtin:zai-coding-plan"
+        },
+        "observed_effort": "max",
+        "pre_activation_seconds": 7.846814705000725
+      },
+      "startedTurn": true,
+      "original_clock": {
+        "original_birth_monotonic_ns": 98773886951863,
+        "original_total_stop_monotonic_ns": 99973886951863,
+        "native_stop_monotonic_ns": 99943886951863,
+        "guard_stop_monotonic_ns": 99968886951863
+      },
+      "resource_placements_before_goal": {
+        "component_placements": [
+          {
+            "component": "native",
+            "unit": "er9-glm-3b1733479cb844b6b2956b35a9a867fb.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2714222",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-3b1733479cb844b6b2956b35a9a867fb.service",
+              "MemoryPeak": "428154880",
+              "MemoryMax": "805306368",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "805306368",
+              "memory.swap.max": "0",
+              "memory.current": "426717184",
+              "memory.peak": "428154880",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "514011136",
+              "memory.peak": "515022848",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 98780526168433,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          },
+          {
+            "component": "pm_boundary",
+            "unit": "er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2714221",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+              "MemoryPeak": "12779520",
+              "MemoryMax": "268435456",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "268435456",
+              "memory.swap.max": "0",
+              "memory.current": "12103680",
+              "memory.peak": "12779520",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "513224704",
+              "memory.peak": "515837952",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 98780561540694,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          },
+          {
+            "component": "pm_execution",
+            "unit": "er9-glm-f18b8ccb25f44027af1c4955d402ae38.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2714224",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-f18b8ccb25f44027af1c4955d402ae38.service",
+              "MemoryPeak": "12251136",
+              "MemoryMax": "268435456",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "268435456",
+              "memory.swap.max": "0",
+              "memory.current": "11730944",
+              "memory.peak": "12251136",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "493514752",
+              "memory.peak": "515837952",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 98780596690517,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          }
+        ],
+        "retained_helper_placements": [
+          {
+            "pid": 2714212,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780526342966
+          },
+          {
+            "pid": 2714218,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780526502105
+          },
+          {
+            "pid": 2714222,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-3b1733479cb844b6b2956b35a9a867fb.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-3b1733479cb844b6b2956b35a9a867fb.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780526657925
+          },
+          {
+            "pid": 2714208,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780561654597
+          },
+          {
+            "pid": 2714219,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780561743858
+          },
+          {
+            "pid": 2714221,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780561837540
+          },
+          {
+            "pid": 2714210,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780596807535
+          },
+          {
+            "pid": 2714223,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780596898963
+          },
+          {
+            "pid": 2714224,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-f18b8ccb25f44027af1c4955d402ae38.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-f18b8ccb25f44027af1c4955d402ae38.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780596990721
+          }
+        ],
+        "all_existing_private_job_pids": [
+          {
+            "pid": 2714221,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780598036395
+          },
+          {
+            "pid": 2714232,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780598146001
+          },
+          {
+            "pid": 2714238,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-0a994f40861e46c7b7a439c7ee64d373.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780598236045
+          },
+          {
+            "pid": 2714224,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-f18b8ccb25f44027af1c4955d402ae38.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-f18b8ccb25f44027af1c4955d402ae38.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780598561637
+          },
+          {
+            "pid": 2714222,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-3b1733479cb844b6b2956b35a9a867fb.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-3b1733479cb844b6b2956b35a9a867fb.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780598879399
+          },
+          {
+            "pid": 2714282,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-3b1733479cb844b6b2956b35a9a867fb.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-glm-3b1733479cb844b6b2956b35a9a867fb.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780598984515
+          },
+          {
+            "pid": 2714204,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780599342930
+          },
+          {
+            "pid": 2714208,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780599432218
+          },
+          {
+            "pid": 2714210,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780599514413
+          },
+          {
+            "pid": 2714212,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780599615837
+          },
+          {
+            "pid": 2714218,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780599719176
+          },
+          {
+            "pid": 2714219,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780599849762
+          },
+          {
+            "pid": 2714223,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9meme56c29334c9146ca8a899c414aebe792.slice/er9-203005-c-01-confirmation-clock-fresh-r001-treatment-research-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 98780599960861
+          }
+        ],
+        "aggregate_memory_max_bytes": 2415919104,
+        "swap_max_bytes": 0,
+        "verified_before_native_goal": true,
+        "fit": "UNKNOWN"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/native/receipt.json",
+        "sha256": "94a54827dfa77651130211e11a97fd69f50cffe6bc2b1113e015c212c12ada4b"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/stage.json",
+        "sha256": "ab73acdbcc4bac99d2574df832df79dad535a1fe8c281c8a10833c17b8c6465f"
+      },
+      "launch_seal_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/LAUNCH_SEAL.json",
+        "sha256": "2fa71d6146e0291607cfcf72c22a6da325254852a50e2e3f2c4af96f73e70484"
+      },
+      "resource_config_binding_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/RESOURCE_CONFIG_BINDING.json",
+        "sha256": "60a51e16e9c067b1f9247ac97ce7a21ddcc16e17ae54095ef36abf6457600d5c"
+      },
+      "whole_both_arm_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-01-CONFIRMATION-CLOCK-FRESH-R001/PIPELINE_CLOSURE.json",
+        "sha256": "1219fc48dc0284c2fe6a0879885d35a689ca3097f5e4011373d597b52012d0c6"
+      },
+      "ops_actual_both_arm_closure": {
+        "path": "LAB_ROOT/ops/dispatcher/fresh-closures/C-01-CONFIRMATION-CLOCK-FRESH-R001.json",
+        "sha256": "563628897795eb6555854290df0570f105c2f6895cbdc34585f3f190624632c0"
+      }
+    }
+  ],
+  "all_old22_quiet_new22_zero_prelaunch": {
+    "path": "LAB_ROOT/ops/dispatcher/DEC014_ATOMIC_PRELAUNCH_ALL22_001.json",
+    "sha256": "7c7889182a4665801b310bab3e071f0e7d8b4b27adbf4bc86be2ef2710b33587"
+  },
+  "new_confirmation_source_quality": "UNASSESSED",
+  "extra_logical_target_credit": false,
+  "raw_modelIO_or_evaluator_findings": false
+}

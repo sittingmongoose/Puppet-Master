@@ -1,0 +1,151 @@
+{
+  "schema": "er9.current-resource-execution-positive-projection.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "rows": [
+    {
+      "alias": "A",
+      "job_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "resource_profile_sha256": "368effbcef0dc0396449e2a9d524e0d174b9fb35880704e3e5f1c5c31b695441",
+      "private_slice_release_sha256": "1a1917c3219f15d22cafd5e6e0b9c8bd07596bd8236e80117f27671940e0be94",
+      "launch_seal_sha256": "ada88ea5e95a9d34bd1e2bb20b7b4a2d7a2ec05e6e1561d10246c8fef6aedf04",
+      "native_result_sha256": "dc189cf2d79c7f6eb3dff4e63208b3149eb215e4991d91eac5b919190310c808",
+      "profile": {
+        "schema": "er9.luna.private-memory-profile.v1",
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_birth_monotonic_ns": 98038371701294,
+        "original_total_stop_monotonic_ns": 99538371701294,
+        "allocation_monotonic_ns": 98039277765018,
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "host_reserve_bytes": 3221225472,
+        "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+      },
+      "release": {
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "27320320",
+          "memory.peak": "373448704",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MemoryPeak": "373448704",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "stop_returncode": 0,
+        "release_monotonic_ns": 98642278281729
+      },
+      "resource_oom_observed": false,
+      "aggregate_kernel_memory_before_worker_exit": {
+        "memory.max": "2415919104",
+        "memory.swap.max": "0",
+        "memory.current": "70295552",
+        "memory.peak": "373448704",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "observed_complete_job_memory_max_bytes": 2415919104,
+      "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_receipt_sha256": "2c4c20bc696ec51c901d87fdd54239c3a2d15657e91943d93dc15d217a0e5c79",
+      "chain_scope": "Exactselected current proof-reader hash matches actualproof+launchseal; embedded referenced receipt hash and enriched final native hash distinct. Source-order enrichment sequence and separately retained preembeddingbytes UNKNOWN unless exact additional current source-order proof supplied; never reconstructed.",
+      "current_actual_execution_receipts": [
+        {
+          "execution_id": "exec-1ekbg2gd",
+          "original_result_sha256": "a7f43eb73945032940c8e1ce41bff680eac4c5679226fcea8eb86b869a06d6a8",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-1ekbg2gd",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "5370dad01e21792db13b2a7c7eb56f3b32c219b2ba7aed35f6c44a16e612c195",
+            "data_sha256": "1daa91f99cdba9fc5503c4e96db66c07ba366920eba0ab06ebe3f18f61425923",
+            "stdout_bytes": 584,
+            "stdout_sha256": "c19e37a74234823c85a5b01b602562311fe676d11b66d199803034147f1c61c8",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        }
+      ],
+      "accounting_scope": "exactcurrent native usage, parent/UI/provider unknowns separate; moneyUNKNOWN; importedbaseline starts not recounted as current starts"
+    }
+  ],
+  "no_rawmodelio_or_candidatefacts": true,
+  "no_source_grade_or_clock_rewrite": true
+}

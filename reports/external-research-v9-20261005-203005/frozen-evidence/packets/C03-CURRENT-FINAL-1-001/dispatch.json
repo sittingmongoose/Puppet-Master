@@ -1,0 +1,117 @@
+{
+  "schema": "er9.current-holdout-single-final-source-packet.v1",
+  "protocol": "ER9-independent-output-v1",
+  "evaluation_id": "independent-confirmation-C03-final-1",
+  "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+  "scope": "single originalholdout currentdesignatedfinal4, counterpartfinalnotselected/missing scientificqualityUNASSESSED; no pairedwinner or futureDEC014credit",
+  "prepared_utc": "2026-10-06T06:24:21.200673+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-confirmation-C03-final-1/reservation.json",
+    "sha256": "0c228f9294027a25a34e112c96899a0e241d2ba7d1a3378fdb91addc1f335bac"
+  },
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/task/brief.md",
+      "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "bytes": 4343
+    },
+    "coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/task/coverage_map.json",
+      "sha256": "244191919a265d07a07f2a1906b60a03eaeb9bb7cbacb175c5dc7befa7655701",
+      "bytes": 4234
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    "actual_holdout_card": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/task/actual-holdout-card.json",
+      "sha256": "ff23c08020344377ae01322eb232d1078fd1a36d9dd90841d870203326a3cc40"
+    },
+    "actual_launched_Task_A": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/task/actual_launched_Task_A.md",
+      "sha256": "d5dfb6eb5cabfe1f2722cdb84667d90846bf42f502064fe4bf6a865a1e502af4"
+    }
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "assessed_stage": "critic_final",
+      "designated_final": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/outputs/A/final/proposal.md",
+        "sha256": "97751c969f7d422b8ab8cdd5a1339e1bc4c8be29b6e51e3db99a1dc0989171f1",
+        "bytes": 34970
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/outputs/A/final/sources.json",
+        "sha256": "3984b8f6cdc742b17b134dfe44c7fc5469d03bdd174de78ab9a87ba26f994378",
+        "bytes": 19292
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/outputs/A/final/witnesses.json",
+        "sha256": "ddbcfaa2972a0e401c74b93f86128b0f7d7f47bbaa576a4d1d5f92e0b25c732a",
+        "bytes": 9237
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/outputs/A/final/leads.json",
+        "sha256": "326a0e38a0576e0f48dc0b9c23b6ee5ec83b92907db59e4d49c873166138f575",
+        "bytes": 6773
+      },
+      "actual_stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "scope": "actual current originalholdout designatedfinal source only; missingcounterpart scientificqualityUNASSESSED,no matchedwinner or DEC014newstratum promotion"
+    }
+  ],
+  "integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/integrity-proof.json",
+    "sha256": "a429f9fb370b3bf2e558ede6ab8c09a7789e5a94082512b302d7584cd411f206"
+  },
+  "actual_criteria_counts": {
+    "released_holdout_H1_obligations": 10,
+    "common_dimensions": 8
+  },
+  "actual_card_duties": {
+    "complete_actual_final4_required": true,
+    "independent_implementation_precedents_min": 2,
+    "real_issue_fix_regression_chain_required": true
+  },
+  "applicability": {
+    "base_A_B_12": "NOT_THIS_HOLDOUT; exactH1coverage10 applies",
+    "base_A_B_important5": "NOT_DECLARED_FOR_H1; no import/invention",
+    "diagnostic_target3": "NOT_APPLICABLE_CONFIRMATION_HOLDOUT; exactcardduties retained"
+  },
+  "budget": {
+    "source_seconds": 1200,
+    "phase2_inclusive_seconds": 600,
+    "whole_seconds_includes_wait_reports_handoffs": 1800,
+    "actual_SOURCE_START": "persist UTC+monotonic immediatelybeforefirstsemanticdispatch/task/body read; reservation is preparation only",
+    "reservation_preparation_elapsed": "separate unknown until actualSOURCE_START, notzero or falselybudgetSTART",
+    "no_reset": true
+  },
+  "blinding": {
+    "held": "arm/model/Goal/status/operationalhistory/cost/keyuntilimmutableP1",
+    "known_hints": "rootlabel/currentTask/corecase/domain strings unavoidable, no perfectblinding claim"
+  },
+  "no_structural4_equals_sciencePASS_or_GoalComplete_or_pipeline_credit": true,
+  "lineage_boundary": "actual originalold1.4 currentfullfinal sourceview; no oldC03grade/output substitution, DEC014newstratum separate",
+  "missing_partner": {
+    "designated_final": null,
+    "scientific_quality": "UNASSESSED_NO_IMPLICIT_COMPARISON"
+  },
+  "source_only_preservation_guard": "raw deliveryrolemanifest/finalbundle/origin_actor model effort Goal status nativeproof jobsession andcost fields HELD_P2; positive recursive source bytefacet projections only"
+}

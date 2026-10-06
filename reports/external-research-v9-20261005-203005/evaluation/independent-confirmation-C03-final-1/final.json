@@ -1,0 +1,68 @@
+{
+  "schema": "er9.independent-confirmation-final-report.v1",
+  "evaluation_id": "independent-confirmation-C03-final-1",
+  "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+  "scientific_outcome": "FAIL",
+  "phase1": {
+    "json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/phase1.json",
+      "sha256": "a5da069e9b2592a82199eabe959e7525d1170a3901b821e6f57cebc38586d28a"
+    },
+    "md": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/phase1.md",
+      "sha256": "a4cca288801f970dfe694e81139ebe5c5692bb10ec54c0449fda51297da8b68c"
+    },
+    "lock": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/phase1.lock.json",
+      "sha256": "a2d5565b134f3cb7989ba1ddc2c49a87bbe4bbb80911e69daac9be74d447df38"
+    }
+  },
+  "phase2": {
+    "json": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/phase2.json",
+      "sha256": "2bdb496650107cf153a9e5d68bf74258325995d973a3050305e8031bdbc8a028"
+    },
+    "md": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/phase2.md",
+      "sha256": "223af677947fcfc2f214ad72680ee6135ca3ff64c81ec04dcf60fcb1324589c2"
+    }
+  },
+  "separate_truth_axes": {
+    "source_quality": "FAIL_IMMUTABLE_P1",
+    "actual_final4_delivery": "PRESENT_MEANINGFUL_EXACT_FROZEN_FILES",
+    "operational_delivery": "COMPLETE_AND_OWNED_QUIET_IN_SAFE_CURRENT_PROJECTION",
+    "native_driver_enum": "completed for both selected roles; distinct from Goal status",
+    "direct_native_Goal_status_record": "NOT_EXPORTED",
+    "native_Goal_status": "UNKNOWN",
+    "owner_selected_native_Goal_status_claim": "complete for both, claim only",
+    "Goal_activation_submission": "positive direct flags for both fresh selected role sessions",
+    "opaque_native_Goal_ID": "UNKNOWN",
+    "physical_provider": "UNKNOWN",
+    "billed_dollars": "UNKNOWN",
+    "matched_causal_credit": "UNASSESSED_NO_COMPLETED_COUNTERPART_SELECTED",
+    "future_DEC014": "SEPARATE_NO_CREDIT",
+    "complete_resource_fit": "UNKNOWN; finite observed peaks/no OOM do not establish general fit"
+  },
+  "clock": {
+    "reservation_utc": "2026-10-06T06:20:07.460646+00:00",
+    "reservation_to_SOURCE_START_seconds": 342.576373735,
+    "actual_SOURCE_START_utc": "2026-10-06T06:25:50.036989+00:00",
+    "actual_SOURCE_START_monotonic_ns": 98368894063424,
+    "P1_freeze_utc": "2026-10-06T06:43:19.976811+00:00",
+    "P1_freeze_monotonic_ns": 99418833813852,
+    "source_elapsed_at_P1_freeze_seconds": 1049.939750428,
+    "checking_start_utc": "2026-10-06T06:47:15.126140+00:00",
+    "checking_start_monotonic_ns": 99653983128475,
+    "inclusive_P2_wait_before_checking_seconds": 235.149314623,
+    "final_reports_ready_utc": "2026-10-06T06:51:14.117822+00:00",
+    "final_reports_ready_monotonic_ns": 99892974804990,
+    "inclusive_P2_elapsed_at_ready_seconds": 474.140991138,
+    "whole_elapsed_at_ready_seconds": 1524.080741566,
+    "P2_inclusive_deadline_monotonic_ns": 100018833813852,
+    "whole_deadline_monotonic_ns": 100168894063424,
+    "checking_anchor_is_not_budget_reset": true,
+    "required_report_handoffs": "Root/publisher final report selectors and accountant/foreman neutral clocks occur under remaining literal inclusive600; closure clock follows those handoffs.",
+    "no_reset": true
+  },
+  "no_matched_winner_or_DEC014_credit": true
+}

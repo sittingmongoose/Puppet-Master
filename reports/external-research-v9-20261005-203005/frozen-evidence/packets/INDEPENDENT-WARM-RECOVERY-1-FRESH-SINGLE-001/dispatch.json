@@ -1,0 +1,173 @@
+{
+  "schema": "er9.current-warm-single-source-output-packet.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "scope": "single_derivative_WARM_actual_current_canonical_source_outputs_plus_sameGoal_candidate_selfreport_no_new_target_credit",
+  "prepared_utc": "2026-10-06T06:55:03.022573+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-warm-recovery-1-fresh/reservation.json",
+    "sha256": "3b0ae043927c84721ecba6a3d9c3569d51731b9800fb64127d33179374dbf4ec"
+  },
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "physical_provider_telemetry": "UNKNOWN",
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "bytes": 5830
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "targeted_coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/targeted_coverage_map.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577
+    },
+    "full_brief_obligations": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577
+    },
+    "common_important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "bytes": 1952
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    "targeted_card": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/targeted-card.json",
+      "sha256": "883ca1fecc61250c9660299ec145ee81a8d4da2278930dd1edcd7e26dc8a92e2"
+    },
+    "actual_launched_task_A": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/task/actual_launched_task_A.md",
+      "sha256": "f9d20e9334550c560401850f6ffe949a9c891b8f47354bdb95e64eb02da8c2ef"
+    }
+  },
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "full_B_brief_obligations": 12,
+    "common_important_checks": 5,
+    "target_scope_checks": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF"
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "actual_stage": "critic_final",
+      "designated_final": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/final/proposal.md",
+        "sha256": "6ece8a7b5d6d34177df1ba125c56061f3e01922d42bd8eadd1d5da4e910c8cab",
+        "bytes": 10914
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/final/sources.json",
+        "sha256": "d7001cc38e8707ba503f49c94bd986d6400ef8f8ad6061ce7212f38c2b7396be",
+        "bytes": 6486
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/final/witnesses.json",
+        "sha256": "b08cb6fe6aa07867180f41b49fca346d59c933ca1c65ceeb3bc47272115849d7",
+        "bytes": 2556
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/final/leads.json",
+        "sha256": "e0b878aabf2d70ba8d13e4d7f172ede29aa7c7a113f8d40f07dcd93045aa2809",
+        "bytes": 1726
+      },
+      "candidate_self_report": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/outputs/A/critique/review.md",
+        "sha256": "bf8cd91618a1f08701bf4c5153c7383f3b7c92b290d9da2ba0a7da0361533c80",
+        "bytes": 6727
+      },
+      "candidate_report_provenance": "SAME current combined candidate nativeGoal authored; NOT independentSol/evaluator judgment",
+      "partial_artifacts": [],
+      "missing_catalogs": [],
+      "other_frozen_artifact_presence_metadata": [],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "B-P1",
+      "obligation_ids": [
+        "B08",
+        "B09"
+      ],
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "check_id": "B-P2",
+      "obligation_ids": [
+        "B02",
+        "B03",
+        "B04",
+        "B10"
+      ],
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "check_id": "B-P3",
+      "obligation_ids": [
+        "B11"
+      ],
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "check_id": "B-P4",
+      "obligation_ids": [
+        "B12"
+      ],
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "check_id": "B-P5",
+      "obligation_ids": [
+        "B01",
+        "B05",
+        "B06",
+        "B07",
+        "B10"
+      ],
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "targeted_predeclared_checks": [],
+  "inherited_target_coverage_source_pair_id": null,
+  "coverage_lineage_rule": "exactinheritedscope map bytes preserved, currentpairedidentity explicit; no truthkey or newrubric",
+  "targeted_scope_boundary": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF",
+  "broader_full_development_proposal_completeness": "full actual integrated development brief applies to available designated final; missing partner scientific quality UNASSESSED",
+  "integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-WARM-RECOVERY-1-FRESH-SINGLE-001/integrity-proof.json",
+    "sha256": "abd7356acbcaceb0bd523136d6db4d202f98c3a5009ca5402f57c4303529fb5e"
+  },
+  "budget": {
+    "source_screen_seconds": 1200,
+    "whole_seconds": 1800,
+    "phase2_max_seconds": 600,
+    "whole_includes_report_handoff": true,
+    "reset": false,
+    "start_rule": "START immediatelybeforefirstpermittedsemantic task/source/candidatebody read"
+  },
+  "blinding": {
+    "known_hints": "Case/role/model labels in rootassignment andexactactualTASKs unavoidable; descriptorcatalogpresence is metadata, no perfectblinding claim",
+    "held": "aliases/nativeGoals/status/history/economics/sourcegrades/privatekey untilimmutablePhase1"
+  },
+  "comparison_boundary": "Actual current singleWARM canonicaloutputs only; sameGoalselfreport notindependentjudge. Missing final/scientificremainderUNASSESSED, actualmandatorydeliveryseparate. No originalgrade replacement/newlogical/fresh/matched/causalcredit or bestof; native/status/cost helduntilimmutableP1.",
+  "selection_rule": "root chronological ALL five fixedWARM outputs regardlessnative/sourcegrade, firstcurrentterminal unit; prior originalsourcegrades unchanged and excluded, no qualityselection"
+}

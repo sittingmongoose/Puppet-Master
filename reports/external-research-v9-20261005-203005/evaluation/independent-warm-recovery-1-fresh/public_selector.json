@@ -1,0 +1,71 @@
+{
+  "schema": "er9.independent-current-warm-public-selector.v1",
+  "evaluation_id": "independent-warm-recovery-1-fresh",
+  "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+  "scope": "Chronological first current derivative WARM single-output only; original scientific grades excluded; no new logical/fresh/matched/target/causal-credit comparator",
+  "authoritative_reports": [
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/storage_exception.json",
+      "sha256": "54b1ec09c6dff83f02c8da19bf3d650f966ba6edca95954ecf6c5d208197352a",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/storage_exception.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1_freeze.json",
+      "sha256": "cf3616248889f0dec176be5264fa881a0a9407d7fb4d77d63499564248918147",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1_freeze.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/input_pins.json",
+      "sha256": "1842316ad42cb462f58aa5f2c62ca1fffbe2db2bf4f1eac811d8bb16091e7f8f",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/input_pins.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/judgment.json",
+      "sha256": "433df474bb2077d153716b78c14683f93a0c8bef9c0ee14825319836d0046d7b",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/judgment.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1/report.md",
+      "sha256": "35f3a939645493b38e225ebf126b4ed7057f630ac58b113e87b1dddd74c3180f",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/report.md",
+      "mirror_byte_identical": true
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase2/checking_start.json",
+      "sha256": "d6dac9b1a670a56a133c3aa4bf97f43d1d2e39bae6c375a5f9f74954a1f9a7d7",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase2/checking_start.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase2/result.json",
+      "sha256": "dc61aa0197a5b9a33280f7bf0cbaf6e515a35ac5795dd045e3fcfc79ea31d50b",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase2/result.json",
+      "mirror_byte_identical": true
+    },
+    {
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase2/report.md",
+      "sha256": "b9a945ef7c868e8ea7518124c2ec9c170659e3b55e640ad5f06984a3d346594f",
+      "mirror_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase2/report.md",
+      "mirror_byte_identical": true
+    }
+  ],
+  "mirror_receipt": {
+    "path": "/tmp/er9-independent-warm-recovery-1-fresh/mirror_receipt.json",
+    "sha256": "5bbb5cfe2f7d7ec04d1d4c6ccf88f711079180339cb9c066dc4a02ddb42551f1"
+  },
+  "source_start_utc": "2026-10-06T06:56:04.683140+00:00",
+  "phase1_freeze_utc": "2026-10-06T07:14:16.912559+00:00",
+  "literal_phase2_stop_utc": "2026-10-06T07:24:16.912559Z",
+  "whole_stop_utc": "2026-10-06T07:26:04.683140Z",
+  "scientific_report_routes": [
+    "/root",
+    "/root/publisher"
+  ],
+  "courier_route_scope": "/root/frozen_exports neutral pins/clocks/gates only",
+  "input_mode_qualification": "45 SHA/lengths independently verified;20 inputs readonly/25 terminal-store writable mode; report outputs readonly; no original byte change",
+  "storage_qualification": "Root-authorized tiny /tmp stage after ENOSPC, later byte-identical LAB mirror; inputs and execution permissions unchanged"
+}
