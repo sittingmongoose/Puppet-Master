@@ -1,14 +1,14 @@
 /* Shared transcript surfaces; deliberately no .working-card/Orbit/Step Rail
    styling or animation changes. */
 [hidden], .hidden { display:none !important; }
-.transcript { min-width:0; overflow-x:hidden; padding-bottom:28px; }
-.transcript-inner, .message, .message-surface, .event-copy, .system-copy,
+.transcript, .tx-feed { min-width:0; overflow-x:hidden; padding-bottom:28px; }
+.transcript-inner, .tx-feed-inner, .message, .message-surface, .event-copy, .system-copy,
 .plan-doc, .pd-body, .att-message, .att-grid { min-width:0; max-width:100%; }
-.transcript .message-surface, .transcript .event-copy { overflow-wrap:anywhere; }
-.transcript pre { max-width:100%; white-space:pre-wrap; overflow-wrap:anywhere; }
-.transcript table { width:100%; table-layout:fixed; }
-.transcript td, .transcript th { overflow-wrap:anywhere; min-width:0; }
-.transcript img, .transcript video, .transcript canvas { max-width:100%; }
+:is(.transcript, .tx-feed) .message-surface, :is(.transcript, .tx-feed) .event-copy { overflow-wrap:anywhere; }
+:is(.transcript, .tx-feed) pre { max-width:100%; white-space:pre-wrap; overflow-wrap:anywhere; }
+:is(.transcript, .tx-feed) table { width:100%; table-layout:fixed; }
+:is(.transcript, .tx-feed) td, :is(.transcript, .tx-feed) th { overflow-wrap:anywhere; min-width:0; }
+:is(.transcript, .tx-feed) img, :is(.transcript, .tx-feed) video, :is(.transcript, .tx-feed) canvas { max-width:100%; }
 .assistant-grid.activity-pinned { grid-template-columns:minmax(150px,var(--history-w)) minmax(230px,var(--activity-w)) minmax(300px,1fr); }
 .assistant-grid.history-closed.activity-pinned { grid-template-columns:minmax(230px,var(--activity-w)) minmax(300px,1fr); }
 @media(min-width:821px) and (max-width:1100px){

@@ -60,7 +60,8 @@
     var label = ctx.statusLabel(s);
     return '<span class="ph-status ph-s-' + ctx.esc(s) + '" data-status="' + ctx.esc(s) + '"'
          + ' data-k="tstat:' + ctx.esc(t.id || '') + '" role="img"'
-         + ' aria-label="' + ctx.esc(label) + '" title="' + ctx.esc(label) + '">'
+         + ' aria-label="' + ctx.esc(label) + '"'
+         + ' data-hover-key="ph-status:' + ctx.esc(t.id || '') + '" data-hover-tip="' + ctx.esc(label) + '">'
          + N.status(s, 15) + '</span>';
   });
 
@@ -299,7 +300,7 @@
          + ' aria-valuemin="' + W_MIN + '" aria-valuemax="' + Math.round(Math.min(W_MAX, paneWidth() * W_PANE)) + '"'
          + ' aria-valuenow="' + clampWidth(widthNow()) + '"'
          + ' aria-label="Resize the pinned history drawer"'
-         + ' title="Drag to resize the pinned drawer"></div>';
+         + ' data-hover-key="ph-resize" data-hover-tip="Drag to resize the pinned drawer"></div>';
   });
 
   /* ---- open / pin / close ------------------------------------------------ */
