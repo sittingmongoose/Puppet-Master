@@ -1,0 +1,144 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T21:21:14.966765+00:00",
+  "case_id": "D-M15-A",
+  "arm": "treatment",
+  "stage": "fresh_full_synthesis_final",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/INPUT_MAP.json",
+      "sha256": "dc69a3e967014643b16584bde048feda471abdeefac99f5b94491de2f242368e",
+      "bytes": 2623
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/admission-timing.json",
+      "sha256": "3603689817f6039a7df0b371e74fb0dddd3c1ef1f123ca9e58d202f9d2a3a49b",
+      "bytes": 781
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/assignment.md",
+      "sha256": "8ed1a21c5a6c1ab5b9972e1229c952144e861ffd7f4cd05594c3e93bbdebf063",
+      "bytes": 4030
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/dispatch-receipt.json",
+      "sha256": "6702c1db5795394cd978592effd3b1b053c5a83077b690473365c1099e81a5e5",
+      "bytes": 1115
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/dispatch-request.json",
+      "sha256": "68c4956e66641d44bca1d195fd3c855c076e60bc49383311b161d22a1ce8955d",
+      "bytes": 705
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/dispatch.json",
+      "sha256": "eaab09238eb2daeb8c30fd8ddd47e8f340e61ad7df750788fb07507f28ab0c90",
+      "bytes": 1546
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/final.md",
+      "sha256": "cd06682f9415536d3e0a419ac8d3b2b67b95f2dcfd38181ebe4f04b5a8233e0c",
+      "bytes": 8377
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/integration-state-active.json",
+      "sha256": "23a1aea13252ace406f0ca25855f3a56c5751bc3e80b5f8715c9fa01908ce35b",
+      "bytes": 5958
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/integration-state-terminal.json",
+      "sha256": "577fb7ac6be5b829198ddf9136c41c1c5c79b8df33c91e856a4dd4c101ef0105",
+      "bytes": 4577
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/passive-active-capture-cost.json",
+      "sha256": "011cd69e76832ca995d51e67ee7be9efc4de3f7a8f6f86c2e9c57b9379494916",
+      "bytes": 1324
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/passive-active.json",
+      "sha256": "f8a6ab0381bbc94540b1cc5f6c528204f101e3af475f9e1a5019ef4dd9ab775c",
+      "bytes": 16948
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/passive-terminal-capture-cost.json",
+      "sha256": "ad4b9682b53e30c06a281f61117f20e5c20258a1b3afaea49707045724d64790",
+      "bytes": 1326
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/passive-terminal.json",
+      "sha256": "50a31c853b09d57d11819034d4af5d1a40608664aa62a435e62311fa2f00e97c",
+      "bytes": 20059
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/read-log.txt",
+      "sha256": "d72363c233a20c03db312fafad8f28318acabd47a375c2b93180cbc36f323807",
+      "bytes": 807
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/SHA256SUMS",
+      "sha256": "fc1d67759711bcec0de76f30e066e1842686305d26a28ca81ff7a34cf1447fa0",
+      "bytes": 716
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/aws-s3-createmultipartupload.html",
+      "sha256": "3f7f3e6a234b8e37d9a7a39e8cf5cac2f3e486acbb67f6356fde8a919c5b8d48",
+      "bytes": 108900
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/aws-s3-uploadpart.html",
+      "sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "bytes": 67235
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/git-objects-chapter.html",
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "bytes": 145608
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/index.json",
+      "sha256": "26ae4bf76666c92e3a7db00465226d26dfa534bf8661b821970952b2d0cca07a",
+      "bytes": 7498
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/man7-open-2.html",
+      "sha256": "d665489cadb85624d98fae03a8d8d06209030f32735cff8aeba949ad8491c789",
+      "bytes": 76506
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/man7-rename-2.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/rfc9110.html",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "bytes": 1187554
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/sqlite-atomiccommit.html",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/tus-resumable-upload-1.0.0.html",
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "bytes": 210884
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/task-terminal.json",
+      "sha256": "6a1d156e2070ab358ca8946590509d9249b85cde6fe44d28223cffdde3c17a5c",
+      "bytes": 2179
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/timings.json",
+      "sha256": "0ee956e96e12279b932a2ff44dfdc757718f9167cc00313d2ddb3ce5d505f2c4",
+      "bytes": 2928
+    }
+  ]
+}

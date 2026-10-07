@@ -1,0 +1,36 @@
+{
+  "cache_mode": "cold",
+  "elapsed_seconds": 0.11007739900014712,
+  "ended_at": "2026-10-07T20:59:27.193046+00:00",
+  "network_requests": 1,
+  "operation": "fetch",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 71130,
+      "sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "71130",
+      "Content-Type": "text/plain; charset=utf-8",
+      "ETag": "\"664860396c2ffe168efb25480b77bb7469954b8ab45446b3dbecb29623e3db63\"",
+      "Last-Modified": null
+    },
+    "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js",
+    "raw": {
+      "bytes": 71130,
+      "sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108"
+    },
+    "retrieved_at": "2026-10-07T20:59:27.187628+00:00",
+    "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js"
+  },
+  "record_id": "13db7aafeebc64f6cead4ad2d96845d02cc7df96149094aea76b6645289feef4",
+  "source": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js",
+  "started_at": "2026-10-07T20:59:27.082966+00:00",
+  "status": "ok"
+}

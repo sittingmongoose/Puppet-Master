@@ -1,0 +1,185 @@
+{
+  "job": "D-M15-A/control/whole_question_research_final-v3",
+  "common_T0": "2026-10-07T20:31:30.755788+00:00",
+  "admission": {
+    "prospective_stage_admission": "2026-10-07T20:31:43.264156+00:00",
+    "admission_timing_prepared_at": "2026-10-07T20:31:43.264156+00:00",
+    "actual_earlier_t3_request": null,
+    "actual_earlier_t3_request_note": "No recorded T3 request timestamp earlier than the prospective admission was available to this agent; earliest observed agent activity is first_observed_agent_activity below, which is after admission, so the min-rule deadline stands at stage_latest_absolute_deadline.",
+    "first_observed_agent_activity": "2026-10-07T20:33:18.093803868+00:00",
+    "stage_latest_absolute_deadline": "2026-10-07T21:31:30.755788+00:00",
+    "common_pair_deadline": "2026-10-07T22:11:30.755788+00:00",
+    "governing_deadline": "2026-10-07T21:31:30.755788+00:00",
+    "deadline_rule": "min(actual prospective admission + 60m stage allowance, frozen latest absolute deadline, common pair deadline); no reset; counterpart queue fully included"
+  },
+  "logical_phases_minutes": {
+    "research": 45,
+    "authoring_output": 15
+  },
+  "reading_log": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/assignment.md",
+      "role": "assignment (objective task statement)",
+      "authorized_by": "objective"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/INPUT_MAP.json",
+      "role": "input map",
+      "authorized_by": "objective/assignment"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/admission-timing.json",
+      "role": "prospective admission annotation (frozen rule)",
+      "authorized_by": "assignment"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/brief.md",
+      "role": "original_brief",
+      "authorized_by": "INPUT_MAP.original_brief"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/sources.json",
+      "role": "original_source_manifest (open discovery, intentionally empty)",
+      "authorized_by": "INPUT_MAP.original_source_manifest"
+    }
+  ],
+  "not_read_by_rule": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/dispatch.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/dispatch-receipt.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/dispatch-request.json",
+    "predecessor reports/source indices/source bytes (none listed: INPUT_MAP.predecessors=[], INPUT_MAP.sources=[])",
+    "sibling answers, control/treatment counterpart, old v1/v2 science/failures, evaluator facts, root failure analysis, other cases/reviews/helpers/campaign/history (not listed, not touched)"
+  ],
+  "source_ops": [
+    {
+      "op": "fetch",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "to": "sources/rfc9110.html",
+      "at": "2026-10-07T20:36:55+00:00"
+    },
+    {
+      "op": "fetch",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "to": "sources/tus-resumable-upload-protocol.html",
+      "at": "2026-10-07T20:36:55+00:00"
+    },
+    {
+      "op": "fetch",
+      "url": "https://curl.se/docs/manpage.html",
+      "to": "sources/curl-manpage.html",
+      "at": "2026-10-07T20:36:56+00:00"
+    },
+    {
+      "op": "fetch",
+      "url": "https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-resumable-upload",
+      "to": "sources/draft-ietf-httpbis-resumable-upload.html",
+      "at": "2026-10-07T20:36:56+00:00"
+    },
+    {
+      "op": "hash+extract",
+      "detail": "sha256 all 4 captures; grepped/parsed captured bytes for versions and section anchors",
+      "at": "2026-10-07T20:38:00+00:00"
+    },
+    {
+      "op": "fetch",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "to": "sources/man7-rename.2.html",
+      "at": "2026-10-07T20:41:31+00:00"
+    },
+    {
+      "op": "fetch",
+      "url": "https://man7.org/linux/man-pages/man2/unlink.2.html",
+      "to": "sources/man7-unlink.2.html",
+      "at": "2026-10-07T20:41:31+00:00"
+    },
+    {
+      "op": "fetch",
+      "url": "https://www.w3.org/TR/FileAPI/",
+      "to": "sources/w3c-fileapi.html",
+      "at": "2026-10-07T20:41:31+00:00"
+    },
+    {
+      "op": "fetch",
+      "url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects",
+      "to": "sources/git-internals-objects.html",
+      "at": "2026-10-07T20:41:31+00:00"
+    },
+    {
+      "op": "hash+extract",
+      "detail": "sha256 all 4 new captures; extracted rename atomicity, unlink-while-open, Blob snapshot state, content-addressed identity passages; appended findings F4-F6 + bridge to notes.md",
+      "at": "2026-10-07T20:44:00+00:00"
+    }
+  ],
+  "capture": [
+    {
+      "file": "sources/rfc9110.html",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "index_row": "sources/index.json#0"
+    },
+    {
+      "file": "sources/tus-resumable-upload-protocol.html",
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "index_row": "sources/index.json#1"
+    },
+    {
+      "file": "sources/curl-manpage.html",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "index_row": "sources/index.json#2"
+    },
+    {
+      "file": "sources/draft-ietf-httpbis-resumable-upload.html",
+      "sha256": "1710111b176fe87f72259d216330b375c7615d8eba2935d40ae5f9a8e9224e85",
+      "index_row": "sources/index.json#3"
+    },
+    {
+      "file": "sources/man7-rename.2.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "index_row": "sources/index.json#4"
+    },
+    {
+      "file": "sources/man7-unlink.2.html",
+      "sha256": "54342d11f277bc670a1896301752b87abbb27261a1e84e8300f2d4c1b0fbde9b",
+      "index_row": "sources/index.json#5"
+    },
+    {
+      "file": "sources/w3c-fileapi.html",
+      "sha256": "975b6f12f51320b7f90af2b97e38a80358b5964bc274caafb5d126b3f3881efc",
+      "index_row": "sources/index.json#6"
+    },
+    {
+      "file": "sources/git-internals-objects.html",
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "index_row": "sources/index.json#7"
+    }
+  ],
+  "first_useful_saved_finding": {
+    "at": "2026-10-07T20:40:00+00:00",
+    "where": "notes.md#first-useful-finding",
+    "what": "F1: HTTP byte-range resume with If-Range (RFC 9110 \u00a713.1.5) vs tus v1.0.0 offset-probe resume; conditions + adoption cost + unknown server-support uncertainty retained",
+    "finding_id": "F1"
+  },
+  "output": {
+    "file": "final.md",
+    "sha256": "6fd7b4ff379feafda1135147f69891b3c71105215709c7ec397039705eb310f0",
+    "completed_at": "2026-10-07T20:48:02.937017+00:00",
+    "words": 1083,
+    "deliverables": [
+      "final.md",
+      "sources/ (8 captures + index.json)"
+    ]
+  },
+  "known_usage": null,
+  "unknown_input": null,
+  "cache": null,
+  "generated": null,
+  "billing": null,
+  "native_counters": {
+    "native_goals": 1,
+    "note": "Distinct counter: one fresh installed native Goal per admission-timing.json (native_goals=1); not merged with any other usage counter."
+  },
+  "terminal": {
+    "terminal_at": "2026-10-07T20:48:02.937271+00:00",
+    "note": "Scientific outputs (final.md, sources/) are final as of terminal_at; no post-terminal amendments per assignment.",
+    "final_md_sha256_at_terminal": "6fd7b4ff379feafda1135147f69891b3c71105215709c7ec397039705eb310f0"
+  }
+}

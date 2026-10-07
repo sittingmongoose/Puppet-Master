@@ -1,0 +1,31 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "mode": "async",
+  "role": "general",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "clientRequestId": "er10-I-FAST-02-control-reviser-v1",
+  "record_at": "2026-10-07T21:11:47.401356+00:00",
+  "prospective_stage_deadline": "2026-10-07T21:26:47.401356+00:00",
+  "prospective_arm_deadline": "2026-10-07T21:28:26.855867+00:00",
+  "stage_allowance_seconds": 900,
+  "aggregate_ceiling_seconds": 2700,
+  "prior_nonoverlapping_occupied_seconds": 1612.779,
+  "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+  "prefrozen_stage_config": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/reviser-v1/prospective-config-v1.json"
+}

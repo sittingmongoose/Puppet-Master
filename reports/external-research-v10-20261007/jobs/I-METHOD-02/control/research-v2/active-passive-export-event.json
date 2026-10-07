@@ -1,0 +1,7 @@
+{
+  "chunk_id": "c4c03d",
+  "wall_time_seconds": 0.094396232,
+  "exit_code": 1,
+  "original_token_count": 219,
+  "output": "Traceback (most recent call last):\n  File \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py\", line 221, in <module>\n    if __name__=='__main__':main()\n                            ~~~~^^\n  File \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py\", line 213, in main\n    value=harvest(stage,db,ids,records,sources,now);raw=json.dumps(value,indent=2,ensure_ascii=False).encode()+b'\\n'\n  File \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py\", line 91, in harvest\n    if tid not in ids: raise ValueError('thread absent from campaign root/owned supervisor authority')\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: thread absent from campaign root/owned supervisor authority\n"
+}

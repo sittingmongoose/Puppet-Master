@@ -1,0 +1,2981 @@
+{
+  "schema_version": "1.0",
+  "source_judgment": "FAIL",
+  "entire_declared_scientific_scope_assessed": true,
+  "counts": {
+    "six_axes": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "O1_O6": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "plan_sections": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "frozen_plan_decisions": {
+      "total": 36,
+      "complete": 36,
+      "assessed": 36,
+      "unassessed": 0
+    },
+    "scope_constraints": {
+      "total": 5,
+      "complete": 5,
+      "assessed": 5,
+      "unassessed": 0
+    },
+    "authored_product_questions": {
+      "total": 8,
+      "complete": 8,
+      "assessed": 8,
+      "unassessed": 0
+    },
+    "external_owner_documents_or_decisions": {
+      "total": 0,
+      "complete": 0,
+      "assessed": 0,
+      "unassessed": 0
+    },
+    "consequential_finding_groups": {
+      "total": 27,
+      "complete": 27,
+      "assessed": 27,
+      "unassessed": 0,
+      "without_material_defect": 25,
+      "with_material_defect": 2,
+      "distinct_material_error_count": 1
+    },
+    "criticism_dispositions": {
+      "total": 7,
+      "complete": 7,
+      "assessed": 7,
+      "unassessed": 0
+    },
+    "preservation_groups": {
+      "total": 61,
+      "complete": 61,
+      "assessed": 61,
+      "unassessed": 0
+    },
+    "P6_validation_categories": {
+      "total": 8,
+      "complete": 8,
+      "assessed": 8,
+      "unassessed": 0
+    }
+  },
+  "counting_note": "Inventories are separately counted; O1-O6, P atoms, constraints and preservation overlap and must not be summed as distinct requirements. Complete means assessment completed, not requirement satisfied.",
+  "material_error_count": 1,
+  "material_errors": [
+    {
+      "id": "D1",
+      "identity": "Misread pandas #35558 valid-index regression and apply preliminary test review to revised/merged test",
+      "claim_locations": [
+        "F:20",
+        "F:130",
+        "critic source-map S13 and audit C5"
+      ],
+      "finding_ids": [
+        "F21",
+        "F23"
+      ],
+      "conditions": "Historical parent commit 59ffa251269ddb8b561d8d88f631a5db21f660dc: left_index=True, right_index=True, no by keys, tolerance non-None and compatible. String formatting uses unbound lk before compatibility checks. Preliminary test at 59a07c22 has by=ticker; final at 7214b3c removes by.",
+      "impact": "Incorrect criticism narrows affected inputs and wrongly discounts the pertinent regression evidence required by O3; the error survives into final history and criticism disposition. This is not a claim that the old defect persists in pandas 3.0.6."
+    }
+  ],
+  "axes": [
+    {
+      "axis": 1,
+      "coverage": "ASSESSED",
+      "judgment": "FAIL",
+      "note": "All O1-O6, 36 frozen plan atoms, five scope constraints and eight product questions checked; O3/O5 contain D1."
+    },
+    {
+      "axis": 2,
+      "coverage": "ASSESSED",
+      "judgment": "FAIL",
+      "note": "27 consequential finding groups assessed; F21/F23 share D1. Governing historical and current code/release conditions pinned."
+    },
+    {
+      "axis": 3,
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "note": "Useful bounded discovery, mechanisms, alternatives and all five negative leads checked. Plot package/jurisdiction/site mapping remain open; no exhaustive recall claim."
+    },
+    {
+      "axis": 4,
+      "coverage": "ASSESSED",
+      "judgment": "FAIL",
+      "note": "C1-C7 and all six already-covered/five rejected dispositions checked. C5 rejects valid revised regression evidence using an obsolete review comment."
+    },
+    {
+      "axis": 5,
+      "coverage": "ASSESSED",
+      "judgment": "FAIL",
+      "note": "61 preservation/disposition groups assessed. Design options/limits largely preserved; history and C5 misstate valid-input applicability under D1."
+    },
+    {
+      "axis": 6,
+      "coverage": "ASSESSED",
+      "judgment": "PASS",
+      "note": "All eight P6 categories assessed. Proposed vs executed boundary is honest; no app test or executed numerical witness. Upstream test source applicability error is recorded under D1."
+    }
+  ],
+  "obligations": {
+    "O1": {
+      "status": "ASSESSED_PASS_WITH_LIMITATIONS",
+      "reference": "F:24,58,71,107-128",
+      "note": "Useful primary-source discovery beyond frozen entries is present. Discovery order is author-reported; no lifecycle reconstruction attempted. No exhaustive opportunity recall."
+    },
+    "O2": {
+      "status": "ASSESSED_PASS",
+      "reference": "F:30,55,69-70,129",
+      "note": "Pinned public definition, governing caller/validator, compiled implementation, current tests and release verified."
+    },
+    "O3": {
+      "status": "ASSESSED_FAIL",
+      "reference": "F:20,130",
+      "note": "Real issue, fix, test and release exist, but D1 materially misstates affected valid inputs and revised regression evidence."
+    },
+    "O4": {
+      "status": "ASSESSED_PASS",
+      "reference": "F:34-105",
+      "note": "All six sections and all 36 frozen plan decisions assessed; precise bounded P references and dispositions retained."
+    },
+    "O5": {
+      "status": "ASSESSED_WITH_MATERIAL_DEFECT",
+      "reference": "F:10-24",
+      "note": "Seven visible substantive criticism dispositions assessed; C5 incorrect. Critic family/identity and procedural independence not inferred from artifact metadata; host concern outside scientific grade."
+    },
+    "O6": {
+      "status": "ASSESSED_PASS",
+      "reference": "F:32-135",
+      "note": "Complete single replacement artifact, options, rationale, dispositions, proposals and uncertainty are present. Completeness does not cure D1 source error."
+    }
+  },
+  "frozen_plan_decisions": [
+    {
+      "id": "P1.1",
+      "requirement": "Volunteer CSV for two locations",
+      "frozen_reference": "plan.md:7",
+      "final_reference": "F:34-41",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P1.2",
+      "requirement": "Authorized public download for one station",
+      "frozen_reference": "plan.md:7",
+      "final_reference": "F:34-41",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P1.3",
+      "requirement": "Retain source files",
+      "frozen_reference": "plan.md:7",
+      "final_reference": "F:34-41",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P1.4",
+      "requirement": "Retain retrieval time",
+      "frozen_reference": "plan.md:7",
+      "final_reference": "F:34-41",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P1.5",
+      "requirement": "Retain station metadata",
+      "frozen_reference": "plan.md:7",
+      "final_reference": "F:34-41",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P1.6",
+      "requirement": "Retain stated reference datum",
+      "frozen_reference": "plan.md:7",
+      "final_reference": "F:34-41",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P2.1",
+      "requirement": "User-selected time convention",
+      "frozen_reference": "plan.md:11",
+      "final_reference": "F:43-49",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P2.2",
+      "requirement": "Unit interpretation",
+      "frozen_reference": "plan.md:11",
+      "final_reference": "F:43-49",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P2.3",
+      "requirement": "Justified reference-level mapping",
+      "frozen_reference": "plan.md:11",
+      "final_reference": "F:43-49",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P2.4",
+      "requirement": "Raw and interpreted values separated",
+      "frozen_reference": "plan.md:11",
+      "final_reference": "F:43-49",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P2.5",
+      "requirement": "Unresolved comparison when information missing",
+      "frozen_reference": "plan.md:11",
+      "final_reference": "F:43-49",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P3.1",
+      "requirement": "Aligned series over selected month",
+      "frozen_reference": "plan.md:15",
+      "final_reference": "F:51-58",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P3.2",
+      "requirement": "Marked observation gaps",
+      "frozen_reference": "plan.md:15",
+      "final_reference": "F:51-58",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P3.3",
+      "requirement": "Residual for declared comparison",
+      "frozen_reference": "plan.md:15",
+      "final_reference": "F:51-58",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P3.4",
+      "requirement": "Simple summaries",
+      "frozen_reference": "plan.md:15",
+      "final_reference": "F:51-58",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P3.5",
+      "requirement": "Candidate event annotations",
+      "frozen_reference": "plan.md:15",
+      "final_reference": "F:51-58",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P3.6",
+      "requirement": "No autonomous recalibration",
+      "frozen_reference": "plan.md:15",
+      "final_reference": "F:51-58",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P3.7",
+      "requirement": "No operational forecast",
+      "frozen_reference": "plan.md:15",
+      "final_reference": "F:51-58",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P4.1",
+      "requirement": "Record station changes",
+      "frozen_reference": "plan.md:19",
+      "final_reference": "F:60-65",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P4.2",
+      "requirement": "Record interpretation choices",
+      "frozen_reference": "plan.md:19",
+      "final_reference": "F:60-65",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P4.3",
+      "requirement": "Record source ranges",
+      "frozen_reference": "plan.md:19",
+      "final_reference": "F:60-65",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P4.4",
+      "requirement": "Reviewer comments",
+      "frozen_reference": "plan.md:19",
+      "final_reference": "F:60-65",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P4.5",
+      "requirement": "Retain two competing interpretations",
+      "frozen_reference": "plan.md:19",
+      "final_reference": "F:60-65",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P4.6",
+      "requirement": "Exports carry chosen context",
+      "frozen_reference": "plan.md:19",
+      "final_reference": "F:60-65",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P5.1",
+      "requirement": "Undecided public-data client assessed",
+      "frozen_reference": "plan.md:23",
+      "final_reference": "F:67-72; coverage F:53,57,84",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P5.2",
+      "requirement": "Undecided alignment component assessed",
+      "frozen_reference": "plan.md:23",
+      "final_reference": "F:67-72; coverage F:53,57,84",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P5.3",
+      "requirement": "Undecided plotting component assessed",
+      "frozen_reference": "plan.md:23",
+      "final_reference": "F:67-72; coverage F:53,57,84",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Choice remains explicitly undecided; static/interactive export alternatives retained, no implementation proof."
+    },
+    {
+      "id": "P5.4",
+      "requirement": "Local operation after download",
+      "frozen_reference": "plan.md:23",
+      "final_reference": "F:67-72; coverage F:53,57,84",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P5.5",
+      "requirement": "Expose input coverage",
+      "frozen_reference": "plan.md:23",
+      "final_reference": "F:67-72; coverage F:53,57,84",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P5.6",
+      "requirement": "No required publication of location details",
+      "frozen_reference": "plan.md:23",
+      "final_reference": "F:67-72; coverage F:53,57,84",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P6.1",
+      "requirement": "Validation for timestamp changes",
+      "frozen_reference": "plan.md:27",
+      "final_reference": "F:74-85,135",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P6.2",
+      "requirement": "Validation for station metadata changes",
+      "frozen_reference": "plan.md:27",
+      "final_reference": "F:74-85,135",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P6.3",
+      "requirement": "Validation for absent reference levels",
+      "frozen_reference": "plan.md:27",
+      "final_reference": "F:74-85,135",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P6.4",
+      "requirement": "Validation for missing intervals",
+      "frozen_reference": "plan.md:27",
+      "final_reference": "F:74-85,135",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P6.5",
+      "requirement": "Validation for reproducible exported summaries",
+      "frozen_reference": "plan.md:27",
+      "final_reference": "F:74-85,135",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    },
+    {
+      "id": "P6.6",
+      "requirement": "No supplied numerical summary/calibration as research answer",
+      "frozen_reference": "plan.md:27",
+      "final_reference": "F:74-85,135",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "note": "Retained or explicitly revised in the replacement plan; not an executed application claim."
+    }
+  ],
+  "scope_constraints": [
+    {
+      "id": "B1",
+      "requirement": "Frozen two volunteer sites/one reference station/one month",
+      "final_reference": "F:28,36,53",
+      "status": "ASSESSED_PASS"
+    },
+    {
+      "id": "B2",
+      "requirement": "Read-only education notebook explains comparisons and supports volunteer review",
+      "final_reference": "F:28,45-49,53-65,72",
+      "status": "ASSESSED_PASS"
+    },
+    {
+      "id": "B3",
+      "requirement": "No navigation/surge prediction, autonomous recalibration or operational forecast",
+      "final_reference": "F:28,54,64,109-113",
+      "status": "ASSESSED_PASS"
+    },
+    {
+      "id": "B4",
+      "requirement": "Public-source sandbox/local privacy; no proposed private upload, third-party contact or canonical changes",
+      "final_reference": "F:36,41,71-72,135; admitted public URLs",
+      "status": "ASSESSED_PASS",
+      "note": "Authored scientific scope and source corpus assessed; no operational/lifecycle audit inferred."
+    },
+    {
+      "id": "B5",
+      "requirement": "One complete authoritative authored artifact; preserve options/limits; no false build/validation claim",
+      "final_reference": "F:7,32-135",
+      "status": "ASSESSED_PASS",
+      "note": "No scope reduction for speed was accepted in this review; timing/quota ignored for scientific judgment."
+    }
+  ],
+  "authored_product_questions": [
+    {
+      "id": "Q1",
+      "final_reference": "F:117",
+      "coverage_status": "ASSESSED",
+      "outcome": "APPROPRIATELY_OPEN"
+    },
+    {
+      "id": "Q2",
+      "final_reference": "F:118",
+      "coverage_status": "ASSESSED",
+      "outcome": "APPROPRIATELY_OPEN"
+    },
+    {
+      "id": "Q3",
+      "final_reference": "F:119",
+      "coverage_status": "ASSESSED",
+      "outcome": "APPROPRIATELY_OPEN"
+    },
+    {
+      "id": "Q4",
+      "final_reference": "F:120",
+      "coverage_status": "ASSESSED",
+      "outcome": "APPROPRIATELY_OPEN"
+    },
+    {
+      "id": "Q5",
+      "final_reference": "F:121",
+      "coverage_status": "ASSESSED",
+      "outcome": "APPROPRIATELY_OPEN"
+    },
+    {
+      "id": "Q6",
+      "final_reference": "F:122",
+      "coverage_status": "ASSESSED",
+      "outcome": "APPROPRIATELY_OPEN"
+    },
+    {
+      "id": "Q7",
+      "final_reference": "F:123",
+      "coverage_status": "ASSESSED",
+      "outcome": "APPROPRIATELY_OPEN"
+    },
+    {
+      "id": "Q8",
+      "final_reference": "F:124",
+      "coverage_status": "ASSESSED",
+      "outcome": "APPROPRIATELY_OPEN"
+    }
+  ],
+  "external_owner_documents_or_decisions": [],
+  "consequential_checks": [
+    {
+      "id": "F01",
+      "claim_or_decision": "Predictions, measured water levels, verified hourly heights and OFS are distinct products",
+      "final_locations": "F:37,53,71,83,109",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "The product identities match NOAA definitions; astronomical predictions remain the primary comparison, observations optional context.",
+      "evidence": [
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "derived lines 120-167, 220-238",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F02",
+      "claim_or_decision": "water_level verification depends on availability; datum required in the selected products",
+      "final_locations": "F:37,91",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED_WITH_CONDITIONS",
+      "analysis": "NOAA water_level can be preliminary or verified; hourly_height is verified. Datum rule is correct for selected level/prediction products; API exempts Air Gap, which is not selected.",
+      "evidence": [
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "derived lines 120-140,254-261",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F03",
+      "claim_or_decision": "Unit and GMT/LST/LST_LDT conventions differ; unknown source time remains unresolved",
+      "final_locations": "F:38,46,79",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "NOAA distinguishes metre/foot units and fixed local standard time from DST-adjusted local time. UTC normalization and unresolved folds/gaps are explicit design/validation policy.",
+      "evidence": [
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "derived lines 301-338",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F04",
+      "claim_or_decision": "STND is station-unique; subordinate predictions use MLLW; datum labels are not unit conversions",
+      "final_locations": "F:47,80",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "The named NOAA datum constraints are correct; equal labels do not supply a local gauge tie.",
+      "evidence": [
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "derived lines 254-300",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F05",
+      "claim_or_decision": "Metadata resources include datums, superseded datums, sensors/outages, details and offsets",
+      "final_locations": "F:39,65,81,94",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "Resources and installation/removal fields exist. An available resource is not proof of the selected station historical values; the artifact requires snapshots.",
+      "evidence": [
+        {
+          "source_id": "S02",
+          "path": "sources/public/noaa-mdapi.html",
+          "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+          "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.286743+00:00; Metadata API v1.0",
+          "range_or_selector": "derived lines 101-118, 716-738,842-863,1012-1037",
+          "derived_text_path": "sources/public/noaa-mdapi.txt",
+          "derived_text_sha256": "8f745ec52c3e5f0182d36efdfe5a027b39eb64b22f45c0672526893ab9483b5a"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F06",
+      "claim_or_decision": "Common vertical reference and epoch-valid evidence gate absolute residuals",
+      "final_locations": "F:21,40,48,80,121",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED_AS_DESIGN_INFERENCE",
+      "analysis": "The measurement resource describes benchmarks, leveling and geodetic connections. Its landing-page description does not establish the actual local mapping or sufficiency of a benchmark. Final retains that as an owner decision and refuses unsupported residuals.",
+      "evidence": [
+        {
+          "source_id": "S07",
+          "path": "sources/public/noaa-water-level-resources.html",
+          "sha256": "17e57a5809ab6498ea3bdfecc7afd674bf22d7c1aaaa0febcf834eef9ce31a1f",
+          "url": "https://tidesandcurrents.noaa.gov/education/tech-assist/training/water-level/",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.457162+00:00",
+          "range_or_selector": "derived lines 32-41",
+          "derived_text_path": "sources/public/noaa-water-level-resources.txt",
+          "derived_text_sha256": "9113abf6197b7de216b1e479d21fc41911c5c5fa927b07979f1b21053bfd36e9"
+        },
+        {
+          "source_id": "S02",
+          "path": "sources/public/noaa-mdapi.html",
+          "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+          "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.286743+00:00; Metadata API v1.0",
+          "range_or_selector": "derived lines 101-104,848-854",
+          "derived_text_path": "sources/public/noaa-mdapi.txt",
+          "derived_text_sha256": "8f745ec52c3e5f0182d36efdfe5a027b39eb64b22f45c0672526893ab9483b5a"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F07",
+      "claim_or_decision": "One public station does not establish equivalence at both volunteer sites",
+      "final_locations": "F:21,28,49,118",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED_AS_DESIGN_INFERENCE",
+      "analysis": "A conservative comparability condition, expressly identified as inference. NOAA also describes site-dependent meteorological effects. No selected site/station relationship is empirically established.",
+      "evidence": [
+        {
+          "source_id": "S04",
+          "path": "sources/public/noaa-faq.html",
+          "sha256": "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f",
+          "url": "https://tidesandcurrents.noaa.gov/faq.html",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.294327+00:00",
+          "range_or_selector": "derived lines 482-485",
+          "derived_text_path": "sources/public/noaa-faq.txt",
+          "derived_text_sha256": "3087bc3fb26ba83b502a5cd57b116f59fb26d21c15faf0012b13198a6a889785"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F08",
+      "claim_or_decision": "Harmonic predictions support dense intervals; subordinate predictions are high/low only",
+      "final_locations": "F:56,83,111,118",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "The API and help agree on station classifications, offsets and intervals. The proposed event-level alternative is conditional; no invented continuous series is supplied.",
+      "evidence": [
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "derived lines 347-365",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        },
+        {
+          "source_id": "S03",
+          "path": "sources/public/noaa-predictions-help.html",
+          "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+          "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.293147+00:00",
+          "range_or_selector": "derived lines 68-71",
+          "derived_text_path": "sources/public/noaa-predictions-help.txt",
+          "derived_text_sha256": "4ef3dc742aa57a6d46c24d4482cf2bb745788023b63f3c3d64497a3c8a72cc7b"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F09",
+      "claim_or_decision": "Observation and prediction retrieval limits differ",
+      "final_locations": "F:19,71,83",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "Six-minute measured data has a one-month per-request limit. Tide high/low predictions allow ten years and other prediction intervals one year. C4 correctly repairs the broad draft cap; no request was executed as an application witness.",
+      "evidence": [
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "derived lines 98-113,347-365",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F10",
+      "claim_or_decision": "Quarterly prediction updates and live metadata require per-run snapshots",
+      "final_locations": "F:22,65,94",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "NOAA help gives quarterly updates including station upgrades, offsets and reference changes. Snapshot recommendation is justified; these live captures are not historic station records.",
+      "evidence": [
+        {
+          "source_id": "S03",
+          "path": "sources/public/noaa-predictions-help.html",
+          "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+          "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.293147+00:00",
+          "range_or_selector": "derived lines 99-105",
+          "derived_text_path": "sources/public/noaa-predictions-help.txt",
+          "derived_text_sha256": "4ef3dc742aa57a6d46c24d4482cf2bb745788023b63f3c3d64497a3c8a72cc7b"
+        },
+        {
+          "source_id": "S02",
+          "path": "sources/public/noaa-mdapi.html",
+          "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+          "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.286743+00:00; Metadata API v1.0",
+          "range_or_selector": "derived lines 101-118",
+          "derived_text_path": "sources/public/noaa-mdapi.txt",
+          "derived_text_sha256": "8f745ec52c3e5f0182d36efdfe5a027b39eb64b22f45c0672526893ab9483b5a"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F11",
+      "claim_or_decision": "Astronomical predictions do not establish weather/runoff effects or a universal accuracy threshold",
+      "final_locations": "F:54,57,110",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "NOAA distinguishes astronomical tides and station-dependent non-tidal effects. Descriptive residuals remain an education product decision.",
+      "evidence": [
+        {
+          "source_id": "S04",
+          "path": "sources/public/noaa-faq.html",
+          "sha256": "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f",
+          "url": "https://tidesandcurrents.noaa.gov/faq.html",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.294327+00:00",
+          "range_or_selector": "derived lines 482-485",
+          "derived_text_path": "sources/public/noaa-faq.txt",
+          "derived_text_sha256": "3087bc3fb26ba83b502a5cd57b116f59fb26d21c15faf0012b13198a6a889785"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F12",
+      "claim_or_decision": "NOAA RMS table uses prediction-minus-observation differences and one year per station",
+      "final_locations": "F:57,110",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "PDF page 1 explicitly describes the sign, RMS and one-year sample; the table contains station analysis years. It is not a two-site one-month threshold. Entire PDF text inspected; relevant first page also visually inspected.",
+      "evidence": [
+        {
+          "source_id": "S05",
+          "path": "sources/public/noaa-prediction-error.pdf",
+          "sha256": "193114c36866be980fd1aa8d13914e370d06d32264acb9aba85e750f2b1f3d56",
+          "url": "https://tidesandcurrents.noaa.gov/pdf/Tide_Prediction_Error_for_the_United_States_Coastline.pdf",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.295424+00:00; undated four-page PDF, station analysis years in table",
+          "range_or_selector": "PDF page 1; pdftotext lines 1-31",
+          "derived_text_path": "sources/public/noaa-prediction-error.txt",
+          "derived_text_sha256": "0b7f0b1c333af86cb7cd18fafeb88539b7ecb5f4ed63609d8eaae43964321e32"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F13",
+      "claim_or_decision": "2018 citizen-science photo/GPS app is an annotation analogue, not a continuous gauge protocol",
+      "final_locations": "F:58,112,128",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED_WITH_LIMITS",
+      "analysis": "Article date and photo/GPS impact-report function are supported. The source does not establish current availability or a quantitative gauge standard; final correctly withholds those claims.",
+      "evidence": [
+        {
+          "source_id": "S06",
+          "path": "sources/public/noaa-citizen-water-level-app.html",
+          "sha256": "a5c22af88f3224b414ffe535822eb8c594c9cc356ebc847ee2238901c60260ac",
+          "url": "https://coastalscience.noaa.gov/news/new-citizen-science-water-level-application-available-nationwide/",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.435573+00:00; article publication 2018-02-22",
+          "range_or_selector": "derived lines 40-47",
+          "derived_text_path": "sources/public/noaa-citizen-water-level-app.txt",
+          "derived_text_sha256": "1976a19b66e83b5b35a763b400d65dc1bd2beee1bc25bb652278b4b37b2cce43"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F14",
+      "claim_or_decision": "OFS is modeled nowcast/forecast guidance and is rejected as primary reference",
+      "final_locations": "F:37,109",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "The source supports product type; excluding it is a justified frozen-scope choice rather than a claim OFS has no value.",
+      "evidence": [
+        {
+          "source_id": "S08",
+          "path": "sources/public/noaa-ofs-fact.html",
+          "sha256": "e18c2303525cf92a90cce2d61afbd1be28025f7513a8c7831b40480200aedf90",
+          "url": "https://oceanservice.noaa.gov/facts/ofs.html",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.466660+00:00",
+          "range_or_selector": "derived lines 41-48",
+          "derived_text_path": "sources/public/noaa-ofs-fact.txt",
+          "derived_text_sha256": "2f0bc388093f71cdb11e6bae80beb92138316a89dc93ef773ab13364e6c09162"
+        },
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "derived lines 220-238",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F15",
+      "claim_or_decision": "API formats and Tide Predictions download/request alternatives",
+      "final_locations": "F:71",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "CSV/JSON/XML API formats and TXT/XML display downloads plus web-service URLs exist. Offline saved-byte acquisition is a proposed mechanism.",
+      "evidence": [
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "derived lines 464-476",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        },
+        {
+          "source_id": "S03",
+          "path": "sources/public/noaa-predictions-help.html",
+          "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+          "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.293147+00:00",
+          "range_or_selector": "derived lines 91-98",
+          "derived_text_path": "sources/public/noaa-predictions-help.txt",
+          "derived_text_sha256": "4ef3dc742aa57a6d46c24d4482cf2bb745788023b63f3c3d64497a3c8a72cc7b"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F16",
+      "claim_or_decision": "pandas 3.0.6 commit/release and interpreter applicability",
+      "final_locations": "F:30,70,129",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "Independent release JSON dates publication to 2026-09-17; annotated tag resolves to 2905718b126579d2cf0fe5bae05bd75facb67d77. pyproject requires Python >=3.11. Candidate leaves project runtime pin conditional.",
+      "evidence": [
+        {
+          "source_id": "S15",
+          "path": "sources/public/pandas-v3.0.6-release.json",
+          "sha256": "36aa7ca12cea760d244cea1fcc5f8a550d408df601b65448d45c5ff1481e3969",
+          "url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v3.0.6",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.661829+00:00",
+          "range_or_selector": "JSON tag_name,published_at,body"
+        },
+        {
+          "source_id": "R21",
+          "path": "sources/public/pandas-v3.0.6-tag.json",
+          "sha256": "6a2e731fcedbcb78ba979e849e76ce2dc5bf754ec58437103436f0faa7396cf9",
+          "url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/619d761f6756d39ff08cbf10746f8808977b7329",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.982247+00:00",
+          "range_or_selector": "JSON object.sha,object.type"
+        },
+        {
+          "source_id": "R22",
+          "path": "sources/public/pandas-v3.0.6-pyproject.toml",
+          "sha256": "1082aa877fa2e0902249287086041d95bd814fd678347625a3d04f9f411bce5e",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pyproject.toml",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "pyproject.toml line 31"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F17",
+      "claim_or_decision": "merge_asof defaults, sorted time key, by grouping and caller dispatch",
+      "final_locations": "F:16,55,69",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "Public definition defaults backward, exact allowed, tolerance None. Global ascending time key is required; sorting by group alone is not sufficient. Caller constructs _AsOfMerge then gets results; grouped indexers are selected via _asof_by_function.",
+      "evidence": [
+        {
+          "source_id": "S09",
+          "path": "sources/public/pandas-v3.0.6-merge.py",
+          "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "pandas/core/reshape/merge.py lines 657-740,917-934,2308-2370,2532-2536,2555-2651"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F18",
+      "claim_or_decision": "Compatible tolerance permits zero; finite positive approximate tolerance is policy",
+      "final_locations": "F:18,55,69,82",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED_WITH_CONDITIONS",
+      "analysis": "Validators reject negative values, not mathematical zero; datetime keys still require timedelta-compatible tolerance. Finite positive approximate tolerance is the notebook policy, not a promised pandas validator property.",
+      "evidence": [
+        {
+          "source_id": "S09",
+          "path": "sources/public/pandas-v3.0.6-merge.py",
+          "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "_validate_tolerance lines 2492-2527"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F19",
+      "claim_or_decision": "Compiled as-of joins return row indexers; nearest ties are backward; no interpolation",
+      "final_locations": "F:17,55,69",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "Nearest invokes backward/forward scans and chooses bri on bdiff <= fdiff; public API has no tie override. Tolerance is inclusive. This selects existing right rows, not an estimated height.",
+      "evidence": [
+        {
+          "source_id": "S10",
+          "path": "sources/public/pandas-v3.0.6-join.pyx",
+          "sha256": "82269a4586d2d2ad4e80e285082b6eabac52440c0713681b65649403a7a0ace9",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/_libs/join.pyx",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "pandas/_libs/join.pyx lines 687-880"
+        },
+        {
+          "source_id": "S09",
+          "path": "sources/public/pandas-v3.0.6-merge.py",
+          "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "merge_asof signature 657-674; dispatch 2630-2651"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F20",
+      "claim_or_decision": "Equality default and explicit bounded as-of alternatives are coherent product choices",
+      "final_locations": "F:16,55,69,82,95",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED_WITH_IMPLEMENTATION_LIMITS",
+      "analysis": "Equality merge is a viable design. Candidate supplies a policy and proposed tests, not runnable merge code. pandas.merge itself defaults inner and can match null keys, so retaining gaps and excluding unresolved times require the stated surrounding policy. No naive-call correctness was claimed; duplicates/cardinality remain implementation acceptance work.",
+      "evidence": [
+        {
+          "source_id": "S09",
+          "path": "sources/public/pandas-v3.0.6-merge.py",
+          "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "merge lines 145-218,367-399"
+        },
+        {
+          "source_id": "S11",
+          "path": "sources/public/pandas-v3.0.6-test_merge_asof.py",
+          "sha256": "dc01ff95dcd9d8d56042df247c8276cdf73e0c849798232fb2dc5bff75ee0d90",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/tests/reshape/merge/test_merge_asof.py",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "test_tolerance_forward/nearest lines 2037-2061; grouped nearest 2818-2846"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F21",
+      "claim_or_decision": "Issue #35558 only proves an incompatible-tolerance diagnostic defect",
+      "final_locations": "F:20,130; source-map audit C5",
+      "coverage_status": "ASSESSED",
+      "outcome": "MATERIAL_ERROR",
+      "analysis": "False narrowing. For both index flags, no by keys and non-None compatible tolerance, the parent _get_merge_keys loop has no lk binding. The msg is formatted before any incompatibility branch, so a valid DateTimeIndex/Timedelta call also fails. Issue reports that valid call.",
+      "evidence": [
+        {
+          "source_id": "R20",
+          "path": "sources/public/pandas-issue-35558.json",
+          "sha256": "9919a011f214d7b3681b22f446680e9574fed89518c5d7fcc1f481d8bd5fa8f7",
+          "url": "https://api.github.com/repos/pandas-dev/pandas/issues/35558",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.926142+00:00",
+          "range_or_selector": "JSON body: reproducible sample and traceback"
+        },
+        {
+          "source_id": "R29",
+          "path": "sources/public/pandas-parent-59ffa251-merge.py",
+          "sha256": "0e8ea28321951ed4b5aa8d70f8302592010c1bd4018e8ebbca7bc0e3af44270a",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/59ffa251269ddb8b561d8d88f631a5db21f660dc/pandas/core/reshape/merge.py",
+          "version": "immutable commit 59ffa251269ddb8b561d8d88f631a5db21f660dc",
+          "range_or_selector": "_MergeOperation.__init__ 645-652; _validate_specification 1198-1203; _get_merge_keys 951-1065; _AsOfMerge._get_merge_keys 1632-1677"
+        }
+      ],
+      "material_defect_id": "D1"
+    },
+    {
+      "id": "F22",
+      "claim_or_decision": "Fix changes lk.dtype to lt.dtype and is released in v1.1.1",
+      "final_locations": "F:20,130",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "Patch identity is correct. Immutable fix and release source both carry lt.dtype, release whatsnew records issue 35558, and official release was published 2020-08-20. Shipping is not inferred merely from PR merge.",
+      "evidence": [
+        {
+          "source_id": "R26",
+          "path": "sources/public/pandas-fix-e7f668b.json",
+          "sha256": "98c4e60369f26f9a4ab76281c8a76e5f835f41a3c94cd3be08f37cc18ee283fc",
+          "url": "https://api.github.com/repos/pandas-dev/pandas/commits/e7f668be34081d497bc8142ab0c77bb841e2964b",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:03.281533+00:00",
+          "range_or_selector": "commit sha,parent and files patches"
+        },
+        {
+          "source_id": "R30",
+          "path": "sources/public/pandas-fixed-e7f668b-merge.py",
+          "sha256": "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/e7f668be34081d497bc8142ab0c77bb841e2964b/pandas/core/reshape/merge.py",
+          "version": "immutable commit e7f668be34081d497bc8142ab0c77bb841e2964b",
+          "range_or_selector": "_AsOfMerge._get_merge_keys 1660-1677"
+        },
+        {
+          "source_id": "R24",
+          "path": "sources/public/pandas-v1.1.1-merge.py",
+          "sha256": "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/core/reshape/merge.py",
+          "version": "immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07",
+          "range_or_selector": "same symbol at release commit f2ca0a2665b2d169c97de87b8e778dbed86aea07, lines 1660-1677"
+        },
+        {
+          "source_id": "S14",
+          "path": "sources/public/pandas-v1.1.1-whatsnew.rst",
+          "sha256": "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/doc/source/whatsnew/v1.1.1.rst",
+          "version": "immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07",
+          "range_or_selector": "v1.1.1 release note lines 3-6,30"
+        },
+        {
+          "source_id": "R23",
+          "path": "sources/public/pandas-v1.1.1-release.json",
+          "sha256": "d2b776203b709233e79436b7a0fa50cc9d9068221a015cd019b160158045af1c",
+          "url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v1.1.1",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:03.141580+00:00",
+          "range_or_selector": "JSON tag_name,published_at"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F23",
+      "claim_or_decision": "The merged issue-linked result test passes without code changes and misses changed branch",
+      "final_locations": "F:20,130; source-map S13,audit C5",
+      "coverage_status": "ASSESSED",
+      "outcome": "MATERIAL_ERROR",
+      "analysis": "The quoted reviewer comment is bound to preliminary commit 59a07c22, whose test has by=ticker and binds lk. Author then replaces it; e7f668b/7214b3c final test has both indexes and no by, valid 0.5-second tolerance, and expected matched result. It reaches the previously failing string construction. Current 3.0.6 test retains that regression setup, skipping second-resolution rounding. Static reachability established; no upstream test run here. General nearest/grouped correctness is still not proven by this single regression.",
+      "evidence": [
+        {
+          "source_id": "R18",
+          "path": "sources/public/pandas-pr-35654-reviews.json",
+          "sha256": "efae5b9b09dec14ffb2f596f1be72173834d371d79a51a6428b42cb66678a2c1",
+          "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/reviews?per_page=100",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.813135+00:00",
+          "range_or_selector": "review 464891484: commit_id,body; later review commits"
+        },
+        {
+          "source_id": "R17",
+          "path": "sources/public/pandas-pr-35654-comments.json",
+          "sha256": "24e631428e81ae979930a72344b670a2ba5f0eab3b7c5ce24d25f1f8cb8cacc6",
+          "url": "https://api.github.com/repos/pandas-dev/pandas/issues/35654/comments?per_page=100",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.702468+00:00",
+          "range_or_selector": "issuecomment-672984640 author correction"
+        },
+        {
+          "source_id": "R28",
+          "path": "sources/public/pandas-preliminary-59a07c-tests.py",
+          "sha256": "0465111fec102d9dbfb683bd6c94884080a17af7bc7a398d02cc52a35bff9ec1",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/59a07c22c68d5709b1718419007b60ab67f5ccfb/pandas/tests/reshape/merge/test_merge_asof.py",
+          "version": "immutable commit 59a07c22c68d5709b1718419007b60ab67f5ccfb",
+          "range_or_selector": "preliminary test_left_index_right_index_tolerance 1343-1356"
+        },
+        {
+          "source_id": "R31",
+          "path": "sources/public/pandas-fixed-7214b3c-tests.py",
+          "sha256": "b3f51fcef805c5f7c1d6bd600fcb4050d4963cc17d2caf974d05763ee657cd38",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/7214b3c50b058094ddcb5f8687e3d8394780ba14/pandas/tests/reshape/merge/test_merge_asof.py",
+          "version": "immutable commit 7214b3c50b058094ddcb5f8687e3d8394780ba14",
+          "range_or_selector": "revised test same symbol 1343-1363"
+        },
+        {
+          "source_id": "R29",
+          "path": "sources/public/pandas-parent-59ffa251-merge.py",
+          "sha256": "0e8ea28321951ed4b5aa8d70f8302592010c1bd4018e8ebbca7bc0e3af44270a",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/59ffa251269ddb8b561d8d88f631a5db21f660dc/pandas/core/reshape/merge.py",
+          "version": "immutable commit 59ffa251269ddb8b561d8d88f631a5db21f660dc",
+          "range_or_selector": "_AsOfMerge._get_merge_keys 1632-1677"
+        },
+        {
+          "source_id": "S11",
+          "path": "sources/public/pandas-v3.0.6-test_merge_asof.py",
+          "sha256": "dc01ff95dcd9d8d56042df247c8276cdf73e0c849798232fb2dc5bff75ee0d90",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/tests/reshape/merge/test_merge_asof.py",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "current regression test 3332-3357"
+        }
+      ],
+      "material_defect_id": "D1"
+    },
+    {
+      "id": "F24",
+      "claim_or_decision": "Historical defect is not automatically current; current source is separately checked",
+      "final_locations": "F:20,69,70,130",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "Final does not say old UnboundLocalError persists in 3.0.6. The current validator uses lt.dtype and separately checks both actual key dtypes. That release applicability limit is sound despite D1.",
+      "evidence": [
+        {
+          "source_id": "S09",
+          "path": "sources/public/pandas-v3.0.6-merge.py",
+          "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+          "version": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range_or_selector": "_maybe_require_matching_dtypes 2447-2490; _validate_tolerance 2492-2527"
+        },
+        {
+          "source_id": "R24",
+          "path": "sources/public/pandas-v1.1.1-merge.py",
+          "sha256": "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/core/reshape/merge.py",
+          "version": "immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07",
+          "range_or_selector": "historical released fix 1660-1677"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F25",
+      "claim_or_decision": "Alternatives, rejected leads and eight owner/product choices remain visible",
+      "final_locations": "F:55-58,72,107-124",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED_WITH_LIMITS",
+      "analysis": "All five rejected/limited leads and eight draft product questions remain. Event-only vs unavailable dense series, observations as optional context, static vs interactive plotting, bounded matching/tie choices and optional interpolation are retained. No concrete plotting-library survey or exhaustive opportunity recall is claimed; package choice remains open.",
+      "evidence": [
+        {
+          "source_id": "S01",
+          "path": "sources/public/noaa-coops-api.html",
+          "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+          "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00",
+          "range_or_selector": "station/product applicability in derived lines 347-365",
+          "derived_text_path": "sources/public/noaa-coops-api.txt",
+          "derived_text_sha256": "ce6f9dc38c83e326e56fe9b4d5cf489df3719dd476dd47105e75e79a7d4affba"
+        },
+        {
+          "source_id": "S03",
+          "path": "sources/public/noaa-predictions-help.html",
+          "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+          "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.293147+00:00",
+          "range_or_selector": "derived lines 68-71,91-105",
+          "derived_text_path": "sources/public/noaa-predictions-help.txt",
+          "derived_text_sha256": "4ef3dc742aa57a6d46c24d4482cf2bb745788023b63f3c3d64497a3c8a72cc7b"
+        },
+        {
+          "source_id": "S06",
+          "path": "sources/public/noaa-citizen-water-level-app.html",
+          "sha256": "a5c22af88f3224b414ffe535822eb8c594c9cc356ebc847ee2238901c60260ac",
+          "url": "https://coastalscience.noaa.gov/news/new-citizen-science-water-level-application-available-nationwide/",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.435573+00:00; article publication 2018-02-22",
+          "range_or_selector": "derived lines 40-47",
+          "derived_text_path": "sources/public/noaa-citizen-water-level-app.txt",
+          "derived_text_sha256": "1976a19b66e83b5b35a763b400d65dc1bd2beee1bc25bb652278b4b37b2cce43"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F26",
+      "claim_or_decision": "Raw data, epochs, unresolved comparisons, local privacy and review/export provenance",
+      "final_locations": "F:28,36-49,53-65,72,78-85,91-105",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED_AS_PROPOSED_DESIGN",
+      "analysis": "Complete proposed plan preserves frozen cardinality, raw/interpreted separation, source ranges via request dates/source-row IDs, choices/comments/alternatives and contextual export. No volunteer dataset was available to prove comparability; the plan explicitly retains that uncertainty.",
+      "evidence": [
+        {
+          "source_id": "S02",
+          "path": "sources/public/noaa-mdapi.html",
+          "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+          "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.286743+00:00; Metadata API v1.0",
+          "range_or_selector": "derived metadata resources 101-118",
+          "derived_text_path": "sources/public/noaa-mdapi.txt",
+          "derived_text_sha256": "8f745ec52c3e5f0182d36efdfe5a027b39eb64b22f45c0672526893ab9483b5a"
+        },
+        {
+          "source_id": "S07",
+          "path": "sources/public/noaa-water-level-resources.html",
+          "sha256": "17e57a5809ab6498ea3bdfecc7afd674bf22d7c1aaaa0febcf834eef9ce31a1f",
+          "url": "https://tidesandcurrents.noaa.gov/education/tech-assist/training/water-level/",
+          "version": "live public metadata/page; accessed 2026-10-07T21:24:02.457162+00:00",
+          "range_or_selector": "derived measurement-reference resource 37-41",
+          "derived_text_path": "sources/public/noaa-water-level-resources.txt",
+          "derived_text_sha256": "9113abf6197b7de216b1e479d21fc41911c5c5fa927b07979f1b21053bfd36e9"
+        }
+      ],
+      "material_defect_id": null
+    },
+    {
+      "id": "F27",
+      "claim_or_decision": "P6 checks are proposed; executed work is retrieval/static reading, not app validation",
+      "final_locations": "F:7,76-85,135",
+      "coverage_status": "ASSESSED",
+      "outcome": "SUPPORTED",
+      "analysis": "All eight validation categories are proposals. No app runtime, application tests, numerical result, or local executed matching witness is presented. An upstream test in source is not execution evidence. D1 separately identifies incorrect source-level applicability of that historical test.",
+      "evidence": [],
+      "material_defect_id": null
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "final_reference": "F:16",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "incorporation": "F:55,69,82,95",
+      "material_defect_id": null
+    },
+    {
+      "id": "C2",
+      "final_reference": "F:17",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "incorporation": "F:55,69,82",
+      "material_defect_id": null
+    },
+    {
+      "id": "C3",
+      "final_reference": "F:18",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "incorporation": "F:55,82",
+      "material_defect_id": null
+    },
+    {
+      "id": "C4",
+      "final_reference": "F:19",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "incorporation": "F:71,83",
+      "material_defect_id": null
+    },
+    {
+      "id": "C5",
+      "final_reference": "F:20",
+      "coverage_status": "ASSESSED",
+      "outcome": "FAIL",
+      "incorporation": "F:20,130",
+      "material_defect_id": "D1"
+    },
+    {
+      "id": "C6",
+      "final_reference": "F:21",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS_WITH_LIMITS",
+      "incorporation": "F:21,48,49,121",
+      "material_defect_id": null
+    },
+    {
+      "id": "C7",
+      "final_reference": "F:22",
+      "coverage_status": "ASSESSED",
+      "outcome": "PASS",
+      "incorporation": "F:39,65",
+      "material_defect_id": null
+    }
+  ],
+  "preservation": [
+    {
+      "id": "KEEP-P1.1",
+      "draft_reference": "D:19",
+      "final_reference": "F:36",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P1.2",
+      "draft_reference": "D:20",
+      "final_reference": "F:37",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P1.3",
+      "draft_reference": "D:21",
+      "final_reference": "F:38",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P1.4",
+      "draft_reference": "D:22",
+      "final_reference": "F:39",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P1.5",
+      "draft_reference": "D:23",
+      "final_reference": "F:40",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P1.6",
+      "draft_reference": "D:24",
+      "final_reference": "F:41",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P2.1",
+      "draft_reference": "D:28",
+      "final_reference": "F:45",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P2.2",
+      "draft_reference": "D:29",
+      "final_reference": "F:46",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P2.3",
+      "draft_reference": "D:30",
+      "final_reference": "F:47",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P2.4",
+      "draft_reference": "D:31",
+      "final_reference": "F:48",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P2.5",
+      "draft_reference": "D:32",
+      "final_reference": "F:49",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P3.1",
+      "draft_reference": "D:36",
+      "final_reference": "F:53",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P3.2",
+      "draft_reference": "D:37",
+      "final_reference": "F:54",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P3.3",
+      "draft_reference": "D:38",
+      "final_reference": "F:55",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P3.4",
+      "draft_reference": "D:39",
+      "final_reference": "F:56",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P3.5",
+      "draft_reference": "D:40",
+      "final_reference": "F:57",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P3.6",
+      "draft_reference": "D:41",
+      "final_reference": "F:58",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P4.1",
+      "draft_reference": "D:45",
+      "final_reference": "F:62",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P4.2",
+      "draft_reference": "D:46",
+      "final_reference": "F:63",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P4.3",
+      "draft_reference": "D:47",
+      "final_reference": "F:64",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P4.4",
+      "draft_reference": "D:48",
+      "final_reference": "F:65",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P5.1",
+      "draft_reference": "D:52",
+      "final_reference": "F:69",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P5.2",
+      "draft_reference": "D:53",
+      "final_reference": "F:70",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P5.3",
+      "draft_reference": "D:54",
+      "final_reference": "F:71",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P5.4",
+      "draft_reference": "D:55",
+      "final_reference": "F:72",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P6.1",
+      "draft_reference": "D:61",
+      "final_reference": "F:78",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P6.2",
+      "draft_reference": "D:62",
+      "final_reference": "F:79",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P6.3",
+      "draft_reference": "D:63",
+      "final_reference": "F:80",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P6.4",
+      "draft_reference": "D:64",
+      "final_reference": "F:81",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P6.5",
+      "draft_reference": "D:65",
+      "final_reference": "F:82",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P6.6",
+      "draft_reference": "D:66",
+      "final_reference": "F:83",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P6.7",
+      "draft_reference": "D:67",
+      "final_reference": "F:84",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "KEEP-P6.8",
+      "draft_reference": "D:68",
+      "final_reference": "F:85",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED_OR_JUSTIFIABLY_CLARIFIED"
+    },
+    {
+      "id": "ALREADY1",
+      "draft_reference": "D:83",
+      "final_reference": "F:100",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "ALREADY2",
+      "draft_reference": "D:84",
+      "final_reference": "F:101",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "ALREADY3",
+      "draft_reference": "D:85",
+      "final_reference": "F:102",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "ALREADY4",
+      "draft_reference": "D:86",
+      "final_reference": "F:103",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "ALREADY5",
+      "draft_reference": "D:87",
+      "final_reference": "F:104",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "ALREADY6",
+      "draft_reference": "D:88",
+      "final_reference": "F:105",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "REJECT1",
+      "draft_reference": "D:92",
+      "final_reference": "F:109",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "REJECT2",
+      "draft_reference": "D:93",
+      "final_reference": "F:110",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "REJECT3",
+      "draft_reference": "D:94",
+      "final_reference": "F:111",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "REJECT4",
+      "draft_reference": "D:95",
+      "final_reference": "F:112",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "REJECT5",
+      "draft_reference": "D:96",
+      "final_reference": "F:113",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "CHOICE1",
+      "draft_reference": "D:100",
+      "final_reference": "F:117",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "CHOICE2",
+      "draft_reference": "D:101",
+      "final_reference": "F:118",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "CHOICE3",
+      "draft_reference": "D:102",
+      "final_reference": "F:119",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "CHOICE4",
+      "draft_reference": "D:103",
+      "final_reference": "F:120",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "CHOICE5",
+      "draft_reference": "D:104",
+      "final_reference": "F:121",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "CHOICE6",
+      "draft_reference": "D:105",
+      "final_reference": "F:122",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "CHOICE7",
+      "draft_reference": "D:106",
+      "final_reference": "F:123",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "CHOICE8",
+      "draft_reference": "D:107",
+      "final_reference": "F:124",
+      "coverage_status": "ASSESSED",
+      "outcome": "PRESERVED"
+    },
+    {
+      "id": "DISPOSITION-C1",
+      "draft_reference": null,
+      "final_reference": "F:16",
+      "coverage_status": "ASSESSED",
+      "outcome": "VISIBLE_AND_SUPPORTED",
+      "material_defect_id": null
+    },
+    {
+      "id": "DISPOSITION-C2",
+      "draft_reference": null,
+      "final_reference": "F:17",
+      "coverage_status": "ASSESSED",
+      "outcome": "VISIBLE_AND_SUPPORTED",
+      "material_defect_id": null
+    },
+    {
+      "id": "DISPOSITION-C3",
+      "draft_reference": null,
+      "final_reference": "F:18",
+      "coverage_status": "ASSESSED",
+      "outcome": "VISIBLE_AND_SUPPORTED",
+      "material_defect_id": null
+    },
+    {
+      "id": "DISPOSITION-C4",
+      "draft_reference": null,
+      "final_reference": "F:19",
+      "coverage_status": "ASSESSED",
+      "outcome": "VISIBLE_AND_SUPPORTED",
+      "material_defect_id": null
+    },
+    {
+      "id": "DISPOSITION-C5",
+      "draft_reference": null,
+      "final_reference": "F:20",
+      "coverage_status": "ASSESSED",
+      "outcome": "VISIBLE_BUT_INCORRECT",
+      "material_defect_id": "D1"
+    },
+    {
+      "id": "DISPOSITION-C6",
+      "draft_reference": null,
+      "final_reference": "F:21",
+      "coverage_status": "ASSESSED",
+      "outcome": "VISIBLE_AND_SUPPORTED",
+      "material_defect_id": null
+    },
+    {
+      "id": "DISPOSITION-C7",
+      "draft_reference": null,
+      "final_reference": "F:22",
+      "coverage_status": "ASSESSED",
+      "outcome": "VISIBLE_AND_SUPPORTED",
+      "material_defect_id": null
+    },
+    {
+      "id": "HISTORY",
+      "draft_reference": "D:113; research source-map issue_fix_regression_release",
+      "final_reference": "F:20,130",
+      "coverage_status": "ASSESSED",
+      "outcome": "INCORRECT_NARROWING",
+      "material_defect_id": "D1"
+    },
+    {
+      "id": "DISCOVERY",
+      "draft_reference": "D:111",
+      "final_reference": "F:24,128",
+      "coverage_status": "ASSESSED",
+      "outcome": "CONTENT_PRESERVED; ordering is author-reported, not independently proven"
+    }
+  ],
+  "source_catalog": [
+    {
+      "id": "S01",
+      "requested_url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+      "retrieval_started_utc": "2026-10-07T21:24:02.284733+00:00",
+      "final_url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "text/html",
+        "Content-Length": "42037",
+        "Connection": "close",
+        "x-amzn-RequestId": "405e36ff-5701-4091-a85f-9c7935356a20",
+        "Last-Modified": "Thu, 14 May 2026 10:58:20 GMT",
+        "x-amzn-Remapped-Content-Length": "42037",
+        "x-amzn-Remapped-Connection": "keep-alive",
+        "x-amz-apigw-id": "E5HB8GzkoAMEIkg=",
+        "x-amzn-Remapped-Server": "nginx",
+        "ETag": "W/\"42037-1778756300000\"",
+        "Accept-Ranges": "bytes",
+        "x-amzn-Remapped-Date": "Wed, 07 Oct 2026 21:24:02 GMT"
+      },
+      "path": "sources/public/noaa-coops-api.html",
+      "bytes": 42037,
+      "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.457071+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.284733+00:00"
+    },
+    {
+      "id": "S02",
+      "requested_url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+      "retrieval_started_utc": "2026-10-07T21:24:02.286743+00:00",
+      "final_url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "text/html;charset=UTF-8",
+        "Content-Length": "72559",
+        "Connection": "close",
+        "x-amzn-RequestId": "d670f3bb-b26d-42b6-b42f-8158516f258e",
+        "x-amzn-Remapped-Connection": "keep-alive",
+        "Set-Cookie": "JSESSIONID=A8CB1F78DCDEA0B088013B9B5D97C6FB; Path=/; Secure; HttpOnly",
+        "x-amz-apigw-id": "E5HB8GQ1oAMEgow=",
+        "x-amzn-Remapped-Server": "nginx",
+        "x-amzn-Remapped-Date": "Wed, 07 Oct 2026 21:24:02 GMT"
+      },
+      "path": "sources/public/noaa-mdapi.html",
+      "bytes": 72559,
+      "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.485966+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.286743+00:00; Metadata API v1.0"
+    },
+    {
+      "id": "S03",
+      "requested_url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+      "retrieval_started_utc": "2026-10-07T21:24:02.293147+00:00",
+      "final_url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+        "Accept-Ranges": "bytes",
+        "Vary": "Accept-Encoding,User-Agent"
+      },
+      "path": "sources/public/noaa-predictions-help.html",
+      "bytes": 32471,
+      "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.435497+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.293147+00:00"
+    },
+    {
+      "id": "S04",
+      "requested_url": "https://tidesandcurrents.noaa.gov/faq.html",
+      "retrieval_started_utc": "2026-10-07T21:24:02.294327+00:00",
+      "final_url": "https://tidesandcurrents.noaa.gov/faq.html",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+        "Accept-Ranges": "bytes",
+        "Vary": "Accept-Encoding,User-Agent"
+      },
+      "path": "sources/public/noaa-faq.html",
+      "bytes": 83932,
+      "sha256": "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.466605+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.294327+00:00"
+    },
+    {
+      "id": "S05",
+      "requested_url": "https://tidesandcurrents.noaa.gov/pdf/Tide_Prediction_Error_for_the_United_States_Coastline.pdf",
+      "retrieval_started_utc": "2026-10-07T21:24:02.295424+00:00",
+      "final_url": "https://tidesandcurrents.noaa.gov/pdf/Tide_Prediction_Error_for_the_United_States_Coastline.pdf",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "application/pdf",
+        "Content-Length": "125615",
+        "Connection": "close",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+        "Last-Modified": "Thu, 18 Sep 2014 18:58:20 GMT",
+        "ETag": "\"1eaaf-5035b91686b00\"",
+        "Accept-Ranges": "bytes",
+        "Vary": "User-Agent"
+      },
+      "path": "sources/public/noaa-prediction-error.pdf",
+      "bytes": 125615,
+      "sha256": "193114c36866be980fd1aa8d13914e370d06d32264acb9aba85e750f2b1f3d56",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.472023+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.295424+00:00; undated four-page PDF, station analysis years in table"
+    },
+    {
+      "id": "S06",
+      "requested_url": "https://coastalscience.noaa.gov/news/new-citizen-science-water-level-application-available-nationwide/",
+      "retrieval_started_utc": "2026-10-07T21:24:02.435573+00:00",
+      "final_url": "https://coastalscience.noaa.gov/news/new-citizen-science-water-level-application-available-nationwide/",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "nginx",
+        "Last-Modified": "Tue, 06 Oct 2026 23:51:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "Permissions-Policy": "accelerometer=(self),camera=(self),geolocation=(self),gyroscope=(self),magnetometer=(self),microphone=(self),payment=(self),usb=(self)",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Content-Security-Policy": "block-all-mixed-content; frame-ancestors 'self'; form-action 'self' https://search.usa.gov; object-src 'none'; base-uri 'self';"
+      },
+      "path": "sources/public/noaa-citizen-water-level-app.html",
+      "bytes": 180185,
+      "sha256": "a5c22af88f3224b414ffe535822eb8c594c9cc356ebc847ee2238901c60260ac",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.661641+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.435573+00:00; article publication 2018-02-22"
+    },
+    {
+      "id": "S07",
+      "requested_url": "https://tidesandcurrents.noaa.gov/education/tech-assist/training/water-level/",
+      "retrieval_started_utc": "2026-10-07T21:24:02.457162+00:00",
+      "final_url": "https://tidesandcurrents.noaa.gov/education/tech-assist/training/water-level/",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+        "Accept-Ranges": "bytes",
+        "Vary": "Accept-Encoding,User-Agent"
+      },
+      "path": "sources/public/noaa-water-level-resources.html",
+      "bytes": 24864,
+      "sha256": "17e57a5809ab6498ea3bdfecc7afd674bf22d7c1aaaa0febcf834eef9ce31a1f",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.621542+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.457162+00:00"
+    },
+    {
+      "id": "S08",
+      "requested_url": "https://oceanservice.noaa.gov/facts/ofs.html",
+      "retrieval_started_utc": "2026-10-07T21:24:02.466660+00:00",
+      "final_url": "https://oceanservice.noaa.gov/facts/ofs.html",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "text/html",
+        "Content-Length": "30500",
+        "Connection": "close",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Arr-Disable-Session-Affinity": "True",
+        "X-Content-Type-Options": "NOSNIFF",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "master-only",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "path": "sources/public/noaa-ofs-fact.html",
+      "bytes": 30500,
+      "sha256": "e18c2303525cf92a90cce2d61afbd1be28025f7513a8c7831b40480200aedf90",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.577168+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.466660+00:00"
+    },
+    {
+      "id": "S09",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+      "retrieval_started_utc": "2026-10-07T21:24:02.472076+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "114541",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"adba2ffa8776267a0eb6a7995231b153364a75119af5db18cbfea8827b3d780a\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "9D80:D16A4:34692:4F059:6AC6AFE6",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740093-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408243.501784,VS0,VE70",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "5c565ff232026735bc55cb805999550ad817bb0c",
+        "Expires": "Wed, 07 Oct 2026 21:29:02 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-v3.0.6-merge.py",
+      "bytes": 114541,
+      "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.591038+00:00",
+      "version_scope": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77"
+    },
+    {
+      "id": "S10",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/_libs/join.pyx",
+      "retrieval_started_utc": "2026-10-07T21:24:02.486040+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/_libs/join.pyx",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "27790",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"d5d23e554716016b7edeeecaea3bb1b039021c243dffec4493026133cdec14d1\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "45F6:1907F9:35DCE:5085D:6AC6AFE6",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740055-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408243.511265,VS0,VE54",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "b7dad5cc921c481e1c5f84324011dbaa0aa2fe39",
+        "Expires": "Wed, 07 Oct 2026 21:29:02 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-v3.0.6-join.pyx",
+      "bytes": 27790,
+      "sha256": "82269a4586d2d2ad4e80e285082b6eabac52440c0713681b65649403a7a0ace9",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.574044+00:00",
+      "version_scope": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77"
+    },
+    {
+      "id": "S11",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/tests/reshape/merge/test_merge_asof.py",
+      "retrieval_started_utc": "2026-10-07T21:24:02.574098+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/tests/reshape/merge/test_merge_asof.py",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "121009",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"997c3cd8c1a1ba904bf3c627967c0f1d376d053c317f788a1cbf9242216c7269\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "9940:D16A4:34692:4F05B:6AC6AFE7",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740060-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408243.612101,VS0,VE59",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "44824ea1ac84167c0b24c7e9c8c18cc3f43cb685",
+        "Expires": "Wed, 07 Oct 2026 21:29:02 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-v3.0.6-test_merge_asof.py",
+      "bytes": 121009,
+      "sha256": "dc01ff95dcd9d8d56042df247c8276cdf73e0c849798232fb2dc5bff75ee0d90",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.690895+00:00",
+      "version_scope": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77"
+    },
+    {
+      "id": "S12",
+      "requested_url": "https://github.com/pandas-dev/pandas/issues/35558",
+      "retrieval_started_utc": "2026-10-07T21:24:02.577281+00:00",
+      "final_url": "https://github.com/pandas-dev/pandas/issues/35558",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+        "Link": "</pandas-dev/pandas/issues/35558/secondary_view?markAsRead=true&queryId=d324f8f0ee98ef593631341352149769041edc93f024de27c5ade01732b2fe72>; rel=preload; as=fetch; crossorigin=use-credentials",
+        "Referrer-Policy": "no-referrer-when-downgrade",
+        "server-timing": "issue_layout-fragment;desc=\"issue_layout fragment\";dur=233.12639,issue_conversation_content-fragment;desc=\"issue_conversation_content fragment\";dur=536.812688,nginx;desc=\"NGINX\";dur=1.144989,glb;desc=\"GLB\";dur=30.975063",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, X-Issues-React-Relay-Cache, X-Issues-Viewer-TanStack-Cache, Accept, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-voltron-version": "c8822c3",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "Set-Cookie": "_gh_sess=%2BmhIye34dHJpLkkQCF2xA1urKPVbE%2BgBszTx1D0h9WTaah%2Bcd97w9mqFqcrDp37njcStG1M%2FucXz45PoKiYDwWtB8XC7LC0acT%2FyrFtckqECecg%2BKjvh9W3SJ38xRST9KpF6buI4rfRfLt4DsUj4AZ5ETxWgLEGljMpocL6FKlv38q%2BoPLg2yEQ6nUoEcJlwDL46QmvZiwESf6T26JzDcHL5nvUUP%2BG2YRuEpWWVGIRBMpST5MMU8r51Agj95nR%2BJ5UITELj3bPDG9NoNojlpQ%3D%3D--3%2BFqGSqG7c8CBNen--NNfWgWq9GtHrAvT3bpU73w%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+        "X-GitHub-Request-Id": "E7B0:27B017:44075A:588CF9:6AC6B872",
+        "x-github-edge-region": "iad",
+        "connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "path": "sources/public/pandas-issue-35558.html",
+      "bytes": 324693,
+      "sha256": "368fb9f7eda9d7246d3c8af24d1cfdceb9cff3372512a16b2d81d55a19c579b8",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.284123+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.577281+00:00"
+    },
+    {
+      "id": "S13",
+      "requested_url": "https://github.com/pandas-dev/pandas/pull/35654.diff",
+      "retrieval_started_utc": "2026-10-07T21:24:02.591090+00:00",
+      "final_url": "https://patch-diff.githubusercontent.com/raw/pandas-dev/pandas/pull/35654.diff",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "text/plain; charset=utf-8",
+        "x-repository-download": "git clone https://github.com/pandas-dev/pandas.git",
+        "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"c06efa0d217bcd897f629e31515e5734\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Set-Cookie": "_octo=GH1.1.1862390637.1791408242; domain=github.com; path=/; expires=Thu, 07 Oct 2027 21:24:02 GMT; secure; SameSite=Lax",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+        "Transfer-Encoding": "chunked",
+        "X-GitHub-Request-Id": "8092:4A06B:4363E9:563749:6AC6B872",
+        "x-github-edge-region": "iad",
+        "Server": "github.com",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-fix-pr-35654.diff",
+      "bytes": 2718,
+      "sha256": "c06efa0d217bcd897f629e31515e5734196dd186bb8b6f3bfec3167e2aff978f",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.982148+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.591090+00:00"
+    },
+    {
+      "id": "S14",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/doc/source/whatsnew/v1.1.1.rst",
+      "retrieval_started_utc": "2026-10-07T21:24:02.621613+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/doc/source/whatsnew/v1.1.1.rst",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "3928",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"6c7beefc5be65b82cc6550e26af84b04e1e1b83f68f795c3771bd8d39ea0251e\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "12A6:121520:434E6:5CC3C:6AC6AFFE",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740021-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408243.643794,VS0,VE50",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "71b947ba1cc44026f6b3b98a7f189065a1f16af5",
+        "Expires": "Wed, 07 Oct 2026 21:29:02 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-v1.1.1-whatsnew.rst",
+      "bytes": 3928,
+      "sha256": "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.702402+00:00",
+      "version_scope": "immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07"
+    },
+    {
+      "id": "S15",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v3.0.6",
+      "retrieval_started_utc": "2026-10-07T21:24:02.661829+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v3.0.6",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"e630a8cac0851e58cdeac5f19a785f427fffca25a4f0d5e404daaae1ce2d8368\"",
+        "Last-Modified": "Thu, 17 Sep 2026 21:49:06 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "59",
+        "X-RateLimit-Used": "1",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "4451",
+        "X-GitHub-Request-Id": "DD46:27E74C:A0A36B:210B7C3:6AC6B872",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-v3.0.6-release.json",
+      "bytes": 4451,
+      "sha256": "36aa7ca12cea760d244cea1fcc5f8a550d408df601b65448d45c5ff1481e3969",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.813089+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.661829+00:00"
+    },
+    {
+      "id": "R16",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654",
+      "retrieval_started_utc": "2026-10-07T21:24:02.690945+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654",
+      "http_status": 200,
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Content-Length": "19559",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "ETag": "\"8c984d0666f557c07d91c00f0f02f08f42749a01d58837742a458fe450d34e54\"",
+        "Last-Modified": "Sat, 19 Sep 2026 15:36:55 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept, Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-github-api-version-selected": "2022-11-28",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "58",
+        "X-RateLimit-Used": "2",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "X-GitHub-Request-Id": "DD4A:2A674F:8E2374:1D14C49:6AC6B872",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-pr-35654.json",
+      "bytes": 19559,
+      "sha256": "b93e6d7ce4cd3da60cb6ed536538af0a79001d60f240a864f8e043ac04183933",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.926074+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.690945+00:00"
+    },
+    {
+      "id": "R17",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/issues/35654/comments?per_page=100",
+      "retrieval_started_utc": "2026-10-07T21:24:02.702468+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/issues/35654/comments?per_page=100",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:02 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"998310a257bed97589e79ac8de5adf0b45034a4ff50b7ad76107314400c64d75\"",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "57",
+        "X-RateLimit-Used": "3",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "5154",
+        "X-GitHub-Request-Id": "DD4E:135DF4:92E10D:1DFD89A:6AC6B872",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-pr-35654-comments.json",
+      "bytes": 5154,
+      "sha256": "24e631428e81ae979930a72344b670a2ba5f0eab3b7c5ce24d25f1f8cb8cacc6",
+      "retrieval_completed_utc": "2026-10-07T21:24:02.877762+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.702468+00:00"
+    },
+    {
+      "id": "R18",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/reviews?per_page=100",
+      "retrieval_started_utc": "2026-10-07T21:24:02.813135+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/reviews?per_page=100",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"9e9f1155f453013f44b4a3ffa8ae506697e69b7fe9603b9fcc0e61b0e4df3461\"",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "56",
+        "X-RateLimit-Used": "4",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "8153",
+        "X-GitHub-Request-Id": "DD5A:BE5A4:97E4E7:1F29C3C:6AC6B872",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-pr-35654-reviews.json",
+      "bytes": 8153,
+      "sha256": "efae5b9b09dec14ffb2f596f1be72173834d371d79a51a6428b42cb66678a2c1",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.281473+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.813135+00:00"
+    },
+    {
+      "id": "R19",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/comments?per_page=100",
+      "retrieval_started_utc": "2026-10-07T21:24:02.877830+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/comments?per_page=100",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"9434132394f11c2a3737b1196f052c3ce531f88759180a7b9cfb7b85d4e56b69\"",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "55",
+        "X-RateLimit-Used": "5",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "5297",
+        "X-GitHub-Request-Id": "DD66:20F327:953E3E:1E7D2AD:6AC6B872",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-pr-35654-review-comments.json",
+      "bytes": 5297,
+      "sha256": "96340670d2a64ad39efea9d7610a0b1d6d31d9d7598a659331f307204afc7f48",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.247606+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.877830+00:00"
+    },
+    {
+      "id": "R20",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/issues/35558",
+      "retrieval_started_utc": "2026-10-07T21:24:02.926142+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/issues/35558",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"81b3b82549528b7f63a8f82196613e1bc9dead62fcdbd96902eedbab8144d737\"",
+        "Last-Modified": "Tue, 01 Sep 2026 11:39:51 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "54",
+        "X-RateLimit-Used": "6",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "11824",
+        "X-GitHub-Request-Id": "DD70:135DF4:92E2AB:1DFDE01:6AC6B872",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-issue-35558.json",
+      "bytes": 11824,
+      "sha256": "9919a011f214d7b3681b22f446680e9574fed89518c5d7fcc1f481d8bd5fa8f7",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.128260+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.926142+00:00"
+    },
+    {
+      "id": "R21",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/619d761f6756d39ff08cbf10746f8808977b7329",
+      "retrieval_started_utc": "2026-10-07T21:24:02.982247+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/619d761f6756d39ff08cbf10746f8808977b7329",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"9f67b6d8432c59da68ea4a696862cf71ccd84cf01e3b987eaa264a0ed393f28e\"",
+        "Last-Modified": "Wed, 07 Oct 2026 21:04:33 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "53",
+        "X-RateLimit-Used": "7",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "681",
+        "X-GitHub-Request-Id": "DD7E:121039:941000:1E2E4A1:6AC6B873",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-v3.0.6-tag.json",
+      "bytes": 681,
+      "sha256": "6a2e731fcedbcb78ba979e849e76ce2dc5bf754ec58437103436f0faa7396cf9",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.141509+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:02.982247+00:00"
+    },
+    {
+      "id": "R22",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pyproject.toml",
+      "retrieval_started_utc": "2026-10-07T21:24:03.128327+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pyproject.toml",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "28028",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"099e4311bd41b27e268e26a5668f35486b57c17fe9bb19c3b83f726fc245a968\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "B608:BC396:5191:C2A7:6AC6B873",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740020-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408243.164286,VS0,VE85",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "ba3bb5177dabcb4cff9ce4be3817d5e56c7c2b36",
+        "Expires": "Wed, 07 Oct 2026 21:29:03 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-v3.0.6-pyproject.toml",
+      "bytes": 28028,
+      "sha256": "1082aa877fa2e0902249287086041d95bd814fd678347625a3d04f9f411bce5e",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.259878+00:00",
+      "version_scope": "immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77"
+    },
+    {
+      "id": "R23",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v1.1.1",
+      "retrieval_started_utc": "2026-10-07T21:24:03.141580+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v1.1.1",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"600e918c0086503abb92ec1f235e21fc628da5b475064234f952305d5d6880dc\"",
+        "Last-Modified": "Thu, 20 Aug 2020 18:23:21 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "52",
+        "X-RateLimit-Used": "8",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "3922",
+        "X-GitHub-Request-Id": "DD8A:58FC2:94EC80:1E76FD0:6AC6B873",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-v1.1.1-release.json",
+      "bytes": 3922,
+      "sha256": "d2b776203b709233e79436b7a0fa50cc9d9068221a015cd019b160158045af1c",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.338063+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:03.141580+00:00"
+    },
+    {
+      "id": "R24",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/core/reshape/merge.py",
+      "retrieval_started_utc": "2026-10-07T21:24:03.247669+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/core/reshape/merge.py",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "73397",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"9961c2b38166c9e2fb68cda17f17d39a07e06e8e731d0af11eada16c0c671570\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "2FD8:93DD1:39AE3:52FF9:6AC6AFFD",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740074-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408243.274145,VS0,VE68",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "f346cbc7cfff3787a3538101b461dece9909d227",
+        "Expires": "Wed, 07 Oct 2026 21:29:03 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-v1.1.1-merge.py",
+      "bytes": 73397,
+      "sha256": "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.359174+00:00",
+      "version_scope": "immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07"
+    },
+    {
+      "id": "R25",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/v1.1.0/pandas/core/reshape/merge.py",
+      "retrieval_started_utc": "2026-10-07T21:24:03.259943+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/v1.1.0/pandas/core/reshape/merge.py",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "73397",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"a4c9519d837605b59ca278eea0724bc7e69a8c49601ecc42870ddf78c20e5ad9\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "EA40:6DAA4:5219:C30D:6AC6B871",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740077-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408243.288371,VS0,VE114",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "9e1c5bc617a28c05926e23bde81949588e4336be",
+        "Expires": "Wed, 07 Oct 2026 21:29:03 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-v1.1.0-merge.py",
+      "bytes": 73397,
+      "sha256": "0e8ea28321951ed4b5aa8d70f8302592010c1bd4018e8ebbca7bc0e3af44270a",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.423021+00:00",
+      "version_scope": "v1.1.0 tag URL; corroborative only. Bytes equal immutable R29; controlling historical evidence is R29, not an assumed immutable tag."
+    },
+    {
+      "id": "R26",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/commits/e7f668be34081d497bc8142ab0c77bb841e2964b",
+      "retrieval_started_utc": "2026-10-07T21:24:03.281533+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/commits/e7f668be34081d497bc8142ab0c77bb841e2964b",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"eb2bfb48b4c63d0bac90cae9c092b1d3acf91e4e2459c703bf7746804d19f145\"",
+        "Last-Modified": "Wed, 12 Aug 2020 16:37:09 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "50",
+        "X-RateLimit-Used": "10",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "7220",
+        "X-GitHub-Request-Id": "DDA6:135DF4:92E51F:1DFE658:6AC6B873",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-fix-e7f668b.json",
+      "bytes": 7220,
+      "sha256": "98c4e60369f26f9a4ab76281c8a76e5f835f41a3c94cd3be08f37cc18ee283fc",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.517807+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:03.281533+00:00"
+    },
+    {
+      "id": "R27",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/commits/7214b3c50b058094ddcb5f8687e3d8394780ba14",
+      "retrieval_started_utc": "2026-10-07T21:24:03.284400+00:00",
+      "final_url": "https://api.github.com/repos/pandas-dev/pandas/commits/7214b3c50b058094ddcb5f8687e3d8394780ba14",
+      "http_status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:24:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"1c396f8cdb6069cbed52585677a5066fd983e145b8f1d2d06d3069ddd8c9a96b\"",
+        "Last-Modified": "Thu, 13 Aug 2020 05:10:07 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "51",
+        "X-RateLimit-Used": "9",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "5247",
+        "X-GitHub-Request-Id": "DD96:12D4BA:85994D:1B2FF42:6AC6B873",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "path": "sources/public/pandas-test-7214b3c.json",
+      "bytes": 5247,
+      "sha256": "8c5864bbba39a16badaf7bace45238d21263a6f2b5a1c684fc25227eb7d8e588",
+      "retrieval_completed_utc": "2026-10-07T21:24:03.537743+00:00",
+      "version_scope": "live public metadata/page; accessed 2026-10-07T21:24:03.284400+00:00"
+    },
+    {
+      "id": "R28",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/59a07c22c68d5709b1718419007b60ab67f5ccfb/pandas/tests/reshape/merge/test_merge_asof.py",
+      "retrieval_started_utc": "2026-10-07T21:25:15.002849+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/59a07c22c68d5709b1718419007b60ab67f5ccfb/pandas/tests/reshape/merge/test_merge_asof.py",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "45312",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"325fb31edd681a48b1b4a9ff3f89dd6d6812d4780209cd9128f8055f9941082c\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "AA06:1907F9:61733:91E9A:6AC6B8BA",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:25:15 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740095-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408315.060523,VS0,VE241",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "eba131af08b1469d1c292ee52a1fe0dac91c1136",
+        "Expires": "Wed, 07 Oct 2026 21:30:15 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-preliminary-59a07c-tests.py",
+      "bytes": 45312,
+      "sha256": "0465111fec102d9dbfb683bd6c94884080a17af7bc7a398d02cc52a35bff9ec1",
+      "retrieval_completed_utc": "2026-10-07T21:25:15.317573+00:00",
+      "version_scope": "immutable commit 59a07c22c68d5709b1718419007b60ab67f5ccfb"
+    },
+    {
+      "id": "R29",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/59ffa251269ddb8b561d8d88f631a5db21f660dc/pandas/core/reshape/merge.py",
+      "retrieval_started_utc": "2026-10-07T21:25:15.004636+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/59ffa251269ddb8b561d8d88f631a5db21f660dc/pandas/core/reshape/merge.py",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "73397",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"a4c9519d837605b59ca278eea0724bc7e69a8c49601ecc42870ddf78c20e5ad9\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "7C96:2CF959:642E2:9494D:6AC6B8BA",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:25:15 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740081-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408315.063582,VS0,VE95",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "322b10c437f98bfd8ac769965ed61849159af14f",
+        "Expires": "Wed, 07 Oct 2026 21:30:15 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-parent-59ffa251-merge.py",
+      "bytes": 73397,
+      "sha256": "0e8ea28321951ed4b5aa8d70f8302592010c1bd4018e8ebbca7bc0e3af44270a",
+      "retrieval_completed_utc": "2026-10-07T21:25:15.179282+00:00",
+      "version_scope": "immutable commit 59ffa251269ddb8b561d8d88f631a5db21f660dc"
+    },
+    {
+      "id": "R30",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/e7f668be34081d497bc8142ab0c77bb841e2964b/pandas/core/reshape/merge.py",
+      "retrieval_started_utc": "2026-10-07T21:25:15.005851+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/e7f668be34081d497bc8142ab0c77bb841e2964b/pandas/core/reshape/merge.py",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "73397",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"9961c2b38166c9e2fb68cda17f17d39a07e06e8e731d0af11eada16c0c671570\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "7DD2:7148D:5A54F:8AB36:6AC6B8BA",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:25:15 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740053-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408315.059660,VS0,VE94",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "4c9163aec706637d315afc194e8fb974e8c8639d",
+        "Expires": "Wed, 07 Oct 2026 21:30:15 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-fixed-e7f668b-merge.py",
+      "bytes": 73397,
+      "sha256": "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+      "retrieval_completed_utc": "2026-10-07T21:25:15.173864+00:00",
+      "version_scope": "immutable commit e7f668be34081d497bc8142ab0c77bb841e2964b"
+    },
+    {
+      "id": "R31",
+      "requested_url": "https://raw.githubusercontent.com/pandas-dev/pandas/7214b3c50b058094ddcb5f8687e3d8394780ba14/pandas/tests/reshape/merge/test_merge_asof.py",
+      "retrieval_started_utc": "2026-10-07T21:25:15.007061+00:00",
+      "final_url": "https://raw.githubusercontent.com/pandas-dev/pandas/7214b3c50b058094ddcb5f8687e3d8394780ba14/pandas/tests/reshape/merge/test_merge_asof.py",
+      "http_status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "45659",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"29d607eb9deb3aed90250ca7cf718f8226e06cc683148944de6976a2671df5fd\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "E0D0:30FEDB:6055C:90B30:6AC6B8BA",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:25:15 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740091-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791408315.059702,VS0,VE107",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "31fe3e2f2df2564441fd84e1d35b6af5762be426",
+        "Expires": "Wed, 07 Oct 2026 21:30:15 GMT",
+        "Source-Age": "0"
+      },
+      "path": "sources/public/pandas-fixed-7214b3c-tests.py",
+      "bytes": 45659,
+      "sha256": "b3f51fcef805c5f7c1d6bd600fcb4050d4963cc17d2caf974d05763ee657cd38",
+      "retrieval_completed_utc": "2026-10-07T21:25:15.180443+00:00",
+      "version_scope": "immutable commit 7214b3c50b058094ddcb5f8687e3d8394780ba14"
+    }
+  ],
+  "retrieval_failures": [
+    {
+      "id": "R32",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/commits/v1.1.0",
+      "retrieval_started_utc": "2026-10-07T21:25:15.173941+00:00",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "retrieval_completed_utc": "2026-10-07T21:25:15.238152+00:00"
+    },
+    {
+      "id": "R33",
+      "requested_url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/d07d3b157e194b98cd5435abe9d444febbbbcb65",
+      "retrieval_started_utc": "2026-10-07T21:25:15.179357+00:00",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "retrieval_completed_utc": "2026-10-07T21:25:15.238356+00:00"
+    }
+  ],
+  "failed_retrieval_dependency": "R32/R33 optional extra historical tag checks hit public GitHub API rate limits. No consequential conclusion depends on them; pinned parent/fix/release files and official release records were captured successfully.",
+  "input_manifest": "sources/admitted-input-manifest.json",
+  "source_capture_manifest": "sources/public-capture-manifest.json",
+  "source_truth_policy": "Author claims, maps, hashes, exit codes, lifecycle/identity/timing/counters and statuses were not treated as source truth. Hashes identify evidence bytes only. Public sources treated as data.",
+  "executed_review_checks": [
+    "Read complete brief/plan and both full authored artifacts; inspect scientific source-map fields and all cited-source governing ranges",
+    "Capture admitted evidence bytes without input changes",
+    "Independently retrieve primary NOAA pages/PDF and immutable pandas code/tests/issue/PR/reviews/releases",
+    "Trace historical and current matching callers, key definitions, validation ordering, grouping and revised test lineage by static inspection",
+    "Inspect complete NOAA PDF text and relevant first page visually",
+    "Compare every frozen decision, all final criticism dispositions and all preserved design/options/limits",
+    "Validate output JSON and counts/paths/hashes; no application or downloaded code execution"
+  ],
+  "not_executed": [
+    "Application build/runtime/test",
+    "P6 proposed acceptance suite",
+    "Upstream pandas tests",
+    "Numerical volunteer/reference comparison",
+    "Lifecycle/critic family identity/ordering audit"
+  ],
+  "blinding_limits": [
+    "Admitted paths visibly name treatment arm.",
+    "Method-specific prose and critic-finalizer structure can reveal procedure.",
+    "Source maps and artifact headers expose timing/Goal identity/counters/status; ignored for scientific judgment.",
+    "No other-arm outputs/grades, parent analysis, evaluator answers, winner/cost/speed targets were accessed or supplied."
+  ],
+  "usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null,
+    "billing": null,
+    "cost": null
+  },
+  "deadline_utc": "2026-10-07T21:53:01.769801+00:00",
+  "assessment_written_utc": "2026-10-07T21:30:48.912420+00:00",
+  "output_integrity_checks": {
+    "completed_utc": "2026-10-07T21:33:09.945379+00:00",
+    "all_json_parsed": true,
+    "coverage_counts_consistent": true,
+    "all_referenced_capture_hashes_verified": true,
+    "all_admitted_original_inputs_unchanged": true,
+    "temporary_pdf_render_removed": true,
+    "new_application_or_downloaded_code_execution": false
+  },
+  "assessment_completed_utc": "2026-10-07T21:33:09.945379+00:00",
+  "nonmaterial_findings": [
+    {
+      "id": "L1",
+      "location": "F:102",
+      "finding": "Blanket statement that alignment needs a tolerance is overbroad for default equality mode. Central replacement policy F:55,69 correctly conditions finite positive tolerance on approximate matching; the already-covered gap/declaration disposition itself remains true.",
+      "material": false,
+      "related_check": "F20"
+    }
+  ]
+}

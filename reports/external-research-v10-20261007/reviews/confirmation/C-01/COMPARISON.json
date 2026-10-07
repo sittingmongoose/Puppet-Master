@@ -1,0 +1,690 @@
+{
+  "schema": "pm.er10.confirmation-comparison.v1",
+  "case": "C-01",
+  "domain": "A",
+  "repetition": 1,
+  "frozen_at": "2026-10-07T21:27:15.311975+00:00",
+  "qualification": "DIAGNOSTIC_UNQUALIFIED",
+  "original_grades_preserved": true,
+  "assessed_pair": false,
+  "both_arm_full_declared_source_coverage": false,
+  "assessment_disposition": "UNASSESSED_HOLD",
+  "arms": {
+    "control": {
+      "original_scientific_grade": null,
+      "full_declared_scope_assessed": false,
+      "source6_axes_original": null,
+      "obligations_original": null,
+      "material_defect_count": 0,
+      "limitations_original_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/control/source-review-v1/REVIEW_FREEZE.json",
+      "review_freeze": null,
+      "review_delivered": false,
+      "assessment_disposition": "UNASSESSED_HOLD",
+      "host_review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/control/source-review-v1/HOST_INCOMPLETE_REVIEW_FREEZE.json",
+        "sha256": "ceb9bc1a23fdc7de784d9a80d10ed96ff4ec5326593188d444feeea75f0f2e76"
+      },
+      "cold_predispatch_at": "2026-10-07T19:57:26.822552+00:00",
+      "candidate_service_terminal_at": "2026-10-07T20:36:29.636000+00:00",
+      "resource_release_observed_upper_bound": "2026-10-07T20:37:09.177752+00:00",
+      "failure_inclusive_service_latency_seconds": 2342.813448,
+      "failure_inclusive_host_closeout_latency_seconds": 2382.3552,
+      "aggregate_stage_occupied_seconds": 2236.053,
+      "host_and_between_stage_elapsed_seconds": 146.30220000000008,
+      "whole_arm_deadline": "2026-10-07T20:42:26.822552+00:00",
+      "service_terminal_within45min": true,
+      "closeout_within45min": true,
+      "stages": [
+        {
+          "stage": "researcher-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-researcher-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-researcher-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-researcher-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a117f1-3a9a-7720-a5e9-b7104d5edd31",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T19:57:27.103Z",
+          "startedAt": "2026-10-07T19:57:28.011Z",
+          "completedAt": "2026-10-07T20:16:59.693Z",
+          "stage_occupied_seconds": 1172.59,
+          "queue_startup_seconds": 0.908,
+          "deadline": "2026-10-07T20:17:26.822552+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "d7fd4f549a203cfad45a1d3dbc8667493e1b240bf4d90683e291c4725c936860",
+              "status": "complete",
+              "tokensUsed": 263657,
+              "tokenBudget": null,
+              "timeUsedSeconds": 1133
+            }
+          ],
+          "output_bytes": 5754680,
+          "scientific_artifact_bytes": 52610,
+          "source_capture_bytes": 5702070,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/control/researcher-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "critic-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-critic-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-critic-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11803-f129-7c72-8d7a-b2786e9db3e5",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T20:17:53.784Z",
+          "startedAt": "2026-10-07T20:17:54.357Z",
+          "completedAt": "2026-10-07T20:24:08.059Z",
+          "stage_occupied_seconds": 374.275,
+          "queue_startup_seconds": 0.573,
+          "deadline": "2026-10-07T20:27:53.623664+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "f197606ae77ce7eb3657dec7f9db51ae79c24405f485a757be3a73abc686ab45",
+              "status": "complete",
+              "tokensUsed": 114762,
+              "tokenBudget": null,
+              "timeUsedSeconds": 340
+            }
+          ],
+          "output_bytes": 2073419,
+          "scientific_artifact_bytes": 42555,
+          "source_capture_bytes": 2030864,
+          "observable_dynamic_tool_counts": {
+            "t3-code.orchestrator_capabilities": 1,
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/control/critic-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "reviser-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-reviser-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-reviser-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-reviser-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a1180a-7444-71e0-9e0e-ad8a01862778",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T20:25:00.448Z",
+          "startedAt": "2026-10-07T20:25:01.266Z",
+          "completedAt": "2026-10-07T20:36:29.636Z",
+          "stage_occupied_seconds": 689.188,
+          "queue_startup_seconds": 0.818,
+          "deadline": "2026-10-07T20:40:00.315475+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "eae6d95ba1ee817cdcb0cfceef089adbb3375881901c53c4585b76d856a90e16",
+              "status": "complete",
+              "tokensUsed": 177055,
+              "tokenBudget": null,
+              "timeUsedSeconds": 654
+            }
+          ],
+          "output_bytes": 4362062,
+          "scientific_artifact_bytes": 51190,
+          "source_capture_bytes": 4310872,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/control/reviser-v1/host/scientific-files-terminal-freeze.json"
+        }
+      ],
+      "review_time_separate": {
+        "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-control-source-review-v1:ordinal:1",
+        "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-control-source-review-v1",
+        "status": "interrupted",
+        "requestedAt": "2026-10-07T20:37:22.771Z",
+        "startedAt": "2026-10-07T20:37:23.408Z",
+        "completedAt": "2026-10-07T21:21:40.929Z"
+      },
+      "usage": {
+        "input": null,
+        "cached_input": null,
+        "generated_output": null,
+        "reasoning_subset": null,
+        "billing": null
+      },
+      "source_operations": null,
+      "scope_audit": "incomplete_unknown; advisory maps not filesystem firewall",
+      "native_raw_API_bodies": "missing; actual active and terminal projection evidence distinct",
+      "affordability_claim": false
+    },
+    "treatment": {
+      "original_scientific_grade": "FAIL",
+      "full_declared_scope_assessed": true,
+      "source6_axes_original": [
+        {
+          "id": "S6-1",
+          "name": "full brief obligations",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E07",
+            "E08",
+            "E09",
+            "E10"
+          ],
+          "defect_refs": [
+            "D-SRC-01"
+          ],
+          "assessment": "All O1-O7 scientific content assessed. Consequential current-state API semantics and resulting condition fail; core integrated proposal otherwise covered.",
+          "limitation_refs": []
+        },
+        {
+          "id": "S6-2",
+          "name": "consequential source claims and governing conditions",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08"
+          ],
+          "defect_refs": [
+            "D-SRC-01",
+            "N-SRC-02"
+          ],
+          "assessment": "Primary standards, version identity, code, fix/release and documented transport boundaries checked. D-SRC-01 is material; BagIt condition is a nonmaterial under-specification.",
+          "limitation_refs": []
+        },
+        {
+          "id": "S6-3",
+          "name": "useful open discovery coverage/options/analogies/components/history",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "E05",
+            "E06",
+            "E09",
+            "E10",
+            "E11"
+          ],
+          "defect_refs": [
+            "N-PRES-01"
+          ],
+          "assessment": "Substantially different service, coordinator packet and file-sync mechanisms; ordinary preview/OSD/JS9 options; Tropy analogy and OAL lead assessed. Independent user-level primary discovery also probed distributed conflicts, atomicity and provenance packaging. No mandatory source count or exhaustive component set.",
+          "limitation_refs": [
+            "L-ORIGINAL-OPERATIONS",
+            "L-HISTORY",
+            "L-PRODUCT-CHOICES"
+          ]
+        },
+        {
+          "id": "S6-4",
+          "name": "incorrect rejection/correction",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E09"
+          ],
+          "defect_refs": [
+            "D-SRC-01"
+          ],
+          "assessment": "FITS correction, limits on issue applicability and JS9/OAL deferrals are justified. Added blanket current-state conversion correction conflicts with pinned implementation.",
+          "limitation_refs": []
+        },
+        {
+          "id": "S6-5",
+          "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "E01",
+            "E03",
+            "E05",
+            "E06",
+            "E07",
+            "E09",
+            "E10"
+          ],
+          "defect_refs": [
+            "N-PRES-01",
+            "N-PRES-02"
+          ],
+          "assessment": "Core negative constraints, unchanged originals, distinct byte/event identity, raw metadata/context, operator gate, human reconciliation/re-anchoring, policy-dependent retention and proposed-test status survive. Optional leads/conditional browser safeguard are narrowed; original 30-day approval condition retained as optional.",
+          "limitation_refs": [
+            "L-PRESERVATION"
+          ]
+        },
+        {
+          "id": "S6-6",
+          "name": "proposed versus actually performed validation",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "E01",
+            "E04",
+            "E10"
+          ],
+          "defect_refs": [],
+          "assessment": "Candidate keeps all application checks proposed and source inspection separate. Reviewer independently repeated accessible input/source-fact checks and performed one clearly separate isolated method check. Original hidden operations not attested.",
+          "limitation_refs": [
+            "L-ORIGINAL-OPERATIONS",
+            "L-SYNTHETIC"
+          ]
+        }
+      ],
+      "obligations_original": {
+        "O1": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "E02",
+            "E07",
+            "E09",
+            "E10"
+          ],
+          "defect_refs": [
+            "N-PRES-01"
+          ],
+          "assessment": "Problem-level discovery content is broad/useful, independently checked through open primary discovery. Candidate states before-PLAN order; excluded execution chronology not independently attested.",
+          "limitation_refs": [
+            "L-ORIGINAL-OPERATIONS"
+          ]
+        },
+        "O2": {
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "E06",
+            "E07",
+            "E09",
+            "E10"
+          ],
+          "defect_refs": [],
+          "assessment": "At least two substantially different useful mechanisms, competing component/display options, outside-domain analogy and consequential operational trade-offs are present.",
+          "limitation_refs": []
+        },
+        "O3": {
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "E02",
+            "E03",
+            "E04",
+            "E07",
+            "E08"
+          ],
+          "defect_refs": [
+            "D-SRC-01",
+            "N-SRC-02"
+          ],
+          "assessment": "Semantics/units/versions/applicability checked; material mismatch between documented intent and actual pinned inverse-scale code.",
+          "limitation_refs": []
+        },
+        "O4": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "E04",
+            "E05",
+            "E06",
+            "E11"
+          ],
+          "defect_refs": [],
+          "assessment": "Justified component implementation is pinned; narrow issue/fix/patch/release chain verified. Missing patch test addition and unexecuted reproduction are disclosed; no general issue-title applicability inference.",
+          "limitation_refs": [
+            "L-HISTORY",
+            "L-PRODUCT-CHOICES"
+          ]
+        },
+        "O5": {
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "E01",
+            "E10"
+          ],
+          "defect_refs": [],
+          "assessment": "All exact A-P1..A-P7 dispositions and what is already covered are assessed; A-P4 technical defect separately recorded.",
+          "limitation_refs": []
+        },
+        "O6": {
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "E03",
+            "E04",
+            "E07",
+            "E08",
+            "E09",
+            "E10"
+          ],
+          "defect_refs": [
+            "D-SRC-01",
+            "N-PRES-01",
+            "N-PRES-02"
+          ],
+          "assessment": "Complete integrated recommendations, optional opportunities, uncertainties and observable proposed validation exist, but a consequential viewer governing condition is false and optional preservation is narrowed.",
+          "limitation_refs": []
+        },
+        "O7": {
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "E01",
+            "E10"
+          ],
+          "defect_refs": [],
+          "assessment": "Ingest/provenance, identity, annotations/collaboration, access, retention/deletion, errors/recovery, and offline handoff/export are assessed within bounded planning; no product implementation/canonical write.",
+          "limitation_refs": []
+        }
+      },
+      "material_defect_count": 1,
+      "limitations_original_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+        "sha256": "743141f191d8b140490184fbf20ec771a347a469e2f54cd93022336e0473351e"
+      },
+      "review_delivered": true,
+      "assessment_disposition": "DELIVERED",
+      "host_review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+        "sha256": "d4b4a52b299c87ff5776b51b16a1489e5271f647fb909d76753aaa3b99a526a4"
+      },
+      "cold_predispatch_at": "2026-10-07T19:57:41.514890+00:00",
+      "candidate_service_terminal_at": "2026-10-07T20:26:45.684000+00:00",
+      "resource_release_observed_upper_bound": "2026-10-07T20:27:20.506730+00:00",
+      "failure_inclusive_service_latency_seconds": 1744.16911,
+      "failure_inclusive_host_closeout_latency_seconds": 1778.99184,
+      "aggregate_stage_occupied_seconds": 1600.737,
+      "host_and_between_stage_elapsed_seconds": 178.25483999999983,
+      "whole_arm_deadline": "2026-10-07T20:42:41.514890+00:00",
+      "service_terminal_within45min": true,
+      "closeout_within45min": true,
+      "stages": [
+        {
+          "stage": "researcher-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-researcher-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-researcher-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-researcher-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a117f1-735a-7ca3-9b56-d49b95bfa0fd",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T19:57:41.678Z",
+          "startedAt": "2026-10-07T19:57:42.489Z",
+          "completedAt": "2026-10-07T20:12:56.926Z",
+          "stage_occupied_seconds": 915.248,
+          "queue_startup_seconds": 0.811,
+          "deadline": "2026-10-07T20:22:41.514890+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "3471cd9337f6f2e6dd5bcca84ef086b1af73d4c02f8ceefa3264e5e7f2bceafd",
+              "status": "complete",
+              "tokensUsed": 252552,
+              "tokenBudget": null,
+              "timeUsedSeconds": 854
+            }
+          ],
+          "output_bytes": 3972639,
+          "scientific_artifact_bytes": 66182,
+          "source_capture_bytes": 3906457,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "critic-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-critic-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-critic-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11801-995f-7d93-a521-1fc9e0c72e9b",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T20:15:20.195Z",
+          "startedAt": "2026-10-07T20:15:20.883Z",
+          "completedAt": "2026-10-07T20:26:45.684Z",
+          "stage_occupied_seconds": 685.489,
+          "queue_startup_seconds": 0.688,
+          "deadline": "2026-10-07T20:35:19.930890+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "b59c1b5cd1a7ba5a90c8622cf11580f94362bf2db1d9adbffa71e829e6214cbd",
+              "status": "complete",
+              "tokensUsed": 213041,
+              "tokenBudget": null,
+              "timeUsedSeconds": 639
+            }
+          ],
+          "output_bytes": 7054788,
+          "scientific_artifact_bytes": 65693,
+          "source_capture_bytes": 6989095,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/host/scientific-files-terminal-freeze.json"
+        }
+      ],
+      "review_time_separate": {
+        "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-01-treatment-source-review-v1:ordinal:1",
+        "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-01-treatment-source-review-v1",
+        "status": "completed",
+        "requestedAt": "2026-10-07T20:37:37.559Z",
+        "startedAt": "2026-10-07T20:37:38.050Z",
+        "completedAt": "2026-10-07T20:50:10.478Z"
+      },
+      "usage": {
+        "input": null,
+        "cached_input": null,
+        "generated_output": null,
+        "reasoning_subset": null,
+        "billing": null
+      },
+      "source_operations": null,
+      "scope_audit": "incomplete_unknown; advisory maps not filesystem firewall",
+      "native_raw_API_bodies": "missing; actual active and terminal projection evidence distinct",
+      "affordability_claim": false
+    }
+  },
+  "service_latency_ratio_control_over_treatment": 1.3432260866034944,
+  "host_closeout_latency_ratio_control_over_treatment": 1.3391602740572437,
+  "repeat_median_range": "Deferred until all four original comparisons frozen; no best-of",
+  "quota_economics": "Unknown usage/billing; no affordability claim",
+  "source_operations_limitation": "Tool projection incomplete; file/capture counts are not source operations",
+  "native_counters_policy": "Original cumulative counters retained per stage; no nested/enclosing/cumulative sum",
+  "single_account_context": "First two matched pairs overlapped four candidates; account/sibling contention not fully attributable; not serialized single-project estimate",
+  "candidate_feedback_sent": false,
+  "outcome_tuning": false
+}

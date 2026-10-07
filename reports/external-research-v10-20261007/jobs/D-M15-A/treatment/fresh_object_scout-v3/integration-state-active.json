@@ -1,0 +1,62 @@
+{
+  "observed_at": "2026-10-07T20:52:13.332545+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_cc4ef8ff-d294-4d36-a97f-6a09044e069f/state.json",
+  "actual_state": {
+    "objective": "Complete D-M15-A/treatment/fresh_object_scout-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "running",
+    "rounds": 0,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "[Consume brief/manifest and open the timing ledger]",
+        "acceptance": "Read /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/brief.md and sources.json plus admission-timing.json; create timings.json in the job dir with T0, stage deadline and empty op slots. Verify: `python3 -c \"import json;[json.load(open(p)) for p in ['/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/timings.json','/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/admission-timing.json']]\"` exits 0 and timings.json names the T0 2026-10-07T20:31:30Z and the 21:51:30Z stage deadline.",
+        "status": "pending"
+      },
+      {
+        "id": "t2",
+        "title": "[Capture transport-side sources on interrupted transfer + bounded retries]",
+        "acceptance": "Independently select ~2-3 primary public docs/code (e.g. HTTP Range/resume semantics, tus resumable-upload protocol, S3 multipart retry semantics) via WebFetch; save bytes under sources/ and append index.json entries with url/version/capture-time/sha256/locator/limits. Verify: `cd <jobdir>/sources && jq -e '.[]|.url and .sha256 and .locator' index.json` lists them and `sha256sum -c` (regenerated from index.json) passes for every captured file.",
+        "status": "pending"
+      },
+      {
+        "id": "t3",
+        "title": "[Capture local-object-side sources on replacement/version identity + lifecycle]",
+        "acceptance": "Independently select ~2-3 primary public docs/code on representation identity and lifecycle during incomplete writes (e.g. ETag/If-Match conditional requests, content-addressed object identity, temp-file+atomic-rename patterns) under sources/ with full index.json bindings; note negative leads (mechanisms found absent or unfit) in each entry's limits field. Verify: same `jq`+`sha256sum -c` check passes and each new index.json entry carries a non-empty limits/negative-lead note.",
+        "status": "pending"
+      },
+      {
+        "id": "t4",
+        "title": "[Author report.md with reconciled findings, recommendation, validation; close timings]",
+        "acceptance": "Write report.md: \u22648 material findings spanning both sides, an explicit overlap reconciliation (not two concatenated answers), one bounded mechanism recommendation plus discriminating validation proposal (no sync service built), dispositions accepted/amended/rejected/unresolved, uncertainty retained; record actually-executed vs proposed validation, then fill timings.json source-op/capture/first-useful-finding/output entries. Verify: `wc -w report.md` \u2264 ~1150; `grep -ciE \"resume|retr\" report.md && grep -ciE \"identit|version|etag\" report.md && grep -ciE \"overlap|reconcil\" report.md` all >0; `test -f report.md` at exactly /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/report.md and `python3 -c \"import json;json.load(open('.../timings.json'))\"` shows non-null first-useful-finding and output timestamps before 2026-10-07T21:51:30Z.",
+        "status": "pending"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791406243291,
+    "updatedAt": 1791406306623
+  },
+  "source_sha256": "95430a13d9a5999b95898ec65e0c1922c359ab6ec642e576e8c2f0ebb16b191e",
+  "source": {
+    "nomination": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/m15-scouts-native-active-root-nominations-v1.json",
+    "nomination_sha256": "967601fe47db1925b30db7ee9597ea99ff907910e17a99a4728bee5560d57a7a",
+    "root_observed_source_sha256": "95430a13d9a5999b95898ec65e0c1922c359ab6ec642e576e8c2f0ebb16b191e",
+    "kind": "unique exact root nomination and current exact owned native state read"
+  },
+  "separate_actual_config_binding": {
+    "dispatch": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/dispatch.json",
+    "dispatch_sha256": "c071ed57a691e24114b22e32b68da149c73b8037d147d338239765f39e170216",
+    "target": {
+      "providerInstanceId": "zcode",
+      "driverKind": "acpRegistry",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": {
+        "thought": "max",
+        "mode": "yolo"
+      }
+    },
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M15-A-treatment-fresh_object_scout-v3",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M15-A-treatment-fresh_object_scout-v3",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M15-A-treatment-fresh_object_scout-v3:ordinal:1"
+  },
+  "limitation": "Installed driver state only; vendor backend goal target and ACP mapping unverified. Frozen clocks unchanged."
+}

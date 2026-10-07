@@ -1,0 +1,65 @@
+[
+  {
+    "candidate_quote": "Atomic Commit",
+    "source_text_hits": [
+      "09-sqlite-atomiccommit.txt"
+    ]
+  },
+  {
+    "candidate_quote": "ignore the Range header field if the validator doesn't match, resulting in transfer of the new selected representation instead of a 412",
+    "source_text_hits": [
+      "06-rfc9110.txt",
+      "01-rfc9110.txt"
+    ]
+  },
+  {
+    "candidate_quote": "409 Conflict without modifying the upload resource",
+    "source_text_hits": []
+  },
+  {
+    "candidate_quote": "If you upload a new part using the same part number that was used with a previous part, the previously uploaded part is overwritten",
+    "source_text_hits": [
+      "08-aws-s3-uploadpart.txt"
+    ]
+  },
+  {
+    "candidate_quote": "can be repeated automatically if a communication failure occurs",
+    "source_text_hits": [
+      "06-rfc9110.txt",
+      "01-rfc9110.txt"
+    ]
+  },
+  {
+    "candidate_quote": "If newpath already exists, it will be atomically replaced, so that there is no point at which another process attempting to access newpath will find it missing",
+    "source_text_hits": [
+      "04-man7-rename-2.txt"
+    ]
+  },
+  {
+    "candidate_quote": "critical",
+    "source_text_hits": [
+      "06-rfc9110.txt",
+      "09-sqlite-atomiccommit.txt",
+      "01-rfc9110.txt"
+    ]
+  },
+  {
+    "candidate_quote": "survive an unexpected power loss",
+    "source_text_hits": [
+      "09-sqlite-atomiccommit.txt"
+    ]
+  },
+  {
+    "candidate_quote": "now contains both versions",
+    "source_text_hits": [
+      "10-git-objects-chapter.txt"
+    ]
+  },
+  {
+    "candidate_quote": "far less useful for comparisons",
+    "source_text_hits": [
+      "06-rfc9110.txt",
+      "01-rfc9110.txt"
+    ]
+  }
+]

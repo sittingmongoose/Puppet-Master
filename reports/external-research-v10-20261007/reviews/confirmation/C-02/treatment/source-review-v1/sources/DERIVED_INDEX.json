@@ -1,0 +1,142 @@
+{
+  "derivatives": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-release.txt",
+      "sha256": "88e6a6abc6cffac2adb10a90196f8b5d9825d29c9238b5f55418cac639b1f62c",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-release.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-conflicts.txt",
+      "sha256": "da532ee4fd68892756f5e62248e4570377f0de02c4b35387eb65795049fe651b",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-conflicts.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-issue-889-page.txt",
+      "sha256": "8940bec0a2c9fe9caac420f20ea33e8bfbf8cc4e8eaba631196aec1fcd9a4619",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-issue-889-page.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/couchdb-conflicts.txt",
+      "sha256": "455a6d5dd27fc1792abbb929cda0d7cde134550b6f6e4d0fb8a3347ef53860c8",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/couchdb-conflicts.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/couchdb-replication-intro.txt",
+      "sha256": "cb995496b00786e846947eaeeaa0217e9cdf296d782426265e93ecf55b58b6ca",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/couchdb-replication-intro.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/fits-standard40.txt",
+      "sha256": "1e9dfeafd7b8694b9e89b281454e986740ad1540907a8dcb0dfdbcdffcb92cc1",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/fits-standard40.pdf",
+      "method": "pdftotext -layout"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/iiif-image-api3.txt",
+      "sha256": "0f60bfecd1db2c8d53c79cb9eace9b83a1f7d7764cff100357b288f99f808f77",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/iiif-image-api3.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/iiif-region-recipe.txt",
+      "sha256": "0f2951116deb74798115a0da70c3b1a8d13106cb6945967771989c726a2ffc54",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/iiif-region-recipe.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-oal21.xsd",
+      "sha256": "281b48c23855d8eb0545555b2071f858074d5186879d1e090ec4e79524cc200d",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip",
+      "method": "zipfile member read, without executing source or XSL transforms"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-openastronomylog21_ext_DeepSky.xsd",
+      "sha256": "f413216f3a6596c985b057a7a73f1e6dbd8db4d7d8d13b3ffe569ba876fdacda",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip",
+      "method": "zipfile member read, without executing source or XSL transforms"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-openastronomylog21_ext_Imaging.xsd",
+      "sha256": "b3674d663140fd93cab6bb71e7ae48f3e351bfdeba2c3aa20c74cf4814fec630",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip",
+      "method": "zipfile member read, without executing source or XSL transforms"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-openastronomylog21_ext_SolarSystem.xsd",
+      "sha256": "445a28b96cf17036416ad782cea66ec27487ed56de8f1f5896be64723a6420c1",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip",
+      "method": "zipfile member read, without executing source or XSL transforms"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-openastronomylog21_ext_VariableStars.xsd",
+      "sha256": "a1f3285f275219ed0457e485f019f5ddc27db0d8c6ed3865aa136d18057378d0",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip",
+      "method": "zipfile member read, without executing source or XSL transforms"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-openastronomylog21_oal_Base.xsd",
+      "sha256": "8f97e88c6a61e427f1be455efb548cb5c6635ca04b00228d28d8bb5b01ecf836",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip",
+      "method": "zipfile member read, without executing source or XSL transforms"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-issue-10468.txt",
+      "sha256": "4971904c27ad87a7aab95460daec6c9298f8f2156ae7d54f8b64c60d12eae76f",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-issue-10468.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-issue-4976.txt",
+      "sha256": "0c39f06287f92a37fa6f6c3812cac14d1c157b88c58811ededbd131e615b230b",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-issue-4976.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-pr-20473.txt",
+      "sha256": "e4fcba714a6d823377be55968f777a9629752d9c7c2fc8c6a628f24b405eabb6",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-pr-20473.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-release.txt",
+      "sha256": "86fe9053b5f46db04c607fe9136c1cf30a30fe2aa573f3fc05026e411bbfc290",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-release.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-wcs-8.0.1.txt",
+      "sha256": "e262a2a7d3ab4351331e5fe25abb5a20f000f6a97dd6f34dfeab1beb1e569e05",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-wcs-8.0.1.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-automerge-repo-blog.txt",
+      "sha256": "eaab68b639d931d907b78c1b41f23ed2cd047868f1b01731903e5592e64e2bd9",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-automerge-repo-blog.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/sqlite-wal.txt",
+      "sha256": "5509b222e2f322272d2a22f57bbce0154a0dcf1bb53a9b8cb3d5608837f00f68",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/sqlite-wal.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/w3c-annotation-model.txt",
+      "sha256": "faa1980e31d39b67da7755078e3e4f658f0d18834e3e686b0d4cbbdb85ee0c20",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/w3c-annotation-model.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/w3c-media-fragments.txt",
+      "sha256": "e7c1ee4ea01140486b0a38b7efc545b1bc2a66c466c2f5c846946300f98f795f",
+      "derived_from": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/w3c-media-fragments.html",
+      "method": "Python stdlib HTMLParser; script/style/noscript omitted; text lines stripped"
+    }
+  ]
+}

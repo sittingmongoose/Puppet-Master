@@ -1,0 +1,13 @@
+{
+  "type": "prospective_earlier_host_preparation_bound",
+  "record_at": "2026-10-07T20:22:07.749951+00:00",
+  "linked_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/execution-v2.json",
+  "actual_observed_UTC_before_helper_preparation": "2026-10-07T20:20:48Z",
+  "exact_helper_preparation_start": null,
+  "conservative_clock_bound": "2026-10-07T20:20:48+00:00",
+  "whole_deadline": "2026-10-07T21:20:48+00:00",
+  "research_deadline": "2026-10-07T20:45:48+00:00",
+  "both_arms_undispatched": true,
+  "no_timestamp_replacement": true,
+  "reason": "Include shared helper generation/preparation cost conservatively; earlier bound, no clock reset or extension."
+}

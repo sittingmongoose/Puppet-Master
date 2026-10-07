@@ -1,0 +1,443 @@
+[
+  {
+    "stage": "researcher-v1",
+    "id": "S01",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/fits-v4-standard.pdf",
+    "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+    "bytes": 1140821,
+    "expected_sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S02",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-wcs-8.0.1.html",
+    "sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+    "bytes": 56441,
+    "expected_sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S03",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-v8.0.1-wcs-utils.py",
+    "sha256": "ce97815fa3c2216abd6aa55d10a0d46c24ce81f7dd0dbb1c93625084dd917e57",
+    "bytes": 46913,
+    "expected_sha256": "ce97815fa3c2216abd6aa55d10a0d46c24ce81f7dd0dbb1c93625084dd917e57",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S04",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-v8.0.1-wcs-test-utils.py",
+    "sha256": "30e680ff7f7fb8c9702c09107e3d9a10efa188189b5dc00298d90deb3f7b9553",
+    "bytes": 58761,
+    "expected_sha256": "30e680ff7f7fb8c9702c09107e3d9a10efa188189b5dc00298d90deb3f7b9553",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S05",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-v8.0.1-release.html",
+    "sha256": "3db86a3df43023f23e73adc92856d153d32ab6493d932a3783809f71974a9bc1",
+    "bytes": 203802,
+    "expected_sha256": "3db86a3df43023f23e73adc92856d153d32ab6493d932a3783809f71974a9bc1",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S06",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-issue-10468.html",
+    "sha256": "6454fd44c16f297b810d8d4eeef7f8fdfadb0b6330739cb5bb3ca3058b797383",
+    "bytes": 294319,
+    "expected_sha256": "6454fd44c16f297b810d8d4eeef7f8fdfadb0b6330739cb5bb3ca3058b797383",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S07",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-issue-4976.html",
+    "sha256": "6c1d2fa161b038f51091e86701122c0b25bf8bda6b56045a765845ca7d8cb849",
+    "bytes": 244882,
+    "expected_sha256": "6c1d2fa161b038f51091e86701122c0b25bf8bda6b56045a765845ca7d8cb849",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S08",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-pr-20473.html",
+    "sha256": "9fe5d363ec9d27a3a22fa6abb1399ae9e0b9f731e55c29861cbdfab42696d9c1",
+    "bytes": 371376,
+    "expected_sha256": "9fe5d363ec9d27a3a22fa6abb1399ae9e0b9f731e55c29861cbdfab42696d9c1",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S09",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-pr-20473.patch",
+    "sha256": "c9eeb98a98c87abb1c5b24e75d00f5fad5e6f22137da8cfef5da765d78d36f96",
+    "bytes": 30610,
+    "expected_sha256": "c9eeb98a98c87abb1c5b24e75d00f5fad5e6f22137da8cfef5da765d78d36f96",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S10",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/w3c-annotation-model-2017.html",
+    "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+    "bytes": 284185,
+    "expected_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S11",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/w3c-media-frags-2012.html",
+    "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+    "bytes": 89887,
+    "expected_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S12",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/rfc9110.html",
+    "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+    "bytes": 1187554,
+    "expected_sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S13",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/rfc8493.html",
+    "sha256": "10f326af7d87449be37a8333e2359d70ddc1064b4cfbf8a04c911061a38467e3",
+    "bytes": 306757,
+    "expected_sha256": "10f326af7d87449be37a8333e2359d70ddc1064b4cfbf8a04c911061a38467e3",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S14",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/sqlite-wal.html",
+    "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+    "bytes": 42143,
+    "expected_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S15",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/sqlite-useovernet.html",
+    "sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1",
+    "bytes": 15812,
+    "expected_sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S16",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-conflicts.html",
+    "sha256": "28612ef6b87e734290784f212926a360f1946c4114494b75179fdce2f8557746",
+    "bytes": 17063,
+    "expected_sha256": "28612ef6b87e734290784f212926a360f1946c4114494b75179fdce2f8557746",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S17",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-release.html",
+    "sha256": "fb78727d583553baa32988bcdf9b9d139ed3cbdb5da684f1bf8d5ebcaf0a61a5",
+    "bytes": 198915,
+    "expected_sha256": "fb78727d583553baa32988bcdf9b9d139ed3cbdb5da684f1bf8d5ebcaf0a61a5",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S18",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-conflicts.ts",
+    "sha256": "6abd56faa5a8ceca10c45ce360ce723efc108a47041253d02d4f71099265c136",
+    "bytes": 4051,
+    "expected_sha256": "6abd56faa5a8ceca10c45ce360ce723efc108a47041253d02d4f71099265c136",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S19",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-implementation.ts",
+    "sha256": "024ccf0c7615b11631552652c350dd5fed657577df2f67dfb8d911f12cf51074",
+    "bytes": 60381,
+    "expected_sha256": "024ccf0c7615b11631552652c350dd5fed657577df2f67dfb8d911f12cf51074",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S20",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-index.ts",
+    "sha256": "83da7bd9dd0bbc8f10912e329349066f7d8686dafd4fa84eed72604cda475217",
+    "bytes": 7678,
+    "expected_sha256": "83da7bd9dd0bbc8f10912e329349066f7d8686dafd4fa84eed72604cda475217",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S21",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-conflicts.test.ts",
+    "sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+    "bytes": 4933,
+    "expected_sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S22",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-v3.5.0-package.json",
+    "sha256": "7a46879182bbaf8bdb51773c99bec5aa92764acb7904d97ed7c459a4cca35c66",
+    "bytes": 3249,
+    "expected_sha256": "7a46879182bbaf8bdb51773c99bec5aa92764acb7904d97ed7c459a4cca35c66",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S23",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-issue-889.html",
+    "sha256": "4da8382bc2759a91d5ceb8c34a88cecff448bafcc973e83e163e2e62bbedbd94",
+    "bytes": 254673,
+    "expected_sha256": "4da8382bc2759a91d5ceb8c34a88cecff448bafcc973e83e163e2e62bbedbd94",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S24",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/automerge-repo-blog.html",
+    "sha256": "7298d1177524c277566e906be3e8cc06ec52500b999a88aeb01b3882c8bfdbf4",
+    "bytes": 36139,
+    "expected_sha256": "7298d1177524c277566e906be3e8cc06ec52500b999a88aeb01b3882c8bfdbf4",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S25",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-repo.html",
+    "sha256": "f025389eb5a7a405ac074933e54258a6203e01572918df8ea013874649993f11",
+    "bytes": 265759,
+    "expected_sha256": "f025389eb5a7a405ac074933e54258a6203e01572918df8ea013874649993f11",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S26",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-repo-metadata.json",
+    "sha256": "a3b3732e29283979565aae5875a951500589d723d35f6491b5c6b944fb64fc75",
+    "bytes": 7108,
+    "expected_sha256": "a3b3732e29283979565aae5875a951500589d723d35f6491b5c6b944fb64fc75",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S27",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-master-commit.json",
+    "sha256": "e13b2f5f819ba6e084120369a2178e2398b22d66a2f12146c521d0a733bf740e",
+    "bytes": 6735,
+    "expected_sha256": "e13b2f5f819ba6e084120369a2178e2398b22d66a2f12146c521d0a733bf740e",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S28",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-README.md",
+    "sha256": "6fcae6c20b578f5f03defab493e89364765cd6b64480802b18b0b5a77f7bde2d",
+    "bytes": 1502,
+    "expected_sha256": "6fcae6c20b578f5f03defab493e89364765cd6b64480802b18b0b5a77f7bde2d",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S29",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-OAL21.zip",
+    "sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+    "bytes": 13171,
+    "expected_sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+    "matches": true
+  },
+  {
+    "stage": "researcher-v1",
+    "id": "S30",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/astropy-v8.0.1-wcs-test-wcs.py",
+    "sha256": "4c426da48d63da486b3ee40839a7c2dcdca1232427cbe03fffd3a256593b8363",
+    "bytes": 90035,
+    "expected_sha256": "4c426da48d63da486b3ee40839a7c2dcdca1232427cbe03fffd3a256593b8363",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S01",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/w3c-annotation-model.html",
+    "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+    "bytes": 284185,
+    "expected_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S02",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/w3c-media-fragments.html",
+    "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+    "bytes": 89887,
+    "expected_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S03",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/rfc9110.txt",
+    "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "bytes": 502941,
+    "expected_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S04",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "bytes": 48783,
+    "expected_sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S05",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/fits-standard40.pdf",
+    "sha256": "4a5fbff1bf592ca9362a6e68e595f852ce8301c026a141f6e6ae28d4f33145e0",
+    "bytes": 1087066,
+    "expected_sha256": "4a5fbff1bf592ca9362a6e68e595f852ce8301c026a141f6e6ae28d4f33145e0",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S06",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/sqlite-wal.html",
+    "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+    "bytes": 42143,
+    "expected_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S07",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/couchdb-conflicts.html",
+    "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+    "bytes": 79028,
+    "expected_sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S08",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/couchdb-replication-intro.html",
+    "sha256": "985a88b6c21b2fca9c1e5c9395badff8f363b5034a2e9eb8ce6652946ed30a3f",
+    "bytes": 21613,
+    "expected_sha256": "985a88b6c21b2fca9c1e5c9395badff8f363b5034a2e9eb8ce6652946ed30a3f",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S09",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-conflicts.html",
+    "sha256": "29f685d69d6506f758b2fcdd8c2915491e353af5ed2af90cc9fe309c5e35cef8",
+    "bytes": 16696,
+    "expected_sha256": "29f685d69d6506f758b2fcdd8c2915491e353af5ed2af90cc9fe309c5e35cef8",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S10",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-release.html",
+    "sha256": "3622a4e94e8e8da6a4491c153054443c925b28a37802d28ae65235c88d02a967",
+    "bytes": 198937,
+    "expected_sha256": "3622a4e94e8e8da6a4491c153054443c925b28a37802d28ae65235c88d02a967",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S11",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-conflicts.ts",
+    "sha256": "6abd56faa5a8ceca10c45ce360ce723efc108a47041253d02d4f71099265c136",
+    "bytes": 4051,
+    "expected_sha256": "6abd56faa5a8ceca10c45ce360ce723efc108a47041253d02d4f71099265c136",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S12",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-implementation.ts",
+    "sha256": "024ccf0c7615b11631552652c350dd5fed657577df2f67dfb8d911f12cf51074",
+    "bytes": 60381,
+    "expected_sha256": "024ccf0c7615b11631552652c350dd5fed657577df2f67dfb8d911f12cf51074",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S13",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-conflicts.test.ts",
+    "sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+    "bytes": 4933,
+    "expected_sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S14",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-3.5.0-package.json",
+    "sha256": "7a46879182bbaf8bdb51773c99bec5aa92764acb7904d97ed7c459a4cca35c66",
+    "bytes": 3249,
+    "expected_sha256": "7a46879182bbaf8bdb51773c99bec5aa92764acb7904d97ed7c459a4cca35c66",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S15",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-issue-889.json",
+    "sha256": "d018d11474782446fd032d1b3347d6da12dcb6aa07888ffff4d5a05a02c553ea",
+    "bytes": 4193,
+    "expected_sha256": "d018d11474782446fd032d1b3347d6da12dcb6aa07888ffff4d5a05a02c553ea",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S16",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/oal-commit.json",
+    "sha256": "e13b2f5f819ba6e084120369a2178e2398b22d66a2f12146c521d0a733bf740e",
+    "bytes": 6735,
+    "expected_sha256": "e13b2f5f819ba6e084120369a2178e2398b22d66a2f12146c521d0a733bf740e",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S17",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/oal-README.md",
+    "sha256": "6fcae6c20b578f5f03defab493e89364765cd6b64480802b18b0b5a77f7bde2d",
+    "bytes": 1502,
+    "expected_sha256": "6fcae6c20b578f5f03defab493e89364765cd6b64480802b18b0b5a77f7bde2d",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S18",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/oal21.zip",
+    "sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+    "bytes": 13171,
+    "expected_sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+    "matches": true
+  },
+  {
+    "stage": "critic-v1",
+    "id": "S19",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/automerge-issue-889-page.html",
+    "sha256": "207b74ec273045cb8b5156d929d6b4b7139ff70704d36c6f21ed52c8fb4f7714",
+    "bytes": 254781,
+    "expected_sha256": "207b74ec273045cb8b5156d929d6b4b7139ff70704d36c6f21ed52c8fb4f7714",
+    "matches": true
+  }
+]

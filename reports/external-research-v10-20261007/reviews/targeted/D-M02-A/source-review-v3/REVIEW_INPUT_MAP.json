@@ -1,0 +1,63 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "httpcache",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpcache.txt",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "httpsem",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpsem.txt",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "candidates": [
+    {
+      "label": "X",
+      "final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/frozen/X/final.md",
+        "sha256": "4fc4217d191ef298ede73d67efbf9f60b31f3c7bb7177f35d7a42bb708b1e8ee"
+      },
+      "method_required_intermediates": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/frozen/X/intermediate-1.md",
+          "sha256": "01ab777f8fd5be20cb2dd8c9e6cfac6d329f1857fa8908a4e7f72efbbe7d8737"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/frozen/X/intermediate-2.md",
+          "sha256": "e2e9435a480e6e9be68739811dcff4fae110d9ee20f5a8d0854cdef1c6691858"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/frozen/X/intermediate-3.md",
+          "sha256": "3cc692f83eba8228bd2756518115444220f6acbd9e152357e86f2b644062e5bc"
+        }
+      ],
+      "artifact_scope_limit": null
+    },
+    {
+      "label": "Y",
+      "final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/frozen/Y/final.md",
+        "sha256": "67e25be679befc92218c56be83af552f90920d91e8f0d0f5c805dc010642f9be"
+      },
+      "method_required_intermediates": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/frozen/Y/intermediate-1.md",
+          "sha256": "67e25be679befc92218c56be83af552f90920d91e8f0d0f5c805dc010642f9be"
+        }
+      ],
+      "artifact_scope_limit": null
+    }
+  ],
+  "writable_review_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3"
+}

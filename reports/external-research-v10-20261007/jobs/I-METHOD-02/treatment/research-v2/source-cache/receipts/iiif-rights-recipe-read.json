@@ -1,0 +1,36 @@
+{
+  "cache_mode": "warm",
+  "elapsed_seconds": 0.0015173989995673764,
+  "ended_at": "2026-10-07T20:28:56.489649+00:00",
+  "network_requests": 0,
+  "operation": "read",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 18867,
+      "sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "18867",
+      "Content-Type": "text/html",
+      "ETag": "\"7ee65d36e3e0769b352d2b9771390a41\"",
+      "Last-Modified": "Fri, 02 Oct 2026 15:52:32 GMT"
+    },
+    "original_url": "https://iiif.io/api/cookbook/recipe/0008-rights/",
+    "raw": {
+      "bytes": 18867,
+      "sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e"
+    },
+    "retrieved_at": "2026-10-07T20:28:54.864824+00:00",
+    "retrieved_url": "https://iiif.io/api/cookbook/recipe/0008-rights/"
+  },
+  "record_id": "e73a2414081ae0feaecd7135d2d1db2cedce45b13b8b8ded151f6bfc55faa543",
+  "source": "e73a2414081ae0feaecd7135d2d1db2cedce45b13b8b8ded151f6bfc55faa543",
+  "started_at": "2026-10-07T20:28:56.488100+00:00",
+  "status": "ok"
+}

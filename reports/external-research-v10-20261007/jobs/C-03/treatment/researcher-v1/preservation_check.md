@@ -1,0 +1,56 @@
+# Preservation and critical-claims check
+
+**Stage:** C-03/treatment/researcher-v1  
+**Source of task scope:** `input-map.json`; admitted `BRIEF.md` SHA-256 `2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4`; frozen `PLAN.md` SHA-256 `7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9`.  
+**Evidence:** only public primary sources selected from open discovery and captured under `sources/`, with exact URL, UTC capture time, version/commit, source locator, byte count, and SHA-256 in `source-map.json`. No own-arm predecessors were declared. No sibling-arm or campaign material was opened.
+
+## Obligation coverage
+
+| Scientific obligation | Preservation/check |
+|---|---|
+| **O1 — Start from the user problem with open public-primary discovery before narrowing to plan defects.** | Discovery was framed from the brief's intake, edition/part identity, page and passage marks, poor-connectivity rehearsal, and later review needs. The initial sweep examined standards, OMR mechanisms, annotations, sync, archival metadata, and packaging before constructing the B-P1–B-P7 dispositions. No hidden defect list or assigned source list was used. |
+| **O2 — Compare substantially different useful mechanisms, competitors, analogies, options, and trade-offs.** | Artifact compares source-page-first manual cue mapping with OMR and manual encoding; Audiveris's integrated hybrid engine/editor with Oemer's model-led pipeline; portable release/return bundles with PouchDB/CouchDB replication and Yjs-backed collaborative text; it uses Tropy and BagIt as adjacent analogies/standards. Costs and reasons to defer are explicit. |
+| **O3 — Verify semantics, units/coordinates, exact versions and applicability; distinguish fact, code, inference, proposal.** | W3C MusicXML 4.0 part/measure nesting and per-document part IDs are distinguished from local ensemble identity. PDF.js's documented 72-DPI viewport and bottom-left-to-top-left transform are cited as an implementation example; normalized coordinates and cue links are clearly proposed conventions. Annotation selector brittleness, PouchDB 9.0.0 conflict/replication semantics, Yjs 13.6.33 lead, Audiveris 5.11.0, and Oemer's pinned commit are recorded. Docs/code facts, release/author claims, inference, proposals, and unknowns are separated. |
+| **O4 — Inspect justified implementation at a pinned version and pertinent history or explain gaps.** | Audiveris source was captured and inspected at full tag commit `9e1e55cd2746037d059345881c53e6a6754bffbd` (5.11.0), including `MeasureStack.getXOffset` and `StaffBarlineInter.getBounds`. PR #954 defect report/changed files and the 5.11.0 release note were checked against those methods. The PR describes an author-run manual reproduction on 5.10.2; no independent reproduction or automated test fixture was found in its two changed Java files. Oemer was inspected at pinned `dbe2a933d630d0f74805d717960eb259473f5978`; it is not selected, and no release/issue history was used to support stability. PouchDB/Yjs are unselected alternatives supported by their captured docs and package versions, not by pinned source-code reviews. Those gaps are stated rather than inferred away. |
+| **O5 — Compare the exact frozen plan by section and disposition every proposal.** | Artifact has a disposition row for every frozen section B-P1 through B-P7, retaining adequately covered choices and identifying evidence/conditions for each change. |
+| **O6 — Give complete changes, decisions, optional leads, uncertainty, and observable validation; separate proposed/actual tests.** | Artifact gives integrated workflow/data/access/retention/export decisions, optional OMR and sync leads, open conditions, and eight observable check groups. Its actually-executed paragraph limits actual work to source search/capture/code reading/hash-output checks; product and score checks are explicitly not executed. |
+| **O7 — Keep manageable integrated scope.** | Proposal covers ingest/provenance, work/edition/part/asset identity, annotation scopes and cue mapping, access limits, retention/deletion/backup/cache, recovery/conflicts, offline review, and portable handoff/export. It excludes product build, WorkNodes, canonical writing, public score marketplace/acquisition, composition, engraving replacement, and live performance assessment. |
+
+## Claims checked and corrected during research
+
+1. **B-P3's proposed import/export-to-preview assumption is not established.** Audiveris documents a subset MusicXML export and limited supported notation, and MusicXML specifies structure rather than a guarantee of equivalent page layout. The proposal requires keeping the original page authoritative and evaluating each derived rendition separately. Sources: S01–S03, S22–S24.
+2. **B-P4's page/measure labels alone do not meet different pagination or replacement behavior.** The Web Annotation model distinguishes target and selector and warns about resource-change brittleness; PDF rendering transforms coordinates. The repaired proposal uses immutable asset/page anchors plus explicit cross-part cue links and manual re-anchor lineage. Sources: S04–S05.
+3. **The brief's review-status distinction is preserved.** No generated interpretation is called checked before a named human review. Audiveris's own documentation agrees that correction is a normal part of its output workflow, while its release fix addresses null crashes, not recognition accuracy. Sources: S19–S25.
+4. **B-P5's “keep annotations locally, submit later” is not an automatic sync/conflict guarantee.** PouchDB docs say replication can retain multiple revisions while a deterministic arbitrary winner is shown; Yjs shared data still requires a sync provider. The proposal replaces implicit sync with a reviewable bundle merge for the initial scope and leaves server/CRDT code unselected. Sources: S06–S08, S31–S32.
+5. **B-P6 deletion/revocation cannot be promised for downloaded packets.** The manifest and intended-recipient list aid provenance, but a copied PDF/ZIP cannot be remotely erased. The PouchDB replication guide also distinguishes destroying a database from deleting replicated records. The proposal preserves that limitation and requires a withdrawal notice/retention policy. Sources: S07, S11.
+6. **Identity is not inferred from a filename, title, checksum, MusicXML ID, or entered measure label.** These provide descriptive or document-local evidence; a librarian-owned relation decides grouping. Source: S01–S03; rule is a proposal.
+7. **No source establishes the group's actual retention period, concurrency frequency, licensing entitlement, OMR accuracy, or legal interpretation.** Those remain decisions/measurements to obtain before importing real material or bundling external software.
+
+## Conditions and corrections retained
+
+- The brief is hypothetical; there is no real ensemble, score corpus, permission document, or verified recognition system represented here.
+- Use only score material the group is authorized to store and distribute. Do not treat file presence as evidence of ownership or permission. No examples or public score files were used.
+- Preserve the untouched file, preserve personal pencil-like marks, make shared-note publication explicit, identify edition/part, disclose whether interpretation is reviewed, and do not assume identical measure labels, pagination, or equivalent renderings.
+- Prefer affordable public components and portable ordinary files; allow poor-connectivity rehearsal and later shared review without requiring a permanent commercial account.
+- Keep the initial group small and librarian-led. No public score marketplace, copyrighted-catalog acquisition, automatic composition, polished-engraving replacement, or live audio/performance assessment.
+- Plan remains read-only prospective input; no Puppet Master `Plans/`, `main`, WorkNodes, schemas, builds, or canonical artifacts were modified.
+- No plugin/code installer, score-processing binary, service account, purchase, public issue/PR, or external message was created. No subordinate worker, external candidate runner, or worktree was created.
+- Activation procedure used one fresh Goal for this exact task: actual Goal ID `01a11828-a54e-76c3-af7a-4b0b322b649c`, verified by native `get_goal` as `active`; exactly one activation-only message was sent to the user-specified supervisor parent before source work. This note records observed actual status; no receipt was serialized or fabricated.
+
+## Executed versus proposed validation
+
+**Executed in this assignment:** public-source retrieval; pinning Audiveris 5.11.0 via `git ls-remote` to full commit `9e1e55cd2746037d059345881c53e6a6754bffbd`; pinning the inspected Oemer snapshot to full commit `dbe2a933d630d0f74805d717960eb259473f5978`; direct capture and read-only code/document inspection; file hashing and metadata entry creation. The only automated integrity checks to run before terminalizing this stage are JSON parse, file presence, and recomputation of each capture's byte count/SHA-256 against the map. No product behavior was tested.
+
+**Proposed only:** the eight validation groups in `artifact.md` (intake/provenance, OMR gate, coordinates, cross-part cues, replacement/re-anchor, offline/collaboration, handoff/recovery, and access/deletion/retention). There are no experimental results or pass/fail claims for them.
+
+## Remaining objections and uncertainties
+
+- Does a manually curated cue map stay understandable and maintainable for actual volunteers when several parts have different page turns? Only a permitted, short workflow trial can answer this.
+- Is OMR worth its correction cost for this group's scans, and which engine's output is best for its score types? No sample, ground truth, benchmark, binary, or score permission was available. Audiveris issue #954 supports only the reported crash fix, not recognition quality; Oemer release/issue history and model-weight provenance remain open.
+- Which data schema/package version should become stable? No compatibility requirements or target application matrix was supplied. A documented manifest, versioning rule, and reader test are proposed, not established.
+- What account/access model, retention periods, backup expiry, and withdrawal obligations does the group want? The operational no-host first proposal cannot enforce access after export or revoke copies.
+- Does the group want live simultaneous editing or does steward-reviewed return-bundle flow suffice? No concurrency or latency requirement was supplied. PouchDB/Yjs are options only; their implementation history and deployment conditions were not fully reviewed.
+- Does the desired licensing/distribution model allow a bundled Audiveris executable or service? This requires a project-specific qualified review; this proposal does not give a legal conclusion.
+- PDF normalization/crop/rotation and image orientation will need to be specified against the selected viewer and test files before code. The coordinate contract here is a proposal and no overlay test was performed.
+
+**Critic disposition:** the planning proposal is complete at the requested planning depth, but product claims and validation remain explicitly unverified. No external reviewer participated in this assignment.

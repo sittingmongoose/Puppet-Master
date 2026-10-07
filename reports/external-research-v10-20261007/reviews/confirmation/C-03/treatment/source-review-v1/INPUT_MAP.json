@@ -1,0 +1,56 @@
+{
+  "final_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/artifact.md",
+  "final_source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/source-map.json",
+  "final_preservation_check": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/preservation_check.md",
+  "admitted": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1/artifact.md",
+      "sha256": "6e2d3b4168c8066aae2f68a896a07b3540fae6d4bd663d202e28d6d172386010",
+      "purpose": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1/source-map.json",
+      "sha256": "fe42bcfa01e38931197e131645c0f98e33ecb0732f6c63362cbb1bd37d5958e7",
+      "purpose": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1/preservation_check.md",
+      "sha256": "2d0c6601fef48bb79d3b6d3f21f7a4f0b638b9df2c70b597d61669058495b7a0",
+      "purpose": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1/sources",
+      "purpose": "own candidate immutable primary-source captures only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/artifact.md",
+      "sha256": "8f39e0a1a1db92d2ef085b114ed2093b9b0eb2ed0c1010d5d5b493dbb959bd2b",
+      "purpose": "final scientific artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/source-map.json",
+      "sha256": "7bfc121f55fbca3d62bb5063b00386236819cc1c1f850e19120d6d23b37186e7",
+      "purpose": "final scientific artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/preservation_check.md",
+      "sha256": "b21f3fd66452e282f60b92babf7cf3dbdfbb1e40444cc0bd2962a23c6cbfae7a",
+      "purpose": "final scientific artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/sources",
+      "purpose": "own candidate immutable primary-source captures only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/BRIEF.md",
+      "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+      "purpose": "frozen common scientific input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/PLAN.md",
+      "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+      "purpose": "frozen common scientific input"
+    }
+  ],
+  "excluded": "All other arms/cases/repetitions, task/root conversation/history, root state/analysis/locks, costs/timings/targets/expected winner, prior independent reviews/grade keys, candidate host/runtime files. No candidate feedback."
+}

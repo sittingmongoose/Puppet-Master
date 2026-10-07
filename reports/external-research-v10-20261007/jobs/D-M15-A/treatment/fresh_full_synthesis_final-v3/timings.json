@@ -1,0 +1,63 @@
+{
+  "schema": "pm.er10.stage-timings.v1",
+  "stage": "D-M15-A/treatment/fresh_full_synthesis_final-v3",
+  "recorded_at": "2026-10-07T21:19:30+00:00",
+  "clock_source": "date -u and filesystem full-iso mtimes on local disk",
+  "common_T0": "2026-10-07T20:31:30.755788+00:00",
+  "admission": {
+    "prospective_admission_at": "2026-10-07T21:03:48.983258+00:00",
+    "stage_deadline": "2026-10-07T21:23:48.983258+00:00",
+    "common_pair_hard_deadline": "2026-10-07T22:11:30.755788+00:00",
+    "source": "admission-timing.json written by host before dispatch"
+  },
+  "actual_source_ops": {
+    "manifest_and_inputs_read": "2026-10-07T21:04:40..21:07:24+00:00",
+    "manifest_read_started": "2026-10-07T21:04:40+00:00",
+    "read_log_scope_check_saved": "2026-10-07T21:07:24+00:00",
+    "curl_fetches_started": "2026-10-07T21:09:29.368734+00:00",
+    "curl_fetches_finished": "2026-10-07T21:09:31.246740+00:00",
+    "files_fetched": 8,
+    "fetch_method": "curl, single fetch per URL, UA-tagged, no cache manipulation, no code executed",
+    "hash_binding_and_claim_phrase_checks": "2026-10-07T21:10:00..21:12:50+00:00",
+    "source_index_saved": "2026-10-07T21:10:56+00:00"
+  },
+  "first_useful_saved_finding": {
+    "time": "2026-10-07T21:07:24+00:00",
+    "artifact": "read-log.txt",
+    "what": "input-scope verification: all read paths mapped to manifest-listed inputs, zero violations; predecessor source bytes hash-verified 11/11"
+  },
+  "output": {
+    "final_md_complete": "2026-10-07T21:17:08+00:00",
+    "final_md_words_raw_wc": 1135,
+    "final_md_findings": 8,
+    "sources_index_entries": 8
+  },
+  "known_usage": {
+    "curl_fetches": 8,
+    "code_executed_from_downloads": 0,
+    "workers_spawned": 0,
+    "second_goal_created": 0
+  },
+  "native_counters": {
+    "note": "kept distinct from the known_usage tool-op counts above; values below are host/passive-owned observations, not worker claims",
+    "passive_capture_file": "passive-active-capture-cost.json",
+    "passive_capture_observed_at": "2026-10-07T21:06:19.730069+00:00",
+    "create_goal_actual_response": "missing_actual_response",
+    "get_goal_actual_response": "missing_actual_response",
+    "update_goal_actual_response": "missing_actual_response",
+    "goal_terminal": {
+      "worker_side_status_at_write": "this is the final deliverable turn (ticket 4/4); all scientific artifacts complete before turn end",
+      "host_dispatch_status_at_write": "running (workState=working), latestTerminalStatus=null",
+      "expected_terminalization": "host-owned on end of this run; no routine worker steering applied",
+      "confirmed_actual_terminal": null
+    }
+  },
+  "unknown": {
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "billing": null,
+    "wall_seconds_before_admission": null
+  },
+  "unknown_fields_rule": "input/cache/generated/billing are null per assignment: not measurable from inside this stage"
+}

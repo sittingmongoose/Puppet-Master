@@ -1,0 +1,33 @@
+{
+  "event": "active",
+  "stage": "D-M15-A/treatment/fresh_full_synthesis_final-v3",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M15-A/treatment/fresh_full_synthesis_final-v3"
+  ],
+  "start": "2026-10-07T21:06:19.657786+00:00",
+  "end": "2026-10-07T21:06:19.872825+00:00",
+  "elapsed_seconds": 0.21503933900021366,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T21:06:19.730069+00:00",
+    "entries": [
+      {
+        "stage": "D-M15-A/treatment/fresh_full_synthesis_final-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M15-A--treatment--fresh_full_synthesis_final-v3--f8a6ab0381bbc945.json",
+        "sha256": "f8a6ab0381bbc94540b1cc5f6c528204f101e3af475f9e1a5019ef4dd9ab775c",
+        "bytes": 16948,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

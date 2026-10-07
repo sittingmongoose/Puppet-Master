@@ -1,0 +1,35 @@
+{
+  "stage": "D-M08-B/common/fresh-common-draft-v3",
+  "native_identity": "01a11827-f68f-7bc0-a13f-0bcb5091cc72",
+  "native_status": "complete",
+  "t3_status": "completed",
+  "quiet": true,
+  "requestedAt": "2026-10-07T20:57:14.367Z",
+  "startedAt": "2026-10-07T20:57:15.061Z",
+  "completedAt": "2026-10-07T21:00:16.792Z",
+  "dispatch_to_delivery_seconds": 182.425,
+  "stage_ceiling_seconds": 480,
+  "absolute_case_deadline": "2026-10-07T21:37:14.367Z",
+  "budget_delivery_eligible": true,
+  "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3/draft.md",
+  "output_sha256": "6be193f8977ebdb3ae3c07549d30c4a17a7a887955349607d9322ef62a967474",
+  "output_bytes": 4942,
+  "scientific_files": {
+    "draft.md": {
+      "sha256": "6be193f8977ebdb3ae3c07549d30c4a17a7a887955349607d9322ef62a967474",
+      "bytes": 4942
+    }
+  },
+  "raw_native_goal_counters": {
+    "objective_sha256": "f4c7cc12f1a960747ca1a790c42aa9503605a07eb5f4d05305ab37ebe3d067f4",
+    "status": "complete",
+    "tokensUsed": 29246,
+    "tokenBudget": null,
+    "timeUsedSeconds": 147
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "source_quality": "UNASSESSED",
+  "scope_audit": "incomplete_unknown; advisorymap notfirewall",
+  "frozen_at": "2026-10-07T21:00:36.692949+00:00"
+}

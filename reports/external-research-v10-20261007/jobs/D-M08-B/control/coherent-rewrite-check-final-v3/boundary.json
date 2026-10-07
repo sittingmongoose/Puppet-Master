@@ -1,0 +1,21 @@
+{
+  "recentRuns": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-control-coherent-rewrite-check-final-v3:ordinal:1",
+      "ordinal": 1,
+      "status": "starting",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T21:07:52.603Z",
+      "startedAt": null,
+      "completedAt": null
+    }
+  ],
+  "stage_ceiling_seconds": 1440,
+  "logical_phase_ceiling_minutes": [
+    18,
+    6
+  ],
+  "absolute_case_deadline": "2026-10-07T21:37:14.367Z",
+  "clock_basis": "Actual T3 requestedAt; common T0 2026-10-07T20:57:14.367Z immutable all shared/queue/startup/delivery included no reset"
+}

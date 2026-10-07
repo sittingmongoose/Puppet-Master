@@ -1,0 +1,205 @@
+{
+  "case_id": "D-M15-A",
+  "version": "v3",
+  "frozen_at": "2026-10-07T20:31:30.755788+00:00",
+  "common_absolute_T0": "2026-10-07T20:31:30.755788+00:00",
+  "common_deadline": "2026-10-07T22:11:30.755788+00:00",
+  "root_binding": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-finite-prospective-admissions-v3.json",
+  "root_binding_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "root_schedule": {
+    "owner": "targeted-cohort4",
+    "family": "GLM",
+    "new_version": 3,
+    "common_stages": [],
+    "control": [
+      {
+        "assignment": "whole-question-research-final",
+        "native_goals": 1,
+        "minutes": 60,
+        "logical_phases": [
+          45,
+          15
+        ],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "fresh-transport-scout",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": "scouts"
+      },
+      {
+        "assignment": "fresh-object-scout",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": "scouts"
+      },
+      {
+        "assignment": "fresh-full-synthesis-final",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 60,
+    "common_absolute_pair_wall_minutes": 100,
+    "arm_overlap": false,
+    "whole_wall_exception_reason": "Original control-first plus two truly parallel scouts then independent synthesis under globalGLM2; all three treatment fresh nativeGoals20min, aggregateequal60. Pairwall100 includes counterpartwaiting, not a15min success.",
+    "original_case_card_sha256": "06968c3c7758e0ee54378b75bdb3234a2f08b89dde4a3d12d5fa4eeacef8014e",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "control",
+      "treatment"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "target": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    }
+  },
+  "hashes": {
+    "case-card.json": "06968c3c7758e0ee54378b75bdb3234a2f08b89dde4a3d12d5fa4eeacef8014e",
+    "CASE_CARD.md": "1847f0b9139a13cb03b5831e9d4e4c10846a1997ee36099e6eb954dadb001b8b",
+    "INPUT_MAP.json": "e64c4b7a1e334dfa8ded27856c426689b36a88f38e0d2033917536c00bd45fd8",
+    "READY.json": "e25591048d35edecd07245e8f17d7ce3cae9539f4b3656dbea5508d1b00fe2e8"
+  },
+  "input_hashes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/case-card.json",
+      "sha256": "06968c3c7758e0ee54378b75bdb3234a2f08b89dde4a3d12d5fa4eeacef8014e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/CASE_CARD.md",
+      "sha256": "1847f0b9139a13cb03b5831e9d4e4c10846a1997ee36099e6eb954dadb001b8b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/INPUT_MAP.json",
+      "sha256": "e64c4b7a1e334dfa8ded27856c426689b36a88f38e0d2033917536c00bd45fd8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/brief.md",
+      "sha256": "4e2794750fe7ea4bc467b935e5a062237c5a5c5de300b470076aeb306ffae552"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/sources.json",
+      "sha256": "d810ac6eb57c7cc49ddfd9a1b452b5427ce10c99ab9b687bf1b76a95e01ecf10"
+    }
+  ],
+  "sources": [],
+  "old_v1_v2_design_immutable": true,
+  "original_wordscope": {
+    "final_path_by_arm": {
+      "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/outputs/control/final.md",
+      "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/outputs/treatment/final.md"
+    },
+    "carrier": "Complete authored native final or exact file export to declared final path; root verifies full byte identity/readability. Native terminal status is separate.",
+    "max_material_findings": 8,
+    "soft_word_ceiling": 1100,
+    "deliverable": "One complete bounded answer/recommendation with source conditions, full obligation dispositions, justified uncertainty, retained optional leads where requested, and discriminating proposed checks. Any carried draft/critique remains a legitimate input, not source truth.",
+    "intermediate_scope": "Only method-required bounded stage outputs. Do not impose four synchronized catalogs or an integrated application plan.",
+    "preservation": "Final must distinguish accepted, amended, rejected and unresolved claims; executed witnesses and proposed tests remain distinct."
+  },
+  "original_scope": "A maintenance-inspection app transfers photo attachments over unreliable rural connections. Users can replace an attachment while a previous transfer is incomplete. Discover a bounded mechanism recommendation for transfer resume and representation identity; examine complementary transfer/transport and local-object/lifecycle risks and reconcile their interaction. Select primary public docs/code yourself.",
+  "obligations": [
+    "Address interrupted transfers and bounded retries.",
+    "Address replacement/version identity during resume.",
+    "Investigate transport-side and local-object-side mechanisms independently.",
+    "Reconcile their overlap instead of concatenating two answers.",
+    "Return at most eight supported material findings with negative leads/uncertainty retained.",
+    "Give a bounded recommendation and discriminating validation without building a full sync service."
+  ],
+  "arm_order": [
+    "control",
+    "treatment"
+  ],
+  "source_mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+  "carrier": "Actual bound installed native GoalLoopDriver state via passivev2; no vendorbackendgoal/ACPmappinginference",
+  "no_further_retry": true,
+  "stages": {
+    "control": [
+      {
+        "stage": "whole_question_research_final",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/final.md",
+        "candidate_minutes": 60,
+        "logical_phases_minutes": [
+          45,
+          15
+        ],
+        "parallel_group": null,
+        "predecessors": [],
+        "latest_absolute_deadline": "2026-10-07T21:31:30.755788+00:00",
+        "request_sha256": "92ebfdf1125ee2cec42b4d2ef8bd8cf529c19d08c8683712c2f985802f7c0b8f",
+        "assignment_sha256": "d443abb40c1162a394acfc3bc949e861482694f5d4e741a42b89412a5e4c464f",
+        "map_sha256": "db27c39093f8c972cb20fdb1fc11a2bfd1076735335cb1096e28426fbca0f7b1"
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "fresh_transport_scout",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/report.md",
+        "candidate_minutes": 20,
+        "logical_phases_minutes": [],
+        "parallel_group": "scouts",
+        "predecessors": [],
+        "latest_absolute_deadline": "2026-10-07T21:51:30.755788+00:00",
+        "request_sha256": "9b15cf74c9078a2e77e81773ee69334ecade71617664081bef2cf3f083648635",
+        "assignment_sha256": "423cbea4b12dbb0828f8071141aeed37e00f4fe6edcce1acdc98a9f1ca3e1937",
+        "map_sha256": "be77c710aaf6b2b2923484750db8c303d684a08afbd6a0d50dee2dd2053b20d9"
+      },
+      {
+        "stage": "fresh_object_scout",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/report.md",
+        "candidate_minutes": 20,
+        "logical_phases_minutes": [],
+        "parallel_group": "scouts",
+        "predecessors": [],
+        "latest_absolute_deadline": "2026-10-07T21:51:30.755788+00:00",
+        "request_sha256": "4b358ba7297d06c228e0239c785e64ffb3f5b7fa2e8af853c9c6f53030f7ab60",
+        "assignment_sha256": "e4c6654f89834d6afacd8f8e332fd2cf940c07a89875954b02934a95a350058a",
+        "map_sha256": "75c71ac789f1160b4edadaa64bf34332a6cc5e425913ba967a0c1e84229bcfa9"
+      },
+      {
+        "stage": "fresh_full_synthesis_final",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/final.md",
+        "candidate_minutes": 20,
+        "logical_phases_minutes": [],
+        "parallel_group": null,
+        "predecessors": [
+          {
+            "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/report.md",
+            "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources",
+            "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/index.json"
+          },
+          {
+            "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/report.md",
+            "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources",
+            "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/index.json"
+          }
+        ],
+        "latest_absolute_deadline": "2026-10-07T22:11:30.755788+00:00",
+        "request_sha256": "68c4956e66641d44bca1d195fd3c855c076e60bc49383311b161d22a1ce8955d",
+        "assignment_sha256": "8ed1a21c5a6c1ab5b9972e1229c952144e861ffd7f4cd05594c3e93bbdebf063",
+        "map_sha256": "dc69a3e967014643b16584bde048feda471abdeefac99f5b94491de2f242368e"
+      }
+    ]
+  },
+  "final_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/final.md",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/final.md"
+  }
+}

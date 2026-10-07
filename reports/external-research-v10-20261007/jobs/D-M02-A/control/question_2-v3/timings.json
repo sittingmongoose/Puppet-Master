@@ -1,0 +1,108 @@
+{
+  "case_id": "D-M02-A",
+  "arm": "control",
+  "stage": "question_2-v3",
+  "role": "question_2",
+  "dispatch_preparation_at_utc": "2026-10-07T21:05:07.836462Z",
+  "stage_deadline_at_utc": "2026-10-07T21:15:07.836462Z",
+  "whole_arm_deadline_at_utc": "2026-10-07T21:23:24.683837Z",
+  "stage_allowance_seconds_including_startup": 600,
+  "operations": [
+    {
+      "operation": "native Goal create_goal",
+      "observed_at_utc": "2026-10-07T21:05:28Z",
+      "result": {
+        "threadId": "01a1182f-4d1b-7a00-80fa-85cf56143602",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAtEpochSeconds": 1791407128
+      }
+    },
+    {
+      "operation": "native Goal get_goal after creation",
+      "observed_at_utc": "2026-10-07T21:05:28Z",
+      "result": {
+        "threadId": "01a1182f-4d1b-7a00-80fa-85cf56143602",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0
+      }
+    },
+    {
+      "operation": "T3 activation-only notice, mode auto",
+      "observed_by_utc": "2026-10-07T21:05:33Z",
+      "result": {
+        "delivery": "started",
+        "status": "starting",
+        "messageId": "message:mcp:edcfdbba-8ed0-4e56-a9e3-522afe412f8c:thread-send:D-M02-A-control-question_2-v3-activation-01",
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort1-v1:ordinal:41"
+      }
+    },
+    {
+      "operation": "read authorized brief, source manifest, source file sizes and hashes, and RFC section headings",
+      "observed_at_utc": "2026-10-07T21:05:41Z",
+      "result": "Read only the allowed brief, sources.json, and two supplied RFC files; sha256sum outputs matched both manifest hashes."
+    },
+    {
+      "operation": "read RFC 9111 cache-key, authorization, validation, Cache-Control, freshness and stale sections",
+      "observed_at_utc": "2026-10-07T21:06:00Z"
+    },
+    {
+      "operation": "read RFC 9111 update and directive excerpts",
+      "observed_at_utc": "2026-10-07T21:06:15Z"
+    },
+    {
+      "operation": "read RFC 9110 Authorization and Vary sections and RFC 9111 Vary/freshness excerpts",
+      "observed_at_utc": "2026-10-07T21:06:19Z"
+    },
+    {
+      "operation": "author and revise report.md",
+      "window_start_not_before_utc": "2026-10-07T21:09:36Z",
+      "completed_observed_by_utc": "2026-10-07T21:10:10Z",
+      "result": "Wrote the bounded answer with accepted, amended, rejected, and unresolved dispositions; proposed fixtures are marked not executed."
+    },
+    {
+      "operation": "review report.md word count and SHA-256",
+      "observed_at_utc": "2026-10-07T21:10:43Z",
+      "result": {
+        "word_count": 1030,
+        "sha256": "e2e9435a480e6e9be68739811dcff4fae110d9ee20f5a8d0854cdef1c6691858"
+      }
+    },
+    {
+      "operation": "author timings.json",
+      "started_at_observed_utc": "2026-10-07T21:10:43Z"
+    },
+    {
+      "operation": "native Goal get_goal before terminal update",
+      "observed_at_utc": "2026-10-07T21:11:20Z",
+      "result": {
+        "threadId": "01a1182f-4d1b-7a00-80fa-85cf56143602",
+        "status": "active",
+        "tokensUsed": 75906,
+        "timeUsedSeconds": 352
+      }
+    }
+  ],
+  "deliverables": {
+    "report_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_2-v3/report.md",
+    "report_sha256": "e2e9435a480e6e9be68739811dcff4fae110d9ee20f5a8d0854cdef1c6691858",
+    "timings_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_2-v3/timings.json"
+  },
+  "usage": {
+    "generated_token_count": null,
+    "billing_amount_usd": null,
+    "native_goal_cumulative_tokens_used_at_activation": 0,
+    "native_goal_cumulative_time_used_seconds_at_activation": 0,
+    "note": "Native Goal cumulative telemetry is not generated-token usage or billing. No per-stage generated-token count or billing amount was supplied.",
+    "native_goal_cumulative_tokens_used_preterminal": 75906,
+    "native_goal_cumulative_time_used_seconds_preterminal": 352
+  },
+  "checks_and_limits": {
+    "source_hash_check": "Executed sha256sum for both supplied source files; both matched sources.json.",
+    "implementation_tests": "Not run; proposed fixtures only.",
+    "network_source_checks": "None; relied only on the supplied frozen public primary corpus.",
+    "timings_json": "Parsed successfully with python3 -m json.tool after authoring; final file parsed again after adding the preterminal native telemetry."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "xhigh"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "mode": "async",
+  "role": "review",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "clientRequestId": "er10-I-METHOD-02-treatment-standalone-fullscience-diagnostic-v2",
+  "record_at": "2026-10-07T21:12:49.803232+00:00",
+  "review_max_seconds": 1200,
+  "prospective_review_deadline": "2026-10-07T21:32:49.803232+00:00",
+  "native_goal_required": false,
+  "carrier": "ordinary_review_v2",
+  "host_gate_authority": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/I-METHOD-02-v2-treatment-only-diagnostic-gate-exception-v1.json",
+  "host_gate_sha256": "5069c27af50bdfe75633fb310fafa4a23f6093d4847c78cf33134d5e5b282928",
+  "quiet_full_final_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-v2-treatment-standalone-gate-freeze-v1.json"
+}

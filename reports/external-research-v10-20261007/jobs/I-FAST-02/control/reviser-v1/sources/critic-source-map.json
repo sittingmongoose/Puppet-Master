@@ -1,0 +1,419 @@
+{
+  "schema": "scientific-critique-source-map-v1",
+  "case": "I-FAST-02",
+  "stage": "control/critic-v1",
+  "classification": "DIAGNOSTIC_UNQUALIFIED",
+  "authoritative_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/artifact.md",
+  "own_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1",
+  "frozen_input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/input-map.json",
+    "bytes": 1805,
+    "sha256": "4c25b2beee906613b480b0b11515c65b5f1f941945012aa6cc2bfdee7bde79ba"
+  },
+  "frozen_inputs": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/INPUTS.md",
+      "bytes": 1917,
+      "sha256": "375908fc306267fd15f50323ab9699d8f348bc13bd128564fdc6b54e233814e7",
+      "expected_sha256": "375908fc306267fd15f50323ab9699d8f348bc13bd128564fdc6b54e233814e7",
+      "expected_bytes": 1917,
+      "verified": true
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/brief.md",
+      "bytes": 5152,
+      "sha256": "12a1ab55102d3423bcc634812c6d120f0143a8e7945e3c696bc920bd56cafc13",
+      "expected_sha256": "12a1ab55102d3423bcc634812c6d120f0143a8e7945e3c696bc920bd56cafc13",
+      "expected_bytes": 5152,
+      "verified": true
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/plan.md",
+      "bytes": 1712,
+      "sha256": "4e6e262b0a1fffb8d47023c629037368809c410f396de5d932eedb09fa859c05",
+      "expected_sha256": "4e6e262b0a1fffb8d47023c629037368809c410f396de5d932eedb09fa859c05",
+      "expected_bytes": 1712,
+      "verified": true
+    }
+  },
+  "predecessors": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/artifact.md",
+      "bytes": 29907,
+      "sha256": "ac9c94a91b77166cf8f52f78306f5568cb4a9f55449e6096f44f25455cabba1f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/source-map.json",
+      "bytes": 15942,
+      "sha256": "8028cf4ba9e9adc942dc386ce8cf61d9fa2531441b0f4fea440709cf51f67e8a"
+    }
+  ],
+  "predecessor_captured_bytes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-coops-data-retrieval-api.html",
+      "bytes": 42037,
+      "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+      "id": "S1",
+      "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+      "title": "CO-OPS Data Retrieval API documentation",
+      "version": "Live documentation as captured; service documentation does not expose a release identifier."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-coops-response-help.html",
+      "bytes": 23254,
+      "sha256": "c934a7921f56b80bbd5b05701795357a97cb5cb3c692931c3d96e8194976ba69",
+      "id": "S2",
+      "url": "https://api.tidesandcurrents.noaa.gov/api/prod/responseHelp.html",
+      "title": "Data API Response Help",
+      "version": "Live documentation as captured."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-coops-metadata-api.html",
+      "bytes": 72559,
+      "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+      "id": "S3",
+      "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+      "title": "CO-OPS Metadata API documentation",
+      "version": "Live documentation as captured; page identifies Metadata API v1.0."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-datum-options.html",
+      "bytes": 38168,
+      "sha256": "b8c630b36f0952d7004546beebb2160b839d60ac6b190f5ad5cdfa61c19ffeab",
+      "id": "S4",
+      "url": "https://tidesandcurrents.noaa.gov/datum_options",
+      "title": "Datum options and definitions",
+      "version": "Live NOAA page as captured."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-datum-updates.html",
+      "bytes": 19469,
+      "sha256": "13e7775e5e7a00a8bc530eb3b5da4b8a23f6c4ab28c1e6da331f75b656471d85",
+      "id": "S5",
+      "url": "https://tidesandcurrents.noaa.gov/datum-updates/",
+      "title": "Datum Updates",
+      "version": "Live NOAA page as captured."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-tide-predictions-help.html",
+      "bytes": 32471,
+      "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+      "id": "S6",
+      "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+      "title": "Tide Predictions Help",
+      "version": "Live NOAA page as captured."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-about-harmonic-constituents.html",
+      "bytes": 29450,
+      "sha256": "9104eb43e3b6dc32393f23f919cfff7132a490ee99fcabb0c611accb02825bca",
+      "id": "S7",
+      "url": "https://tidesandcurrents.noaa.gov/about_harmonic_constituents",
+      "title": "About Harmonic Constituents",
+      "version": "Live NOAA page as captured."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-faq.html",
+      "bytes": 83932,
+      "sha256": "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f",
+      "id": "S8",
+      "url": "https://tidesandcurrents.noaa.gov/faq.html",
+      "title": "Frequently Asked Questions — tide prediction accuracy",
+      "version": "Live NOAA page as captured."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/noaa-tide-pred-station-history.html",
+      "bytes": 554475,
+      "sha256": "c100d0fbc5482ec24f5c99d912be73306bd2dea079690f08edc5f58a821bcd61",
+      "id": "S9",
+      "url": "https://tidesandcurrents.noaa.gov/tide_pred_stn_history.html",
+      "title": "NOAA Tide Predictions History of Updates",
+      "version": "Dynamic station-history table as captured; table displayed updates through 2026-10-07."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-issue-35558.json",
+      "bytes": 12820,
+      "sha256": "9624eee8bfea99234dfd5079dcf44366a030df070661ba9c99baa8a159cead21",
+      "id": "S10",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/issues/35558",
+      "title": "Issue #35558 — incompatible tolerance error in merge_asof",
+      "version": "Public issue snapshot; issue created 2020-08-05 and closed through PR #35654."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-pr-35654.json",
+      "bytes": 22820,
+      "sha256": "b39ed0528a7c4b5cef825333e89f861613ea9b4918c5cf93d23efe6078003744",
+      "id": "S11",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654",
+      "title": "Pull request #35654 — fix for GH-35558",
+      "version": "Public pull request snapshot; merged 2020-08-13; merge commit 40795053aaf82f8f55abe56001b1276b1ef0a916; milestone 1.1.1."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-pr-35654-files.json",
+      "bytes": 4172,
+      "sha256": "1196e3193bf7fd7fde3a2d319441b43506a772e06c48750bfd9ec6317b12dca0",
+      "id": "S12",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/files",
+      "title": "Files changed by pull request #35654",
+      "version": "Public PR diff snapshot for PR #35654."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-pr-35654-reviews.json",
+      "bytes": 9575,
+      "sha256": "d8e6f0ecceb8fecd5b0024468a63ce010e13a4bf8c4d623686a597f28bbebdb7",
+      "id": "S13",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/reviews",
+      "title": "Reviews of pull request #35654",
+      "version": "Public review history snapshot; substantive review submitted 2020-08-11."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-1.1.1-merge.py",
+      "bytes": 73397,
+      "sha256": "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+      "id": "S14",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/core/reshape/merge.py",
+      "title": "pandas core merge implementation at v1.1.1",
+      "version": "pandas v1.1.1, immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-1.1.1-join.pyx",
+      "bytes": 30236,
+      "sha256": "1d363c4b5d1bf00c01e79e84801dc503fb69ee62a911dc8e79e2e1fa671c97a9",
+      "id": "S15",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/_libs/join.pyx",
+      "title": "pandas Cython join implementation at v1.1.1",
+      "version": "pandas v1.1.1, immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-1.1.1-test_merge_asof.py",
+      "bytes": 45659,
+      "sha256": "b3f51fcef805c5f7c1d6bd600fcb4050d4963cc17d2caf974d05763ee657cd38",
+      "id": "S16",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/tests/reshape/merge/test_merge_asof.py",
+      "title": "pandas merge_asof tests at v1.1.1",
+      "version": "pandas v1.1.1, immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-1.1.1-whatsnew.rst",
+      "bytes": 3928,
+      "sha256": "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f",
+      "id": "S17",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/doc/source/whatsnew/v1.1.1.rst",
+      "title": "pandas 1.1.1 release notes",
+      "version": "pandas v1.1.1, immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-v1.1.1-tag-ref.json",
+      "bytes": 372,
+      "sha256": "0ef02112f8509e3b91ac126d4c3563b96319738a9d4b9bba09746295ba66e5b9",
+      "id": "S18",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/git/ref/tags/v1.1.1",
+      "title": "Git reference for pandas tag v1.1.1",
+      "version": "Public tag-reference snapshot captured twice; final file is second response."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-v1.1.1-tag-object.json",
+      "bytes": 787,
+      "sha256": "1254ba94ef9e6f4494b15128d94eb89f338e80e41948a1b56c0c0da70e32e457",
+      "id": "S19",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/d07d3b157e194b98cd5435abe9d444febbbbcb65",
+      "title": "Annotated tag object for pandas v1.1.1",
+      "version": "Public annotated tag object captured twice; final file resolves v1.1.1 to commit f2ca0a2665b2d169c97de87b8e778dbed86aea07."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-pr-35654-review-comments.json",
+      "bytes": 6273,
+      "sha256": "abd23f1290268863c062e49267423d3d85f69e12fee222390bf7e258871c11c7",
+      "id": "S20",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/comments",
+      "title": "Inline review comments on pull request #35654",
+      "version": "Public inline review comment snapshot."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources/pandas-pr-35654-issue-comments.json",
+      "bytes": 6134,
+      "sha256": "c816d3bcfed3d1258b7a5d1e48c846f77a72970e93ddb5002d052e82574ec1e2",
+      "id": "S21",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/issues/35654/comments",
+      "title": "Conversation comments on pull request #35654",
+      "version": "Public issue-comment snapshot."
+    }
+  ],
+  "independent_captures": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-data-api.html",
+      "bytes": 42037,
+      "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+      "id": "C1",
+      "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+      "title": "NOAA CO-OPS Data Retrieval API",
+      "version": "live docs"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-response-help.html",
+      "bytes": 23254,
+      "sha256": "c934a7921f56b80bbd5b05701795357a97cb5cb3c692931c3d96e8194976ba69",
+      "id": "C2",
+      "url": "https://api.tidesandcurrents.noaa.gov/api/prod/responseHelp.html",
+      "title": "NOAA Response Help",
+      "version": "live docs"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-metadata-api.html",
+      "bytes": 72559,
+      "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+      "id": "C3",
+      "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+      "title": "NOAA Metadata API",
+      "version": "v1.0 live docs"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-prediction-help.html",
+      "bytes": 32471,
+      "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+      "id": "C4",
+      "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+      "title": "NOAA Tide Predictions Help",
+      "version": "live docs"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-harmonic-constituents.html",
+      "bytes": 29450,
+      "sha256": "9104eb43e3b6dc32393f23f919cfff7132a490ee99fcabb0c611accb02825bca",
+      "id": "C5",
+      "url": "https://tidesandcurrents.noaa.gov/about_harmonic_constituents",
+      "title": "NOAA harmonic constituents",
+      "version": "live docs"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-accuracy-faq.html",
+      "bytes": 83932,
+      "sha256": "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f",
+      "id": "C6",
+      "url": "https://tidesandcurrents.noaa.gov/faq.html",
+      "title": "NOAA accuracy FAQ",
+      "version": "live docs"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-1.1.1-merge.py",
+      "bytes": 73397,
+      "sha256": "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+      "id": "C7",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/core/reshape/merge.py",
+      "title": "pandas merge.py",
+      "version": "v1.1.1 commit f2ca0a2665b2d169c97de87b8e778dbed86aea07"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-1.1.1-join.pyx",
+      "bytes": 30236,
+      "sha256": "1d363c4b5d1bf00c01e79e84801dc503fb69ee62a911dc8e79e2e1fa671c97a9",
+      "id": "C8",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/_libs/join.pyx",
+      "title": "pandas join.pyx",
+      "version": "v1.1.1 same commit"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-1.1.1-test-merge-asof.py",
+      "bytes": 45659,
+      "sha256": "b3f51fcef805c5f7c1d6bd600fcb4050d4963cc17d2caf974d05763ee657cd38",
+      "id": "C9",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/tests/reshape/merge/test_merge_asof.py",
+      "title": "pandas merge_asof tests",
+      "version": "v1.1.1 same commit"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-1.1.1-whatsnew.rst",
+      "bytes": 3928,
+      "sha256": "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f",
+      "id": "C10",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/doc/source/whatsnew/v1.1.1.rst",
+      "title": "pandas release notes",
+      "version": "v1.1.1 same commit"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-issue-35558.html",
+      "bytes": 324693,
+      "sha256": "9d1e0af5d5ab73256012cd51bc4fd9e9f596393ea1b7b05e3262c9a75fa7a51c",
+      "id": "C11",
+      "url": "https://github.com/pandas-dev/pandas/issues/35558",
+      "title": "pandas issue 35558",
+      "version": "public page snapshot"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-pr-35654.html",
+      "bytes": 420624,
+      "sha256": "3cdb8504c84b3ce523aae7e71c0af688fbaec83a765b0f9641707b716e9ba6b1",
+      "id": "C12",
+      "url": "https://github.com/pandas-dev/pandas/pull/35654",
+      "title": "pandas PR 35654",
+      "version": "public page snapshot"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-issue-14887.html",
+      "bytes": 278691,
+      "sha256": "2f587bb202bd6119b94e79ad9d3c990c9a003a3683c77abc0899fb4c4760fdcd",
+      "id": "C13",
+      "url": "https://github.com/pandas-dev/pandas/issues/14887",
+      "title": "pandas issue 14887",
+      "version": "public page snapshot"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-issue-53279.html",
+      "bytes": 259609,
+      "sha256": "90d98f21cf0df43130a0d5ada36be47aea0262de3d62abab359b67ae0cff50ee",
+      "id": "C14",
+      "url": "https://github.com/pandas-dev/pandas/issues/53279",
+      "title": "pandas issue 53279",
+      "version": "public page snapshot"
+    }
+  ],
+  "independent_operations": {
+    "web_search_calls": 2,
+    "queries": 6,
+    "web_open_calls": 1,
+    "primary_pages_opened": 5,
+    "direct_https_get_attempts": 20,
+    "saved_bodies": 14,
+    "github_api_403_attempts": 6,
+    "note": "Four public GitHub HTML pages saved instead; other API-only endpoints were not recaptured."
+  },
+  "time_and_budget": {
+    "first_useful_finding_utc": "2026-10-07T21:04:53Z",
+    "source_capture_window_observed_utc": "2026-10-07T21:05:57Z/2026-10-07T21:07:22Z",
+    "complete_output_utc": "2026-10-07T21:10:59.706772Z",
+    "stage_deadline_utc": "2026-10-07T21:11:27.284747+00:00",
+    "whole_arm_deadline_utc": "2026-10-07T21:28:26.855867+00:00",
+    "occupied_ceiling_seconds": 2700,
+    "reserve_seconds": 900,
+    "stage_usage": {
+      "input_tokens": null,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    }
+  },
+  "native_goal_projection": {
+    "identity": "01a1182b-ede1-70e1-9fdd-d0d91630dcb3",
+    "created_status": "active",
+    "pre_science_get_status": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "remainingTokens": null
+  },
+  "activation_notice": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "clientRequestId": "er10-I-FAST-02-control-critic-v1-active",
+    "messageId": "message:mcp:bac23562-516c-4e63-9fb2-343e9113edcd:thread-send:er10-I-FAST-02-control-critic-v1-active",
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:ordinal:34",
+    "status": "starting",
+    "delivery": "started"
+  },
+  "executed_validation": {
+    "application": false,
+    "product_data": false,
+    "build": false
+  },
+  "note": "Stage usage and billing unknown/null. Parent and native Goal outputs are distinct from stage usage."
+}

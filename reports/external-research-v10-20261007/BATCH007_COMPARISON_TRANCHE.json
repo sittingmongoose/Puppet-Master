@@ -1,0 +1,95 @@
+{
+  "schema": "ER10-batch007-finite-tranche-v1",
+  "cutoff": "2026-10-07T21:52:36.000Z",
+  "campaign_complete": false,
+  "scientific_regrading": false,
+  "rows": [
+    {
+      "case": "Cohort1 six-case final",
+      "exact_version": "final CLOSED projection",
+      "original_disposition_only": "Six scientific paired assessments including diagnostic/repaired reviews; ZERO qualified method comparisons",
+      "limits": "Seven pair-version dispositions retain historical M02A v2 missing-final diagnostic; no 24-case/campaign completion claim",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/COMPARISONS.json",
+      "published_record": "reports/external-research-v10-20261007/batch007-frozen-originals/helpers/targeted-supervisor/COMPARISONS.json"
+    },
+    {
+      "case": "D-M02-A",
+      "exact_version": "last v3 complete Source6 review",
+      "original_disposition_only": "Control QUALIFIED_SUPPORTED; treatment NOT_FULLY_CORRECT_AS_WRITTEN",
+      "limits": "Six obligations and 13 claim groups per label are audit partitions; chronology/timing/provenance limits separate; original v2 diagnostic unchanged",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/REVIEW.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/targeted/D-M02-A/source-review-v3/REVIEW.json"
+    },
+    {
+      "case": "C-01",
+      "exact_version": "original v1 mechanical disposition",
+      "original_disposition_only": "Control NULL/UNASSESSED; treatment FAIL; comparative HOLD",
+      "limits": "Missing control review; original control material_defect_count 0 preserved but normalized unknown/null",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/COMPARISON.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/confirmation/C-01/COMPARISON.json"
+    },
+    {
+      "case": "C-02",
+      "exact_version": "original v1 delivered paired assessment",
+      "original_disposition_only": "Control FAIL / treatment HOLD",
+      "limits": "Treatment O1 remainder retained; delivered pair assessment distinct from both-arm full source coverage",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/COMPARISON.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/confirmation/C-02/COMPARISON.json"
+    },
+    {
+      "case": "C-03",
+      "exact_version": "original v1 diagnostic paired assessment",
+      "original_disposition_only": "Control HOLD / treatment FAIL; comparative HOLD",
+      "limits": "Control chronology/material defects retained; treatment native BLOCKED and root diagnostic exception distinct from science",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/COMPARISON.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/confirmation/C-03/COMPARISON.json"
+    },
+    {
+      "case": "C-04",
+      "exact_version": "original v1 BOTH-arm full declared Source pair",
+      "original_disposition_only": "Control FAIL / treatment PASS_WITH_LIMITATIONS",
+      "limits": "Near-equal descriptive times; one both-arm full-source pair; no qualified confirmation win",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/COMPARISON.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/confirmation/C-04/COMPARISON.json"
+    },
+    {
+      "case": "D-M08-B",
+      "exact_version": "matched v3 complete pair/full own reviews",
+      "original_disposition_only": "Control FullSourceFAIL / treatment FullSourcePASS",
+      "limits": "Full scope/scientific assessment distinct from native/time/method/provenance eligibility; expanded 40-minute ceilings are new benchmark",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-B-v3/PAIR_COMPARISON.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/targeted-cohort3/D-M08-B-v3/PAIR_COMPARISON.json"
+    },
+    {
+      "case": "D-M15-A",
+      "exact_version": "matched v3 complete pair/full own reviews",
+      "original_disposition_only": "FAIL / FAIL",
+      "limits": "All four candidate stages and full own reviews retained; two failure labels do not establish equal quality or ranking; expanded 60/common100 budgets separate",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M15-A/comparison-v3.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M15-A/comparison-v3.json"
+    },
+    {
+      "case": "I-METHOD-02",
+      "exact_version": "v2 separately authorized treatment-only diagnostic",
+      "original_disposition_only": "Treatment full Source6 FAIL; immutable paired UNASSESSED/HOLD",
+      "limits": "Standalone grade never replaces paired disposition or control missing-full-final status",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/frozen-standalone-review.json",
+      "published_record": "reports/external-research-v10-20261007/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/frozen-standalone-review.json"
+    },
+    {
+      "case": "I-FAST-02",
+      "exact_version": "original v1 complete paired reviews",
+      "original_disposition_only": "FAIL / FAIL",
+      "limits": "Exact lock/native/carriers/cold timing retained; no equal-quality/ranking inference or quality-preserving speed win",
+      "original_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/fast02-pair-disposition-v1.json",
+      "published_record": "reports/external-research-v10-20261007/helpers/integrated-execution/fast02-pair-disposition-v1.json"
+    }
+  ],
+  "confirmation_original_counts": {
+    "mechanical_dispositions": 4,
+    "delivered_paired_assessments": 3,
+    "both_arm_full_declared_source_pairs": 1,
+    "qualified_wins": 0
+  },
+  "count_rule": "Counts explicitly stated by final closure records, not a newly inferred denominator. Forty immutable slots/eighty arms are protocol counts, not completion counts. Attempts/reviews/helpers do not create logical comparisons."
+}

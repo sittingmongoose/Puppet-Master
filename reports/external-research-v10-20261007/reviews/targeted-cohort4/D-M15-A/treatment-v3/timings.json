@@ -1,0 +1,322 @@
+{
+  "schema": "independent-source-review.timings.v1",
+  "case_id": "D-M15-A",
+  "first_observed_review_operation_at": "2026-10-07T21:22:05.321000+00:00",
+  "finished_artifact_validation_at": "2026-10-07T21:33:55.834593+00:00",
+  "elapsed_seconds_from_first_observed_operation": 710.513593,
+  "review_deadline_at": "2026-10-07T21:41:44.512741+00:00",
+  "nominal_twenty_minute_window_start_derived_from_supplied_deadline": "2026-10-07T21:21:44.512741+00:00",
+  "elapsed_seconds_from_nominal_window_start": 731.321852,
+  "actual_t3_requested_at": null,
+  "actual_t3_requested_at_limit": "Not present in the scoped dispatch receipt/request lifecycle fields; no thread timeline or forbidden history was read. Supplied absolute deadline was retained and no budget reset occurred. Review finished early.",
+  "expiry_encountered": false,
+  "source_operations": [
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 0,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/rfc9110.html",
+      "bytes": 1187554,
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "hash_match": true,
+      "elapsed_seconds": 0.18407184700117796,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 1,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/tus-resumable-upload-1.0.0.html",
+      "bytes": 210884,
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "hash_match": true,
+      "elapsed_seconds": 0.014210528999683447,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 2,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/s3-api-createmultipartupload.html",
+      "bytes": 108900,
+      "sha256": "3f7f3e6a234b8e37d9a7a39e8cf5cac2f3e486acbb67f6356fde8a919c5b8d48",
+      "hash_match": true,
+      "elapsed_seconds": 0.012741582999296952,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 3,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/man7-rename-2.html",
+      "bytes": 23571,
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "hash_match": true,
+      "elapsed_seconds": 0.004633772998204222,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 4,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/man7-open-2.html",
+      "bytes": 76506,
+      "sha256": "d665489cadb85624d98fae03a8d8d06209030f32735cff8aeba949ad8491c789",
+      "hash_match": true,
+      "elapsed_seconds": 0.00931313899855013,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 5,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "hash_match": true,
+      "elapsed_seconds": 0.008870846999343485,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 6,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/tus-protocol-1.0.0.md",
+      "bytes": 25906,
+      "sha256": "dfc82027d295c80c3ff799f8f6944115e6fb383373a0b41d0eec296200535bb6",
+      "hash_match": true,
+      "elapsed_seconds": 0.0010536699992371723,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 7,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/aws-s3-uploadpart.html",
+      "bytes": 67235,
+      "sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "hash_match": true,
+      "elapsed_seconds": 0.007656603000214091,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 8,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rename2-manpage.html",
+      "bytes": 23571,
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "hash_match": true,
+      "elapsed_seconds": 0.0002094330011459533,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 9,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/sqlite-atomiccommit.html",
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "hash_match": true,
+      "elapsed_seconds": 0.005918852999457158,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 10,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/git-objects-chapter.html",
+      "bytes": 145608,
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "hash_match": true,
+      "elapsed_seconds": 0.008674406999489293,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 11,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/rfc9110.html",
+      "bytes": 1187554,
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "hash_match": true,
+      "elapsed_seconds": 0.0049768819990276825,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 12,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/tus-resumable-upload-1.0.0.html",
+      "bytes": 210884,
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "hash_match": true,
+      "elapsed_seconds": 0.0007300079996639397,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 13,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/aws-s3-uploadpart.html",
+      "bytes": 67235,
+      "sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "hash_match": true,
+      "elapsed_seconds": 0.00024625899823149666,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 14,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/aws-s3-createmultipartupload.html",
+      "bytes": 108900,
+      "sha256": "3f7f3e6a234b8e37d9a7a39e8cf5cac2f3e486acbb67f6356fde8a919c5b8d48",
+      "hash_match": true,
+      "elapsed_seconds": 0.0003580839984351769,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 15,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/man7-rename-2.html",
+      "bytes": 23571,
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "hash_match": true,
+      "elapsed_seconds": 0.0001001130003714934,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 16,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/man7-open-2.html",
+      "bytes": 76506,
+      "sha256": "d665489cadb85624d98fae03a8d8d06209030f32735cff8aeba949ad8491c789",
+      "hash_match": true,
+      "elapsed_seconds": 0.00024365099670831114,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 17,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/sqlite-atomiccommit.html",
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "hash_match": true,
+      "elapsed_seconds": 0.00024764900081208907,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "read_hash_and_normalize_mapped_primary_capture",
+      "map_entry": 18,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_full_synthesis_final-v3/sources/git-objects-chapter.html",
+      "bytes": 145608,
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "hash_match": true,
+      "elapsed_seconds": 0.0004664209991460666,
+      "started_at": null,
+      "measurement_limit": "Duration instrumented for this local read/hash/extraction operation; exact per-entry UTC start was not instrumented. Semantic assessment time is not this duration."
+    },
+    {
+      "operation": "bounded_public_primary_fetch",
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.html",
+      "capture_at": "2026-10-07T21:23:12.455626+00:00",
+      "bytes": 15152,
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "elapsed_seconds": 0.44082249399798457,
+      "measurement_limit": "Single urllib HTTP fetch/write operation, with parser/metadata overhead as instrumented; no code or server test executed."
+    },
+    {
+      "operation": "bounded_public_primary_fetch",
+      "url": "https://man7.org/linux/man-pages/man2/utimensat.2.html",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.html",
+      "capture_at": "2026-10-07T21:24:16.215335+00:00",
+      "bytes": 22528,
+      "sha256": "d8cfbbcb7a7815d74313e02f9b0e20fcfc087bc955b197dd44b30f20ff4fbd64",
+      "elapsed_seconds": 0.46246110499851056,
+      "measurement_limit": "Single urllib HTTP fetch/write operation, with parser/metadata overhead as instrumented; no code or server test executed."
+    },
+    {
+      "operation": "bounded_public_primary_fetch",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.html",
+      "capture_at": "2026-10-07T21:24:16.418711+00:00",
+      "bytes": 32489,
+      "sha256": "dce987a4dd51d5f0c41f1efa579e28b05b8c585bcc879f5e503d242c524d0d02",
+      "elapsed_seconds": 0.20325610299914842,
+      "measurement_limit": "Single urllib HTTP fetch/write operation, with parser/metadata overhead as instrumented; no code or server test executed."
+    },
+    {
+      "operation": "bounded_public_primary_fetch",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.html",
+      "capture_at": "2026-10-07T21:26:08.502813+00:00",
+      "bytes": 83175,
+      "sha256": "120bba4c5fffd1ffa8a57aa6e08d1adad866decadc331a77ab195afb27d73c11",
+      "elapsed_seconds": 0.2198985619979794,
+      "measurement_limit": "Single urllib HTTP fetch/write operation, with parser/metadata overhead as instrumented; no code or server test executed."
+    }
+  ],
+  "checks": [
+    {
+      "check": "frozen SHA-256 before assessment",
+      "result": "match",
+      "expected": "cd06682f9415536d3e0a419ac8d3b2b67b95f2dcfd38181ebe4f04b5a8233e0c",
+      "elapsed_seconds": null
+    },
+    {
+      "check": "all 19 mapped source captures and 3 capture indices",
+      "result": "all declared hashes match",
+      "elapsed_seconds": null
+    },
+    {
+      "check": "complete consequential claim/condition checking",
+      "claim_count": 58,
+      "evidence_records": 22,
+      "result": "full declared relevant scope assessed; material defects retained",
+      "elapsed_seconds": null
+    },
+    {
+      "check": "quote normalization audit and source-version/header checks",
+      "result": "tus quote paraphrase; date/count/section metadata corrections recorded; remaining quoted semantics checked",
+      "elapsed_seconds": null
+    },
+    {
+      "check": "source-bounded negative and optional-mechanism checks",
+      "result": "scope retained; RFC no-bound and S3 unpublished negatives rejected",
+      "elapsed_seconds": null
+    },
+    {
+      "check": "artifact/locator/reference and immutable-byte final validation",
+      "result": "pass",
+      "validated_at": "2026-10-07T21:33:55.834593+00:00",
+      "elapsed_seconds": null
+    }
+  ],
+  "known_local_integrity_operation_seconds": 0.2647237509881961,
+  "known_supplementary_source_operation_seconds": 1.326438263993623,
+  "measurement_limits": "Instrumented operation durations are not sums of total model/reasoning time. Uninstrumented check durations remain null. No candidate timing inputs were read; no inferred token/cache/billing values are substituted.",
+  "unknown_input": null,
+  "input_tokens": null,
+  "cache": null,
+  "generated": null,
+  "billing": null,
+  "native_counters_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/native-counters.json",
+  "delivery": {
+    "mode": "T3 delegated-task terminal final response",
+    "artifact_delivery_prepared_at": "2026-10-07T21:33:55.834593+00:00",
+    "confirmed_delivery_at": null,
+    "status": "artifacts validated and ready for immediate terminal return; automatic T3 parent receipt is outside this reviewer\u2019s observable timeline"
+  },
+  "cleanup": {
+    "temporary_files_created": 0,
+    "browsers_or_servers_started": 0,
+    "worktrees_or_branches_created": 0,
+    "pending_children": 0,
+    "retained_outputs": "Requested review/timing artifacts plus review source captures, normalized source text and audit evidence needed to resolve exact locators; all under the requested review directory."
+  }
+}

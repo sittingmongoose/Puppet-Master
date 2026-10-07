@@ -1,0 +1,18 @@
+{
+  "type": "prospective_unstarted_matched_stage_artifact_path_clarification",
+  "record_at": "2026-10-07T20:40:41.797584+00:00",
+  "case": "I-METHOD-02",
+  "version": "v2",
+  "applies_only": [
+    "control/critic-v2",
+    "control/reviser-v2",
+    "treatment/critic-v2",
+    "treatment/reviser-v2"
+  ],
+  "neither_critic_dispatched": true,
+  "original_research_contracts_and_failures_unchanged": true,
+  "canonical_output_name": "artifact.md",
+  "complete_scientific_scope_unchanged": true,
+  "method_budget_effort_account_unchanged": true,
+  "reason": "Frozen prompt literal FULLartifact.md conflicted with map artifact.md. Full scientific scope remains FULL, exact future output filename artifact.md. No scientific revision."
+}

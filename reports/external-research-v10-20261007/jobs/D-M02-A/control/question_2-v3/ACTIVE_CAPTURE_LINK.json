@@ -1,0 +1,18 @@
+{
+  "schema": "pm.er10.passive-receipts-index.v1",
+  "observed_at_utc": "2026-10-07T21:05:43.173157+00:00",
+  "entries": [
+    {
+      "stage": "D-M02-A/control/question_2-v3",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M02-A--control--question_2-v3--c44c0a1cfeb23c4c.json",
+      "sha256": "c44c0a1cfeb23c4cae0c39dfca3249375b99c3cdc21a58df157e2542ffca1bf1",
+      "bytes": 10881,
+      "capture": {
+        "create_goal": "missing_actual_response",
+        "get_goal": "missing_actual_response",
+        "update_goal": "missing_actual_response"
+      }
+    }
+  ],
+  "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+}

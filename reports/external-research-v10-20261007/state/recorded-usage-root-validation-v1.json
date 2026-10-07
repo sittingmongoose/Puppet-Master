@@ -1,0 +1,19 @@
+{
+  "schema": "ER10-root-recorded-usage-supplement-independent-validation-v1",
+  "checked_at": "2026-10-07T21:27:34.820811+00:00",
+  "reader_sha256": "0b8f03c8df464ad1a827395a994b03d0e27ce053b1aaebc974e751fea356f557",
+  "observation_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage/observation-20261007T211653Z-aa6ea07490bb4a08.json",
+  "observation_sha256": "aa6ea07490bb4a0888b799fd35eb0aa7d1f80873e4836330bbb7a2481d6d3034",
+  "unique_native_sessions": 208,
+  "group_count": 72,
+  "summed_distinct_sessions": 147,
+  "all_group_arithmetic_recomputed": true,
+  "no_session_repeated_across_groups": true,
+  "no_live_or_held_session_summed": true,
+  "C02_qualification_5_of_5_exact": true,
+  "original_C02_grade_bytes_unchanged": true,
+  "group_roles_may_include_candidate_and_review_explicitly": true,
+  "complete_arm_or_complete_campaign_usage_claimed": false,
+  "billing_remaining_quota_claimed": false,
+  "failures": []
+}

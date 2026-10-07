@@ -1,0 +1,80 @@
+[
+  {
+    "id": "rfc9110",
+    "side": "transport",
+    "file": "rfc9110.txt",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+    "title": "HTTP Semantics (RFC 9110, STD 97)",
+    "version": "June 2022, Standards Track; obsoletes RFC 7230-7235",
+    "capture_at": "2026-10-07T20:55:12+00:00",
+    "capture_method": "curl raw text; content read and section-checked via WebFetch + grep on captured bytes",
+    "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "locator": "S14.2 Range / S14.4 Content-Range / S14.5 Partial PUT (TOC lines 247ff; body S14); S13.1.1 If-Match (line 235); S15.5.17 416 Range Not Satisfiable (line 7755); S10.2.3 Retry-After (line 203); S9.2.2 idempotent methods / automatic retry on connection failure (line 650)",
+    "limits": "Initial WebFetch read truncated past S6.4 (TOC-only for later sections), so semantic wording for S13-S15 was confirmed against the captured raw text by grep, not full read; no statement bounding retry counts (boundedness is client policy); Retry-After is a delay hint only; no transfer-resumption semantics beyond byte ranges and partial PUT; range units extensible but only 'bytes' standardized here."
+  },
+  {
+    "id": "tus-core-1.0.0",
+    "side": "transport",
+    "file": "tus-protocol-1.0.0.md",
+    "url": "https://raw.githubusercontent.com/tus/tus-resumable-upload-protocol/master/protocol.md",
+    "title": "tus resumable upload protocol, core + extensions",
+    "version": "1.0.0 (dated 2016-03-24 in header; MIT license)",
+    "capture_at": "2026-10-07T20:55:12+00:00",
+    "capture_method": "curl raw markdown from protocol repo master; content read via WebFetch and locator-checked by grep",
+    "sha256": "dfc82027d295c80c3ff799f8f6944115e6fb383373a0b41d0eec296200535bb6",
+    "locator": "HEAD returns Upload-Offset resume point (lines 118-143 examples); PATCH with Upload-Offset mismatch -> 409 Conflict without modifying resource (line 222); client SHOULD send remaining bytes in a single PATCH (line 225); Tus-Resumable: 1.0.0; extensions via Tus-Extension: creation, creation-defer-length, expiration, checksum, termination, concatenation",
+    "limits": "No mandated or advised chunk size in core (no 1 GiB / untrusted-network guidance found - negative lead, common attribution unverified); no mechanism for replacing an existing upload resource or versioning payload identity (negative lead); offset is opaque byte count - no content identity binding; protocol dated 2016, captured from master branch so drift from the 1.0.0 tag is possible (unverified against tag)."
+  },
+  {
+    "id": "aws-s3-uploadpart",
+    "side": "transport",
+    "file": "aws-s3-uploadpart.html",
+    "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html",
+    "title": "Amazon S3 API Reference - UploadPart",
+    "version": "S3 API 2006-03-01, docs page as captured 2026-10-07",
+    "capture_at": "2026-10-07T20:55:12+00:00",
+    "capture_method": "curl rendered docs HTML; content read via WebFetch; key phrases grep-verified in captured bytes",
+    "sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+    "locator": "'If you upload a new part using the same part number that was used with a previous part, the previously uploaded part is overwritten' (grep-confirmed 1 hit); part numbers 1-10,000; NoSuchUpload 404 after abort/complete; 'must either complete or abort multipart upload in order to stop getting charged' (orphan parts); per-part checksum headers (CRC32/SHA256/...) and Content-MD5; per-part ETag in response",
+    "limits": "Vendor docs (primary for S3 behavior, not a neutral standard); no retry-count or backoff bound stated on this page - SDK retry policy lives in SDK docs, not the API reference (negative lead); HTML capture may omit JS-augmented sections (examples/TOC verified present); part overwrite semantics described but no cross-part-number consistency guarantee stated on this page; billing/lifecycle detail is S3-specific, not generalizable."
+  },
+  {
+    "id": "posix-rename2",
+    "side": "local-object",
+    "file": "rename2-manpage.html",
+    "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+    "title": "rename(2) - Linux man page (rename, renameat, renameat2)",
+    "version": "Linux man-pages project page as captured 2026-10-07",
+    "capture_at": "2026-10-07T20:58:30+00:00",
+    "capture_method": "curl rendered HTML; content read via WebFetch; phrases grep-verified",
+    "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+    "locator": "'If newpath already exists, it will be atomically replaced, so that there is no point at which another process attempting to access newpath will find it missing' (grep-verified); ENOENT/EBUSY error cases; 'If newpath exists but the operation fails for some reason, rename() guarantees to leave an instance of newpath in place'; BUGS: NFS - cannot assume failure means no rename",
+    "limits": "No fsync/durability statement at all (negative lead: atomic replacement is not durable swap; crash after rename may still lose the data without fsync); ETXTBSY not documented on this page; EBUSY noted as optional ('no requirement to return EBUSY'); NFS rename atomicity explicitly disclaimed in BUGS; man page documents API contract, not a field-tested mechanism."
+  },
+  {
+    "id": "sqlite-atomiccommit",
+    "side": "local-object",
+    "file": "sqlite-atomiccommit.html",
+    "url": "https://www.sqlite.org/atomiccommit.html",
+    "title": "Atomic Commit In SQLite",
+    "version": "SQLite doc as captured 2026-10-07 (page timestamp 2026-04-21 per WebFetch read)",
+    "capture_at": "2026-10-07T20:58:30+00:00",
+    "capture_method": "curl rendered HTML; content read via WebFetch; headings grep-verified",
+    "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+    "locator": "S3.5 Creating A Rollback Journal; S3.7 Flushing The Rollback Journal File To Mass Storage ('critical step in insuring that the database can survive an unexpected power loss'); S3.11 Deleting The Rollback Journal ('instant where the transaction commits'); S4.2 Hot Rollback Journals ('database file is in an inconsistent state'); S9 Things That Can Go Wrong (broken fsync, NFS locking)",
+    "limits": "Canonical single-writer database design - the journal+fsync discipline is proven for one file, not for chunked network uploads; assumes flush/fsync works ('broken on some versions of Windows and Linux ... nothing that SQLite can do', negative lead for rural/unreliable power+storage); commit point defined as journal deletion, not data visibility; readers kept off partial writes by exclusive locking, which has no analogue in a pure append-to-temp-file upload cache; WAL alternative only linked, not covered here."
+  },
+  {
+    "id": "git-content-objects",
+    "side": "local-object",
+    "file": "git-objects-chapter.html",
+    "url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects",
+    "title": "Pro Git 2nd ed. - 10.2 Git Internals: Git Objects",
+    "version": "Pro Git 2nd edition web edition as captured 2026-10-07",
+    "capture_at": "2026-10-07T20:58:30+00:00",
+    "capture_method": "curl rendered HTML; content read via WebFetch; phrases and SHA examples grep-verified",
+    "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+    "locator": "'content-addressable filesystem'; identity = SHA-1 of 'blob <size>\\0' header + content (example blobs 83baae61.../1f7a7a47..., grep-verified 4 hits); objects under .git/objects with 2+38 hex fan-out, zlib-compressed; 'Your object database now contains both versions' (immutability on content change)",
+    "limits": "Chapter covers identity and storage only - GC of unreachable objects and reflog expiry are NOT covered here (moved to 10.7 Maintenance, negative lead for orphan lifecycle); SHA-1 collision posture not discussed (later git moved to SHA-256, unverified in this capture); immutability implied by content-addressing, not stated as a guarantee; book is prose tutorial, not normative spec."
+  }
+]

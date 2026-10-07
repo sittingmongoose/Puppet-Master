@@ -1,0 +1,49 @@
+{
+  "method": "verbatim four methods extracted from pinned public source; zero rotation/translation and synthetic unequal versus equal scale springs; no constructor, rendering, upload or app run",
+  "pinned_commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+  "source_sha256": "ea57535dd89c54712f22c95a173e2dbdb80f65ef6b614c3a2ec71cf7b3e1b903",
+  "executed_at_utc": "2026-10-07T20:40:55.347Z",
+  "results": [
+    {
+      "currentScale": 1,
+      "targetScale": 2,
+      "original": {
+        "x": 500,
+        "y": 250
+      },
+      "displayed": {
+        "x": 0.5,
+        "y": 0.25
+      },
+      "inverse": {
+        "x": 250,
+        "y": 125
+      },
+      "currentRoundTripMatches": false
+    },
+    {
+      "currentScale": 1,
+      "targetScale": 1,
+      "original": {
+        "x": 500,
+        "y": 250
+      },
+      "displayed": {
+        "x": 0.5,
+        "y": 0.25
+      },
+      "inverse": {
+        "x": 500,
+        "y": 250
+      },
+      "currentRoundTripMatches": true
+    }
+  ],
+  "applicability": "Unequal TiledImage current/target scale, e.g. animated setWidth/fitBounds. Does not demonstrate failure for a fixed TiledImage during viewer-only pan/zoom or after settlement.",
+  "snippets": {
+    "_viewportToImageDelta": "_viewportToImageDelta: function( viewerX, viewerY, current ) {\n        const scale = (current ? this._scaleSpring.current.value : this._scaleSpring.target.value);\n        return new $.Point(viewerX * (this.source.dimensions.x / scale),\n            viewerY * ((this.source.dimensions.y * this.contentAspectX) / scale));\n    }",
+    "viewportToImageCoordinates": "viewportToImageCoordinates: function(viewerX, viewerY, current) {\n        let point;\n        if (viewerX instanceof $.Point) {\n            //they passed a point instead of individual components\n            current = viewerY;\n            point = viewerX;\n        } else {\n            point = new $.Point(viewerX, viewerY);\n        }\n\n        point = point.rotate(-this.getRotation(current), this._getRotationPoint(current));\n        return current ?\n            this._viewportToImageDelta(\n                point.x - this._xSpring.current.value,\n                point.y - this._ySpring.current.value) :\n            this._viewportToImageDelta(\n                point.x - this._xSpring.target.value,\n                point.y - this._ySpring.target.value);\n    }",
+    "_imageToViewportDelta": "_imageToViewportDelta: function( imageX, imageY, current ) {\n        const scale = (current ? this._scaleSpring.current.value : this._scaleSpring.target.value);\n        return new $.Point((imageX / this.source.dimensions.x) * scale,\n            (imageY / this.source.dimensions.y / this.contentAspectX) * scale);\n    }",
+    "imageToViewportCoordinates": "imageToViewportCoordinates: function(imageX, imageY, current) {\n        if (imageX instanceof $.Point) {\n            //they passed a point instead of individual components\n            current = imageY;\n            imageY = imageX.y;\n            imageX = imageX.x;\n        }\n\n        const point = this._imageToViewportDelta(imageX, imageY, current);\n        if (current) {\n            point.x += this._xSpring.current.value;\n            point.y += this._ySpring.current.value;\n        } else {\n            point.x += this._xSpring.target.value;\n            point.y += this._ySpring.target.value;\n        }\n\n        return point.rotate(this.getRotation(current), this._getRotationPoint(current));\n    }"
+  }
+}

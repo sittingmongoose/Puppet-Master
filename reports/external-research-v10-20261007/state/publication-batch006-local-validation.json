@@ -1,0 +1,18 @@
+{
+  "schema": "ER10-root-batch006-independent-target-validation-v1",
+  "checked_at": "2026-10-07T21:26:25.295364+00:00",
+  "manifest_sha256": "2a7c1ac5521459f670d47f09318728b3c0d23494253f1e09fd5d0c6d8aa63269",
+  "entries": 2091,
+  "counts": {
+    "EXISTING_EXACT_COMMIT_REFERENCE": 886,
+    "NEW_EXACT_COPY": 1199,
+    "GENERATED_ADMINISTRATIVE": 6
+  },
+  "staged_files": 1206,
+  "staged_bytes": 17850935,
+  "exact_ref_commits": [
+    "5041f3a0d8dfc3494be5f07b7de5d8103c1a49ec"
+  ],
+  "failures": [],
+  "no_science_regrade": true
+}

@@ -1,0 +1,26 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ]
+  },
+  "record_at": "2026-10-07T21:23:24.876540+00:00",
+  "prospective_stage_deadline": "2026-10-07T21:35:44.125819+00:00",
+  "prospective_arm_deadline": "2026-10-07T21:45:44.125819+00:00",
+  "clientRequestId": "er10-I-FAST-03-treatment-research-v1",
+  "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+  "mode": "async",
+  "role": "research",
+  "runtimeMode": "full-access",
+  "interactionMode": "default"
+}

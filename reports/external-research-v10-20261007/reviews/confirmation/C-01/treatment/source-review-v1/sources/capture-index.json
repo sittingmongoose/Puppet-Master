@@ -1,0 +1,733 @@
+[
+  {
+    "title": "W3C Web Annotation Data Model",
+    "url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+    "version_or_release": "W3C Recommendation, 23 February 2017",
+    "commit": null,
+    "locators": [
+      "\u00a7\u00a73.3, 4.2.1, 4.2.7, 4.3: targets, FragmentSelector, SvgSelector, body/annotation model"
+    ],
+    "id": "R01",
+    "accessed_at_utc": "2026-10-07T20:38:43.601505+00:00",
+    "final_url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/web-annotation-model.html",
+    "bytes": 284185,
+    "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "W3C Media Fragments URI 1.0",
+    "url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+    "version_or_release": "W3C Recommendation, 25 September 2012",
+    "commit": null,
+    "locators": [
+      "\u00a7\u00a74.2.2, 6.1.2, 7.1: image xywh syntax, intrinsic pixel and percentage units, top-left origin"
+    ],
+    "id": "R02",
+    "accessed_at_utc": "2026-10-07T20:38:43.603533+00:00",
+    "final_url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/media-fragments.html",
+    "bytes": 89887,
+    "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "FITS Standard v4.0",
+    "url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+    "version_or_release": "FITS Standard v4.0, language-edited 13 August 2018",
+    "commit": null,
+    "locators": [
+      "FITS v4.0 front matter (2016-07-22; language edit 2018-08-13); \u00a74.4.2.2 p13/PDF19 DATE-OBS; \u00a78.2 p31/PDF37 CRPIX; \u00a7\u00a79.1.1,9.2.1 pp37-38/PDF43-44 timezone and time-scale defaults/overrides"
+    ],
+    "id": "R03",
+    "accessed_at_utc": "2026-10-07T20:38:43.605083+00:00",
+    "final_url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/fits-standard-v4.pdf",
+    "bytes": 1140821,
+    "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "FITS World Coordinate System overview",
+    "url": "https://fits.gsfc.nasa.gov/fits_wcs.html",
+    "version_or_release": "Official FITS Support Office reference page captured 2026-10-07",
+    "commit": null,
+    "locators": [
+      "Primary WCS papers and distinction between approved and non-standard conventions"
+    ],
+    "id": "R04",
+    "accessed_at_utc": "2026-10-07T20:38:43.606363+00:00",
+    "final_url": "https://fits.gsfc.nasa.gov/fits_wcs.html",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/fits-wcs.html",
+    "bytes": 15055,
+    "sha256": "a0f55cb08b119ad22988932cbbe2e1ee51626319284b032686b47ff229930522",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "BagIt File Packaging Format",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+    "version_or_release": "IETF RFC 8493, October 2018",
+    "commit": null,
+    "locators": [
+      "RFC8493 \u00a7\u00a71.3,2.1.3,2.4,3 fixity and completeness; \u00a75.1 path containment; \u00a75.4 no protection against active attacks"
+    ],
+    "id": "R05",
+    "accessed_at_utc": "2026-10-07T20:38:43.607807+00:00",
+    "final_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+    "http_status": 200,
+    "content_type": "text/html",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/rfc8493.html",
+    "bytes": 63600,
+    "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenAstronomyLog project repository",
+    "url": "https://github.com/openastronomylog/openastronomylog",
+    "version_or_release": "Official repository page captured 2026-10-07; branch/release not pinned",
+    "commit": null,
+    "locators": [
+      "README and repository tree: XML-schema lead for observation logging; applicability to asset annotations not assumed"
+    ],
+    "id": "R06",
+    "accessed_at_utc": "2026-10-07T20:38:43.609473+00:00",
+    "final_url": "https://github.com/openastronomylog/openastronomylog",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/openastronomylog.html",
+    "bytes": 265781,
+    "sha256": "f42a0744150f418cd84dfc8d40858747ad04709e5571e989dc0862d314286f0e",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "Observation Manager official page",
+    "url": "https://observation.sourceforge.net/en/",
+    "version_or_release": "Official project page captured 2026-10-07; exact release unspecified",
+    "commit": null,
+    "locators": [
+      "OpenAstronomyLog XML export claim and project scope"
+    ],
+    "id": "R07",
+    "accessed_at_utc": "2026-10-07T20:38:43.696998+00:00",
+    "final_url": "https://observation.sourceforge.net/en/",
+    "http_status": 200,
+    "content_type": "text/html",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/observation-manager.html",
+    "bytes": 7655,
+    "sha256": "f2239528870792ee491f43f61020beb161e27e40f14e4189157bea86a2314c04",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "Tropy official documentation",
+    "url": "https://docs.tropy.org/",
+    "version_or_release": "Official documentation captured 2026-10-07; page does not state a release",
+    "commit": null,
+    "locators": [
+      "Local catalog, photos/items, metadata, tags/notes and export; analogy limits"
+    ],
+    "id": "R08",
+    "accessed_at_utc": "2026-10-07T20:38:43.739449+00:00",
+    "final_url": "https://docs.tropy.org/",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/tropy-docs.html",
+    "bytes": 462352,
+    "sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "Nextcloud desktop conflict documentation",
+    "url": "https://raw.githubusercontent.com/nextcloud/documentation/2de94819a621e1d5876e6afde1f47203b613b96e/user_manual/desktop/conflicts.rst",
+    "version_or_release": "Documentation repository commit 2de94819a621e1d5876e6afde1f47203b613b96e",
+    "commit": "2de94819a621e1d5876e6afde1f47203b613b96e",
+    "locators": [
+      "user_manual/desktop/conflicts.rst, Overview and Example: simultaneous local/remote edit yields remote base plus local conflicted copy, requires human comparison; default conflict copy is not uploaded; exact Nextcloud client release not identified"
+    ],
+    "id": "R09",
+    "accessed_at_utc": "2026-10-07T20:38:43.741475+00:00",
+    "final_url": "https://raw.githubusercontent.com/nextcloud/documentation/2de94819a621e1d5876e6afde1f47203b613b96e/user_manual/desktop/conflicts.rst",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-conflicts.rst",
+    "bytes": 2864,
+    "sha256": "5995f5c8aa1fd57ca36a2b2aca2ae11167ddb9f089953edfed97043c8eecade0",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "Nextcloud Server 35 file versioning manual",
+    "url": "https://docs.nextcloud.com/server/35/user_manual/en/files/version_control.html",
+    "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+    "commit": null,
+    "locators": [
+      "Version control section: new restore point only after at least 2 minutes; age-based retention; max 50% currently available free space; named version excluded from automatic expiry"
+    ],
+    "id": "R10",
+    "accessed_at_utc": "2026-10-07T20:38:43.788124+00:00",
+    "final_url": "https://docs.nextcloud.com/server/35/user_manual/en/files/version_control.html",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-versioning.html",
+    "bytes": 19998,
+    "sha256": "7b10fe8138e47008007c76efc9d4da361b03ce8e1db4e55fb19aefebfdbc4aa6",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "Nextcloud Server 35 WebDAV chunking docs",
+    "url": "https://docs.nextcloud.com/server/35/developer_manual/client_apis/WebDAV/chunking.html",
+    "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+    "commit": null,
+    "locators": [
+      "WebDAV chunking v1/v2 sections: server assembles numbered chunks; v2 constraints and total length/quota semantics"
+    ],
+    "id": "R11",
+    "accessed_at_utc": "2026-10-07T20:38:43.827179+00:00",
+    "final_url": "https://docs.nextcloud.com/server/35/developer_manual/client_apis/WebDAV/chunking.html",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-chunking.html",
+    "bytes": 19374,
+    "sha256": "ffb919382e19d1e07364ac79c58564bec2698af195ae716d39bde1fbd79028d6",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon v6.0.2 commit page",
+    "url": "https://github.com/openseadragon/openseadragon/commit/7842cd92e6799d97c18227a79cb69af4f706b023",
+    "version_or_release": "OpenSeadragon v6.0.2 tag dereferences to commit 7842cd92e6799d97c18227a79cb69af4f706b023",
+    "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+    "locators": [
+      "Commit page identity; public git ls-remote refs/tags/v6.0.2 returned tag object ad68b05bb6f82935217fdc6794ca39eed3ce1df7 peeling to 7842cd92e6799d97c18227a79cb69af4f706b023"
+    ],
+    "id": "R12",
+    "accessed_at_utc": "2026-10-07T20:38:43.872655+00:00",
+    "final_url": "https://github.com/openseadragon/openseadragon/commit/7842cd92e6799d97c18227a79cb69af4f706b023",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-v6.0.2-commit.html",
+    "bytes": 313515,
+    "sha256": "98988cc9f660afe49c5ec3a0953851377553e9b4b111075feeb7367827007700",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon Viewer implementation v6.0.2",
+    "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewer.js",
+    "version_or_release": "OpenSeadragon v6.0.2",
+    "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+    "locators": [
+      "src/viewer.js lines 1947-1958: processReadyItems callback payload includes item: tiledImage after PR #2874"
+    ],
+    "id": "R13",
+    "accessed_at_utc": "2026-10-07T20:38:43.893182+00:00",
+    "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewer.js",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-viewer.js",
+    "bytes": 181325,
+    "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon Viewport implementation v6.0.2",
+    "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewport.js",
+    "version_or_release": "OpenSeadragon v6.0.2",
+    "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+    "locators": [
+      "src/viewport.js:1338-1348 pointFromPixel current state; 1360-1394 global/per-image conversion and clipping"
+    ],
+    "id": "R14",
+    "accessed_at_utc": "2026-10-07T20:38:43.952538+00:00",
+    "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewport.js",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-viewport.js",
+    "bytes": 70542,
+    "sha256": "f6d284f5e0845fff040b46fb9f11c5e656071b87a689bd1bdfa1d0ae89f6d12c",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon TiledImage implementation v6.0.2",
+    "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/tiledimage.js",
+    "version_or_release": "OpenSeadragon v6.0.2",
+    "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+    "locators": [
+      "src/tiledimage.js:564-595 inverse conversion drops current for scale; 599-630 forward passes current; 703-705 helper loses TiledImage current; 824-830,1388-1408 animated scale; 1932-1943 current scale used to position tiles"
+    ],
+    "id": "R15",
+    "accessed_at_utc": "2026-10-07T20:38:43.986524+00:00",
+    "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/tiledimage.js",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tiledimage.js",
+    "bytes": 102982,
+    "sha256": "ea57535dd89c54712f22c95a173e2dbdb80f65ef6b614c3a2ec71cf7b3e1b903",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon issue #2873",
+    "url": "https://github.com/openseadragon/openseadragon/issues/2873",
+    "version_or_release": "Opened 2026-02-18; issue page state at access",
+    "commit": null,
+    "locators": [
+      "Issue body/reproduction: OpenSeadragon 6 concurrent addTiledImage callbacks could receive wrong event.item; reporter says reproducible on 6.0 and not 5.0.1"
+    ],
+    "id": "R16",
+    "accessed_at_utc": "2026-10-07T20:38:44.047398+00:00",
+    "final_url": "https://github.com/openseadragon/openseadragon/issues/2873",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-issue-2873.html",
+    "bytes": 267981,
+    "sha256": "e6af965f224be03118376abb1336cad282471e401fcac62198b8de66e88e821b",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon PR #2874",
+    "url": "https://github.com/openseadragon/openseadragon/pull/2874",
+    "version_or_release": "Merged 2026-02-20; merge commit b974dc1db594420826e7f87e0b099135ad29429d",
+    "commit": "b974dc1db594420826e7f87e0b099135ad29429d",
+    "locators": [
+      "PR2874 merge b974dc1db594420826e7f87e0b099135ad29429d; Copilot review comment requesting a regression test; not independent proof of entire test suite absence"
+    ],
+    "id": "R17",
+    "accessed_at_utc": "2026-10-07T20:38:44.065144+00:00",
+    "final_url": "https://github.com/openseadragon/openseadragon/pull/2874",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-2874.html",
+    "bytes": 400668,
+    "sha256": "69162cc1cb28ddd0553182aaad229792c63fa11bcbedc09c4c7cf9d486482299",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon v6.0.1 release notes",
+    "url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.0.1",
+    "version_or_release": "OpenSeadragon v6.0.1 release entry",
+    "commit": null,
+    "locators": [
+      "Release entry: v6.0.1 lists fix #2874 for multi-image loading"
+    ],
+    "id": "R18",
+    "accessed_at_utc": "2026-10-07T20:38:44.089536+00:00",
+    "final_url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.0.1",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-release-v6.0.1.html",
+    "bytes": 197546,
+    "sha256": "6fb9720382e835e54c14d744c5e962c4c5f5b3ba3aee5740191f850b4e9b0d92",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon issue #2925",
+    "url": "https://github.com/openseadragon/openseadragon/issues/2925",
+    "version_or_release": "Opened 2026-05-15; issue state at access",
+    "commit": null,
+    "locators": [
+      "issue2925 body reporter OSD6.0.2 and slow IIIF dynamic add path; embedded timeline comments, also captured separately as R41"
+    ],
+    "id": "R19",
+    "accessed_at_utc": "2026-10-07T20:38:44.283554+00:00",
+    "final_url": "https://github.com/openseadragon/openseadragon/issues/2925",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-issue-2925.html",
+    "bytes": 259467,
+    "sha256": "654aa0394fa01854fcb7d577d2458e9f46cdfc05adabedf6efb6b5edf0c89de9",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "JS9 project repository page",
+    "url": "https://github.com/ericmandel/js9",
+    "version_or_release": "Official repository archived 2024-12-31; v3.9.0 release 2024-12-13",
+    "commit": null,
+    "locators": [
+      "README: FITS, image regions, WCS-related domain capabilities; release v3.9.0 on 2024-12-13, archive on 2024-12-31, and explicit no-maintainer warning"
+    ],
+    "id": "R20",
+    "accessed_at_utc": "2026-10-07T20:38:44.403098+00:00",
+    "final_url": "https://github.com/ericmandel/js9",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/js9-repository.html",
+    "bytes": 415096,
+    "sha256": "ecc71fcd68bac4e3cfb71162683ebfafee815911ea237a13566e3c4e4ed99f1e",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "OpenSeadragon PR #2874 patch",
+    "url": "https://github.com/openseadragon/openseadragon/pull/2874.diff",
+    "version_or_release": "PR #2874 merged as b974dc1db594420826e7f87e0b099135ad29429d",
+    "commit": "b974dc1db594420826e7f87e0b099135ad29429d",
+    "locators": [
+      "Patch contains one viewer.js callback change and no test-file changes"
+    ],
+    "id": "R21",
+    "accessed_at_utc": "2026-10-07T20:38:44.482822+00:00",
+    "final_url": "https://patch-diff.githubusercontent.com/raw/openseadragon/openseadragon/pull/2874.diff",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-2874.diff",
+    "bytes": 571,
+    "sha256": "8537b7b2d8ae53f8d7df5c0dd2ae0fa19420e389f717c804c23d2e75c786850b",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "title": "Nextcloud Server 35 file-sharing administration manual",
+    "url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/file_sharing_configuration.html",
+    "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+    "commit": null,
+    "locators": [
+      "File Drop Shares require public uploads; unauthenticated uploads are not chunked; group/share options and shared-file ownership note"
+    ],
+    "id": "R22",
+    "accessed_at_utc": "2026-10-07T20:38:44.756644+00:00",
+    "final_url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/file_sharing_configuration.html",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-sharing.html",
+    "bytes": 36258,
+    "sha256": "f108da2b205df5299163220cddee9a520f25b92a9661e89f768c254f7e7e8d1a",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R23",
+    "title": "CouchDB replication/conflicts",
+    "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+    "version_or_release": "3.5 documentation",
+    "commit": null,
+    "locators": [
+      "2.3.2 conflict avoidance; 2.3.3 revision tree; 2.3.7 history/compaction"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:44.817090+00:00",
+    "final_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/couchdb-conflicts.html",
+    "bytes": 79028,
+    "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R24",
+    "title": "SQLite atomic commit",
+    "url": "https://www.sqlite.org/atomiccommit.html",
+    "version_or_release": "official documentation at access",
+    "commit": null,
+    "locators": [
+      "1 rollback-mode applicability; 3 single-file commit; 9 limitations"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:44.835990+00:00",
+    "final_url": "https://www.sqlite.org/atomiccommit.html",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/sqlite-atomiccommit.html",
+    "bytes": 77968,
+    "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R25",
+    "title": "RO-Crate introduction",
+    "url": "https://www.researchobject.org/ro-crate/specification/1.1/introduction.html",
+    "version_or_release": "RO-Crate 1.1",
+    "commit": null,
+    "locators": [
+      "Introduction: context and files; structured metadata"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:44.891239+00:00",
+    "final_url": "https://www.researchobject.org/ro-crate/specification/1.1/introduction.html",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/ro-crate-1.1.html",
+    "bytes": 23683,
+    "sha256": "9b21c7a5692f15375d6795fed3b978e4b9b1d8b71b73810079a77b4e7f55c421",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R26",
+    "title": "AstroLog official roadmap",
+    "url": "https://astro-log.app/",
+    "version_or_release": "official project page at access",
+    "commit": null,
+    "locators": [
+      "Roadmap; beta/current versus future"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:44.907703+00:00",
+    "final_url": "https://astro-log.app/",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/astrolog.html",
+    "bytes": 67242,
+    "sha256": "70e3c51135e1a496ac2b0ea4e4d414db1e56a65d8a6d8c90da07f6efd8ef8d65",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R27",
+    "title": "OpenSeadragon v6.0.2 tag identity",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.0.2",
+    "version_or_release": "v6.0.2",
+    "commit": null,
+    "locators": [
+      "object SHA tag object"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:44.915805+00:00",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.0.2",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tag-ref.json",
+    "bytes": 353,
+    "sha256": "eb3c5c4439ac3be70f5bbeef274d94f362e3d76c05489c345fcdebcc71ac9b9a",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R28",
+    "title": "OpenSeadragon PR 2874 metadata",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2874",
+    "version_or_release": "PR 2874",
+    "commit": null,
+    "locators": [
+      "merge_commit_sha; merged_at; body"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:44.974272+00:00",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2874",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-api.json",
+    "bytes": 17967,
+    "sha256": "58901f103ca790e1e1bf5a1d6442588f438c995c300f4e8ba05e1eb11d94d966",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R29",
+    "title": "OpenSeadragon issue 2873 metadata",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2873",
+    "version_or_release": "issue 2873",
+    "commit": null,
+    "locators": [
+      "body and status"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:44.998752+00:00",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2873",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-issue-api.json",
+    "bytes": 6869,
+    "sha256": "ab55731382a2de74c55d2572b16fa6cf1742045a80d54452095d546d6cb72b5b",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R30",
+    "title": "OpenSeadragon PR 2874 discussion",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2874/comments",
+    "version_or_release": "PR 2874 comments",
+    "commit": null,
+    "locators": [
+      "regression-test request"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:45.054576+00:00",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2874/comments",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-comments.json",
+    "bytes": 1622,
+    "sha256": "889e2c3c2e3330b4c75e5f8d400a568accccbd1544929aeed7ad36c968e48b00",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R31",
+    "title": "OpenSeadragon release 6.0.1 metadata",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.0.1",
+    "version_or_release": "v6.0.1",
+    "commit": null,
+    "locators": [
+      "release body and target identity"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:45.100588+00:00",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.0.1",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-release-api.json",
+    "bytes": 5131,
+    "sha256": "f0b0b4ef3b3b8b2e02d56007146d0346931c3374e6ae672d91c905a919cb1c35",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R32",
+    "title": "Nextcloud large-file upload docs",
+    "url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/big_file_upload_configuration.html",
+    "version_or_release": "Server 35 docs",
+    "commit": null,
+    "locators": [
+      "default limit; web/PHP constraints"
+    ],
+    "accessed_at_utc": "2026-10-07T20:38:45.155673+00:00",
+    "final_url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/big_file_upload_configuration.html",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-biguploads.html",
+    "bytes": 33835,
+    "sha256": "b0377f5f25962e0f45d1020b274ba18860b5abeb1df46e0bcaedb11e6cc30f28",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R33",
+    "title": "OpenSeadragon annotated v6.0.2 tag object",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/ad68b05bb6f82935217fdc6794ca39eed3ce1df7",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/ad68b05bb6f82935217fdc6794ca39eed3ce1df7",
+    "accessed_at_utc": "2026-10-07T20:39:05.162743+00:00",
+    "http_status": 200,
+    "version_or_release": "v6.0.2",
+    "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+    "locators": [
+      "object.sha; tag; tagger"
+    ],
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tag-object.json",
+    "bytes": 671,
+    "sha256": "753f4628dd2de8601bfefadedf28ea5e41807f5b84179689486ec815eddcccd4",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R34",
+    "title": "OpenSeadragon history for inverse coordinates",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/commits?path=src/tiledimage.js&per_page=100",
+    "version_or_release": "path history at access",
+    "locators": [
+      "Latest 100 commits for src/tiledimage.js, bounded message scan; not complete history or proof no fix exists"
+    ],
+    "accessed_at_utc": "2026-10-07T20:40:55.542548+00:00",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/commits?path=src/tiledimage.js&per_page=100",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tiledimage-history.json",
+    "bytes": 340419,
+    "sha256": "69f4ed94f823c855ad3807bb03d11b0a0c984c2e8cb8a10dd0ef3a8def721602",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R35",
+    "title": "OpenSeadragon code/test maintenance PR 2958",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2958",
+    "version_or_release": "PR 2958",
+    "locators": [
+      "PR2958 metadata/body: tile-source/control coverage; unrelated to inverse current-scale defect"
+    ],
+    "accessed_at_utc": "2026-10-07T20:40:55.544451+00:00",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2958",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-2958.json",
+    "bytes": 18469,
+    "sha256": "a3b92e6c3d7b03f1266304070ec49f54d1dee7a569b50696298f4b930df62539",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R36",
+    "title": "OpenSeadragon PR 2958 patch",
+    "url": "https://github.com/openseadragon/openseadragon/pull/2958.diff",
+    "version_or_release": "PR 2958",
+    "locators": [
+      "PR2958 diff has no viewportToImageCoordinates/_viewportToImageDelta match; no applicability asserted"
+    ],
+    "accessed_at_utc": "2026-10-07T20:40:55.545846+00:00",
+    "final_url": "https://patch-diff.githubusercontent.com/raw/openseadragon/openseadragon/pull/2958.diff",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-2958.diff",
+    "bytes": 37345,
+    "sha256": "272ddc8f55cd74e7336bf8281332e957387514bb4fcd15ca4f04a3d64988561e",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R37",
+    "title": "OpenSeadragon exact 6.0.2 changelog",
+    "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/changelog.txt",
+    "version_or_release": "v6.0.2 commit 7842cd92e6799d97c18227a79cb69af4f706b023",
+    "locators": [
+      "6.0.2; 6.0.1; 6.0.0 entries"
+    ],
+    "accessed_at_utc": "2026-10-07T20:40:55.547365+00:00",
+    "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/changelog.txt",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-changelog-v6.0.2.txt",
+    "bytes": 60080,
+    "sha256": "7df4a37a7460f8e28766f58705946a86459d309a47753e60923c129c1330e89e",
+    "capture_integrity_rechecked": true,
+    "commit": "7842cd92e6799d97c18227a79cb69af4f706b023"
+  },
+  {
+    "id": "R38",
+    "title": "OpenSeadragon v6.0.2 repository tree",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/git/trees/7842cd92e6799d97c18227a79cb69af4f706b023?recursive=1",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/git/trees/7842cd92e6799d97c18227a79cb69af4f706b023?recursive=1",
+    "accessed_at_utc": "2026-10-07T20:41:27.575889+00:00",
+    "http_status": 200,
+    "version_or_release": "v6.0.2",
+    "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+    "locators": [
+      "Pinned repository tree, truncated=false; test/modules/tiledimage.js path discovery"
+    ],
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tree-v6.0.2.json",
+    "bytes": 310770,
+    "sha256": "810bd5e87e15aefb4bf52652e0255cf50a76effb7d5f336be4d84774724d5dc5",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R39",
+    "title": "OpenSeadragon pinned TiledImage tests",
+    "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/test/modules/tiledimage.js",
+    "version_or_release": "v6.0.2",
+    "locators": [
+      "test/modules/tiledimage.js:56-61 conversion checks use default/target state; 108-126 animation test checks current bounds after setWidth, not inverse conversion at unequal scales"
+    ],
+    "accessed_at_utc": "2026-10-07T20:41:51.276867+00:00",
+    "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/test/modules/tiledimage.js",
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-test-tiledimage.js",
+    "bytes": 29169,
+    "sha256": "823f6a583b78fb34348206d1c54bf86672e71f15f3f104c6c266629c51e1fb0c",
+    "capture_integrity_rechecked": true,
+    "commit": "7842cd92e6799d97c18227a79cb69af4f706b023"
+  },
+  {
+    "id": "R40",
+    "title": "OpenSeadragon coordinate/current issue search",
+    "url": "https://api.github.com/search/issues?q=repo%3Aopenseadragon%2Fopenseadragon%20viewportToImageCoordinates%20current",
+    "version_or_release": "public issue index at access",
+    "locators": [
+      "8 issue/PR results; bodies for #1360, #2485, #2593 describe different mapping usage questions; not matched to inverse current-scale defect"
+    ],
+    "accessed_at_utc": "2026-10-07T20:41:51.279696+00:00",
+    "final_url": "https://api.github.com/search/issues?q=repo%3Aopenseadragon%2Fopenseadragon%20viewportToImageCoordinates%20current",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-current-issue-search.json",
+    "bytes": 33120,
+    "sha256": "cea27af2b0f98bf55dda380a96949a83a155563a48399cca688e7ef7ff48880d",
+    "capture_integrity_rechecked": true
+  },
+  {
+    "id": "R41",
+    "title": "OpenSeadragon issue 2925 discussion",
+    "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2925/comments",
+    "final_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2925/comments",
+    "accessed_at_utc": "2026-10-07T20:44:09.781466+00:00",
+    "http_status": 200,
+    "version_or_release": "report on v6.0.2; discussion at access",
+    "commit": null,
+    "locators": [
+      "issuecomment-4466229134 and -4466272374: reporter WebGL texture error and Canvas workaround on Mac browsers; -4480273108 asks CORS/fallback versus WebGL path question"
+    ],
+    "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-issue-2925-comments.json",
+    "bytes": 12832,
+    "sha256": "0b9c596d55f8eb5f890d0bf5770356817392d2f35c49bd47cfdbe3d3d4aae386",
+    "capture_integrity_rechecked": true
+  }
+]

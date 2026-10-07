@@ -1,0 +1,377 @@
+{
+  "record_at": "2026-10-07T20:41:45.477166+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/artifact.md": {
+      "sha256": "addea6f450af3cba67a5dbb5c3403cfaf7b5d525609a20faee7b83e74ff33e7a",
+      "bytes": 28034
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/source-map.json": {
+      "sha256": "8b5bbf091a0a07656fa7fefeaa9a607068068e68ec14465a512716818ab02d2f",
+      "bytes": 48340
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/FragmentSelector.ts": {
+      "sha256": "3fd0e36710117c7f54e49b05815d5dcb33a28869558ea31e297c236deb920743",
+      "bytes": 2222
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/ImageAnnotation.ts": {
+      "sha256": "5494cfc92d34ae61014df0bf3cf2fdf5d7a52a12955cd8c760fa8106733bff6f",
+      "bytes": 678
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/Polygon.ts": {
+      "sha256": "62eaef9dbc97fad4b313e9e8d7129a3b47d9161b39d487ea6b57bef5be0d9875",
+      "bytes": 241
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/Rectangle.ts": {
+      "sha256": "eb150552265cbe02de825e35d314ae2f5102aa3e9f22277a0afe3a444b64955b",
+      "bytes": 287
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/RubberbandPolygon.svelte": {
+      "sha256": "82fec9f9373cb6fee445a91405b567aaf9b3c6531d4d378db51b27b5138d6b62",
+      "bytes": 5905
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/RubberbandRectangle.svelte": {
+      "sha256": "b1d2dd1e32c4cf270e754b92965f0c6138ca1a6cb801b41beae9adddf9137624",
+      "bytes": 4334
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/SVGSelector.ts": {
+      "sha256": "a472e46ef5fed54c9753ae3e148713b9a6b54d13829293f3eb7bd19c61b2045c",
+      "bytes": 8537
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/Shape.ts": {
+      "sha256": "ebe46b6360fb86a7ae12f6df0e5d085ce90f8310c64bb1325719a3637eebcf28",
+      "bytes": 485
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/W3CImageFormatAdapter.ts": {
+      "sha256": "43cff3bea76f044d8bfba118c932ff192fc24b7d346f296857b69ce8f34c6d87",
+      "bytes": 4814
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/drawingToolsRegistry.ts": {
+      "sha256": "c3ff2ea382f4b6a781d0ee9935116fde30f81e034f3e09b7e20538bb2a92aaf3",
+      "bytes": 836
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/polygon-index.ts": {
+      "sha256": "9350d4a7c2e6763bd224afd75f28e1b765b23bf917ae4a46a4877ba8809612ee",
+      "bytes": 74
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/polygonUtils.ts": {
+      "sha256": "4b33c6cd5035464b2e5df21582de319c71ca955b3cf81540bc9a29ded3122fe6",
+      "bytes": 987
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/rectangle-index.ts": {
+      "sha256": "4f87b548b5950ec2a362f2bdbe0e4930e23e4a0da1af96cc4bec9cb14cb3c7e4",
+      "bytes": 78
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4-code/rectangleUtils.ts": {
+      "sha256": "7e4e29fc232eb97a683aa83dabe0b848935c1aa3374875a1a22c19e598fee531",
+      "bytes": 1306
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4.tgz": {
+      "sha256": "1a4cf3228e3ecafa4f05538a909756fa173c2b6fb17b974bad9e11e9a46d90ff",
+      "bytes": 363515
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-latest.json": {
+      "sha256": "3916e8a37507e0e471dc46ab06fe837a2081de93c6a2dd4cb539fa22b17c70a7",
+      "bytes": 2432
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-home.html": {
+      "sha256": "056264beb11864bbd5ee5f28ec7430febe844cd004e5faf558b03cba078bac19",
+      "bytes": 28265
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-issue-599.html": {
+      "sha256": "7535cbc724701e552e50703a32689b6e1bf081ab2c5aac068037204e722dab44",
+      "bytes": 301997
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-issue-603.html": {
+      "sha256": "265c559ae23994a94b124c89797c4ae05478dac1249d7470b3e177a2f7f66392",
+      "bytes": 333244
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4-README.md": {
+      "sha256": "91a6f03c64508e9cdc57f8b45aba91f9033683173d03586db961b48ab4e0de80",
+      "bytes": 1068
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4-code/src__Annotorious.ts": {
+      "sha256": "c2dc5c66467619bcff2a98197483ed910bc5eea6b7d3a515af5129ca1e09edcd",
+      "bytes": 8804
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4-code/src__annotation__svg__OSDLayer.svelte": {
+      "sha256": "3c0f0d23c25a4d139f31e860c079bbf71a3b5750f0c06ec93837848d402c36ae",
+      "bytes": 1252
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4-code/src__annotation__svg__drawing__OSDToolMount.svelte": {
+      "sha256": "a97ffbb32c43789d41656e4f391fa8805740045b43aaf1cd84bb25d29e3c49bf",
+      "bytes": 2530
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4-code/src__annotation__svg__drawing__SVGDrawingLayer.svelte": {
+      "sha256": "a160702095166c52b34df650d1b3d5f5942f2e06b80b68e6d3a8f37bff09e55f",
+      "bytes": 10330
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4-code/src__utils__viewerCoordinates.ts": {
+      "sha256": "cafcf3dcf55267896025bc898f0222c90ed7e5cfce27c71d4436835003d4ad02",
+      "bytes": 1840
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4.es.js.map": {
+      "sha256": "7a937b40d051e2344c64f402953a91639129d88ee438b26c54bae6dc3fe28f26",
+      "bytes": 2734022
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4.tgz": {
+      "sha256": "74169a03e28c814ea21c39c3493e3430a93a096f745dc5bc4c4a51114855e0f6",
+      "bytes": 1793815
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-latest.json": {
+      "sha256": "14c2848fd515c2ebf558b560f0a0d53e7b01c339bf02eebda24bdd295d29e018",
+      "bytes": 2638
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-react-latest.json": {
+      "sha256": "dd371a15dd22eaead57edbe50aa27548b09d6e2b91779c7e0782a53a90efe263",
+      "bytes": 2439
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-v3.4.0-release.json": {
+      "sha256": "b951ceda206c32ef33fbcdc3bc799472792ac51b839cdf99972f63da537d5778",
+      "bytes": 2304
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/iiif-cookbook-annotations-0269.html": {
+      "sha256": "6dd37af92e8270670f34993a0c18588fe7d57526db731ed963435f4755d74261",
+      "bytes": 20973
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/iiif-cookbook-matrix.html": {
+      "sha256": "92f0add99331eb8ec25431b0cb9ac09ab8cf641d7ccc3a7fc9137fa8fd01688a",
+      "bytes": 322052
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/iiif-cookbook-polygon-0261.html": {
+      "sha256": "a9fc8be5f00bd0f6e9d2fb7465814deea4e1bddce49eef183557fdce227afb9c",
+      "bytes": 20600
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/iiif-cookbook-region-0299.html": {
+      "sha256": "e425f46ea5e7cd09fd9cec2ea29afecd3d884c6dc523a46a6f70634a952605ca",
+      "bytes": 20760
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/iiif-cookbook-simple-annotation.html": {
+      "sha256": "8499e908ae1e18023e71d5a5fd4b9e123d2eb4a9a932b1c9f2056c8b864794b3",
+      "bytes": 28743
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/iiif-image-3.0.html": {
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "bytes": 145643
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/iiif-presentation-3.0.html": {
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "bytes": 385826
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/iiif-using-resources-guide.html": {
+      "sha256": "61bff02c6ce5d45c4533d8035c3b112562d0a511616b1fee8f40b14e20139216",
+      "bytes": 24841
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/mirador-home.html": {
+      "sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "bytes": 7133
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/mirador-repo.html": {
+      "sha256": "24075189fd9615b1f7892bc4480ea2007b236a080ce9d560501fc9393f95d886",
+      "bytes": 357244
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-6.0.2-commit-iiiftilesource.js": {
+      "sha256": "08d7416a852597d4e85d21fa011cf22d7e75224a67c4f375997483e74ed36b1b",
+      "bytes": 25035
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-6.0.2-commit-overlay.js": {
+      "sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "bytes": 20632
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-6.0.2-commit-overlays-test.js": {
+      "sha256": "2a453f26fc84a0ca41db8c2edb87993bdd639599abddfd89035ec1984a5b94c7",
+      "bytes": 49593
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-6.0.2-commit-viewer.js": {
+      "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e",
+      "bytes": 181325
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-6.0.2-iiiftilesource.js": {
+      "sha256": "08d7416a852597d4e85d21fa011cf22d7e75224a67c4f375997483e74ed36b1b",
+      "bytes": 25035
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-6.0.2-overlay.js": {
+      "sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "bytes": 20632
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-6.0.2-overlays-test.js": {
+      "sha256": "2a453f26fc84a0ca41db8c2edb87993bdd639599abddfd89035ec1984a5b94c7",
+      "bytes": 49593
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-6.0.2-viewer.js": {
+      "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e",
+      "bytes": 181325
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-issue-1861.json": {
+      "sha256": "d451327630a2ab0e71b66df2467072e31831d7c10da86d27679caf8ae855da9d",
+      "bytes": 4771
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-issue-774.json": {
+      "sha256": "1971ea3ae492d955b223a41b6ea458918a07af0a3be109660d969bfcdf3f294f",
+      "bytes": 5266
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-pr-1865-files.json": {
+      "sha256": "bc15e1372ee452710db516b59305617f08b0ab75d43455e21bc79a60b235ef07",
+      "bytes": 922
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-pr-1865-review-comments.json": {
+      "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d",
+      "bytes": 5
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-pr-1865.html": {
+      "sha256": "8ff40dac923a645e09c9c6f7897eeea4fc71b937dfa6c631aa1fa1ab697530cf",
+      "bytes": 340572
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-pr-1865.json": {
+      "sha256": "a58662254e469573787a8054cbdd8d12c78c11dad70257eb31bf4b4a5bbf9c09",
+      "bytes": 20754
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-pr-1865.patch": {
+      "sha256": "8c174eb83c0c5f26791ec9b9ab6f7427a337c63e29e2ff8025c3368807492538",
+      "bytes": 760
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-release-v3.0.0.html": {
+      "sha256": "65ec52517625f064b2b909f20629dfbb80c5c0c1247dd6ae223d86221a091c97",
+      "bytes": 252365
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-release-v3.0.0.json": {
+      "sha256": "0d81a21468aceae1f2ea0fd80a05342ac058e03ba36534c98b769731e302547c",
+      "bytes": 12008
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-release-v6.0.2.html": {
+      "sha256": "1abcf871cab8f48f1ad0b9c22c1708eacc847f24eda24b00a5eb691828fd7db9",
+      "bytes": 200133
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-release-v6.0.2.json": {
+      "sha256": "050c1124d8955de7f11a5dcea373fcbfa40a6587a78a040660dfdea58e15b240",
+      "bytes": 6207
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-tag-object-v6.0.2.json": {
+      "sha256": "8c986c32f6d599873ad7866f78b2c204eb4d660009ac2aed2d4bea652205cad8",
+      "bytes": 780
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/osd-tag-v6.0.2.json": {
+      "sha256": "fb4dacc3038e964f6b60ba22c09d14e28fee2ff0d74a2fb64fdc0f78169259d4",
+      "bytes": 392
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/rfc9110.html": {
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "bytes": 1187554
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/w3c-web-annotation-model.html": {
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "bytes": 284185
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-control-research-v2:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:22:26.176Z",
+    "startedAt": "2026-10-07T20:22:26.691Z",
+    "completedAt": "2026-10-07T20:41:16.633Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-02/control/research-v2",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-02--control--research-v2--d4a97e50dcdffc4f.json",
+    "sha256": "d4a97e50dcdffc4f377263faa914fcbaba1741b1b5dd43ff1c6a6b67a829da9d",
+    "bytes": 10873,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "2e5a8b302d089496f6f88eb89091de6cfd528b230d6f825c06dfb2e8930912a7",
+      "status": "complete",
+      "tokensUsed": 465796,
+      "tokenBudget": null,
+      "timeUsedSeconds": 1105
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-02-control-research-v2%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a11808-18fa-7b00-a9fd-303b887535eb",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:41:16.459Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-02-control-research-v2%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:41:16.459Z",
+        "sha256": "6d26316723435abf2c4b4d3926ebd16cb0beea364d31d3515f9c639fb064eeed"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": null,
+  "native_terminal": null,
+  "same_identity": false,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": null,
+  "native_elapsed_seconds": null,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "research",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-METHOD-02-control-research-v2",
+    "record_at": "2026-10-07T20:21:51.048108+00:00",
+    "stage_allowance_seconds": 1500,
+    "prospective_arm_deadline": "2026-10-07T21:20:48+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:45:48+00:00",
+    "deadline_rule": "stage activation<=allocation AND wholedeadline preserves1200final forcritic; totaloccupied<=3600; no reset",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "version": "v2",
+    "earlier_conservative_host_preparation_bound": "2026-10-07T20:20:48+00:00",
+    "linked_prospective_clock_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-v2-prospective-clock-annotation.json"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "pm.er10.timings.v1",
+  "job": "D-M15-A/treatment/fresh_object_scout-v3",
+  "common_T0": "2026-10-07T20:31:30.755788+00:00",
+  "frozen_stage_latest_absolute_deadline": "2026-10-07T21:51:30.755788+00:00",
+  "prospective_admission_at": "2026-10-07T20:49:58.323108+00:00",
+  "effective_stage_deadline": "2026-10-07T21:09:58.323108+00:00",
+  "effective_deadline_rule": "min(prospective_admission + 20min, frozen latest absolute, common pair deadline 2026-10-07T22:11:30.755788+00:00) = 2026-10-07T21:09:58.323108+00:00; no reset",
+  "ledger_opened_at": "2026-10-07T20:52:30Z",
+  "source_ops": [
+    {
+      "op": "transport-side discovery + capture",
+      "at": "2026-10-07T20:53:55Z..20:56:30Z",
+      "detail": "WebFetch read rfc9110.txt, tus protocol.md master, AWS UploadPart docs; curl raw capture of all three; locators grep-verified on captured bytes"
+    },
+    {
+      "op": "local-object-side discovery + capture",
+      "at": "2026-10-07T20:57:48Z..20:59:15Z",
+      "detail": "WebFetch read sqlite atomiccommit, Pro Git Git-Objects, rename(2); curl raw capture of all three; locators grep-verified"
+    },
+    {
+      "op": "report authoring",
+      "at": "2026-10-07T21:00:30Z..21:01:49Z",
+      "detail": "report.md written from six captured sources; locators grep-verified; no new fetches"
+    }
+  ],
+  "captures": [
+    {
+      "file": "sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "at": "2026-10-07T20:55:12+00:00"
+    },
+    {
+      "file": "sources/tus-protocol-1.0.0.md",
+      "sha256": "dfc82027d295c80c3ff799f8f6944115e6fb383373a0b41d0eec296200535bb6",
+      "at": "2026-10-07T20:55:12+00:00"
+    },
+    {
+      "file": "sources/aws-s3-uploadpart.html",
+      "sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "at": "2026-10-07T20:55:12+00:00"
+    },
+    {
+      "file": "sources/rename2-manpage.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "at": "2026-10-07T20:58:30+00:00"
+    },
+    {
+      "file": "sources/sqlite-atomiccommit.html",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "at": "2026-10-07T20:58:30+00:00"
+    },
+    {
+      "file": "sources/git-objects-chapter.html",
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "at": "2026-10-07T20:58:30+00:00"
+    }
+  ],
+  "first_useful_saved_finding": "2026-10-07T20:56:00Z tus PATCH offset-mismatch 409 + S3 same-part-number overwrite verified in captured bytes (transport+identity overlap seed)",
+  "output": {
+    "file": "report.md",
+    "written_at": "2026-10-07T21:01:49Z",
+    "words": 1082,
+    "material_findings": 8
+  },
+  "known_usage": null,
+  "unknown_input": null,
+  "cache": null,
+  "generated": null,
+  "billing": null,
+  "native_counters": {
+    "goal_loop_dispatch_rounds": 4,
+    "webfetch_calls": 6,
+    "curl_captures": 6,
+    "model_turns": null,
+    "provider_counters": "not directly observable from agent side; left null rather than estimated"
+  }
+}

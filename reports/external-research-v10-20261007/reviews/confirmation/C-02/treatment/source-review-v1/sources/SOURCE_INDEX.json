@@ -1,0 +1,822 @@
+{
+  "schema": "pm.source6.primary-captures.v1",
+  "sources": [
+    {
+      "id": "R01",
+      "url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "version": "W3C Recommendation 2017-02-23",
+      "commit": null,
+      "locator": "\u00a71.1 model and protocol boundary; \u00a73 bodies/targets and lifecycle; \u00a74.2.1 Fragment Selector; \u00a72 metadata hints for external resources",
+      "candidate_ref": "critic-v1/S01",
+      "file": "w3c-annotation-model.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.083348+00:00",
+      "status": 200,
+      "resolved_url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/w3c-annotation-model.html",
+      "bytes": 284185,
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "last-modified": "Wed, 22 Feb 2017 08:03:33 GMT"
+      }
+    },
+    {
+      "id": "R02",
+      "url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "version": "W3C Recommendation 2012-09-25",
+      "commit": null,
+      "locator": "\u00a74.2.2 xywh: integer x,y,width,height; pixel default; origin top-left; percent relative to original media dimensions; \u00a76.3 source-resolution validation boundary",
+      "candidate_ref": "critic-v1/S02",
+      "file": "w3c-media-fragments.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.085361+00:00",
+      "status": 200,
+      "resolved_url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/w3c-media-fragments.html",
+      "bytes": 89887,
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "last-modified": "Wed, 20 Mar 2019 17:12:22 GMT"
+      }
+    },
+    {
+      "id": "R03",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110, June 2022",
+      "commit": null,
+      "locator": "\u00a78.8.3.2 strong entity-tag comparison; \u00a713.1.1 If-Match; \u00a713.2 precondition evaluation and allowed failure response",
+      "candidate_ref": "critic-v1/S03",
+      "file": "rfc9110.txt",
+      "accessed_at_utc": "2026-10-07T20:37:56.086558+00:00",
+      "status": 200,
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/rfc9110.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "response_headers": {
+        "Content-Type": "text/plain;charset=utf-8",
+        "ETag": "W/\"7c9fc097e78bd883e559172c885e074c\""
+      }
+    },
+    {
+      "id": "R04",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493, October 2018; BagIt version 1.0",
+      "commit": null,
+      "locator": "\u00a7\u00a72.1.3, 2.4, 3, 6; payload manifests, complete vs valid bags, transfer format boundary (not MIME/TAR/ZIP)",
+      "candidate_ref": "critic-v1/S04",
+      "file": "rfc8493.txt",
+      "accessed_at_utc": "2026-10-07T20:37:56.087482+00:00",
+      "status": 200,
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/rfc8493.txt",
+      "bytes": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "response_headers": {
+        "Content-Type": "text/plain;charset=utf-8",
+        "ETag": "W/\"c7c65e09c2ddf1e7ea885562b49da2ee\""
+      }
+    },
+    {
+      "id": "R05",
+      "url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa.pdf",
+      "version": "FITS Standard 4.0; published 2016-07-22, latest minor update 2017-12-01",
+      "commit": null,
+      "locator": "\u00a73.3.2 array dimensions/order; \u00a73.4 extensions; DATE-OBS keyword semantics/time scale and start-of-observation assumption; TELESCOP/INSTRUME/OBJECT keywords",
+      "candidate_ref": "critic-v1/S05",
+      "file": "fits-standard40.pdf",
+      "accessed_at_utc": "2026-10-07T20:37:56.088481+00:00",
+      "status": 200,
+      "resolved_url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa.pdf",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/fits-standard40.pdf",
+      "bytes": 1087066,
+      "sha256": "4a5fbff1bf592ca9362a6e68e595f852ce8301c026a141f6e6ae28d4f33145e0",
+      "response_headers": {
+        "Last-Modified": "Tue, 05 Dec 2017 16:31:57 GMT",
+        "ETag": "\"2353e701-10965a-55f9a5fa70591\"",
+        "Content-Type": "application/pdf"
+      }
+    },
+    {
+      "id": "R06",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Vendor page captured 2026-10-07; documentation says WAL introduced in SQLite 3.7.0; no runtime version selected",
+      "commit": null,
+      "locator": "Concurrency limitations: all processes on one host; WAL unsupported over network filesystem; WAL/SHM and multi-database transaction boundaries",
+      "candidate_ref": "critic-v1/S06",
+      "file": "sqlite-wal.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.094084+00:00",
+      "status": 200,
+      "resolved_url": "https://www.sqlite.org/wal.html",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/sqlite-wal.html",
+      "bytes": 42143,
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "response_headers": {
+        "Last-Modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+        "ETag": "\"m6aa3e181sa49f\"",
+        "Content-type": "text/html; charset=utf-8"
+      }
+    },
+    {
+      "id": "R07",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version": "Stable docs alias captured 2026-10-07; page identifies CouchDB 3.5 documentation; used as option evidence, not a runtime selection",
+      "commit": null,
+      "locator": "\u00a72.3: same-node stale _rev returns 409; cross-database replicated edits retain conflict leaves; deterministic winner; application must inspect and resolve",
+      "candidate_ref": "critic-v1/S07",
+      "file": "couchdb-conflicts.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.181521+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/couchdb-conflicts.html",
+      "bytes": 79028,
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"95b445c6955552a93476bae521c1d426\"",
+        "Last-Modified": "Thu, 14 May 2026 20:50:51 GMT"
+      }
+    },
+    {
+      "id": "R08",
+      "url": "https://docs.couchdb.org/en/stable/replication/intro.html",
+      "version": "Stable docs alias captured 2026-10-07; page identifies CouchDB 3.5 documentation; used as option evidence, not a runtime selection",
+      "commit": null,
+      "locator": "Replication procedure and document transfer; source/target runs; PouchDB offline client relation",
+      "candidate_ref": "critic-v1/S08",
+      "file": "couchdb-replication-intro.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.205707+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.couchdb.org/en/stable/replication/intro.html",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/couchdb-replication-intro.html",
+      "bytes": 21613,
+      "sha256": "985a88b6c21b2fca9c1e5c9395badff8f363b5034a2e9eb8ce6652946ed30a3f",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"ec93958e9b4575c1e6ea1faa70833524\"",
+        "Last-Modified": "Thu, 14 May 2026 20:50:51 GMT"
+      }
+    },
+    {
+      "id": "R09",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "version": "Current project docs captured 2026-10-07; behavior cross-checked against @automerge/automerge 3.5.0 source",
+      "commit": null,
+      "locator": "Default deterministic property winner and getConflicts resolution; docs are not a version-pinned release specification",
+      "candidate_ref": "critic-v1/S09",
+      "file": "automerge-conflicts.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.253081+00:00",
+      "status": 200,
+      "resolved_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-conflicts.html",
+      "bytes": 16696,
+      "sha256": "29f685d69d6506f758b2fcdd8c2915491e353af5ed2af90cc9fe309c5e35cef8",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "last-modified": "Fri, 04 Sep 2026 18:44:49 GMT"
+      }
+    },
+    {
+      "id": "R10",
+      "url": "https://github.com/automerge/automerge/releases/tag/js/automerge-3.5.0",
+      "version": "@automerge/automerge 3.5.0; released 2026-09-16; commit 4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "Release notes: author metadata is opaque hex; fixes for list insertions, patches/rich text and performance; no issue-889 fix claimed",
+      "candidate_ref": "critic-v1/S10",
+      "file": "automerge-3.5.0-release.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.259632+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/automerge/automerge/releases/tag/js/automerge-3.5.0",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-release.html",
+      "bytes": 198943,
+      "sha256": "5df804b40c7abe5096eb300178d73ebabc1c1a8dc3633e4075838e0deb743215",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"78c60ae50458af5990ab095f5a6ef863\""
+      }
+    },
+    {
+      "id": "R11",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/conflicts.ts",
+      "version": "@automerge/automerge 3.5.0",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "conflictAt calls context.getAll and returns competing values indexed by operation ID; outside change callback object values are frozen plain values; inside callback proxies",
+      "candidate_ref": "critic-v1/S11",
+      "file": "automerge-3.5.0-conflicts.ts",
+      "accessed_at_utc": "2026-10-07T20:37:56.283956+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/conflicts.ts",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-conflicts.ts",
+      "bytes": 4051,
+      "sha256": "6abd56faa5a8ceca10c45ce360ce723efc108a47041253d02d4f71099265c136",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"77b4db106fa788dc3098f1b9a54050468260740fcd35c7a6a699368bae23afe9\""
+      }
+    },
+    {
+      "id": "R12",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/implementation.ts",
+      "version": "@automerge/automerge 3.5.0",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "lines 924-988: deterministic but arbitrary winner wording; getConflicts delegates to conflictAt for a document property",
+      "candidate_ref": "critic-v1/S12",
+      "file": "automerge-3.5.0-implementation.ts",
+      "accessed_at_utc": "2026-10-07T20:37:56.325274+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/implementation.ts",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-implementation.ts",
+      "bytes": 60381,
+      "sha256": "024ccf0c7615b11631552652c350dd5fed657577df2f67dfb8d911f12cf51074",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"0b42400e55f6763fdac9acb2f88ffb0741d7580918b5d0752b8146a86a4579db\""
+      }
+    },
+    {
+      "id": "R13",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/test/conflicts.ts",
+      "version": "@automerge/automerge 3.5.0",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "Tests for conflicting object replacement, getConflicts values, map/list conflict resolution and immutable values; inspected, not run",
+      "candidate_ref": "critic-v1/S13",
+      "file": "automerge-3.5.0-conflicts.test.ts",
+      "accessed_at_utc": "2026-10-07T20:37:56.379959+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/test/conflicts.ts",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-conflicts.test.ts",
+      "bytes": 4933,
+      "sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"e16af611651e593f4933dc0913db71365f1b6cb4e293fd0a3191566e865c0961\""
+      }
+    },
+    {
+      "id": "R14",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/package.json",
+      "version": "@automerge/automerge 3.5.0; MIT license",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "version, license, package entrypoints, test script; inspected, not installed or executed",
+      "candidate_ref": "critic-v1/S14",
+      "file": "automerge-3.5.0-package.json",
+      "accessed_at_utc": "2026-10-07T20:37:56.390710+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/package.json",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-3.5.0-package.json",
+      "bytes": 3249,
+      "sha256": "7a46879182bbaf8bdb51773c99bec5aa92764acb7904d97ed7c459a4cca35c66",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"a0031b61351dc37f6d61c5473c6fa22365fc6a7483aa9190cc20e46f75c53fd0\""
+      }
+    },
+    {
+      "id": "R15",
+      "url": "https://api.github.com/repos/automerge/automerge/issues/889",
+      "version": "Issue report names @automerge/automerge 2.1.11; API snapshot closed_at 2026-09-10; pull_request absent",
+      "commit": null,
+      "locator": "Report: redundant same-value assignment is not surfaced by getConflicts; no linked PR in API record; applicability to 3.5.0 not established",
+      "candidate_ref": "critic-v1/S15",
+      "file": "automerge-issue-889.json",
+      "accessed_at_utc": "2026-10-07T20:37:56.424642+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/issues/889",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-issue-889.json",
+      "bytes": 4193,
+      "sha256": "d018d11474782446fd032d1b3347d6da12dcb6aa07888ffff4d5a05a02c553ea",
+      "response_headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"5981404743b3618490799a254b8ee191f02465be79404e555b3b6eb7477e7de5\"",
+        "Last-Modified": "Thu, 10 Sep 2026 17:04:51 GMT",
+        "X-RateLimit-Remaining": "49"
+      }
+    },
+    {
+      "id": "R16",
+      "url": "https://api.github.com/repos/openastronomylog/openastronomylog/commits/59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "version": "Commit dated 2020-12-09; not asserted as current repository head",
+      "commit": "59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "locator": "Exact commit identity/date for README and OAL21 schema archive",
+      "candidate_ref": "critic-v1/S16",
+      "file": "oal-commit.json",
+      "accessed_at_utc": "2026-10-07T20:37:56.471106+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/openastronomylog/openastronomylog/commits/59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-commit.json",
+      "bytes": 6735,
+      "sha256": "e13b2f5f819ba6e084120369a2178e2398b22d66a2f12146c521d0a733bf740e",
+      "response_headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"72c89d4b1c6d0a75abdfd9cbbb1905df960f681588a9142f4af71c52fb79a62c\"",
+        "Last-Modified": "Wed, 09 Dec 2020 07:55:45 GMT",
+        "X-RateLimit-Remaining": "48"
+      }
+    },
+    {
+      "id": "R17",
+      "url": "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/README.md",
+      "version": "README at commit 59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "commit": "59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "locator": "Exchange purpose, schema context and stated license",
+      "candidate_ref": "critic-v1/S17",
+      "file": "oal-README.md",
+      "accessed_at_utc": "2026-10-07T20:37:56.475066+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/README.md",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal-README.md",
+      "bytes": 1502,
+      "sha256": "6fcae6c20b578f5f03defab493e89364765cd6b64480802b18b0b5a77f7bde2d",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"d029830529fd7136852f05e75c9e22d5b83b217f9c50708d4528849752763cfc\""
+      }
+    },
+    {
+      "id": "R18",
+      "url": "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/OAL21.zip",
+      "version": "OAL 2.1; nested XSD revision 2011-08-08; archived at commit 59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "commit": "59cc9dd4ecbd7569d90f86b0313e0430578f18fb",
+      "locator": "sessionType has begin/end and optional image references; observations have begin/end and image references; no annotation/versioning guarantee inferred",
+      "candidate_ref": "critic-v1/S18",
+      "file": "oal21.zip",
+      "accessed_at_utc": "2026-10-07T20:37:56.518900+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/OAL21.zip",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip",
+      "bytes": 13171,
+      "sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+      "response_headers": {
+        "Content-Type": "application/zip",
+        "ETag": "\"6a9ae7cda728b406b43b8db0bb08cf66233463491238060a969c2ddff874c319\""
+      }
+    },
+    {
+      "id": "R19",
+      "url": "https://github.com/automerge/automerge/issues/889",
+      "version": "Rendered issue page captured 2026-10-07; status display showed Closed; report says @automerge/automerge 2.1.11",
+      "commit": null,
+      "locator": "Issue body and rendered status, checked against API snapshot; a comments API request separately returned HTTP 403 rate limit; events endpoint not fetched",
+      "candidate_ref": "critic-v1/S19",
+      "file": "automerge-issue-889-page.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.568238+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/automerge/automerge/issues/889",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-issue-889-page.html",
+      "bytes": 254776,
+      "sha256": "c668288cd3b59e560c2a69a4d31326350225318b745e697733e786fccee89bde",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      }
+    },
+    {
+      "id": "R20",
+      "url": "https://observation.sourceforge.net/en/",
+      "version": "Observation Manager project page",
+      "commit": null,
+      "locator": "Project description, OAL 2.1, FITS support, licensing",
+      "candidate_ref": null,
+      "file": "observation-manager.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.582377+00:00",
+      "status": 403,
+      "resolved_url": "https://observation.sourceforge.net/en/",
+      "capture_path": null,
+      "bytes": 5469,
+      "sha256": "4a6822f48bcb6f763988877930e6292e475f48184deecd95d1528d25993eefa4",
+      "response_headers": {
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "discarded_http_error_body": true
+    },
+    {
+      "id": "R21",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version": "IIIF Image API 3.0",
+      "commit": null,
+      "locator": "\u00a74.1 region, transformations and dimensions",
+      "candidate_ref": null,
+      "file": "iiif-image-api3.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.612477+00:00",
+      "status": 200,
+      "resolved_url": "https://iiif.io/api/image/3.0/",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/iiif-image-api3.html",
+      "bytes": 145643,
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "response_headers": {
+        "Content-Type": "text/html",
+        "Last-Modified": "Thu, 21 May 2026 20:44:53 GMT",
+        "ETag": "\"fe0bd821e143c70d9d0061d21ccc3f42\""
+      }
+    },
+    {
+      "id": "R22",
+      "url": "https://iiif.io/api/cookbook/recipe/0299-region/",
+      "version": "IIIF cookbook live at capture",
+      "commit": null,
+      "locator": "Addressing a Spatial Region; resource/Canvas dimensions",
+      "candidate_ref": null,
+      "file": "iiif-region-recipe.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.618491+00:00",
+      "status": 200,
+      "resolved_url": "https://iiif.io/api/cookbook/recipe/0299-region/",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/iiif-region-recipe.html",
+      "bytes": 20760,
+      "sha256": "e425f46ea5e7cd09fd9cec2ea29afecd3d884c6dc523a46a6f70634a952605ca",
+      "response_headers": {
+        "Content-Type": "text/html",
+        "Last-Modified": "Fri, 02 Oct 2026 15:52:37 GMT",
+        "ETag": "\"008a7e7b934dc4b41705e51db27a350e\""
+      }
+    },
+    {
+      "id": "R23",
+      "url": "https://api.github.com/repos/automerge/automerge/git/ref/tags/js/automerge-3.5.0",
+      "version": "Automerge tag js/automerge-3.5.0",
+      "commit": null,
+      "locator": "Tag object and SHA",
+      "candidate_ref": null,
+      "file": "automerge-tag.json",
+      "accessed_at_utc": "2026-10-07T20:37:56.649841+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/git/ref/tags/js/automerge-3.5.0",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-tag.json",
+      "bytes": 387,
+      "sha256": "bd8fdd8b1eed9e9395444f934197947e23aed8c0bc1533ba726e3a95bca444b8",
+      "response_headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"c6d8f33c7e734efd70d119afd8de9288a80974d3b275b8add04c27e670bb1c58\"",
+        "Last-Modified": "Wed, 07 Oct 2026 09:11:43 GMT",
+        "X-RateLimit-Remaining": "47"
+      }
+    },
+    {
+      "id": "R24",
+      "url": "https://api.github.com/repos/automerge/automerge/releases/tags/js%2Fautomerge-3.5.0",
+      "version": "Automerge 3.5.0 release",
+      "commit": null,
+      "locator": "published_at, tag_name, release body",
+      "candidate_ref": null,
+      "file": "automerge-release.json",
+      "accessed_at_utc": "2026-10-07T20:37:56.663695+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/releases/tags/js%2Fautomerge-3.5.0",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-release.json",
+      "bytes": 3996,
+      "sha256": "8891a2711350097b98c04177f7ecf79c9e002818124aa7b29785e542c6f69af0",
+      "response_headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"1ffe6adbf8a061d55ed6b60f8789e80bc203d9a0de2b8dfb65fdb496d2efb862\"",
+        "Last-Modified": "Wed, 16 Sep 2026 14:25:23 GMT",
+        "X-RateLimit-Remaining": "46"
+      }
+    },
+    {
+      "id": "R25",
+      "url": "https://api.github.com/repos/automerge/automerge/issues/889/comments",
+      "version": "Automerge issue 889 history",
+      "commit": null,
+      "locator": "All returned comments and closure explanation",
+      "candidate_ref": null,
+      "file": "automerge-889-comments.json",
+      "accessed_at_utc": "2026-10-07T20:37:56.664048+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/issues/889/comments",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-889-comments.json",
+      "bytes": 2200,
+      "sha256": "d2f0e16cfb315c9027ed7a3014a75fcbf58e11efdc321f2549190472c3c4d287",
+      "response_headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"8b28897e68345147e1602ae491a618f91995218021af770ab0b5d325b2af09e4\"",
+        "X-RateLimit-Remaining": "45"
+      }
+    },
+    {
+      "id": "R26",
+      "url": "https://api.github.com/repos/automerge/automerge/issues/889/timeline",
+      "version": "Automerge issue 889 history",
+      "commit": null,
+      "locator": "Closure event, links, commit IDs",
+      "candidate_ref": null,
+      "file": "automerge-889-timeline.json",
+      "accessed_at_utc": "2026-10-07T20:37:56.708856+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/automerge/automerge/issues/889/timeline",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-889-timeline.json",
+      "bytes": 16527,
+      "sha256": "6e730c2b4af8fe6ee3be9112bf730bfc1e03ad6434926af637cc972ecb88d36b",
+      "response_headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"0c25a26bac29aca7009e271c336331662326c54d6ff0638cc98bea6b4610975d\"",
+        "X-RateLimit-Remaining": "44"
+      }
+    },
+    {
+      "id": "R27",
+      "url": "https://docs.astropy.org/en/v8.0.1/wcs/index.html",
+      "version": "Astropy 8.0.1 docs",
+      "commit": null,
+      "locator": "Pixel Conventions and Definitions; High-Level/Low-Level API; axis-order examples",
+      "candidate_ref": "researcher-v1/S02",
+      "file": "prior-astropy-wcs-8.0.1.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.713667+00:00",
+      "status": 200,
+      "resolved_url": "https://docs.astropy.org/en/v8.0.1/wcs/index.html",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-wcs-8.0.1.html",
+      "bytes": 56441,
+      "sha256": "9b32aa47ff5c4263f05bb7af1b4cf56d7149589a21d34dd8d3768ab32c5b29ed",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"9581183bb47414f606bcb397157ba062\"",
+        "Last-Modified": "Sun, 05 Jul 2026 06:55:28 GMT"
+      }
+    },
+    {
+      "id": "R28",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/utils.py",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "skycoord_to_pixel lines 621-685; pixel_to_skycoord lines 688 onward",
+      "candidate_ref": "researcher-v1/S03",
+      "file": "prior-astropy-v8.0.1-wcs-utils.py",
+      "accessed_at_utc": "2026-10-07T20:37:56.792496+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/utils.py",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-wcs-utils.py",
+      "bytes": 46913,
+      "sha256": "ce97815fa3c2216abd6aa55d10a0d46c24ce81f7dd0dbb1c93625084dd917e57",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"53f45b78ac98dbe2d4dd8510836240f61a8b2cacb9814656cde67023591f95b1\""
+      }
+    },
+    {
+      "id": "R29",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/tests/test_utils.py",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "test_skycoord_to_pixel_swapped at line 864; no PR-added lat-before-lon case in this tag",
+      "candidate_ref": "researcher-v1/S04",
+      "file": "prior-astropy-v8.0.1-wcs-test-utils.py",
+      "accessed_at_utc": "2026-10-07T20:37:56.804925+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/tests/test_utils.py",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-wcs-test-utils.py",
+      "bytes": 58761,
+      "sha256": "30e680ff7f7fb8c9702c09107e3d9a10efa188189b5dc00298d90deb3f7b9553",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"0478d943da46c347e01d69eb693a64d424ac8854963eb15ab795d474665d2d17\""
+      }
+    },
+    {
+      "id": "R30",
+      "url": "https://github.com/astropy/astropy/releases/tag/v8.0.1",
+      "version": "v8.0.1; released 2026-07-08",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "Release page tag/signature/commit; 8.0.1 changelog link",
+      "candidate_ref": "researcher-v1/S05",
+      "file": "prior-astropy-v8.0.1-release.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.817617+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/astropy/astropy/releases/tag/v8.0.1",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-release.html",
+      "bytes": 203830,
+      "sha256": "a6b84a3dddab125f61bf402a711c634461b030703418c6a0540c6e70853adb5b",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"1bec3d4f6d9e5857a49f9bc59a05b71b\""
+      }
+    },
+    {
+      "id": "R31",
+      "url": "https://github.com/astropy/astropy/issues/10468",
+      "version": "Issue opened 2020-06-08; report says Astropy 4.0",
+      "commit": null,
+      "locator": "Description and reproduction: CTYPE1 DEC--TAN before CTYPE2 RA---TAN; Cutout2D example; issue status at capture",
+      "candidate_ref": "researcher-v1/S06",
+      "file": "prior-astropy-issue-10468.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.831567+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/astropy/astropy/issues/10468",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-issue-10468.html",
+      "bytes": 294425,
+      "sha256": "ff5522e7b70437731873bfd04ef1d59151a921dd2addf52c958dddcc32d4f81c",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      }
+    },
+    {
+      "id": "R32",
+      "url": "https://github.com/astropy/astropy/issues/4976",
+      "version": "Issue opened 2016-05-25",
+      "commit": null,
+      "locator": "Description of reversed celestial CTYPE and skycoord_to_pixel; issue status at capture",
+      "candidate_ref": "researcher-v1/S07",
+      "file": "prior-astropy-issue-4976.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.899587+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/astropy/astropy/issues/4976",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-issue-4976.html",
+      "bytes": 244984,
+      "sha256": "a643a215c77650f440954efcbcc2693e488e38bf91f0afcb80b57a3f1ba1510c",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      }
+    },
+    {
+      "id": "R33",
+      "url": "https://github.com/astropy/astropy/pull/20473",
+      "version": "PR opened 2026-09-23; milestone v8.1.0; closed 2026-10-02",
+      "commit": null,
+      "locator": "Description, linked issues, commits, status and milestone",
+      "candidate_ref": "researcher-v1/S08",
+      "file": "prior-astropy-pr-20473.html",
+      "accessed_at_utc": "2026-10-07T20:37:56.904635+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/astropy/astropy/pull/20473",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-pr-20473.html",
+      "bytes": 371479,
+      "sha256": "82322200ec4cfad3e630cd9338831453704ebcde8eb371fca2331ace55db1418",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      }
+    },
+    {
+      "id": "R34",
+      "url": "https://github.com/astropy/astropy/pull/20473.patch",
+      "version": "Two proposed commits; not merged in PR 20473",
+      "commit": "2b7b4a51eb773f563ce40e38d922730fec8bd52e; f28d6fd48b19fa5133d3a6ee46ac98ca463d2303",
+      "locator": "test_skycoord_to_pixel_lat_lon_order; test_wcs_methods_lat_lon_order; native_pixel_order API change",
+      "candidate_ref": "researcher-v1/S09",
+      "file": "prior-astropy-pr-20473.patch",
+      "accessed_at_utc": "2026-10-07T20:37:57.102966+00:00",
+      "status": 200,
+      "resolved_url": "https://patch-diff.githubusercontent.com/raw/astropy/astropy/pull/20473.patch",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-pr-20473.patch",
+      "bytes": 30610,
+      "sha256": "c9eeb98a98c87abb1c5b24e75d00f5fad5e6f22137da8cfef5da765d78d36f96",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "W/\"c9eeb98a98c87abb1c5b24e75d00f5fa\""
+      }
+    },
+    {
+      "id": "R35",
+      "url": "https://automerge.org/blog/automerge-repo/",
+      "version": "Project article dated 2023-11",
+      "commit": null,
+      "locator": "Networking/storage adapters, IndexedDB example, public test server limits, sharePolicy config",
+      "candidate_ref": "researcher-v1/S24",
+      "file": "prior-automerge-repo-blog.html",
+      "accessed_at_utc": "2026-10-07T20:37:57.242895+00:00",
+      "status": 200,
+      "resolved_url": "https://automerge.org/blog/automerge-repo/",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-automerge-repo-blog.html",
+      "bytes": 36139,
+      "sha256": "7298d1177524c277566e906be3e8cc06ec52500b999a88aeb01b3882c8bfdbf4",
+      "response_headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "last-modified": "Fri, 04 Sep 2026 18:44:50 GMT"
+      }
+    },
+    {
+      "id": "R36",
+      "url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/tests/test_wcs.py",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "Reviewed only for WCS axis/array conventions",
+      "candidate_ref": "researcher-v1/S30",
+      "file": "prior-astropy-v8.0.1-wcs-test-wcs.py",
+      "accessed_at_utc": "2026-10-07T20:37:57.303905+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/astropy/astropy/7c5a9c124ce84c76992016e89631566ad398aff7/astropy/wcs/tests/test_wcs.py",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/prior-astropy-v8.0.1-wcs-test-wcs.py",
+      "bytes": 90035,
+      "sha256": "4c426da48d63da486b3ee40839a7c2dcdca1232427cbe03fffd3a256593b8363",
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"164df96068a31852b152812de56a19575b58feaaa58a69f804118dbf81992f82\""
+      }
+    },
+    {
+      "id": "R37",
+      "url": "https://api.github.com/repos/astropy/astropy/releases/tags/v8.0.1",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "release published_at and tag_name",
+      "candidate_ref": null,
+      "file": "astropy-release.json",
+      "accessed_at_utc": "2026-10-07T20:40:29.041247+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/releases/tags/v8.0.1",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-release.json",
+      "bytes": 1964,
+      "sha256": "70f998c514e8c53bd85a60f270d8b4de5cfd9efd67b454942f6c891d1d99e1fb"
+    },
+    {
+      "id": "R38",
+      "url": "https://api.github.com/repos/astropy/astropy/git/ref/tags/v8.0.1",
+      "version": "Astropy v8.0.1",
+      "commit": null,
+      "locator": "tag SHA/type",
+      "candidate_ref": null,
+      "file": "astropy-tag.json",
+      "accessed_at_utc": "2026-10-07T20:40:29.043291+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/git/ref/tags/v8.0.1",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-tag.json",
+      "bytes": 329,
+      "sha256": "61876675cb63c503742da7a5788109259d3bfebbfeae36a9269c7328518eb808"
+    },
+    {
+      "id": "R39",
+      "url": "https://api.github.com/repos/astropy/astropy/pulls/20473",
+      "version": "Astropy PR 20473",
+      "commit": null,
+      "locator": "state, merged, merged_at, milestone, base/head SHA, body",
+      "candidate_ref": null,
+      "file": "astropy-pr20473.json",
+      "accessed_at_utc": "2026-10-07T20:40:29.044557+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/pulls/20473",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-pr20473.json",
+      "bytes": 22684,
+      "sha256": "e51bfc0f69a33db7cd49ee81891dc49a17df88ba39ac9a36770aa07305ac8719"
+    },
+    {
+      "id": "R40",
+      "url": "https://api.github.com/repos/astropy/astropy/issues/4976",
+      "version": "Astropy issue 4976",
+      "commit": null,
+      "locator": "status and issue reproduction",
+      "candidate_ref": null,
+      "file": "astropy-4976.json",
+      "accessed_at_utc": "2026-10-07T20:40:29.046020+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/issues/4976",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-4976.json",
+      "bytes": 3327,
+      "sha256": "e69524a01458214ea5e99140a254afbd017cdcdc76d53afc88d3f2a0618f7f9e"
+    },
+    {
+      "id": "R41",
+      "url": "https://api.github.com/repos/astropy/astropy/issues/10468",
+      "version": "Astropy issue 10468",
+      "commit": null,
+      "locator": "status, version and Cutout2D reproduction",
+      "candidate_ref": null,
+      "file": "astropy-10468.json",
+      "accessed_at_utc": "2026-10-07T20:40:29.047534+00:00",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/astropy/astropy/issues/10468",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-10468.json",
+      "bytes": 6358,
+      "sha256": "63c54f152dbfe5ed76257c47e6392603a5ee1eabbc1aa768aa2b911a41d3a719"
+    },
+    {
+      "id": "R42",
+      "url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/proxies.ts",
+      "version": "Automerge 3.5.0",
+      "commit": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "assignment handler skip/no-op and conflict handling",
+      "candidate_ref": null,
+      "file": "automerge-proxies.ts",
+      "accessed_at_utc": "2026-10-07T20:40:29.234019+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/proxies.ts",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/automerge-proxies.ts",
+      "bytes": 26006,
+      "sha256": "0b0c28b233e324480fa413bf76b0f17aa59e593df893f3092d2bd3092999ad63"
+    },
+    {
+      "id": "R43",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.rst",
+      "version": "bagit-python v1.9.0",
+      "commit": "v1.9.0",
+      "locator": "public component alternative for package creation and validation",
+      "candidate_ref": null,
+      "file": "bagit-python-1.9.0-README.rst",
+      "accessed_at_utc": "2026-10-07T20:40:29.234615+00:00",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.rst",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/bagit-python-1.9.0-README.rst",
+      "bytes": 6875,
+      "sha256": "65572ed3f666e434bdaa5499583d7d505b8e8ccf8b482a7e5dc0f831c3493c7d"
+    },
+    {
+      "id": "R44",
+      "url": "https://api.github.com/repos/astropy/astropy/git/tags/980b6e36bbe9d7d2d847fcd9c94c4651c06869c0",
+      "version": "Astropy v8.0.1",
+      "commit": "7c5a9c124ce84c76992016e89631566ad398aff7",
+      "locator": "Annotated release tag object -> pinned commit; verification metadata",
+      "candidate_ref": "researcher-v1/S05",
+      "file": "astropy-tag-object.json",
+      "accessed_at_utc": "2026-10-07T20:41:23.001547+00:00",
+      "status": 200,
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/astropy-tag-object.json",
+      "bytes": 2630,
+      "sha256": "874d494993cd15662b08b3dbd0a2b1c7b7cee3e35dff819167d04fb9559089d8"
+    }
+  ],
+  "http_attempts": 44
+}

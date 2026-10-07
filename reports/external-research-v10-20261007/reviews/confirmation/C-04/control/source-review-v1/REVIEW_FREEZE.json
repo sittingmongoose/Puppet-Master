@@ -1,0 +1,2004 @@
+{
+  "schema": "pm.er10.source6-review-freeze.v1",
+  "review_kind": "ONE fresh ordinary independent FULL declared Source6 primary-source review",
+  "reviewer": {
+    "declared_provider": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "declared_service_tier": "priority",
+    "declared_named_account": "sittingmongoose@gmail.com",
+    "account_binding_eligibility_owner": "supervisor",
+    "nested_helpers": false,
+    "reviewer_goal_required": false,
+    "reviewer_goal_used": false
+  },
+  "created_at_utc": "2026-10-07T21:42:18.129354+00:00",
+  "reviewed_final_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/artifact.md",
+  "reviewed_final_sha256": "786bf123b637b3a24a16a6e1bfc78856c07050910c9124efbd1c38ea4d5643ae",
+  "report_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/REPORT.md",
+  "report_sha256": "822d6fc4fe55cdc27c29589e528d7eee5f3b03b546d09527d58724789d7d5d73",
+  "original_scientific_grade": {
+    "status": "FAIL",
+    "immutable": true,
+    "reason": "D01: missing explicit competing-component comparison under O2. Other qualified consequential claims and integrated plan/preservation/validation distinctions are substantially supported.",
+    "material_defect_ids": [
+      "D01"
+    ],
+    "eligibility_cannot_upgrade": true
+  },
+  "full_declared_scope_assessed": true,
+  "coverage_disposition": "FULL declared scientific planning/source scope assessed; FAIL, no scientific rescue. Candidate read-order chronology is attested, not reconstructed; product behavior is proposed/unvalidated, not an unassessed accepted guarantee.",
+  "axes": [
+    {
+      "axis_id": "S1",
+      "name": "full brief obligations",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "BRIEF.md:15\u201321",
+        "artifact.md:5\u2013108",
+        "REPORT.md:Exact frozen-plan disposition completeness",
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "O5",
+        "O6",
+        "O7"
+      ],
+      "defect_refs": [
+        "D01"
+      ],
+      "reason": "All obligations assessed; the explicit competing-components portion of O2 is missing."
+    },
+    {
+      "axis_id": "S2",
+      "name": "consequential source claims and governing conditions",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10"
+      ],
+      "defect_refs": [],
+      "caveat_refs": [
+        "C01",
+        "C02"
+      ],
+      "reason": "Core claims agree with independently retrieved primary docs/code; issue reporting and viewport normalization have nonmaterial qualifications."
+    },
+    {
+      "axis_id": "S3",
+      "name": "useful open discovery coverage/options/analogies/components/history",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "artifact.md:11\u201354",
+        "DISC-OSMD-README",
+        "DISC-OSMD-PACKAGE",
+        "CHECK-VRV-01",
+        "CHECK-WA-01",
+        "E05",
+        "E06",
+        "E07"
+      ],
+      "defect_refs": [
+        "D01"
+      ],
+      "reason": "Substantially different mechanisms, optional leads, W3C analogy and bounded history are present; no competing implementation comparison is supplied."
+    },
+    {
+      "axis_id": "S4",
+      "name": "incorrect rejection/correction",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "PLAN.md:B-P1..B-P7",
+        "researcher-v1/artifact.md:25\u201353",
+        "critic-v1/artifact.md:25\u201345",
+        "reviser-v1/artifact.md:60\u201387",
+        "E03",
+        "E04",
+        "E06"
+      ],
+      "defect_refs": [],
+      "reason": "No materially incorrect rejection/correction found. B-P4 was already an open durability assumption; the final develops it and retains its note intent."
+    },
+    {
+      "axis_id": "S5",
+      "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "researcher-v1/artifact.md:5\u20139,25\u201341,47\u201387",
+        "critic-v1/artifact.md:5\u20137,27\u201333,39\u201371",
+        "reviser-v1/artifact.md:5\u20137,30\u201354,60\u2013106",
+        "all three preservation_check.md files",
+        "all three source-map.json files",
+        "E01"
+      ],
+      "defect_refs": [],
+      "reason": "No material preservation loss found. Advanced schemas/services are deferred with their safety properties and meaningful optional directions retained. D01 was not an option lost from the admitted predecessors."
+    },
+    {
+      "axis_id": "S6",
+      "name": "proposed versus actually performed validation",
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "artifact.md:97\u2013108",
+        "preservation_check.md:Proposed versus actually executed checks",
+        "E01",
+        "CHECK-PDF-API-TESTS",
+        "CHECK-VRV-4396"
+      ],
+      "defect_refs": [],
+      "reason": "Pilot checks remain proposed; source reading/capture/hash inspection is distinguished from musical and workflow execution. Upstream tests are source evidence, not candidate or reviewer test runs."
+    }
+  ],
+  "obligations": {
+    "O1": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence_refs": [
+        "artifact.md:13",
+        "BRIEF.md:15",
+        "CHECK-WA-01",
+        "CHECK-MEI-CHAPTER",
+        "REPORT.md:Consequential claims independently checked"
+      ],
+      "reason": "Output-level user-first discovery and useful mechanism coverage assessed. Candidate chronology is self-reported in admitted scientific files; runtime/history was not reconstructed."
+    },
+    "O2": {
+      "status": "FAIL",
+      "evidence_refs": [
+        "artifact.md:15\u201324",
+        "DISC-OSMD-README",
+        "DISC-OSMD-PACKAGE",
+        "CHECK-VRV-01"
+      ],
+      "defect_refs": [
+        "D01"
+      ],
+      "reason": "Distinct mechanisms and their trade-offs plus analogy are covered; competing-component implementation comparison is absent."
+    },
+    "O3": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence_refs": [
+        "E02",
+        "E03",
+        "E04",
+        "E07",
+        "E08",
+        "E09"
+      ],
+      "caveat_refs": [
+        "C02"
+      ],
+      "reason": "Version pins, data identities, divisions and source/viewport/surface coordinate boundaries were independently checked. Rotation values normalize modulo 360 before validation."
+    },
+    "O4": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence_refs": [
+        "E02",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E09"
+      ],
+      "caveat_refs": [
+        "C01"
+      ],
+      "reason": "Pinned core implementation and bounded issue/fix/release history checked. Dedicated regression paths are absent in the inspected patches, not proved absent elsewhere. Candidate PouchDB source gap is explicit and that component is unselected. Reviewer source checks do not retroactively repair it."
+    },
+    "O5": {
+      "status": "PASS",
+      "evidence_refs": [
+        "PLAN.md:B-P1",
+        "PLAN.md:B-P2",
+        "PLAN.md:B-P3",
+        "PLAN.md:B-P4",
+        "PLAN.md:B-P5",
+        "PLAN.md:B-P6",
+        "PLAN.md:B-P7",
+        "artifact.md:58\u201366",
+        "REPORT.md:Exact frozen-plan disposition completeness"
+      ],
+      "reason": "Every exact frozen section is dispositioned, including already-covered choices and governing uncertainties."
+    },
+    "O6": {
+      "status": "PASS",
+      "evidence_refs": [
+        "artifact.md:68\u2013108",
+        "E01",
+        "REPORT.md:Preservation, validation and review boundary"
+      ],
+      "reason": "Complete bounded proposed workflow, optional opportunities, open product choices and observable pilot checks; no product validation result invented."
+    },
+    "O7": {
+      "status": "PASS",
+      "evidence_refs": [
+        "artifact.md:5\u20137,60\u201377,89\u2013106",
+        "PLAN.md:B-P2..B-P6"
+      ],
+      "reason": "Ingest/provenance, work/edition/part/source identity, notes/collaboration, access, retention/deletion, recovery and portable offline handoff are integrated without product/canon work."
+    }
+  },
+  "material_defects": [
+    {
+      "defect_id": "D01",
+      "classification": "material coverage defect",
+      "axis_refs": [
+        "S1",
+        "S3"
+      ],
+      "obligation_refs": [
+        "O2"
+      ],
+      "claim": "Final preservation_check.md marks O2 satisfied, while the scientific final supplies no comparison between competing implementations for a consequential component job.",
+      "candidate_locators": [
+        "reviser-v1/artifact.md:15\u201322",
+        "reviser-v1/artifact.md:24",
+        "reviser-v1/artifact.md:28\u201354",
+        "reviser-v1/preservation_check.md:Full scientific obligations retained/O2"
+      ],
+      "governing_requirement": "Review instruction O2 explicitly includes competing components; frozen BRIEF.md:15\u201317 asks useful competing mechanisms, component options and consequential investigation.",
+      "evidence_refs": [
+        "DISC-OSMD-README",
+        "DISC-OSMD-PACKAGE",
+        "CHECK-VRV-01",
+        "REPORT.md:Material finding"
+      ],
+      "factual_reasoning": "PDF.js, Audiveris and Verovio occupy complementary layers. Listing their roles and comparing page-first versus structured-first does not compare competing implementations of a job. Public discovery demonstrates a useful renderer alternative with different implementation/deployment and packaging boundaries; no particular library or exhaustive list is mandatory.",
+      "materiality": "A declared portion of full discovery is missing, leaving implementation trade-offs relevant to volunteer maintainability unassessed by the proposal. Optional adoption does not discharge the comparison obligation.",
+      "disposition": "FAIL; no candidate repair or feedback supplied"
+    }
+  ],
+  "nonmaterial_caveats": [
+    {
+      "id": "C01",
+      "claim_locator": "artifact.md:36",
+      "evidence_refs": [
+        "CHECK-AUD-971-COMMENTS",
+        "CHECK-AUD-971-JSON"
+      ],
+      "reason": "Issue includes a second different-score reproducer by the same reporter. This is not independent-person reproduction and does not establish prevalence; candidate summarizes the original seven-sheet input."
+    },
+    {
+      "id": "C02",
+      "claim_locator": "artifact.md:48",
+      "evidence_refs": [
+        "CHECK-PDF-01:77\u2013110",
+        "CHECK-PDF-API-TESTS:3993\u20133998"
+      ],
+      "reason": "Rotation is normalized modulo 360; equivalent multiples such as -90 and 450 are accepted. Listed canonical quarter turns are not an exhaustive pre-normalization input set. Core coordinate proposal remains valid."
+    }
+  ],
+  "limitations": [
+    {
+      "kind": "blinding",
+      "detail": "Advisory map and required paths reveal control arm and researcher/critic/reviser plus confirmation/C-04 stage structure. Admitted preservation text also reveals stage obligations. No counterpart/expected winner inferred."
+    },
+    {
+      "kind": "provenance_observability",
+      "detail": "Discovery-before-PLAN/read chronology and browsing action claims are self-reported in scientific artifacts. Forbidden host/runtime/history files were not inspected. Scientific content and captured bytes were assessed; lifecycle/account/provenance/economics eligibility belongs to supervisor."
+    },
+    {
+      "kind": "validation_boundary",
+      "detail": "No source score, OMR, rendering, coordinate integration, conflict, packet, access, deletion, backup or restore test run by reviewer or claimed run by candidate. Upstream test code and PR test reports were read, not executed."
+    },
+    {
+      "kind": "history_boundary",
+      "detail": "Issue reports are not independent causal reproductions. Absence of a test path in two bounded patches is not proof of no tests elsewhere. No exhaustive project-history claim."
+    },
+    {
+      "kind": "source_applicability",
+      "detail": "Rolling MEI/PouchDB/Xournal++/IIIF docs apply to their captured labeled content, not every future release. Implementation pins and source hashes are recorded separately. Discovered competitors were not qualified as replacements."
+    },
+    {
+      "kind": "open_product_choices",
+      "detail": "Device formats, volunteer effort, rights assertions, retention/expiry, enforceable access, actual OMR/renderer fidelity and per-part mappings need an authorized pilot/product decisions; candidate explicitly leaves them unresolved."
+    }
+  ],
+  "unassessed_scientific_remainder": [],
+  "reviewed_input_sha256s": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/artifact.md",
+      "sha256": "7a2f5b7688c53fbb7157ab956e08dd1ed31b7820d5a4084f8db6ec9bbad32ab2",
+      "expected_sha256": "7a2f5b7688c53fbb7157ab956e08dd1ed31b7820d5a4084f8db6ec9bbad32ab2",
+      "matched": true,
+      "bytes": 23499,
+      "role": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/source-map.json",
+      "sha256": "59e22d6cb7798cbe927ce962dd7e51dcfc9f302d2ff830c0e9c813a4f3d563ba",
+      "expected_sha256": "59e22d6cb7798cbe927ce962dd7e51dcfc9f302d2ff830c0e9c813a4f3d563ba",
+      "matched": true,
+      "bytes": 21401,
+      "role": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/preservation_check.md",
+      "sha256": "3b4df13e186f8084ee5f5977372f75502964038bc81a7188524f5c4c43560ce2",
+      "expected_sha256": "3b4df13e186f8084ee5f5977372f75502964038bc81a7188524f5c4c43560ce2",
+      "matched": true,
+      "bytes": 6032,
+      "role": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/artifact.md",
+      "sha256": "3ec78aee9608c76b26598f98d46fc3a40b7a9f9dcfcfc5a2f20ba2ae1745a189",
+      "expected_sha256": "3ec78aee9608c76b26598f98d46fc3a40b7a9f9dcfcfc5a2f20ba2ae1745a189",
+      "matched": true,
+      "bytes": 18954,
+      "role": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/source-map.json",
+      "sha256": "18a10c2b70d0d688e062c2d0a5efbdc190b33f292cbf436ed9f532ba1ecc2230",
+      "expected_sha256": "18a10c2b70d0d688e062c2d0a5efbdc190b33f292cbf436ed9f532ba1ecc2230",
+      "matched": true,
+      "bytes": 14023,
+      "role": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/preservation_check.md",
+      "sha256": "fc2d639df0ef896db535cb1062255c177513c3de28c66c21261315e49aed9021",
+      "expected_sha256": "fc2d639df0ef896db535cb1062255c177513c3de28c66c21261315e49aed9021",
+      "matched": true,
+      "bytes": 5811,
+      "role": "own predecessor scientific preservation evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/artifact.md",
+      "sha256": "786bf123b637b3a24a16a6e1bfc78856c07050910c9124efbd1c38ea4d5643ae",
+      "expected_sha256": "786bf123b637b3a24a16a6e1bfc78856c07050910c9124efbd1c38ea4d5643ae",
+      "matched": true,
+      "bytes": 30153,
+      "role": "final scientific artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/source-map.json",
+      "sha256": "7878d0488ad0899e7508fb2846851cba7cc350623b6083606e2150ff0c146b17",
+      "expected_sha256": "7878d0488ad0899e7508fb2846851cba7cc350623b6083606e2150ff0c146b17",
+      "matched": true,
+      "bytes": 27592,
+      "role": "final scientific artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/preservation_check.md",
+      "sha256": "79c996bff075dcacccafcf73f7c7d27a1bea469a7acd97c6c8296f726e187b76",
+      "expected_sha256": "79c996bff075dcacccafcf73f7c7d27a1bea469a7acd97c6c8296f726e187b76",
+      "matched": true,
+      "bytes": 7932,
+      "role": "final scientific artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/BRIEF.md",
+      "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+      "expected_sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+      "matched": true,
+      "bytes": 6493,
+      "role": "frozen common scientific input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/PLAN.md",
+      "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+      "expected_sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+      "matched": true,
+      "bytes": 3748,
+      "role": "frozen common scientific input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/audiveris-handbook-5.11.0.md",
+      "sha256": "25984a189259472c021571bbdab56dbee22934a0df5bb0ef7f30c37ae2a909fd",
+      "expected_sha256": "25984a189259472c021571bbdab56dbee22934a0df5bb0ef7f30c37ae2a909fd",
+      "matched": true,
+      "bytes": 5233,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "AUD-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/audiveris-export-5.11.0.md",
+      "sha256": "7b19b88165d136a38277068fd55d4fefe06fd2abc4fdced63c943e40ee2495b8",
+      "expected_sha256": "7b19b88165d136a38277068fd55d4fefe06fd2abc4fdced63c943e40ee2495b8",
+      "matched": true,
+      "bytes": 2366,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "AUD-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/audiveris-PartwiseBuilder-5.11.0.java",
+      "sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "expected_sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "matched": true,
+      "bytes": 157209,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "AUD-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/audiveris-issue-920.html",
+      "sha256": "b2ea1d76d9cef8cf657c37382d9476b18533845ba1eb464f134125b42deabbe5",
+      "expected_sha256": "b2ea1d76d9cef8cf657c37382d9476b18533845ba1eb464f134125b42deabbe5",
+      "matched": true,
+      "bytes": 242836,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "AUD-04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/audiveris-release-5.10.2.html",
+      "sha256": "56412a979e01b785086eb0cc3af89b203c7d8e2c6e0650daf5fca2a1b409ce3a",
+      "expected_sha256": "56412a979e01b785086eb0cc3af89b203c7d8e2c6e0650daf5fca2a1b409ce3a",
+      "matched": true,
+      "bytes": 200365,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "AUD-05"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/audiveris-5.10.1-to-5.10.2.patch",
+      "sha256": "5372013d70707536ad6212bbff7cdb0869e0078b48e870e126561813ea5b54f0",
+      "expected_sha256": "5372013d70707536ad6212bbff7cdb0869e0078b48e870e126561813ea5b54f0",
+      "matched": true,
+      "bytes": 463372,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "AUD-06"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/audiveris-issue-971.html",
+      "sha256": "a2914f310aff2e0ce94c294fbacecdec546577d467586c363f6c097f3547a5ea",
+      "expected_sha256": "a2914f310aff2e0ce94c294fbacecdec546577d467586c363f6c097f3547a5ea",
+      "matched": true,
+      "bytes": 271781,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "AUD-07"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/audiveris-release-5.11.0.html",
+      "sha256": "3ed75b0c314ffca6be08858a6dd2b7e65a7e0fd9c865f58edf93a5c84e2bd92b",
+      "expected_sha256": "3ed75b0c314ffca6be08858a6dd2b7e65a7e0fd9c865f58edf93a5c84e2bd92b",
+      "matched": true,
+      "bytes": 212784,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "AUD-08"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/musicxml-4.0-musicxml.xsd",
+      "sha256": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99",
+      "expected_sha256": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99",
+      "matched": true,
+      "bytes": 379505,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "MXL-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/mei-v5.1-surface.html",
+      "sha256": "d39e225bd9e6e6c821a1980e7abbf8d49993cb9fb907c89aa9751576c8dd3691",
+      "expected_sha256": "d39e225bd9e6e6c821a1980e7abbf8d49993cb9fb907c89aa9751576c8dd3691",
+      "matched": true,
+      "bytes": 113671,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "MEI-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/mei-v5.1-zone.html",
+      "sha256": "6d5a006608c076d6c635529fe36c942a1ce540b2de55333c20b030ff441c15e8",
+      "expected_sha256": "6d5a006608c076d6c635529fe36c942a1ce540b2de55333c20b030ff441c15e8",
+      "matched": true,
+      "bytes": 103709,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "MEI-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/mei-v5.1-att-facsimile.html",
+      "sha256": "570f8ad4fc27a57844a588613ec87f79cbcb0afa033c08e589a687444300d867",
+      "expected_sha256": "570f8ad4fc27a57844a588613ec87f79cbcb0afa033c08e589a687444300d867",
+      "matched": true,
+      "bytes": 286732,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "MEI-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/mei-v5.1-guidelines.pdf",
+      "sha256": "5b2851e0654a2e398478b30de836116a30112057582bc410df465f3ae5c0ff1c",
+      "expected_sha256": "5b2851e0654a2e398478b30de836116a30112057582bc410df465f3ae5c0ff1c",
+      "matched": true,
+      "bytes": 40692637,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "MEI-04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/verovio-6.3.0-README.md",
+      "sha256": "d271bcbb870d91db06aff30fa050a2d99508df36a8e2adc7064933f1006e27e1",
+      "expected_sha256": "d271bcbb870d91db06aff30fa050a2d99508df36a8e2adc7064933f1006e27e1",
+      "matched": true,
+      "bytes": 4578,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "VRV-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/verovio-6.3.0-iomusxml.cpp",
+      "sha256": "0def2542a241989f2368fe9b54e67db474242fc0d24b27c48af8dac5ee499ab5",
+      "expected_sha256": "0def2542a241989f2368fe9b54e67db474242fc0d24b27c48af8dac5ee499ab5",
+      "matched": true,
+      "bytes": 230645,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "VRV-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/verovio-6.3.0-CHANGELOG.md",
+      "sha256": "70220d7ef990dfd82cee30075394ad869b78b3cdb4e98ddb41601a287c1261f0",
+      "expected_sha256": "70220d7ef990dfd82cee30075394ad869b78b3cdb4e98ddb41601a287c1261f0",
+      "matched": true,
+      "bytes": 37066,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "VRV-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/verovio-release-6.3.0.html",
+      "sha256": "1fa72cb2f83dac3394805cf41a4a0bd9674c846120e0c75368468a7ce922e050",
+      "expected_sha256": "1fa72cb2f83dac3394805cf41a4a0bd9674c846120e0c75368468a7ce922e050",
+      "matched": true,
+      "bytes": 197584,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "VRV-04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/pdfjs-6.3.289-page_viewport.js",
+      "sha256": "bcbc222e3771faa0397bcb282b7385940d912f89595e21ef8996159c2c0cf79d",
+      "expected_sha256": "bcbc222e3771faa0397bcb282b7385940d912f89595e21ef8996159c2c0cf79d",
+      "matched": true,
+      "bytes": 6541,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "PDF-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/pdfjs-6.3.289-examples.md",
+      "sha256": "1721aa1920969882e4233e7457e63495a62a53e11a81ff650e9a336e1fc695f9",
+      "expected_sha256": "1721aa1920969882e4233e7457e63495a62a53e11a81ff650e9a336e1fc695f9",
+      "matched": true,
+      "bytes": 3747,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "PDF-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/pdfjs-6.3.289-annotation_storage.js",
+      "sha256": "cb2d5670aca79c96bd905ae8abeb8f07cabc01c0e84a2ec9830f0306e0e38916",
+      "expected_sha256": "cb2d5670aca79c96bd905ae8abeb8f07cabc01c0e84a2ec9830f0306e0e38916",
+      "matched": true,
+      "bytes": 9344,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "PDF-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/pdfjs-issue-20604.html",
+      "sha256": "06309b751b43a4fe082a9418f9dbcbc547a05262f2a90a0de5748ab663e919ff",
+      "expected_sha256": "06309b751b43a4fe082a9418f9dbcbc547a05262f2a90a0de5748ab663e919ff",
+      "matched": true,
+      "bytes": 253323,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "PDF-04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/pdfjs-discussion-17649.html",
+      "sha256": "0cbd4bb60cc0cacc9599a919b34089b0ef47865caa38fe2526a22e6222d8a0ea",
+      "expected_sha256": "0cbd4bb60cc0cacc9599a919b34089b0ef47865caa38fe2526a22e6222d8a0ea",
+      "matched": true,
+      "bytes": 546996,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "PDF-05"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/pdfjs-release-6.3.289.html",
+      "sha256": "b5c17f691a6b62aea6562cf37f58f9e88394a7bb2a523d7be77e1027b9f934d9",
+      "expected_sha256": "b5c17f691a6b62aea6562cf37f58f9e88394a7bb2a523d7be77e1027b9f934d9",
+      "matched": true,
+      "bytes": 307084,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "PDF-06"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1/sources/w3c-web-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "expected_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "matched": true,
+      "bytes": 284185,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "WEB-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/audiveris-handbook-5.11.0.md",
+      "sha256": "25984a189259472c021571bbdab56dbee22934a0df5bb0ef7f30c37ae2a909fd",
+      "expected_sha256": "25984a189259472c021571bbdab56dbee22934a0df5bb0ef7f30c37ae2a909fd",
+      "matched": true,
+      "bytes": 5233,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-AUD-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/audiveris-PartwiseBuilder-5.11.0.java",
+      "sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "expected_sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "matched": true,
+      "bytes": 157209,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-AUD-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/audiveris-issue-971.html",
+      "sha256": "25425ae31c54957419a6abc65682d2df7fc6ed65aec5da762f9a2368bdf12af5",
+      "expected_sha256": "25425ae31c54957419a6abc65682d2df7fc6ed65aec5da762f9a2368bdf12af5",
+      "matched": true,
+      "bytes": 271788,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-AUD-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/audiveris-release-5.11.0.html",
+      "sha256": "c3ee636e3d82232d06dff8cfcf6760c5aa9b9d585718b68f3f3ee792d7e2f0e6",
+      "expected_sha256": "c3ee636e3d82232d06dff8cfcf6760c5aa9b9d585718b68f3f3ee792d7e2f0e6",
+      "matched": true,
+      "bytes": 212788,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-AUD-04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/musicxml-4.0-musicxml.xsd",
+      "sha256": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99",
+      "expected_sha256": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99",
+      "matched": true,
+      "bytes": 379505,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-MXL-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/pdfjs-6.3.289-page_viewport.js",
+      "sha256": "bcbc222e3771faa0397bcb282b7385940d912f89595e21ef8996159c2c0cf79d",
+      "expected_sha256": "bcbc222e3771faa0397bcb282b7385940d912f89595e21ef8996159c2c0cf79d",
+      "matched": true,
+      "bytes": 6541,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-PDF-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/pdfjs-release-6.3.289.html",
+      "sha256": "447533097769ec26b2368e526a8026531c50b124719d92779131b8f9db8e98fe",
+      "expected_sha256": "447533097769ec26b2368e526a8026531c50b124719d92779131b8f9db8e98fe",
+      "matched": true,
+      "bytes": 307084,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-PDF-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/w3c-web-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "expected_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "matched": true,
+      "bytes": 284185,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-WA-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/pouchdb-replication.html",
+      "sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "expected_sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "matched": true,
+      "bytes": 30777,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-PDB-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/pouchdb-conflicts.html",
+      "sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "expected_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "matched": true,
+      "bytes": 28467,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-PDB-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/audiveris-export-5.11.0.md",
+      "sha256": "7b19b88165d136a38277068fd55d4fefe06fd2abc4fdced63c943e40ee2495b8",
+      "expected_sha256": "7b19b88165d136a38277068fd55d4fefe06fd2abc4fdced63c943e40ee2495b8",
+      "matched": true,
+      "bytes": 2366,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-AUD-05"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/audiveris-issue-920.html",
+      "sha256": "5ccebba9271b131e469b02256da5e644fe6d4d19283b4d1705ea1840c7bad076",
+      "expected_sha256": "5ccebba9271b131e469b02256da5e644fe6d4d19283b4d1705ea1840c7bad076",
+      "matched": true,
+      "bytes": 242842,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-AUD-06"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/audiveris-release-5.10.2.html",
+      "sha256": "c9428d824352714fa611fbf927d79f48f21ce7f4e7b1933cf334faa805c39afb",
+      "expected_sha256": "c9428d824352714fa611fbf927d79f48f21ce7f4e7b1933cf334faa805c39afb",
+      "matched": true,
+      "bytes": 200364,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-AUD-07"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1/sources/audiveris-5.10.1-to-5.10.2.patch",
+      "sha256": "5372013d70707536ad6212bbff7cdb0869e0078b48e870e126561813ea5b54f0",
+      "expected_sha256": "5372013d70707536ad6212bbff7cdb0869e0078b48e870e126561813ea5b54f0",
+      "matched": true,
+      "bytes": 463372,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "CRIT-AUD-08"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-handbook-5.11.0.md",
+      "sha256": "25984a189259472c021571bbdab56dbee22934a0df5bb0ef7f30c37ae2a909fd",
+      "expected_sha256": "25984a189259472c021571bbdab56dbee22934a0df5bb0ef7f30c37ae2a909fd",
+      "matched": true,
+      "bytes": 5233,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-export-5.11.0.md",
+      "sha256": "7b19b88165d136a38277068fd55d4fefe06fd2abc4fdced63c943e40ee2495b8",
+      "expected_sha256": "7b19b88165d136a38277068fd55d4fefe06fd2abc4fdced63c943e40ee2495b8",
+      "matched": true,
+      "bytes": 2366,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-PartwiseBuilder-5.11.0.java",
+      "sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "expected_sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "matched": true,
+      "bytes": 157209,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-release-5.11.0.html",
+      "sha256": "d9c33d46d9e5fb999fc1304dc83c8cf24f99bfc3121918d3e7706dbcc7a2b601",
+      "expected_sha256": "d9c33d46d9e5fb999fc1304dc83c8cf24f99bfc3121918d3e7706dbcc7a2b601",
+      "matched": true,
+      "bytes": 212784,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-issue-971.html",
+      "sha256": "58091f3e6cf5cb3afb94ebfbdc33fd6b5192de84323b2ff082b29898adc53d3c",
+      "expected_sha256": "58091f3e6cf5cb3afb94ebfbdc33fd6b5192de84323b2ff082b29898adc53d3c",
+      "matched": true,
+      "bytes": 271788,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-05"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-issue-920.html",
+      "sha256": "446ecd491eb52562cccf4de482c16e946046e3bf6906a88b3d8d453cc8e83eb4",
+      "expected_sha256": "446ecd491eb52562cccf4de482c16e946046e3bf6906a88b3d8d453cc8e83eb4",
+      "matched": true,
+      "bytes": 242842,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-06"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-release-5.10.2.html",
+      "sha256": "614e347730ff21724073aa457fac912613873df1241f988e7dfc496fab3a6e81",
+      "expected_sha256": "614e347730ff21724073aa457fac912613873df1241f988e7dfc496fab3a6e81",
+      "matched": true,
+      "bytes": 200365,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-07"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-5.10.1-to-5.10.2.patch",
+      "sha256": "5372013d70707536ad6212bbff7cdb0869e0078b48e870e126561813ea5b54f0",
+      "expected_sha256": "5372013d70707536ad6212bbff7cdb0869e0078b48e870e126561813ea5b54f0",
+      "matched": true,
+      "bytes": 463372,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-08"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/musicxml-4.0-musicxml.xsd",
+      "sha256": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99",
+      "expected_sha256": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99",
+      "matched": true,
+      "bytes": 379505,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-MXL-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/pdfjs-6.3.289-page_viewport.js",
+      "sha256": "bcbc222e3771faa0397bcb282b7385940d912f89595e21ef8996159c2c0cf79d",
+      "expected_sha256": "bcbc222e3771faa0397bcb282b7385940d912f89595e21ef8996159c2c0cf79d",
+      "matched": true,
+      "bytes": 6541,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-PDF-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/pdfjs-6.3.289-examples.md",
+      "sha256": "1721aa1920969882e4233e7457e63495a62a53e11a81ff650e9a336e1fc695f9",
+      "expected_sha256": "1721aa1920969882e4233e7457e63495a62a53e11a81ff650e9a336e1fc695f9",
+      "matched": true,
+      "bytes": 3747,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-PDF-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/pdfjs-6.3.289-annotation_storage.js",
+      "sha256": "cb2d5670aca79c96bd905ae8abeb8f07cabc01c0e84a2ec9830f0306e0e38916",
+      "expected_sha256": "cb2d5670aca79c96bd905ae8abeb8f07cabc01c0e84a2ec9830f0306e0e38916",
+      "matched": true,
+      "bytes": 9344,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-PDF-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/pdfjs-release-6.3.289.html",
+      "sha256": "262a52a42dc913122febc1debdd5f549cabb7cf0ed276a0b975e5be6baf7eeb0",
+      "expected_sha256": "262a52a42dc913122febc1debdd5f549cabb7cf0ed276a0b975e5be6baf7eeb0",
+      "matched": true,
+      "bytes": 307088,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-PDF-04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/w3c-web-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "expected_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "matched": true,
+      "bytes": 284185,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-WA-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/mei-v5.1-surface.html",
+      "sha256": "d39e225bd9e6e6c821a1980e7abbf8d49993cb9fb907c89aa9751576c8dd3691",
+      "expected_sha256": "d39e225bd9e6e6c821a1980e7abbf8d49993cb9fb907c89aa9751576c8dd3691",
+      "matched": true,
+      "bytes": 113671,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-MEI-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/mei-v5.1-zone.html",
+      "sha256": "6d5a006608c076d6c635529fe36c942a1ce540b2de55333c20b030ff441c15e8",
+      "expected_sha256": "6d5a006608c076d6c635529fe36c942a1ce540b2de55333c20b030ff441c15e8",
+      "matched": true,
+      "bytes": 103709,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-MEI-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/mei-v5.1-att-facsimile.html",
+      "sha256": "570f8ad4fc27a57844a588613ec87f79cbcb0afa033c08e589a687444300d867",
+      "expected_sha256": "570f8ad4fc27a57844a588613ec87f79cbcb0afa033c08e589a687444300d867",
+      "matched": true,
+      "bytes": 286732,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-MEI-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-RunTable-5.11.0.java",
+      "sha256": "0a1d100fa7540e537983a1eb89d204098d3fb51f3f34c6264442147388840982",
+      "expected_sha256": "0a1d100fa7540e537983a1eb89d204098d3fb51f3f34c6264442147388840982",
+      "matched": true,
+      "bytes": 61643,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-09"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-ZipFileSystem-5.11.0.java",
+      "sha256": "9db426ec313d705ce67d1bc33ca3a1605ddc49dd16187fe732cd4b20d8a24eac",
+      "expected_sha256": "9db426ec313d705ce67d1bc33ca3a1605ddc49dd16187fe732cd4b20d8a24eac",
+      "matched": true,
+      "bytes": 4716,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-10"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/audiveris-Book-5.11.0.java",
+      "sha256": "2cac9a011635a65aa3f336cd82889cc4271bf8a3b3dbcebedf7ab8228cfd6b71",
+      "expected_sha256": "2cac9a011635a65aa3f336cd82889cc4271bf8a3b3dbcebedf7ab8228cfd6b71",
+      "matched": true,
+      "bytes": 95171,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-AUD-11"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/pouchdb-replication.html",
+      "sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "expected_sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "matched": true,
+      "bytes": 30777,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-PDB-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/pouchdb-conflicts.html",
+      "sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "expected_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "matched": true,
+      "bytes": 28467,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-PDB-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/pouchdb-release-9.0.0.html",
+      "sha256": "e819568619e6b27c74ed3c4c0526f5d659645f3d9fe6ee59fb8dd48282b6ce5b",
+      "expected_sha256": "e819568619e6b27c74ed3c4c0526f5d659645f3d9fe6ee59fb8dd48282b6ce5b",
+      "matched": true,
+      "bytes": 299633,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-PDB-03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/verovio-6.3.0-README.md",
+      "sha256": "d271bcbb870d91db06aff30fa050a2d99508df36a8e2adc7064933f1006e27e1",
+      "expected_sha256": "d271bcbb870d91db06aff30fa050a2d99508df36a8e2adc7064933f1006e27e1",
+      "matched": true,
+      "bytes": 4578,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-VRV-01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/verovio-6.3.0-iomusxml.cpp",
+      "sha256": "0def2542a241989f2368fe9b54e67db474242fc0d24b27c48af8dac5ee499ab5",
+      "expected_sha256": "0def2542a241989f2368fe9b54e67db474242fc0d24b27c48af8dac5ee499ab5",
+      "matched": true,
+      "bytes": 230645,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-VRV-02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1/sources/verovio-release-6.3.0.html",
+      "sha256": "ac2264d276fff0acf20769b189ae97fc2700bebaf7743138b1ae11b174ea93b0",
+      "expected_sha256": "ac2264d276fff0acf20769b189ae97fc2700bebaf7743138b1ae11b174ea93b0",
+      "matched": true,
+      "bytes": 197582,
+      "role": "candidate preservation capture integrity only",
+      "source_id": "REV-VRV-03"
+    }
+  ],
+  "primary_sources_checked": [
+    {
+      "id": "CHECK-AUD-01",
+      "candidate_source_id": "REV-AUD-01",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/docs/_pages/handbook.md",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/docs/_pages/handbook.md",
+      "access_time_utc": "2026-10-07T21:32:48.143259+00:00",
+      "version": "5.11.0",
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Overview lines 43\u201374; supported notation, limitations, verification, license.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-01-audiveris-handbook-5.11.0.md",
+      "sha256": "25984a189259472c021571bbdab56dbee22934a0df5bb0ef7f30c37ae2a909fd",
+      "bytes": 5233,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-02",
+      "candidate_source_id": "REV-AUD-02",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/docs/_pages/tutorials/quick/export.md",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/docs/_pages/tutorials/quick/export.md",
+      "access_time_utc": "2026-10-07T21:32:48.145380+00:00",
+      "version": "5.11.0",
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Saving/reloading .omr and lossy .mxl export, lines 9\u201359.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-02-audiveris-export-5.11.0.md",
+      "sha256": "7b19b88165d136a38277068fd55d4fefe06fd2abc4fdced63c943e40ee2495b8",
+      "bytes": 2366,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-03",
+      "candidate_source_id": "REV-AUD-03",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/PartwiseBuilder.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/PartwiseBuilder.java",
+      "access_time_utc": "2026-10-07T21:32:48.146579+00:00",
+      "version": "5.11.0",
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Part IDs lines 550\u2013632; measure labels 1981\u20131986 and 2217\u20132223.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-03-audiveris-PartwiseBuilder-5.11.0.java",
+      "sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "bytes": 157209,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-04",
+      "candidate_source_id": "REV-AUD-04",
+      "url": "https://github.com/Audiveris/audiveris/releases/tag/5.11.0",
+      "final_url": "https://github.com/Audiveris/audiveris/releases/tag/5.11.0",
+      "access_time_utc": "2026-10-07T21:32:48.147606+00:00",
+      "version": "5.11.0",
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Release/tag metadata pins implementation applicability.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-04-audiveris-release-5.11.0.html",
+      "sha256": "27778c5d389afadb910b62d5f7e1ee8ca0c247b14216c823b948145aee00a72e",
+      "bytes": 212779,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-05",
+      "candidate_source_id": "REV-AUD-05",
+      "url": "https://github.com/Audiveris/audiveris/issues/971",
+      "final_url": "https://github.com/Audiveris/audiveris/issues/971",
+      "access_time_utc": "2026-10-07T21:32:48.148780+00:00",
+      "version": "5.11.0 reported build",
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Summary, exact environment, minimal reproducer, actual/expected, issue state and comments.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-05-audiveris-issue-971.html",
+      "sha256": "6de0b2fc0533372861600d560140a0c21c734ff0c0f3a96ba1a1fd178edef128",
+      "bytes": 271790,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-06",
+      "candidate_source_id": "REV-AUD-06",
+      "url": "https://github.com/Audiveris/audiveris/issues/920",
+      "final_url": "https://github.com/Audiveris/audiveris/issues/920",
+      "access_time_utc": "2026-10-07T21:32:48.150542+00:00",
+      "version": "5.10.1 reported vs 5.9",
+      "commit": "issue 920",
+      "locator": "Reporter environment and claimed difference.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-06-audiveris-issue-920.html",
+      "sha256": "f20f7a3bbc87cf6861d2daba3834088a0dbe548057006bb0ef72bc2fbf16ead4",
+      "bytes": 242842,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-AUD-07",
+      "candidate_source_id": "REV-AUD-07",
+      "url": "https://github.com/Audiveris/audiveris/releases/tag/5.10.2",
+      "final_url": "https://github.com/Audiveris/audiveris/releases/tag/5.10.2",
+      "access_time_utc": "2026-10-07T21:32:48.210883+00:00",
+      "version": "5.10.2",
+      "commit": "1b7cf44088c68f4168801822a613751d1bb1b584",
+      "locator": "Release note for #920 and commit boundary.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-07-audiveris-release-5.10.2.html",
+      "sha256": "7623e953be9982276796dcb1dfe8b448b5592e007addbda901eb95e8d76722e3",
+      "bytes": 200360,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-AUD-08",
+      "candidate_source_id": "REV-AUD-08",
+      "url": "https://github.com/Audiveris/audiveris/compare/b1c0bda...1b7cf44.patch",
+      "final_url": "https://github.com/Audiveris/audiveris/compare/b1c0bda...1b7cf44.patch",
+      "access_time_utc": "2026-10-07T21:32:48.213737+00:00",
+      "version": "5.10.1 to 5.10.2",
+      "commit": "b1c0bda47b25c16bff1e886d21acd13d8d323b5d..1b7cf44088c68f4168801822a613751d1bb1b584",
+      "locator": "Patch 24/30 for #920; inspect ClefBuilder/ClefInter and patch path list.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-08-audiveris-5.10.1-to-5.10.2.patch",
+      "sha256": "5372013d70707536ad6212bbff7cdb0869e0078b48e870e126561813ea5b54f0",
+      "bytes": 463372,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-MXL-01",
+      "candidate_source_id": "REV-MXL-01",
+      "url": "https://raw.githubusercontent.com/w3c/musicxml/799e2defb2ece0ae7bafe08dcbcac25b2c631d53/schema/musicxml.xsd",
+      "final_url": "https://raw.githubusercontent.com/w3c/musicxml/799e2defb2ece0ae7bafe08dcbcac25b2c631d53/schema/musicxml.xsd",
+      "access_time_utc": "2026-10-07T21:32:48.224039+00:00",
+      "version": "MusicXML 4.0",
+      "commit": "799e2defb2ece0ae7bafe08dcbcac25b2c631d53",
+      "locator": "measure attributes 2383\u20132410; divisions 2820\u20132822.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-MXL-01-musicxml-4.0-musicxml.xsd",
+      "sha256": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99",
+      "bytes": 379505,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "799e2defb2ece0ae7bafe08dcbcac25b2c631d53"
+    },
+    {
+      "id": "CHECK-PDF-01",
+      "candidate_source_id": "REV-PDF-01",
+      "url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/src/display/page_viewport.js",
+      "final_url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/src/display/page_viewport.js",
+      "access_time_utc": "2026-10-07T21:32:48.251639+00:00",
+      "version": "6.3.289",
+      "commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56",
+      "locator": "Constructor and transform 47\u2013110; inverse/forward point conversion 185\u2013213.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-01-pdfjs-6.3.289-page_viewport.js",
+      "sha256": "bcbc222e3771faa0397bcb282b7385940d912f89595e21ef8996159c2c0cf79d",
+      "bytes": 6541,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-PDF-02",
+      "candidate_source_id": "REV-PDF-02",
+      "url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/docs/contents/examples/index.md",
+      "final_url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/docs/contents/examples/index.md",
+      "access_time_utc": "2026-10-07T21:32:48.257998+00:00",
+      "version": "6.3.289",
+      "commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56",
+      "locator": "Rendering the Page; viewport/canvas coordinate discussion.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-02-pdfjs-6.3.289-examples.md",
+      "sha256": "1721aa1920969882e4233e7457e63495a62a53e11a81ff650e9a336e1fc695f9",
+      "bytes": 3747,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-PDF-03",
+      "candidate_source_id": "REV-PDF-03",
+      "url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/src/display/annotation_storage.js",
+      "final_url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/src/display/annotation_storage.js",
+      "access_time_utc": "2026-10-07T21:32:48.271818+00:00",
+      "version": "6.3.289",
+      "commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56",
+      "locator": "Storage map, get/set and serialization 26\u201342, 108\u2013136, 168\u2013200.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-03-pdfjs-6.3.289-annotation_storage.js",
+      "sha256": "cb2d5670aca79c96bd905ae8abeb8f07cabc01c0e84a2ec9830f0306e0e38916",
+      "bytes": 9344,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-PDF-04",
+      "candidate_source_id": "REV-PDF-04",
+      "url": "https://github.com/mozilla/pdf.js/releases/tag/v6.3.289",
+      "final_url": "https://github.com/mozilla/pdf.js/releases/tag/v6.3.289",
+      "access_time_utc": "2026-10-07T21:32:48.294652+00:00",
+      "version": "6.3.289",
+      "commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56",
+      "locator": "Release date, tag, commit and release notes.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-04-pdfjs-release-6.3.289.html",
+      "sha256": "5682ca93cb808e46b4fd02dfa7d45cbcd42c2750585b047503d2edf540d9c7df",
+      "bytes": 307084,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-WA-01",
+      "candidate_source_id": "REV-WA-01",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "final_url": "https://www.w3.org/TR/annotation-model/",
+      "access_time_utc": "2026-10-07T21:32:48.324994+00:00",
+      "version": "W3C Recommendation 2017-02-23",
+      "commit": "W3C TR/REC",
+      "locator": "Specific Resource, selector/state and position selector \u00a7\u00a73\u20134; representation brittleness.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-WA-01-w3c-web-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "bytes": 284185,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-MEI-01",
+      "candidate_source_id": "REV-MEI-01",
+      "url": "https://music-encoding.org/guidelines/v5/elements/surface.html",
+      "final_url": "https://music-encoding.org/guidelines/v5/elements/surface.html",
+      "access_time_utc": "2026-10-07T21:32:48.329814+00:00",
+      "version": "MEI 5.1",
+      "commit": "Guidelines build #9d551da",
+      "locator": "Surface page/graphic coordinate model.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-MEI-01-mei-v5.1-surface.html",
+      "sha256": "d39e225bd9e6e6c821a1980e7abbf8d49993cb9fb907c89aa9751576c8dd3691",
+      "bytes": 113671,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-MEI-02",
+      "candidate_source_id": "REV-MEI-02",
+      "url": "https://music-encoding.org/guidelines/v5/elements/zone.html",
+      "final_url": "https://music-encoding.org/guidelines/v5/elements/zone.html",
+      "access_time_utc": "2026-10-07T21:32:48.332923+00:00",
+      "version": "MEI 5.1",
+      "commit": "Guidelines build #9d551da",
+      "locator": "Zone region and coordinate attributes.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-MEI-02-mei-v5.1-zone.html",
+      "sha256": "6d5a006608c076d6c635529fe36c942a1ce540b2de55333c20b030ff441c15e8",
+      "bytes": 103709,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-MEI-03",
+      "candidate_source_id": "REV-MEI-03",
+      "url": "https://music-encoding.org/guidelines/v5/attribute-classes/att.facsimile.html",
+      "final_url": "https://music-encoding.org/guidelines/v5/attribute-classes/att.facsimile.html",
+      "access_time_utc": "2026-10-07T21:32:48.352951+00:00",
+      "version": "MEI 5.1",
+      "commit": "Guidelines build #9d551da",
+      "locator": "@facs references to MEI surface/zone identifiers.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-MEI-03-mei-v5.1-att-facsimile.html",
+      "sha256": "570f8ad4fc27a57844a588613ec87f79cbcb0afa033c08e589a687444300d867",
+      "bytes": 286732,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-AUD-09",
+      "candidate_source_id": "REV-AUD-09",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/run/RunTable.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/run/RunTable.java",
+      "access_time_utc": "2026-10-07T21:32:48.408864+00:00",
+      "version": "5.11.0",
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "afterMarshal / afterUnmarshal and sequences handling around lines 330\u2013370.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-09-audiveris-RunTable-5.11.0.java",
+      "sha256": "0a1d100fa7540e537983a1eb89d204098d3fb51f3f34c6264442147388840982",
+      "bytes": 61643,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-10",
+      "candidate_source_id": "REV-AUD-10",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/util/ZipFileSystem.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/util/ZipFileSystem.java",
+      "access_time_utc": "2026-10-07T21:32:48.419567+00:00",
+      "version": "5.11.0",
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "open implementation and behavior around lines 90\u2013130.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-10-audiveris-ZipFileSystem-5.11.0.java",
+      "sha256": "9db426ec313d705ce67d1bc33ca3a1605ddc49dd16187fe732cd4b20d8a24eac",
+      "bytes": 4716,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-11",
+      "candidate_source_id": "REV-AUD-11",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/Book.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/Book.java",
+      "access_time_utc": "2026-10-07T21:32:48.448968+00:00",
+      "version": "5.11.0",
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "openBookFile/openSheetFolder and export/reload paths noted in #971.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-11-audiveris-Book-5.11.0.java",
+      "sha256": "2cac9a011635a65aa3f336cd82889cc4271bf8a3b3dbcebedf7ab8228cfd6b71",
+      "bytes": 95171,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-PDB-01",
+      "candidate_source_id": "REV-PDB-01",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "final_url": "https://pouchdb.com/guides/replication.html",
+      "access_time_utc": "2026-10-07T21:32:48.454938+00:00",
+      "version": "PouchDB 9.0.0 docs (site navigation)",
+      "commit": "not independently pinned for implementation",
+      "locator": "sync, live+retry, error/pause, and deletion/re-replication behavior.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDB-01-pouchdb-replication.html",
+      "sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "bytes": 30777,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-PDB-02",
+      "candidate_source_id": "REV-PDB-02",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "final_url": "https://pouchdb.com/guides/conflicts.html",
+      "access_time_utc": "2026-10-07T21:32:48.455374+00:00",
+      "version": "PouchDB 9.0.0 docs (site navigation)",
+      "commit": "not independently pinned for implementation",
+      "locator": "Immediate 409, eventual conflict winner, _conflicts revisions, app-selected resolution.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDB-02-pouchdb-conflicts.html",
+      "sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "bytes": 28467,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-PDB-03",
+      "candidate_source_id": "REV-PDB-03",
+      "url": "https://github.com/apache/pouchdb/releases/tag/9.0.0",
+      "final_url": "https://github.com/apache/pouchdb/releases/tag/9.0.0",
+      "access_time_utc": "2026-10-07T21:32:48.482134+00:00",
+      "version": "9.0.0",
+      "commit": "b2882c1 (release display short commit)",
+      "locator": "Release date, version and short commit; captured to pin the docs-era candidate.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDB-03-pouchdb-release-9.0.0.html",
+      "sha256": "15b24bea2747c0f89f178f9f439cb102d8e0e8f4b13d929901c702404a627c12",
+      "bytes": 299640,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-VRV-01",
+      "candidate_source_id": "REV-VRV-01",
+      "url": "https://raw.githubusercontent.com/rism-digital/verovio/425dd7b6ba26edcecbe345c10b15586d095743d9/README.md",
+      "final_url": "https://raw.githubusercontent.com/rism-digital/verovio/425dd7b6ba26edcecbe345c10b15586d095743d9/README.md",
+      "access_time_utc": "2026-10-07T21:32:48.504255+00:00",
+      "version": "6.3.0",
+      "commit": "425dd7b6ba26edcecbe345c10b15586d095743d9",
+      "locator": "Supported input/output formats and license, lines 11\u201329.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-01-verovio-6.3.0-README.md",
+      "sha256": "d271bcbb870d91db06aff30fa050a2d99508df36a8e2adc7064933f1006e27e1",
+      "bytes": 4578,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "425dd7b6ba26edcecbe345c10b15586d095743d9"
+    },
+    {
+      "id": "CHECK-VRV-02",
+      "candidate_source_id": "REV-VRV-02",
+      "url": "https://raw.githubusercontent.com/rism-digital/verovio/425dd7b6ba26edcecbe345c10b15586d095743d9/src/iomusxml.cpp",
+      "final_url": "https://raw.githubusercontent.com/rism-digital/verovio/425dd7b6ba26edcecbe345c10b15586d095743d9/src/iomusxml.cpp",
+      "access_time_utc": "2026-10-07T21:32:48.560735+00:00",
+      "version": "6.3.0",
+      "commit": "425dd7b6ba26edcecbe345c10b15586d095743d9",
+      "locator": "Measure counting, label selection, and repeated-number handling around lines 193\u2013211, 358\u2013402, 1815\u20131883.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-02-verovio-6.3.0-iomusxml.cpp",
+      "sha256": "0def2542a241989f2368fe9b54e67db474242fc0d24b27c48af8dac5ee499ab5",
+      "bytes": 230645,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "425dd7b6ba26edcecbe345c10b15586d095743d9"
+    },
+    {
+      "id": "CHECK-VRV-03",
+      "candidate_source_id": "REV-VRV-03",
+      "url": "https://github.com/rism-digital/verovio/releases/tag/version-6.3.0",
+      "final_url": "https://github.com/rism-digital/verovio/releases/tag/version-6.3.0",
+      "access_time_utc": "2026-10-07T21:32:48.604566+00:00",
+      "version": "6.3.0",
+      "commit": "425dd7b6ba26edcecbe345c10b15586d095743d9",
+      "locator": "Tag/release and peeled implementation commit.",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-03-verovio-release-6.3.0.html",
+      "sha256": "5bf45c3546fa9995c7524f627c6c637ba42578b0d4a2ff11454f7223f59a11e0",
+      "bytes": 197584,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "425dd7b6ba26edcecbe345c10b15586d095743d9"
+    },
+    {
+      "id": "DISC-OSMD",
+      "url": "https://github.com/opensheetmusicdisplay/opensheetmusicdisplay",
+      "final_url": "https://github.com/opensheetmusicdisplay/opensheetmusicdisplay",
+      "version": "public default branch at access",
+      "locator": "README: features/limitations; competitor to a MusicXML rendering component",
+      "access_time_utc": "2026-10-07T21:33:45.691981+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/DISC-OSMD.html",
+      "sha256": "12bed788bb55ef65a05b48afb566a782e3d560501cd8ae7f741fbb7c08802718",
+      "bytes": 377897,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "open-discovery coverage check only; not qualified or selected as a replacement component"
+    },
+    {
+      "id": "DISC-XOPP",
+      "url": "https://xournalpp.github.io/guide/pdfs/",
+      "final_url": "https://xournalpp.github.io/guide/pdfs/",
+      "version": "rolling documentation at access",
+      "locator": "Working with PDF files: portable journal/background and export limitations",
+      "access_time_utc": "2026-10-07T21:33:45.693904+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/DISC-XOPP.html",
+      "sha256": "37bc8077a7870b432bd7e04676c847f3f19629693e982b5aa4c9a4612b3c14ac",
+      "bytes": 34331,
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "assessment_mode": "open-discovery coverage check only; not qualified or selected as a replacement component"
+    },
+    {
+      "id": "DISC-IIIF",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "final_url": "https://iiif.io/api/presentation/3.0/",
+      "version": "IIIF Presentation 3.0",
+      "locator": "Canvas coordinate space and annotations; independent image-library analogy",
+      "access_time_utc": "2026-10-07T21:33:45.695311+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/DISC-IIIF.html",
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "bytes": 385826,
+      "http_status": 200,
+      "content_type": "text/html",
+      "assessment_mode": "open-discovery coverage check only; not qualified or selected as a replacement component"
+    },
+    {
+      "id": "CHECK-VRV-HISTORY",
+      "url": "https://raw.githubusercontent.com/rism-digital/verovio/425dd7b6ba26edcecbe345c10b15586d095743d9/CHANGELOG.md",
+      "final_url": "https://raw.githubusercontent.com/rism-digital/verovio/425dd7b6ba26edcecbe345c10b15586d095743d9/CHANGELOG.md",
+      "version": "6.3.0 / 425dd7b6ba26edcecbe345c10b15586d095743d9",
+      "locator": "6.3.0 and 5.6.0 MusicXML fixes",
+      "access_time_utc": "2026-10-07T21:33:45.696413+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-HISTORY.md",
+      "sha256": "70220d7ef990dfd82cee30075394ad869b78b3cdb4e98ddb41601a287c1261f0",
+      "bytes": 37066,
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "425dd7b6ba26edcecbe345c10b15586d095743d9"
+    },
+    {
+      "id": "CHECK-VRV-3902",
+      "url": "https://api.github.com/repos/rism-digital/verovio/issues/3902",
+      "final_url": "https://api.github.com/repos/rism-digital/verovio/issues/3902",
+      "version": "issue 3902",
+      "locator": "body,state,version scope and closure link",
+      "access_time_utc": "2026-10-07T21:33:45.697384+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-3902.json",
+      "sha256": "c16bbaf495222f2e003835bed6206ffc5bb2d5f7199592fc0d5d6cf95dc6ba7d",
+      "bytes": 4007,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-VRV-4396",
+      "url": "https://api.github.com/repos/rism-digital/verovio/pulls/4396",
+      "final_url": "https://api.github.com/repos/rism-digital/verovio/pulls/4396",
+      "version": "PR 4396",
+      "locator": "PR 4396 body, merged_at 2026-07-20, merge_commit_sha 2849913d97dcca8d4b7c3379e05ed4693fea6ed3; author-reported suite comparisons, not reviewer executions",
+      "access_time_utc": "2026-10-07T21:33:45.698635+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-4396.json",
+      "sha256": "4b8aca2f0d7b8f19355b396f8671d7a7fa6a6cd39f876367ecaaa8e7ef2dc9d6",
+      "bytes": 21431,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-PDF-20604",
+      "url": "https://api.github.com/repos/mozilla/pdf.js/issues/20604",
+      "final_url": "https://api.github.com/repos/mozilla/pdf.js/issues/20604",
+      "version": "reported 5.4.530",
+      "locator": "body,state,version and reproduction context",
+      "access_time_utc": "2026-10-07T21:33:45.779116+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-20604.json",
+      "sha256": "413c1df2edc52344c63106fec070055735591ff5ef96c9c71a5f868ece83dd24",
+      "bytes": 5360,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-PDF-TREE",
+      "url": "https://api.github.com/repos/mozilla/pdf.js/git/trees/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56?recursive=1",
+      "final_url": "https://api.github.com/repos/mozilla/pdf.js/git/trees/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56?recursive=1",
+      "version": "6.3.289 / 1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56",
+      "locator": "paths for viewport implementation tests",
+      "access_time_utc": "2026-10-07T21:33:45.792637+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-TREE.json",
+      "sha256": "e4ac62e1c1a704da145b00e354ea1fbd580b9691bb1a34ead87a26f628d253ce",
+      "bytes": 638117,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "version/path/ancestry metadata inspection only",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-PDF-TAG",
+      "url": "https://api.github.com/repos/mozilla/pdf.js/git/ref/tags/v6.3.289",
+      "final_url": "https://api.github.com/repos/mozilla/pdf.js/git/ref/tags/v6.3.289",
+      "version": "tag v6.3.289",
+      "locator": "tag SHA identity",
+      "access_time_utc": "2026-10-07T21:33:45.813609+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-TAG.json",
+      "sha256": "efbd81474487e438664efded23f0855e552c02360b0cd589a6ca722ef529c496",
+      "bytes": 341,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "version/path/ancestry metadata inspection only",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-AUD-TAG",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/git/ref/tags/5.11.0",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/git/ref/tags/5.11.0",
+      "version": "tag 5.11.0",
+      "locator": "tag SHA identity",
+      "access_time_utc": "2026-10-07T21:33:45.906102+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-TAG.json",
+      "sha256": "1945a0f5985a245ddcd4c3a3d38bdbce85847442e8c2502af4daa78851bcf0ef",
+      "bytes": 347,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "version/path/ancestry metadata inspection only",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-VRV-TAG",
+      "url": "https://api.github.com/repos/rism-digital/verovio/git/ref/tags/version-6.3.0",
+      "final_url": "https://api.github.com/repos/rism-digital/verovio/git/ref/tags/version-6.3.0",
+      "version": "tag version-6.3.0",
+      "locator": "tag and peeled SHA identity",
+      "access_time_utc": "2026-10-07T21:33:45.943997+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-TAG.json",
+      "sha256": "086b154b10aabf3fe8f5fa11801ab1674091e12da4f2f453bc43212ff4278daa",
+      "bytes": 365,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "version/path/ancestry metadata inspection only",
+      "resolved_implementation_commit": "425dd7b6ba26edcecbe345c10b15586d095743d9"
+    },
+    {
+      "id": "CHECK-MXL-TAG",
+      "url": "https://api.github.com/repos/w3c/musicxml/git/ref/tags/v4.0",
+      "final_url": "https://api.github.com/repositories/40168190/git/ref/tags/v4.0",
+      "version": "tag v4.0",
+      "locator": "tag SHA identity",
+      "access_time_utc": "2026-10-07T21:33:45.957122+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-MXL-TAG.json",
+      "sha256": "40f169bdad05245f3cff9393288d5a964e5871bef958c223f727cf1d95d7fee0",
+      "bytes": 331,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "version/path/ancestry metadata inspection only"
+    },
+    {
+      "id": "CHECK-AUD-971-JSON",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/issues/971",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/issues/971",
+      "version": "issue 971",
+      "locator": "body,state and exact environment",
+      "access_time_utc": "2026-10-07T21:33:45.961919+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-971-JSON.json",
+      "sha256": "b71334d81710561073faaa0464eabb717d461706e612ec9f325e83ad7f1aaeff",
+      "bytes": 7537,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-971-COMMENTS",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/issues/971/comments",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/issues/971/comments",
+      "version": "issue 971 comments at access",
+      "locator": "issuecomment-5098315690 by jdburrage: second different score in the same reported 5.11.0 environment, not independent-person reproduction",
+      "access_time_utc": "2026-10-07T21:33:45.997899+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-971-COMMENTS.json",
+      "sha256": "41b529f7375af9473c402b2ed218951995cb0e3c0151cbea156cfcce5aff2e0f",
+      "bytes": 4474,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-920-JSON",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/issues/920",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/issues/920",
+      "version": "issue 920",
+      "locator": "body,state and environment",
+      "access_time_utc": "2026-10-07T21:33:45.998834+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-920-JSON.json",
+      "sha256": "fb4a6fc64f7d246135afe3c624b18bf43c36c4041ac7a32b0e3b45558a53f552",
+      "bytes": 4161,
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-MEI-CHAPTER",
+      "url": "https://music-encoding.org/guidelines/v5/content/facsimilesrecordings.html",
+      "final_url": "https://music-encoding.org/guidelines/v5/content/facsimilesrecordings.html",
+      "version": "MEI 5.1 build 9d551da",
+      "locator": "MEI 5.1 build #9d551da \u00a712.1.1, listings 436\u2013438 and following explanation: zone coordinates relative to surface, not necessarily graphic dimensions",
+      "access_time_utc": "2026-10-07T21:35:33.300415+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-MEI-CHAPTER.html",
+      "sha256": "02da0bbe1f9d8a4b407e32c38d4029005c7d8b45aa70230865242d7d0c9925e8",
+      "bytes": 121396,
+      "http_status": 200,
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-VRV-PEEL",
+      "url": "https://api.github.com/repos/rism-digital/verovio/git/tags/55f1f5d485cb252268ed48d3b7127cdc6b7064fa",
+      "final_url": "https://api.github.com/repos/rism-digital/verovio/git/tags/55f1f5d485cb252268ed48d3b7127cdc6b7064fa",
+      "version": "6.3.0 annotated tag",
+      "locator": "object.sha -> commit",
+      "access_time_utc": "2026-10-07T21:35:33.301506+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-PEEL.json",
+      "sha256": "95edeb9cbdbd35f9517156119ad6e4ae03f7df24fd696df66aeaf4465346382a",
+      "bytes": 660,
+      "http_status": 200,
+      "assessment_mode": "version/path/ancestry metadata inspection only",
+      "resolved_implementation_commit": "425dd7b6ba26edcecbe345c10b15586d095743d9"
+    },
+    {
+      "id": "CHECK-VRV-FIX-RANGE",
+      "url": "https://api.github.com/repos/rism-digital/verovio/compare/2849913d97dcca8d4b7c3379e05ed4693fea6ed3...425dd7b6ba26edcecbe345c10b15586d095743d9",
+      "final_url": "https://api.github.com/repos/rism-digital/verovio/compare/2849913d97dcca8d4b7c3379e05ed4693fea6ed3...425dd7b6ba26edcecbe345c10b15586d095743d9",
+      "version": "PR 4396 merge to 6.3.0",
+      "locator": "comparison 2849913d97dcca8d4b7c3379e05ed4693fea6ed3...425dd7b6ba26edcecbe345c10b15586d095743d9: status ahead, behind_by 0; merge is an ancestor of 6.3.0",
+      "access_time_utc": "2026-10-07T21:35:33.302807+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-FIX-RANGE.json",
+      "sha256": "9c7b086315b2fee460389b82b012ba74508c83bb48999aa91b6230b47fe19e7c",
+      "bytes": 1635341,
+      "http_status": 200,
+      "assessment_mode": "version/path/ancestry metadata inspection only"
+    },
+    {
+      "id": "CHECK-VRV-FIX-PATCH",
+      "url": "https://github.com/rism-digital/verovio/pull/4396.patch",
+      "final_url": "https://patch-diff.githubusercontent.com/raw/rism-digital/verovio/pull/4396.patch",
+      "version": "PR 4396",
+      "locator": "PR 4396 patch: FindMeasureByCount migration; only include/vrv/iomusxml.h and src/iomusxml.cpp changed; no test path in this patch",
+      "access_time_utc": "2026-10-07T21:35:33.303854+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-VRV-FIX-PATCH.patch",
+      "sha256": "d56164841c5d0e3cc294eff47651eb7154c0f1fce2c5cdf43a749654b7f4b44c",
+      "bytes": 34672,
+      "http_status": 200,
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-PDF-TEST",
+      "url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/test/unit/display_utils_spec.js",
+      "final_url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/test/unit/display_utils_spec.js",
+      "version": "6.3.289 / 1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56",
+      "locator": "test/unit/display_utils_spec.js: locator search found no PageViewport/convertToPdfPoint/userUnit tests in this file; not evidence that no tests exist",
+      "access_time_utc": "2026-10-07T21:35:33.305428+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-TEST.js",
+      "sha256": "c649b6d78890e624c827c6c5df9ae4c0dc82801aa10e95d1696ed00398d590f5",
+      "bytes": 20012,
+      "http_status": 200,
+      "assessment_mode": "locator search only; this file contained no PageViewport test, so API tests were retrieved separately",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-PDF-20604-COMMENTS",
+      "url": "https://api.github.com/repos/mozilla/pdf.js/issues/20604/comments",
+      "final_url": "https://api.github.com/repos/mozilla/pdf.js/issues/20604/comments",
+      "version": "issue comments at access",
+      "locator": "PDF_TO_CSS_UNITS explanation and closure rather than inferred component bug",
+      "access_time_utc": "2026-10-07T21:35:33.369618+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-20604-COMMENTS.json",
+      "sha256": "d71664117e46f59df996654e763e6c33bce3798ec7b52534e224312917984e05",
+      "bytes": 4028,
+      "http_status": 200,
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-PDF-API",
+      "url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/src/display/api.js",
+      "final_url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/src/display/api.js",
+      "version": "6.3.289 / 1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56",
+      "locator": "src/display/api.js lines 1374\u20131438: pageNumber is 1-based, pageIndex internal 0-based; userUnit in 1/72 inch; visible page view and getViewport parameters",
+      "access_time_utc": "2026-10-07T21:35:33.424772+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-API.js",
+      "sha256": "9858ca9516c732acd46eeb4b8ca1eafea942ff4c708aeaff34eb4f93315a150c",
+      "bytes": 113204,
+      "http_status": 200,
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-AUD-CLEF",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/ClefInter.java",
+      "final_url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/ClefInter.java",
+      "version": "5.11.0 / 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Clef pitch/constructor and setBounds carry-forward",
+      "access_time_utc": "2026-10-07T21:35:33.467826+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-CLEF.java",
+      "sha256": "0b8a281e6a96473ba8364cba63bb5c83fc99718e93819d528bf62d502ddc9f45",
+      "bytes": 28406,
+      "http_status": 200,
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd"
+    },
+    {
+      "id": "CHECK-AUD-RANGE",
+      "url": "https://api.github.com/repos/Audiveris/audiveris/compare/1b7cf44088c68f4168801822a613751d1bb1b584...9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "final_url": "https://api.github.com/repos/Audiveris/audiveris/compare/1b7cf44088c68f4168801822a613751d1bb1b584...9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "version": "5.10.2 to 5.11.0",
+      "locator": "release ancestry",
+      "access_time_utc": "2026-10-07T21:35:33.520472+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-AUD-RANGE.json",
+      "sha256": "824557583aa1bcbdcf892e205db5d5c9cd808bd57d56c5572350ea06bdc254f5",
+      "bytes": 642693,
+      "http_status": 200,
+      "assessment_mode": "version/path/ancestry metadata inspection only"
+    },
+    {
+      "id": "DISC-OSMD-PIN",
+      "url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/commits/develop",
+      "final_url": "https://api.github.com/repos/opensheetmusicdisplay/opensheetmusicdisplay/commits/develop",
+      "version": "default branch develop at access",
+      "locator": "commit SHA for source identity of useful competitor",
+      "access_time_utc": "2026-10-07T21:35:33.595015+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/DISC-OSMD-PIN.json",
+      "sha256": "18dfb0bbbdca24244a8c047b63d39b45677bf5b898e1d657243d90529723201b",
+      "bytes": 17216,
+      "http_status": 200,
+      "assessment_mode": "open-discovery coverage check only; not qualified or selected as a replacement component",
+      "resolved_implementation_commit": "ea3ff982e2e5a4df010cef7871f69376a662d3fe"
+    },
+    {
+      "id": "DISC-OSMD-README",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/ea3ff982e2e5a4df010cef7871f69376a662d3fe/README.md",
+      "final_url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/ea3ff982e2e5a4df010cef7871f69376a662d3fe/README.md",
+      "version": "ea3ff982e2e5a4df010cef7871f69376a662d3fe",
+      "locator": "README.md lines 35\u201340, 52\u201380, 97\u2013106 at ea3ff982e2e5a4df010cef7871f69376a662d3fe: MusicXML renderer, TS/VexFlow and feature limits; discovery comparator only",
+      "access_time_utc": "2026-10-07T21:36:07.609645+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/DISC-OSMD-README.md",
+      "sha256": "de99421152d98db3ed61a4e50ab6644f04a070f5ab035110aebd26d8c98e06ad",
+      "bytes": 13299,
+      "http_status": 200,
+      "assessment_mode": "open-discovery coverage check only; not qualified or selected as a replacement component",
+      "resolved_implementation_commit": "ea3ff982e2e5a4df010cef7871f69376a662d3fe"
+    },
+    {
+      "id": "DISC-OSMD-PACKAGE",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/ea3ff982e2e5a4df010cef7871f69376a662d3fe/package.json",
+      "final_url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/ea3ff982e2e5a4df010cef7871f69376a662d3fe/package.json",
+      "version": "ea3ff982e2e5a4df010cef7871f69376a662d3fe",
+      "locator": "package.json version 2.2.0, license BSD-3-Clause and VexFlow dependency at ea3ff982e2e5a4df010cef7871f69376a662d3fe; version/packaging metadata only",
+      "access_time_utc": "2026-10-07T21:36:07.612082+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/DISC-OSMD-PACKAGE.json",
+      "sha256": "076fef533bce02d52cf7af82ac5740443ec17c7be0bfd08f05a61c490f766b52",
+      "bytes": 6358,
+      "http_status": 200,
+      "assessment_mode": "open-discovery coverage check only; not qualified or selected as a replacement component",
+      "resolved_implementation_commit": "ea3ff982e2e5a4df010cef7871f69376a662d3fe"
+    },
+    {
+      "id": "CHECK-PDF-API-TESTS",
+      "url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/test/unit/api_spec.js",
+      "final_url": "https://raw.githubusercontent.com/mozilla/pdf.js/1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56/test/unit/api_spec.js",
+      "version": "6.3.289 / 1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56",
+      "locator": "test/unit/api_spec.js lines 3928\u20133998: viewport rotation, non-default userUnit, offsets, dontFlip and rejection of 45 degrees; read only, not executed",
+      "access_time_utc": "2026-10-07T21:36:07.613409+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDF-API-TESTS.js",
+      "sha256": "ceea4456a7dd2e892a90ae13e1299e6f3bb5f6892ae040b71b1277ba9e401802",
+      "bytes": 335415,
+      "http_status": 200,
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "1c8020a7d4e43668ac287a3ecf9a8dbea17e4c56"
+    },
+    {
+      "id": "CHECK-PDB-DELETE-GUIDE",
+      "url": "https://pouchdb.com/guides/compact-and-destroy.html",
+      "final_url": "https://pouchdb.com/guides/compact-and-destroy.html",
+      "version": "rolling v9.0.0 site",
+      "locator": "destroy removes local database, not replicated record deletions",
+      "access_time_utc": "2026-10-07T21:36:07.614598+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDB-DELETE-GUIDE.html",
+      "sha256": "f655bafa4b8fe7be1aaeba9c27cbfb112227027d7fe6f383dc91bbf79b4dcc88",
+      "bytes": 22602,
+      "http_status": 200,
+      "assessment_mode": "source text/code/metadata inspection; no runtime test"
+    },
+    {
+      "id": "CHECK-PDB-TAG",
+      "url": "https://api.github.com/repos/apache/pouchdb/git/ref/tags/9.0.0",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/git/ref/tags/9.0.0",
+      "version": "9.0.0",
+      "locator": "tag SHA identity",
+      "access_time_utc": "2026-10-07T21:37:23.768709+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDB-TAG.json",
+      "sha256": "301128a24ad587274ef64072dc20aab8e24c84f90f6822f72d46962417da8143",
+      "bytes": 331,
+      "http_status": 200,
+      "assessment_mode": "version/path/ancestry metadata inspection only",
+      "resolved_implementation_commit": "b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1"
+    },
+    {
+      "id": "CHECK-PDB-TAG-OBJECT",
+      "url": "https://api.github.com/repos/apache/pouchdb/git/commits/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "version": "9.0.0",
+      "locator": "tag/commit object",
+      "access_time_utc": "2026-10-07T21:37:29.897549+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDB-TAG-OBJECT.json",
+      "sha256": "c86f1fb3ae21fefe11d6c924330df06e9ba734c5c3a5599428278def3310a403",
+      "bytes": 1094,
+      "http_status": 200,
+      "assessment_mode": "version/path/ancestry metadata inspection only",
+      "resolved_implementation_commit": "b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1"
+    },
+    {
+      "id": "CHECK-PDB-TREE",
+      "url": "https://api.github.com/repos/apache/pouchdb/git/trees/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1?recursive=1",
+      "version": "9.0.0 / b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "locator": "replication/winner/deletion code paths",
+      "access_time_utc": "2026-10-07T21:37:37.421784+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDB-TREE.json",
+      "sha256": "424722f7db7aaaf62c8e2759640178aed226eb29775c8f9867c231805fcc2674",
+      "bytes": 13679,
+      "http_status": 200,
+      "assessment_mode": "version/path/ancestry metadata inspection only",
+      "resolved_implementation_commit": "b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1"
+    },
+    {
+      "id": "CHECK-PDB-BUILD-CODE",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/lib/index-browser.es.js",
+      "version": "9.0.0 / b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "locator": "lib/index-browser.es.js lines 960\u2013985 winningRev, 1031\u20131042 collectConflicts, 485 REV_CONFLICT, 2499\u20132558 destroy, 6433\u20136453 indexedDB destroy, 9650\u20139676 backOff, 9946\u20139970 paused/active",
+      "access_time_utc": "2026-10-07T21:37:52.458701+00:00",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/CHECK-PDB-BUILD-CODE.js",
+      "sha256": "fad71631f509479ede7be5a1315f922cf686d425d560fe9d398c34695864404b",
+      "bytes": 300779,
+      "http_status": 200,
+      "assessment_mode": "source text/code/metadata inspection; no runtime test",
+      "resolved_implementation_commit": "b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1"
+    }
+  ],
+  "failed_source_capture_attempts": [
+    {
+      "id": "CHECK-PDB-REPLICATION-CODE",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/9.0.0/packages/node_modules/pouchdb-replication/src/replicate.js",
+      "access_time_utc": "2026-10-07T21:37:23.770527+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "CHECK-PDB-WINNING-REV",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/9.0.0/packages/node_modules/pouchdb-merge/src/winningRev.js",
+      "access_time_utc": "2026-10-07T21:37:23.771866+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "CHECK-PDB-CONFLICTS-CODE",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/9.0.0/packages/node_modules/pouchdb-merge/src/collectConflicts.js",
+      "access_time_utc": "2026-10-07T21:37:23.773170+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "CHECK-PDB-DESTROY-CODE",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/9.0.0/packages/node_modules/pouchdb-core/src/adapter.js",
+      "access_time_utc": "2026-10-07T21:37:23.774741+00:00",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "source_capture_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/control/source-review-v1/sources/capture-manifest.json",
+    "sha256": "565f1451ab67dbcb39e0112a7a98f28f3e3cfc16fad5c0693ec409cc902ae9b2"
+  },
+  "preservation": {
+    "result": "PASS",
+    "material_loss_found": false,
+    "incorrect_scientific_rejection_or_correction_found": false,
+    "evidence_refs": [
+      "S4",
+      "S5",
+      "E01",
+      "REPORT.md:Preservation, validation and review boundary"
+    ],
+    "preserved": [
+      "hypothetical-only/authorized inputs",
+      "no marketplace/catalog acquisition/composition/engraving replacement/live performance assessment",
+      "affordable public/local components and portable poor-connectivity handoff",
+      "work-edition-part and exact source/derivative versions",
+      "observed versus corrected labels and permission assertions",
+      "human checked scope, no perfect recognition",
+      "MusicXML shared-barline/duplicate/nonnumeric/text/divisions/document-ID conditions",
+      "source PDF versus raster versus MEI frame distinction",
+      "stale targets and explicit re-anchoring",
+      "reviewed per-part links and unresolved readable notes",
+      "private marks and explicit shared publication/returns",
+      "visible conflicting base-revision returns",
+      "withdrawal/active-cache/backup limits and copied-file access limits",
+      "scope reduction with optional OMR/MEI/Verovio/replication/service leads",
+      "actual versus proposed validation and issue non-reproduction"
+    ],
+    "compression_without_material_loss": [
+      "shared-folder transport lead",
+      "detailed optional staff/voice/event schema",
+      "generalized event/interpretation/tombstone machinery deferred"
+    ],
+    "source_identity_result": "Mapped hashes match; final sources retain exact identities/versions/URLs/byte hashes. Reviewer retrieved governing evidence afresh. D01 is not a lost admitted option; the missing comparison was absent in the lineage."
+  },
+  "proposed_vs_executed": {
+    "result": "PASS",
+    "candidate_proposed": [
+      "authorized varied ingest/hash/identity pilot",
+      "coordinate recovery under crop/rotation/device scale",
+      "scoped review, replacement/staleness and per-part links",
+      "conditional OMR/renderer save-reopen-export/fidelity checks",
+      "offline shared returns/conflicts/private-note leakage",
+      "portable packet open/restore/withdrawal/cache and backup expiry"
+    ],
+    "candidate_executed_claimed": [
+      "mapped scientific source/input reading",
+      "brief/plan hash comparison",
+      "open discovery before PLAN",
+      "26 final public response captures and recorded hashes",
+      "pinned code/schema/release/issue inspection"
+    ],
+    "candidate_executed_observable": [
+      "mapped file bytes and hashes",
+      "existence/integrity of final 26 captured responses",
+      "scientific text and source locators"
+    ],
+    "candidate_executed_not_independently_reconstructed": [
+      "browse/read chronology and individual source-reading actions"
+    ],
+    "candidate_product_checks_executed": [],
+    "reviewer_executed": [
+      "open public-primary discovery from brief before reading PLAN/final",
+      "independent public byte capture",
+      "code/schema/docs/issue/comment/release/patch reading",
+      "tag/commit/ancestry and data/unit/coordinate checks",
+      "input and capture SHA-256 comparison",
+      "all B-P1..B-P7 and six axes/O1..O7/preservation assessment"
+    ],
+    "reviewer_product_checks_executed": [],
+    "upstream_tests": "Read PDF.js viewport test assertions and Verovio PR-reported comparisons; no suite or supplied score executed."
+  },
+  "source_operations": {
+    "web_search_tool_calls_observed": 3,
+    "web_search_queries_submitted_observed": 10,
+    "logical_public_capture_attempts_observed": 63,
+    "successful_public_byte_captures_observed": 59,
+    "failed_capture_attempts_observed": 4,
+    "mapped_scientific_file_hash_records_observed": 75,
+    "total_source_operations": null,
+    "underlying_http_requests_including_redirects": null,
+    "candidate_source_operations": null
+  },
+  "usage": {
+    "input": null,
+    "cached": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "applicable_rules_read": [
+    "/home/sittingmongoose/.codex/AGENTS.md",
+    "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md"
+  ],
+  "excluded_material_not_inspected": [
+    "other arms/cases/repetitions",
+    "root conversation/history/analysis",
+    "earlier independent reviews/grade keys",
+    "candidate host/runtime files",
+    "campaign timing/costs/targets/expected winner",
+    "private repositories/score collections"
+  ],
+  "supervisor_owned_eligibility": [
+    "lifecycle",
+    "time",
+    "provenance/account binding",
+    "economics"
+  ],
+  "no_candidate_feedback_or_rewriting": true,
+  "original_result_change_policy": "Immutable original scientific FAIL; supervisor eligibility cannot upgrade it."
+}

@@ -1,0 +1,22 @@
+{
+  "frozen_at": "2026-10-07T21:30:46.914468+00:00",
+  "finals": {
+    "control": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/reviser-v1/host/scientific-files-terminal-freeze.json",
+      "sha256": "f231c586f29cc4ed5a9d3f0c3072a9bc403fe280a4cbf68e62abe0722dfbf732"
+    },
+    "treatment": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/host/scientific-files-terminal-freeze.json",
+      "sha256": "e61350619a5ef80f6033cedf05f09b490ebb1a661aa88bd03ee367072003aa2d"
+    }
+  },
+  "quiet_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/PAIR_QUIET.json",
+  "scientific_status": "UNASSESSED",
+  "original_outputs_unchanged": true,
+  "diagnostic_review_exception": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/C-03-failed-native-diagnostic-review-gate-exception-v1.json",
+    "sha256": "0a40f04ed1593d108a7806fc228ba3fb8e021744069729a10bedc5af6444b2b7",
+    "own_hash_readability_rechecked_at": "2026-10-07T21:30:36.283974+00:00"
+  },
+  "native_and_comparative_eligibility": "HOLD"
+}

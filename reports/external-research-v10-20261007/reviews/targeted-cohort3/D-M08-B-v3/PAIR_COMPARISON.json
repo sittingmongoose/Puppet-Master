@@ -1,0 +1,84 @@
+{
+  "case": "D-M08-B",
+  "version": "v3",
+  "is_method_comparison": true,
+  "disposition": "COMPLETE_FULL_SOURCE_PAIR",
+  "control": "FullSourceFAIL",
+  "treatment": "FullSourcePASS",
+  "six_axes": "Full declared scope independently assessed each arm; no weighted rubric",
+  "conclusion": "This exact trial favors amendment-first for source quality and observed final-stage/cold timing. Control generalizes dataset mask precedence to mask reads and loses the RGBA fallback condition; treatment preserves conditional hierarchy. No general causal, billing or quota estimate.",
+  "review_freezes": {
+    "J2": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-B-v3/J2/freeze_disposition.json",
+    "J1": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M08-B-v3/J1/freeze_disposition.json"
+  },
+  "pair_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/V3_PAIR_FREEZE.json",
+  "economics": {
+    "new_upper_bound_minutes_each_cold": 40,
+    "original_15min_success_claim": false,
+    "shared_stage_dispatch_to_delivery_seconds_fully_charged_each_arm": 565.915,
+    "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 1045.028,
+    "paired_critical_wall_seconds": 980.25,
+    "arms": {
+      "control": {
+        "occupied_dispatch_to_delivery_seconds_including_full_shared": 907.929,
+        "actual_common_T0_to_final_delivery_seconds": 980.25,
+        "final_stage_seconds": 342.014,
+        "queue_and_host_handoff_seconds_before_final": 72.32100000000003,
+        "native_goal_raw_counters": {
+          "objective_sha256": "171a5e39e986b81930f1236282dff3d5c01fd99c84210bbbbf09a0c2da0df95a",
+          "status": "complete",
+          "tokensUsed": 39779,
+          "tokenBudget": null,
+          "timeUsedSeconds": 316
+        },
+        "final_bytes": 6638
+      },
+      "treatment": {
+        "occupied_dispatch_to_delivery_seconds_including_full_shared": 703.0139999999999,
+        "actual_common_T0_to_final_delivery_seconds": 764.723,
+        "final_stage_seconds": 137.099,
+        "queue_and_host_handoff_seconds_before_final": 61.70900000000006,
+        "native_goal_raw_counters": {
+          "objective_sha256": "6b01932ba629097534abda27396fb5ede2a81b8b48150ba5cffbfd42b1fdbb78",
+          "status": "complete",
+          "tokensUsed": 37448,
+          "tokenBudget": null,
+          "timeUsedSeconds": 112
+        },
+        "final_bytes": 5132
+      }
+    },
+    "shared_native_goal_raw_counters": [
+      {
+        "objective_sha256": "f4c7cc12f1a960747ca1a790c42aa9503605a07eb5f4d05305ab37ebe3d067f4",
+        "status": "complete",
+        "tokensUsed": 29246,
+        "tokenBudget": null,
+        "timeUsedSeconds": 147
+      },
+      {
+        "objective_sha256": "dd56ee681fff9825b8b7d7b92a1740a960ff159492749430f9f750027ec236b6",
+        "status": "complete",
+        "tokensUsed": 28468,
+        "tokenBudget": null,
+        "timeUsedSeconds": 364
+      }
+    ],
+    "review_occupied_seconds": {
+      "J1": 356.49,
+      "J2": 217.071
+    },
+    "aggregate_candidate_plus_reviews_stage_sum_seconds": 1618.589,
+    "overlap": "Root-authorized finals overlap; stage sums differ from wall time, contention inseparable; parent orchestration not counted as another worker.",
+    "billing": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "old_failure_costs": "All v1/v2 failed attempts retained and charged fully each arm cold/once aggregate. Missing fields unknown; these v3 numbers additional, not failure-inclusive totals.",
+    "host_capture_cost": "Individual exact lifecycle capture costs retained, no synthesized total when unknown."
+  },
+  "eligibility": "All v3 stages native-active/complete, quiet and within new budgets; previous failure grades/dispositions unchanged.",
+  "provenance": "Path maps advisory no firewall; method paths/incidental timing reduce blinding; source exposure audit incomplete. Reviewer algebra only, no raster/runtime processing tests.",
+  "frozen_at": "2026-10-07T21:20:29.273973+00:00"
+}

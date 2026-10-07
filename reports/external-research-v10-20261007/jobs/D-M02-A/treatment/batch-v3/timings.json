@@ -1,0 +1,122 @@
+{
+  "schema": "er10.actual-timings.v1",
+  "case_id": "D-M02-A",
+  "arm": "treatment",
+  "role": "batch",
+  "activation_stage": "D-M02-A/treatment/batch-v3",
+  "dispatch_preparation_at_utc": "2026-10-07T20:53:33.026432Z",
+  "batch_report_deadline_utc": "2026-10-07T21:18:24.683837Z",
+  "whole_arm_deadline_utc": "2026-10-07T21:23:24.683837Z",
+  "native_goal": {
+    "id": "01a11824-c7fb-7ca2-9eda-c309609bd5e0",
+    "objective_limit_characters": 4000,
+    "created_at_utc_from_native_result": "2026-10-07T20:54:03.000Z",
+    "initial_native_state": {
+      "status": "active",
+      "tokens_used_cumulative": 0
+    },
+    "activation_notice": {
+      "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort1-v1",
+      "message_id": "message:mcp:5bd8e7b5-b90e-478c-85b9-fb38a312f378:thread-send:D-M02-A-treatment-batch-v3-activation",
+      "delivery": "queued",
+      "status": "queued",
+      "sent_immediately_after_active_get": true
+    },
+    "last_preterminal_native_observation": {
+      "observed_at_utc": "2026-10-07T21:17:28Z",
+      "status": "active",
+      "tokens_used_cumulative": 113530,
+      "time_used_seconds": 1405,
+      "updated_at_utc_from_native_result": "2026-10-07T21:17:28.000Z"
+    }
+  },
+  "operations": [
+    {
+      "operation": "Read the assigned brief and exact listed source manifest and RFC files only",
+      "started_after": "activation notice",
+      "brief_path_correction": "One initial brief open used a mistyped root and returned ENOENT; the exact allowed path was then opened successfully. No content was read from the mistyped path."
+    },
+    {
+      "operation": "Verify both supplied RFC SHA-256 values against sources.json and locate governing sections",
+      "observed_at_utc": "2026-10-07T20:54:19Z",
+      "result": "Both hashes matched."
+    },
+    {
+      "operation": "Read source manifest and inspect relevant RFC 9111 and RFC 9110 sections",
+      "manifest_read_observed_at_utc": "2026-10-07T20:55:06Z",
+      "section_review_completed_observed_at_utc": "2026-10-07T20:58:54Z"
+    },
+    {
+      "operation": "Write initial batch report",
+      "window_utc": ["2026-10-07T21:05:19Z", "2026-10-07T21:05:19Z"],
+      "initial_word_count": 933
+    },
+    {
+      "operation": "Correct 304 required-field list and private-cache storage description",
+      "window_utc": ["2026-10-07T21:08:00Z", "2026-10-07T21:08:00Z"],
+      "word_count": 944
+    },
+    {
+      "operation": "Clarify that a Vary mismatch requires successful revalidation or another response",
+      "window_utc": ["2026-10-07T21:08:25Z", "2026-10-07T21:08:26Z"],
+      "word_count": 950
+    },
+    {
+      "operation": "Begin same-author finalization, write final.md, and verify identity with cmp and SHA-256",
+      "window_utc": ["2026-10-07T21:11:04Z", "2026-10-07T21:11:05Z"],
+      "cmp_exit_code": 0,
+      "matching_sha256": "1a6cb7ec23f5aa9e5b5a62f601cda3ee2bbe10f5765e66cb6c28d2f1d7cd7588",
+      "word_count": 950
+    },
+    {
+      "operation": "Read same native Goal before terminalization",
+      "observed_at_utc": "2026-10-07T21:11:05Z",
+      "status": "active",
+      "tokens_used_cumulative": 94817,
+      "time_used_seconds": 1022
+    },
+    {
+      "operation": "Apply final precision edit to both scope files and repeat byte-identity check",
+      "window_utc": ["2026-10-07T21:14:48Z", "2026-10-07T21:14:48Z"],
+      "cmp_exit_code": 0,
+      "matching_sha256": "67e25be679befc92218c56be83af552f90920d91e8f0d0f5c805dc010642f9be",
+      "word_count": 958
+    },
+    {
+      "operation": "Write finalization report with the checked shared-condition map",
+      "window_utc": ["2026-10-07T21:14:57Z", "2026-10-07T21:14:57Z"],
+      "word_count": 193
+    },
+    {
+      "operation": "Prepare and save this timings record in both allowed writable directories",
+      "record_prepared_at_utc": "2026-10-07T21:17:52Z",
+      "save_window_utc": ["2026-10-07T21:17:52Z", "2026-10-07T21:17:52Z"],
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/batch-v3/timings.json",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/finalize-v3/timings.json"
+      ]
+    }
+  ],
+  "outputs": {
+    "batch_report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/batch-v3/report.md",
+    "final_scope": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/finalize-v3/final.md",
+    "finalization_report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/finalize-v3/report.md",
+    "final_scope_and_batch_report_identical": true,
+    "final_scope_and_batch_report_sha256": "67e25be679befc92218c56be83af552f90920d91e8f0d0f5c805dc010642f9be",
+    "final_scope_word_count": 958,
+    "finalization_report_word_count": 193
+  },
+  "usage": {
+    "generated_tokens": null,
+    "billing_tokens": null,
+    "native_goal_tokens_used_cumulative_initial": 0,
+    "native_goal_tokens_used_cumulative_preterminal": 113530,
+    "native_goal_time_used_seconds_preterminal": 1405,
+    "note": "Native cumulative Goal totals are recorded separately and are not generated-token or billing measurements."
+  },
+  "execution": {
+    "source_hash_checks": "executed and matched",
+    "application_or_fixture_tests": "not run",
+    "proposed_boundary_fixtures": "not executed"
+  }
+}

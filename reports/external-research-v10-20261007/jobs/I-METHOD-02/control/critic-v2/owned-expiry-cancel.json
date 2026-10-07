@@ -1,0 +1,49 @@
+{
+  "guard": {
+    "chunk_id": "a850d8",
+    "wall_time_seconds": 0.000032137,
+    "exit_code": 0,
+    "original_token_count": 162,
+    "output": "{\n  \"schema\": \"ER10-readonly-clock-guard-v1\",\n  \"observed_at\": \"2026-10-07T20:57:36.813016+00:00\",\n  \"original_deadline\": \"2026-10-07T20:56:45.658271+00:00\",\n  \"seconds_remaining\": -51.154745,\n  \"deadline_elapsed\": true,\n  \"prior_notice_at\": \"2026-10-07T20:56:58+00:00\",\n  \"prior_notice_was_early\": false,\n  \"actual_notice_grace_end\": \"2026-10-07T20:57:28+00:00\",\n  \"grace_elapsed\": true,\n  \"policy\": \"lifecycle_notice\",\n  \"decision\": \"OWNED_CANCEL_IF_STILL_LIVE\",\n  \"limitation\": \"Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline.\"\n}\n"
+  },
+  "status_before_cancel": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-control-critic-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-control-critic-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-control-critic-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-control-critic-v2\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-control-critic-v2",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-control-critic-v2",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-control-critic-v2:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-control-critic-v2",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "isError": false
+  },
+  "cancel": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-control-critic-v2\",\"status\":\"cancel_requested\"}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-02-control-critic-v2",
+      "status": "cancel_requested"
+    },
+    "isError": false
+  }
+}

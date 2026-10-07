@@ -1,0 +1,36 @@
+{
+  "cache_mode": "cold",
+  "elapsed_seconds": 0.2151809120005055,
+  "ended_at": "2026-10-07T20:45:28.440107+00:00",
+  "network_requests": 1,
+  "operation": "fetch",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 3951,
+      "sha256": "ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "3951",
+      "Content-Type": "application/json; charset=utf-8",
+      "ETag": "W/\"ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b\"",
+      "Last-Modified": "Tue, 16 Jul 2024 16:30:04 GMT"
+    },
+    "original_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614",
+    "raw": {
+      "bytes": 3951,
+      "sha256": "ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b"
+    },
+    "retrieved_at": "2026-10-07T20:45:28.437129+00:00",
+    "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614"
+  },
+  "record_id": "4398cad40f0216bed529b32d4fc46fbe69c09629680dee13fcc29fba9b0deac8",
+  "source": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614",
+  "started_at": "2026-10-07T20:45:28.224910+00:00",
+  "status": "ok"
+}

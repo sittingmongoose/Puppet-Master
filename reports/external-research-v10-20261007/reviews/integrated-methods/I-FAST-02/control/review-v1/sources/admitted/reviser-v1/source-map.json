@@ -1,0 +1,246 @@
+{
+  "schema": "scientific-final-revision-source-map-v1",
+  "case": "I-FAST-02",
+  "stage": "control/reviser-v1",
+  "classification": "DIAGNOSTIC_UNQUALIFIED",
+  "authoritative_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/reviser-v1/artifact.md",
+  "own_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/reviser-v1",
+  "frozen_input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/reviser-v1/input-map.json",
+    "bytes": 1175,
+    "sha256": "fe4ac38b72c65e9b9cb6983eaa1ce8fc2d3cff6973ac137f79c2dd68f30f5885",
+    "input_boundary": "exact own draft/critique/sourcebytes only"
+  },
+  "outputs": {
+    "artifact": {
+      "path": "artifact.md",
+      "bytes": 33276,
+      "sha256": "3132f56c20cbf09f84db8bac3138371fd2e8279654b09505eb701b0ba8825c03"
+    },
+    "source_map": {
+      "path": "source-map.json",
+      "note": "This file indexes exact linked predecessor capture maps and selected byte-level checks. Its own final hash is intentionally not self-referenced."
+    },
+    "linked_evidence": [
+      {
+        "path": "sources/research-v1",
+        "target": "../../research-v1/sources",
+        "meaning": "Read-only symbolic link to all 21 exact captures declared in the research-v1 source map."
+      },
+      {
+        "path": "sources/critic-v1",
+        "target": "../../critic-v1/sources",
+        "meaning": "Read-only symbolic link to all 14 exact captures declared in the critic-v1 source map."
+      },
+      {
+        "path": "sources/research-source-map.json",
+        "target": "../../research-v1/source-map.json",
+        "meaning": "Exact research-v1 source index with capture paths, hashes, timestamps, versions, and operation counts."
+      },
+      {
+        "path": "sources/critic-source-map.json",
+        "target": "../../critic-v1/source-map.json",
+        "meaning": "Exact critic-v1 source index with capture paths, hashes, timestamps, versions, and operation counts."
+      }
+    ]
+  },
+  "predecessors": [
+    {
+      "role": "research draft",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/artifact.md",
+      "bytes": 29907,
+      "sha256": "ac9c94a91b77166cf8f52f78306f5568cb4a9f55449e6096f44f25455cabba1f"
+    },
+    {
+      "role": "research source map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/source-map.json",
+      "bytes": 15942,
+      "sha256": "8028cf4ba9e9adc942dc386ce8cf61d9fa2531441b0f4fea440709cf51f67e8a"
+    },
+    {
+      "role": "independent critic artifact",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/artifact.md",
+      "bytes": 14522,
+      "sha256": "292e28c107a3b0c7f73ad69a390acd04088b1bcb0c9572e5b4c7d8bb1f973044"
+    },
+    {
+      "role": "critic source map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/source-map.json",
+      "bytes": 21380,
+      "sha256": "e5ae257be4d57422ee730227244aae34d36077c13e62bfa298624022452d1493"
+    }
+  ],
+  "capture_indexes": [
+    {
+      "stage": "control/research-v1",
+      "source_map": "sources/research-source-map.json",
+      "source_directory": "sources/research-v1",
+      "source_map_sha256": "8028cf4ba9e9adc942dc386ce8cf61d9fa2531441b0f4fea440709cf51f67e8a",
+      "captured_sources": 21,
+      "source_operations": {
+        "public_web_search_queries": 11,
+        "public_web_page_opens": 20,
+        "public_web_link_clicks": 2,
+        "public_web_in_page_finds": 13,
+        "direct_http_gets": 23,
+        "captured_source_files": 21,
+        "repeated_gets_overwriting_existing_capture": 2
+      },
+      "version_summary": "NOAA live documentation snapshots accessed 2026-10-07, including Metadata API v1.0; pandas implementation/test/release files are pinned to v1.1.1 commit f2ca0a2665b2d169c97de87b8e778dbed86aea07; issue/PR materials are public snapshots recorded individually in the linked map."
+    },
+    {
+      "stage": "control/critic-v1",
+      "source_map": "sources/critic-source-map.json",
+      "source_directory": "sources/critic-v1",
+      "source_map_sha256": "e5ae257be4d57422ee730227244aae34d36077c13e62bfa298624022452d1493",
+      "captured_sources": 14,
+      "independent_operations": {
+        "web_search_calls": 2,
+        "queries": 6,
+        "web_open_calls": 1,
+        "primary_pages_opened": 5,
+        "direct_https_get_attempts": 20,
+        "saved_bodies": 14,
+        "github_api_403_attempts": 6,
+        "note": "Four public GitHub HTML pages were saved instead; other API-only endpoints were not recaptured."
+      },
+      "version_summary": "NOAA live documentation and pandas v1.1.1 captures are byte-identical where hashes agree with research-v1; critic-only public GitHub HTML captures remain linked and indexed with their own hashes/versions."
+    }
+  ],
+  "reviewed_source_bytes": [
+    {
+      "source_id": "S1",
+      "claim_area": "CO-OPS products, request parameters, datum/time-zone options, and retrieval limits",
+      "path": "sources/research-v1/noaa-coops-data-retrieval-api.html",
+      "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+      "version": "Live API documentation as captured; no service release identifier."
+    },
+    {
+      "source_id": "S2",
+      "claim_area": "Water-level and prediction response fields, quality states, and flags",
+      "path": "sources/research-v1/noaa-coops-response-help.html",
+      "sha256": "c934a7921f56b80bbd5b05701795357a97cb5cb3c692931c3d96e8194976ba69",
+      "version": "Live response help as captured."
+    },
+    {
+      "source_id": "S3",
+      "claim_area": "Station datums, superseded datums, sensors, details, benchmarks, and prediction offsets",
+      "path": "sources/research-v1/noaa-coops-metadata-api.html",
+      "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+      "version": "Live documentation as captured; page identifies Metadata API v1.0."
+    },
+    {
+      "source_id": "S6",
+      "claim_area": "Harmonic/subordinate station capabilities and quarterly prediction updates",
+      "path": "sources/research-v1/noaa-tide-predictions-help.html",
+      "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+      "version": "Live NOAA prediction help as captured."
+    },
+    {
+      "source_id": "S7-S8",
+      "claim_area": "Harmonic prediction model and limits of astronomical prediction versus observed water level",
+      "path": "sources/research-v1/noaa-about-harmonic-constituents.html and sources/research-v1/noaa-faq.html",
+      "sha256": [
+        "9104eb43e3b6dc32393f23f919cfff7132a490ee99fcabb0c611accb02825bca",
+        "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f"
+      ],
+      "version": "Live NOAA pages as captured."
+    },
+    {
+      "source_id": "S10-S13",
+      "claim_area": "Issue #35558, PR #35654, changed error-path expression, added test, and reviewer comment",
+      "path": "sources/research-v1/pandas-issue-35558.json; sources/research-v1/pandas-pr-35654.json; sources/research-v1/pandas-pr-35654-files.json; sources/research-v1/pandas-pr-35654-reviews.json",
+      "sha256": [
+        "9624eee8bfea99234dfd5079dcf44366a030df070661ba9c99baa8a159cead21",
+        "b39ed0528a7c4b5cef825333e89f861613ea9b4918c5cf93d23efe6078003744",
+        "1196e3193bf7fd7fde3a2d319441b43506a772e06c48750bfd9ec6317b12dca0",
+        "d8e6f0ecceb8fecd5b0024468a63ce010e13a4bf8c4d623686a597f28bbebdb7"
+      ],
+      "version": "Public issue, PR diff, and review snapshots; individual capture times are in the linked research source map."
+    },
+    {
+      "source_id": "S14-S16",
+      "claim_area": "Pinned merge_asof wrapper/caller, validation, dispatch, nearest kernel, tie/duplicate behavior, and tests",
+      "path": "sources/research-v1/pandas-1.1.1-merge.py; sources/research-v1/pandas-1.1.1-join.pyx; sources/research-v1/pandas-1.1.1-test_merge_asof.py",
+      "sha256": [
+        "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+        "1d363c4b5d1bf00c01e79e84801dc503fb69ee62a911dc8e79e2e1fa671c97a9",
+        "b3f51fcef805c5f7c1d6bd600fcb4050d4963cc17d2caf974d05763ee657cd38"
+      ],
+      "version": "pandas v1.1.1 at immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07."
+    },
+    {
+      "source_id": "S17-S19",
+      "claim_area": "Release note and annotated tag resolving v1.1.1 to the inspected commit",
+      "path": "sources/research-v1/pandas-1.1.1-whatsnew.rst; sources/research-v1/pandas-v1.1.1-tag-ref.json; sources/research-v1/pandas-v1.1.1-tag-object.json",
+      "sha256": [
+        "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f",
+        "0ef02112f8509e3b91ac126d4c3563b96319738a9d4b9bba09746295ba66e5b9",
+        "1254ba94ef9e6f4494b15128d94eb89f338e80e41948a1b56c0c0da70e32e457"
+      ],
+      "version": "pandas v1.1.1 tag and source at the immutable commit recorded above."
+    },
+    {
+      "source_id": "C1-C14",
+      "claim_area": "Independent critic capture set, including matching NOAA docs, pandas v1.1.1 sources, and public GitHub HTML pages",
+      "path": "sources/critic-source-map.json and sources/critic-v1/",
+      "version": "Exact per-file hashes, URLs, and capture notes are recorded in the linked critic source map."
+    }
+  ],
+  "source_operations_for_this_stage": {
+    "input_map_reads": 1,
+    "predecessor_artifact_and_source_map_reads": 4,
+    "distinct_captured_source_files_inspected": 11,
+    "public_web_search_calls": 0,
+    "public_web_page_opens": 0,
+    "direct_http_get_attempts": 0,
+    "new_source_files_captured": 0,
+    "source_recaptures": 0,
+    "note": "All source claims were checked against local capture bytes declared by the supplied maps. The source maps list predecessor operations; they are not reviser operations."
+  },
+  "time_and_budget": {
+    "first_useful_finding_utc": "2026-10-07T21:13:11Z",
+    "first_useful_finding_time_semantics": "First clock-confirmed checkpoint by which the critic's actionable findings had been recognized; the exact internal recognition instant was not separately sampled.",
+    "complete_output_time_utc": "2026-10-07T21:21:47Z",
+    "complete_output_time_note": "This is the UTC checkpoint at which both outputs, their links, parsed JSON, and artifact hash were present and verified. The exact internal write instant was not sampled.",
+    "stage_deadline_utc": "2026-10-07T21:26:47.401356+00:00",
+    "whole_arm_deadline_utc": "2026-10-07T21:28:26.855867+00:00",
+    "aggregate_occupied_ceiling_seconds": 2700,
+    "stage_maximum_seconds": 900,
+    "reserve_seconds": 0,
+    "stage_usage": {
+      "input_tokens": null,
+      "cache_read_tokens": null,
+      "cache_write_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    },
+    "note": "Stage usage and billing are unknown/null. Native Goal counters are separate and will be reported from the actual terminal Goal response."
+  },
+  "native_goal_projection_before_science": {
+    "identity": "01a11835-4b0c-7380-9962-5afc355463c2",
+    "created_status": "active",
+    "pre_science_get_status": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "remainingTokens": null,
+    "goal_thread_id": "01a11835-4b0c-7380-9962-5afc355463c2"
+  },
+  "activation_notice": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "clientRequestId": "er10-I-FAST-02-control-reviser-v1-active",
+    "message": "Native active: I-FAST-02/control/reviser-v1, identity 01a11835-4b0c-7380-9962-5afc355463c2.",
+    "messageId": "message:mcp:80a146d8-acd5-42be-9798-ceb743485ea5:thread-send:er10-I-FAST-02-control-reviser-v1-active",
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:ordinal:40",
+    "status": "running",
+    "delivery": "steered"
+  },
+  "executed_validation": {
+    "application": false,
+    "product_data": false,
+    "build": false,
+    "performance": false,
+    "usability": false
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T21:03:16.235511+00:00",
+  "case_id": "D-M15-A",
+  "arm": "treatment",
+  "stage": "fresh_object_scout",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/INPUT_MAP.json",
+      "sha256": "75c71ac789f1160b4edadaa64bf34332a6cc5e425913ba967a0c1e84229bcfa9",
+      "bytes": 1715
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/admission-timing.json",
+      "sha256": "06098883e5edeccf8668809f58e4b8276a554622b7a5b5f22bdcedf2f4009d34",
+      "bytes": 270
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/assignment.md",
+      "sha256": "e4c6654f89834d6afacd8f8e332fd2cf940c07a89875954b02934a95a350058a",
+      "bytes": 4012
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/dispatch-receipt.json",
+      "sha256": "e2927c5dbd4b027260bb69063c4d9518ca23f24e0d0b2ed2e01f66fd5eb8e4b7",
+      "bytes": 1083
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/dispatch-request.json",
+      "sha256": "4b358ba7297d06c228e0239c785e64ffb3f5b7fa2e8af853c9c6f53030f7ab60",
+      "bytes": 673
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/dispatch.json",
+      "sha256": "c071ed57a691e24114b22e32b68da149c73b8037d147d338239765f39e170216",
+      "bytes": 1498
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/integration-state-active.json",
+      "sha256": "0fa1adb1a822e1f1bd44e30cae890588add6d58bf8e900b39951b6eb98a536fb",
+      "bytes": 6935
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/integration-state-terminal.json",
+      "sha256": "6c36231d844e27e64335c5f02ea1b0668488a667a55bbd06ae992257d87a4b2d",
+      "bytes": 5573
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/passive-active-capture-cost.json",
+      "sha256": "9f3f0d19cf558b696bee9d7c5e655b6d1cad53e1f57c81f74a044b82d8d17ade",
+      "bytes": 1292
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/passive-active.json",
+      "sha256": "557d21eca6a8f4a0ae6a76b94228442a9989462fc90b9b65ecb09451a94654be",
+      "bytes": 16844
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/passive-terminal-capture-cost.json",
+      "sha256": "99d479595769cbf4f283641ad470bc01e0942373d9d91fa353d615feb7c73355",
+      "bytes": 1294
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/passive-terminal.json",
+      "sha256": "265753d36baba3c1add6aae525efec7b4198519ebeb3819d7cc4b7c446bfc830",
+      "bytes": 19930
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/report.md",
+      "sha256": "8cb33c1c842baca865edf20ee7ea5019b9851cedee87929309bec1d505c37e7c",
+      "bytes": 7725
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/aws-s3-uploadpart.html",
+      "sha256": "99431e43cb9439f6d103bb647a25e6d1ef707191afbc45bc159ba70b0058dac1",
+      "bytes": 67235
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/git-objects-chapter.html",
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "bytes": 145608
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/index.json",
+      "sha256": "5eee83e054b5099eb08f74586b95ff55aebeac8d959cb36cd9fcc9b4238006b7",
+      "bytes": 8069
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rename2-manpage.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/sqlite-atomiccommit.html",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/sources/tus-protocol-1.0.0.md",
+      "sha256": "dfc82027d295c80c3ff799f8f6944115e6fb383373a0b41d0eec296200535bb6",
+      "bytes": 25906
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/task-terminal.json",
+      "sha256": "39448f393986bc5d8f551e2dafe109d9db18c59d96c9214e6f23a1dde9719aab",
+      "bytes": 2123
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/timings.json",
+      "sha256": "ef9178f8e134292121aa1a1bcf28fd574d3a6f6dc0e58c42dae563cde58b638b",
+      "bytes": 3101
+    }
+  ]
+}

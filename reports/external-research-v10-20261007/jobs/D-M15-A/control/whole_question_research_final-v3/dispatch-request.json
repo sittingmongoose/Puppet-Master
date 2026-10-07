@@ -1,0 +1,18 @@
+{
+  "clientRequestId": "er10-cohort4-D-M15-A-control-whole_question_research_final-v3",
+  "title": "ER10 COHORT4 D-M15-A control whole_question_research_final v3",
+  "role": "general",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    }
+  },
+  "task": "/goal Complete D-M15-A/control/whole_question_research_final-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/assignment.md"
+}

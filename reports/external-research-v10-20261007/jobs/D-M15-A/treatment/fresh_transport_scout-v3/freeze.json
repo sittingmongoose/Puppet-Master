@@ -1,0 +1,129 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T21:03:48.961592+00:00",
+  "case_id": "D-M15-A",
+  "arm": "treatment",
+  "stage": "fresh_transport_scout",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/INPUT_MAP.json",
+      "sha256": "be77c710aaf6b2b2923484750db8c303d684a08afbd6a0d50dee2dd2053b20d9",
+      "bytes": 1724
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/admission-timing.json",
+      "sha256": "06098883e5edeccf8668809f58e4b8276a554622b7a5b5f22bdcedf2f4009d34",
+      "bytes": 270
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/assignment.md",
+      "sha256": "423cbea4b12dbb0828f8071141aeed37e00f4fe6edcce1acdc98a9f1ca3e1937",
+      "bytes": 4027
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/dispatch-receipt.json",
+      "sha256": "0c2b7ef0df89c77eb5e183d26e17f2ed2225394433c60165641ec80979372fdd",
+      "bytes": 1095
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/dispatch-request.json",
+      "sha256": "9b15cf74c9078a2e77e81773ee69334ecade71617664081bef2cf3f083648635",
+      "bytes": 685
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/dispatch.json",
+      "sha256": "2292e67d0e9563b5481d96c515f8fae07c3f43ef476d02cb652aa6d6ddec80ec",
+      "bytes": 1516
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/intake-timing.md",
+      "sha256": "feefffea7a6adccb3213100754bd6eb6e5355df98a586ec1a9fac6c5dbc5759f",
+      "bytes": 1763
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/integration-state-active.json",
+      "sha256": "42c68136117bf4a825ca6065de8e4110a57b009b35916b914aa72aa094191c8b",
+      "bytes": 6445
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/integration-state-terminal.json",
+      "sha256": "81a76c4f2b44fdec62a8ed41fe71ca77ec5f5a5ee0924380eb30216206076432",
+      "bytes": 5068
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/investigation-notes.md",
+      "sha256": "3583a8a20cf0e3344b1ea6f7cc563973bac955938608ce169db78161aceda30f",
+      "bytes": 7171
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/passive-active-capture-cost.json",
+      "sha256": "3ca0b96e80d7368c31b061083a3f08f17c35fc66c76379783a6327d7d60f486f",
+      "bytes": 1304
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/passive-active.json",
+      "sha256": "c67b22f83bd0ac81400b299b56fc0ef77093ef13ca0731c86acac77871b8687b",
+      "bytes": 17439
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/passive-terminal-capture-cost.json",
+      "sha256": "a85e3abe9033874e82a55103dfbf78155a4327c0baa27dbb3c6c0ba368aab366",
+      "bytes": 1306
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/passive-terminal.json",
+      "sha256": "4cfcf118e38bae1aa233e5f61ad5dfe013ef7df0d3b208f914200acc1f11fc8a",
+      "bytes": 20806
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/report.md",
+      "sha256": "33490d5c4d940745408ce5e5c0a2c814e385d80300029c455c031deada5d298a",
+      "bytes": 7815
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/index.json",
+      "sha256": "4e42af9e3d1572685d7eebcec050442f94cdbf39d292fecb859a226242df4040",
+      "bytes": 3778
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/man7-open-2.html",
+      "sha256": "d665489cadb85624d98fae03a8d8d06209030f32735cff8aeba949ad8491c789",
+      "bytes": 76506
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/man7-rename-2.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/rfc9110.html",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "bytes": 1187554
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/s3-api-createmultipartupload.html",
+      "sha256": "3f7f3e6a234b8e37d9a7a39e8cf5cac2f3e486acbb67f6356fde8a919c5b8d48",
+      "bytes": 108900
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources/tus-resumable-upload-1.0.0.html",
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "bytes": 210884
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/task-terminal.json",
+      "sha256": "1876cd5ad78b35485f608c65b283a8987f20e2bffbbbb031790bff70004bbacf",
+      "bytes": 2144
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/timings.json",
+      "sha256": "cf8730a927d75a5f542cab285d7debd210b6c8b3ac3b6de421b64d6658ef497a",
+      "bytes": 2030
+    }
+  ]
+}

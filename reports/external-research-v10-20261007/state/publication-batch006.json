@@ -1,0 +1,66 @@
+{
+  "schema": "ER10-publication-batch006-actual-GitHub-verification-v1",
+  "verified_at": "2026-10-07T21:29:09.722390+00:00",
+  "repository": "sittingmongoose/Puppet-Master",
+  "research_branch": "t3/research/er10-research-efficiency-campaign",
+  "commit": "0f4b6069f110be4834747cc330094dde580262bd",
+  "github_commit_url": "https://github.com/sittingmongoose/Puppet-Master/commit/0f4b6069f110be4834747cc330094dde580262bd",
+  "github_branch_ref_equals_commit": true,
+  "github_commit_exists": true,
+  "verification": "Actual GitHub REST commit/ref and seven exact critical blob bodies; all2091 manifest targets independently validated and all1206 committed payload blobs matched staging. NAS mirror not used for verification.",
+  "new_files": 1206,
+  "new_bytes": 17850935,
+  "manifest_sha256": "2a7c1ac5521459f670d47f09318728b3c0d23494253f1e09fd5d0c6d8aa63269",
+  "checks": [
+    {
+      "path": "reports/external-research-v10-20261007/BATCH006_MANIFEST.json",
+      "github_blob_sha": "326ef1a2c45471bfaeba3959fd2cb7fc98077b5d",
+      "sha256": "2a7c1ac5521459f670d47f09318728b3c0d23494253f1e09fd5d0c6d8aa63269",
+      "bytes": 1900686,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/INDEX_BATCH006.md",
+      "github_blob_sha": "3ef805da5510c301d349d4c7989ae76f20b9ac19",
+      "sha256": "c6ebb884a26643c4a3ecc526be4d2208a4706d7c300040958b911011aec5b61f",
+      "bytes": 8900,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M14-A/comparison-v3.json",
+      "github_blob_sha": "89d1b35c680ad8f420642c8aba957e2c8d799a05",
+      "sha256": "b83e37fc965a4c010d8cd98f58aee1170fe3410f111c3e2723d5625e10ced276",
+      "bytes": 10689,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "github_blob_sha": "73ad944e075c04726fa165a53a87b38f9a76cb5d",
+      "sha256": "48eac1feeb0335178083b05a22d53e71ecbc205fc2872d7b678b88027d7c4ed2",
+      "bytes": 7290,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/confirmation/C-02/COMPARISON.json",
+      "github_blob_sha": "9a4c821bce119f0fa16c9b8288829005f61a71a6",
+      "sha256": "3491ff06146f1549089390bf20fd6da91d765f857614fd70211e238dd9f7ee22",
+      "bytes": 32177,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/C-02-actual-Codex-session-usage-observation-v1.json",
+      "github_blob_sha": "966de996b9dc4fd222ba8aef2312c6c1f911b9de",
+      "sha256": "b8aaddb768b58e53adac76c365080855d6f792225e51a2cd5f7c0b8551e64bfe",
+      "bytes": 20109,
+      "actual_github_equals_local": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch004-frozen-originals/locks/confirmation-selection.json",
+      "github_blob_sha": "11c55306752dd7c78b0f4d7edc18e3f5c51942b8",
+      "sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a",
+      "bytes": 4896,
+      "actual_github_equals_local": true
+    }
+  ],
+  "scope": "Finite21:14:03cutoff tranche; campaign active, original grades/remainders and cleanup-not-yet-performed retained."
+}

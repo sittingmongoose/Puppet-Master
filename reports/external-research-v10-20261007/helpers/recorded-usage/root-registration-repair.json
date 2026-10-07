@@ -1,0 +1,6 @@
+{
+  "at": "2026-10-07T21:08:46.892977+00:00",
+  "initial_failure": "TypeError while updating usage_measurement: old checkpoint field is a string. Failure occurred before checkpoint write; dispatch persisted.",
+  "repair": "Registered exact task once; preserved original usage_measurement string; new evidence stored separately in recorded_usage_supplement.",
+  "no_scientific_grade_or_candidate_change": true
+}

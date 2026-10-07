@@ -1,0 +1,63 @@
+{
+  "schema": "pm.er10.scout-source-index.v1",
+  "case": "D-M15-A/treatment/fresh_transport_scout-v3",
+  "captured_by": "fresh_transport_scout (treatment arm, open discovery)",
+  "note": "Source selection is this scout's own open discovery; identities frozen at capture.",
+  "entries": [
+    {
+      "id": "rfc9110",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version": "RFC 9110 (HTTP Semantics), Standards Track, June 2022; in-page section ids verified (e.g. name-etag)",
+      "locator": "RFC 9110 sections 8.8.3 ETag, 13.1.1 If-Match, 14 Range Requests, 15.3 Range Units \u2014 covers transport resume (byte ranges) and representation identity (validators) in one semantics doc",
+      "limits": "fetched HTML as captured; text/markup only, no code executed; single UA fetch via curl, no cache manipulation",
+      "file": "rfc9110.html",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "capture_time": "2026-10-07T20:53:54.028945+00:00",
+      "bytes": 1187554
+    },
+    {
+      "id": "tus-1.0.0",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "version": "tus resumable upload protocol v1.0.0 ('1.0.0' string verified in capture); 24 occurrences of Upload-Offset present",
+      "locator": "Core protocol: creation, PATCH with Upload-Offset, Upload-Length, Upload-Offset resume handshake; extension sections for checksum",
+      "limits": "fetched HTML as captured; protocol spec prose only, no server code fetched or run",
+      "file": "tus-resumable-upload-1.0.0.html",
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "capture_time": "2026-10-07T20:53:54.178946+00:00",
+      "bytes": 210884
+    },
+    {
+      "id": "s3-multipart",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html",
+      "version": "AWS S3 API Reference page as captured 2026-10-07 (page carries no explicit doc version string)",
+      "locator": "CreateMultipartUpload request/response (UploadId, object key); part-based upload with per-part identity",
+      "limits": "single API-reference page captured, not the full S3 doc set; page may be JS-augmented, captured server HTML only",
+      "file": "s3-api-createmultipartupload.html",
+      "sha256": "3f7f3e6a234b8e37d9a7a39e8cf5cac2f3e486acbb67f6356fde8a919c5b8d48",
+      "capture_time": "2026-10-07T20:53:54.499948+00:00",
+      "bytes": 108900
+    },
+    {
+      "id": "man7-rename",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "version": "Linux man-pages 6.19, dated 2026-02-08 (verified in capture)",
+      "locator": "rename(2)/renameat(2): atomic replacement semantics \u2014 to_path atomically replaces destination, guaranteeing readers see old or new inode, never a mix",
+      "limits": "single man page HTML; POSIX/Linux semantics only, no other OS variants captured",
+      "file": "man7-rename-2.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "capture_time": "2026-10-07T20:53:54.978951+00:00",
+      "bytes": 23571
+    },
+    {
+      "id": "man7-open",
+      "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+      "version": "Linux man-pages 6.19, dated 2026-02-08 (verified in capture)",
+      "locator": "open(2): O_TRUNC truncation on open, O_EXCL/O_CREAT exclusive creation, O_APPEND \u2014 local-object lifecycle risks when a file is replaced or truncated while a transfer holds it open",
+      "limits": "single man page HTML; POSIX/Linux semantics only",
+      "file": "man7-open-2.html",
+      "sha256": "d665489cadb85624d98fae03a8d8d06209030f32735cff8aeba949ad8491c789",
+      "capture_time": "2026-10-07T20:53:55.541954+00:00",
+      "bytes": 76506
+    }
+  ]
+}

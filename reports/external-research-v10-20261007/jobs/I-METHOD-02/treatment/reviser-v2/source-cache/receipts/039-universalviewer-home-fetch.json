@@ -1,0 +1,36 @@
+{
+  "cache_mode": "cold",
+  "elapsed_seconds": 0.19199208799909684,
+  "ended_at": "2026-10-07T20:59:29.015001+00:00",
+  "network_requests": 1,
+  "operation": "fetch",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 12582,
+      "sha256": "728d60e22a7e93ed5b8ecb647a7e846ae2424a0e1da1deecd9deffe7a8a9d8c9"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": null,
+      "Content-Type": "text/html; charset=utf-8",
+      "ETag": null,
+      "Last-Modified": "Fri, 18 Sep 2026 15:15:37 GMT"
+    },
+    "original_url": "https://universalviewer.io/",
+    "raw": {
+      "bytes": 12582,
+      "sha256": "728d60e22a7e93ed5b8ecb647a7e846ae2424a0e1da1deecd9deffe7a8a9d8c9"
+    },
+    "retrieved_at": "2026-10-07T20:59:29.012054+00:00",
+    "retrieved_url": "https://universalviewer.io/"
+  },
+  "record_id": "3cec8c8437848f35fa981b4092ee13a445dd46e1f7bf3242824fd7724cf10ee4",
+  "source": "https://universalviewer.io/",
+  "started_at": "2026-10-07T20:59:28.822993+00:00",
+  "status": "ok"
+}

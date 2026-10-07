@@ -1,0 +1,36 @@
+{
+  "cache_mode": "cold",
+  "elapsed_seconds": 0.19271005100017646,
+  "ended_at": "2026-10-07T20:25:48.525757+00:00",
+  "network_requests": 1,
+  "operation": "fetch",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 353,
+      "sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "353",
+      "Content-Type": "application/json; charset=utf-8",
+      "ETag": "W/\"e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569\"",
+      "Last-Modified": "Wed, 07 Oct 2026 16:41:57 GMT"
+    },
+    "original_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1",
+    "raw": {
+      "bytes": 353,
+      "sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569"
+    },
+    "retrieved_at": "2026-10-07T20:25:48.522784+00:00",
+    "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1"
+  },
+  "record_id": "2b5ea5c47e2975deacdf358e2dd6d98aaf6ca78efa33d3429b80a9ea0ed238d5",
+  "source": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1",
+  "started_at": "2026-10-07T20:25:48.333027+00:00",
+  "status": "ok"
+}

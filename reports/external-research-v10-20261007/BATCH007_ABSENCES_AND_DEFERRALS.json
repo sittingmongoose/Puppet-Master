@@ -1,0 +1,71 @@
+{
+  "schema": "ER10-batch007-absences-v1",
+  "cutoff": "2026-10-07T21:52:36.000Z",
+  "campaign_complete": false,
+  "omissions": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/admission-timing.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": true,
+      "why": "PROTOCOL_ONLY_NOT_COMPLETION: live/unassessed at fixed cutoff; no answers, findings, terminal/native outputs opened"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/admission-timing.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": true,
+      "why": "PROTOCOL_ONLY_NOT_COMPLETION: live/unassessed at fixed cutoff; no answers, findings, terminal/native outputs opened"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/observation-manager.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/confirmation/C-02/treatment/source-review-v1/REVIEW_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/observation-manager.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/confirmation/C-02/treatment/source-review-v1/sources/SOURCE_INDEX.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/sources/research-v1/noaa-coops-data-retrieval-api.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/sources/research-v1/noaa-coops-response-help.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/sources/research-v1/noaa-coops-metadata-api.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/sources/research-v1/noaa-tide-predictions-help.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/source-map.json"
+    },
+    {
+      "path": "historical GLM P27 witness",
+      "status": "ORIGINAL_MISSING_WITNESS_REMAINS_ABSENT",
+      "no_witness_invented": true
+    }
+  ],
+  "explicit_remainders": [
+    "C01 control required scientific review artifacts absent; original scientific grade null/UNASSESSED and comparative HOLD; original zero material_defect_count is not an error-free finding",
+    "C02 treatment O1 discovery coverage remainder unchanged; not BOTH-arm full declared-source pair",
+    "C03 treatment native BLOCKED; diagnostic treatment FAIL/control HOLD with chronology/material defects; comparative HOLD",
+    "METHOD02 v2 control full final UNASSESSED; immutable paired HOLD distinct from separately authorized treatment-only Source6 FAIL",
+    "M10, METHOD04 LASTv2, FAST03, M16 and later GLM queues live/unassessed at cutoff: PREdispatch protocols only, no live scientific outputs/findings read or published",
+    "Historical old GLM P27 witness absent; no witness invented",
+    "Excluded raw source/corpus/PDF/API/patch bodies, full transcripts/logs/DBs/profiles/rollouts/nested repos remain excluded; no private archive verification claimed",
+    "Original JSON whitespace/trailing-content limitations and stale expected hash mismatches retained without scientific-file repairs",
+    "All after-cutoff writes and unstable originals excluded; exact prior identities can remain referenced through the supplied pinned previous commit"
+  ]
+}

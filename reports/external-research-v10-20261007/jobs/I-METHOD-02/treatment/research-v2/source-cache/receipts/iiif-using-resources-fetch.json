@@ -1,0 +1,36 @@
+{
+  "cache_mode": "cold",
+  "elapsed_seconds": 0.14019573199766455,
+  "ended_at": "2026-10-07T20:28:54.869820+00:00",
+  "network_requests": 1,
+  "operation": "fetch",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 25571,
+      "sha256": "34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "25571",
+      "Content-Type": "text/html",
+      "ETag": "\"a9ea8ca36021f4655657aa3890128226\"",
+      "Last-Modified": "Wed, 07 Oct 2026 18:51:31 GMT"
+    },
+    "original_url": "https://iiif.io/get-started/explainers/using_iiif_resources/",
+    "raw": {
+      "bytes": 25571,
+      "sha256": "34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de"
+    },
+    "retrieved_at": "2026-10-07T20:28:54.866482+00:00",
+    "retrieved_url": "https://iiif.io/get-started/explainers/using_iiif_resources/"
+  },
+  "record_id": "ea76036c7bcf99bc11e6b8de3ce154cdf15d3b7503ec96d529eaee9a240c401b",
+  "source": "https://iiif.io/get-started/explainers/using_iiif_resources/",
+  "started_at": "2026-10-07T20:28:54.729614+00:00",
+  "status": "ok"
+}

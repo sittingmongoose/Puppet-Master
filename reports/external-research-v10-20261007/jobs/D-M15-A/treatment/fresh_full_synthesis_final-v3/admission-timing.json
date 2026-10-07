@@ -1,0 +1,18 @@
+{
+  "prospective_admission_at": "2026-10-07T21:03:48.983258+00:00",
+  "deadline": "2026-10-07T21:23:48.983258+00:00",
+  "stage_minutes": 20,
+  "common_T0": "2026-10-07T20:31:30.755788+00:00",
+  "common_deadline": "2026-10-07T22:11:30.755788+00:00",
+  "no_reset": true,
+  "actual_predecessor_quiet_freezes": [
+    {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/freeze.json",
+      "sha256": "d83c1ca926c258e78489484499de0d444d93471ec713a8b517d8d697f814b946"
+    },
+    {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_object_scout-v3/freeze.json",
+      "sha256": "4e7827b4f352a5898d250d4c4d534dfea6813a6b5ef5a74e127e7a8a7ae41bd5"
+    }
+  ]
+}

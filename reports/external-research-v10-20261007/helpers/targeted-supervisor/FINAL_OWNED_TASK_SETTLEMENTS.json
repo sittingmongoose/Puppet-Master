@@ -1,0 +1,706 @@
+[
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-control-research-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-control-research-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504154}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504154
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-treatment-research-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-treatment-research-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504157}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504157
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-control-normal_retrieval-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-control-normal_retrieval-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504166}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504166
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-control-finalize-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-control-finalize-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504188}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504188
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-control-criticism-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-control-criticism-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504182}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504182
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-navigate-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-navigate-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504177}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504177
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-control-revision-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-control-revision-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504199}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504199
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-treatment-critic_and_final-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-treatment-critic_and_final-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504204}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504204
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-focused_read-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-focused_read-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504219}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504219
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-expand-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-expand-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504233}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504233
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-research-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-research-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504256}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504256
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-finalize-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-treatment-finalize-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504273}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504273
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-treatment-research-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-treatment-research-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504286}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504286
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-criticism-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-criticism-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504296}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504296
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-treatment-critic_and_final-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-treatment-critic_and_final-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504307}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504307
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-revision-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-revision-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504322}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504322
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_1-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_1-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504342}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504342
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_2-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_2-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504333}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504333
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-navigate-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-navigate-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504343}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504343
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-focused_read-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-focused_read-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504353}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504353
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-join-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-join-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504350}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504350
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-expand-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-expand-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504359}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504359
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-finalize-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-treatment-finalize-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504375}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504375
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-treatment-batch-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-treatment-batch-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504378}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504378
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-control-normal_retrieval-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-control-normal_retrieval-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504382}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504382
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-control-finalize-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-control-finalize-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504389}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504389
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-treatment-batch-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-treatment-batch-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504397}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504397
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-question_1-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-question_1-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504413}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504413
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-question_2-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-question_2-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504415}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504415
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-join-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-control-join-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504428}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504428
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_1-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_1-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504431}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504431
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-treatment-batch-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-treatment-batch-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504420}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504420
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_2-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_2-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504440}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504440
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-join-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-join-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504455}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504455
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-source-review-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-A-source-review-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504468}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504468
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-source-review-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-source-review-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504481}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504481
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-source-review-paired-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-source-review-paired-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504501}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504501
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-source-review-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-source-review-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504515}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504515
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-source-review-v3",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-source-review-v3",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504520}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504520
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-source-review-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-B-source-review-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504531}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504531
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-source-review-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-source-review-v1",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504548}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504548
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-source-review-X-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-source-review-X-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504561}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504561
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-source-review-Y-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-A-source-review-Y-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504562}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504562
+      },
+      "isError": false
+    }
+  },
+  {
+    "taskId": "node:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-source-review-v2",
+    "threadId": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M03-B-source-review-v2",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"sequence\":504577}"
+        }
+      ],
+      "structuredContent": {
+        "sequence": 504577
+      },
+      "isError": false
+    }
+  }
+]

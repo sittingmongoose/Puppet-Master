@@ -1,0 +1,288 @@
+{
+  "schema": "research-source-map-v1",
+  "case": "I-FAST-02",
+  "stage": "control/research-v1",
+  "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources",
+  "hashes": "Host computes hashes; no hash values supplied by researcher.",
+  "source_operation_counts": {
+    "public_web_search_queries": 11,
+    "public_web_page_opens": 20,
+    "public_web_link_clicks": 2,
+    "public_web_in_page_finds": 13,
+    "direct_http_gets": 23,
+    "captured_source_files": 21,
+    "repeated_gets_overwriting_existing_capture": 2,
+    "note": "Counts include discovery leads later not used as evidence. NOAA documentation was live/current as retrieved. GitHub issue/PR API records were public snapshots at the captured times."
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "publisher": "NOAA CO-OPS",
+      "title": "CO-OPS Data Retrieval API documentation",
+      "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+      "accessed_at_utc": "2026-10-07T20:47:56.605766113Z",
+      "version": "Live documentation as captured; service documentation does not expose a release identifier.",
+      "local_path": "sources/noaa-coops-data-retrieval-api.html",
+      "paths_symbols_ranges": [
+        {"path": "Rendered documentation", "symbol": "product=water_level, predictions; request length limits", "range": "web-rendered lines 63-89, 175-190"},
+        {"path": "Rendered documentation", "symbol": "datum and units", "range": "web-rendered lines 128-158"},
+        {"path": "Rendered documentation", "symbol": "time_zone", "range": "web-rendered lines 163-172"}
+      ]
+    },
+    {
+      "id": "S2",
+      "publisher": "NOAA CO-OPS",
+      "title": "Data API Response Help",
+      "url": "https://api.tidesandcurrents.noaa.gov/api/prod/responseHelp.html",
+      "accessed_at_utc": "2026-10-07T20:47:56.722549097Z",
+      "version": "Live documentation as captured.",
+      "local_path": "sources/noaa-coops-response-help.html",
+      "paths_symbols_ranges": [
+        {"path": "Rendered documentation", "symbol": "water-level response fields t, v, f, q; preliminary/verified labels", "range": "web-rendered lines 39-51"},
+        {"path": "Rendered documentation", "symbol": "tide prediction fields t, v", "range": "web-rendered lines 129-134"}
+      ]
+    },
+    {
+      "id": "S3",
+      "publisher": "NOAA CO-OPS",
+      "title": "CO-OPS Metadata API documentation",
+      "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+      "accessed_at_utc": "2026-10-07T20:47:56.840767519Z",
+      "version": "Live documentation as captured; page identifies Metadata API v1.0.",
+      "local_path": "sources/noaa-coops-metadata-api.html",
+      "paths_symbols_ranges": [
+        {"path": "Rendered documentation", "symbol": "station resources datums, supersededdatums, sensors, details, benchmarks, tidepredoffsets", "range": "web-rendered lines 84-96"},
+        {"path": "Rendered documentation", "symbol": "station details and sensor example", "range": "web-rendered lines 234-281"}
+      ]
+    },
+    {
+      "id": "S4",
+      "publisher": "NOAA Tides & Currents",
+      "title": "Datum options and definitions",
+      "url": "https://tidesandcurrents.noaa.gov/datum_options",
+      "accessed_at_utc": "2026-10-07T20:47:56.978779922Z",
+      "version": "Live NOAA page as captured.",
+      "local_path": "sources/noaa-datum-options.html",
+      "paths_symbols_ranges": [
+        {"path": "Rendered glossary", "symbol": "Station Datum; National Tidal Datum Epoch", "range": "web-rendered lines 86-90"},
+        {"path": "Rendered page", "symbol": "datum reference for datums page", "range": "web-rendered line 99"}
+      ]
+    },
+    {
+      "id": "S5",
+      "publisher": "NOAA Tides & Currents",
+      "title": "Datum Updates",
+      "url": "https://tidesandcurrents.noaa.gov/datum-updates/",
+      "accessed_at_utc": "2026-10-07T20:47:57.103769092Z",
+      "version": "Live NOAA page as captured.",
+      "local_path": "sources/noaa-datum-updates.html",
+      "paths_symbols_ranges": [
+        {"path": "Rendered page", "symbol": "National Tidal Datum Epoch and International Great Lakes Datum updates", "range": "web-rendered lines 56-59"}
+      ]
+    },
+    {
+      "id": "S6",
+      "publisher": "NOAA Tides & Currents / CO-OPS",
+      "title": "Tide Predictions Help",
+      "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+      "accessed_at_utc": "2026-10-07T20:49:37.388649121Z",
+      "version": "Live NOAA page as captured.",
+      "local_path": "sources/noaa-tide-predictions-help.html",
+      "paths_symbols_ranges": [
+        {"path": "Rendered page", "symbol": "Harmonic and subordinate station definitions and capabilities", "range": "web-rendered lines 124-129"},
+        {"path": "Rendered page", "symbol": "time zone, datum, interval and display options", "range": "web-rendered lines 134-150"},
+        {"path": "Rendered page", "symbol": "quarterly prediction updates", "range": "web-rendered lines 171-178"}
+      ]
+    },
+    {
+      "id": "S7",
+      "publisher": "NOAA Tides & Currents / CO-OPS",
+      "title": "About Harmonic Constituents",
+      "url": "https://tidesandcurrents.noaa.gov/about_harmonic_constituents",
+      "accessed_at_utc": "2026-10-07T20:49:37.533379005Z",
+      "version": "Live NOAA page as captured.",
+      "local_path": "sources/noaa-about-harmonic-constituents.html",
+      "paths_symbols_ranges": [
+        {"path": "Rendered page", "symbol": "harmonic constituents and calculation description", "range": "web-rendered lines 106-135"}
+      ]
+    },
+    {
+      "id": "S8",
+      "publisher": "NOAA Tides & Currents / CO-OPS",
+      "title": "Frequently Asked Questions — tide prediction accuracy",
+      "url": "https://tidesandcurrents.noaa.gov/faq.html",
+      "accessed_at_utc": "2026-10-07T20:49:37.694380008Z",
+      "version": "Live NOAA page as captured.",
+      "local_path": "sources/noaa-faq.html",
+      "paths_symbols_ranges": [
+        {"path": "Rendered FAQ", "symbol": "location-dependent accuracy, astronomical prediction limits, weather and inland effects", "range": "web-rendered lines 312-318"}
+      ]
+    },
+    {
+      "id": "S9",
+      "publisher": "NOAA Tides & Currents / CO-OPS",
+      "title": "NOAA Tide Predictions History of Updates",
+      "url": "https://tidesandcurrents.noaa.gov/tide_pred_stn_history.html",
+      "accessed_at_utc": "2026-10-07T20:49:38.092382485Z",
+      "version": "Dynamic station-history table as captured; table displayed updates through 2026-10-07.",
+      "local_path": "sources/noaa-tide-pred-station-history.html",
+      "paths_symbols_ranges": [
+        {"path": "Station update history table", "symbol": "Updated, StationId, Name, Prediction Type, Reference Station, time/height adjustments", "range": "full table snapshot; no stable line numbers"}
+      ]
+    },
+    {
+      "id": "S10",
+      "publisher": "pandas-dev",
+      "title": "Issue #35558 — incompatible tolerance error in merge_asof",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/issues/35558",
+      "accessed_at_utc": "2026-10-07T20:47:57.361923436Z",
+      "version": "Public issue snapshot; issue created 2020-08-05 and closed through PR #35654.",
+      "local_path": "sources/pandas-issue-35558.json",
+      "paths_symbols_ranges": [
+        {"path": "JSON issue object", "symbol": "title, body, state, milestone, closed_at", "range": "JSON Pointers $.title, $.body, $.state, $.milestone, $.closed_at"},
+        {"path": "Issue body", "symbol": "merge_asof reproduction with DatetimeIndex, Timedelta and both index keys", "range": "public issue page lines 165-193"}
+      ]
+    },
+    {
+      "id": "S11",
+      "publisher": "pandas-dev",
+      "title": "Pull request #35654 — fix for GH-35558",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654",
+      "accessed_at_utc": "2026-10-07T20:47:57.646772340Z",
+      "version": "Public pull request snapshot; merged 2020-08-13; merge commit 40795053aaf82f8f55abe56001b1276b1ef0a916; milestone 1.1.1.",
+      "local_path": "sources/pandas-pr-35654.json",
+      "paths_symbols_ranges": [
+        {"path": "JSON pull request object", "symbol": "title, body, merged_at, merge_commit_sha, milestone", "range": "JSON Pointers $.title, $.body, $.merged_at, $.merge_commit_sha, $.milestone"},
+        {"path": "Public PR page", "symbol": "merged status and PR summary", "range": "page lines 129-168, 324-325, 410-417"}
+      ]
+    },
+    {
+      "id": "S12",
+      "publisher": "pandas-dev",
+      "title": "Files changed by pull request #35654",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/files",
+      "accessed_at_utc": "2026-10-07T20:47:57.967774260Z",
+      "version": "Public PR diff snapshot for PR #35654.",
+      "local_path": "sources/pandas-pr-35654-files.json",
+      "paths_symbols_ranges": [
+        {"path": "pandas/core/reshape/merge.py", "symbol": "_AsOfMerge._get_merge_keys error message", "range": "PR patch around line 1667; changes repr(lk.dtype) to repr(lt.dtype)"},
+        {"path": "pandas/tests/reshape/merge/test_merge_asof.py", "symbol": "test_left_index_right_index_tolerance", "range": "added 22 lines after pre-change line 1339"},
+        {"path": "doc/source/whatsnew/v1.1.1.rst", "symbol": "GH-35558 release note", "range": "added in Fixed regressions section"}
+      ]
+    },
+    {
+      "id": "S13",
+      "publisher": "pandas-dev",
+      "title": "Reviews of pull request #35654",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/reviews",
+      "accessed_at_utc": "2026-10-07T20:50:18.649574014Z",
+      "version": "Public review history snapshot; substantive review submitted 2020-08-11.",
+      "local_path": "sources/pandas-pr-35654-reviews.json",
+      "paths_symbols_ranges": [
+        {"path": "JSON review object", "symbol": "review body and state", "range": "JSON Pointer $.body; the first review body states the added test passes without the code changes"},
+        {"path": "Public PR page", "symbol": "same review context", "range": "page lines 198-200"}
+      ]
+    },
+    {
+      "id": "S14",
+      "publisher": "pandas-dev",
+      "title": "pandas core merge implementation at v1.1.1",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/core/reshape/merge.py",
+      "accessed_at_utc": "2026-10-07T20:47:58.135775264Z",
+      "version": "pandas v1.1.1, immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07.",
+      "local_path": "sources/pandas-1.1.1-merge.py",
+      "paths_symbols_ranges": [
+        {"path": "pandas/core/reshape/merge.py", "symbol": "merge_asof", "range": "lines 291-365"},
+        {"path": "pandas/core/reshape/merge.py", "symbol": "merge_asof caller into _AsOfMerge", "range": "lines 546-563"},
+        {"path": "pandas/core/reshape/merge.py", "symbol": "_AsOfMerge._validate_specification and _get_merge_keys tolerance validation", "range": "lines 1541-1693"},
+        {"path": "pandas/core/reshape/merge.py", "symbol": "_AsOfMerge._get_join_indexers and libjoin dispatch", "range": "lines 1719-1789"}
+      ]
+    },
+    {
+      "id": "S15",
+      "publisher": "pandas-dev",
+      "title": "pandas Cython join implementation at v1.1.1",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/_libs/join.pyx",
+      "accessed_at_utc": "2026-10-07T20:51:06.418927212Z",
+      "version": "pandas v1.1.1, immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07.",
+      "local_path": "sources/pandas-1.1.1-join.pyx",
+      "paths_symbols_ranges": [
+        {"path": "pandas/_libs/join.pyx", "symbol": "asof_join_backward_on_X_by_Y and asof_join_forward_on_X_by_Y", "range": "lines 668-803"},
+        {"path": "pandas/_libs/join.pyx", "symbol": "asof_join_nearest_on_X_by_Y", "range": "lines 806-852; backward tie selected by bdiff <= fdiff"}
+      ]
+    },
+    {
+      "id": "S16",
+      "publisher": "pandas-dev",
+      "title": "pandas merge_asof tests at v1.1.1",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/pandas/tests/reshape/merge/test_merge_asof.py",
+      "accessed_at_utc": "2026-10-07T20:47:58.289776185Z",
+      "version": "pandas v1.1.1, immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07.",
+      "local_path": "sources/pandas-1.1.1-test_merge_asof.py",
+      "paths_symbols_ranges": [
+        {"path": "pandas/tests/reshape/merge/test_merge_asof.py", "symbol": "test_left_index_right_index_tolerance (GH-35558)", "range": "lines 1343-1363"},
+        {"path": "pandas/tests/reshape/merge/test_merge_asof.py", "symbol": "test_index_tolerance", "range": "lines 689-703"}
+      ]
+    },
+    {
+      "id": "S17",
+      "publisher": "pandas-dev",
+      "title": "pandas 1.1.1 release notes",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/doc/source/whatsnew/v1.1.1.rst",
+      "accessed_at_utc": "2026-10-07T20:47:58.439557324Z",
+      "version": "pandas v1.1.1, immutable commit f2ca0a2665b2d169c97de87b8e778dbed86aea07.",
+      "local_path": "sources/pandas-1.1.1-whatsnew.rst",
+      "paths_symbols_ranges": [
+        {"path": "doc/source/whatsnew/v1.1.1.rst", "symbol": "fixed regression for merge_asof UnboundLocalError with both indexes and tolerance", "range": "line 30"}
+      ]
+    },
+    {
+      "id": "S18",
+      "publisher": "pandas-dev",
+      "title": "Git reference for pandas tag v1.1.1",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/git/ref/tags/v1.1.1",
+      "accessed_at_utc": "2026-10-07T20:47:58.526108442Z",
+      "version": "Public tag-reference snapshot captured twice; final file is second response.",
+      "local_path": "sources/pandas-v1.1.1-tag-ref.json",
+      "paths_symbols_ranges": [
+        {"path": "JSON ref object", "symbol": "tag object SHA", "range": "JSON Pointer $.object.type, $.object.sha; type=tag, SHA=d07d3b157e194b98cd5435abe9d444febbbbcb65"}
+      ]
+    },
+    {
+      "id": "S19",
+      "publisher": "pandas-dev",
+      "title": "Annotated tag object for pandas v1.1.1",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/d07d3b157e194b98cd5435abe9d444febbbbcb65",
+      "accessed_at_utc": "2026-10-07T20:47:58.610744256Z",
+      "version": "Public annotated tag object captured twice; final file resolves v1.1.1 to commit f2ca0a2665b2d169c97de87b8e778dbed86aea07.",
+      "local_path": "sources/pandas-v1.1.1-tag-object.json",
+      "paths_symbols_ranges": [
+        {"path": "JSON annotated tag object", "symbol": "tag name, target commit, tagger date", "range": "JSON Pointers $.tag, $.object.type, $.object.sha, $.tagger.date"}
+      ]
+    },
+    {
+      "id": "S20",
+      "publisher": "pandas-dev",
+      "title": "Inline review comments on pull request #35654",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654/comments",
+      "accessed_at_utc": "2026-10-07T20:50:12.881145150Z",
+      "version": "Public inline review comment snapshot.",
+      "local_path": "sources/pandas-pr-35654-review-comments.json",
+      "paths_symbols_ranges": [
+        {"path": "JSON review comment objects", "symbol": "user, created_at, path, body", "range": "JSON fields; supplemental PR review context"}
+      ]
+    },
+    {
+      "id": "S21",
+      "publisher": "pandas-dev",
+      "title": "Conversation comments on pull request #35654",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/issues/35654/comments",
+      "accessed_at_utc": "2026-10-07T20:50:13.073395383Z",
+      "version": "Public issue-comment snapshot.",
+      "local_path": "sources/pandas-pr-35654-issue-comments.json",
+      "paths_symbols_ranges": [
+        {"path": "JSON comment objects", "symbol": "user, created_at, body", "range": "JSON fields; supplemental PR review context"}
+      ]
+    }
+  ]
+}

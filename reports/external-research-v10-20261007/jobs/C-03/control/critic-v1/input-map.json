@@ -1,0 +1,34 @@
+{
+  "scientific_inputs": {
+    "brief": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/BRIEF.md",
+      "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+      "bytes": 6493,
+      "filesystem_mtime_utc": "2026-10-07T19:43:18.153148+00:00",
+      "filesystem_birth_utc": "2026-10-07 19:43:18.151439147 +0000"
+    },
+    "plan": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/PLAN.md",
+      "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+      "bytes": 3748,
+      "filesystem_mtime_utc": "2026-10-07T19:43:18.162927+00:00",
+      "filesystem_birth_utc": "2026-10-07 19:43:18.161439208 +0000"
+    }
+  },
+  "own_predecessor_files": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/researcher-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/researcher-v1/source-map.json"
+  ],
+  "own_predecessor_sources": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/researcher-v1/sources"
+  ],
+  "outputs": {
+    "stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/critic-v1",
+    "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/critic-v1/sources",
+    "raw_cache_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/critic-v1/raw-cache",
+    "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/critic-v1/artifact.md",
+    "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/critic-v1/source-map.json",
+    "preservation_check": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/critic-v1/preservation_check.md"
+  },
+  "scope_policy": "Read only these scientific inputs, exact own-arm predecessors and legitimate public primary sources; write only this stage directory. Do not read other arms/repetitions, campaign state/results/reviews, parent conversation/history, secrets, or canonical repo. Map advisory, no filesystem firewall claim."
+}

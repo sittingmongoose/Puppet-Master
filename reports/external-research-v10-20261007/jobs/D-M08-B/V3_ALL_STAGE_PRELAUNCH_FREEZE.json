@@ -1,0 +1,411 @@
+{
+  "schema": "COHORT3-finalfinite-v3-prelaunch-freeze",
+  "case": "D-M08-B",
+  "root_schedule": {
+    "owner": "targeted-cohort3",
+    "family": "Luna",
+    "new_version": 3,
+    "common_stages": [
+      {
+        "assignment": "fresh-common-draft",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-independent-common-critique",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "control": [
+      {
+        "assignment": "coherent-rewrite-check-final",
+        "native_goals": 1,
+        "minutes": 24,
+        "logical_phases": [
+          18,
+          6
+        ],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "local-amendment-dependency-check-render",
+        "native_goals": 1,
+        "minutes": 24,
+        "logical_phases": [
+          8,
+          10,
+          6
+        ],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 40,
+    "common_absolute_pair_wall_minutes": 40,
+    "arm_overlap": true,
+    "original_case_card_sha256": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "treatment",
+      "control"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "root_schedule_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "account": "sittingmongoose@gmail.com"
+  },
+  "carrier": "prospectivepassivev2 actualstate, missingrawAPI explicit",
+  "original_science_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/case-card.json": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/INPUT_MAP.json": "6567e7f6133453ccfba7296cd0e2511cde29fc70155705f63712e5f4936d35ca",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/SEED_INPUT_MAP.json": "8602073384f07ada9316c08dbb711e788e8ce2cba15c20c29f147c11acc42405",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md": "80845872fa053e425c1cc24ccdaa6e3559b34b181ece657dae757e1257c8fe97",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json": "47356c93d872337b9a70a2e002a29eecc4b9d9d4099153a9aa335f0950c83d07"
+  },
+  "all_stages": [
+    {
+      "stage": "D-M08-B/common/fresh-common-draft-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3/assignment.md",
+      "task_sha256": "463f5292fcdca5670a1bc7e7e109aa3ba75326ffc99c02821f49f7dc5d887605",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "rasterresample",
+            "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+            "version_or_capture": "Rasterio 1.3.10",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "rastermask",
+            "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+            "version_or_capture": "Rasterio 1.3.10",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "geotransform",
+            "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+            "version_or_capture": "GDAL 3.9.0",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3/boundary.json"
+      },
+      "input_map_sha256": "d056825a3d2298b9e05c895722b872fa8c268a40a2be8122e40ffa12e6413a72",
+      "assignment": {
+        "assignment": "fresh-common-draft",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3/draft.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/case-card.json": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/INPUT_MAP.json": "6567e7f6133453ccfba7296cd0e2511cde29fc70155705f63712e5f4936d35ca",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/SEED_INPUT_MAP.json": "8602073384f07ada9316c08dbb711e788e8ce2cba15c20c29f147c11acc42405",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md": "80845872fa053e425c1cc24ccdaa6e3559b34b181ece657dae757e1257c8fe97",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json": "47356c93d872337b9a70a2e002a29eecc4b9d9d4099153a9aa335f0950c83d07"
+      },
+      "objective": "Execute ER10 D-M08-B v3 fresh-common-draft",
+      "clientRequestId": "er10-cohort3-D-M08-B-common-fresh-common-draft-v3"
+    },
+    {
+      "stage": "D-M08-B/common/fresh-independent-common-critique-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-independent-common-critique-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-independent-common-critique-v3/assignment.md",
+      "task_sha256": "ca86909c9c175a979d7ba14a4cf95d4c86662b1811d3f230f37e2523d4227534",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "rasterresample",
+            "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+            "version_or_capture": "Rasterio 1.3.10",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "rastermask",
+            "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+            "version_or_capture": "Rasterio 1.3.10",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "geotransform",
+            "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+            "version_or_capture": "GDAL 3.9.0",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-independent-common-critique-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "790d86d6968f32e254a4ad7f8d273b6eab7499d85f9b340be6cd40a9707bf3d6",
+      "assignment": {
+        "assignment": "fresh-independent-common-critique",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-independent-common-critique-v3/critique.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/case-card.json": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/INPUT_MAP.json": "6567e7f6133453ccfba7296cd0e2511cde29fc70155705f63712e5f4936d35ca",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/SEED_INPUT_MAP.json": "8602073384f07ada9316c08dbb711e788e8ce2cba15c20c29f147c11acc42405",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md": "80845872fa053e425c1cc24ccdaa6e3559b34b181ece657dae757e1257c8fe97",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json": "47356c93d872337b9a70a2e002a29eecc4b9d9d4099153a9aa335f0950c83d07"
+      },
+      "objective": "Execute ER10 D-M08-B v3 fresh-independent-common-critique",
+      "clientRequestId": "er10-cohort3-D-M08-B-common-fresh-independent-common-critique-v3"
+    },
+    {
+      "stage": "D-M08-B/control/coherent-rewrite-check-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/control/coherent-rewrite-check-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/control/coherent-rewrite-check-final-v3/assignment.md",
+      "task_sha256": "8620cb5b72cda69f5be3cfb0df4a1aacf2b84b11f4e3e4b6cb7a3cd30a7bfe06",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "rasterresample",
+            "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+            "version_or_capture": "Rasterio 1.3.10",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "rastermask",
+            "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+            "version_or_capture": "Rasterio 1.3.10",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "geotransform",
+            "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+            "version_or_capture": "GDAL 3.9.0",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/control/coherent-rewrite-check-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        },
+        "critique": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-independent-common-critique-v3/critique.md",
+          "kind": "exact supplied common candidate critique; not optional adoption list, not evaluator truth"
+        }
+      },
+      "input_map_sha256": "c9cf740a4e8678c9f646c49aabed7498e8d430dd117a93acb04b7f5d960c0e4f",
+      "assignment": {
+        "assignment": "coherent-rewrite-check-final",
+        "native_goals": 1,
+        "minutes": 24,
+        "logical_phases": [
+          18,
+          6
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/control/coherent-rewrite-check-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/case-card.json": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/INPUT_MAP.json": "6567e7f6133453ccfba7296cd0e2511cde29fc70155705f63712e5f4936d35ca",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/SEED_INPUT_MAP.json": "8602073384f07ada9316c08dbb711e788e8ce2cba15c20c29f147c11acc42405",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md": "80845872fa053e425c1cc24ccdaa6e3559b34b181ece657dae757e1257c8fe97",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json": "47356c93d872337b9a70a2e002a29eecc4b9d9d4099153a9aa335f0950c83d07"
+      },
+      "objective": "Execute ER10 D-M08-B v3 coherent-rewrite-check-final",
+      "clientRequestId": "er10-cohort3-D-M08-B-control-coherent-rewrite-check-final-v3"
+    },
+    {
+      "stage": "D-M08-B/treatment/local-amendment-dependency-check-render-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/local-amendment-dependency-check-render-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/local-amendment-dependency-check-render-v3/assignment.md",
+      "task_sha256": "33c06bee2f6ac8c2e1e418e2c41ea18216dc575ef2f8d869a5f6a8547c4eca16",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "rasterresample",
+            "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+            "version_or_capture": "Rasterio 1.3.10",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "rastermask",
+            "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+            "version_or_capture": "Rasterio 1.3.10",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "geotransform",
+            "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+            "version_or_capture": "GDAL 3.9.0",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/local-amendment-dependency-check-render-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-common-draft-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        },
+        "critique": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/fresh-independent-common-critique-v3/critique.md",
+          "kind": "exact supplied common candidate critique; not optional adoption list, not evaluator truth"
+        }
+      },
+      "input_map_sha256": "4eec58cb39e2a2773b85ec11804bb2ed4b47986264e9113cc34cdf74b04a669b",
+      "assignment": {
+        "assignment": "local-amendment-dependency-check-render",
+        "native_goals": 1,
+        "minutes": 24,
+        "logical_phases": [
+          8,
+          10,
+          6
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/local-amendment-dependency-check-render-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/case-card.json": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/INPUT_MAP.json": "6567e7f6133453ccfba7296cd0e2511cde29fc70155705f63712e5f4936d35ca",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/SEED_INPUT_MAP.json": "8602073384f07ada9316c08dbb711e788e8ce2cba15c20c29f147c11acc42405",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md": "80845872fa053e425c1cc24ccdaa6e3559b34b181ece657dae757e1257c8fe97",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json": "47356c93d872337b9a70a2e002a29eecc4b9d9d4099153a9aa335f0950c83d07"
+      },
+      "objective": "Execute ER10 D-M08-B v3 local-amendment-dependency-check-render",
+      "clientRequestId": "er10-cohort3-D-M08-B-treatment-local-amendment-dependency-check-render-v3"
+    }
+  ],
+  "attempt_limit": 1,
+  "old_versions": "immutable; costs retained inclusive separate, no priorfailedscience inputs/no bestof",
+  "frozen_at": "2026-10-07T20:27:58.296362+00:00"
+}

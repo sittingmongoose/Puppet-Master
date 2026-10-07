@@ -1,0 +1,25 @@
+# Categorical raster downsampling: bounded recommendation
+
+**Scope.** This recommendation addresses a same-CRS categorical raster resize unless stated otherwise. The class schema, output grid, nodata collisions, mask provenance, and product validity rule were not supplied. Critique dispositions are explicit below; choices that depend on those inputs remain unresolved.
+
+1. **AMENDED — choose a categorical rule per band.** Use nearest-neighbor only as a proposed baseline when each output cell should sample one source class. This is a product policy, not a categorical guarantee from Rasterio. Rasterio says resampling has no universally correct method. If the intended value is the dominant class over an output footprint, separately define the aggregation and tie rule. [S1]
+
+2. **AMENDED; PRODUCT INPUTS UNRESOLVED — bind class and validity.** Obtain the authoritative code-to-label mapping and valid-code set. Keep validity separate from class identity. If a nodata sentinel can also be a legitimate class value, the value alone is ambiguous; resolve it from authoritative metadata or the selected mask policy. Do not assume resampling cannot emit the sentinel; check valid output codes and validity against the chosen rule. [S2]
+
+3. **ACCEPTED WITH CONDITION — interpret source masks deliberately.** GDAL-style masks mark nonzero pixels valid; NumPy masked-array masks use `True` for invalid. Rasterio documents precedence for `dataset_mask()`: an existing `.msk`, dataset-wide alpha, or internal mask takes precedence over nodata; RGBA shadow nodata uses band 4; otherwise nodata uses the binary OR of band masks; with no nodata it returns all-valid. Thus `dataset_mask()` is not an all-bands-valid rule. Use per-band `read_masks()` or a dataset-wide mask according to the product meaning. [S2]
+
+4. **AMENDED; OUTPUT POLICY UNRESOLVED — define output validity.** Pairing validity sampled at the nearest source location with nearest-neighbor class sampling is one proposed policy. “Any contributor valid” and “all contributors valid” are distinct alternatives. The supplied mask guide does not prescribe downsampled-mask semantics or guarantee the selected operation’s nodata/mask propagation. Choose the product rule, then verify the actual Rasterio 1.3.10 operation, including external-mask regions, per-band disagreement, edges, and partly or wholly invalid neighborhoods. Until checked, describe behavior as proposed, not as library behavior. [S2]
+
+5. **ACCEPTED WITH CONDITION — derive transform with output shape.** For source shape `(H, W)` resized to `(h, w)` in the same CRS, Rasterio’s example scales the existing transform by `(W/w, H/h)`. This scales the existing grid to its existing footprint; it does not establish arbitrary requested bounds or alignment. Define destination transform and shape together if those differ. A CRS change needs a reprojection/destination-grid workflow; the same-CRS resize formula is insufficient. Verify output dimensions, affine pixel corners, and intended footprint. [S1, S3]
+
+6. **ACCEPTED, OPTIONAL AND SEPARATE — continuous bands.** For genuinely continuous bands, bilinear or cubic may be better suited than nearest; average may suit selected numerical goals. Choose per band and goal. Do not apply this advice to class IDs by default. [S1]
+
+7. **AMENDED — validation record.** Proposed checks: allowed class codes for valid outputs; the chosen validity rule, mask polarity, and nodata behavior; output dimensions and corner coordinates/footprint; and continuous-band values under their selected method. No raster data were processed and none of these checks were run. The class mapping, mask authority, target grid, and output-validity policy remain product decisions.
+
+## Sources
+
+- **[S1]** Rasterio 1.3.10, “Resampling,” capture 2026-10-07. [Source](https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst). SHA-256: `2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727`.
+- **[S2]** Rasterio 1.3.10, “Nodata Masks,” capture 2026-10-07. [Source](https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst). SHA-256: `27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9`.
+- **[S3]** GDAL 3.9.0, “Geotransform Tutorial,” capture 2026-10-07. [Source](https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst). SHA-256: `5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc`.
+
+**Run record.** Boundary requestedAt: 2026-10-07T21:07:41.991Z; common T0: 20:57:14.367Z. Read the mapped input map, brief, manifest, boundary, fresh draft and critique, and the three exact source captures; SHA-256 checked all three captures against the manifest. An initial attempt used a duplicated `sources/` path for the resampling capture and failed; the exact mapped path was then read. No other source files, primary sources, code, raster data, or tests were accessed. Billing/input/cache/generated-token usage is unknown. See the separate amendment and dependency-check records for local dispositions and evidence mapping.

@@ -1,0 +1,17 @@
+{
+  "schema": "ER10-root-batch006-committed-payload-verification-v1",
+  "checked_at": "2026-10-07T21:28:04.915555+00:00",
+  "commit": "0f4b6069f110be4834747cc330094dde580262bd",
+  "expected_payload_paths": 1206,
+  "actual_commit_paths": 1206,
+  "all_committed_bytes_exact": true,
+  "only_owned_manifest_payload": true,
+  "verification_failures": [],
+  "precommit_verifier_failure": {
+    "actual": "AssertionError on ordered path-list comparison",
+    "cause": "Path component sorting and whole-string lexical sorting differ",
+    "correction": "Compare exact path sets and independently verify all committed blobs; no original files or grades edited",
+    "failure_preserved": true
+  },
+  "no_history_rewrite": true
+}

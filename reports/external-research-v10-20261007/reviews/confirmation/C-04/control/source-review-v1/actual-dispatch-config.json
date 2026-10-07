@@ -1,0 +1,28 @@
+{
+  "captured_at": "2026-10-07T21:31:47.664348+00:00",
+  "actual_binding": {
+    "modelSelection": {
+      "instanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "xhigh"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "providerInstanceId": "codex_gmail"
+  },
+  "actual_run_projection": {
+    "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-04-control-source-review-v1:ordinal:1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-04-control-source-review-v1",
+    "status": "running",
+    "requestedAt": "2026-10-07T21:31:36.559Z",
+    "startedAt": "2026-10-07T21:31:37.081Z",
+    "completedAt": null
+  }
+}

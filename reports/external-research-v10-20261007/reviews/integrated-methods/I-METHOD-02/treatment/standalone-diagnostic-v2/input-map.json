@@ -1,0 +1,29 @@
+{
+  "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/brief.md",
+  "original_plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/plan.md",
+  "final_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/artifact.md",
+  "final_source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-map.json",
+  "necessary_primary_evidence": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources",
+  "preservation_predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json"
+  ],
+  "predecessor_source_directories": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources"
+  ],
+  "exact_input_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/brief.md": "c9820b2b6c95b3591de0eef4dc002ccb8d8e35719c7422c11f9f4add0b5e440d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/plan.md": "5dd8d6230f5a4be45f9b0faf0d3748e0b5df30bb90b20a05c0634cdf476c063e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/artifact.md": "1579a45fd43fc94e35d9b3f992b59196a7b8c3cbfe46d9356c829f9625abab4d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-map.json": "34516967aa3ac851bc4264cbf2e9ae97eb416e2ca3ecc59110b9b035c5f35773",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/artifact.md": "abecf9252711d4b9de07421f314bfa135c55a8c579b0cdc3936bca85c8c24afc",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json": "5fdcd057962758a1ff3f0db0686fe1f6672ab287f8087e15763dedaa3136d3cf",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/artifact.md": "1b2298858ad54267b3422a0c5daa3d3abdfabbef4e3c82c3d1f977a3dc085809",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json": "13c28b113b375c573ac36c78f0c1624d12043fc82a304ac626d79bddc8831c5b"
+  },
+  "own_outputs": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2",
+  "scope": "FULL original scientific Source6, own frozen predecessor preservation; no otherarm/scoredfacts/history/grades/costs"
+}

@@ -1,0 +1,36 @@
+{
+  "cache_mode": "cold",
+  "elapsed_seconds": 0.21092883299934329,
+  "ended_at": "2026-10-07T20:59:17.289806+00:00",
+  "network_requests": 1,
+  "operation": "fetch",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 16457,
+      "sha256": "0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "16457",
+      "Content-Type": "application/json; charset=utf-8",
+      "ETag": "W/\"0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371\"",
+      "Last-Modified": null
+    },
+    "original_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614/comments",
+    "raw": {
+      "bytes": 16457,
+      "sha256": "0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371"
+    },
+    "retrieved_at": "2026-10-07T20:59:17.286814+00:00",
+    "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614/comments"
+  },
+  "record_id": "d97b474e756aecd6a50d048bd14bda8b05023c6fa97704c6ff8dcfa4c2f74918",
+  "source": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614/comments",
+  "started_at": "2026-10-07T20:59:17.078849+00:00",
+  "status": "ok"
+}

@@ -1,0 +1,50 @@
+{
+  "observed_at": "2026-10-07T21:03:33.726140+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_c7074359-262f-4a79-b90b-40e990969d25/state.json",
+  "actual_state": {
+    "objective": "Complete D-M15-A/treatment/fresh_transport_scout-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "complete",
+    "rounds": 6,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "[Intake and timing admission: read assignment inputs only]",
+        "acceptance": "cat admission-timing.json and cases/D-M15-A/inputs/brief.md and inputs/sources.json; confirm OPEN_DISCOVERY_BRIEF_ONLY (empty sources/predecessors) and record actual deadline = min of the three INPUT_MAP timestamps; done when a T0/deadline note exists and no sibling/control/v1v2/evaluator paths were opened",
+        "status": "done"
+      },
+      {
+        "id": "t2",
+        "title": "[Capture primary public sources for transfer resume and object identity]",
+        "acceptance": "select primary docs/code (e.g. HTTP Range/If-Match RFCs, tus resume protocol, S3 multipart upload, SQLite/POSIX file lifecycle or app-level ETag/hash docs) within the bounded allowance; save raw bytes to jobs/.../fresh_transport_scout-v3/sources/ and write sources/index.json with url/version/capture-time/sha256/locator/limits per entry; verify: jq -e each entry has all fields and sha256sum matches recorded hashes",
+        "status": "done"
+      },
+      {
+        "id": "t3",
+        "title": "[Independent two-sided investigation with reconciled overlap]",
+        "acceptance": "analyze transport-side resume/retry mechanisms and local-object identity/version mechanisms separately, then write the reconciliation (what identity key binds a resumed transfer to the replaced attachment) as working notes with negative leads and uncertainties retained; done when notes contain both sides plus an overlap section and at least one negative lead (mechanism examined and rejected, with why)",
+        "status": "done"
+      },
+      {
+        "id": "t4",
+        "title": "[Author report.md with bounded recommendation and \u22648 findings]",
+        "acceptance": "write jobs/.../fresh_transport_scout-v3/report.md: at most 8 supported material findings, ~\u22641100 words, each finding bound to a captured source, dispositions (accepted/amended/rejected/unresolved), proposed-vs-executed validation, bounded recommendation + discriminating validation, no full sync service; verify: wc -w report.md, grep that all 6 obligation strings are covered, findings \u22648",
+        "status": "done"
+      },
+      {
+        "id": "t5",
+        "title": "[Record timings.json and final delivery check]",
+        "acceptance": "write timings.json with actual source-ops/capture/first-useful-finding/output timestamps and null for unknown inputs (native counters distinct); verify: report.md and sources/index.json exist at the exact output paths, jq timings.json parses, no edits after finalization; done when both artifacts are terminal",
+        "status": "done"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791406222900,
+    "updatedAt": 1791406983773,
+    "endedReason": "all tickets done"
+  },
+  "source_sha256": "11a38354eb4497a081f6dee3fa87e3f163280c99abef4e04d2b8e5fb66ced0e0",
+  "source": {
+    "kind": "actual terminal notification exact previously nominated own native state"
+  },
+  "limitation": "Installed GoalLoopDriver only; no vendor backend goal/ACP association inference"
+}

@@ -1,0 +1,58 @@
+{
+  "frozen_at": "2026-10-07T20:43:26.855867+00:00",
+  "case": "I-FAST-02",
+  "arm": "control",
+  "role": "reviser",
+  "seconds": 900,
+  "arm_total_seconds": 2700,
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "carrier": {
+    "version": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_at": "2026-10-07T20:07:51.549911+00:00",
+    "applies_to_both_arms_all_stages": true,
+    "exact_stage_versions": [
+      "I-FAST-02/control/research-v1",
+      "I-FAST-02/control/critic-v1",
+      "I-FAST-02/control/reviser-v1",
+      "I-FAST-02/treatment/research-v1",
+      "I-FAST-02/treatment/critic-finalizer-v1"
+    ],
+    "native_route": "actual Codex create_goal/get active/update complete/get terminal on same fresh Goal; <=4000char objective",
+    "activation_notice_parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "host_carrier": "one passive export per activation or terminal event; Codex actual native Goal state projection, not raw tool bodies",
+    "exporter_sha256": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8",
+    "absence_policy": "actual active/terminal state absent -> lifecycle HOLD; no fake proof",
+    "scientific_delivery": "complete artifact.md + source-map.json/captured source bytes; complete native output fallback verbatim accepted; concise path/status final after actual terminal",
+    "cost": "host export setup/invocation separate; native usage fields distinct and unknown null",
+    "scope_and_envelopes_unchanged": true,
+    "activation_notice_transport": {
+      "mode": "auto",
+      "reason": "one exact activation-only notice to known parent even if idle",
+      "frozen_at": "2026-10-07T20:07:51.549911+00:00"
+    }
+  },
+  "registration_order_policy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/prospective-activation-notice-registration-order-v1.json",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/reviser-v1/input-map.json",
+  "write_scope": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/reviser-v1",
+  "scientific_scope": "FULL original O1-O6 and all in-scope plan sections; complete proposed-change artifact, options, retained/rejected dispositions, criticism dispositions, uncertainty, validation proposed/executed",
+  "role_procedure": "Competent fresh researcher, independent same-family critic, fresh complete final reviser",
+  "whole_deadline": "2026-10-07T21:28:26.855867+00:00",
+  "stage_rule": "earliest casejob prep/request throughcoldstartup/queue/sourceoutput/delivery; perstage<=allocation and whole deadline preserves reserves; no reset",
+  "candidate_goal_required": true,
+  "before_either_arm_dispatch": true
+}

@@ -1,0 +1,608 @@
+{
+  "artifact": {
+    "path": "artifact.md",
+    "classification": "DIAGNOSTIC_UNQUALIFIED",
+    "full_authored_output": true,
+    "native_output_fallback_used": false,
+    "sha256": "1f4f7bd7d8440fd1e841a5ec1e720b8f394b10ca760d1f7e1828a3004cdf9377",
+    "bytes": 17168
+  },
+  "assignment": "I-METHOD-02/control/critic-v2",
+  "candidate_input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/input-map.json",
+    "bytes": 1808,
+    "sha256": "27d4d054afbb3feea66d51f30669ea212efe779210b2fe8b6cc8dcc1b023aa05"
+  },
+  "scientific_inputs": {
+    "brief": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/brief.md",
+      "bytes": 5129,
+      "sha256": "c9820b2b6c95b3591de0eef4dc002ccb8d8e35719c7422c11f9f4add0b5e440d"
+    },
+    "plan": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/plan.md",
+      "bytes": 1781,
+      "sha256": "5dd8d6230f5a4be45f9b0faf0d3748e0b5df30bb90b20a05c0634cdf476c063e"
+    },
+    "researcher_artifact_read": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/artifact.md",
+      "bytes": 28034,
+      "sha256": "addea6f450af3cba67a5dbb5c3403cfaf7b5d525609a20faee7b83e74ff33e7a"
+    },
+    "researcher_source_map_read": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/source-map.json",
+      "bytes": 48340,
+      "sha256": "8b5bbf091a0a07656fa7fefeaa9a607068068e68ec14465a512716818ab02d2f"
+    },
+    "dispatch_config_read": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/dispatch-config.json",
+      "bytes": 1162,
+      "sha256": "28d8245be0b1eca16e2fed1c7eb093454e35ad8850c91c4f63f80c2b5d64a0a8"
+    }
+  },
+  "method": {
+    "independent_public_acquisition": true,
+    "raw_byte_acquisitions_reused": [],
+    "predecessor_material_used": [
+      "The complete researcher artifact and source map for candidate review; their public source locators were independently fetched."
+    ],
+    "source_content_execution": "None. Public code, package archives, metadata, issue records and standards were inspected as data.",
+    "first_useful_finding": {
+      "observed_no_later_than": "2026-10-07T20:49:32Z",
+      "finding": "Static inspection of the pinned W3C adapter suggests normal object-target imports lose the original target source when the internal target is rebuilt; checked against the shipped bundle and caller-supplied serialization source."
+    },
+    "operations": [
+      {
+        "sequence": 1,
+        "description": "Read dispatch-config.json stage bound before scientific inputs; create and confirm one fresh native Goal, then send exactly one activation-only notice."
+      },
+      {
+        "sequence": 2,
+        "description": "Read exact input-map, full brief and plan, and the complete admitted researcher artifact/source-map."
+      },
+      {
+        "sequence": 3,
+        "description": "Independently GET primary standards, pinned OSD raw files and tag/issue/PR/release APIs, exact Annotorious package metadata/tarballs, issue comments/events, fix commit and GitHub compare record. No predecessor source bytes were reused."
+      },
+      {
+        "sequence": 4,
+        "description": "Parse package archives/source maps as data; inspect relevant TypeScript, JavaScript, HTML, JSON, tests and RFC passages; verify NPM SHA-512 integrity; record SHA-256 and byte size for each retained capture."
+      },
+      {
+        "sequence": 5,
+        "description": "Author complete artifact.md and source-map.json in the authorized candidate output directory."
+      }
+    ],
+    "failed_unretained_attempts": [
+      {
+        "url": "https://api.github.com/repos/annotorious/annotorious/releases/tags/v3.9.4",
+        "result": "HTTP 404; no response file retained; GitHead, package metadata, issue history, and current package bytes used instead."
+      }
+    ],
+    "downloaded_code_executed": false,
+    "nested_delegation_used": false,
+    "activation_notice_count": 1
+  },
+  "timing": {
+    "dispatch_config_record_at": "2026-10-07T20:41:45.658271Z",
+    "dispatch_config_stage_allowance_seconds": 900,
+    "dispatch_config_stage_deadline": "2026-10-07T20:56:45.658271Z",
+    "whole_arm_deadline": "2026-10-07T21:20:48Z",
+    "total_occupied_cap_seconds": 3600,
+    "final_stage_reserve_seconds": 1200,
+    "reset_or_extension": false,
+    "no_writing_after_envelope": true
+  },
+  "native_goal": {
+    "threadId": "01a11819-fd77-7d61-97df-e2255cb40b8e",
+    "fresh": true,
+    "token_budget_set": false,
+    "precompletion_snapshot_at": "2026-10-07T20:53:22Z",
+    "status_at_snapshot": "active",
+    "aggregate_counters_separate_unsummed": {
+      "tokensUsed": 213316,
+      "timeUsedSeconds": 670,
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "terminalization_check": "After both required artifacts were written, update_goal complete and get_goal will confirm the same threadId."
+  },
+  "costs": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null,
+    "unknown_note": "No reliable per-stage cost meter was available; null means unknown, not zero."
+  },
+  "checks": {
+    "executed": [
+      "Public-source HTTP retrieval and local byte capture",
+      "OSD annotated-tag resolution and commit-pinned code retrieval",
+      "NPM package version/GitHead/integrity metadata inspection",
+      "NPM tarball SHA-512 equality with published integrity strings",
+      "Static source/caller and issue/fix/release history review",
+      "SHA-256 and byte-length recording for every retained source capture"
+    ],
+    "not_executed": [
+      "Downloaded code execution",
+      "Application build/runtime or browser test",
+      "Annotation package round-trip or IIIF interoperability",
+      "Accessibility validation",
+      "Production-bundle validation",
+      "Museum service, partner source, or live data checks"
+    ]
+  },
+  "captures": [
+    {
+      "captured_path": "sources/annotorious-adapter-at-3fbef.ts",
+      "source_url": "https://raw.githubusercontent.com/annotorious/annotorious/3fbefb2cb4646c11e2d0d0b9fb4977fe028186a4/packages/annotorious/src/model/w3c/W3CImageFormatAdapter.ts",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/plain",
+      "bytes": 4814,
+      "sha256": "43cff3bea76f044d8bfba118c932ff192fc24b7d346f296857b69ce8f34c6d87",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-commit-61148.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/commits/61148bfe2300a55e0c5ce7f20bd5538de7ca0e1b",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 6090,
+      "sha256": "661cadf1b70db909bd82249dc236bd27a0df34f1cad4df3c297673074ef9552e",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-compare-fix-to-3.9.4.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/compare/61148bfe2300a55e0c5ce7f20bd5538de7ca0e1b...3fbefb2cb4646c11e2d0d0b9fb4977fe028186a4",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 448003,
+      "sha256": "44f974e1d1c47cae4ae8b17d9abeb73b1c232c208471c9f8431a5010e2f28ddb",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-core-3.9.4-FragmentSelector.ts",
+      "source_url": "https://registry.npmjs.org/@annotorious/annotorious/-/annotorious-3.9.4.tgz",
+      "source_locator": "package/dist/annotorious.es.js.map :: sourcesContent ../src/model/w3c/fragment/FragmentSelector.ts",
+      "capture_kind": "published_package_file_or_source_map_extract",
+      "media_type": "text/plain",
+      "bytes": 2222,
+      "sha256": "3fd0e36710117c7f54e49b05815d5dcb33a28869558ea31e297c236deb920743",
+      "purpose": "Source text extracted as data from the captured exact-version published NPM tarball."
+    },
+    {
+      "captured_path": "sources/annotorious-core-3.9.4-SVGSelector.ts",
+      "source_url": "https://registry.npmjs.org/@annotorious/annotorious/-/annotorious-3.9.4.tgz",
+      "source_locator": "package/dist/annotorious.es.js.map :: sourcesContent ../src/model/w3c/svg/SVGSelector.ts",
+      "capture_kind": "published_package_file_or_source_map_extract",
+      "media_type": "text/plain",
+      "bytes": 8537,
+      "sha256": "a472e46ef5fed54c9753ae3e148713b9a6b54d13829293f3eb7bd19c61b2045c",
+      "purpose": "Source text extracted as data from the captured exact-version published NPM tarball."
+    },
+    {
+      "captured_path": "sources/annotorious-core-3.9.4-W3CImageFormatAdapter.ts",
+      "source_url": "https://registry.npmjs.org/@annotorious/annotorious/-/annotorious-3.9.4.tgz",
+      "source_locator": "package/dist/annotorious.es.js.map :: sourcesContent ../src/model/w3c/W3CImageFormatAdapter.ts",
+      "capture_kind": "published_package_file_or_source_map_extract",
+      "media_type": "text/plain",
+      "bytes": 4814,
+      "sha256": "43cff3bea76f044d8bfba118c932ff192fc24b7d346f296857b69ce8f34c6d87",
+      "purpose": "Source text extracted as data from the captured exact-version published NPM tarball."
+    },
+    {
+      "captured_path": "sources/annotorious-core-3.9.4-drawingToolsRegistry.ts",
+      "source_url": "https://registry.npmjs.org/@annotorious/annotorious/-/annotorious-3.9.4.tgz",
+      "source_locator": "package/dist/annotorious.es.js.map :: sourcesContent ../src/annotation/tools/drawingToolsRegistry.ts",
+      "capture_kind": "published_package_file_or_source_map_extract",
+      "media_type": "text/plain",
+      "bytes": 836,
+      "sha256": "c3ff2ea382f4b6a781d0ee9935116fde30f81e034f3e09b7e20538bb2a92aaf3",
+      "purpose": "Source text extracted as data from the captured exact-version published NPM tarball."
+    },
+    {
+      "captured_path": "sources/annotorious-core-3.9.4.es.js",
+      "source_url": "https://registry.npmjs.org/@annotorious/annotorious/-/annotorious-3.9.4.tgz",
+      "source_locator": "package/dist/annotorious.es.js",
+      "capture_kind": "published_package_file_or_source_map_extract",
+      "media_type": "text/javascript",
+      "bytes": 199871,
+      "sha256": "9fd3fee9067921e0cf224b610b2fe04a305f65511ab0a10d69e9f4e3341e2d8c",
+      "purpose": "Source text extracted as data from the captured exact-version published NPM tarball."
+    },
+    {
+      "captured_path": "sources/annotorious-core-3.9.4.json",
+      "source_url": "https://registry.npmjs.org/@annotorious%2fannotorious/3.9.4",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 2432,
+      "sha256": "3916e8a37507e0e471dc46ab06fe837a2081de93c6a2dd4cb539fa22b17c70a7",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-core-3.9.4.tgz",
+      "source_url": "https://registry.npmjs.org/@annotorious/annotorious/-/annotorious-3.9.4.tgz",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/x-tar",
+      "bytes": 363515,
+      "sha256": "1a4cf3228e3ecafa4f05538a909756fa173c2b6fb17b974bad9e11e9a46d90ff",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-fragment-at-3fbef.ts",
+      "source_url": "https://raw.githubusercontent.com/annotorious/annotorious/3fbefb2cb4646c11e2d0d0b9fb4977fe028186a4/packages/annotorious/src/model/w3c/fragment/FragmentSelector.ts",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/plain",
+      "bytes": 2222,
+      "sha256": "3fd0e36710117c7f54e49b05815d5dcb33a28869558ea31e297c236deb920743",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-fragment-at-61148.ts",
+      "source_url": "https://raw.githubusercontent.com/annotorious/annotorious/61148bfe2300a55e0c5ce7f20bd5538de7ca0e1b/packages/annotorious/src/model/w3c/fragment/FragmentSelector.ts",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/plain",
+      "bytes": 2222,
+      "sha256": "3fd0e36710117c7f54e49b05815d5dcb33a28869558ea31e297c236deb920743",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-issue-599-comments.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/issues/599/comments",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 23450,
+      "sha256": "4be3c281172d723bb1d5257ec092fd5ab6085450ff306556a88b2da1ea603881",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-issue-599.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/issues/599",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 6137,
+      "sha256": "3e7df44b1b36e2480ae42a4f87b84bf5a18340714bc4953fa31528ce769cb253",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-issue-603-comments.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/issues/603/comments",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 6289,
+      "sha256": "590f04eec29b3a3b9fa7fe476c076a1419f10494b0fc75db5dd5b32eae47c6ee",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-issue-603-events.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/issues/603/events",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 6087,
+      "sha256": "4128579d63f3300873d43333520c07b4adaca1c663776237a1f9ded6e29a6853",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-issue-603.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/issues/603",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 10808,
+      "sha256": "cc845f21d630235ab1556e629569ac5876657402bbb62e6f24a2d7e2cfc1058b",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-npm-packument.json",
+      "source_url": "https://registry.npmjs.org/@annotorious%2fannotorious",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 302660,
+      "sha256": "d30beb7f65e4f1386c8ecc8bc47ce2949906e22f05a6a117be026f43084df8a7",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-openseadragon-3.9.4.json",
+      "source_url": "https://registry.npmjs.org/@annotorious%2fopenseadragon/3.9.4",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 2638,
+      "sha256": "14c2848fd515c2ebf558b560f0a0d53e7b01c339bf02eebda24bdd295d29e018",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-openseadragon-3.9.4.tgz",
+      "source_url": "https://registry.npmjs.org/@annotorious/openseadragon/-/openseadragon-3.9.4.tgz",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/x-tar",
+      "bytes": 1793815,
+      "sha256": "74169a03e28c814ea21c39c3493e3430a93a096f745dc5bc4c4a51114855e0f6",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-osd-3.9.4-Annotorious.ts",
+      "source_url": "https://registry.npmjs.org/@annotorious/openseadragon/-/openseadragon-3.9.4.tgz",
+      "source_locator": "package/dist/annotorious-openseadragon.es.js.map :: sourcesContent ../src/Annotorious.ts",
+      "capture_kind": "published_package_file_or_source_map_extract",
+      "media_type": "text/plain",
+      "bytes": 8804,
+      "sha256": "c2dc5c66467619bcff2a98197483ed910bc5eea6b7d3a515af5129ca1e09edcd",
+      "purpose": "Source text extracted as data from the captured exact-version published NPM tarball."
+    },
+    {
+      "captured_path": "sources/annotorious-osd-3.9.4-SVGDrawingLayer.svelte",
+      "source_url": "https://registry.npmjs.org/@annotorious/openseadragon/-/openseadragon-3.9.4.tgz",
+      "source_locator": "package/dist/annotorious-openseadragon.es.js.map :: sourcesContent ../src/annotation/svg/drawing/SVGDrawingLayer.svelte",
+      "capture_kind": "published_package_file_or_source_map_extract",
+      "media_type": "text/plain",
+      "bytes": 10330,
+      "sha256": "a160702095166c52b34df650d1b3d5f5942f2e06b80b68e6d3a8f37bff09e55f",
+      "purpose": "Source text extracted as data from the captured exact-version published NPM tarball."
+    },
+    {
+      "captured_path": "sources/annotorious-osd-3.9.4-viewerCoordinates.ts",
+      "source_url": "https://registry.npmjs.org/@annotorious/openseadragon/-/openseadragon-3.9.4.tgz",
+      "source_locator": "package/dist/annotorious-openseadragon.es.js.map :: sourcesContent ../src/utils/viewerCoordinates.ts",
+      "capture_kind": "published_package_file_or_source_map_extract",
+      "media_type": "text/plain",
+      "bytes": 1840,
+      "sha256": "cafcf3dcf55267896025bc898f0222c90ed7e5cfce27c71d4436835003d4ad02",
+      "purpose": "Source text extracted as data from the captured exact-version published NPM tarball."
+    },
+    {
+      "captured_path": "sources/annotorious-pr-604-files.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/pulls/604/files",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 5414,
+      "sha256": "1a5be51877883cc70acc72b00cde1bd8cab62a071cb21ae60634c9142867f8d1",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/annotorious-pr-604.json",
+      "source_url": "https://api.github.com/repos/annotorious/annotorious/pulls/604",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 21018,
+      "sha256": "e02f8c5a7b464bd900cd43a2beb8a3563dcb96e3e0cf5572fa321e76f85f382b",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/iiif-cookbook-annotations-0269.html",
+      "source_url": "https://iiif.io/api/cookbook/recipe/0269-embedded-or-referenced-annotations/",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 20973,
+      "sha256": "6dd37af92e8270670f34993a0c18588fe7d57526db731ed963435f4755d74261",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/iiif-cookbook-matrix.html",
+      "source_url": "https://iiif.io/api/cookbook/recipe/matrix/",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 322052,
+      "sha256": "92f0add99331eb8ec25431b0cb9ac09ab8cf641d7ccc3a7fc9137fa8fd01688a",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/iiif-cookbook-polygon-0261.html",
+      "source_url": "https://iiif.io/api/cookbook/recipe/0261-non-rectangular-commenting/",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 20600,
+      "sha256": "a9fc8be5f00bd0f6e9d2fb7465814deea4e1bddce49eef183557fdce227afb9c",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/iiif-cookbook-region-0299.html",
+      "source_url": "https://iiif.io/api/cookbook/recipe/0299-region/",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 20760,
+      "sha256": "e425f46ea5e7cd09fd9cec2ea29afecd3d884c6dc523a46a6f70634a952605ca",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/iiif-image-3.0.html",
+      "source_url": "https://iiif.io/api/image/3.0/",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 145643,
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/iiif-presentation-3.0.html",
+      "source_url": "https://iiif.io/api/presentation/3.0/",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 385826,
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/mirador-home.html",
+      "source_url": "https://projectmirador.org/",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 7133,
+      "sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-iiiftilesource.js",
+      "source_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/iiiftilesource.js",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/javascript",
+      "bytes": 25035,
+      "sha256": "08d7416a852597d4e85d21fa011cf22d7e75224a67c4f375997483e74ed36b1b",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-issue-1861.json",
+      "source_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1861",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 4771,
+      "sha256": "d451327630a2ab0e71b66df2467072e31831d7c10da86d27679caf8ae855da9d",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-issue-774.json",
+      "source_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/774",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 5266,
+      "sha256": "1971ea3ae492d955b223a41b6ea458918a07af0a3be109660d969bfcdf3f294f",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-overlay.js",
+      "source_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/overlay.js",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/javascript",
+      "bytes": 20632,
+      "sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-overlays-test.js",
+      "source_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/test/modules/overlays.js",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/javascript",
+      "bytes": 49593,
+      "sha256": "2a453f26fc84a0ca41db8c2edb87993bdd639599abddfd89035ec1984a5b94c7",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-pr-1865-files.json",
+      "source_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/1865/files",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 922,
+      "sha256": "bc15e1372ee452710db516b59305617f08b0ab75d43455e21bc79a60b235ef07",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-pr-1865.json",
+      "source_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/1865",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 20754,
+      "sha256": "a58662254e469573787a8054cbdd8d12c78c11dad70257eb31bf4b4a5bbf9c09",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-pr-1865.patch",
+      "source_url": "https://github.com/openseadragon/openseadragon/pull/1865.patch",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/x-diff",
+      "bytes": 760,
+      "sha256": "8c174eb83c0c5f26791ec9b9ab6f7427a337c63e29e2ff8025c3368807492538",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-release-v3.0.0.json",
+      "source_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v3.0.0",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 12008,
+      "sha256": "0d81a21468aceae1f2ea0fd80a05342ac058e03ba36534c98b769731e302547c",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-release-v6.0.2.json",
+      "source_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.0.2",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 6207,
+      "sha256": "050c1124d8955de7f11a5dcea373fcbfa40a6587a78a040660dfdea58e15b240",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-tag-object.json",
+      "source_url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/ad68b05bb6f82935217fdc6794ca39eed3ce1df7",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 780,
+      "sha256": "8c986c32f6d599873ad7866f78b2c204eb4d660009ac2aed2d4bea652205cad8",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-tag-ref.json",
+      "source_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.0.2",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "application/json",
+      "bytes": 392,
+      "sha256": "fb4dacc3038e964f6b60ba22c09d14e28fee2ff0d74a2fb64fdc0f78169259d4",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/osd-viewer.js",
+      "source_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewer.js",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/javascript",
+      "bytes": 181325,
+      "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/rfc9110.html",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 1187554,
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    },
+    {
+      "captured_path": "sources/w3c-web-annotation-model.html",
+      "source_url": "https://www.w3.org/TR/annotation-model/",
+      "source_locator": null,
+      "capture_kind": "direct_public_primary_bytes",
+      "media_type": "text/html",
+      "bytes": 284185,
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "purpose": "Primary public source for pinned component behavior, release applicability, or the exact issue history described by this file."
+    }
+  ]
+}

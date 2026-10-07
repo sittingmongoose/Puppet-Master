@@ -1,0 +1,36 @@
+{
+  "cache_mode": "cold",
+  "elapsed_seconds": 0.2579676479981572,
+  "ended_at": "2026-10-07T20:28:55.023401+00:00",
+  "network_requests": 1,
+  "operation": "fetch",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 18571,
+      "sha256": "d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "18571",
+      "Content-Type": "application/json; charset=utf-8",
+      "ETag": "\"d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d\"",
+      "Last-Modified": "Mon, 24 Aug 2026 11:39:33 GMT"
+    },
+    "original_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2546",
+    "raw": {
+      "bytes": 18571,
+      "sha256": "d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d"
+    },
+    "retrieved_at": "2026-10-07T20:28:55.021356+00:00",
+    "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2546"
+  },
+  "record_id": "bbb2a78ec2bd051258c7a888a11fc60cc8d4c6cec583fab50ba91ee490a3293c",
+  "source": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2546",
+  "started_at": "2026-10-07T20:28:54.765412+00:00",
+  "status": "ok"
+}

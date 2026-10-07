@@ -1,0 +1,75 @@
+{
+  "case_id": "D-M02-A",
+  "arm": "control",
+  "role": "question_1",
+  "stage": "question_1-v3",
+  "timing_capture_started_at_utc": "2026-10-07T21:04:16.709393+00:00",
+  "dispatch_preparation_at_utc": "2026-10-07T20:53:24.683837+00:00",
+  "hard_stage_deadline_utc": "2026-10-07T21:03:24.683837+00:00",
+  "whole_arm_deadline_utc": "2026-10-07T21:23:24.683837+00:00",
+  "elapsed_from_dispatch_ms_at_capture": 652026,
+  "deadline_overrun_ms_at_capture": 52026,
+  "deadline_note": "The stage hard deadline had passed by the measured overrun when this timing record was written; no timestamps are backdated.",
+  "operations": [
+    {
+      "operation": "create fresh native Goal",
+      "goal_thread_id": "01a11824-9431-7461-91b6-c645bb559226",
+      "native_created_at_epoch_seconds": 1791406420,
+      "native_created_at_utc": "2026-10-07T20:53:40Z",
+      "actual_result_status": "active",
+      "native_tokensUsed_at_activation": 0
+    },
+    {
+      "operation": "native get_goal observed same Goal active",
+      "goal_thread_id": "01a11824-9431-7461-91b6-c645bb559226",
+      "actual_result_status": "active",
+      "observed_at_utc": null,
+      "note": "Tool result was exposed; no separate clock sample was taken at that call."
+    },
+    {
+      "operation": "send one activation-only supervisor notice with mode auto",
+      "actual_result_delivery": "steered",
+      "message_id": "message:mcp:9e725fb8-7e25-4149-a87b-18b518940a46:thread-send:D-M02-A-control-question_1-v3-activation",
+      "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort1-v1:ordinal:38",
+      "sent_at_utc": null,
+      "note": "Sent immediately after observing the active Goal; timestamp not sampled."
+    },
+    {
+      "operation": "read authorized brief and source manifest; verify both capture SHA-256 values",
+      "observed_at_utc": "2026-10-07T20:53:56Z",
+      "result": "both hashes matched sources.json"
+    },
+    {
+      "operation": "read relevant RFC 9111 and RFC 9110 sections directly from supplied captures",
+      "completed_no_later_than_utc": "2026-10-07T20:57:12Z",
+      "exact_start_and_finish_utc": null
+    },
+    {
+      "operation": "write bounded report.md and inspect word count/hash",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_1-v3/report.md",
+      "word_count": 1086,
+      "sha256": "01ab777f8fd5be20cb2dd8c9e6cfac6d329f1857fa8908a4e7f72efbbe7d8737",
+      "write_interval_lower_bound_utc": "2026-10-07T20:59:51Z",
+      "write_interval_upper_bound_utc": "2026-10-07T21:04:16.709393+00:00",
+      "exact_write_times_utc": null,
+      "proposed_fixtures_executed": false
+    },
+    {
+      "operation": "write timings.json",
+      "write_started_at_utc": "2026-10-07T21:04:16.709393+00:00",
+      "write_completed_at_utc": null
+    }
+  ],
+  "usage": {
+    "native_goal_tokensUsed_at_activation": 0,
+    "generated_tokens": null,
+    "billing_usd": null,
+    "tool_usage_tokens": null,
+    "interpretation": "Native tokensUsed is the native Goal cumulative field, not generated tokens or billing."
+  },
+  "terminalization": {
+    "update_goal_complete_at_utc": null,
+    "terminal_get_goal_at_utc": null,
+    "note": "This file is saved before update_goal/get_goal terminalization; these future timestamps are therefore null. No post-terminal artifact edits will be made."
+  }
+}

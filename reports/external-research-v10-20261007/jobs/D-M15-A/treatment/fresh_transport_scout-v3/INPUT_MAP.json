@@ -1,0 +1,25 @@
+{
+  "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/brief.md",
+  "original_source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/inputs/sources.json",
+  "sources": [],
+  "source_mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+  "predecessors": [],
+  "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/report.md",
+  "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/sources",
+  "obligations": [
+    "Address interrupted transfers and bounded retries.",
+    "Address replacement/version identity during resume.",
+    "Investigate transport-side and local-object-side mechanisms independently.",
+    "Reconcile their overlap instead of concatenating two answers.",
+    "Return at most eight supported material findings with negative leads/uncertainty retained.",
+    "Give a bounded recommendation and discriminating validation without building a full sync service."
+  ],
+  "stage_minutes": 20,
+  "logical_phases_minutes": [],
+  "common_T0": "2026-10-07T20:31:30.755788+00:00",
+  "common_deadline": "2026-10-07T22:11:30.755788+00:00",
+  "stage_latest_absolute_deadline": "2026-10-07T21:51:30.755788+00:00",
+  "prospective_admission_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/treatment/fresh_transport_scout-v3/admission-timing.json",
+  "deadline_rule": "min(actual prospective admission + stage allowance, frozen latest absolute deadline, common pairdeadline); no reset; counterpart queue fully included",
+  "advisory_scope_not_filesystem_firewall": true
+}

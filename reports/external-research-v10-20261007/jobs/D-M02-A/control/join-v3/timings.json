@@ -1,0 +1,75 @@
+{
+  "schema": "er10.stage-timings.v1",
+  "case_id": "D-M02-A",
+  "arm": "control",
+  "role": "join",
+  "stage": "join-v3",
+  "stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v3",
+  "window": {
+    "dispatch_preparation_utc": "2026-10-07T21:12:18.876036Z",
+    "hard_stage_deadline_utc": "2026-10-07T21:22:18.876036Z",
+    "whole_arm_deadline_utc": "2026-10-07T21:23:24.683837Z"
+  },
+  "operations": [
+    {
+      "at_utc": "2026-10-07T21:12:18.876036Z",
+      "operation": "Stage clock begins at supplied dispatch preparation time."
+    },
+    {
+      "at_utc": "2026-10-07T21:12:35Z",
+      "operation": "Created fresh native Goal; native result gave identity 01a11835-c554-73f2-8e5e-55de077a2d52 and active state with tokensUsed 0 and timeUsedSeconds 0; get_goal confirmed active."
+    },
+    {
+      "at_utc": null,
+      "operation": "Sent exactly one activation-only T3 notice with mode auto. Tool returned delivery started, messageId message:mcp:3d588fbd-6006-4961-8897-5a95b416250f:thread-send:D-M02-A-control-join-v3-activation-01a11835-c554-73f2-8e5e-55de077a2d52, and runId run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort1-v1:ordinal:43; delivery response exposed no send timestamp."
+    },
+    {
+      "at_utc": "2026-10-07T21:12:51Z",
+      "operation": "Read authorized brief, source manifest, both authorized predecessor reports; sha256sum of both supplied RFC files matched sources.json."
+    },
+    {
+      "at_utc": "2026-10-07T21:14:14Z",
+      "operation": "Reviewed relevant sections directly in both authorized RFC text captures and verified both predecessor report SHA-256 values against the allowed map."
+    },
+    {
+      "at_utc": "2026-10-07 21:16:43 UTC",
+      "operation": "Wrote complete joined report.md and final.md; no proposed fixture or implementation test executed."
+    },
+    {
+      "at_utc": "2026-10-07T21:17:33Z",
+      "operation": "Read active native Goal state and verified the saved report/final SHA-256 values and word counts before completion."
+    },
+    {
+      "at_utc": "2026-10-07T21:18:39Z",
+      "operation": "Reviewed RFC 9111 validation requirements directly, corrected the full-response disposition to \u00a74.3.3, retained qualified origin Vary guidance, and verified final/report counts, hashes, and timings JSON."
+    },
+    {
+      "at_utc": "2026-10-07T21:18:39Z",
+      "operation": "Native get_goal observed the same Goal active immediately before completion preparation; see preterminal usage snapshot."
+    }
+  ],
+  "usage": {
+    "generated_tokens": null,
+    "billed_amount": null,
+    "native_goal_tokens_used": null,
+    "native_goal_time_used_seconds": null,
+    "native_goal_usage_note": "The preterminal values are native cumulative totals, not generated-token or billing metrics. Terminal totals were unavailable at the time this file was written, so terminal-only fields remain null.",
+    "native_goal_tokens_used_at_preterminal_snapshot": 117876,
+    "native_goal_time_used_seconds_at_preterminal_snapshot": 364,
+    "native_goal_tokens_used_at_terminal": null,
+    "native_goal_time_used_seconds_at_terminal": null
+  },
+  "outputs": {
+    "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v3/report.md",
+    "final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v3/final.md",
+    "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v3/timings.json",
+    "verification": {
+      "verified_at_utc": "2026-10-07T21:18:39Z",
+      "report_word_count": 981,
+      "final_word_count": 770,
+      "report_sha256": "3cc692f83eba8228bd2756518115444220f6acbd9e152357e86f2b644062e5bc",
+      "final_sha256": "4fc4217d191ef298ede73d67efbf9f60b31f3c7bb7177f35d7a42bb708b1e8ee",
+      "timings_json_parse": "valid JSON before this update; parse verification repeated after write"
+    }
+  }
+}

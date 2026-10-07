@@ -1,0 +1,33 @@
+{
+  "schema": "ER10-cohort4-native-activation-absence-v1",
+  "recorded_at": "2026-10-07T20:34:28.542418+00:00",
+  "nomination_source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/m15-native-active-root-nomination-v1.json",
+  "nomination_source_sha256": "66ef4406425c13241057d3ede51630f379cc9981d52b302fb65c81cf16e84ad8",
+  "actual_root_nomination": {
+    "schema": "ER10-M15-control-native-active-root-nomination-v1",
+    "observed_at": "2026-10-07T20:32:19.783363+00:00",
+    "exact_owned_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/assignment.md",
+    "bounded_lookup": "One exact objective path lookup only; no foreign state contents admitted",
+    "matching_objectives": 0,
+    "rows": [],
+    "binding": "zcode/GLM5.3Flash thought=max mode=yolo from cohort frozen actual dispatch; installed GoalLoopDriver state, not vendor backend goal target or inferred ACP session mapping",
+    "native_active_observed": false
+  },
+  "actual_task_binding": {
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M15-A-control-whole_question_research_final-v3",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M15-A-control-whole_question_research_final-v3",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M15-A-control-whole_question_research_final-v3:ordinal:1",
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash"
+  },
+  "dispatch_sha256": "71c6bb883505122f9529e4cc3b71cd6ed7b344285e4096f4f23ab054b1134d9f",
+  "assignment_sha256": "d443abb40c1162a394acfc3bc949e861482694f5d4e741a42b89412a5e4c464f",
+  "native_activation": "NOT_OBSERVED_ZERO_EXACT_MATCHES",
+  "native_path": null,
+  "native_createdAt": null,
+  "native_status": null,
+  "vendor_backend_goal_target": null,
+  "ACP_mapping": "UNVERIFIED_UNKNOWN",
+  "clocks_unchanged": true,
+  "no_second_goal_or_worker_steer": true
+}

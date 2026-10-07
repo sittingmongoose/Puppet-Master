@@ -1,0 +1,375 @@
+{
+  "schema_version": "1.0",
+  "case_id": "I-FAST-02",
+  "arm": "treatment",
+  "stage": "research-v1",
+  "output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/research-v1",
+  "artifact": "artifact.md",
+  "source_map": "source-map.json",
+  "research_goal_projection": {
+    "identity": "01a1181b-8b81-7870-a945-6f6dfe486b7",
+    "status_at_activation": "active",
+    "activation_goal_counters": {
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    "precompletion_observation_utc": "2026-10-07 20:54:13 UTC",
+    "precompletion_goal_counters": {
+      "status": "active",
+      "tokensUsed": 194303,
+      "timeUsedSeconds": 587
+    },
+    "counter_note": "These are aggregate native Goal counters; input/cache/generated/reasoning/billing categories were not exposed and are null below."
+  },
+  "dispatch_window": {
+    "dispatch_record_at": "2026-10-07T20:43:26.943856+00:00",
+    "researcher_max_seconds": 750,
+    "conservative_researcher_deadline": "2026-10-07T20:55:56.855867+00:00",
+    "whole_arm_max_seconds": 1350,
+    "whole_arm_deadline": "2026-10-07T21:05:56.855867+00:00",
+    "first_useful_saved_finding_utc": "2026-10-07T20:45:50Z",
+    "complete_artifact_saved_utc": "2026-10-07T20:53:20.544739597Z"
+  },
+  "exact_input_boundary": {
+    "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/research-v1/input-map.json",
+    "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/brief.md",
+    "plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/plan.md",
+    "order": "brief read first; public-source discovery before opening frozen plan; then plan comparison",
+    "input_identities_from_map": {
+      "brief.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/brief.md",
+        "sha256": "12a1ab55102d3423bcc634812c6d120f0143a8e7945e3c696bc920bd56cafc13",
+        "bytes": 5152
+      },
+      "plan.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/plan.md",
+        "sha256": "4e6e262b0a1fffb8d47023c629037368809c410f396de5d932eedb09fa859c05",
+        "bytes": 1712
+      }
+    },
+    "excluded": "No parent history, other cases/arms, campaign packets, evaluator keys, credentials, private repositories, or prior scientific findings were used."
+  },
+  "activity_counts": {
+    "web_tool_calls": 8,
+    "search_query_requests": 16,
+    "page_open_or_click_requests": 26,
+    "captured_public_source_byte_files": 19,
+    "github_api_metadata_requests": 10,
+    "source_discovery_before_plan": true,
+    "first_saved_finding_utc": "2026-10-07T20:45:50Z",
+    "completed_draft_utc": "2026-10-07T20:53:20.544739597Z",
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null
+  },
+  "hash_policy": {
+    "sha256": null,
+    "computed_by": "host after delivery; researcher did not calculate or fill hashes"
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "authority": "NOAA CO-OPS Data Retrieval API docs",
+      "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+      "accessed_utc": "2026-10-07T20:47:35.111647770Z",
+      "version": "Unversioned production API documentation; captured snapshot",
+      "captured_file": "sources/noaa-coops-api.html",
+      "web_reader_ranges": [
+        "62-89",
+        "128-190",
+        "272-280"
+      ],
+      "symbols_or_sections": [
+        "Data Products",
+        "datum",
+        "units",
+        "Time Zone",
+        "Interval",
+        "Sample API Queries"
+      ]
+    },
+    {
+      "id": "S02",
+      "authority": "NOAA CO-OPS Metadata API docs",
+      "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+      "accessed_utc": "2026-10-07T20:47:35.269638681Z",
+      "version": "Metadata API v1.0 docs; captured snapshot",
+      "captured_file": "sources/noaa-mdapi.html",
+      "web_reader_ranges": [
+        "83-97",
+        "233-273",
+        "391-411"
+      ],
+      "symbols_or_sections": [
+        "Resource",
+        "expand",
+        "Water Level station fields",
+        "datums",
+        "supersededdatums",
+        "sensors",
+        "details",
+        "notices",
+        "tidepredoffsets"
+      ]
+    },
+    {
+      "id": "S03",
+      "authority": "NOAA Tide Predictions Help",
+      "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+      "accessed_utc": "2026-10-07T20:47:35.120637792Z",
+      "version": "Unversioned NOAA help page; captured snapshot",
+      "captured_file": "sources/noaa-predictions-help.html",
+      "web_reader_ranges": [
+        "113-145",
+        "155-178"
+      ],
+      "symbols_or_sections": [
+        "Harmonic stations",
+        "Subordinate stations",
+        "time zone",
+        "data interval",
+        "quarterly updates"
+      ]
+    },
+    {
+      "id": "S04",
+      "authority": "NOAA Tides & Currents FAQ",
+      "url": "https://tidesandcurrents.noaa.gov/faq.html",
+      "accessed_utc": "2026-10-07T20:47:35.142637923Z",
+      "version": "Unversioned NOAA FAQ; captured snapshot",
+      "captured_file": "sources/noaa-faq.html",
+      "web_reader_ranges": [
+        "312-318"
+      ],
+      "symbols_or_sections": [
+        "Q: Are tide predictions accurate?"
+      ]
+    },
+    {
+      "id": "S05",
+      "authority": "NOAA Tide Prediction Error for the United States Stations",
+      "url": "https://tidesandcurrents.noaa.gov/pdf/Tide_Prediction_Error_for_the_United_States_Coastline.pdf",
+      "accessed_utc": "2026-10-07T20:47:35.149637965Z",
+      "version": "NOAA PDF snapshot, 4 pages; analysis year shown in table",
+      "captured_file": "sources/noaa-prediction-error.pdf",
+      "web_reader_ranges": [
+        "PDF page 0, lines 0-19"
+      ],
+      "symbols_or_sections": [
+        "method: observed/predicted difference and one-year station RMS"
+      ]
+    },
+    {
+      "id": "S06",
+      "authority": "NOAA NCCOS New Citizen Science Water Level Application Available Nationwide",
+      "url": "https://coastalscience.noaa.gov/news/new-citizen-science-water-level-application-available-nationwide/",
+      "accessed_utc": "2026-10-07T20:47:35.351639171Z",
+      "version": "Article published 2018-02-22; captured snapshot",
+      "captured_file": "sources/noaa-citizen-water-level-app.html",
+      "web_reader_ranges": [
+        "40-47"
+      ],
+      "symbols_or_sections": [
+        "photo/GPS water-level impact reports"
+      ]
+    },
+    {
+      "id": "S07",
+      "authority": "NOAA Water Level Resources for External Users",
+      "url": "https://tidesandcurrents.noaa.gov/education/tech-assist/training/water-level/",
+      "accessed_utc": "2026-10-07T20:47:35.135637881Z",
+      "version": "Unversioned NOAA training-resource page; captured snapshot",
+      "captured_file": "sources/noaa-water-level-resources.html",
+      "web_reader_ranges": [
+        "52-77"
+      ],
+      "symbols_or_sections": [
+        "Guidance for Capturing Water Levels",
+        "benchmark and leveling requirements",
+        "U.S. IOOS Water Level Data List"
+      ]
+    },
+    {
+      "id": "S08",
+      "authority": "NOAA What is an Operational Forecast System?",
+      "url": "https://oceanservice.noaa.gov/facts/ofs.html",
+      "accessed_utc": "2026-10-07T20:53:47.419904539Z",
+      "version": "Unversioned NOAA facts page; captured snapshot",
+      "captured_file": "sources/noaa-ofs-fact.html",
+      "web_reader_ranges": [
+        "6-13"
+      ],
+      "symbols_or_sections": [
+        "nowcast/forecast distinction from astronomical tide tables"
+      ]
+    },
+    {
+      "id": "S09",
+      "authority": "pandas source: pandas/core/reshape/merge.py",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+      "accessed_utc": "2026-10-07T20:47:35.142637923Z",
+      "version": "pandas v3.0.6, commit 2905718b126579d2cf0fe5bae05bd75facb67d77 (tag object resolved from v3.0.6)",
+      "captured_file": "sources/pandas-v3.0.6-merge.py",
+      "code_locations": [
+        {
+          "symbol": "merge_asof",
+          "lines": "657-934"
+        },
+        {
+          "symbol": "_asof_by_function",
+          "lines": "2308-2310"
+        },
+        {
+          "symbol": "_AsOfMerge.__init__ and key validation",
+          "lines": "2313-2425"
+        },
+        {
+          "symbol": "_AsOfMerge._validate_tolerance",
+          "lines": "2492-2526"
+        },
+        {
+          "symbol": "_AsOfMerge._get_join_indexers",
+          "lines": "2555-2651"
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "authority": "pandas Cython join source: pandas/_libs/join.pyx",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/_libs/join.pyx",
+      "accessed_utc": "2026-10-07T20:47:35.130691784Z",
+      "version": "pandas v3.0.6, commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+      "captured_file": "sources/pandas-v3.0.6-join.pyx",
+      "code_locations": [
+        {
+          "symbol": "asof_join_backward_on_X_by_Y",
+          "lines": "687-756"
+        },
+        {
+          "symbol": "asof_join_forward_on_X_by_Y",
+          "lines": "758-828"
+        },
+        {
+          "symbol": "asof_join_nearest_on_X_by_Y",
+          "lines": "830-880"
+        }
+      ]
+    },
+    {
+      "id": "S11",
+      "authority": "pandas regression tests: pandas/tests/reshape/merge/test_merge_asof.py",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/tests/reshape/merge/test_merge_asof.py",
+      "accessed_utc": "2026-10-07T20:47:35.141637917Z",
+      "version": "pandas v3.0.6, commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+      "captured_file": "sources/pandas-v3.0.6-test_merge_asof.py",
+      "code_locations": [
+        {
+          "symbol": "test_left_index_right_index_tolerance",
+          "lines": "3332-3356"
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "authority": "pandas issue #35558",
+      "url": "https://github.com/pandas-dev/pandas/issues/35558",
+      "accessed_utc": "2026-10-07T20:47:35.833642050Z",
+      "version": "Issue created 2020-08-05; captured HTML snapshot",
+      "captured_file": "sources/pandas-issue-35558.html",
+      "web_reader_ranges": [
+        "165-247"
+      ],
+      "symbols_or_sections": [
+        "issue statement",
+        "regression vs 1.0.5",
+        "reproducer with DatetimeIndex and Timedelta tolerance"
+      ]
+    },
+    {
+      "id": "S13",
+      "authority": "pandas PR #35654 and merged diff",
+      "url": "https://github.com/pandas-dev/pandas/pull/35654.diff",
+      "accessed_utc": "2026-10-07T20:47:35.454044983Z",
+      "version": "Merged 2020-08-13; merge commit afa40819e454460a172121911539e7ffce7c65f7; fix commit e7f668be34081d497bc8142ab0c77bb841e2964b; regression-test commit 7214b3c50b058094ddcb5f8687e3d8394780ba14",
+      "captured_file": "sources/pandas-fix-pr-35654.diff",
+      "additional_record": {
+        "url": "https://api.github.com/repos/pandas-dev/pandas/pulls/35654",
+        "accessed_utc": "2026-10-07T20:50:23.237661926Z",
+        "captured_file": "sources/pandas-pr-35654.json"
+      },
+      "code_locations": [
+        {
+          "path": "pandas/core/reshape/merge.py",
+          "symbol": "_AsOfMerge._get_merge_keys error message variable",
+          "patch_lines": "around 1667; changes lk.dtype to lt.dtype"
+        },
+        {
+          "path": "pandas/tests/reshape/merge/test_merge_asof.py",
+          "symbol": "test_left_index_right_index_tolerance",
+          "patch_lines": "adds index-based tolerance regression test"
+        },
+        {
+          "path": "doc/source/whatsnew/v1.1.1.rst",
+          "symbol": "1.1.1 regression note",
+          "patch_lines": "adds issue 35558 release entry"
+        }
+      ]
+    },
+    {
+      "id": "S14",
+      "authority": "pandas v1.1.1 release evidence",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/doc/source/whatsnew/v1.1.1.rst",
+      "accessed_utc": "2026-10-07T20:50:23.067933911Z",
+      "version": "pandas v1.1.1 release commit f2ca0a2665b2d169c97de87b8e778dbed86aea07; published 2020-08-20",
+      "captured_file": "sources/pandas-v1.1.1-whatsnew.rst",
+      "code_locations": [
+        {
+          "symbol": "Fixed regression: pandas.merge_asof with left_index, right_index, tolerance (issue 35558)",
+          "lines": "30-30"
+        }
+      ],
+      "additional_records": [
+        {
+          "url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v1.1.1",
+          "accessed_utc": "2026-10-07T20:50:23.199424252Z",
+          "captured_file": "sources/pandas-v1.1.1-release.json"
+        },
+        {
+          "url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/d07d3b157e194b98cd5435abe9d444febbbbcb65",
+          "accessed_utc": "2026-10-07T20:50:23.163580154Z",
+          "captured_file": "sources/pandas-v1.1.1-tag.json"
+        }
+      ]
+    },
+    {
+      "id": "S15",
+      "authority": "pandas v3.0.6 release/tag",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v3.0.6",
+      "accessed_utc": "2026-10-07T20:50:23.191427151Z",
+      "version": "pandas 3.0.6 release published 2026-09-17; annotated tag object 619d761f6756d39ff08cbf10746f8808977b7329 resolves to commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+      "captured_file": "sources/pandas-v3.0.6-release.json",
+      "additional_record": {
+        "url": "https://api.github.com/repos/pandas-dev/pandas/git/tags/619d761f6756d39ff08cbf10746f8808977b7329",
+        "accessed_utc": "2026-10-07T20:50:23.194979220Z",
+        "captured_file": "sources/pandas-v3.0.6-tag.json"
+      },
+      "relevance": "Release page recommends upgrade within 3.0.x and states Python 3.11+ support; used to select inspection version, not to claim project runtime compatibility."
+    }
+  ],
+  "issue_fix_regression_release": {
+    "issue": "S12 #35558 reports merge_asof tolerance regression on pandas 1.1.0/1.2.0.dev vs 1.0.5.",
+    "fix": "S13 PR #35654, fix commit e7f668be34081d497bc8142ab0c77bb841e2964b changes a bad tolerance-error dtype variable reference.",
+    "regression": "S13 adds test_left_index_right_index_tolerance with DatetimeIndex inputs offset by 0.4 seconds and 0.5-second tolerance; S11 has a corresponding current test.",
+    "release": "S14 v1.1.1 changelog explicitly lists the fix; PR merge alone is not treated as proof of shipping.",
+    "applicability_limit": "Relevant to time-key tolerance validation. Historical regression uses both indexes; it does not by itself prove the proposed column/grouped/nearest pattern. The selected v3.0.6 code and test were separately inspected."
+  },
+  "state": {
+    "candidate_critic": "pending separate fresh same-family critic",
+    "application_built": false,
+    "application_tests_executed": false,
+    "proposed_checks_executed": false,
+    "source_discovery_and_static_source_reading_executed": true
+  }
+}

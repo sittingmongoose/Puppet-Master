@@ -1,0 +1,36 @@
+{
+  "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/brief.md",
+  "original_source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/sources.json",
+  "sources": [],
+  "source_mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+  "predecessors": [
+    {
+      "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/report.md",
+      "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources",
+      "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json"
+    },
+    {
+      "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/report.md",
+      "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources",
+      "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json"
+    }
+  ],
+  "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+  "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources",
+  "obligations": [
+    "Give a separate disposition for acquisition and refresh.",
+    "Give a separate disposition for stale display and retention.",
+    "Identify shared identity/freshness dependencies and reuse invalidation.",
+    "Preserve topic-specific uncertainties instead of assuming shared evidence settles both.",
+    "Return at most eight distinct material findings across the bundle.",
+    "Deliver a bounded topic comparison and discriminating checks, counting shared discovery and synthesis."
+  ],
+  "stage_minutes": 20,
+  "logical_phases_minutes": [],
+  "common_T0": "2026-10-07T21:21:56.716615+00:00",
+  "common_deadline": "2026-10-07T22:41:56.716615+00:00",
+  "stage_latest_absolute_deadline": "2026-10-07T22:41:56.716615+00:00",
+  "prospective_admission_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/admission-timing.json",
+  "deadline_rule": "min(actual prospective admission + stage allowance, frozen latest absolute deadline, common pairdeadline); no reset; counterpart queue fully included",
+  "advisory_scope_not_filesystem_firewall": true
+}

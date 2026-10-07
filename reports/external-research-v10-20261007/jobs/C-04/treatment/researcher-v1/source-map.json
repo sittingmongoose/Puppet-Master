@@ -1,0 +1,279 @@
+{
+  "assignment": "C-04/treatment/researcher-v1",
+  "research_window_utc": "2026-10-07T20:58:09Z/2026-10-07T21:10:16Z",
+  "inputs": {
+    "brief": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/BRIEF.md",
+      "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+      "authority": "exact own-case input-map entry; read"
+    },
+    "frozen_plan": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/PLAN.md",
+      "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+      "authority": "exact own-case input-map entry; read after broad open discovery"
+    },
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/treatment/researcher-v1/input-map.json",
+      "authority": "exact assignment map; read",
+      "sha256": "3068e24e5b2b388b05559be07669d460e2341b4a0a09bde727d8d1cf8f920094"
+    },
+    "own_predecessor_files": [],
+    "own_predecessor_sources": [],
+    "excluded_inputs": "Other arms/repetitions, campaign state/results/reviews, histories/costs/evaluator keys/sibling answers/caches, parent history, secrets, and canonical repository files were not read."
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Audiveris 5.11.0 README",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/README.md",
+      "accessed_utc": "2026-10-07T21:05:52.989653+00:00",
+      "version_or_commit": "Audiveris 5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "OMR scope and limits, §§22–40 and output/release sections",
+      "capture_path": "sources/audiveris-readme-9e1e55c.md",
+      "bytes": 5066,
+      "sha256": "72d1ca2301410c398958ae5bd3657b2606b40a0b6e29bce0c989f2459be3e55b"
+    },
+    {
+      "id": "S02",
+      "title": "Audiveris RunTable implementation",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/run/RunTable.java",
+      "accessed_utc": "2026-10-07T21:05:52.563505+00:00",
+      "version_or_commit": "Audiveris 5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Java lines 329–360: afterMarshal iterates sequences; afterUnmarshal delegates to afterMarshal",
+      "capture_path": "sources/audiveris-run-table-9e1e55c.java",
+      "bytes": 61643,
+      "sha256": "0a1d100fa7540e537983a1eb89d204098d3fb51f3f34c6264442147388840982"
+    },
+    {
+      "id": "S03",
+      "title": "Audiveris Book export implementation",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/Book.java",
+      "accessed_utc": "2026-10-07T21:05:52.626771+00:00",
+      "version_or_commit": "Audiveris 5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Java lines 572–635: MusicXML export transcribes, then exports movement/opus; exceptions logged",
+      "capture_path": "sources/audiveris-book-9e1e55c.java",
+      "bytes": 95171,
+      "sha256": "2cac9a011635a65aa3f336cd82889cc4271bf8a3b3dbcebedf7ab8228cfd6b71"
+    },
+    {
+      "id": "S04",
+      "title": "Audiveris AGPL license",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/LICENSE",
+      "accessed_utc": "2026-10-07T21:05:53.022760+00:00",
+      "version_or_commit": "Audiveris 5.11.0; commit 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "GNU Affero General Public License v3 heading and terms",
+      "capture_path": "sources/audiveris-license-9e1e55c.txt",
+      "bytes": 34520,
+      "sha256": "76a97c878c9c7a8321bb395c2b44d3fe2f8d81314d219b20138ed0e2dddd5182"
+    },
+    {
+      "id": "S05",
+      "title": "Audiveris 5.11.0 release",
+      "url": "https://github.com/Audiveris/audiveris/releases/tag/5.11.0",
+      "accessed_utc": "2026-10-07T21:05:53.138280+00:00",
+      "version_or_commit": "Release tag 5.11.0; commit 9e1e55c (full commit in S02/S03)",
+      "locator": "Release metadata and notes",
+      "capture_path": "sources/audiveris-release-5.11.0.html",
+      "bytes": 212779,
+      "sha256": "2478fd10ecee574aff2197124b32116f04ede8a183e30745d411f5c04ce03dbb"
+    },
+    {
+      "id": "S06",
+      "title": "Audiveris issue 971",
+      "url": "https://github.com/Audiveris/audiveris/issues/971",
+      "accessed_utc": "2026-10-07T21:05:53.528863+00:00",
+      "version_or_commit": "Issue opened 2026-07-27; reports 5.11.0 build 9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "locator": "Issue status open; description/reproducer and environment; user report, not independently reproduced",
+      "capture_path": "sources/audiveris-issue-971.html",
+      "bytes": 271788,
+      "sha256": "f68be1d352bdcb5dd217d70785ff48110e4dfc64ceb9929c09580cb0b62964f7"
+    },
+    {
+      "id": "S07",
+      "title": "Audiveris 5.10.2 release",
+      "url": "https://github.com/Audiveris/audiveris/releases/tag/5.10.2",
+      "accessed_utc": "2026-10-07T21:05:54.023665+00:00",
+      "version_or_commit": "Release 5.10.2; commit 1b7cf44",
+      "locator": "Release notes: states fix for #920 rounding error in F-clef pitch/export",
+      "capture_path": "sources/audiveris-release-5.10.2.html",
+      "bytes": 200365,
+      "sha256": "c2c7788ba4ee33978220a4cb43b956d544eb5668f429427e66266d8495202ed5"
+    },
+    {
+      "id": "S08",
+      "title": "Audiveris issue 920",
+      "url": "https://github.com/Audiveris/audiveris/issues/920",
+      "accessed_utc": "2026-10-07T21:05:54.517566+00:00",
+      "version_or_commit": "Issue opened 2026-03-22; user reports 5.10.1 versus 5.9 output difference",
+      "locator": "Issue heading/status and report; user-reported regression, not generalized benchmark",
+      "capture_path": "sources/audiveris-issue-920.html",
+      "bytes": 242842,
+      "sha256": "5fc5259039f5e41bb633daec1a77fa712b48bf8ab6104591e8c975651844b880"
+    },
+    {
+      "id": "S09",
+      "title": "OpenSheetMusicDisplay API implementation",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/b416d38707b87d6ed0a56c5bd8309124ad99172d/src/OpenSheetMusicDisplay/OpenSheetMusicDisplay.ts",
+      "accessed_utc": "2026-10-07T21:05:55.088015+00:00",
+      "version_or_commit": "OSMD 2.2.0; commit b416d38707b87d6ed0a56c5bd8309124ad99172d",
+      "locator": "TypeScript lines 113–125 load(content); 270 onward render; 380 onward incremental renderer; rendering API, not annotation persistence",
+      "capture_path": "sources/osmd-source-b416d38.ts",
+      "bytes": 97515,
+      "sha256": "c7eb374e3b2ee8b58af9dac15da7cf7720ea305a9f46871af84a3b1c6fe2865f"
+    },
+    {
+      "id": "S10",
+      "title": "OpenSheetMusicDisplay 2.2.0 release",
+      "url": "https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/releases/tag/2.2.0",
+      "accessed_utc": "2026-10-07T21:05:55.230306+00:00",
+      "version_or_commit": "OSMD release 2.2.0; commit b416d38707b87d6ed0a56c5bd8309124ad99172d; released 2026-10-02",
+      "locator": "Release entry and changelog; note improvements/fixes to click-to-note behavior in renderer",
+      "capture_path": "sources/osmd-release-2.2.0.html",
+      "bytes": 262297,
+      "sha256": "2030bb6885e887cefb1294d29208f8cda481f0583e19c1736fabd1f7aa499085"
+    },
+    {
+      "id": "S11",
+      "title": "OpenSheetMusicDisplay package metadata",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/b416d38707b87d6ed0a56c5bd8309124ad99172d/package.json",
+      "accessed_utc": "2026-10-07T21:05:56.000910+00:00",
+      "version_or_commit": "OSMD 2.2.0; commit b416d38707b87d6ed0a56c5bd8309124ad99172d",
+      "locator": "package name/version/description; test/build scripts present but not run",
+      "capture_path": "sources/osmd-package-b416d38.json",
+      "bytes": 6358,
+      "sha256": "076fef533bce02d52cf7af82ac5740443ec17c7be0bfd08f05a61c490f766b52"
+    },
+    {
+      "id": "S12",
+      "title": "OpenSheetMusicDisplay license",
+      "url": "https://raw.githubusercontent.com/opensheetmusicdisplay/opensheetmusicdisplay/b416d38707b87d6ed0a56c5bd8309124ad99172d/LICENSE",
+      "accessed_utc": "2026-10-07T21:09:24.573824+00:00",
+      "version_or_commit": "OSMD 2.2.0; commit b416d38707b87d6ed0a56c5bd8309124ad99172d",
+      "locator": "BSD 3-Clause license text",
+      "capture_path": "sources/osmd-license-b416d38.txt",
+      "bytes": 1456,
+      "sha256": "261655f10cf6b90bd062fbe3c7fa4dd03e0324fdfc4b53a3c7d626e3aec694a8"
+    },
+    {
+      "id": "S13",
+      "title": "Verovio Toolkit public API",
+      "url": "https://raw.githubusercontent.com/rism-digital/verovio/425dd7b6ba26edcecbe345c10b15586d095743d9/include/vrv/toolkit.h",
+      "accessed_utc": "2026-10-07T21:05:56.131709+00:00",
+      "version_or_commit": "Verovio 6.3.0; commit 425dd7b6ba26edcecbe345c10b15586d095743d9",
+      "locator": "Header lines 310–321 editor API explicitly experimental; 365–376 SVG page rendering, pageNo 1-based; 516/564/574 MEI, element page/attribute lookup",
+      "capture_path": "sources/verovio-toolkit-425dd7b.h",
+      "bytes": 24553,
+      "sha256": "dea45193cb36e6ca8df9d63cc96c34b2e8b8fd1996a6d1a05fa951e11c49eb17"
+    },
+    {
+      "id": "S14",
+      "title": "Verovio 6.3.0 release",
+      "url": "https://github.com/rism-digital/verovio/releases/tag/version-6.3.0",
+      "accessed_utc": "2026-10-07T21:05:56.253382+00:00",
+      "version_or_commit": "Verovio release 6.3.0; commit 425dd7b6ba26edcecbe345c10b15586d095743d9; released 2026-08-19",
+      "locator": "Release metadata and changelog, including MusicXML importer improvements",
+      "capture_path": "sources/verovio-release-6.3.0.html",
+      "bytes": 197589,
+      "sha256": "01a104928e4fb0b028b3d47290e56f0347fc43e874e7209b77b6f2fc768e2c80"
+    },
+    {
+      "id": "S15",
+      "title": "Verovio GPL license",
+      "url": "https://raw.githubusercontent.com/rism-digital/verovio/425dd7b6ba26edcecbe345c10b15586d095743d9/COPYING",
+      "accessed_utc": "2026-10-07T21:09:24.707972+00:00",
+      "version_or_commit": "Verovio 6.3.0; commit 425dd7b6ba26edcecbe345c10b15586d095743d9",
+      "locator": "GNU GPL v3 heading and terms",
+      "capture_path": "sources/verovio-license-425dd7b.txt",
+      "bytes": 35148,
+      "sha256": "8b1ba204bb69a0ade2bfcf65ef294a920f6bb361b317dba43c7ef29d96332b9b"
+    },
+    {
+      "id": "S16",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "accessed_utc": "2026-10-07T21:05:56.598071+00:00",
+      "version_or_commit": "W3C Recommendation, Web Annotation Data Model (stable TR URL)",
+      "locator": "§1.1 model purpose/non-transport; §4.2 multiple selectors; §4.2.7 SVG selector dimensions relative to source",
+      "capture_path": "sources/w3c-annotation-model.html",
+      "bytes": 284185,
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980"
+    },
+    {
+      "id": "S17",
+      "title": "MEI facsimile guidelines",
+      "url": "https://music-encoding.org/guidelines/v5/content/facsimilesrecordings.html",
+      "accessed_utc": "2026-10-07T21:05:56.704975+00:00",
+      "version_or_commit": "MEI Guidelines v5 content; v5 site currently publishes v5.1",
+      "locator": "§12.1.1 facsimile/surface/zone, surface coordinates, graphics, zone coordinate frame and ID linkage",
+      "capture_path": "sources/mei-facsimiles-v5.html",
+      "bytes": 121396,
+      "sha256": "02da0bbe1f9d8a4b407e32c38d4029005c7d8b45aa70230865242d7d0c9925e8"
+    },
+    {
+      "id": "S18",
+      "title": "MEI facsimile module",
+      "url": "https://music-encoding.org/guidelines/v5/modules/MEI.facsimile.html",
+      "accessed_utc": "2026-10-07T21:10:15.385004+00:00",
+      "version_or_commit": "MEI 5 Guidelines module; page identifies facsimile/surface/zone",
+      "locator": "Module declarations for facsimile elements",
+      "capture_path": "sources/mei-facsimile-module-v5.html",
+      "bytes": 21507,
+      "sha256": "e0db37af2c3be10d4c8fa7f492c40e645e44b35efbd33d1f9e2ed60d5cfa3c8c"
+    },
+    {
+      "id": "S19",
+      "title": "MusicXML 4.0 measure reference",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/measure-partwise/",
+      "accessed_utc": "2026-10-07T21:05:56.814635+00:00",
+      "version_or_commit": "MusicXML 4.0 (W3C 2021-06 reference)",
+      "locator": "Measure @number/@text/@id semantics, implicit and non-controlling flags; identifiers unique only document-wide",
+      "capture_path": "sources/musicxml-measure-v4.html",
+      "bytes": 15604,
+      "sha256": "e5a94556143bf6755dd74627c11409c078abb4fe49a972d79eec3a962f79a725"
+    },
+    {
+      "id": "S20",
+      "title": "MusicXML 4.0 duration reference",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/duration/",
+      "accessed_utc": "2026-10-07T21:10:15.591797+00:00",
+      "version_or_commit": "MusicXML 4.0 (W3C 2021-06 reference)",
+      "locator": "<duration> expressed in positive division units; musical position behavior",
+      "capture_path": "sources/musicxml-duration-v4.html",
+      "bytes": 13785,
+      "sha256": "740707532c0ec709937ba1325a0177afc481bdc80c7f05e09c1bde7a1ffe9808"
+    },
+    {
+      "id": "S21",
+      "title": "MusicXML 4.0 divisions reference",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/elements/divisions/",
+      "accessed_utc": "2026-10-07T21:10:15.668097+00:00",
+      "version_or_commit": "MusicXML 4.0 (W3C 2021-06 reference)",
+      "locator": "<divisions> gives number per quarter note; divisions can change with tuplets",
+      "capture_path": "sources/musicxml-divisions-v4.html",
+      "bytes": 7784,
+      "sha256": "03f23ea16519fc5fe4d5dfc813479421b48dab8fbe3d84b1840038eb443879f3"
+    },
+    {
+      "id": "S22",
+      "title": "MusicXML 4.0 tenths reference",
+      "url": "https://www.w3.org/2021/06/musicxml40/musicxml-reference/data-types/tenths/",
+      "accessed_utc": "2026-10-07T21:10:15.736162+00:00",
+      "version_or_commit": "MusicXML 4.0 (W3C 2021-06 reference)",
+      "locator": "tenths = tenths of interline staff space, scaled through <scaling>; not pixels/points",
+      "capture_path": "sources/musicxml-tenths-v4.html",
+      "bytes": 64154,
+      "sha256": "da6149f22cd00e7bd78b862d3f5d9935396d41d0091ca9e7871e24a442e8be6e"
+    },
+    {
+      "id": "S23",
+      "title": "MusicXML 4.0 XSD",
+      "url": "https://www.w3.org/2021/06/musicxml40/listings/musicxml.xsd",
+      "accessed_utc": "2026-10-07T21:05:57.332743+00:00",
+      "version_or_commit": "MusicXML 4.0 W3C XSD",
+      "locator": "Schema declarations for optional-unique-id, score-partwise/timewise and format constraints",
+      "capture_path": "sources/musicxml-xsd-v4.xsd",
+      "bytes": 467545,
+      "sha256": "3ed9946c77e04699b7fc673b06f479a404a76025597f574df3afedd5c3700f27"
+    }
+  ]
+}

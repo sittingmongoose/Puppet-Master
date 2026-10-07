@@ -1,0 +1,261 @@
+{
+  "schema": "er10.M02A.final-pair-v3.freeze",
+  "frozen_at": "2026-10-07T20:24:52.857812+00:00",
+  "root_policy_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-finite-prospective-admissions-v3.json",
+  "root_policy_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "admission": {
+    "owner": "targeted-cohort1",
+    "family": "Luna",
+    "new_version": 3,
+    "common_stages": [],
+    "control": [
+      {
+        "assignment": "fresh-question1",
+        "native_goals": 1,
+        "minutes": 10,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-question2",
+        "native_goals": 1,
+        "minutes": 10,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-full-join-final",
+        "native_goals": 1,
+        "minutes": 10,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "sameauthor-coherent-batch-full-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          25,
+          5
+        ],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 30,
+    "common_absolute_pair_wall_minutes": 30,
+    "arm_overlap": true,
+    "original_case_card_sha256": "8c340630fb5a1c66a56625c825c98cf9071bd88b000afd9f437c76c8fe0ba393",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "control",
+      "treatment"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "original_input_bytes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/case-card.json",
+      "sha256": "8c340630fb5a1c66a56625c825c98cf9071bd88b000afd9f437c76c8fe0ba393"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/CASE_CARD.md",
+      "sha256": "2f86e8852e9f159052b682611eb948da79bdfdf03de9b10d2c177c5ea2466ced"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/INPUT_MAP.json",
+      "sha256": "bf68a4dc10134c5686f5eeb7b9ab083c9eb1edc3ebbde46d0fe400d65d064ebc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/brief.md",
+      "sha256": "7e098f7e27253c87adca194aaa0a7cd36012b8bac69bc220518cd078bb0dec19"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources.json",
+      "sha256": "2ac208038416cc008b1fdc2fab08c74b57bc4b8715b3b16276038b5861b5e9c7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpcache.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpsem.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+    }
+  ],
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "parent_thread_id_literal": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort1-v1",
+  "notice_mode": "auto",
+  "absolute_clock": "T0 is earliest new preparation/request of either arm. BOTH arms deadline T0+30min; no resets. Arm overlap allowed within Luna2, control admitted first. Individual control stages<=10min and clipped to common deadline. Treatment logical batch<=T0+25, final<=T0+30. Limits are upper bounds; finish early.",
+  "candidate_tool_policy": "Direct fresh native create_goal/get_goal active/update_goal complete/get_goal same identity, one activation-only T3 notice with mode auto. No Goal engineering, no delegation, no repo edits/installers/account changes/third-party writes. Frozen primary sources and equally permitted supplementary primary checks, record bytes/versions. Only mapped scientific outputs in jobs; advisory maps are not firewall. No other cases, old attempts, evaluator inputs or findings.",
+  "output_scope": {
+    "carrier": "Exact actual jobs paths only, no aliases or cases outputs.",
+    "max_material_findings": 8,
+    "soft_word_ceiling": 1100,
+    "deliverable": "One complete bounded answer/recommendation with source conditions, full obligation dispositions, justified uncertainty, retained optional leads where requested, and discriminating proposed checks. Any carried draft/critique remains a legitimate input, not source truth.",
+    "intermediate_scope": "Only method-required bounded stage outputs. Do not impose four synchronized catalogs or an integrated application plan.",
+    "preservation": "Final must distinguish accepted, amended, rejected and unresolved claims; executed witnesses and proposed tests remain distinct."
+  },
+  "both_arm_stage_maps": {
+    "control": [
+      {
+        "clientRequestId": "er10-cohort1-D-M02-A-control-question_1-v3",
+        "role": "question_1",
+        "procedure": "Fresh same-family researcher answers Q1 with its relevant shared conditions.",
+        "minutes": 10,
+        "native_goals": 1,
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "predecessor_artifacts": [],
+        "writable_stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_1-v3",
+        "stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_1-v3/report.md",
+        "final_output": null
+      },
+      {
+        "clientRequestId": "er10-cohort1-D-M02-A-control-question_2-v3",
+        "role": "question_2",
+        "procedure": "Another fresh same-family researcher answers Q2 from the same brief and sources; no sibling answer is supplied.",
+        "minutes": 10,
+        "native_goals": 1,
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "predecessor_artifacts": [],
+        "writable_stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_2-v3",
+        "stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_2-v3/report.md",
+        "final_output": null
+      },
+      {
+        "clientRequestId": "er10-cohort1-D-M02-A-control-join-v3",
+        "role": "join",
+        "procedure": "Same-family author reconciles Q1/Q2 dispositions and shared conditions into one final; source-check contradictions.",
+        "minutes": 10,
+        "native_goals": 1,
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "predecessor_artifacts": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_1-v3/report.md",
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/question_2-v3/report.md"
+        ],
+        "writable_stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v3",
+        "stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v3/report.md",
+        "final_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/control/join-v3/final.md"
+      }
+    ],
+    "treatment": [
+      {
+        "clientRequestId": "er10-cohort1-D-M02-A-treatment-batch-v3",
+        "role": "batch",
+        "procedure": "One fresh researcher answers Q1 and Q2 coherently, reusing acquired context and keeping each disposition visible.",
+        "minutes": 30,
+        "native_goals": 1,
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "predecessor_artifacts": [],
+        "writable_stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/batch-v3",
+        "stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/batch-v3/report.md",
+        "final_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/finalize-v3/final.md",
+        "same_author_finalization_procedure": "The same author checks the shared-condition map and produces the identical final scope.",
+        "logical_minutes": [
+          25,
+          5
+        ],
+        "writable_finalization_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/finalize-v3",
+        "finalization_report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M02-A/treatment/finalize-v3/report.md"
+      }
+    ]
+  },
+  "full_review_gate": "Both full finals, native complete, all exact-case tasks and descendants quiet before independent full-source ordinary Sol6.1 xhigh codex_gmail priority review; absence no method credit.",
+  "attempt_limit": 1,
+  "old_attempts_immutable": true,
+  "start_gate": "Only after M02B scored work quiet and actual source assessment decision"
+}

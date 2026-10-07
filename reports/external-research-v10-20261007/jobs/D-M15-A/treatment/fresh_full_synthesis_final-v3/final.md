@@ -1,0 +1,41 @@
+# D-M15-A—Transfer resume × representation identity: reconciled bounded recommendation
+
+Stage: treatment `fresh_full_synthesis_final-v3`, synthesizing the two complementary scouts with independent checking. Sources: 8 primary public docs captured and SHA-256-pinned this stage in `sources/index.json` (RFC 9110; tus 1.0.0; S3 UploadPart + CreateMultipartUpload; rename(2), open(2); SQLite "Atomic Commit"; Pro Git §10.2). Consequential claims re-verified against captured bytes; no code executed; fault-injection validation is proposed only.
+
+## Bounded recommendation (no full sync service)
+
+Bind each photo transfer to one identity—SHA-256 of the final local bytes, computed at enqueue and stored in the transfer record—enforced at two gates. *Local gate:* before every resume attempt, re-read and re-hash the attachment path; equal → resume; mismatch → abort the old session (remote abort/termination plus temp-file removal) and start fresh on the new bytes. *Transport gate:* resume only behind strong representation identity—byte-range GETs with `If-Range` carrying a strong ETag; offset/part protocols preconditioned on the hash where the server accepts preconditions; otherwise the local gate is the only identity check. Publish local edits fsync-then-rename (atomicity is not durability). Bound retries by attempt count plus byte-progress floor, honoring `Retry-After`; on exhaustion or replacement, transition to terminal state: abort the remote session, remove temp files. Scope: one upload path's mechanics—no sync engine, conflict UI, or storage redesign.
+
+## Material findings (8)
+
+**F1 (transport)—Range resume degrades safely only behind a strong validator.** Captured: If-Range instructs the recipient to "ignore the Range header field if the validator doesn't match, resulting in transfer of the new selected representation instead of a 412". Mid-transfer replacement therefore yields a clean full re-transfer, never a mixed 206—but only if the server mints strong ETags (§8.8.1). Disposition: accepted.
+
+**F2 (transport)—offset/part resume is content-blind.** tus 1.0.0: mismatched Upload-Offset → "409 Conflict without modifying the upload resource", yet the offset is positional state; core has no replacement or versioning mechanism (negative lead). S3 UploadPart, verbatim: "If you upload a new part using the same part number that was used with a previous part, the previously uploaded part is overwritten"—silent substitution succeeds. Neither captured spec states a retry bound. Disposition: amended (adopt resume mechanics; add the identity gate).
+
+**F3 (transport)—HTTP retries are sanctioned but unbounded.** RFC 9110 §9.2.2: idempotent requests "can be repeated automatically if a communication failure occurs"; §10.2.3 Retry-After is a delay hint only. No bound exists in the captured text—boundedness is entirely client policy. Disposition: accepted.
+
+**F4 (local)—atomic rename is the safe publish primitive; atomic ≠ durable.** rename(2), verbatim: "If newpath already exists, it will be atomically replaced, so that there is no point at which another process attempting to access newpath will find it missing"; a failed rename leaves newpath in place. BUGS disclaims atomicity on NFS; the page says nothing about durability. SQLite's atomic-commit discipline supplies it: journal before modify, flush "critical" to "survive an unexpected power loss", commit = journal deletion, hot journal = inconsistent. Disposition: amended (rename alone → fsync-then-rename). Uncertainty: fd-continuation of an in-flight transfer across rename is POSIX-implied, not captured verbatim.
+
+**F5 (local)—in-place replacement defeats all transport-side repair.** open(2) `O_TRUNC` truncates the file to length 0 on open: a concurrent reader observes truncated or mixed bytes; no protocol can repair an already-corrupted local read side. Identity gating detects the change but cannot salvage the corrupted partial. Disposition: accepted; recommendation is conditional on replace-via-rename.
+
+**F6 (reconciliation)—one identity key, two enforcement points, not two answers.** Content-addressed identity (Git blob = hash of header + content; on change the store "now contains both versions") makes replacement decidable by comparison but ignorant of wire progress; offset/part resume tracks progress but not byte identity (F2). The join: the hash keys the session; the local gate decides resume-vs-restart before touching the wire; the transport gate makes the wire refuse to mix. Neither gate alone suffices—position-only resume silently concatenates replaced bytes; identity without atomic publication still corrupts (F5). Strong validators may change without a data change, so the transport gate can false-abort—safe, costs bytes only. Disposition: accepted.
+
+**F7—rejected identity candidates.** (a) mtime+size: replacements can preserve both; §8.8.1 makes weak validators "far less useful for comparisons"—false resume and false abort are both possible. (b) Weak ETags (`W/`): they assert semantic equivalence, not byte identity; a replaced photo is not equivalent. (c) Path/filename: rename(2) shows one path atomically denotes different content over time. (d) Bare offset/part-number position: F2/F3 show substitution succeeds silently. Disposition: rejected (all four).
+
+**F8—bounded retries must imply bounded abandonment.** Remote: incomplete multipart sessions persist and accrue storage/billing until Complete or Abort. Local: temp/staged files persist; the Git chapter omits collection of unreachable objects (open lead). A cap that merely stops attempts leaves residue; it must transition the session to terminal state and trigger two-sided cleanup. Exact constants are app-tunable, not source-derived. Disposition: accepted with open parameterization.
+
+## Conditions, uncertainty, and negative leads (retained)
+
+Conditions: HTTP-family transfer; single-writer per attachment; server support for strong ETags (or preconditions) is pivotal—without it the transport gate collapses to the local gate (U1); whether this app replaces via rename or in-place decides whether F5 corruption is live (U2); local filesystem must give atomic rename (not NFS per captured BUGS). Uncertainty: fd-continuation after rename (U3); S3 composite ETag semantics unpublished (U4); re-hash cost per resume on rural devices untested, bounded by photo sizes (U5); tus page is the published 1.0.0 render, drift vs repo master unchecked (U6). Negative leads: no retry bound anywhere in RFC 9110, tus core, or the captured S3 pages; no tus-core replacement mechanism or mandated chunk size; no durability statement on the rename page; no GC coverage in the Git chapter.
+
+## Validation—proposed vs actually executed
+
+Executed this stage: capture and SHA-256 binding of 8 sources; phrase-level verification of every quote above against captured bytes. Proposed, not executed (no live transfer stack built; code execution not permitted): **V1 replace-then-resume**—enqueue a large transfer, replace once via rename, once in-place, force a resume; discriminator: identity-gated resume restarts cleanly in both arms, offset-only resume produces a mixed file in at least one. **V2 server-side replacement**—kill mid-transfer, replace server-side, resume; mixed 206 vs clean restart discriminates strong-If-Range deployments. **V3 boundedness**—connection-flap loop until caps trigger; measure attempts to terminal state and residue (remote orphan sessions plus local temp files) with vs without abort-on-exhaustion.
+
+## Dispositions
+
+Accepted: F1, F3, F5, F6, F8. Amended: F2 (resume mechanics + identity gate), F4 (fsync-then-rename). Rejected: all F7 identity candidates. Unresolved: transport-gate availability (U1), the app's actual replace-mode (U2), re-hash cost (U5), chunk-size guidance (absent from captured tus core), S3 SDK retry bounds (not on the captured page).
+
+## Obligation coverage
+
+1 interrupted transfers + bounded retries → F3, F8, recommendation · 2 replacement identity during resume → F1, F2, F6, F7 · 3 two-sided investigation → F1–F3 vs F4–F5 · 4 reconciled overlap → F6, shared cleanup in F8 · 5 ≤8 supported findings with negatives/uncertainty → list + retained section · 6 bounded recommendation + discriminating validation, no sync service → recommendation, V1–V3.

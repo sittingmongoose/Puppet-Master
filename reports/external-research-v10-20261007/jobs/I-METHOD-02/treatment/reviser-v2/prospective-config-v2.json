@@ -1,0 +1,30 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "mode": "async",
+  "role": "general",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "clientRequestId": "er10-I-METHOD-02-treatment-reviser-v2",
+  "record_at": "2026-10-07T20:21:51.048108+00:00",
+  "stage_allowance_seconds": 1200,
+  "prospective_arm_deadline": "2026-10-07T21:21:51.048108+00:00",
+  "prospective_stage_deadline": null,
+  "deadline_rule": "stage activation<=allocation AND wholedeadline preserves1200final forcritic; totaloccupied<=3600; no reset",
+  "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+  "version": "v2"
+}

@@ -1,0 +1,36 @@
+{
+  "cache_mode": "warm",
+  "elapsed_seconds": 0.0019428829982643947,
+  "ended_at": "2026-10-07T20:59:13.541908+00:00",
+  "network_requests": 0,
+  "operation": "read",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 145643,
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "145643",
+      "Content-Type": "text/html",
+      "ETag": "\"fe0bd821e143c70d9d0061d21ccc3f42\"",
+      "Last-Modified": "Thu, 21 May 2026 20:44:53 GMT"
+    },
+    "original_url": "https://iiif.io/api/image/3.0/",
+    "raw": {
+      "bytes": 145643,
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3"
+    },
+    "retrieved_at": "2026-10-07T20:59:13.384448+00:00",
+    "retrieved_url": "https://iiif.io/api/image/3.0/"
+  },
+  "record_id": "0bf6f73480231e04c3167fbf3eed74f1440d198f0e0a3cf7b68e097b549e212b",
+  "source": "0bf6f73480231e04c3167fbf3eed74f1440d198f0e0a3cf7b68e097b549e212b",
+  "started_at": "2026-10-07T20:59:13.539938+00:00",
+  "status": "ok"
+}

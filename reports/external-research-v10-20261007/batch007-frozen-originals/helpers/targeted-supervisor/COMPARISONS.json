@@ -1,0 +1,651 @@
+{
+  "schema": "er10.cohort1.comparisons.final.v2",
+  "planned_slots": 6,
+  "counts": {
+    "planned_slots": 6,
+    "terminal_slots": 6,
+    "assessable_comparisons": 0,
+    "source_assessed_pairs": 6,
+    "structured_source_assessment_partial_delivery_pairs": 1,
+    "source_unassessed_pairs": 0,
+    "science_paired_assessments_including_diagnostic": 6,
+    "qualified_method_comparisons": 0,
+    "diagnostic_partial_final_pairs": 1,
+    "pair_version_dispositions": 7
+  },
+  "comparisons": [
+    {
+      "case_id": "D-M01-A",
+      "version": 1,
+      "disposition": "FULL_SCIENTIFIC_DIAGNOSTIC_ASSESSED_COMPARATIVE_HOLD",
+      "qualified_method_comparison": false,
+      "quality": {
+        "assessment_basis": "Independent authored source reviews; status summaries are reporting only, not new grading.",
+        "control": "Full-scope diagnostic: control has decisive staging-deletion contradiction and missing governing conditions.",
+        "treatment": "Treatment has missing governing conditions and unsupported/overbroad optional-alternative claims; neither receives unqualified support.",
+        "coverage": {
+          "obligations_assessed": 12,
+          "claim_condition_units_assessed": 76,
+          "scientific_remainder_unassessed": 0
+        }
+      },
+      "time": {
+        "control": {
+          "candidate_dispatch_to_t3_terminal_seconds": 1079.068,
+          "aggregate_occupied_t3_run_seconds": 979.509,
+          "includes_failed_interrupted_delivery": true,
+          "native_goal_usage_by_stage": [
+            {
+              "update_goal_receipt": {
+                "goal": {
+                  "threadId": "01a117a7-d38c-7030-a585-4d1e70f0c353",
+                  "objective": "Research Stage D-M01-A control: produce one complete bounded preliminary proposal grounded in the provided brief and listed SQLite primary sources, preserve source conditions and uncertainty, and save the required intermediate and native lifecycle receipts under the authorized stage directory.",
+                  "status": "complete",
+                  "tokensUsed": 49984,
+                  "timeUsedSeconds": 194,
+                  "createdAt": 1791398289,
+                  "updatedAt": 1791398484
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+              },
+              "final_get_goal_receipt": {
+                "goal": {
+                  "threadId": "01a117a7-d38c-7030-a585-4d1e70f0c353",
+                  "objective": "Research Stage D-M01-A control: produce one complete bounded preliminary proposal grounded in the provided brief and listed SQLite primary sources, preserve source conditions and uncertainty, and save the required intermediate and native lifecycle receipts under the authorized stage directory.",
+                  "status": "complete",
+                  "tokensUsed": 49984,
+                  "timeUsedSeconds": 194,
+                  "createdAt": 1791398289,
+                  "updatedAt": 1791398484
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": null
+              },
+              "observed_clock_before_terminal_calls": {
+                "current_time": "2026-10-07 18:41:24 UTC"
+              },
+              "observed_clock_after_final_get": {
+                "current_time": "2026-10-07 18:41:24 UTC"
+              }
+            },
+            {
+              "update_goal": {
+                "goal": {
+                  "threadId": "01a117ad-50ee-7e61-841d-5dc9ed1ac6e0",
+                  "objective": "Case D-M01-A control arm research criticism stage: inspect only the declared brief, primary source files, and predecessor draft; produce a bounded obligation-by-obligation critique with concrete dispositions and proposed discriminating checks, preserving uncertainty and source conditions, without finalizing.",
+                  "status": "complete",
+                  "tokensUsed": 46522,
+                  "timeUsedSeconds": 161,
+                  "createdAt": 1791398611,
+                  "updatedAt": 1791398773
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+              },
+              "get_goal": {
+                "goal": {
+                  "threadId": "01a117ad-50ee-7e61-841d-5dc9ed1ac6e0",
+                  "objective": "Case D-M01-A control arm research criticism stage: inspect only the declared brief, primary source files, and predecessor draft; produce a bounded obligation-by-obligation critique with concrete dispositions and proposed discriminating checks, preserving uncertainty and source conditions, without finalizing.",
+                  "status": "complete",
+                  "tokensUsed": 46522,
+                  "timeUsedSeconds": 161,
+                  "createdAt": 1791398611,
+                  "updatedAt": 1791398773
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": null
+              },
+              "observed_at_utc": "2026-10-07 18:46:13 UTC"
+            },
+            null
+          ],
+          "generated_tokens": null,
+          "input_tokens": null,
+          "cached_input_tokens": null,
+          "billing": null,
+          "queue_retry_delay": null,
+          "usable_final_elapsed_seconds": null,
+          "note": "T3 candidate run intervals, including candidate receipt engineering and interrupted revision. Complete output time not equated to T3 terminal; native Goal counters not generated/billing and not summed."
+        },
+        "treatment": {
+          "candidate_dispatch_to_t3_terminal_seconds": 732.581,
+          "aggregate_occupied_t3_run_seconds": 692.8309999999999,
+          "includes_failed_interrupted_delivery": true,
+          "native_goal_usage_by_stage": [
+            {
+              "final_get_observed_at_utc": "2026-10-07 19:01:12 UTC",
+              "final_get_response": {
+                "goal": {
+                  "threadId": "01a117ba-02d4-7d62-96f5-ce090c2c38c3",
+                  "objective": "Complete the bounded research stage for ER10 case D-M01-A treatment: read only the provided brief and primary SQLite source files, produce the required research intermediate draft in the specified stage directory, preserve exact native Goal lifecycle receipts, and record observed timing/usage within the six-minute deadline.",
+                  "status": "active",
+                  "tokensUsed": 53440,
+                  "timeUsedSeconds": 210,
+                  "createdAt": 1791399462,
+                  "updatedAt": 1791399672
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": null
+              },
+              "update_goal_requested_at_utc": "2026-10-07 19:01:12 UTC",
+              "update_goal_response": {
+                "goal": {
+                  "threadId": "01a117ba-02d4-7d62-96f5-ce090c2c38c3",
+                  "objective": "Complete the bounded research stage for ER10 case D-M01-A treatment: read only the provided brief and primary SQLite source files, produce the required research intermediate draft in the specified stage directory, preserve exact native Goal lifecycle receipts, and record observed timing/usage within the six-minute deadline.",
+                  "status": "complete",
+                  "tokensUsed": 56344,
+                  "timeUsedSeconds": 210,
+                  "createdAt": 1791399462,
+                  "updatedAt": 1791399672
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+              }
+            },
+            {
+              "update_goal": {
+                "args": {
+                  "status": "complete"
+                },
+                "response": {
+                  "goal": {
+                    "threadId": "01a117bf-8dbb-7fb0-8018-5fee22776f41",
+                    "objective": "For ER10 case D-M01-A treatment critic_and_final: read only the declared brief, source manifest, primary source files, and declared predecessor draft; verify its obligations against the exact SQLite 3.51.3 documentation/code; record bounded critique dispositions; author the complete corrected recommendation at final.md and the critique report at report.md, preserving uncertainty and distinguishing executed witnesses from proposed checks. Save observed timings and direct native Goal receipts in the declared stage directory.",
+                    "status": "complete",
+                    "tokensUsed": 69311,
+                    "timeUsedSeconds": 302,
+                    "createdAt": 1791399829,
+                    "updatedAt": 1791400131
+                  },
+                  "remainingTokens": null,
+                  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+                },
+                "error": null
+              },
+              "get_goal": {
+                "args": {},
+                "response": {
+                  "goal": {
+                    "threadId": "01a117bf-8dbb-7fb0-8018-5fee22776f41",
+                    "objective": "For ER10 case D-M01-A treatment critic_and_final: read only the declared brief, source manifest, primary source files, and declared predecessor draft; verify its obligations against the exact SQLite 3.51.3 documentation/code; record bounded critique dispositions; author the complete corrected recommendation at final.md and the critique report at report.md, preserving uncertainty and distinguishing executed witnesses from proposed checks. Save observed timings and direct native Goal receipts in the declared stage directory.",
+                    "status": "complete",
+                    "tokensUsed": 69311,
+                    "timeUsedSeconds": 302,
+                    "createdAt": 1791399829,
+                    "updatedAt": 1791400131
+                  },
+                  "remainingTokens": null,
+                  "completionBudgetReport": null
+                },
+                "error": null
+              }
+            }
+          ],
+          "generated_tokens": null,
+          "input_tokens": null,
+          "cached_input_tokens": null,
+          "billing": null,
+          "queue_retry_delay": null,
+          "usable_final_elapsed_seconds": null,
+          "note": "T3 candidate run intervals, including candidate receipt engineering and interrupted revision. Complete output time not equated to T3 terminal; native Goal counters not generated/billing and not summed."
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_cumulative_totals_not_summed": true
+      },
+      "evidence": [],
+      "eligibility": {
+        "qualified_method_credit": false,
+        "lifecycle": "Control revision interrupted without native terminal; initial control research create capture missing",
+        "provenance": "Advisory maps, not filesystem firewall; no clean provenance claim",
+        "source_method_win_established": false
+      },
+      "candidate_allowance_minutes_per_arm": 15,
+      "all_previous_failures_and_costs_retained": true
+    },
+    {
+      "case_id": "D-M01-B",
+      "version": 1,
+      "disposition": "PAIRED_SEMANTIC_REVIEW_REPAIRED_COMPARATIVE_HOLD",
+      "qualified_method_comparison": false,
+      "quality": {
+        "assessment_basis": "Independent authored source reviews; status summaries are reporting only, not new grading.",
+        "control": "Conditional recommendation supported with qualifications.",
+        "treatment": "Conditional recommendation supported with qualifications; original native/time failures remain.",
+        "coverage": {
+          "obligations_assessed": 12,
+          "claim_groups_assessed": 58
+        }
+      },
+      "time": {
+        "control": {
+          "dispatch_to_terminal_seconds": 812.586,
+          "aggregate_occupied_seconds": 593.177,
+          "actual_run_count": 3,
+          "includes_failed_attempts_and_overruns": true,
+          "native_cumulative_tokens_not_summed": true,
+          "billing": null,
+          "generated_tokens": null
+        },
+        "treatment": {
+          "dispatch_to_terminal_seconds": 921.41,
+          "aggregate_occupied_seconds": 880.417,
+          "actual_run_count": 2,
+          "includes_failed_attempts_and_overruns": true,
+          "native_cumulative_tokens_not_summed": true,
+          "billing": null,
+          "generated_tokens": null
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_cumulative_totals_not_summed": true
+      },
+      "evidence": [],
+      "eligibility": {
+        "qualified_method_credit": false,
+        "source_method_win_established": false,
+        "provenance": "Advisory scope restriction only, not firewall"
+      },
+      "run_times_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+        "sha256": "647c1dd17d46831ef3901924b4fb467fc324feded5c1d4934d2a0d3aaf142165"
+      },
+      "candidate_allowance_minutes_per_arm": 15,
+      "all_previous_failures_and_costs_retained": true
+    },
+    {
+      "case_id": "D-M03-A",
+      "version": 1,
+      "disposition": "FULL_SCIENTIFIC_OWN_ARM_REVIEWS_REPAIRED_COMPARATIVE_HOLD",
+      "qualified_method_comparison": false,
+      "quality": {
+        "assessment_basis": "Independent authored source reviews; status summaries are reporting only, not new grading.",
+        "control": "Material scientific corrections required after full own-arm review.",
+        "treatment": "Material scientific corrections required after full own-arm review.",
+        "coverage": {
+          "obligations_assessed": 12,
+          "scientific_claim_groups_assessed": 36,
+          "historical_process_groups_unassessed": 2
+        }
+      },
+      "time": {
+        "control": {
+          "dispatch_to_terminal_seconds": 405.194,
+          "aggregate_occupied_seconds": 322.89,
+          "actual_run_count": 2,
+          "includes_failed_attempts_and_overruns": true,
+          "billing": null,
+          "generated_tokens": null,
+          "native_cumulative_counters_not_summed": true
+        },
+        "treatment": {
+          "dispatch_to_terminal_seconds": 753.641,
+          "aggregate_occupied_seconds": 537.53,
+          "actual_run_count": 4,
+          "includes_failed_attempts_and_overruns": true,
+          "billing": null,
+          "generated_tokens": null,
+          "native_cumulative_counters_not_summed": true
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_cumulative_totals_not_summed": true
+      },
+      "evidence": [],
+      "eligibility": {
+        "qualified_method_credit": false,
+        "source_method_win_established": false,
+        "provenance": "Advisory scope restriction only, not firewall"
+      },
+      "run_times_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+        "sha256": "e8be320ca936dc01a168126f1b6ab64e70c07deba0191f2f39ed2f253006112c"
+      },
+      "candidate_allowance_minutes_per_arm": 15,
+      "all_previous_failures_and_costs_retained": true
+    },
+    {
+      "case_id": "D-M03-B",
+      "version": 2,
+      "disposition": "FULL_SOURCE_SCIENCE_ASSESSED_PROVENANCE_HOLD",
+      "qualified_method_comparison": false,
+      "quality": {
+        "assessment_basis": "Independent authored source reviews; status summaries are reporting only, not new grading.",
+        "control": "SUPPORTED_CORE_WITH_QUALIFICATION_REQUIRED",
+        "treatment": "CONSEQUENTIAL_SCIENTIFIC_ERRORS_PRESENT",
+        "coverage": {
+          "obligations_assessed": 12,
+          "scientific_claim_groups_assessed": 39,
+          "process_groups_unassessed": 5,
+          "runtime_groups_unassessed": 8
+        }
+      },
+      "time": {
+        "control": {
+          "dispatch_to_terminal_seconds": 257.552,
+          "aggregate_occupied_seconds": 235.48999999999998,
+          "actual_run_count": 2,
+          "billing": null,
+          "generated_tokens": null,
+          "native_totals_not_summed": true
+        },
+        "treatment": {
+          "dispatch_to_terminal_seconds": 557.925,
+          "aggregate_occupied_seconds": 442.584,
+          "actual_run_count": 4,
+          "billing": null,
+          "generated_tokens": null,
+          "native_totals_not_summed": true
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_cumulative_totals_not_summed": true
+      },
+      "evidence": [],
+      "eligibility": [
+        {
+          "detected_at": "2026-10-07T19:55:17.842389+00:00",
+          "kind": "out_of_map_write",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/treatment/final.md",
+          "exists": true,
+          "sha256": "cdf6c9e9b93a950e7f09fa481937279d3f7f014257013be88988029bed49d1a6",
+          "matches_declared_final": true,
+          "disposition": "PROVENANCE_HOLD: candidate reported unauthorized case-output export contrary to root jobs-only binding; retain exact original, do not delete or treat as authoritative candidate carrier",
+          "science_grade_inference": null
+        },
+        {
+          "kind": "out_of_map_write",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/outputs/control/final.md",
+          "sha256": "c6a0a9bb5bdb2ddc2bbc264199c1256b87d22349d35ebfcdbd5657858a469e0f",
+          "matches_declared_final": true,
+          "disposition": "PROVENANCE_HOLD: unauthorized extra cases-output export, advisory maps not firewall; original retained, jobsfinal authoritative",
+          "science_grade_inference": null
+        },
+        {
+          "kind": "supervisor_prompt_path_conflict",
+          "detected_at": "2026-10-07T20:04:13.428240+00:00",
+          "fact": "Original v2 prompt copied frozen output_scope.final_path_by_arm cases/outputs paths while exactmap/jobs-only prohibition overrides them; actual unauthorized exports cannot be attributed solely to candidate compliance. Both original inputs/prompts preserved.",
+          "disposition": "PROVENANCE/CARRIER_HOLD and mixedinstruction limitation retained separately; no scientificgrade change or retroactive prompt rewrite"
+        }
+      ],
+      "run_times_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+        "sha256": "712dc57eddff2cd3ac71abcb35e0469fd28c562fa1feed64109ba5f2c2b9863a"
+      },
+      "candidate_allowance_minutes_per_arm": 15,
+      "all_previous_failures_and_costs_retained": true
+    },
+    {
+      "case_id": "D-M02-A",
+      "version": 2,
+      "disposition": "CONTROL_MISSING_FINAL_DIAGNOSTIC_ONLY_NO_COMPARISON",
+      "qualified_method_comparison": false,
+      "quality": {
+        "assessment_basis": "Independent authored source reviews; status summaries are reporting only, not new grading.",
+        "control": "UNASSESSED_MISSING_COMPLETE_FINAL; existing Q1/Q2 diagnostic assessment only",
+        "treatment": "NOT_FULLY_CORRECT_AS_UNQUALIFIED_NORMATIVE_RECOMMENDATION",
+        "coverage": {
+          "control_final_obligations_unassessed": 6,
+          "control_existing_scientific_groups_assessed": 13,
+          "treatment_final_obligations_assessed": 6,
+          "treatment_scientific_groups_assessed": 13
+        }
+      },
+      "time": {
+        "control": {
+          "dispatch_to_task_terminal_seconds": 947.585,
+          "aggregate_occupied_seconds": 862.971,
+          "actual_run_count": 3,
+          "native_final_completion": "ABSENT control final/nativecomplete",
+          "billing": null,
+          "generated_tokens": null,
+          "failure_inclusive": true,
+          "native_totals_not_summed": true
+        },
+        "treatment": {
+          "dispatch_to_task_terminal_seconds": 581.169,
+          "aggregate_occupied_seconds": 580.65,
+          "actual_run_count": 1,
+          "native_final_completion": "actualcomplete frozen",
+          "billing": null,
+          "generated_tokens": null,
+          "failure_inclusive": true,
+          "native_totals_not_summed": true
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_cumulative_totals_not_summed": true
+      },
+      "evidence": [],
+      "eligibility": [
+        {
+          "kind": "out_of_map_write",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/outputs/treatment/final.md",
+          "sha256": "4525479502b381cd8b93b1bf56a3e44158bfc4bb822730d43b7ede6714902b1c",
+          "matches_declared_final": true,
+          "disposition": "PROVENANCE_HOLD: unauthorized extra cases-output export; original retained and jobsfinal authoritative",
+          "science_grade_inference": null
+        },
+        {
+          "kind": "supervisor_prompt_path_conflict",
+          "detected_at": "2026-10-07T20:04:13.428240+00:00",
+          "fact": "Original v2 prompt copied frozen output_scope.final_path_by_arm cases/outputs paths while exactmap/jobs-only prohibition overrides them; actual unauthorized exports cannot be attributed solely to candidate compliance. Both original inputs/prompts preserved.",
+          "disposition": "PROVENANCE/CARRIER_HOLD and mixedinstruction limitation retained separately; no scientificgrade change or retroactive prompt rewrite"
+        }
+      ],
+      "run_times_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+        "sha256": "d8cb815b090cd096a66a91c46cbbf288f6879cd5f05f9812b915a25ba93df102"
+      },
+      "candidate_allowance_minutes_per_arm": 15,
+      "all_previous_failures_and_costs_retained": true
+    },
+    {
+      "case_id": "D-M02-B",
+      "version": "v3",
+      "disposition": "terminal_full_source_assessed_provenance_hold",
+      "qualified_method_comparison": false,
+      "quality": {
+        "assessment_basis": "Independent authored source reviews; status summaries are reporting only, not new grading.",
+        "control": "SUPPORTED_WITH_STATED_CONDITIONS; intermediate defects corrected later.",
+        "treatment": "SUPPORTED_WITH_STATED_CONDITIONS_AND_MINOR_WORDING_LIMIT",
+        "coverage": {
+          "obligations_assessed": 12,
+          "scientific_claim_groups_assessed": 28,
+          "process_groups_unverified": 2
+        }
+      },
+      "time": {
+        "control": {
+          "dispatch_to_task_terminal_seconds": 1295.268,
+          "aggregate_occupied_seconds": 1242.992,
+          "actual_run_count": 3,
+          "allowance_minutes": 30,
+          "billing": null,
+          "generated_tokens": null,
+          "native_totals_not_summed": true
+        },
+        "treatment": {
+          "dispatch_to_task_terminal_seconds": 436.515,
+          "aggregate_occupied_seconds": 435.771,
+          "actual_run_count": 1,
+          "allowance_minutes": 30,
+          "billing": null,
+          "generated_tokens": null,
+          "native_totals_not_summed": true
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_cumulative_totals_not_summed": true
+      },
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+          "sha256": "cdb79be0493165d1446b9233f44b192ea83e39f29d3cbb58ba78c854718ae944",
+          "bytes": 3601
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/review.md",
+          "sha256": "b9a30bb5cad47bdf29f3195576045fec924cd99343fc579d974bdbdc8a76027d",
+          "bytes": 20803
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/REVIEW.json",
+          "sha256": "27e47cf25856d77a7b4aef3cb381368027e751ec6cc6abd488b00aa01f8c1ed1",
+          "bytes": 45483
+        }
+      ],
+      "eligibility": "Advisory maps are not filesystem confinement; treatment reports run-level filename search outside exact map. Scope history unverified and retained HOLD; no scientific grade inference.",
+      "candidate_allowance_minutes_per_arm": 30,
+      "all_previous_failures_and_costs_retained": true
+    },
+    {
+      "case_id": "D-M02-A",
+      "version": "v3",
+      "disposition": "terminal_full_source_assessed_timing_provenance_hold",
+      "qualified_method_comparison": false,
+      "quality": {
+        "assessment_basis": "Independent authored source reviews; status summaries are reporting only, not new grading.",
+        "control": {
+          "status": "QUALIFIED_SUPPORTED",
+          "full_supplied_scientific_scope_assessed": true,
+          "unqualified_correctness": false,
+          "conclusion": "The final provides source-supported answers to both questions and all six obligations, including Authorization exceptions, qualified directives, conditional stale reuse and validator-limited 304 updates. Its opening omits the permitted-stale alternative detailed later, so the recommendation is internally incomplete as a summary. Required intermediates contain two overstatements and one exception omission that later text corrects; safe-rekey fallback detail is not explicit in final. No forbidden-reuse behavior or actual implementation correctness is established.",
+          "qualification_refs": [
+            "G01",
+            "G04",
+            "G05",
+            "G06",
+            "G07",
+            "G08",
+            "G09"
+          ]
+        },
+        "treatment": {
+          "status": "NOT_FULLY_CORRECT_AS_WRITTEN",
+          "full_supplied_scientific_scope_assessed": true,
+          "unqualified_correctness": false,
+          "conclusion": "The final substantially answers both questions and covers the six declared domains. Its universal response no-store/storage shorthand omits the governing must-understand exception; obligation 4 is therefore only partially satisfied as a general RFC account. The opening Rejected Authorization/Vary disposition also contradicts the correct body rule. The identical required intermediate supplies no correction. These findings establish a source-condition omission and internal labeling error, not unsafe deployed-cache behavior or a requirement to store.",
+          "qualification_refs": [
+            "G01",
+            "G03",
+            "G06",
+            "G07",
+            "G08",
+            "G09",
+            "G12"
+          ]
+        },
+        "coverage": {
+          "mapped_files": 6,
+          "mapped_files_fully_read": 6,
+          "complete_finals": 2,
+          "missing_finals": 0,
+          "scientifically_distinct_candidate_texts": 5,
+          "required_intermediates_read": 4,
+          "brief_obligations_assessed": 12,
+          "brief_obligations_unassessed": 0,
+          "scientific_claim_groups_assessed": 26,
+          "scientific_claim_groups_unassessed": 0,
+          "process_claim_groups_unverified": 8,
+          "external_empirical_fact_groups_unassessed": 4,
+          "counts_definition": "Six brief obligations and thirteen enumerated consequential scientific claim groups per label. Group counts are an audit partition, not an atomic-claim count or a score. Y final/I1 identical; both files inspected, scientific content assessed once. Process history and external facts are counted separately."
+        }
+      },
+      "time": {
+        "control": {
+          "dispatch_to_task_terminal_seconds": 1546.339,
+          "common_T0_to_task_terminal_seconds": 1554.226163,
+          "aggregate_occupied_seconds": 1478.42,
+          "actual_run_count": 3,
+          "allowance_minutes": 30,
+          "billing": null,
+          "generated_tokens": null,
+          "native_totals_not_summed": true
+        },
+        "treatment": {
+          "dispatch_to_task_terminal_seconds": 1477.736,
+          "common_T0_to_task_terminal_seconds": 1499.012163,
+          "aggregate_occupied_seconds": 1477.163,
+          "actual_run_count": 1,
+          "allowance_minutes": 30,
+          "billing": null,
+          "generated_tokens": null,
+          "native_totals_not_summed": true
+        }
+      },
+      "quota": {
+        "billing": null,
+        "generated_tokens": null,
+        "native_cumulative_totals_not_summed": true
+      },
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/FAILURE_INCLUSIVE_RUN_TIMES.json",
+          "sha256": "64717e132cd936603ddd3d5938d28cfae2a0e05a121c6c29e91d86dae3b77884",
+          "bytes": 3601
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/review.md",
+          "sha256": "3a7a8cd745f3a72efc408e042f1977605aee87b7616c2bb6074ef281b0868c48",
+          "bytes": 34092
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/REVIEW.json",
+          "sha256": "19bc2d1adf621338f6ce9208536f16125b6b756b9c3d6acb17b1158700ccec56",
+          "bytes": 55282
+        }
+      ],
+      "eligibility": [
+        "Original Q1-v3 stage ceiling exceeded; full scientific artifact independently assessed without retroqualification",
+        "Advisory path maps do not enforce filesystem confinement; independent process history unverified"
+      ],
+      "candidate_allowance_minutes_per_arm": 30,
+      "all_previous_failures_and_costs_retained": true
+    }
+  ],
+  "pending": [],
+  "no_complete_cohort_claim": false,
+  "count_definitions": {
+    "terminal_slots": "Six distinct owned cases with honest terminal dispositions; no campaign24 completion claim",
+    "science_paired_assessments_including_diagnostic": "Six distinct cases with both full scientific finals assessed, includes failed-native-terminal diagnostic M01A and prospective review repairs; M02A finalv3 assessed separately while originalv2 diagnostic retained",
+    "pair_version_dispositions": "Seven: six latest/scoped pairs plus M02A original v2 missing-control-final diagnostic; no best-of selection",
+    "diagnostic_partial_final_pairs": "One historical M02A v2; its six missing-control-final obligations remain unassessed",
+    "qualified_method_comparisons": "Zero; lifecycle/time/provenance holds preserved independently of scientific evaluations",
+    "assessable_comparisons": "Legacy alias for qualified_method_comparisons, not scientific paired assessment count"
+  },
+  "pending_cases": [],
+  "completion": {
+    "status": "complete",
+    "completed_at": "2026-10-07T21:30:51.318670+00:00",
+    "scope": "ONLY six cohort1 cases; seven pair-version dispositions including M02A original diagnostic plus authorized final v3, original failures immutable; other18 not executed by this supervisor",
+    "all_owned_tasks_quiet": true,
+    "owned_task_count": 44,
+    "quiet_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/FINAL_OWNED_TASK_QUIET_CHECK.json",
+    "quiet_sha256": "65deca2e033814015b87a39e5122ec6f635b680f4612d8653ea7ff7e2c066623",
+    "no_further_admissions": true
+  },
+  "no_24_case_completion_claim": true,
+  "preserved_detailed_projection": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/COMPARISONS-pre-final-preserved.json",
+    "sha256": "b6a6329875cdd6ed3f19cc16274754763bb8c2e922a920be97103a073eed525f"
+  },
+  "full_final_projection": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/COMPARISONS-full-final-preserved.json",
+    "sha256": "24ffb7a4431a944f96ccb6856bbfe3eabd2f702c6f5a2dca0b38fbb52d717bbe"
+  },
+  "science_counts_do_not_sum_different_partition_units": true
+}

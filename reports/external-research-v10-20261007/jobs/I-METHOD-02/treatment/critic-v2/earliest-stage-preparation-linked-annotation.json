@@ -1,0 +1,12 @@
+{
+  "type": "linked_earliest_stage_preparation_clock_annotation",
+  "record_at": "2026-10-07T20:41:21.374692+00:00",
+  "earlier_actual_local_record_at": "2026-10-07T20:39:47.155523+00:00",
+  "earlier_prospective_stage_deadline": "2026-10-07T20:54:47.155523+00:00",
+  "actual_dispatched_config": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/dispatch-config.json",
+  "later_repreparation_limit": "Carrier filename clarification re-ran preparer and produced a later printed deadline; preserve actual dispatched prompt/config and enforce earlier original boundary. No extension/clock reset authorized.",
+  "effective_stage_deadline": "2026-10-07T20:54:47.155523+00:00",
+  "whole_deadline_unchanged": "2026-10-07T21:20:48+00:00",
+  "first_cfg_raw_file_overwritten": true,
+  "earlier_time_evidence": "Actual prepare_method02_stage_v2.py execution result in host tool timeline, 2026-10-07T20:39:47.155523+00:00; no fabricated missing raw file."
+}

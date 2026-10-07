@@ -1,0 +1,36 @@
+{
+  "cache_mode": "cold",
+  "elapsed_seconds": 0.2038856239996676,
+  "ended_at": "2026-10-07T20:57:46.753147+00:00",
+  "network_requests": 1,
+  "operation": "fetch",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 385826,
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": "385826",
+      "Content-Type": "text/html",
+      "ETag": "\"57700142c11e03d57e1c7219dbe8320c\"",
+      "Last-Modified": "Thu, 21 May 2026 20:45:05 GMT"
+    },
+    "original_url": "https://iiif.io/api/presentation/3.0/",
+    "raw": {
+      "bytes": 385826,
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e"
+    },
+    "retrieved_at": "2026-10-07T20:57:46.743771+00:00",
+    "retrieved_url": "https://iiif.io/api/presentation/3.0/"
+  },
+  "record_id": "8a18887dc3a1c99c7e41efdc589894141d0ae5b53efc69c7df9cf8053ef82f6b",
+  "source": "https://iiif.io/api/presentation/3.0/",
+  "started_at": "2026-10-07T20:57:46.549241+00:00",
+  "status": "ok"
+}

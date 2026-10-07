@@ -1,0 +1,47 @@
+[
+  {
+    "id": "RFC_failed_automatic_retry",
+    "review_source": "01-rfc9110.txt",
+    "normalized_literal_present": true
+  },
+  {
+    "id": "RFC_failed_automatic_retry",
+    "review_source": "06-rfc9110.txt",
+    "normalized_literal_present": true
+  },
+  {
+    "id": "RFC_IfRange_quote",
+    "review_source": "01-rfc9110.txt",
+    "normalized_literal_present": true
+  },
+  {
+    "id": "RFC_IfRange_quote",
+    "review_source": "06-rfc9110.txt",
+    "normalized_literal_present": true
+  },
+  {
+    "id": "TUS_quote_as_printed",
+    "review_source": "02-tus-resumable-upload-1.0.0.txt",
+    "normalized_literal_present": false
+  },
+  {
+    "id": "TUS_quote_as_printed",
+    "review_source": "07-tus-protocol-1.0.0.txt",
+    "normalized_literal_present": false
+  },
+  {
+    "id": "TUS_quote_with_governing_word",
+    "review_source": "02-tus-resumable-upload-1.0.0.txt",
+    "normalized_literal_present": true
+  },
+  {
+    "id": "TUS_quote_with_governing_word",
+    "review_source": "07-tus-protocol-1.0.0.txt",
+    "normalized_literal_present": true
+  },
+  {
+    "id": "S3_same_part_overwrite",
+    "review_source": "08-aws-s3-uploadpart.txt",
+    "normalized_literal_present": true
+  }
+]

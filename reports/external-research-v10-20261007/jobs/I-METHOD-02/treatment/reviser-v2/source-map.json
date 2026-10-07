@@ -1,0 +1,2748 @@
+{
+  "task": "I-METHOD-02/treatment/reviser-v2",
+  "classification": "DIAGNOSTIC_UNQUALIFIED",
+  "goal_identity": "01a11826-4f77-7820-a010-285882479a52",
+  "goal_status_at_snapshot": "active",
+  "activation": {
+    "goal_created_at_epoch": 1791406544,
+    "goal_created_at_utc": "2026-10-07T20:55:44Z",
+    "initial_goal_projection": {
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    "parent_notification": {
+      "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+      "clientRequestId": "er10-I-METHOD-02-treatment-reviser-v2-active",
+      "message": "Native active: I-METHOD-02/treatment/reviser-v2, identity 01a11826-4f77-7820-a010-285882479a52",
+      "message_id": "message:mcp:2aca85ef-3ea2-40eb-ba74-63cba379907c:thread-send:er10-I-METHOD-02-treatment-reviser-v2-active",
+      "delivery": "started",
+      "status": "starting",
+      "attempts": 1
+    }
+  },
+  "dispatch_bound": {
+    "config_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/dispatch-config.json",
+    "record_at": "2026-10-07T20:55:13.005373+00:00",
+    "stage_allowance_seconds": 1200,
+    "stage_deadline": "2026-10-07T21:15:13.005373+00:00",
+    "whole_arm_deadline": "2026-10-07T21:20:48+00:00",
+    "total_occupied_limit_seconds": 3600,
+    "prior_nonoverlapping_occupied_seconds": 1814.839,
+    "final_reserve_seconds": 0,
+    "deadline_rule": "No reset, extension, or writing after envelope exhaustion; queue/startup/service/retries/retrieval/output/delivery/handoffs count."
+  },
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/input-map.json",
+  "input_files": {
+    "dispatch_config": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/dispatch-config.json",
+      "sha256": "b5398694b5536344dfcd382b0880f0bd82e5f186033afdcda4a8d90fc5365e76",
+      "bytes": 1320
+    },
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/input-map.json",
+      "sha256": "ba4981f416dc02d0f8d5a9770be6c324c4fa5432f476e11892825aed2a1b09d5",
+      "bytes": 1360
+    },
+    "research_artifact": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/artifact.md",
+      "sha256": "abecf9252711d4b9de07421f314bfa135c55a8c579b0cdc3936bca85c8c24afc",
+      "bytes": 27485
+    },
+    "research_source_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+      "sha256": "5fdcd057962758a1ff3f0db0686fe1f6672ab287f8087e15763dedaa3136d3cf",
+      "bytes": 58923
+    },
+    "critic_artifact": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/artifact.md",
+      "sha256": "1b2298858ad54267b3422a0c5daa3d3abdfabbef4e3c82c3d1f977a3dc085809",
+      "bytes": 20782
+    },
+    "critic_source_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+      "sha256": "13c28b113b375c573ac36c78f0c1624d12043fc82a304ac626d79bddc8831c5b",
+      "bytes": 64101
+    }
+  },
+  "predecessor_stage_records": {
+    "research-v2": {
+      "source_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+        "sha256": "5fdcd057962758a1ff3f0db0686fe1f6672ab287f8087e15763dedaa3136d3cf",
+        "bytes": 58923
+      },
+      "native_goal_projection": {
+        "identity": "01a11807-f69c-7642-9612-702f742431d7",
+        "status": "active",
+        "projection_observed_at_stage": "pre-artifact active projection",
+        "tokensUsed": 240095,
+        "timeUsedSeconds": 586,
+        "budgeted": false,
+        "billing_inference": false
+      },
+      "prospective_clock": {
+        "annotation_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-v2-prospective-clock-annotation.json",
+        "conservative_start": "2026-10-07T20:20:48+00:00",
+        "research_deadline": "2026-10-07T20:45:48+00:00",
+        "whole_arm_deadline": "2026-10-07T21:20:48+00:00",
+        "stage_allowance_seconds": 1500,
+        "clock_reset_or_extension": false
+      },
+      "discovery_operations": {
+        "first_useful_finding_utc": "approximately 2026-10-07T20:23Z; source discovery established Manifest/Canvas and Web Annotation selector models before frozen-plan comparison",
+        "query_batches": 4,
+        "independent_search_queries": 16,
+        "query_charge": "free per declared recipe; no semantic query cache",
+        "query_groups": [
+          [
+            "IIIF Presentation 3 annotation pages and multiple Canvases",
+            "Annotorious image annotation and IIIF service docs",
+            "Mirador viewer/annotations/multi-view docs",
+            "W3C selectors for image regions"
+          ],
+          [
+            "Mirador multi-window compare and annotation",
+            "Universal Viewer annotations and IIIF",
+            "Recogito image/map annotation product",
+            "Tropy photo notes and selections"
+          ],
+          [
+            "Annotorious and OpenSeadragon integration",
+            "Annotorious issue history",
+            "IIIF rights metadata semantics",
+            "IIIF Authorization Flow for restricted resources"
+          ],
+          [
+            "Closed Annotorious issue/fix search",
+            "OpenSeadragon overlay issue/fix search",
+            "OpenSeadragon overlay pull request/release",
+            "OpenSeadragon release history"
+          ]
+        ],
+        "direct_source_navigation": "Official specification/product/GitHub pages were opened, inspected and selectively captured; exact fetch and read operations are in source-cache/receipts."
+      },
+      "operations_and_costs": {
+        "helper": {
+          "successful_source_records": 28,
+          "linked_capture_count": 28,
+          "capture_hash_mismatches_or_missing": 0,
+          "raw_bytes_total": 2753436,
+          "cold_fetch_elapsed_seconds_successes": 4.664895167985378,
+          "warm_read_elapsed_seconds_successes": 0.053996786977222655,
+          "failed_fetch_elapsed_seconds": 1.5754830000005313,
+          "successful_fetch_network_requests": 28,
+          "failed_fetch_network_requests": 2,
+          "fetch_operations": 30,
+          "warm_read_operations": 28
+        },
+        "setup_wall_seconds": null,
+        "web_retrieval_wall_seconds": null,
+        "total_role_wall_seconds": null,
+        "input_tokens": null,
+        "cache_input_tokens": null,
+        "generated_tokens": null,
+        "reasoning_tokens": null,
+        "billing_usd": null,
+        "separate_measurement_note": "Unknown measures are null, not zero. Goal aggregate counters above remain separate and are not added to helper elapsed time or interpreted as billing."
+      },
+      "failed_operations": [
+        {
+          "operation": "fetch",
+          "source": "https://new.annotorious.com/getting-started/",
+          "status": "error",
+          "error": "ValueError: use public HTTPS URL, port 443, without credentials/query/fragment",
+          "elapsed_seconds": 1.4504895509999187,
+          "network_requests": 1,
+          "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-cache/receipts/annotorious-getting-started-fetch.json"
+        },
+        {
+          "operation": "fetch",
+          "source": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/modules/overlay.js",
+          "status": "error",
+          "error": "ValueError: HTTP status 404",
+          "elapsed_seconds": 0.1249934490006126,
+          "network_requests": 1,
+          "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-cache/receipts/osd-overlay-test-js-fetch.json"
+        }
+      ],
+      "executed_checks": [
+        "All successful cold fetches were read back through the same cache helper using unique warm-read receipts; helper verified object hashes and lengths.",
+        "Local source capture hashes were matched against cached raw-object SHA-256 during source-map generation.",
+        "No application test, build, or interoperability run was executed."
+      ],
+      "review_status": {
+        "O5": "pending fresh independent critic; no candidate criticism received by research output"
+      }
+    },
+    "critic-v2": {
+      "source_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+        "sha256": "13c28b113b375c573ac36c78f0c1624d12043fc82a304ac626d79bddc8831c5b",
+        "bytes": 64101
+      },
+      "native_goal_projection": null,
+      "prospective_clock": null,
+      "discovery_operations": null,
+      "operations_and_costs": {
+        "successful_cold_fetches": 28,
+        "total_successful_network_requests": 28,
+        "successful_warm_reads": 28,
+        "warm_read_network_requests": 0,
+        "raw_bytes_total": 2403413,
+        "cold_fetch_elapsed_seconds": 5.077112612991186,
+        "warm_read_elapsed_seconds": 0.04509637299270253,
+        "setup_wall_seconds": null,
+        "independent_web_wall_seconds": null,
+        "end_to_end_role_wall_seconds": null,
+        "application_build_or_test": false,
+        "source_validation": "Every copied linked capture SHA-256 matched its helper raw-object SHA-256."
+      },
+      "failed_operations": [
+        {
+          "operation": "fetch",
+          "source": "https://new.annotorious.com/getting-started/",
+          "status": "error",
+          "error": "ValueError: use public HTTPS URL, port 443, without credentials/query/fragment",
+          "elapsed_seconds": 0.8047409089995199,
+          "network_requests": 1,
+          "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-cache/receipts/critic-v2-annotorious-getting-started-fetch.json",
+          "linked_capture": null
+        },
+        {
+          "operation": "fetch",
+          "source": "https://iiif.io/api/presentation/3.0/",
+          "status": "error_before_fetch",
+          "error": "A duplicate receipt path was reused; helper refused the operation before network access. The source was successfully acquired/read under the original unique receipt.",
+          "elapsed_seconds": null,
+          "network_requests": 0,
+          "receipt_path": null
+        }
+      ],
+      "executed_checks": [
+        "Raw-byte acquisitions were read back using the helper with unique receipts.",
+        "All 28 linked primary-source captures were SHA-256 checked against their raw cached objects.",
+        "No application build, source-code test suite, or interoperability test was executed."
+      ],
+      "review_status": null
+    }
+  },
+  "first_useful_reviser_finding": {
+    "approx_utc": "2026-10-07T20:57Z",
+    "precision": "minute-level, not separately instrumented",
+    "finding": "The critic’s Canvas-coordinate correction is material: source-image pixel dimensions can differ from Canvas dimensions, so persist Canvas-frame geometry and an explicit supported image-to-Canvas mapping."
+  },
+  "output": {
+    "artifact": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/artifact.md",
+      "sha256": "1579a45fd43fc94e35d9b3f992b59196a7b8c3cbfe46d9356c829f9625abab4d",
+      "bytes": 35896
+    },
+    "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-map.json",
+    "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources",
+    "linked_source_file_count": 35,
+    "linked_capture_bytes_are_raw": true,
+    "status": "DIAGNOSTIC_UNQUALIFIED"
+  },
+  "source_cache_recipe": {
+    "helper": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/mechanical/source_cache.py",
+    "cache_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache",
+    "recipe": "fetch exact public HTTPS URL with a new receipt, optional full 40-hex commit label and extraction; then read pinned record SHA-256 through same cache with a unique new receipt. All successful operations used identity-v1 and no line extraction.",
+    "same_arm_only": true,
+    "semantic_cache_used": false,
+    "helper_commit_label_binds_code_identity": false,
+    "independent_search_batches": 0,
+    "independent_search_queries": 0
+  },
+  "captures": [
+    {
+      "source_id": "annotorious-regression-599",
+      "source_id_aliases": [
+        "annotorious-regression-599",
+        "annotorious-issue-599"
+      ],
+      "original_url": "https://api.github.com/repos/annotorious/annotorious/issues/599",
+      "retrieved_url": "https://api.github.com/repos/annotorious/annotorious/issues/599",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "ad394ebfc469a49a78b66306d729c68799c731823762666b7fc436489259207e",
+      "fresh_raw_bytes": 5759,
+      "fresh_extracted_sha256": "ad394ebfc469a49a78b66306d729c68799c731823762666b7fc436489259207e",
+      "fresh_extracted_bytes": 5759,
+      "provided_capture_sha256": "ad394ebfc469a49a78b66306d729c68799c731823762666b7fc436489259207e",
+      "provided_capture_bytes": 5759,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-annotorious-regression-599.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-annotorious-regression-599.json",
+      "fresh_capture_copy_sha256": "ad394ebfc469a49a78b66306d729c68799c731823762666b7fc436489259207e",
+      "record_id": "3317ac4d1c8824aaaa2b86c12af2645edebf15be58b38d20529f13d885cae671",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/3317ac4d1c8824aaaa2b86c12af2645edebf15be58b38d20529f13d885cae671.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/ad394ebfc469a49a78b66306d729c68799c731823762666b7fc436489259207e",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.18726556999899913,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/001-annotorious-regression-599-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0008978139994724188,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/001-annotorious-regression-599-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "annotorious-regression-599",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/annotorious-issue-599.json",
+          "record_sha256": "9e2e79349949acdd4d78b4ffb40aff00607757960fbefc96f8bbb9873424275a",
+          "raw_sha256": "ad394ebfc469a49a78b66306d729c68799c731823762666b7fc436489259207e",
+          "raw_bytes": 5759,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "annotorious-issue-599",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/annotorious-issue-599.json",
+          "record_sha256": "1a21e3ebe84917bf73c58f280d7f104b7bb3e335c021654a2ef8267915e0b2fa",
+          "raw_sha256": "ad394ebfc469a49a78b66306d729c68799c731823762666b7fc436489259207e",
+          "raw_bytes": 5759,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "iiif-auth2",
+      "source_id_aliases": [
+        "iiif-auth2",
+        "iiif-auth2"
+      ],
+      "original_url": "https://iiif.io/api/auth/2.0/",
+      "retrieved_url": "https://iiif.io/api/auth/2.0/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+      "fresh_raw_bytes": 150767,
+      "fresh_extracted_sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+      "fresh_extracted_bytes": 150767,
+      "provided_capture_sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+      "provided_capture_bytes": 150767,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-auth2.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-auth2.html",
+      "fresh_capture_copy_sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+      "record_id": "ae9d55850d53ec4c043c062cf9959586cf72e0c70d6559826f6c930a7cc37a18",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/ae9d55850d53ec4c043c062cf9959586cf72e0c70d6559826f6c930a7cc37a18.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.1726956179991248,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/002-iiif-auth2-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0019126459992548916,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/002-iiif-auth2-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "iiif-auth2",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/iiif-auth2.html",
+          "record_sha256": "111dbeae16ca8a29d734b319bf107a225634c7684b372f60c3475c3854d15c8c",
+          "raw_sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+          "raw_bytes": 150767,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "iiif-auth2",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/iiif-auth2.html",
+          "record_sha256": "2f003d31040faca4edae015addee129df7f4143d2081150955d3fef7ae42c636",
+          "raw_sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+          "raw_bytes": 150767,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "iiif-canvas-size-recipe",
+      "source_id_aliases": [
+        "iiif-canvas-size-recipe"
+      ],
+      "original_url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+      "retrieved_url": "https://iiif.io/api/cookbook/recipe/0004-canvas-size/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504",
+      "fresh_raw_bytes": 17599,
+      "fresh_extracted_sha256": "1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504",
+      "fresh_extracted_bytes": 17599,
+      "provided_capture_sha256": "1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504",
+      "provided_capture_bytes": 17599,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-canvas-size-recipe.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-canvas-size-recipe.html",
+      "fresh_capture_copy_sha256": "1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504",
+      "record_id": "62db7c046f9b75b300fe713f6fa5f3d5589e4d401a21bf08efc949418f9aa03d",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/62db7c046f9b75b300fe713f6fa5f3d5589e4d401a21bf08efc949418f9aa03d.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.13172734299951117,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/003-iiif-canvas-size-recipe-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009872539994830731,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/003-iiif-canvas-size-recipe-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "iiif-canvas-size-recipe",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/iiif-canvas-size-recipe.html",
+          "record_sha256": "0f65366249a6ef9ce9639623baf042d9a78b4ee3642ca67ea84f0bf64f600aac",
+          "raw_sha256": "1ae2467ff53bca8ca51b64612abbceab089523e5b1cbbed1bb34ae76b8d3b504",
+          "raw_bytes": 17599,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "iiif-image3",
+      "source_id_aliases": [
+        "iiif-image3",
+        "iiif-image3"
+      ],
+      "original_url": "https://iiif.io/api/image/3.0/",
+      "retrieved_url": "https://iiif.io/api/image/3.0/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "fresh_raw_bytes": 145643,
+      "fresh_extracted_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "fresh_extracted_bytes": 145643,
+      "provided_capture_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "provided_capture_bytes": 145643,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-image3.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-image3.html",
+      "fresh_capture_copy_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "record_id": "0bf6f73480231e04c3167fbf3eed74f1440d198f0e0a3cf7b68e097b549e212b",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/0bf6f73480231e04c3167fbf3eed74f1440d198f0e0a3cf7b68e097b549e212b.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.12128083399875322,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/004-iiif-image3-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0019428829982643947,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/004-iiif-image3-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "iiif-image3",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/iiif-image3.html",
+          "record_sha256": "16f54dcee7f35a20a713b11fa757006eea8a154852f25833f95b284ad120bb92",
+          "raw_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+          "raw_bytes": 145643,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "iiif-image3",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/iiif-image3.html",
+          "record_sha256": "8d6aecdecebe383c4dc306dd849d5e1e3ce2a30c768550ab110c80f89441c1d3",
+          "raw_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+          "raw_bytes": 145643,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "iiif-multicanvas-recipe",
+      "source_id_aliases": [
+        "iiif-multicanvas-recipe",
+        "iiif-multicanvas-recipe"
+      ],
+      "original_url": "https://iiif.io/api/cookbook/recipe/0540-link-for-opening-multiple-canvases/",
+      "retrieved_url": "https://iiif.io/api/cookbook/recipe/0540-link-for-opening-multiple-canvases/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "a661e3051dcdf3e4647750fc1ac5c1fa2ca5f294e8fcd22fc4154a471b49e1a8",
+      "fresh_raw_bytes": 19197,
+      "fresh_extracted_sha256": "a661e3051dcdf3e4647750fc1ac5c1fa2ca5f294e8fcd22fc4154a471b49e1a8",
+      "fresh_extracted_bytes": 19197,
+      "provided_capture_sha256": "a661e3051dcdf3e4647750fc1ac5c1fa2ca5f294e8fcd22fc4154a471b49e1a8",
+      "provided_capture_bytes": 19197,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-multicanvas-recipe.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-multicanvas-recipe.html",
+      "fresh_capture_copy_sha256": "a661e3051dcdf3e4647750fc1ac5c1fa2ca5f294e8fcd22fc4154a471b49e1a8",
+      "record_id": "4427eff25eac9141d8d16bcd7a2d3d95ec9c7a162f044e94107635971a24c616",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/4427eff25eac9141d8d16bcd7a2d3d95ec9c7a162f044e94107635971a24c616.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/a661e3051dcdf3e4647750fc1ac5c1fa2ca5f294e8fcd22fc4154a471b49e1a8",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.12236755099729635,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/005-iiif-multicanvas-recipe-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.000945656000112649,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/005-iiif-multicanvas-recipe-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "iiif-multicanvas-recipe",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/iiif-multicanvas-recipe.html",
+          "record_sha256": "3754de892939858811c0cceb24f1619ce90e65990e01b79a07f4d73f12eed8f8",
+          "raw_sha256": "a661e3051dcdf3e4647750fc1ac5c1fa2ca5f294e8fcd22fc4154a471b49e1a8",
+          "raw_bytes": 19197,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "iiif-multicanvas-recipe",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/iiif-multicanvas-recipe.html",
+          "record_sha256": "5e4854d158ed0c6d0fc8a550dc89217ed7710d8298f3f9759977854a3c346ea2",
+          "raw_sha256": "a661e3051dcdf3e4647750fc1ac5c1fa2ca5f294e8fcd22fc4154a471b49e1a8",
+          "raw_bytes": 19197,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "iiif-presentation2.1.1",
+      "source_id_aliases": [
+        "iiif-presentation2.1.1"
+      ],
+      "original_url": "https://iiif.io/api/presentation/2.1/",
+      "retrieved_url": "https://iiif.io/api/presentation/2.1/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+      "fresh_raw_bytes": 310181,
+      "fresh_extracted_sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+      "fresh_extracted_bytes": 310181,
+      "provided_capture_sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+      "provided_capture_bytes": 310181,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-presentation2.1.1.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-presentation2.1.1.html",
+      "fresh_capture_copy_sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+      "record_id": "606a8a5fed4ec6e7889f7a336726bfdc137bccc8acc501490d2d367a91615d86",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/606a8a5fed4ec6e7889f7a336726bfdc137bccc8acc501490d2d367a91615d86.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.18400533000021824,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/006-iiif-presentation2.1.1-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0031091560013010167,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/006-iiif-presentation2.1.1-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "iiif-presentation2.1.1",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/iiif-presentation2.1.1.html",
+          "record_sha256": "084e78344dd3bef5b466fb45c01096481131c54f24f30d90c32a267b01cec3c8",
+          "raw_sha256": "67f7247d11409bd6736edbd0f474f553ea715f0e60a7f06b25a5eebf30221f1c",
+          "raw_bytes": 310181,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "iiif-presentation3",
+      "source_id_aliases": [
+        "iiif-presentation3",
+        "iiif-presentation3"
+      ],
+      "original_url": "https://iiif.io/api/presentation/3.0/",
+      "retrieved_url": "https://iiif.io/api/presentation/3.0/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "fresh_raw_bytes": 385826,
+      "fresh_extracted_sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "fresh_extracted_bytes": 385826,
+      "provided_capture_sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "provided_capture_bytes": 385826,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-presentation3.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-presentation3.html",
+      "fresh_capture_copy_sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "record_id": "6665db2e2d087c53844a56841cc0df344f7994eb71a5873833100c749bae09e3",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/6665db2e2d087c53844a56841cc0df344f7994eb71a5873833100c749bae09e3.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.10951345099965692,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/007-iiif-presentation3-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0035610800005088095,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/007-iiif-presentation3-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "iiif-presentation3",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/iiif-presentation3.html",
+          "record_sha256": "e98dad915f6abd13f651277050aab904103b714bac8cc3da2176be45e6112ab0",
+          "raw_sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+          "raw_bytes": 385826,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "iiif-presentation3",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/iiif-presentation3.html",
+          "record_sha256": "7760633bdc282a2533a95ddf79c1baa4faac80845adefd76ba6c622b264e6110",
+          "raw_sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+          "raw_bytes": 385826,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "iiif-rights-recipe",
+      "source_id_aliases": [
+        "iiif-rights-recipe",
+        "iiif-rights-recipe"
+      ],
+      "original_url": "https://iiif.io/api/cookbook/recipe/0008-rights/",
+      "retrieved_url": "https://iiif.io/api/cookbook/recipe/0008-rights/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e",
+      "fresh_raw_bytes": 18867,
+      "fresh_extracted_sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e",
+      "fresh_extracted_bytes": 18867,
+      "provided_capture_sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e",
+      "provided_capture_bytes": 18867,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-rights-recipe.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-rights-recipe.html",
+      "fresh_capture_copy_sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e",
+      "record_id": "b08fcdd9bad086df1ff66ef785d7eb58feb55c65d6a9e4edc3e8856dbcf305b0",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/b08fcdd9bad086df1ff66ef785d7eb58feb55c65d6a9e4edc3e8856dbcf305b0.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.11531830999956583,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/008-iiif-rights-recipe-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0010004010000557173,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/008-iiif-rights-recipe-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "iiif-rights-recipe",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/iiif-rights-recipe.html",
+          "record_sha256": "e73a2414081ae0feaecd7135d2d1db2cedce45b13b8b8ded151f6bfc55faa543",
+          "raw_sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e",
+          "raw_bytes": 18867,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "iiif-rights-recipe",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/iiif-rights-recipe.html",
+          "record_sha256": "783d96ea23d79afbff96285a5de99a555a89897b2379534c5b142f8bc1d073cb",
+          "raw_sha256": "2c1f8ed8dc2c1144ab00cda749071b4e90b0b9a793a83c7fa79142bfe091e28e",
+          "raw_bytes": 18867,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "iiif-using-resources",
+      "source_id_aliases": [
+        "iiif-using-resources"
+      ],
+      "original_url": "https://iiif.io/get-started/explainers/using_iiif_resources/",
+      "retrieved_url": "https://iiif.io/get-started/explainers/using_iiif_resources/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de",
+      "fresh_raw_bytes": 25571,
+      "fresh_extracted_sha256": "34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de",
+      "fresh_extracted_bytes": 25571,
+      "provided_capture_sha256": "34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de",
+      "provided_capture_bytes": 25571,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-using-resources.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-iiif-using-resources.html",
+      "fresh_capture_copy_sha256": "34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de",
+      "record_id": "91916fcb999ad18b4e2ac33da5c2e7bccf3dbb525670cec4c3b634afa451bed1",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/91916fcb999ad18b4e2ac33da5c2e7bccf3dbb525670cec4c3b634afa451bed1.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.11334455099859042,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/009-iiif-using-resources-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0010556699999142438,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/009-iiif-using-resources-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "iiif-using-resources",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/iiif-using-resources.html",
+          "record_sha256": "ea76036c7bcf99bc11e6b8de3ce154cdf15d3b7503ec96d529eaee9a240c401b",
+          "raw_sha256": "34505a39ea8158102943baf53da77b05437a7471c7936880e6d79224a8a9e2de",
+          "raw_bytes": 25571,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "media-frags",
+      "source_id_aliases": [
+        "media-frags"
+      ],
+      "original_url": "https://www.w3.org/TR/media-frags/",
+      "retrieved_url": "https://www.w3.org/TR/media-frags/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "fresh_raw_bytes": 89887,
+      "fresh_extracted_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "fresh_extracted_bytes": 89887,
+      "provided_capture_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "provided_capture_bytes": 89887,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-media-frags.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-media-frags.html",
+      "fresh_capture_copy_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "record_id": "7fae1e4bdb3beff3bf33e35179f12575af03cbff7651b74813b0e41eb45a6e22",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/7fae1e4bdb3beff3bf33e35179f12575af03cbff7651b74813b0e41eb45a6e22.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.11842417300067609,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/010-media-frags-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.001483056003053207,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/010-media-frags-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "media-frags",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/media-frags.html",
+          "record_sha256": "97ce4a52d6e3dc2f1fe7b78289c0f7f381772dd8156ded4b1a2636e84d7e6d22",
+          "raw_sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+          "raw_bytes": 89887,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "mirador-home",
+      "source_id_aliases": [
+        "mirador-home",
+        "mirador-home"
+      ],
+      "original_url": "https://projectmirador.org/",
+      "retrieved_url": "https://projectmirador.org/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "fresh_raw_bytes": 7133,
+      "fresh_extracted_sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "fresh_extracted_bytes": 7133,
+      "provided_capture_sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "provided_capture_bytes": 7133,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-mirador-home.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-mirador-home.html",
+      "fresh_capture_copy_sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "record_id": "7868d09f5ed097e060502d8fbaade1dcd4e510569898c3c9097522e2234d1e0b",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/7868d09f5ed097e060502d8fbaade1dcd4e510569898c3c9097522e2234d1e0b.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.28013645199825987,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/011-mirador-home-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009384989971294999,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/011-mirador-home-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "mirador-home",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/mirador-home.html",
+          "record_sha256": "24495335c792d25161805a2e59c7e8cb840d862f88c43eedceb616d76791fa42",
+          "raw_sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+          "raw_bytes": 7133,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "mirador-home",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/mirador-home.html",
+          "record_sha256": "91dd0da6f5de2d8629d6793350a45528ab3a09161c26a65020eedef3f6efa70e",
+          "raw_sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+          "raw_bytes": 7133,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-issue-1614",
+      "source_id_aliases": [
+        "osd-issue-1614",
+        "osd-issue-1614"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b",
+      "fresh_raw_bytes": 3951,
+      "fresh_extracted_sha256": "ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b",
+      "fresh_extracted_bytes": 3951,
+      "provided_capture_sha256": "ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b",
+      "provided_capture_bytes": 3951,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-issue-1614.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-issue-1614.json",
+      "fresh_capture_copy_sha256": "ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b",
+      "record_id": "e5f1d1f9612e1269d3371d47eefbfde98f38caa1c4823c82f6ee475377949dec",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/e5f1d1f9612e1269d3371d47eefbfde98f38caa1c4823c82f6ee475377949dec.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.20723202699809917,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/012-osd-issue-1614-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0008519069997419138,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/012-osd-issue-1614-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-issue-1614",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-issue-1614.json",
+          "record_sha256": "cd2bab5fc8336cf705f39364b991c542f8f29697345890d96660eaec6ccfc355",
+          "raw_sha256": "ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b",
+          "raw_bytes": 3951,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "osd-issue-1614",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-issue-1614.json",
+          "record_sha256": "4398cad40f0216bed529b32d4fc46fbe69c09629680dee13fcc29fba9b0deac8",
+          "raw_sha256": "ee0160038456d75eb421e6c04ea2f4fe5bf9d09730d47377b9b80c2c447f946b",
+          "raw_bytes": 3951,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-issue-1614-comments",
+      "source_id_aliases": [
+        "osd-issue-1614-comments",
+        "osd-issue-1614-comments"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614/comments",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/1614/comments",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371",
+      "fresh_raw_bytes": 16457,
+      "fresh_extracted_sha256": "0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371",
+      "fresh_extracted_bytes": 16457,
+      "provided_capture_sha256": "0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371",
+      "provided_capture_bytes": 16457,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-issue-1614-comments.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-issue-1614-comments.json",
+      "fresh_capture_copy_sha256": "0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371",
+      "record_id": "d97b474e756aecd6a50d048bd14bda8b05023c6fa97704c6ff8dcfa4c2f74918",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/d97b474e756aecd6a50d048bd14bda8b05023c6fa97704c6ff8dcfa4c2f74918.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.21092883299934329,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/013-osd-issue-1614-comments-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009432730003027245,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/013-osd-issue-1614-comments-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-issue-1614-comments",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-issue-1614-comments.json",
+          "record_sha256": "69e3ca1d321ea0f6ec0a025530c17d929e0e7e64af5815823c9cc12b0690ab24",
+          "raw_sha256": "0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371",
+          "raw_bytes": 16457,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "osd-issue-1614-comments",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-issue-1614-comments.json",
+          "record_sha256": "e4ca430b343de18d7490dbd057c12aac67ffdd649cd462a2fd26a59791a8a4c9",
+          "raw_sha256": "0afe901d847ae018fc0071f647b6779d69c5914befef1a7d3492e884cc107371",
+          "raw_bytes": 16457,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-latest-release",
+      "source_id_aliases": [
+        "osd-latest-release"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/latest",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/latest",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "fresh_raw_bytes": 5452,
+      "fresh_extracted_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "fresh_extracted_bytes": 5452,
+      "provided_capture_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "provided_capture_bytes": 5452,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-latest-release.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-latest-release.json",
+      "fresh_capture_copy_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "record_id": "debe2ecccee4df2855f0c16a527652df057b31500d16925b37f60186881ab73b",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/debe2ecccee4df2855f0c16a527652df057b31500d16925b37f60186881ab73b.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.14631654199911281,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/014-osd-latest-release-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.001098288001230685,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/014-osd-latest-release-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-latest-release",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-latest-release.json",
+          "record_sha256": "1c6b8fea971808468b13c9e781f11d3ac71ce7cbfa5d82b3bc3dd270cefa9cae",
+          "raw_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+          "raw_bytes": 5452,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-pr-2546",
+      "source_id_aliases": [
+        "osd-pr-2546",
+        "osd-pr-2546"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2546",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2546",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d",
+      "fresh_raw_bytes": 18571,
+      "fresh_extracted_sha256": "d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d",
+      "fresh_extracted_bytes": 18571,
+      "provided_capture_sha256": "d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d",
+      "provided_capture_bytes": 18571,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr-2546.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr-2546.json",
+      "fresh_capture_copy_sha256": "d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d",
+      "record_id": "6564ac72d70c359cc2c1903a31c4022ba98052032a6538a2e764b6cde2d11304",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/6564ac72d70c359cc2c1903a31c4022ba98052032a6538a2e764b6cde2d11304.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.3189925439983199,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/015-osd-pr-2546-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009754389975569211,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/015-osd-pr-2546-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-pr-2546",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-pr-2546.json",
+          "record_sha256": "bbb2a78ec2bd051258c7a888a11fc60cc8d4c6cec583fab50ba91ee490a3293c",
+          "raw_sha256": "d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d",
+          "raw_bytes": 18571,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "osd-pr-2546",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-pr-2546.json",
+          "record_sha256": "ccf123d803bcbd99d60e78c5de95e42a4df392d573dc86b430ca11a5959c2070",
+          "raw_sha256": "d61f9860d44b39be93ff029e8706f05bc1a70052d0ecd4f5cd856c3835a0954d",
+          "raw_bytes": 18571,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-pr-2546-files",
+      "source_id_aliases": [
+        "osd-pr-2546-files"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2546/files",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2546/files",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "5d85a391f04f4485b191977f055ff5e39736a4b2d2d061a500066ca361330282",
+      "fresh_raw_bytes": 10608,
+      "fresh_extracted_sha256": "5d85a391f04f4485b191977f055ff5e39736a4b2d2d061a500066ca361330282",
+      "fresh_extracted_bytes": 10608,
+      "provided_capture_sha256": "5d85a391f04f4485b191977f055ff5e39736a4b2d2d061a500066ca361330282",
+      "provided_capture_bytes": 10608,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr-2546-files.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr-2546-files.json",
+      "fresh_capture_copy_sha256": "5d85a391f04f4485b191977f055ff5e39736a4b2d2d061a500066ca361330282",
+      "record_id": "88db78622336da9a056c9fc7f02f4bc611613160ffd4c80665283593027e0c8f",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/88db78622336da9a056c9fc7f02f4bc611613160ffd4c80665283593027e0c8f.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/5d85a391f04f4485b191977f055ff5e39736a4b2d2d061a500066ca361330282",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 1.2886464510011137,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/016-osd-pr-2546-files-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0016872190026333556,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/016-osd-pr-2546-files-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-pr-2546-files",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-pr-2546-files.json",
+          "record_sha256": "6f246975481f7d82387fa5aad40d1b01a3229a5af3abb43071da25ce483b135f",
+          "raw_sha256": "5d85a391f04f4485b191977f055ff5e39736a4b2d2d061a500066ca361330282",
+          "raw_bytes": 10608,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-pr2546-config",
+      "source_id_aliases": [
+        "osd-pr2546-config"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/819d4cb20c2abd08c7622b9358ccafde8bc2e673/src/openseadragon.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/819d4cb20c2abd08c7622b9358ccafde8bc2e673/src/openseadragon.js",
+      "commit_label": "819d4cb20c2abd08c7622b9358ccafde8bc2e673",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "c19b04a70cc82105cb0bf286ab6d462f5c957afd441871e2934397c9e94c5a4c",
+      "fresh_raw_bytes": 121519,
+      "fresh_extracted_sha256": "c19b04a70cc82105cb0bf286ab6d462f5c957afd441871e2934397c9e94c5a4c",
+      "fresh_extracted_bytes": 121519,
+      "provided_capture_sha256": "c19b04a70cc82105cb0bf286ab6d462f5c957afd441871e2934397c9e94c5a4c",
+      "provided_capture_bytes": 121519,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr2546-config.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr2546-config.js",
+      "fresh_capture_copy_sha256": "c19b04a70cc82105cb0bf286ab6d462f5c957afd441871e2934397c9e94c5a4c",
+      "record_id": "29662c9aef2f699b42c88ffbba18c068d83e1a805a75d20a660a37504e0e41a6",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/29662c9aef2f699b42c88ffbba18c068d83e1a805a75d20a660a37504e0e41a6.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/c19b04a70cc82105cb0bf286ab6d462f5c957afd441871e2934397c9e94c5a4c",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.14303081999969436,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/017-osd-pr2546-config-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0018683540001802612,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/017-osd-pr2546-config-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-pr2546-config",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-pr2546-openseadragon.js",
+          "record_sha256": "5420b1781fb97f7099a2a4257bf5ba1a04d14ae62fdf655b9aa0a7bb50cd491e",
+          "raw_sha256": "c19b04a70cc82105cb0bf286ab6d462f5c957afd441871e2934397c9e94c5a4c",
+          "raw_bytes": 121519,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-pr2546-demo",
+      "source_id_aliases": [
+        "osd-pr2546-demo"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/819d4cb20c2abd08c7622b9358ccafde8bc2e673/test/demo/overlay.html",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/819d4cb20c2abd08c7622b9358ccafde8bc2e673/test/demo/overlay.html",
+      "commit_label": "819d4cb20c2abd08c7622b9358ccafde8bc2e673",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "6fb4f5dba5ced97cf2243930707e35921410e5f16f10e960bfe583a2c1a4dd21",
+      "fresh_raw_bytes": 4256,
+      "fresh_extracted_sha256": "6fb4f5dba5ced97cf2243930707e35921410e5f16f10e960bfe583a2c1a4dd21",
+      "fresh_extracted_bytes": 4256,
+      "provided_capture_sha256": "6fb4f5dba5ced97cf2243930707e35921410e5f16f10e960bfe583a2c1a4dd21",
+      "provided_capture_bytes": 4256,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr2546-demo.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr2546-demo.html",
+      "fresh_capture_copy_sha256": "6fb4f5dba5ced97cf2243930707e35921410e5f16f10e960bfe583a2c1a4dd21",
+      "record_id": "0727f949cd112c4721c28056c1f37958568f46b675ac6716c44f5714cfa33c9b",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/0727f949cd112c4721c28056c1f37958568f46b675ac6716c44f5714cfa33c9b.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/6fb4f5dba5ced97cf2243930707e35921410e5f16f10e960bfe583a2c1a4dd21",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.09092775500175776,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/018-osd-pr2546-demo-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009072829998331144,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/018-osd-pr2546-demo-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-pr2546-demo",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-pr2546-overlay-demo.html",
+          "record_sha256": "6672e80aa5644efd30723ab738004bdd60dbb46d73f387b63badffb9d9036ec8",
+          "raw_sha256": "6fb4f5dba5ced97cf2243930707e35921410e5f16f10e960bfe583a2c1a4dd21",
+          "raw_bytes": 4256,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-pr2546-overlay",
+      "source_id_aliases": [
+        "osd-pr2546-overlay"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/819d4cb20c2abd08c7622b9358ccafde8bc2e673/src/overlay.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/819d4cb20c2abd08c7622b9358ccafde8bc2e673/src/overlay.js",
+      "commit_label": "819d4cb20c2abd08c7622b9358ccafde8bc2e673",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "4244466318980cc2168ad8cb9bf334fe02f7d373e0aee22281afc458f60bba10",
+      "fresh_raw_bytes": 20222,
+      "fresh_extracted_sha256": "4244466318980cc2168ad8cb9bf334fe02f7d373e0aee22281afc458f60bba10",
+      "fresh_extracted_bytes": 20222,
+      "provided_capture_sha256": "4244466318980cc2168ad8cb9bf334fe02f7d373e0aee22281afc458f60bba10",
+      "provided_capture_bytes": 20222,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr2546-overlay.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr2546-overlay.js",
+      "fresh_capture_copy_sha256": "4244466318980cc2168ad8cb9bf334fe02f7d373e0aee22281afc458f60bba10",
+      "record_id": "55b51beeb29e6721101c506df65cb90821f92ee832221f7febe0c219c37888ce",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/55b51beeb29e6721101c506df65cb90821f92ee832221f7febe0c219c37888ce.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/4244466318980cc2168ad8cb9bf334fe02f7d373e0aee22281afc458f60bba10",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.0906898769972031,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/019-osd-pr2546-overlay-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0010235769987048116,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/019-osd-pr2546-overlay-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-pr2546-overlay",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-pr2546-overlay.js",
+          "record_sha256": "96cfef45ec9e9ad263ceef465b200f5b9094ca322caf9cfa5cb0dfd0ec3a9a3b",
+          "raw_sha256": "4244466318980cc2168ad8cb9bf334fe02f7d373e0aee22281afc458f60bba10",
+          "raw_bytes": 20222,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-pr2546-viewer",
+      "source_id_aliases": [
+        "osd-pr2546-viewer"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/819d4cb20c2abd08c7622b9358ccafde8bc2e673/src/viewer.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/819d4cb20c2abd08c7622b9358ccafde8bc2e673/src/viewer.js",
+      "commit_label": "819d4cb20c2abd08c7622b9358ccafde8bc2e673",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "fc42a025e690ef6b8d02dc3365e247762688735721b8da064d72471a7225580d",
+      "fresh_raw_bytes": 162412,
+      "fresh_extracted_sha256": "fc42a025e690ef6b8d02dc3365e247762688735721b8da064d72471a7225580d",
+      "fresh_extracted_bytes": 162412,
+      "provided_capture_sha256": "fc42a025e690ef6b8d02dc3365e247762688735721b8da064d72471a7225580d",
+      "provided_capture_bytes": 162412,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr2546-viewer.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-pr2546-viewer.js",
+      "fresh_capture_copy_sha256": "fc42a025e690ef6b8d02dc3365e247762688735721b8da064d72471a7225580d",
+      "record_id": "658c9dbbf2c1e1eb94a84b03a4cbda55b0bf2ba277c83834f24355ec357b7463",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/658c9dbbf2c1e1eb94a84b03a4cbda55b0bf2ba277c83834f24355ec357b7463.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/fc42a025e690ef6b8d02dc3365e247762688735721b8da064d72471a7225580d",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.13959670099939103,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/020-osd-pr2546-viewer-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0020120929984841496,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/020-osd-pr2546-viewer-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-pr2546-viewer",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-pr2546-viewer.js",
+          "record_sha256": "dfab21dc219c31a42e9db038bb351c7d233d4284708f535ad6bbab8768a11cc2",
+          "raw_sha256": "fc42a025e690ef6b8d02dc3365e247762688735721b8da064d72471a7225580d",
+          "raw_bytes": 162412,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-release-v5.0.0",
+      "source_id_aliases": [
+        "osd-release-v5.0.0",
+        "osd-release-v5.0.0"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v5.0.0",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v5.0.0",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "88703be0ba80aa10319e0520d1952d2bf3161ca9331bb934bbf2808c87c12056",
+      "fresh_raw_bytes": 7296,
+      "fresh_extracted_sha256": "88703be0ba80aa10319e0520d1952d2bf3161ca9331bb934bbf2808c87c12056",
+      "fresh_extracted_bytes": 7296,
+      "provided_capture_sha256": "88703be0ba80aa10319e0520d1952d2bf3161ca9331bb934bbf2808c87c12056",
+      "provided_capture_bytes": 7296,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-release-v5.0.0.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-release-v5.0.0.json",
+      "fresh_capture_copy_sha256": "88703be0ba80aa10319e0520d1952d2bf3161ca9331bb934bbf2808c87c12056",
+      "record_id": "9da4af45d2aea3a0c2615fe5a8a67312170ff5196f2e447c6e191ad6d7c40543",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/9da4af45d2aea3a0c2615fe5a8a67312170ff5196f2e447c6e191ad6d7c40543.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/88703be0ba80aa10319e0520d1952d2bf3161ca9331bb934bbf2808c87c12056",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.1746873299998697,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/021-osd-release-v5.0.0-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009863110026344657,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/021-osd-release-v5.0.0-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-release-v5.0.0",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-release-v5.0.0.json",
+          "record_sha256": "e869478de2135dfe7c3ecbdd7a4100c51730197e9a8b6124f973470493b226d4",
+          "raw_sha256": "88703be0ba80aa10319e0520d1952d2bf3161ca9331bb934bbf2808c87c12056",
+          "raw_bytes": 7296,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "osd-release-v5.0.0",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-release-v5.0.0.json",
+          "record_sha256": "4367ed1eb634eb0f92242aa9ce648eb67aa437d9aed9023c968e239a961a0de9",
+          "raw_sha256": "88703be0ba80aa10319e0520d1952d2bf3161ca9331bb934bbf2808c87c12056",
+          "raw_bytes": 7296,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-release-v6.1.1",
+      "source_id_aliases": [
+        "osd-release-v6.1.1",
+        "osd-v6.1.1-release"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.1.1",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.1.1",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "fresh_raw_bytes": 5452,
+      "fresh_extracted_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "fresh_extracted_bytes": 5452,
+      "provided_capture_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "provided_capture_bytes": 5452,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-release-v6.1.1.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-release-v6.1.1.json",
+      "fresh_capture_copy_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "record_id": "cc1340d5899a0c97e1db877281a0639558a376a14be71393c3be7d9f2348c481",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/cc1340d5899a0c97e1db877281a0639558a376a14be71393c3be7d9f2348c481.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.1715892989996064,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/022-osd-release-v6.1.1-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009739599991007708,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/022-osd-release-v6.1.1-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-release-v6.1.1",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-release-v6.1.1.json",
+          "record_sha256": "90384bfb4390c4aaa02b8550c85bc4768483b919646eed1229de95ebfdaf070e",
+          "raw_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+          "raw_bytes": 5452,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "osd-v6.1.1-release",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-v6.1.1-release.json",
+          "record_sha256": "b61010e390b1760f16b32a0ea446cb4e26260df2f398fc01d329527358b41ed3",
+          "raw_sha256": "148bcc4ba3999348f6216f565523e4d7edb005412e8c6a460ec48d8103e3d689",
+          "raw_bytes": 5452,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-tag-object",
+      "source_id_aliases": [
+        "osd-tag-object",
+        "osd-tag-object-v6.1.1"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/96bdae63fc78de7cfb0721480b4e0560e0ce6b96",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/96bdae63fc78de7cfb0721480b4e0560e0ce6b96",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "7bae08ad1e537cd60ee98f5ada8585299d6debaeec79c6a388324b7652ae37f8",
+      "fresh_raw_bytes": 671,
+      "fresh_extracted_sha256": "7bae08ad1e537cd60ee98f5ada8585299d6debaeec79c6a388324b7652ae37f8",
+      "fresh_extracted_bytes": 671,
+      "provided_capture_sha256": "7bae08ad1e537cd60ee98f5ada8585299d6debaeec79c6a388324b7652ae37f8",
+      "provided_capture_bytes": 671,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-tag-object.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-tag-object.json",
+      "fresh_capture_copy_sha256": "7bae08ad1e537cd60ee98f5ada8585299d6debaeec79c6a388324b7652ae37f8",
+      "record_id": "063fcab4fd1759ef8a364625aec7452409b81e71ffbc5afd8b187e99de9bae0b",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/063fcab4fd1759ef8a364625aec7452409b81e71ffbc5afd8b187e99de9bae0b.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/7bae08ad1e537cd60ee98f5ada8585299d6debaeec79c6a388324b7652ae37f8",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.1440624620008748,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/023-osd-tag-object-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.000818762000562856,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/023-osd-tag-object-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-tag-object",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-tag-object.json",
+          "record_sha256": "85d3c2636218f7e6b6020e86e36b31d338cf890f6f1c60f6cd276790888d4d75",
+          "raw_sha256": "7bae08ad1e537cd60ee98f5ada8585299d6debaeec79c6a388324b7652ae37f8",
+          "raw_bytes": 671,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "osd-tag-object-v6.1.1",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-tag-object-v6.1.1.json",
+          "record_sha256": "d5e6f2b6c1dede3da796406989189b4d7c770c3d72a71d6adacab65c97f771d7",
+          "raw_sha256": "7bae08ad1e537cd60ee98f5ada8585299d6debaeec79c6a388324b7652ae37f8",
+          "raw_bytes": 671,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-tag-ref",
+      "source_id_aliases": [
+        "osd-tag-ref",
+        "osd-tag-ref-v6.1.1"
+      ],
+      "original_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1",
+      "retrieved_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.1.1",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569",
+      "fresh_raw_bytes": 353,
+      "fresh_extracted_sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569",
+      "fresh_extracted_bytes": 353,
+      "provided_capture_sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569",
+      "provided_capture_bytes": 353,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-tag-ref.json",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-tag-ref.json",
+      "fresh_capture_copy_sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569",
+      "record_id": "1be34321ae8dff532eb6df855f98c0610618b06fa5ffe024d7882c572da5fe9d",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/1be34321ae8dff532eb6df855f98c0610618b06fa5ffe024d7882c572da5fe9d.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.13967904699893552,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/024-osd-tag-ref-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0008768400002736598,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/024-osd-tag-ref-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-tag-ref",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-tag-ref.json",
+          "record_sha256": "2b5ea5c47e2975deacdf358e2dd6d98aaf6ca78efa33d3429b80a9ea0ed238d5",
+          "raw_sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569",
+          "raw_bytes": 353,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "osd-tag-ref-v6.1.1",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-tag-ref-v6.1.1.json",
+          "record_sha256": "88f07ec30e1c48def3c83946050a757438da9ace81e9b0b58240de4a959a747e",
+          "raw_sha256": "e4471dbd0e62982d3b39acf344e8d03ee733c58909593f2dd1b93b512b7b9569",
+          "raw_bytes": 353,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-iiiftilesource",
+      "source_id_aliases": [
+        "osd-v6.1.1-iiiftilesource"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/iiiftilesource.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/iiiftilesource.js",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "fresh_raw_bytes": 28380,
+      "fresh_extracted_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "fresh_extracted_bytes": 28380,
+      "provided_capture_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "provided_capture_bytes": 28380,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-iiiftilesource.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-iiiftilesource.js",
+      "fresh_capture_copy_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "record_id": "b8e43470235cf66b78e0a7b1d77d0814aa2186919d05a4e2466dd840d0e2f357",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/b8e43470235cf66b78e0a7b1d77d0814aa2186919d05a4e2466dd840d0e2f357.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.11812209799973061,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/025-osd-v6.1.1-iiiftilesource-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0010395850003988016,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/025-osd-v6.1.1-iiiftilesource-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-iiiftilesource",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-v6.1.1-iiiftilesource.js",
+          "record_sha256": "67fd10a7db9dd84d7c094d14612afd8c7c8b86df46283e82132ab761fceed867",
+          "raw_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+          "raw_bytes": 28380,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-iiiftilesource",
+      "source_id_aliases": [
+        "osd-v6.1.1-iiiftilesource"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/iiiftilesource.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/iiiftilesource.js",
+      "commit_label": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "fresh_raw_bytes": 28380,
+      "fresh_extracted_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "fresh_extracted_bytes": 28380,
+      "provided_capture_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "provided_capture_bytes": 28380,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-iiiftilesource.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-iiiftilesource.js",
+      "fresh_capture_copy_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "record_id": "cd4f3c5f426b65bf3c60d8e9a9dba8b5a14f4de332844f6c3871eaa373b646a7",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/cd4f3c5f426b65bf3c60d8e9a9dba8b5a14f4de332844f6c3871eaa373b646a7.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.04917038900020998,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/026-osd-v6.1.1-iiiftilesource-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.001057648998539662,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/026-osd-v6.1.1-iiiftilesource-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-iiiftilesource",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-v6.1.1-iiiftilesource.js",
+          "record_sha256": "dfaf1aac7d384774381989c112811562d5f687ac16a391b6d69afba7b3de5bdf",
+          "raw_sha256": "63c7c75f9a43c562a5258831ac62c36d116ec8c563c7e12676c71e9c713249e9",
+          "raw_bytes": 28380,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-openseadragon",
+      "source_id_aliases": [
+        "osd-v6.1.1-openseadragon"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/openseadragon.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/openseadragon.js",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "fresh_raw_bytes": 133669,
+      "fresh_extracted_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "fresh_extracted_bytes": 133669,
+      "provided_capture_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "provided_capture_bytes": 133669,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-openseadragon.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-openseadragon.js",
+      "fresh_capture_copy_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "record_id": "4a35effe1a3da896ed8f51621132276a3ff39c51cc29cf493cfb10fad1c9b163",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/4a35effe1a3da896ed8f51621132276a3ff39c51cc29cf493cfb10fad1c9b163.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.11935362199801602,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/027-osd-v6.1.1-openseadragon-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0018945830015582033,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/027-osd-v6.1.1-openseadragon-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-openseadragon",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-v6.1.1-openseadragon.js",
+          "record_sha256": "24237718e4d72f899f5382e6932084e3d7589d6e67bb3e3aed8cdc2c23f4cb33",
+          "raw_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+          "raw_bytes": 133669,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-openseadragon",
+      "source_id_aliases": [
+        "osd-v6.1.1-openseadragon"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/openseadragon.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/openseadragon.js",
+      "commit_label": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "fresh_raw_bytes": 133669,
+      "fresh_extracted_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "fresh_extracted_bytes": 133669,
+      "provided_capture_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "provided_capture_bytes": 133669,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-openseadragon.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-openseadragon.js",
+      "fresh_capture_copy_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "record_id": "b47e0e582d51655087d4bfffd4079264cdae9ef7caeb13e7c556f0d82321dcf3",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/b47e0e582d51655087d4bfffd4079264cdae9ef7caeb13e7c556f0d82321dcf3.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.06752374200004851,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/028-osd-v6.1.1-openseadragon-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0027671850002661813,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/028-osd-v6.1.1-openseadragon-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-openseadragon",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-v6.1.1-openseadragon.js",
+          "record_sha256": "b744e99cb4993163f88618dc1020342d95ef204ab61d7e008d537a1f7d456764",
+          "raw_sha256": "f4acacc60b9ce9d51616ec7f0b86115ca1549a05d1276029efd1a4ca001caa1c",
+          "raw_bytes": 133669,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-overlay",
+      "source_id_aliases": [
+        "osd-v6.1.1-overlay"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/overlay.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/overlay.js",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "fresh_raw_bytes": 20632,
+      "fresh_extracted_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "fresh_extracted_bytes": 20632,
+      "provided_capture_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "provided_capture_bytes": 20632,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-overlay.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-overlay.js",
+      "fresh_capture_copy_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "record_id": "782391d9b80969b74e09bbc3796fe94a5fafc4dbff2df4f2328f6901c832f1a1",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/782391d9b80969b74e09bbc3796fe94a5fafc4dbff2df4f2328f6901c832f1a1.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.09013465200041537,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/029-osd-v6.1.1-overlay-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009735840030771215,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/029-osd-v6.1.1-overlay-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-overlay",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-v6.1.1-overlay.js",
+          "record_sha256": "adb1c682c67a14e4f029c91537cd3dc244804749d0f68a1a7715e17a376948ed",
+          "raw_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+          "raw_bytes": 20632,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-overlay",
+      "source_id_aliases": [
+        "osd-v6.1.1-overlay"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/overlay.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/overlay.js",
+      "commit_label": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "fresh_raw_bytes": 20632,
+      "fresh_extracted_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "fresh_extracted_bytes": 20632,
+      "provided_capture_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "provided_capture_bytes": 20632,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-overlay.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-overlay.js",
+      "fresh_capture_copy_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "record_id": "78faa8ca2ffdf16164550fc5b37c7fe86ea67fc41add626e8ca1f85072700e00",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/78faa8ca2ffdf16164550fc5b37c7fe86ea67fc41add626e8ca1f85072700e00.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.04416205999950762,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/030-osd-v6.1.1-overlay-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0016417210026702378,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/030-osd-v6.1.1-overlay-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-overlay",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-v6.1.1-overlay.js",
+          "record_sha256": "77ece7b7c6ac13b68e258df5c6c60b89f21ef96b568d43248a90eadb4f3bf7ea",
+          "raw_sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+          "raw_bytes": 20632,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-overlay-demo",
+      "source_id_aliases": [
+        "osd-v6.1.1-overlay-demo"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/demo/overlay.html",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/demo/overlay.html",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "fresh_raw_bytes": 4257,
+      "fresh_extracted_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "fresh_extracted_bytes": 4257,
+      "provided_capture_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "provided_capture_bytes": 4257,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-overlay-demo.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-overlay-demo.html",
+      "fresh_capture_copy_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "record_id": "7634f8e3d6d4c638943d791da84491b66d2f509a6d10cdd14edc010b6751986b",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/7634f8e3d6d4c638943d791da84491b66d2f509a6d10cdd14edc010b6751986b.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.09284066699910909,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/031-osd-v6.1.1-overlay-demo-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.000843391000671545,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/031-osd-v6.1.1-overlay-demo-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-overlay-demo",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-v6.1.1-overlay-demo.html",
+          "record_sha256": "44f464276661e402be4673a6d2615a0c8a4c7c1f584abf178e8595c476115b6b",
+          "raw_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+          "raw_bytes": 4257,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-overlay-demo",
+      "source_id_aliases": [
+        "osd-v6.1.1-overlay-demo"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/demo/overlay.html",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/test/demo/overlay.html",
+      "commit_label": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "fresh_raw_bytes": 4257,
+      "fresh_extracted_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "fresh_extracted_bytes": 4257,
+      "provided_capture_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "provided_capture_bytes": 4257,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-overlay-demo.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-overlay-demo.html",
+      "fresh_capture_copy_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "record_id": "8e8911c6acbacd7542b435f9e67c0ab3ce352e74e5f902d998b4b84c32272aef",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/8e8911c6acbacd7542b435f9e67c0ab3ce352e74e5f902d998b4b84c32272aef.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.05779116000121576,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/032-osd-v6.1.1-overlay-demo-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009423369992873631,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/032-osd-v6.1.1-overlay-demo-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-overlay-demo",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-v6.1.1-overlay-demo.html",
+          "record_sha256": "60aca48af88c6f2de30fe50854dc1f012a9f9a51bf662e842f8ddb605f172a59",
+          "raw_sha256": "29bb6f42e40d82e989e8e8b1035043beddaa216f9b6a71af84ff9d8c72a70eb9",
+          "raw_bytes": 4257,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-viewer",
+      "source_id_aliases": [
+        "osd-v6.1.1-viewer"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewer.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewer.js",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "fresh_raw_bytes": 190702,
+      "fresh_extracted_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "fresh_extracted_bytes": 190702,
+      "provided_capture_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "provided_capture_bytes": 190702,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-viewer.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-viewer.js",
+      "fresh_capture_copy_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "record_id": "3128d4d973ea2e3dad326fee081ce25148c536a7b6dcf6ad059e7c80fbdafe3d",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/3128d4d973ea2e3dad326fee081ce25148c536a7b6dcf6ad059e7c80fbdafe3d.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.16499331199884182,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/033-osd-v6.1.1-viewer-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.002268726002512267,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/033-osd-v6.1.1-viewer-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-viewer",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-v6.1.1-viewer.js",
+          "record_sha256": "420fe449707bf5cdc98eeb0c7679d0b0f2d1b87368d5c4500b24c7b1cceb2f76",
+          "raw_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+          "raw_bytes": 190702,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-viewer",
+      "source_id_aliases": [
+        "osd-v6.1.1-viewer"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewer.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewer.js",
+      "commit_label": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "fresh_raw_bytes": 190702,
+      "fresh_extracted_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "fresh_extracted_bytes": 190702,
+      "provided_capture_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "provided_capture_bytes": 190702,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-viewer.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-viewer.js",
+      "fresh_capture_copy_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "record_id": "ac53079f538289ec039fb5a97f83ed6d4be61abb5617bba8ec76d4734873a60e",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/ac53079f538289ec039fb5a97f83ed6d4be61abb5617bba8ec76d4734873a60e.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.07043159300155821,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/034-osd-v6.1.1-viewer-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.002235865998954978,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/034-osd-v6.1.1-viewer-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-viewer",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-v6.1.1-viewer.js",
+          "record_sha256": "7a217566cfd415db54208459a401152f4b97bb7534898149d31e0b844ceabcb7",
+          "raw_sha256": "e0ce76b3528abd5b8ca492b6e5c14e855e83cb6969c518f101e74c62b4173671",
+          "raw_bytes": 190702,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-viewport",
+      "source_id_aliases": [
+        "osd-v6.1.1-viewport"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "fresh_raw_bytes": 71130,
+      "fresh_extracted_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "fresh_extracted_bytes": 71130,
+      "provided_capture_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "provided_capture_bytes": 71130,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-viewport.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-viewport.js",
+      "fresh_capture_copy_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "record_id": "13db7aafeebc64f6cead4ad2d96845d02cc7df96149094aea76b6645289feef4",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/13db7aafeebc64f6cead4ad2d96845d02cc7df96149094aea76b6645289feef4.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.11007739900014712,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/035-osd-v6.1.1-viewport-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0013992019994475413,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/035-osd-v6.1.1-viewport-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-viewport",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/osd-v6.1.1-viewport.js",
+          "record_sha256": "167a2a60bbdfd8f7c96eb7ac9ab551b3f78ee252827ba8e304c07fad1d43fcb7",
+          "raw_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+          "raw_bytes": 71130,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "osd-v6.1.1-viewport",
+      "source_id_aliases": [
+        "osd-v6.1.1-viewport"
+      ],
+      "original_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js",
+      "retrieved_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/201d47833e3f10e9fa55159cd4203630521926b8/src/viewport.js",
+      "commit_label": "201d47833e3f10e9fa55159cd4203630521926b8",
+      "commit_binding": "caller_label_unverified",
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "fresh_raw_bytes": 71130,
+      "fresh_extracted_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "fresh_extracted_bytes": 71130,
+      "provided_capture_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "provided_capture_bytes": 71130,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-viewport.js",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-osd-v6.1.1-viewport.js",
+      "fresh_capture_copy_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "record_id": "625758b1b8c1fe1a346196a39edb4c8921387623bfd93901e03df7202f4f533a",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/625758b1b8c1fe1a346196a39edb4c8921387623bfd93901e03df7202f4f533a.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.05555978700067499,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/036-osd-v6.1.1-viewport-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0013552829987020232,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/036-osd-v6.1.1-viewport-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "osd-v6.1.1-viewport",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/osd-v6.1.1-viewport.js",
+          "record_sha256": "af05616da17c988acc50f422725ba5fd5a612b40f298a5f724460c2b9564f4ac",
+          "raw_sha256": "6518b3f1438719be45829935c41de9f86a81a309407c673f411849b589d67108",
+          "raw_bytes": 71130,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "tropy-basics",
+      "source_id_aliases": [
+        "tropy-basics"
+      ],
+      "original_url": "https://docs.tropy.org/",
+      "retrieved_url": "https://docs.tropy.org/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "fresh_raw_bytes": 462352,
+      "fresh_extracted_sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "fresh_extracted_bytes": 462352,
+      "provided_capture_sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "provided_capture_bytes": 462352,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-tropy-basics.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-tropy-basics.html",
+      "fresh_capture_copy_sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "record_id": "9daff55d400027159d4b221bf63a34a7b6a02a667e3135244eae42c326646c52",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/9daff55d400027159d4b221bf63a34a7b6a02a667e3135244eae42c326646c52.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.2874617750021571,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/037-tropy-basics-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.004215641001792392,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/037-tropy-basics-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "tropy-basics",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/tropy-basics.html",
+          "record_sha256": "07a16b2f0275d5702ae0486eb58850b9208ddd27cb9fa1525903adbf89cfff2a",
+          "raw_sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+          "raw_bytes": 462352,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "tropy-selections",
+      "source_id_aliases": [
+        "tropy-selections",
+        "tropy-selections"
+      ],
+      "original_url": "https://docs.tropy.org/in-the-item-view/selections",
+      "retrieved_url": "https://docs.tropy.org/in-the-item-view/selections",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "5bf39b69aede913d24bc29037aa618ade8b4d55a406bfba550d13066d8fdd3ca",
+      "fresh_raw_bytes": 438206,
+      "fresh_extracted_sha256": "5bf39b69aede913d24bc29037aa618ade8b4d55a406bfba550d13066d8fdd3ca",
+      "fresh_extracted_bytes": 438206,
+      "provided_capture_sha256": "5bf39b69aede913d24bc29037aa618ade8b4d55a406bfba550d13066d8fdd3ca",
+      "provided_capture_bytes": 438206,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-tropy-selections.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-tropy-selections.html",
+      "fresh_capture_copy_sha256": "5bf39b69aede913d24bc29037aa618ade8b4d55a406bfba550d13066d8fdd3ca",
+      "record_id": "1613532f73d63e08a7a85fe03ac63f2abb41d236d411dfe9da3d279a43b6c1fb",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/1613532f73d63e08a7a85fe03ac63f2abb41d236d411dfe9da3d279a43b6c1fb.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/5bf39b69aede913d24bc29037aa618ade8b4d55a406bfba550d13066d8fdd3ca",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.1999488429974008,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/038-tropy-selections-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.004380176000267966,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/038-tropy-selections-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "tropy-selections",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/tropy-selections.html",
+          "record_sha256": "76bfb1f6fd1c0e8b9ba5335082d5a68ed2c80344373dd3ed62b63a57509bd90e",
+          "raw_sha256": "5bf39b69aede913d24bc29037aa618ade8b4d55a406bfba550d13066d8fdd3ca",
+          "raw_bytes": 438206,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "tropy-selections",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/tropy-selections.html",
+          "record_sha256": "a0bea7d54eaa2fc3601a37cc282f6a4747fe207ae59acb223cf7f38740fcf085",
+          "raw_sha256": "5bf39b69aede913d24bc29037aa618ade8b4d55a406bfba550d13066d8fdd3ca",
+          "raw_bytes": 438206,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "universalviewer-home",
+      "source_id_aliases": [
+        "universalviewer-home"
+      ],
+      "original_url": "https://universalviewer.io/",
+      "retrieved_url": "https://universalviewer.io/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "728d60e22a7e93ed5b8ecb647a7e846ae2424a0e1da1deecd9deffe7a8a9d8c9",
+      "fresh_raw_bytes": 12582,
+      "fresh_extracted_sha256": "728d60e22a7e93ed5b8ecb647a7e846ae2424a0e1da1deecd9deffe7a8a9d8c9",
+      "fresh_extracted_bytes": 12582,
+      "provided_capture_sha256": "8c48599cbb4a126aed4a600c5318063dcdb3c9f317dbc9ad83043348fe1ea1f7",
+      "provided_capture_bytes": 12582,
+      "fresh_matches_supplied_capture": false,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-universalviewer-home.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/fresh-universalviewer-home-728d60e22a7e.html",
+      "fresh_capture_copy_sha256": "728d60e22a7e93ed5b8ecb647a7e846ae2424a0e1da1deecd9deffe7a8a9d8c9",
+      "record_id": "3cec8c8437848f35fa981b4092ee13a445dd46e1f7bf3242824fd7724cf10ee4",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/3cec8c8437848f35fa981b4092ee13a445dd46e1f7bf3242824fd7724cf10ee4.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/728d60e22a7e93ed5b8ecb647a7e846ae2424a0e1da1deecd9deffe7a8a9d8c9",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.19199208799909684,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/039-universalviewer-home-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0009684759970696177,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/039-universalviewer-home-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "universalviewer-home",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/universalviewer-home.html",
+          "record_sha256": "17f9b0f9ba01ac73825342b08bf692e3ccdd0cb45cc4530ae01d5f0c302c98c1",
+          "raw_sha256": "8c48599cbb4a126aed4a600c5318063dcdb3c9f317dbc9ad83043348fe1ea1f7",
+          "raw_bytes": 12582,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    },
+    {
+      "source_id": "web-annotation-model",
+      "source_id_aliases": [
+        "web-annotation-model",
+        "web-annotation-model"
+      ],
+      "original_url": "https://www.w3.org/TR/annotation-model/",
+      "retrieved_url": "https://www.w3.org/TR/annotation-model/",
+      "commit_label": null,
+      "commit_binding": null,
+      "extraction": {
+        "range": null,
+        "version": "identity-v1"
+      },
+      "fresh_raw_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "fresh_raw_bytes": 284185,
+      "fresh_extracted_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "fresh_extracted_bytes": 284185,
+      "provided_capture_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "provided_capture_bytes": 284185,
+      "fresh_matches_supplied_capture": true,
+      "evidence_used_for_claims_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-web-annotation-model.html",
+      "fresh_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-web-annotation-model.html",
+      "fresh_capture_copy_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "record_id": "631a8f355c6431c53fe2534d693f5120df795937f6ded7e74c530825ac6b85c0",
+      "record_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/records/631a8f355c6431c53fe2534d693f5120df795937f6ded7e74c530825ac6b85c0.json",
+      "raw_object_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/objects/a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.12180339100086712,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/040-web-annotation-model-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.002889557999878889,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/040-web-annotation-model-read.json"
+      },
+      "provided_capture_aliases": [
+        {
+          "source_id": "web-annotation-model",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/research-v2/sources/web-annotation-model.html",
+          "record_sha256": "f6d5b863d186ec49b3d105c5f6cb745875f35a4546ea313db6d86a0b2ef4015f",
+          "raw_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+          "raw_bytes": 284185,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        },
+        {
+          "source_id": "web-annotation-model",
+          "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/source-map.json",
+          "provided_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/critic-v2/sources/web-annotation-model.html",
+          "record_sha256": "2e2849de3da3526d7f7d7f400eaa3a1a8fa1dbb74dc9bc8dce1eb712340648b8",
+          "raw_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+          "raw_bytes": 284185,
+          "extraction": {
+            "range": null,
+            "version": "identity-v1"
+          }
+        }
+      ]
+    }
+  ],
+  "extra_operations": [
+    {
+      "kind": "initial_duplicate_setup_fetch_read",
+      "source_id": "iiif-presentation3",
+      "record_id": "8a18887dc3a1c99c7e41efdc589894141d0ae5b53efc69c7df9cf8053ef82f6b",
+      "raw_sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "fetch": {
+        "cache_mode": "cold",
+        "elapsed_seconds": 0.2038856239996676,
+        "network_requests": 1,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/001-iiif-presentation3-fetch.json"
+      },
+      "warm_read": {
+        "cache_mode": "warm",
+        "elapsed_seconds": 0.0038101120007922873,
+        "network_requests": 0,
+        "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/001-iiif-presentation3-read.json"
+      }
+    }
+  ],
+  "operations": {
+    "unique_url_commit_hash_capture_entries": 40,
+    "fetch_operations": 41,
+    "fetch_status_counts": {
+      "ok": 41
+    },
+    "warm_read_operations": 41,
+    "warm_read_status_counts": {
+      "ok": 41
+    },
+    "cold_network_requests": 41,
+    "warm_read_network_requests": 0,
+    "raw_bytes_acquired_across_fetch_operations": 4034341,
+    "cold_fetch_elapsed_seconds": 6.967711072982638,
+    "warm_read_elapsed_seconds": 0.06754049600567669,
+    "source_capture_hash_matches": 39,
+    "source_capture_hash_differences": [
+      {
+        "source_id": "universalviewer-home",
+        "url": "https://universalviewer.io/",
+        "provided_sha256": "8c48599cbb4a126aed4a600c5318063dcdb3c9f317dbc9ad83043348fe1ea1f7",
+        "fresh_sha256": "728d60e22a7e93ed5b8ecb647a7e846ae2424a0e1da1deecd9deffe7a8a9d8c9",
+        "provided_bytes_used_for_claims": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/input-universalviewer-home.html",
+        "fresh_bytes_preserved_at": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/sources/fresh-universalviewer-home-728d60e22a7e.html"
+      }
+    ],
+    "operation_receipts": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/001-annotorious-regression-599-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/001-annotorious-regression-599-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/002-iiif-auth2-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/002-iiif-auth2-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/003-iiif-canvas-size-recipe-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/003-iiif-canvas-size-recipe-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/004-iiif-image3-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/004-iiif-image3-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/005-iiif-multicanvas-recipe-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/005-iiif-multicanvas-recipe-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/006-iiif-presentation2.1.1-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/006-iiif-presentation2.1.1-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/007-iiif-presentation3-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/007-iiif-presentation3-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/008-iiif-rights-recipe-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/008-iiif-rights-recipe-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/009-iiif-using-resources-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/009-iiif-using-resources-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/010-media-frags-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/010-media-frags-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/011-mirador-home-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/011-mirador-home-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/012-osd-issue-1614-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/012-osd-issue-1614-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/013-osd-issue-1614-comments-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/013-osd-issue-1614-comments-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/014-osd-latest-release-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/014-osd-latest-release-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/015-osd-pr-2546-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/015-osd-pr-2546-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/016-osd-pr-2546-files-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/016-osd-pr-2546-files-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/017-osd-pr2546-config-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/017-osd-pr2546-config-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/018-osd-pr2546-demo-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/018-osd-pr2546-demo-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/019-osd-pr2546-overlay-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/019-osd-pr2546-overlay-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/020-osd-pr2546-viewer-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/020-osd-pr2546-viewer-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/021-osd-release-v5.0.0-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/021-osd-release-v5.0.0-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/022-osd-release-v6.1.1-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/022-osd-release-v6.1.1-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/023-osd-tag-object-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/023-osd-tag-object-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/024-osd-tag-ref-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/024-osd-tag-ref-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/025-osd-v6.1.1-iiiftilesource-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/025-osd-v6.1.1-iiiftilesource-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/026-osd-v6.1.1-iiiftilesource-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/026-osd-v6.1.1-iiiftilesource-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/027-osd-v6.1.1-openseadragon-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/027-osd-v6.1.1-openseadragon-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/028-osd-v6.1.1-openseadragon-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/028-osd-v6.1.1-openseadragon-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/029-osd-v6.1.1-overlay-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/029-osd-v6.1.1-overlay-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/030-osd-v6.1.1-overlay-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/030-osd-v6.1.1-overlay-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/031-osd-v6.1.1-overlay-demo-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/031-osd-v6.1.1-overlay-demo-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/032-osd-v6.1.1-overlay-demo-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/032-osd-v6.1.1-overlay-demo-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/033-osd-v6.1.1-viewer-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/033-osd-v6.1.1-viewer-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/034-osd-v6.1.1-viewer-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/034-osd-v6.1.1-viewer-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/035-osd-v6.1.1-viewport-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/035-osd-v6.1.1-viewport-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/036-osd-v6.1.1-viewport-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/036-osd-v6.1.1-viewport-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/037-tropy-basics-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/037-tropy-basics-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/038-tropy-selections-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/038-tropy-selections-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/039-universalviewer-home-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/039-universalviewer-home-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/040-web-annotation-model-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/040-web-annotation-model-read.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/001-iiif-presentation3-fetch.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/source-cache/receipts/001-iiif-presentation3-read.json"
+    ],
+    "application_build_or_test": false,
+    "interoperability_test": false
+  },
+  "cost_breakdown": {
+    "input_tokens": null,
+    "cache_input_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing_usd": null,
+    "setup_wall_seconds": null,
+    "independent_web_wall_seconds": null,
+    "end_to_end_role_wall_seconds": null,
+    "host_delivery_wall_seconds": null,
+    "helper_cold_fetch_seconds": 6.967711072982638,
+    "helper_warm_read_seconds": 0.06754049600567669,
+    "helper_fetch_raw_bytes": 4034341,
+    "aggregate_goal_counters_are_separate_unsummed": true
+  },
+  "goal_counters_before_completion": {
+    "tokensUsed": 188473,
+    "timeUsedSeconds": 741,
+    "snapshot_status": "active",
+    "snapshot_taken_utc": "2026-10-07T21:08:24Z",
+    "not_billing": true,
+    "not_added_to_helper_times": true
+  },
+  "executed_checks": [
+    "All 40 supplied source capture groups were copied under own sources/ and SHA-256 checked against their supplied maps.",
+    "41 helper fetch receipts and 41 unique warm-read receipts were successful; all source reads used pinned record IDs.",
+    "39 current fetch hashes matched supplied captures; current Universal Viewer bytes differed and are separately preserved.",
+    "No application build, test suite, or interoperability check was run."
+  ]
+}

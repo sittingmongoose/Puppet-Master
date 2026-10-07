@@ -1,0 +1,32 @@
+{
+  "own_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1",
+  "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/artifact.md",
+  "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/source-map.json",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/source-map.json"
+  ],
+  "source_directories": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/research-v1/sources"
+  ],
+  "input_boundary": "full originalbrief/plan and own researcher draft/source map/bytes, independent primaryqueries",
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/brief.md",
+  "plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/plan.md",
+  "input_identities": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/INPUTS.md",
+      "sha256": "375908fc306267fd15f50323ab9699d8f348bc13bd128564fdc6b54e233814e7",
+      "bytes": 1917
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/brief.md",
+      "sha256": "12a1ab55102d3423bcc634812c6d120f0143a8e7945e3c696bc920bd56cafc13",
+      "bytes": 5152
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/plan.md",
+      "sha256": "4e6e262b0a1fffb8d47023c629037368809c410f396de5d932eedb09fa859c05",
+      "bytes": 1712
+    }
+  }
+}

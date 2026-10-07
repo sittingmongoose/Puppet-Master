@@ -1,0 +1,508 @@
+{
+  "schema_version": "1.0",
+  "case_id": "I-FAST-02",
+  "arm": "treatment",
+  "stage": "critic-finalizer-v1",
+  "status": "DIAGNOSTIC_UNQUALIFIED",
+  "output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/critic-finalizer-v1",
+  "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/critic-finalizer-v1/artifact.md",
+  "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/critic-finalizer-v1/source-map.json",
+  "finalizer_goal": {
+    "identity": "01a11828-b9bd-7f32-b808-0011a3c54a26",
+    "activation_status": "active",
+    "token_budget": null,
+    "last_active_snapshot_utc": "2026-10-07T21:05:03Z",
+    "last_active_aggregate_counters": {
+      "tokensUsed": 90860,
+      "timeUsedSeconds": 404
+    },
+    "distinct_usage": {
+      "input_tokens": null,
+      "cache_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    }
+  },
+  "deadline": {
+    "stage_deadline_utc": "2026-10-07T21:05:56.855867Z",
+    "whole_arm_deadline_utc": "2026-10-07T21:05:56.855867Z",
+    "reserve_seconds": 0,
+    "no_extension_or_clock_reset": true
+  },
+  "timing": {
+    "activation_created_epoch_seconds": 1791406693,
+    "first_useful_finding_observed_window_utc": [
+      "2026-10-07T20:58:50Z",
+      "2026-10-07T20:59:28Z"
+    ],
+    "first_useful_finding_exact_timestamp": "unknown within clock-checked window; not fabricated",
+    "first_independent_capture_operation_started_utc": "2026-10-07T20:59:40.568577Z",
+    "artifact_write_operation_started_utc": "2026-10-07T21:04:57.600285Z",
+    "source_map_write_operation_started_utc": "2026-10-07T21:05:34.455240Z",
+    "full_output_write_completion_upper_bound_utc": "2026-10-07T21:05:34.455240Z"
+  },
+  "input_boundary": {
+    "input_map": {
+      "own_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/critic-finalizer-v1",
+      "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/critic-finalizer-v1/artifact.md",
+      "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/critic-finalizer-v1/source-map.json",
+      "predecessors": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/research-v1/artifact.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/research-v1/source-map.json"
+      ],
+      "source_directories": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/research-v1/sources"
+      ],
+      "input_boundary": "full originalbrief/plan and own researcher draft/source map/bytes, independent primaryqueries",
+      "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/brief.md",
+      "plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/plan.md",
+      "input_identities": {
+        "INPUTS.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/INPUTS.md",
+          "sha256": "375908fc306267fd15f50323ab9699d8f348bc13bd128564fdc6b54e233814e7",
+          "bytes": 1917
+        },
+        "brief.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/brief.md",
+          "sha256": "12a1ab55102d3423bcc634812c6d120f0143a8e7945e3c696bc920bd56cafc13",
+          "bytes": 5152
+        },
+        "plan.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/plan.md",
+          "sha256": "4e6e262b0a1fffb8d47023c629037368809c410f396de5d932eedb09fa859c05",
+          "bytes": 1712
+        }
+      }
+    },
+    "input_map_sha256": "3ce07d5a4b1ff06a82bf8b28958cb44ae034549e71e930d7c04c5c3bd7333af8",
+    "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/brief.md",
+    "brief_sha256": "12a1ab55102d3423bcc634812c6d120f0143a8e7945e3c696bc920bd56cafc13",
+    "plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/plan.md",
+    "plan_sha256": "4e6e262b0a1fffb8d47023c629037368809c410f396de5d932eedb09fa859c05",
+    "predecessors": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/research-v1/artifact.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/treatment/research-v1/source-map.json"
+    ],
+    "research_artifact_sha256": "120fa60601a211b14e97320f2f7339e2c67f9a0ffd98d01c4d8c2a21912f12d3",
+    "research_source_map_sha256": "53a36f400e112860e9a3d3925f106447427e62d3794ecb9d966ecf1b0dde97d4"
+  },
+  "source_operations": {
+    "browser_tool_calls": 2,
+    "browser_open_requests": 16,
+    "browser_search_requests": 0,
+    "direct_public_http_capture_requests": 13,
+    "operation_note": "Primary page/source URLs were independently opened and read; selected exact-version/public bodies were captured as bytes. No application code or external runtime was executed."
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "authority": "NOAA CO-OPS Data Retrieval API docs",
+      "url": "https://api.tidesandcurrents.noaa.gov/api/prod",
+      "version": "Live, unversioned production API docs; snapshot 2026-10-07",
+      "captured_file": "sources/noaa-coops-api.html",
+      "bytes": 42037,
+      "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:40.568577+00:00",
+      "review_note": "Product-specific observation and prediction interval limits, datum, units, time zones, products, formats."
+    },
+    {
+      "id": "S02",
+      "authority": "NOAA CO-OPS Metadata API docs",
+      "url": "https://api.tidesandcurrents.noaa.gov/mdapi/prod/",
+      "version": "Live metadata API v1.0 docs; snapshot 2026-10-07",
+      "captured_file": "sources/noaa-mdapi.html",
+      "bytes": 72559,
+      "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:40.706546+00:00"
+    },
+    {
+      "id": "S03",
+      "authority": "NOAA Tide Predictions Help",
+      "url": "https://tidesandcurrents.noaa.gov/noaatidepredictionshelp.html",
+      "version": "Live, unversioned help page; snapshot 2026-10-07",
+      "captured_file": "sources/noaa-predictions-help.html",
+      "bytes": 32471,
+      "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:40.844377+00:00"
+    },
+    {
+      "id": "S04",
+      "authority": "NOAA Tides & Currents FAQ",
+      "url": "https://tidesandcurrents.noaa.gov/faq.html",
+      "version": "Predecessor captured snapshot; unversioned",
+      "captured_file": "sources/predecessor-research-v1/noaa-faq.html",
+      "bytes": 83932,
+      "sha256": "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f",
+      "capture_operation": "exact predecessor bytes copied and fully read"
+    },
+    {
+      "id": "S05",
+      "authority": "NOAA Tide Prediction Error for United States Stations",
+      "url": "https://tidesandcurrents.noaa.gov/pdf/Tide_Prediction_Error_for_the_United_States_Coastline.pdf",
+      "version": "Predecessor PDF capture, 4 pages",
+      "captured_file": "sources/predecessor-research-v1/noaa-prediction-error.pdf",
+      "bytes": 125615,
+      "sha256": "193114c36866be980fd1aa8d13914e370d06d32264acb9aba85e750f2b1f3d56",
+      "capture_operation": "exact predecessor bytes copied and fully read"
+    },
+    {
+      "id": "S06",
+      "authority": "NOAA NCCOS citizen-science water-level application article",
+      "url": "https://coastalscience.noaa.gov/news/new-citizen-science-water-level-application-available-nationwide/",
+      "version": "2018-02-22 article; predecessor capture",
+      "captured_file": "sources/predecessor-research-v1/noaa-citizen-water-level-app.html",
+      "bytes": 180185,
+      "sha256": "a5c22af88f3224b414ffe535822eb8c594c9cc356ebc847ee2238901c60260ac",
+      "capture_operation": "exact predecessor bytes copied and fully read"
+    },
+    {
+      "id": "S07",
+      "authority": "NOAA Water Level Resources for External Users",
+      "url": "https://tidesandcurrents.noaa.gov/education/tech-assist/training/water-level/",
+      "version": "Live, unversioned page; snapshot 2026-10-07",
+      "captured_file": "sources/noaa-water-level-resources.html",
+      "bytes": 24864,
+      "sha256": "17e57a5809ab6498ea3bdfecc7afd674bf22d7c1aaaa0febcf834eef9ce31a1f",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:40.980587+00:00"
+    },
+    {
+      "id": "S08",
+      "authority": "NOAA What is an Operational Forecast System?",
+      "url": "https://oceanservice.noaa.gov/facts/ofs.html",
+      "version": "Live, unversioned page; snapshot 2026-10-07",
+      "captured_file": "sources/noaa-ofs-fact.html",
+      "bytes": 30500,
+      "sha256": "e18c2303525cf92a90cce2d61afbd1be28025f7513a8c7831b40480200aedf90",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:41.082780+00:00"
+    },
+    {
+      "id": "S09",
+      "authority": "pandas merge_asof and _AsOfMerge source",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/core/reshape/merge.py",
+      "version": "pandas v3.0.6; immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+      "captured_file": "sources/pandas-v3.0.6-merge.py",
+      "bytes": 114541,
+      "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:41.191571+00:00",
+      "code_locations": [
+        {
+          "symbol": "merge_asof",
+          "lines": "657-934"
+        },
+        {
+          "symbol": "_AsOfMerge key/tolerance validation",
+          "lines": "2313-2526"
+        },
+        {
+          "symbol": "_get_join_indexers",
+          "lines": "2555-2651"
+        }
+      ],
+      "review_note": "Defaults are backward, exact allowed, and no tolerance; API requires sorted key."
+    },
+    {
+      "id": "S10",
+      "authority": "pandas compiled as-of join source",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/_libs/join.pyx",
+      "version": "pandas v3.0.6; immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+      "captured_file": "sources/pandas-v3.0.6-join.pyx",
+      "bytes": 27790,
+      "sha256": "82269a4586d2d2ad4e80e285082b6eabac52440c0713681b65649403a7a0ace9",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:41.283574+00:00",
+      "code_locations": [
+        {
+          "symbol": "asof_join_nearest_on_X_by_Y",
+          "lines": "830-880"
+        }
+      ],
+      "review_note": "Equal-distance comparison uses bdiff <= fdiff and therefore backward tie."
+    },
+    {
+      "id": "S11",
+      "authority": "pandas merge_asof regression tests",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/tests/reshape/merge/test_merge_asof.py",
+      "version": "pandas v3.0.6; immutable commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+      "captured_file": "sources/pandas-v3.0.6-test_merge_asof.py",
+      "bytes": 121009,
+      "sha256": "dc01ff95dcd9d8d56042df247c8276cdf73e0c849798232fb2dc5bff75ee0d90",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:41.365515+00:00",
+      "code_locations": [
+        {
+          "symbol": "test_left_index_right_index_tolerance",
+          "lines": "3332-3356"
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "authority": "pandas issue #35558",
+      "url": "https://github.com/pandas-dev/pandas/issues/35558",
+      "version": "Issue opened 2020-08-05; live issue page snapshot 2026-10-07",
+      "captured_file": "sources/pandas-issue-35558.html",
+      "bytes": 324688,
+      "sha256": "4ccb0965a5a94735331bf6380d43829c2d523130d959894df485bf0dd5b7c118",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:41.459584+00:00",
+      "review_note": "Reports apparent incompatible tolerance and UnboundLocalError; linked historical behavior is narrow."
+    },
+    {
+      "id": "S13",
+      "authority": "pandas PR #35654 and merged diff",
+      "url": "https://github.com/pandas-dev/pandas/pull/35654.diff",
+      "version": "Merged fix/test/changelog diff, Aug 2020; redirects to patch-diff.github.com",
+      "captured_file": "sources/pandas-fix-pr-35654.diff",
+      "bytes": 2718,
+      "sha256": "c06efa0d217bcd897f629e31515e5734196dd186bb8b6f3bfec3167e2aff978f",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:42.141019+00:00",
+      "review_note": "Changes error-message dtype reference; review notes the added valid-input test passes without code change."
+    },
+    {
+      "id": "S14",
+      "authority": "pandas v1.1.1 release note",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/f2ca0a2665b2d169c97de87b8e778dbed86aea07/doc/source/whatsnew/v1.1.1.rst",
+      "version": "Release commit f2ca0a2665b2d169c97de87b8e778dbed86aea07; published 2020-08-20",
+      "captured_file": "sources/pandas-v1.1.1-whatsnew.rst",
+      "bytes": 3928,
+      "sha256": "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:42.529830+00:00",
+      "review_note": "Explicitly records merge_asof UnboundLocalError fix for issue 35558."
+    },
+    {
+      "id": "S15",
+      "authority": "pandas v3.0.6 release and annotated tag",
+      "url": "https://api.github.com/repos/pandas-dev/pandas/releases/tags/v3.0.6",
+      "version": "Release published 2026-09-17; tag object 619d761f6756d39ff08cbf10746f8808977b7329 resolves to 2905718b126579d2cf0fe5bae05bd75facb67d77",
+      "captured_file": "sources/pandas-v3.0.6-release.json",
+      "bytes": 4451,
+      "sha256": "36aa7ca12cea760d244cea1fcc5f8a550d408df601b65448d45c5ff1481e3969",
+      "capture_operation": "independent read-only public HTTP capture",
+      "capture_started_utc": "2026-10-07T20:59:42.577630+00:00",
+      "review_note": "Release/tag JSON also captured at sources/pandas-v3.0.6-tag.json."
+    }
+  ],
+  "full_capture_byte_manifest": [
+    {
+      "path": "sources/noaa-coops-api.html",
+      "bytes_read": 42037,
+      "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5"
+    },
+    {
+      "path": "sources/noaa-mdapi.html",
+      "bytes_read": 72559,
+      "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb"
+    },
+    {
+      "path": "sources/noaa-ofs-fact.html",
+      "bytes_read": 30500,
+      "sha256": "e18c2303525cf92a90cce2d61afbd1be28025f7513a8c7831b40480200aedf90"
+    },
+    {
+      "path": "sources/noaa-predictions-help.html",
+      "bytes_read": 32471,
+      "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45"
+    },
+    {
+      "path": "sources/noaa-water-level-resources.html",
+      "bytes_read": 24864,
+      "sha256": "17e57a5809ab6498ea3bdfecc7afd674bf22d7c1aaaa0febcf834eef9ce31a1f"
+    },
+    {
+      "path": "sources/pandas-fix-pr-35654.diff",
+      "bytes_read": 2718,
+      "sha256": "c06efa0d217bcd897f629e31515e5734196dd186bb8b6f3bfec3167e2aff978f"
+    },
+    {
+      "path": "sources/pandas-issue-35558.html",
+      "bytes_read": 324688,
+      "sha256": "4ccb0965a5a94735331bf6380d43829c2d523130d959894df485bf0dd5b7c118"
+    },
+    {
+      "path": "sources/pandas-v1.1.1-whatsnew.rst",
+      "bytes_read": 3928,
+      "sha256": "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f"
+    },
+    {
+      "path": "sources/pandas-v3.0.6-join.pyx",
+      "bytes_read": 27790,
+      "sha256": "82269a4586d2d2ad4e80e285082b6eabac52440c0713681b65649403a7a0ace9"
+    },
+    {
+      "path": "sources/pandas-v3.0.6-merge.py",
+      "bytes_read": 114541,
+      "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037"
+    },
+    {
+      "path": "sources/pandas-v3.0.6-release.json",
+      "bytes_read": 4451,
+      "sha256": "36aa7ca12cea760d244cea1fcc5f8a550d408df601b65448d45c5ff1481e3969"
+    },
+    {
+      "path": "sources/pandas-v3.0.6-tag.json",
+      "bytes_read": 681,
+      "sha256": "6a2e731fcedbcb78ba979e849e76ce2dc5bf754ec58437103436f0faa7396cf9"
+    },
+    {
+      "path": "sources/pandas-v3.0.6-test_merge_asof.py",
+      "bytes_read": 121009,
+      "sha256": "dc01ff95dcd9d8d56042df247c8276cdf73e0c849798232fb2dc5bff75ee0d90"
+    }
+  ],
+  "inherited_predecessor_capture_manifest": [
+    {
+      "path": "sources/predecessor-research-v1/noaa-citizen-water-level-app.html",
+      "bytes_read": 180185,
+      "sha256": "a5c22af88f3224b414ffe535822eb8c594c9cc356ebc847ee2238901c60260ac",
+      "capture_relation": "byte-identical copy of research-v1/sources/noaa-citizen-water-level-app.html"
+    },
+    {
+      "path": "sources/predecessor-research-v1/noaa-coops-api.html",
+      "bytes_read": 42037,
+      "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+      "capture_relation": "byte-identical copy of research-v1/sources/noaa-coops-api.html"
+    },
+    {
+      "path": "sources/predecessor-research-v1/noaa-faq.html",
+      "bytes_read": 83932,
+      "sha256": "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f",
+      "capture_relation": "byte-identical copy of research-v1/sources/noaa-faq.html"
+    },
+    {
+      "path": "sources/predecessor-research-v1/noaa-mdapi.html",
+      "bytes_read": 72559,
+      "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+      "capture_relation": "byte-identical copy of research-v1/sources/noaa-mdapi.html"
+    },
+    {
+      "path": "sources/predecessor-research-v1/noaa-ofs-fact.html",
+      "bytes_read": 30500,
+      "sha256": "e18c2303525cf92a90cce2d61afbd1be28025f7513a8c7831b40480200aedf90",
+      "capture_relation": "byte-identical copy of research-v1/sources/noaa-ofs-fact.html"
+    },
+    {
+      "path": "sources/predecessor-research-v1/noaa-prediction-error.pdf",
+      "bytes_read": 125615,
+      "sha256": "193114c36866be980fd1aa8d13914e370d06d32264acb9aba85e750f2b1f3d56",
+      "capture_relation": "byte-identical copy of research-v1/sources/noaa-prediction-error.pdf"
+    },
+    {
+      "path": "sources/predecessor-research-v1/noaa-predictions-help.html",
+      "bytes_read": 32471,
+      "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+      "capture_relation": "byte-identical copy of research-v1/sources/noaa-predictions-help.html"
+    },
+    {
+      "path": "sources/predecessor-research-v1/noaa-water-level-resources.html",
+      "bytes_read": 24864,
+      "sha256": "17e57a5809ab6498ea3bdfecc7afd674bf22d7c1aaaa0febcf834eef9ce31a1f",
+      "capture_relation": "byte-identical copy of research-v1/sources/noaa-water-level-resources.html"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-fix-pr-35654.diff",
+      "bytes_read": 2718,
+      "sha256": "c06efa0d217bcd897f629e31515e5734196dd186bb8b6f3bfec3167e2aff978f",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-fix-pr-35654.diff"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-issue-35558.html",
+      "bytes_read": 324693,
+      "sha256": "438088892668ef075eef5d82c1661f2b8f7bd833e43030eb14aa2d012465041f",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-issue-35558.html"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-pr-35654.json",
+      "bytes_read": 22820,
+      "sha256": "b39ed0528a7c4b5cef825333e89f861613ea9b4918c5cf93d23efe6078003744",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-pr-35654.json"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-v1.1.1-release.json",
+      "bytes_read": 4443,
+      "sha256": "fe466da8593142ba07bda4ea8628c6721498610204433948e88fb57754fcae84",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-v1.1.1-release.json"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-v1.1.1-tag.json",
+      "bytes_read": 787,
+      "sha256": "1254ba94ef9e6f4494b15128d94eb89f338e80e41948a1b56c0c0da70e32e457",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-v1.1.1-tag.json"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-v1.1.1-whatsnew.rst",
+      "bytes_read": 3928,
+      "sha256": "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-v1.1.1-whatsnew.rst"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-v3.0.6-join.pyx",
+      "bytes_read": 27790,
+      "sha256": "82269a4586d2d2ad4e80e285082b6eabac52440c0713681b65649403a7a0ace9",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-v3.0.6-join.pyx"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-v3.0.6-merge.py",
+      "bytes_read": 114541,
+      "sha256": "af66f4a95da5bd65049f3d31797f9c49600ebc61c437060e1c2fefb5e97df037",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-v3.0.6-merge.py"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-v3.0.6-release.json",
+      "bytes_read": 5039,
+      "sha256": "cfd96bbc60401388a9e6ff63fc303293bf6f0e24a9407bdd95b0b405dc8a1533",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-v3.0.6-release.json"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-v3.0.6-tag.json",
+      "bytes_read": 790,
+      "sha256": "26fe3dc814406b3a883e04e47a0c270c169f88f1b96faa05aeee9f2b7aa3d64e",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-v3.0.6-tag.json"
+    },
+    {
+      "path": "sources/predecessor-research-v1/pandas-v3.0.6-test_merge_asof.py",
+      "bytes_read": 121009,
+      "sha256": "dc01ff95dcd9d8d56042df247c8276cdf73e0c849798232fb2dc5bff75ee0d90",
+      "capture_relation": "byte-identical copy of research-v1/sources/pandas-v3.0.6-test_merge_asof.py"
+    }
+  ],
+  "audit_dispositions": [
+    "C1 exact equality vs merge_asof default: accepted and repaired in P3/P5/P6",
+    "C2 nearest tie rule has no API override: accepted and repaired",
+    "C3 tolerance zero is API-valid; positive is product policy: clarified",
+    "C4 NOAA one-month observed-data limit vs prediction limits: accepted and repaired",
+    "C5 issue/fix/test history scope is narrow; linked test does not demonstrate changed error-message branch: qualified",
+    "C6 vertical-reference/benchmark statement: measurement guidance retained; local-equivalence statement labeled conservative design inference",
+    "C7 live NOAA docs do not establish old run state: per-run source and metadata snapshot retained"
+  ],
+  "validation": {
+    "executed": [
+      "Read frozen brief, plan, input map, complete predecessor artifact and source map",
+      "Copied and loaded all 19 predecessor captured source byte files",
+      "Independently opened primary NOAA docs and commit-pinned pandas code/tests/issue/PR/release; captured 13 public source files",
+      "Static source inspection and cross-check of all O1-O6 and P1-P6; wrote final proposed-change artifact"
+    ],
+    "not_executed": [
+      "Application build",
+      "Application/runtime tests",
+      "Proposed P6 acceptance checks",
+      "No claim of product validation or source-pass"
+    ],
+    "proposed_checks_preserved": "All P6 checks in artifact.md are proposals."
+  },
+  "non_scope_constraints": [
+    "No nested delegation, other arms/cases, evaluator keys or parent history",
+    "No repository/canonical Plans/WorkNodes changes",
+    "No third-party contact, private data, external runner, downloaded code execution or app build",
+    "No SourcePASS or speed inference"
+  ],
+  "generated_at_note": "Timestamp immediately before source-map serialization; completion bound is before native completion call."
+}

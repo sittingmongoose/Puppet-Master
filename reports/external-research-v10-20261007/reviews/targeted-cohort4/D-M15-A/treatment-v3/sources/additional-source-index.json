@@ -1,0 +1,50 @@
+[
+  {
+    "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+    "capture_at": "2026-10-07T21:23:12.455626+00:00",
+    "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+    "bytes": 15152,
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.html",
+    "version": "Linux man-pages 6.19, 2026-02-08; version/date also independently read through web tool",
+    "locator": "DESCRIPTION: file fsync does not necessarily persist containing-directory entry; directory fsync required",
+    "limits": "One public HTML prose page; no downloaded code executed; Linux/POSIX contract, no crash test or hardware guarantee",
+    "elapsed_seconds": 0.44082249399798457,
+    "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-fsync-2.txt"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.html",
+    "url": "https://man7.org/linux/man-pages/man2/utimensat.2.html",
+    "capture_at": "2026-10-07T21:24:16.215335+00:00",
+    "sha256": "d8cfbbcb7a7815d74313e02f9b0e20fcfc087bc955b197dd44b30f20ff4fbd64",
+    "bytes": 22528,
+    "elapsed_seconds": 0.46246110499851056,
+    "limits": "Additional bounded reviewer primary-document check; server HTML only; no code execution, accounts or service operations",
+    "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-utimensat-2.txt",
+    "version": "Linux man-pages 6.19; page date 2025-10-29",
+    "locator": "DESCRIPTION timestamp values and permissions, lines 30-66 of extracted text"
+  },
+  {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.html",
+    "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html",
+    "capture_at": "2026-10-07T21:24:16.418711+00:00",
+    "sha256": "dce987a4dd51d5f0c41f1efa579e28b05b8c585bcc879f5e503d242c524d0d02",
+    "bytes": 32489,
+    "elapsed_seconds": 0.20325610299914842,
+    "limits": "Additional bounded reviewer primary-document check; server HTML only; no code execution, accounts or service operations",
+    "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-abortmultipartupload.txt",
+    "version": "Amazon S3 API reference, API namespace 2006-03-01, current HTML captured 2026-10-07; no immutable doc revision",
+    "locator": "Introductory operation semantics, in-flight parts and ListParts verification, lines 6-13"
+  },
+  {
+    "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
+    "capture_at": "2026-10-07T21:26:08.502813+00:00",
+    "sha256": "120bba4c5fffd1ffa8a57aa6e08d1adad866decadc331a77ab195afb27d73c11",
+    "bytes": 83175,
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.html",
+    "review_text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M15-A/treatment-v3/sources/additional-s3-object-integrity-upload.txt",
+    "version": "Amazon S3 User Guide, current public HTML captured 2026-10-07; no immutable documentation release ID",
+    "locator": "Full object and composite checksum types; multipart ETag construction note; Using Content-MD5 and the ETag to verify uploaded objects",
+    "limits": "Reviewer bounded check of the claim that S3 multipart ETag semantics are unpublished. Current page may postdate candidate capture; no implementation validation or code execution; code examples left inert. Web cached view separately reports crawl three weeks ago.",
+    "elapsed_seconds": 0.2198985619979794
+  }
+]

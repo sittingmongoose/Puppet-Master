@@ -1,0 +1,314 @@
+{
+  "record_at": "2026-10-07T20:58:14.296391+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/artifact.md": {
+      "sha256": "1f4f7bd7d8440fd1e841a5ec1e720b8f394b10ca760d1f7e1828a3004cdf9377",
+      "bytes": 17168
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/source-map.json": {
+      "sha256": "f975a3f5d0ab1bbd319afd09113d718b560f1d57d4c5d02b8781d5b28e719e76",
+      "bytes": 32522
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-adapter-at-3fbef.ts": {
+      "sha256": "43cff3bea76f044d8bfba118c932ff192fc24b7d346f296857b69ce8f34c6d87",
+      "bytes": 4814
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-commit-61148.json": {
+      "sha256": "661cadf1b70db909bd82249dc236bd27a0df34f1cad4df3c297673074ef9552e",
+      "bytes": 6090
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-compare-fix-to-3.9.4.json": {
+      "sha256": "44f974e1d1c47cae4ae8b17d9abeb73b1c232c208471c9f8431a5010e2f28ddb",
+      "bytes": 448003
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-core-3.9.4-FragmentSelector.ts": {
+      "sha256": "3fd0e36710117c7f54e49b05815d5dcb33a28869558ea31e297c236deb920743",
+      "bytes": 2222
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-core-3.9.4-SVGSelector.ts": {
+      "sha256": "a472e46ef5fed54c9753ae3e148713b9a6b54d13829293f3eb7bd19c61b2045c",
+      "bytes": 8537
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-core-3.9.4-W3CImageFormatAdapter.ts": {
+      "sha256": "43cff3bea76f044d8bfba118c932ff192fc24b7d346f296857b69ce8f34c6d87",
+      "bytes": 4814
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-core-3.9.4-drawingToolsRegistry.ts": {
+      "sha256": "c3ff2ea382f4b6a781d0ee9935116fde30f81e034f3e09b7e20538bb2a92aaf3",
+      "bytes": 836
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-core-3.9.4.es.js": {
+      "sha256": "9fd3fee9067921e0cf224b610b2fe04a305f65511ab0a10d69e9f4e3341e2d8c",
+      "bytes": 199871
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-core-3.9.4.json": {
+      "sha256": "3916e8a37507e0e471dc46ab06fe837a2081de93c6a2dd4cb539fa22b17c70a7",
+      "bytes": 2432
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-core-3.9.4.tgz": {
+      "sha256": "1a4cf3228e3ecafa4f05538a909756fa173c2b6fb17b974bad9e11e9a46d90ff",
+      "bytes": 363515
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-fragment-at-3fbef.ts": {
+      "sha256": "3fd0e36710117c7f54e49b05815d5dcb33a28869558ea31e297c236deb920743",
+      "bytes": 2222
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-fragment-at-61148.ts": {
+      "sha256": "3fd0e36710117c7f54e49b05815d5dcb33a28869558ea31e297c236deb920743",
+      "bytes": 2222
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-issue-599-comments.json": {
+      "sha256": "4be3c281172d723bb1d5257ec092fd5ab6085450ff306556a88b2da1ea603881",
+      "bytes": 23450
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-issue-599.json": {
+      "sha256": "3e7df44b1b36e2480ae42a4f87b84bf5a18340714bc4953fa31528ce769cb253",
+      "bytes": 6137
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-issue-603-comments.json": {
+      "sha256": "590f04eec29b3a3b9fa7fe476c076a1419f10494b0fc75db5dd5b32eae47c6ee",
+      "bytes": 6289
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-issue-603-events.json": {
+      "sha256": "4128579d63f3300873d43333520c07b4adaca1c663776237a1f9ded6e29a6853",
+      "bytes": 6087
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-issue-603.json": {
+      "sha256": "cc845f21d630235ab1556e629569ac5876657402bbb62e6f24a2d7e2cfc1058b",
+      "bytes": 10808
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-npm-packument.json": {
+      "sha256": "d30beb7f65e4f1386c8ecc8bc47ce2949906e22f05a6a117be026f43084df8a7",
+      "bytes": 302660
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-openseadragon-3.9.4.json": {
+      "sha256": "14c2848fd515c2ebf558b560f0a0d53e7b01c339bf02eebda24bdd295d29e018",
+      "bytes": 2638
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-openseadragon-3.9.4.tgz": {
+      "sha256": "74169a03e28c814ea21c39c3493e3430a93a096f745dc5bc4c4a51114855e0f6",
+      "bytes": 1793815
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-osd-3.9.4-Annotorious.ts": {
+      "sha256": "c2dc5c66467619bcff2a98197483ed910bc5eea6b7d3a515af5129ca1e09edcd",
+      "bytes": 8804
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-osd-3.9.4-SVGDrawingLayer.svelte": {
+      "sha256": "a160702095166c52b34df650d1b3d5f5942f2e06b80b68e6d3a8f37bff09e55f",
+      "bytes": 10330
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-osd-3.9.4-viewerCoordinates.ts": {
+      "sha256": "cafcf3dcf55267896025bc898f0222c90ed7e5cfce27c71d4436835003d4ad02",
+      "bytes": 1840
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-pr-604-files.json": {
+      "sha256": "1a5be51877883cc70acc72b00cde1bd8cab62a071cb21ae60634c9142867f8d1",
+      "bytes": 5414
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-pr-604.json": {
+      "sha256": "e02f8c5a7b464bd900cd43a2beb8a3563dcb96e3e0cf5572fa321e76f85f382b",
+      "bytes": 21018
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/iiif-cookbook-annotations-0269.html": {
+      "sha256": "6dd37af92e8270670f34993a0c18588fe7d57526db731ed963435f4755d74261",
+      "bytes": 20973
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/iiif-cookbook-matrix.html": {
+      "sha256": "92f0add99331eb8ec25431b0cb9ac09ab8cf641d7ccc3a7fc9137fa8fd01688a",
+      "bytes": 322052
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/iiif-cookbook-polygon-0261.html": {
+      "sha256": "a9fc8be5f00bd0f6e9d2fb7465814deea4e1bddce49eef183557fdce227afb9c",
+      "bytes": 20600
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/iiif-cookbook-region-0299.html": {
+      "sha256": "e425f46ea5e7cd09fd9cec2ea29afecd3d884c6dc523a46a6f70634a952605ca",
+      "bytes": 20760
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/iiif-image-3.0.html": {
+      "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "bytes": 145643
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/iiif-presentation-3.0.html": {
+      "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+      "bytes": 385826
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/mirador-home.html": {
+      "sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+      "bytes": 7133
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-iiiftilesource.js": {
+      "sha256": "08d7416a852597d4e85d21fa011cf22d7e75224a67c4f375997483e74ed36b1b",
+      "bytes": 25035
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-issue-1861.json": {
+      "sha256": "d451327630a2ab0e71b66df2467072e31831d7c10da86d27679caf8ae855da9d",
+      "bytes": 4771
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-issue-774.json": {
+      "sha256": "1971ea3ae492d955b223a41b6ea458918a07af0a3be109660d969bfcdf3f294f",
+      "bytes": 5266
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-overlay.js": {
+      "sha256": "ca270d851824a64cb07ca1b50418a84f6f0d4a6172f17441e20756b684e8ac56",
+      "bytes": 20632
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-overlays-test.js": {
+      "sha256": "2a453f26fc84a0ca41db8c2edb87993bdd639599abddfd89035ec1984a5b94c7",
+      "bytes": 49593
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-pr-1865-files.json": {
+      "sha256": "bc15e1372ee452710db516b59305617f08b0ab75d43455e21bc79a60b235ef07",
+      "bytes": 922
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-pr-1865.json": {
+      "sha256": "a58662254e469573787a8054cbdd8d12c78c11dad70257eb31bf4b4a5bbf9c09",
+      "bytes": 20754
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-pr-1865.patch": {
+      "sha256": "8c174eb83c0c5f26791ec9b9ab6f7427a337c63e29e2ff8025c3368807492538",
+      "bytes": 760
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-release-v3.0.0.json": {
+      "sha256": "0d81a21468aceae1f2ea0fd80a05342ac058e03ba36534c98b769731e302547c",
+      "bytes": 12008
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-release-v6.0.2.json": {
+      "sha256": "050c1124d8955de7f11a5dcea373fcbfa40a6587a78a040660dfdea58e15b240",
+      "bytes": 6207
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-tag-object.json": {
+      "sha256": "8c986c32f6d599873ad7866f78b2c204eb4d660009ac2aed2d4bea652205cad8",
+      "bytes": 780
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-tag-ref.json": {
+      "sha256": "fb4dacc3038e964f6b60ba22c09d14e28fee2ff0d74a2fb64fdc0f78169259d4",
+      "bytes": 392
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/osd-viewer.js": {
+      "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e",
+      "bytes": 181325
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/rfc9110.html": {
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "bytes": 1187554
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/w3c-web-annotation-model.html": {
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "bytes": 284185
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-02-control-critic-v2:ordinal:1",
+    "ordinal": 1,
+    "status": "interrupted",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T20:41:58.687Z",
+    "startedAt": "2026-10-07T20:41:59.418Z",
+    "completedAt": "2026-10-07T20:57:39.160Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-METHOD-02/control/critic-v2",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-02--control--critic-v2--3d4566869b0eb779.json",
+    "sha256": "3d4566869b0eb779ad807be7e56e7f8502849fe3623b55f32b70facf9d29ea8a",
+    "bytes": 10854,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "e7cb8a99857f3d85d349adffbc2ee693a1a7fd879119751787960caa8db64e6d",
+      "status": "paused",
+      "tokensUsed": 225972,
+      "tokenBudget": null,
+      "timeUsedSeconds": 926
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-02-control-critic-v2%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a11819-fd77-7d61-97df-e2255cb40b8e",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T20:57:39.160Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-METHOD-02-control-critic-v2%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T20:57:39.160Z",
+        "sha256": "29dd861aa06a47738ed5753479371bb555e69eb6a61de93ad7a39470fe28904f"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a11819-fd77-7d61-97df-e2255cb40b8e",
+  "native_terminal": "paused",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 225972,
+  "native_elapsed_seconds": 926,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-METHOD-02-control-critic-v2",
+    "record_at": "2026-10-07T20:41:45.658271+00:00",
+    "stage_allowance_seconds": 900,
+    "prospective_arm_deadline": "2026-10-07T21:20:48+00:00",
+    "prospective_stage_deadline": "2026-10-07T20:56:45.658271+00:00",
+    "deadline_rule": "stage activation<=allocation AND wholedeadline preserves1200final forcritic; totaloccupied<=3600; no reset",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "version": "v2",
+    "prior_nonoverlapping_occupied_seconds": 1130.457,
+    "final_reserve_seconds": 1200,
+    "linked_prospective_clock_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method02-v2-prospective-clock-annotation.json"
+  },
+  "t3_delivery_in_prefrozen_deadline": false,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "event": "active",
+  "stage": "D-M15-A/treatment/fresh_transport_scout-v3",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M15-A/treatment/fresh_transport_scout-v3"
+  ],
+  "start": "2026-10-07T20:52:22.397760+00:00",
+  "end": "2026-10-07T20:52:22.608586+00:00",
+  "elapsed_seconds": 0.21082803700119257,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T20:52:22.500558+00:00",
+    "entries": [
+      {
+        "stage": "D-M15-A/treatment/fresh_transport_scout-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M15-A--treatment--fresh_transport_scout-v3--c67b22f83bd0ac81.json",
+        "sha256": "c67b22f83bd0ac81400b299b56fc0ef77093ef13ca0731c86acac77871b8687b",
+        "bytes": 17439,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

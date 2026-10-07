@@ -1,0 +1,184 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T20:49:49.970782+00:00",
+  "case_id": "D-M15-A",
+  "arm": "control",
+  "stage": "whole_question_research_final",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/INPUT_MAP.json",
+      "sha256": "db27c39093f8c972cb20fdb1fc11a2bfd1076735335cb1096e28426fbca0f7b1",
+      "bytes": 1759
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/activation-observation-absence-root-v1.json",
+      "sha256": "071e11c69433a99a1f887ac8a888bd5980296ecd3c22c6900d3df65b125c82ce",
+      "bytes": 2172
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/admission-timing.json",
+      "sha256": "69b9af9e6a3713b6dd15f25544ed521f7773d88d342104f7b9db99d20c896edd",
+      "bytes": 640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/assignment.md",
+      "sha256": "d443abb40c1162a394acfc3bc949e861482694f5d4e741a42b89412a5e4c464f",
+      "bytes": 3897
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/dispatch-receipt.json",
+      "sha256": "110fa7d8f77cc524524445170327cc815e4493d7c021d635c09f995cce038227",
+      "bytes": 1119
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/dispatch-request.json",
+      "sha256": "92ebfdf1125ee2cec42b4d2ef8bd8cf529c19d08c8683712c2f985802f7c0b8f",
+      "bytes": 709
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/dispatch.json",
+      "sha256": "71c6bb883505122f9529e4cc3b71cd6ed7b344285e4096f4f23ab054b1134d9f",
+      "bytes": 1552
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/final.md",
+      "sha256": "6fd7b4ff379feafda1135147f69891b3c71105215709c7ec397039705eb310f0",
+      "bytes": 7826
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/integration-state-active.json",
+      "sha256": "bd21bd8d4aa99a07dd5860979c693cd04bb4258be64d4c527bdf82b5bdb83e64",
+      "bytes": 6355
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/integration-state-terminal.json",
+      "sha256": "d18b1640ae2fc45b9d5647c64599b2df6a0f66d5692dd7a3f2549ca86e00a58c",
+      "bytes": 4926
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/notes.md",
+      "sha256": "764dd1460ae7b3ac8ff826d1b3f7a6d8951a060c426b9f239544bebdbadf450a",
+      "bytes": 7996
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/passive-active-capture-cost.json",
+      "sha256": "a98c94ff7f83347c9455ecc7923fbe9557433bdc84377cc35050fb7f49feb8b4",
+      "bytes": 1328
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/passive-active.json",
+      "sha256": "9c2c68fd10c059e90d2ad1b92c48a00966195c2e6b9bfcab31ba8e5cf3433739",
+      "bytes": 17511
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/passive-terminal-capture-cost.json",
+      "sha256": "96562e8d143b92de3f1fd64afc63fa4fdad944b4090b39be1aa0d4793987d673",
+      "bytes": 1330
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/passive-terminal.json",
+      "sha256": "46caaaa75bb70bad51929c22d7480bab4c8c7db492b5bd4482d0470a1a6e9708",
+      "bytes": 20900
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/curl-man.headers",
+      "sha256": "5182eed209e4da2349a2e924e30ecbd23d2091217a3501f2f045a13d166fb9e9",
+      "bytes": 1940
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/curl-manpage.html",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "bytes": 465220
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/draft-ietf-httpbis-resumable-upload.html",
+      "sha256": "1710111b176fe87f72259d216330b375c7615d8eba2935d40ae5f9a8e9224e85",
+      "bytes": 273421
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/draft-resumable-upload.headers",
+      "sha256": "8dff2d5d3566cf5847fd077858172d0490da74d50abb3acdcff38b3891483471",
+      "bytes": 1105
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/fileapi.headers",
+      "sha256": "34c63ab873c0300bd2377e357e65cbe7556224ca4351c140c4e0f95e7bdc92ba",
+      "bytes": 1037
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/git-internals-objects.html",
+      "sha256": "2392ed9763af88229b885e6b9df7b71be550bb34d6be48243305328c73d6a07a",
+      "bytes": 145608
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/gitobjects.headers",
+      "sha256": "8358217d0cae8df2062913092570b11164dadecbe51878fefd91057fe0ec0797",
+      "bytes": 666
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/index.json",
+      "sha256": "b5afe2b327091b1921fc991a9f7f627b76e20676a44b259e5d88f0254129bb63",
+      "bytes": 7612
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/man7-rename.2.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/man7-unlink.2.html",
+      "sha256": "54342d11f277bc670a1896301752b87abbb27261a1e84e8300f2d4c1b0fbde9b",
+      "bytes": 16969
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/rename.headers",
+      "sha256": "673dcbddb78e0ecf86c7192d2428efe3e30468003cb4bcfdf8fe3f0b58440852",
+      "bytes": 255
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/rfc9110.headers",
+      "sha256": "6131bcf7271b65c4d57bee8a59b40a3e8964ecef786c81eca17d07d02ecca8fb",
+      "bytes": 641
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/rfc9110.html",
+      "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "bytes": 1187554
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/tus-resumable-upload-protocol.html",
+      "sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "bytes": 210884
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/tus.headers",
+      "sha256": "72ac73399df44ad742e601ae4d8ad34af158609bea07572c924f8c19acf587e7",
+      "bytes": 653
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/unlink.headers",
+      "sha256": "dfbb434308ae6a9079c02827fd9912f784fb4bf2476a6cdb9c615933a7262ff5",
+      "bytes": 255
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/sources/w3c-fileapi.html",
+      "sha256": "975b6f12f51320b7f90af2b97e38a80358b5964bc274caafb5d126b3f3881efc",
+      "bytes": 567075
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/task-terminal.json",
+      "sha256": "135c88450d62b2c36cdd0a8edaea39010d09219f682331af130b38f1582e65bc",
+      "bytes": 2186
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M15-A/control/whole_question_research_final-v3/timings.json",
+      "sha256": "b4daa9c7a49d007a8df6c2207471b7dcddd7f265f76d3648cbb520af637f1e7a",
+      "bytes": 7877
+    }
+  ]
+}

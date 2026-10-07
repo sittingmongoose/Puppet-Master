@@ -1,0 +1,180 @@
+{
+  "record_at": "2026-10-07T21:11:47.301551+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/artifact.md": {
+      "sha256": "292e28c107a3b0c7f73ad69a390acd04088b1bcb0c9572e5b4c7d8bb1f973044",
+      "bytes": 14522
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/source-map.json": {
+      "sha256": "e5ae257be4d57422ee730227244aae34d36077c13e62bfa298624022452d1493",
+      "bytes": 21380
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-accuracy-faq.html": {
+      "sha256": "9d7a31f347973a0bb557588735ae861cfb929e88226c1e751dfc5dc38581b38f",
+      "bytes": 83932
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-data-api.html": {
+      "sha256": "2f35c273fdb3eeca2aa98111d0ed62998500c2ed9f4c507b0543d919dd6b4da5",
+      "bytes": 42037
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-harmonic-constituents.html": {
+      "sha256": "9104eb43e3b6dc32393f23f919cfff7132a490ee99fcabb0c611accb02825bca",
+      "bytes": 29450
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-metadata-api.html": {
+      "sha256": "e764ddf6ac3bb29472b78acb154b7126fc592db74387f4fcb310496a693d3bbb",
+      "bytes": 72559
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-prediction-help.html": {
+      "sha256": "e07367b38e82211675ced022ec081d1ede76156292bfd246dcc1e9faf897ef45",
+      "bytes": 32471
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/noaa-response-help.html": {
+      "sha256": "c934a7921f56b80bbd5b05701795357a97cb5cb3c692931c3d96e8194976ba69",
+      "bytes": 23254
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-1.1.1-join.pyx": {
+      "sha256": "1d363c4b5d1bf00c01e79e84801dc503fb69ee62a911dc8e79e2e1fa671c97a9",
+      "bytes": 30236
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-1.1.1-merge.py": {
+      "sha256": "f68bc7410c13a2aed16cdfad761b9ff21ff8b349dcc0b3b046cab2af52b5920d",
+      "bytes": 73397
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-1.1.1-test-merge-asof.py": {
+      "sha256": "b3f51fcef805c5f7c1d6bd600fcb4050d4963cc17d2caf974d05763ee657cd38",
+      "bytes": 45659
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-1.1.1-whatsnew.rst": {
+      "sha256": "610c3733ea337e620591b6d41c13781da2c9667ef57efac4ecf72ba58818dd5f",
+      "bytes": 3928
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-issue-14887.html": {
+      "sha256": "2f587bb202bd6119b94e79ad9d3c990c9a003a3683c77abc0899fb4c4760fdcd",
+      "bytes": 278691
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-issue-35558.html": {
+      "sha256": "9d1e0af5d5ab73256012cd51bc4fd9e9f596393ea1b7b05e3262c9a75fa7a51c",
+      "bytes": 324693
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-issue-53279.html": {
+      "sha256": "90d98f21cf0df43130a0d5ada36be47aea0262de3d62abab359b67ae0cff50ee",
+      "bytes": 259609
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/sources/pandas-pr-35654.html": {
+      "sha256": "3cdb8504c84b3ce523aae7e71c0af688fbaec83a765b0f9641707b716e9ba6b1",
+      "bytes": 420624
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-02-control-critic-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T21:01:34.275Z",
+    "startedAt": "2026-10-07T21:01:35.030Z",
+    "completedAt": "2026-10-07T21:11:24.916Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-FAST-02/control/critic-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-FAST-02--control--critic-v1--cf6e133bc05ef7b4.json",
+    "sha256": "cf6e133bc05ef7b47a392715ec0bfe7addcfef1232788de2aebfb376e221495e",
+    "bytes": 10844,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "e0b1f65a4c8898ac35430669f2b46197cd9537fa3b9c5d27fbdf8ca643beb2e2",
+      "status": "complete",
+      "tokensUsed": 152852,
+      "tokenBudget": null,
+      "timeUsedSeconds": 536
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-FAST-02-control-critic-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a1182b-ede1-70e1-9fdd-d0d91630dcb3",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T21:11:24.749Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-FAST-02-control-critic-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T21:11:24.749Z",
+        "sha256": "40936fa787d2a4ae6bfecc4fdecb2d2c5e22ea6accef64a474ed56ca38d7f0f6"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a1182b-ede1-70e1-9fdd-d0d91630dcb3",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 152852,
+  "native_elapsed_seconds": 536,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-FAST-02-control-critic-v1",
+    "record_at": "2026-10-07T21:01:27.284747+00:00",
+    "prospective_stage_deadline": "2026-10-07T21:11:27.284747+00:00",
+    "prospective_arm_deadline": "2026-10-07T21:28:26.855867+00:00",
+    "stage_allowance_seconds": 600,
+    "aggregate_ceiling_seconds": 2700,
+    "prior_nonoverlapping_occupied_seconds": 1022.138,
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_stage_config": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-02/control/critic-v1/prospective-config-v1.json"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}
