@@ -3127,7 +3127,20 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!button.dataset.menuAnchor) button.dataset.menuAnchor=uid('picker');
     return button.dataset.menuAnchor;
   }
+  /* A second click on the same sheet picker (model, Persona, choice) closes it.
+     The trigger sits outside the menu, so the outside-click close never sees it,
+     and openMenu used to reopen in place. A different anchor still switches. */
+  function scopedPickerToggled(type,button){
+    const a=button&&button.dataset&&button.dataset.menuAnchor;
+    if(a&&state.menu&&state.menu.scopedPicker&&state.menu.type===type&&state.menu.anchor===a){closeMenu();return true;}
+    return false;
+  }
+  function pickerExpandedAttr(anchor){
+    const open=!!(state.menu&&state.menu.scopedPicker&&state.menu.anchor===anchor);
+    return `aria-haspopup="listbox" aria-expanded="${open?'true':'false'}"`;
+  }
   function beginScopedPicker(type,button,value,onChange){
+    if(scopedPickerToggled(type,button))return;
     scopedPicker={type,value:{model:value.model||state.model,effort:value.effort||'',fast:!!value.fast,persona:value.persona||state.persona},onChange};
     state.modelSearch=''; state.modelProvider='all';
     openMenu(type,pickerAnchor(button),{scopedPicker:true});
@@ -3164,6 +3177,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   window.PM56_PICKERS={
     openChoice(button,title,current,options,onChange){
+      if(scopedPickerToggled('choice',button))return;
       scopedPicker={type:'choice',title,current,options,onChange,value:{}};
       openMenu('choice',pickerAnchor(button),{scopedPicker:true});
     },
@@ -3172,10 +3186,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     personas:()=>PERSONA_CATALOG.map(([name,description])=>({name,description})),
     modelButton(action,anchor,modelId,extra=''){
       const m=D.models.find(x=>x.id===modelId);
-      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${extra}><span class="provider-mark">${m?providerMark(m.provider,16):icon('sparkles',16)}</span><span class="shared-picker-copy"><strong>${esc(m?m.name:'Default model')}</strong><small>${esc(m?D.accountNick(m.accountId,m.account):'Use the configured default')}</small></span>${icon('down',11)}</button>`;
+      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${pickerExpandedAttr(anchor)} ${extra}><span class="provider-mark">${m?providerMark(m.provider,16):icon('sparkles',16)}</span><span class="shared-picker-copy"><strong>${esc(m?m.name:'Default model')}</strong><small>${esc(m?D.accountNick(m.accountId,m.account):'Use the configured default')}</small></span>${icon('down',11)}</button>`;
     },
     personaButton(action,anchor,persona,extra=''){
-      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${extra}><span class="menu-icon">${icon('user',15)}</span><span class="shared-picker-copy"><strong>${esc(persona)}</strong></span>${icon('down',11)}</button>`;
+      return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${pickerExpandedAttr(anchor)} ${extra}><span class="menu-icon">${icon('user',15)}</span><span class="shared-picker-copy"><strong>${esc(persona)}</strong></span>${icon('down',11)}</button>`;
     }
   };
 
