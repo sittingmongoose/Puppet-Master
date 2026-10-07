@@ -18,6 +18,75 @@ Build with `python3 build.py` then `--check`.
 
 ---
 
+## Neon icon family
+
+Every icon in the chat is drawn by one registry, `neon-icons.js`
+(`window.PM56_NEON`: `icon(name, size, cls)`, `status(s, size, cls)`, `has`,
+`register`), styled by `neon-icons.css`, in the activity bar's neon-sign
+language.
+
+- **One glyph per concept**, reused everywhere. The app's table, the module
+  (pmx) glyphs and the former bespoke tables (thread options, attachments,
+  sound, plans, To-Dos, Teach) all draw through the registry. An unknown name
+  draws `info` and is recorded silently in `PM56_NEON.misses`. Provider marks,
+  avatars, charts and illustrations are not icons.
+- **Anatomy.** A glyph is a lit tube (round caps and joins) over a soft core
+  halo of the same ink; the soft tail of the glow is a radial backlight on the
+  HTML host (status wrappers, activity-bar items). There is no CSS `filter`,
+  `color-mix()` or `stroke-dashoffset`. Light themes keep a faint halo only,
+  never a smudge or a plate.
+- **Roles.** **Controls** (close, chevrons, copy, more, pickers, attach…) sit
+  unlit in the host ink and **ignite on hover or keyboard focus**: the glyph
+  lights to the text colour, the halo comes up on dark themes, and the glyph's
+  act plays once. **Status** icons are always lit in their tone and move.
+  **Concept** icons (kind marks, mode glyphs) are lit steady. A pressed toggle
+  (history pin, Activity pin and filter) sits on a raised neutral tile with its
+  glyph lit, never an accent tile.
+- **Acts.** Each glyph moves part by part in its own way: the goal arrow strikes
+  the target, the To-Do ticks check in one after another, artifact lines write
+  in, the pen writes, the trash lid lifts, a chevron nudges. Below 12px nothing
+  moves; at 12-14px only parts with enough travel or length move.
+- **Colour is reserved for status.** The tones are the bar's: blocked
+  `--danger`, attention `--warning`, working `--accent`, changed `--accent-2`,
+  done `--positive`, idle `--subtle`, paused `--muted`. Menu, event-card and
+  card-head icons sit on neutral tiles.
+- **Voices.** Friendly overshoots, Glass glides, Retro steps, NieR steps square
+  (see *NieR Mode*); timing and order never change.
+- **Reduced motion** (the media query, Demo Studio's `body.pm56-reduced`, and
+  `html[data-motion="reduced"]`) stops every act and loop; the lit ink, the
+  halo and the silhouette still carry each state.
+- **Fast mode** shows an amber bolt beside the model on the composer chip and,
+  while a Fast reply's chrome shows, in its meta row. It strikes like lightning:
+  the bolt cracks top-down in under 200ms, flashes, re-flashes and settles into
+  an afterglow, about every 5s while Fast is on; hovering strikes it once more.
+  It never shakes or moves as a whole.
+
+### Status set
+
+`PM56_NEON.status()` draws one shared set wherever a status shows (thread rows,
+the chat header, the bar's previews, To-Dos, plan steps, module cards). Every
+silhouette is distinct without colour, so states still read in grayscale and
+under reduced motion.
+
+| Status | Mark | Tone | Motion in lists |
+|---|---|---|---|
+| working (running, in progress) | a still ring with a bead travelling **on** it | working | the bead laps the ring in 9s |
+| reviewing | a page with a lens | working | the lens sweeps |
+| needs you (a thread waiting on the user) | a speech bubble with a tall "?" | attention | the "?" hops twice every 2.4s and the backlight swells; it outshines working |
+| waiting on a dependency (queued for its turn) | an hourglass | attention | a slow tip |
+| idle / ready | a small hollow ring | idle, unlit | none |
+| complete | a bold check | done | draws once |
+| blocked | a lock | blocked | the shackle drops, then a hard double blink |
+| failed | a warning triangle | blocked | an irregular stutter on arrival |
+| paused | two bars | muted | none |
+| recovering (retrying, backing off) | two opposed arrow arcs | attention | a counter-clockwise ratchet |
+| pending / queued step | a dashed ring | idle | none |
+| skipped | a slashed circle | muted | none |
+| mixed | a half-lit ring | changed | none |
+
+In module (pmx) cards and sheets the marks are lit and still (one-shot acts
+only), because those cards' loop budget is spent by their sheen.
+
 ## Composer chrome
 
 - The composer box is one field. **Attach** and **active capability glyphs**
@@ -30,20 +99,51 @@ Build with `python3 build.py` then `--check`.
 - Attach and capability glyphs are **22×22** orbit-node squares with **16px**
   inner SVGs. Compact selectors and the wand are **28×28**. Labeled selectors
   and the labeled wand are **24px** tall orbit-node pills (`surface-3`, 1px
-  border, 9px radius). Send stays **24×24** with its current glyph size. Icons
-  are SVG only.
+  border, 9px radius). Send / Stop stays **24×24**. Icons are SVG only. A
+  capability glyph is lit while its capability is on and plays its act on
+  hover; Back Seat Driver **On** is a lit open eye, **Auto** a dim lowered lid.
 - A static `1px` `--border-strong` divider always sits between the textarea
   and `.composer-tools` (including Layered Studio). Focusing the textarea does
   **not** glow, thicken, or recolor that line (no `:focus-within` ring, no
   `:focus-visible` outline on the field). Layered Studio still tints the
   tools **background**; the divider itself stays the same hairline.
-- While any work record is running **and the composer is empty**, Send **morphs
-  to Stop**: same **24×24** slot, danger-red fill, **small filled rounded-square**
-  glyph (media-player Stop, ~9×9 in the 24 viewBox, optically centered with
-  Send). Not a stroked 12×12 box. Typing or editing a queued follow-up morphs it
-  back to Send without a full app re-render. Stop cancels the live run and
-  sequence. Stop does **not** clear the follow-up queue and does **not**
-  auto-send the next queued message.
+- **Send / Stop** (`send-stop.js` + `send-stop.css`, "solid-living") is one
+  24×24 chip with an 8px radius, patched in place in every state. The chip
+  stays solid (accent for Send and Queue, danger for Stop); the craft is in the
+  glyph.
+  - **Idle** (empty composer): the accent chip with its glyph at rest, a little
+    dimmer. **Ready** (text typed): the glyph ignites with a short flicker and
+    the plane hops once. Hover lifts the chip 1px and swells its backlight;
+    press squeezes it.
+  - **Sending into a run:** the plane lifts off along its heading, a fresh
+    plane slides in and morphs point by point into a rounded square **on the
+    accent**, and only then does the danger red flood out from under the
+    square, so a plane never sits on red. Retro steps from accent to danger in
+    one step as the square lands.
+  - **Stop** shows while any work record is running **and the composer is
+    empty**. Its white square breathes about 1px, at the activity bar's 2.2s
+    working cadence while words arrive and slower (3.2s) while the model thinks
+    or a tool runs, over a calm red backlight (.30/.18 on dark themes, .10/.06
+    on light). It reads as running, not as an alarm.
+  - **Clicking Stop** clunks the square, drains the red first, then opens the
+    square back into the plane; a run that ends on its own drains and morphs
+    back without the clunk. Stop cancels the live run and sequence. It does
+    **not** clear the follow-up queue and does **not** auto-send the next queued
+    message. The second click of a double-click is ignored (`event.detail > 1`),
+    so a double-click on Send never stops the run it started.
+  - **Busy with text = Queue:** a second plane stacks behind the front one with
+    a badge counting the messages already waiting (1 or 2); a Queue click lifts
+    the front plane off and the chip returns to Stop. **Full** (two waiting): a
+    neutral chip with muted planes. A click on a full chip, or with nothing to
+    send, **sputters** (a 300ms flicker that does not light); the full chip also
+    shows the "Queue full" toast. A refused send shakes once with a danger flash.
+  - Opening a busy thread shows its Stop at once, without the send motion.
+    Typing or editing a queued follow-up morphs it back to Send without a full
+    app re-render. Reduced motion (all three routes) shows the end states only;
+    a refused send then shows a static danger ring for 1.4s.
+  - **NieR:** an ink block with a paper plane; Stop is an ink block with a paper
+    square that turns NieR rust on hover (a pointer that just sent must leave
+    and come back first); square corners, stepped motion, no light.
 
 ## Demo Studio boot defaults
 
@@ -60,6 +160,55 @@ Plans.
 - Full default vector is `variants:[7,5,1,0,1,16,8]`. Recipe starts as
   **Custom mix** (`recipe: -1`) so those family picks are not mislabeled as
   PM7 Refined. **Reset all** restores this mix.
+
+## NieR Mode (NieR Light and NieR Dark)
+
+Demo Studio's theme list ends with **NieR Dark** and **NieR Light**, after the
+eight family themes. They follow PMConcept7's NieR contract exactly, so its
+port carries every rule unchanged: NieR **paints Basic** (`body[data-theme]` is
+`basic-light` or `basic-dark`) under `html[data-o55-nier="on"]`, with
+`data-o55-nier-parts` listing the installed parts. Picking any other theme
+removes every NieR attribute, layer and font.
+
+- **Owners:** `nier.js` (engine, contract, Demo Studio manager), `nier.css`
+  (palette, generated by `nier_palette_56.py` from PMConcept7's
+  `nier-automata.json`), `nier-fonts.js` (PM NieR Sans and PM NieR Mono,
+  embedded, OFL), `nier-parts.js/css` (look, motion, sound and pointer parts),
+  `nier-world.js/css` (world parts) and `nier-scenes.js/css` (scenes; generated
+  block from `nier_scenes_56.py`).
+- **All 29 of PMConcept7's parts**, each switchable and all on by default, in
+  Demo Studio's **Plug-in Chips** (five groups, a storage meter, the presets
+  Full install / Quiet / Still / Colors only, and Play reboot moment). The
+  choices persist per viewer.
+- **Look:** ink on parchment, square hairlines, the menu cursor (an ink bar with
+  paper text and a stepping square cursor), YoRHa headers, the parchment
+  ground, target brackets on focus and the chosen thread, diamond loaders, the
+  square pointer and square icon strokes.
+- **Motion:** the reboot band when entering or leaving NieR; the stepped slice
+  on menus, dialogs and sheets; the title decode on a thread switch; the page
+  wipe; drifting particles; the ambient sweep; and a glitch on alert toasts,
+  refusals and failed steps.
+- **Sound & voice:** NieR's ticks play through the chat's own sound switch and
+  mute; Report / Alert / Proposal leads and the POD 042 band on toasts and
+  system cards; Pod 042 hovers above the composer and turns toward toasts.
+- **World:** the boot log, status-bar readouts and the context HP bar, block
+  progress, ink charts, corner ticks, machine glyphs, intel cards for hover
+  cards, the **Pod 042 persona** (it answers in Pod's voice while NieR and the
+  part are on), quest banners (plan approved, build complete, goal complete),
+  empty-state drawings and the save signal.
+- **Scenes:** a background picker (None, City Ruins, Bunker, Desert, Forest
+  Castle, Amusement Park, Flooded City, Follow the page) draws PMConcept7's ink
+  panoramas as the transcript stage's own background. A change between two
+  scenes cross-fades over 520ms; reduced motion and the Still and Colors only
+  presets swap instantly. Follow the page maps the chat's view: the park for
+  chat, the bunker for a plan, the desert for the context drawer, the flooded
+  city for running work, the forest for an open artifact.
+- **Icons under NieR:** no glow anywhere, ink tubes with square caps, stepped
+  acts. Status marks stay distinct: needs you is an inverted ink block with a
+  paper "?" (with ink corner brackets under the brackets part), working is the
+  diamond loader, idle and pending are squares.
+- Reduced motion (all three routes) stops every NieR motion part; the static
+  look stays complete.
 
 ## Hover labels
 
@@ -316,10 +465,12 @@ Plans.
   search result) releases it, and scrolling back to the bottom re-engages it.
   Growth never moves a reader who has scrolled away; a receipt landing never
   drags them back down. The control does not steal scroll just by being visible.
-- While any work record is running the tile is **working**: accent color,
-  slightly heavier stroke, `ab-breathe` plus a small chevron bounce, hover card
-  **Scroll to latest**. Idle hover card is **Scroll to bottom**. Reduced motion
-  keeps the accent and drops the animation.
+- While any work record is running the tile is **working**: accent ink, a
+  heavier stroke, the neon working halo, `ab-breathe` (2.2s) and a small
+  chevron nudge; hover card **Scroll to latest**. Idle, its chevron is an unlit
+  control that ignites on hover; hover card **Scroll to bottom**. Reduced motion
+  keeps the accent and the halo and drops the animation; under NieR the nudge
+  steps.
 
 ## Selector collapse and hint
 
@@ -438,6 +589,10 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
 - The chat header does **not** show the goal chip or `chat-meta`
   (model · mode · worktree). Those are redundant with the activity bar and
   composer selectors.
+- The chat header shows the thread's **status mark** from the status set next
+  to its status word, and the word takes the mark's tone: Ready and Paused
+  muted, Working and Reviewing accent, Waiting and Recovering warning, Complete
+  positive, Blocked and Failed danger.
 - **Context Lens** is a header icon **left of thread-search**, then search,
   worktree, context ring. Clicking it sprouts a **horizontal** Lens strip on
   the top of the transcript (Mute / Focus / Subcompact / Turn Off). Opening
@@ -456,13 +611,17 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
   status head; per-message Show full / Release and subcompact “Release
   operation” remain. **Turn Off** is a bordered soft button with **danger-red
   label** (matching the Turn Off mode-row icon); **Apply** is text only (no
-  icon). The header icon keeps a per-mode glow (Mute warning/slow pulse, Focus
-  accent, Subcompact accent-2 compress). Turn Off returns the icon to idle.
+  icon). The header icon is lit per mode on a neutral tile, with the neon halo
+  and a backlight (never a filter): Mute in the attention tone breathing at
+  3.2s, Focus in the working tone breathing at 2.2s, Subcompact steady in the
+  changed tone. Turn Off returns the icon to idle.
   Lens is not on the wand menu.
 - Header, history-head, and Activity Detail icon buttons share orbit-node
   chrome (28×28 rounded square, `surface-3`, 1px border). New thread stays a
   labeled pill with the same fill when the head is wide. The context ring
-  stays circular.
+  stays circular. A pressed toggle (history pin, Activity pin and filter) sits
+  on a raised neutral tile (`--surface-4`, strong hairline) with its glyph lit;
+  under NieR it is an ink block.
 - Pin / unpin glyphs are a Lucide-style pushpin (history head and Activity
   Detail).
 - **Open history** and **New thread** always exist in the chat-header markup.
@@ -492,13 +651,14 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
   **summary preview**; `box-sizing: border-box` and the copy gutter keep the
   inset ring from clipping. Long names like **Inline Visualizer Gallery** may
   still ellipsize.
-- Preview Rows: working / reviewing keep the outer spinning satellite **on**
-  the ring (constant radius around the ring center; the pip does not drift on
-  and off the stroke). **Complete** check, **paused** bars, and **failed** X are
-  15×15 SVGs centered on the ring (not CSS capsules). **Blocked** is a **full**
-  danger ring with a centered halt bar (the top of the circle is not missing).
-  Other history takes that still use `.status-orbit` keep the same on-ring
-  satellite.
+- Preview Rows draw the shared **status set** (see *Neon icon family*) at
+  15px in the row's status slot, which keeps `data-status`, its `role=img`
+  label and its tip: working is a still ring with its bead travelling on it,
+  needs you a bubble whose "?" hops and swells and outshines working, blocked a
+  blinking lock, failed a stuttering warning triangle, complete a check that
+  draws once, idle a small unlit ring, paused two bars. The other history takes
+  keep their own status shapes (the `.status-orbit` takes keep the on-ring
+  satellite) and only take the new drawings.
 - In narrow mode: status glyph and timestamp are hidden so the title gets full
   width; the lead column stays collapsed (no hover expansion). Thread options
   still appear on the **right** on row hover only. Rows gain a little extra
@@ -512,10 +672,9 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
 
 ## Context Lens glyph
 
-- The glyph is the PMConcept7 lens (circle with three horizontal lines),
-  restyled to the activity-bar SVG language (`stroke-width="1.8"`,
-  `currentColor`). It also appears as an in-field capability glyph when Lens
-  is on.
+- The glyph is the PMConcept7 lens (circle with three horizontal lines), drawn
+  by the neon registry. It also appears as an in-field capability glyph, lit,
+  while Lens is on.
 
 ## Activity bar and Activity Detail
 
@@ -541,6 +700,22 @@ same open panel remains transient and docks automatically when room returns.
 The transient form has no inert resize handle. Escape closes only the transient
 form; pin, unpin, and close restore focus to the corresponding panel control or
 Activity Bar domain.
+
+Each bar icon is lit like a neon sign in its domain's status tone: **working**
+in the accent, breathing at 2.2s; **attention** in the warning tone, breathing
+at 3.2s; **blocked** in the danger tone with a hard double blink (`ab-alert`,
+1.9s); **changed** (`--accent-2`), **done** (`--positive`) and **idle** steady.
+A working or attention icon also plays its own part-by-part act: the goal arrow
+strikes, the To-Do ticks check in turn, the subagent figures rise, the Crew
+strands draw to their node, BrainStorm's branches spark, Review's lens sweeps,
+Chat Room's satellites turn, the Changes arrows swap and the artifact lines
+write in. The glow is the neon halo plus a radial backlight, never a filter.
+Crew, BrainStorm, Review and Chat Room take the worst state over that domain's
+runs, the same per-run state their cards show (needs you, limit, failed or
+degraded → attention; running or starting → working; completed → done;
+otherwise idle), so a Crew with a blocked helper reads amber like its card.
+Hover-card heads and Activity Detail chips are lit in the domain tone without
+loops.
 
 Presence:
 
@@ -838,8 +1013,9 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   others. When no subject is running (the model is between tool calls) the most
   recently started one stays live, exactly as before.
 - **A subject can fail or wait for the reader.** A failed node shakes once and turns
-  danger-red with an x flag, and its panel chip reads **Failed**; a subject waiting for
-  approval turns warning-amber with a pause flag, the core reads **Waiting for you**,
+  danger-red with a warning-triangle flag, and its panel chip reads **Failed**; a subject
+  waiting for approval turns warning-amber with the needs-you bubble as its flag, the core
+  shows the needs-you mark and reads **Waiting for you**,
   and an **Approval needed** item appears in the transcript right under the card. The
   product item offers the full approval ladder (deny, once, for this session, always;
   ACD-011); the concept demonstrates Approve once and Deny. Approving resumes the run; denying stops it with nothing applied.
@@ -852,8 +1028,9 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   as prose at the **foot of the card**; when the next subject starts, the line **tucks
   up into the head caption** (it flies from where it was written). Longer prose and the
   final answer stay transcript text.
-- Finished subjects keep their kind's colour (muted) with a small green completion pip,
-  so a completed ring still reads as the run it was.
+- Finished subjects are **lit green** (positive ink, a faint done halo, a neutral tile)
+  and never act, so a completed ring reads as finished at a glance. The live subject's
+  dark disc carries the phase hue (see *Orbit*).
 - **Demo controls** (play/pause, step, complete, reset, work history) sit behind **one
   button** in the card head that opens them as a drawer inside the head. They are
   concept-lab controls only (the product's Stop lives in the composer) and are
@@ -880,6 +1057,12 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 
 - The stage is **always open**: dial on the left, detail panel visible — no click
   needed. In a narrow container the panel sits full-width UNDER the dial.
+- **The dark disc.** The live node and the center disc are a dark disc (the canvas on
+  dark themes, a dark puck on light themes) rimmed in the phase hue, with the subject's
+  glyph lit in that hue. The live glyph plays its act while the run runs; the node keeps
+  its pop and pulse ring. Done nodes are lit green, pending nodes sit at rest, and only
+  the live node and the current strip disc ever act. Under NieR the disc is ink with a
+  paper glyph and the pulse steps.
 - The **panel follows the live subject**; clicking a ring node **pins** the panel to
   that subject (clicking the pinned node again is NOT a collapse). The **center disc
   always shows the live subject** and clicking it returns the panel to following live.
@@ -917,9 +1100,9 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 
 ## Step Rail (simplified) — behavior spec
 
-- An accumulating rail of **kind-colored subject discs** (orbit-strip look) with a bold
-  verb + count label; the **current disc is larger and pulses**; discs grow slightly on
-  hover. All spawned discs are clickable in every state. The disc **track wraps** like
+- An accumulating rail of **subject discs** (orbit-strip look) with a bold verb + count
+  label; the **current disc is larger, a dark disc with its glyph lit in the phase hue,
+  and pulses**; finished discs are lit green; discs grow slightly on hover. All spawned discs are clickable in every state. The disc **track wraps** like
   the orbit strip. The verb/count label and **chevron sit on a full-width tail row**
   under the discs so the chevron cannot be pushed off the card when many steps spawn.
 - Clicking a disc **pins** the rows region to that subject; clicking the pinned disc
@@ -936,7 +1119,9 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
 
 Six roots exactly, in this order: **Ask**, **Agent**, **Debug**, **Plan**,
 **Deep Plan**, **Review**. Plan, Deep Plan and Review carry sidecars that use
-the existing fixed-width sprout behaviour.
+the existing fixed-width sprout behaviour. Their glyphs (in the menu and on the
+composer's Mode chip) are Ask `info`, Agent `sparkles`, Debug `bug`, Plan and
+Deep Plan `plan` (a folded map) and Review the Review kind mark.
 
 - **Plan** — Quick / **Standard · Default** / Thorough.
 - **Deep Plan** — **Thorough · Default** / Exhaustive / BrainStorm, then a
@@ -995,6 +1180,12 @@ The Plan is a transcript card because it is a human-readable deliverable. It is
 - Export produces Markdown and a structured bundle as real downloads; the PDF
   route opens the browser print pipeline and the receipt records what actually
   happened rather than claiming a file was written.
+- Step marks use the status set at 14px: done a check, in progress the working
+  mark, blocked a lock in the danger tone, skipped a slashed circle, mixed a half
+  ring. A Building plan's support line leads with the waiting-on-a-dependency
+  hourglass ("Waiting for Usage", "Outside execution window") or the paused mark
+  for a paused build. The warning callout's triangle is lit in the attention
+  tone; info marks stay uncoloured.
 
 ## To-Dos
 
@@ -1012,7 +1203,8 @@ child sub-To-Dos; every leaf carries a bounded expected outcome.
   an inset **Expected** well, then a full-width wrapping dependency or waiting
   line when one exists, plus source links. It does not show dependency,
   attempt, or receipt dumps.
-- Each virtual row is a bordered card: the title sits with the status glyph,
+- Each virtual row is a bordered card: the title sits with its status mark from
+  the shared set (lit, without loops, because the list remounts rows on scroll),
   and progress or status sits in a full-width meta strip under a hairline.
   Expand carets point **right** when collapsed and **down** when expanded.
 - There is **no verification status** anywhere user-visible; validation, when
@@ -1071,6 +1263,12 @@ Each module supplies only its own content.
   module's equivalent, then the questions, the promise lines ("What won't
   happen") and one **Advanced** entry. Foot: the read-back sentence, the
   estimate line, Cancel and one primary.
+- **Marks.** Module glyphs come through the pmx primitive (`pmxGlyph`,
+  `pmxKindMark`, `pmxStatus` in `module-shell.js`) and are lit and still:
+  sheet-head kind marks are concept-lit, a run's kind badge is lit in the run's
+  tone, status marks come from the shared set (one-shot acts only), and a
+  decision row leads with its status mark in its own slot. The previews in the
+  configuration sheets keep the same lit marks.
 - **Numbered questions** (1-4) appear only in the four collaboration kinds,
   where the order is real (job, team, how, extras). Settings-style sheets use
   unnumbered questions.
@@ -1781,7 +1979,12 @@ This is a concept lab, and the distinction is kept visible rather than blurred:
   thread `orbit-run` "Multi Orbit demo", model catalog).
 - Orbit: `orbit.js` + `orbit.css`. Step Rail: `variants-a.js` (`W[8]`) +
   `variants-a.css` (+ shared disc metrics in `orbit.css` PART 1).
-- Composer overlay, queue, selector collapse: `app.js` + `composer.css`.
+- Composer overlay, queue, selector collapse: `app.js` + `composer.css`. Send / Stop:
+  `send-stop.js` + `send-stop.css`.
+- Icons: `neon-icons.js` (the registry and status set, first in `MODULES`) +
+  `neon-icons.css`. NieR Mode: `nier.js`, `nier-fonts.js`, `nier-parts.js`,
+  `nier-world.js`, `nier-scenes.js` with their `.css` (generated blocks from
+  `nier_palette_56.py` and `nier_scenes_56.py`; run each with `--check`).
 - Menus: `menus.js` + `menus.css`. Context: `context.js` + `context.css`.
   History pin: `history.js` + `history.css`.
 - Assistant-redesign wave (2026-09-03), one owner per file, each registering
@@ -1798,7 +2001,9 @@ This is a concept lab, and the distinction is kept visible rather than blurred:
   Each has a matching `.css` concatenated last. `composer-state` loads first of
   the set because the others write the composer destination it owns; `plans.js`
   installs the identity-preserving `window.PM56_RUNTIME` merging accessor.
-- Verification: `node orbit-verify.mjs` (+ `--negative`), `node tests/audit.mjs`,
+- Verification: `node neon-verify.mjs` (+ `--reduced`; census, roles, status set,
+  salience, contrast order, reduced motion, all ten themes), `node orbit-verify.mjs`
+  (+ `--negative`), `node tests/audit.mjs`,
   `node tests/context-verify.mjs` (current context contract: **207 checks**),
   and the redesign suites `node tests/assistant-plan-verify.mjs`,
   `tests/todo-verify.mjs`, `tests/collaboration-verify.mjs`,
