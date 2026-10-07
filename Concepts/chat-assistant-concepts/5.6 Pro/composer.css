@@ -31,20 +31,7 @@
   color: var(--subtle);
 }
 .composer-infield .icon-button svg { width: 16px; height: 16px; }
-.composer-infield .send-button {
-  width: 24px; height: 24px; flex: none; margin-left: auto;
-  border-radius: 8px; box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 28%, transparent);
-  display: grid; place-items: center;
-}
-.composer-infield .send-button svg { width: 13px; height: 13px; transform: translate(-0.5px, 0.5px); }
-.composer-infield .send-button.is-stop svg { width: 11px; height: 11px; transform: none; }
-.composer-infield .send-button.is-stop {
-  background: var(--danger);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--danger) 28%, transparent);
-}
-.composer-infield .send-button:disabled {
-  opacity: .45; cursor: not-allowed; transform: none; filter: none;
-}
+/* The Send / Stop chip in this row (.send-button.sendstop) is send-stop.css's (step SS, "solid-living"). */
 
 .composer-infield .capability-indicators { display: flex; align-items: center; gap: 2px; }
 .composer-infield .capability-dot {
@@ -90,11 +77,13 @@
   border: 1px solid var(--border);
   color: var(--subtle);
 }
+/* Neon icons (3D): a toggled tool (the wand while a capability is on) reads as on by its lit glyph -- the text ink
+   with its bloom -- not by an accent tile; colour is reserved for status (plan §4). */
 .composer-tools > .icon-button.active {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
 }
+.composer-tools > .icon-button.active > svg.nx { --nx-hi-a: var(--nx-h-concept-i); }
 .composer-tools > .icon-button svg { width: 14px; height: 14px; }
 .selector-button {
   flex: none; min-width: max-content; max-width: none;
@@ -116,7 +105,7 @@
 
 .composer-box.is-compact .selector-button .sel-icon { display: grid; }
 .composer-box.is-compact .selector-button .sel-label,
-.composer-box.is-compact .selector-button .fast-bolt { display: none; }
+.composer-box.is-compact .selector-button .nx-bolt { display: none; }
 .composer-box.is-compact .composer-hint { display: block; }
 .composer-box.is-compact .selector-button,
 .composer-box.is-compact .composer-tools > .icon-button {
@@ -126,15 +115,17 @@
   border: 1px solid var(--border);
   color: var(--subtle);
 }
+/* (every picker carries .active; collapsed to its glyph it stays a neutral control, as it is uncollapsed) */
 .composer-box.is-compact .selector-button.active,
 .composer-box.is-compact .composer-tools > .icon-button.active {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-3);
 }
 .composer-box.is-measuring .selector-button .sel-icon { display: none; }
-.composer-box.is-measuring .selector-button .sel-label,
-.composer-box.is-measuring .selector-button .fast-bolt { display: revert; }
+.composer-box.is-measuring .selector-button .sel-label { display: revert; }
+/* the Fast bolt's wrapper (neon-icons.css 8b) measures at its own display */
+.composer-box.is-measuring .selector-button .nx-bolt { display: inline-flex; }
 .composer-box.is-measuring .composer-hint { display: none; }
 .composer-box.is-measuring .selector-button {
   width: auto; height: 24px; min-height: 24px; padding: 0 8px;
@@ -167,7 +158,7 @@
 @container composer (max-width: 320px) {
   .selector-button .sel-icon { display: grid; }
   .selector-button .sel-label,
-  .selector-button .fast-bolt { display: none; }
+  .selector-button .nx-bolt { display: none; }
   .composer-hint { display: block; }
   .chat-stage[data-shell="2"] .composer-hint { display: block; }
   .selector-button,
@@ -214,6 +205,12 @@
   color: var(--subtle);
 }
 .send-queue-row .icon-button svg { width: 13px; height: 13px; }
+
+/* The model sidecar's Fast row (app.js): the bolt stands in for the row's dot -- lit and striking while Fast mode is
+   on (neon-icons.css 8b), a plain control glyph while it is off. Its 11 px box gives back 3 px so the label lines up
+   with the effort rows' 8 px dots. */
+.effort-row.fast-row > svg.nx, .effort-row.fast-row > .nx-bolt { margin: 0 -1.5px; }
+.effort-row.fast-row:not(.active) > svg.nx { color: var(--subtle); }
 
 .provider-mark {
   background: var(--surface-4);
@@ -265,15 +262,33 @@
 .activity-panel-head .icon-button svg {
   width: 16px; height: 16px;
 }
-.hh-plus-glyph { stroke-width: 2.6; }
-.chat-header .icon-button.active,
-.chat-header .icon-button.is-on,
+.hh-plus-glyph { --nx-stroke-base: 2.6; }
+/* Neon icons (3E2, 2026-10-02; fix cycle 1): a toggled header or panel button (the history pin, the Activity
+   panel's pinned pin and pressed filter, fix cycle 2) reads as on by a raised neutral tile -- --surface-4 with the strong hairline, a step past
+   both the resting tile (--surface-3) and the hover, which keeps --surface-3 -- and its glyph lit steady (the text
+   ink with the concept bloom). Not an accent tile: colour is reserved for status (plan §4). Hover still ignites it.
+   Under NieR the on-state is NieR's own idiom, the ink block (the checked Plug-in Chip): ink tile, on-ink glyph.
+   The Lens trigger keeps its tone rules (lens.css); the sound toggle says on/off by its own glyph (chat-sound). */
 .history-head .icon-button.is-pinned,
+.activity-panel-head .icon-button.is-pinned,
 .activity-panel-head .icon-button[aria-pressed="true"] {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  background: color-mix(in srgb, var(--accent) 15%, var(--surface-3));
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-4);
 }
+html[data-o55-nier="on"] .history-head .icon-button.is-pinned,
+html[data-o55-nier="on"] .activity-panel-head .icon-button.is-pinned,
+html[data-o55-nier="on"] .activity-panel-head .icon-button[aria-pressed="true"] {
+  color: var(--o55-nier-on-ink);
+  border-color: var(--o55-nier-ink);
+  background: var(--o55-nier-ink);
+}
+.history-head .icon-button.is-pinned > svg.nx,
+.activity-panel-head .icon-button.is-pinned > svg.nx,
+.activity-panel-head .icon-button[aria-pressed="true"] > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
+.history-head .icon-button.is-pinned:is(:hover, :focus-visible) > svg.nx,
+.activity-panel-head .icon-button.is-pinned:is(:hover, :focus-visible) > svg.nx,
+.activity-panel-head .icon-button[aria-pressed="true"]:is(:hover, :focus-visible) > svg.nx { --nx-hi-a: var(--nx-h-hover-i); }
 .history-head .soft-button {
   height: 28px; min-height: 28px;
   border-radius: 9px;

@@ -24,24 +24,34 @@
    `.state-mark` (styles.css:235) was a 5px dot whose value came from five
    object literals, so all five pulsed identically whether work was running,
    stalled or finished.  activity-bar.js publishes a derived six-value tone
-   per domain onto <body> as the --ab-ink, --ab-anim and --ab-shadow property
-   families; the five mapping rules below hand the right one to the right
-   button, and one paint rule lights the icon from it.
+   per domain onto <html> (data-ab-<id>) and <body> as the --ab-ink, --ab-anim,
+   --ab-hi, --ab-bl and --ab-stroke property families; the nine mapping rules
+   below hand the right one to the right button, and one rule lights the icon.
+   Neon icons (2026-10-02): the icon is an svg.nx (neon-icons.js) and its glow
+   is the neon halo (two merged stroke bands behind the tubes), not a CSS
+   filter: --ab-hi is the core band's strength and --ab-bl the backlight's (the
+   soft tail, an anchored ::after behind the icon; section below). The bar is
+   self-lit, so it sets every neon variable itself, which also keeps the
+   generic hover ignite (neon-icons.css section 8) off it.
    ===================================================================== */
 html[data-ab-ready] .activity-item .state-mark { display: none; }
 
-html[data-ab-ready] .activity-item[data-hover-domain="goal"]      { --ab-ink: var(--ab-ink-goal);      --ab-anim: var(--ab-anim-goal);      --ab-shadow: var(--ab-shadow-goal); --ab-stroke: var(--ab-stroke-goal); }
-html[data-ab-ready] .activity-item[data-hover-domain="todo"]      { --ab-ink: var(--ab-ink-todo);      --ab-anim: var(--ab-anim-todo);      --ab-shadow: var(--ab-shadow-todo); --ab-stroke: var(--ab-stroke-todo); }
-html[data-ab-ready] .activity-item[data-hover-domain="subagents"] { --ab-ink: var(--ab-ink-subagents); --ab-anim: var(--ab-anim-subagents); --ab-shadow: var(--ab-shadow-subagents); --ab-stroke: var(--ab-stroke-subagents); }
-html[data-ab-ready] .activity-item[data-hover-domain="crew"]      { --ab-ink: var(--ab-ink-crew);      --ab-anim: var(--ab-anim-crew);      --ab-shadow: var(--ab-shadow-crew); --ab-stroke: var(--ab-stroke-crew); }
-html[data-ab-ready] .activity-item[data-hover-domain="changes"]   { --ab-ink: var(--ab-ink-changes);   --ab-anim: var(--ab-anim-changes);   --ab-shadow: var(--ab-shadow-changes); --ab-stroke: var(--ab-stroke-changes); }
-html[data-ab-ready] .activity-item[data-hover-domain="artifacts"] { --ab-ink: var(--ab-ink-artifacts); --ab-anim: var(--ab-anim-artifacts); --ab-shadow: var(--ab-shadow-artifacts); --ab-stroke: var(--ab-stroke-artifacts); }
+html[data-ab-ready] .activity-item[data-hover-domain="goal"]       { --ab-ink: var(--ab-ink-goal);       --ab-anim: var(--ab-anim-goal);       --ab-hi: var(--ab-hi-goal);       --ab-bl: var(--ab-bl-goal);       --ab-stroke: var(--ab-stroke-goal); }
+html[data-ab-ready] .activity-item[data-hover-domain="todo"]       { --ab-ink: var(--ab-ink-todo);       --ab-anim: var(--ab-anim-todo);       --ab-hi: var(--ab-hi-todo);       --ab-bl: var(--ab-bl-todo);       --ab-stroke: var(--ab-stroke-todo); }
+html[data-ab-ready] .activity-item[data-hover-domain="subagents"]  { --ab-ink: var(--ab-ink-subagents);  --ab-anim: var(--ab-anim-subagents);  --ab-hi: var(--ab-hi-subagents);  --ab-bl: var(--ab-bl-subagents);  --ab-stroke: var(--ab-stroke-subagents); }
+html[data-ab-ready] .activity-item[data-hover-domain="crew"]       { --ab-ink: var(--ab-ink-crew);       --ab-anim: var(--ab-anim-crew);       --ab-hi: var(--ab-hi-crew);       --ab-bl: var(--ab-bl-crew);       --ab-stroke: var(--ab-stroke-crew); }
+html[data-ab-ready] .activity-item[data-hover-domain="brainstorm"] { --ab-ink: var(--ab-ink-brainstorm); --ab-anim: var(--ab-anim-brainstorm); --ab-hi: var(--ab-hi-brainstorm); --ab-bl: var(--ab-bl-brainstorm); --ab-stroke: var(--ab-stroke-brainstorm); }
+html[data-ab-ready] .activity-item[data-hover-domain="review"]     { --ab-ink: var(--ab-ink-review);     --ab-anim: var(--ab-anim-review);     --ab-hi: var(--ab-hi-review);     --ab-bl: var(--ab-bl-review);     --ab-stroke: var(--ab-stroke-review); }
+html[data-ab-ready] .activity-item[data-hover-domain="chat_room"]  { --ab-ink: var(--ab-ink-chat_room);  --ab-anim: var(--ab-anim-chat_room);  --ab-hi: var(--ab-hi-chat_room);  --ab-bl: var(--ab-bl-chat_room);  --ab-stroke: var(--ab-stroke-chat_room); }
+html[data-ab-ready] .activity-item[data-hover-domain="changes"]    { --ab-ink: var(--ab-ink-changes);    --ab-anim: var(--ab-anim-changes);    --ab-hi: var(--ab-hi-changes);    --ab-bl: var(--ab-bl-changes);    --ab-stroke: var(--ab-stroke-changes); }
+html[data-ab-ready] .activity-item[data-hover-domain="artifacts"]  { --ab-ink: var(--ab-ink-artifacts);  --ab-anim: var(--ab-anim-artifacts);  --ab-hi: var(--ab-hi-artifacts);  --ab-bl: var(--ab-bl-artifacts);  --ab-stroke: var(--ab-stroke-artifacts); }
 
 html[data-ab-ready] .activity-item > svg {
   /* 14px, not the emitted 12px: dropping the dot and its 6px gap returns 11px
      of width, and a 24-unit viewBox at 1.8 stroke gives ~1.05px strokes at 14
      instead of ~0.90px at 12 — the same sub-pixel problem item 12 documents
-     for the phase trail. */
+     for the phase trail. (neon-icons.js gates the acts by the emitted 12, and
+     every bar act travels at least 3 units, 1.75px at the rendered 14.) */
   width: 14px; height: 14px;
   /* PRE-EXISTING DEFECT, measured not assumed: the label and count spans are
      white-space:nowrap, so their automatic minimum size is their full text and
@@ -52,18 +62,73 @@ html[data-ab-ready] .activity-item > svg {
      indicator, so it is pinned; the container queries at the end of this file
      take the space back out of the labels instead. */
   flex: 0 0 auto;
+  /* The ink stays on `color` (abverify reads it); the tubes and halos inherit
+     it as currentColor. */
   color: var(--ab-ink, var(--subtle));
-  /* Static glow carries the tone with motion off; the keyframes only touch
-     opacity, so this declared filter is never fill-mode-clobbered. */
-  filter: var(--ab-shadow, none);
-  stroke-width: var(--ab-stroke, 1.8);
+  --nx-stroke-base: var(--ab-stroke, 1.8);
+  --nx-tone-k: 1;
+  /* drawn at 14, emitted at 12: the moving parts' halo copies convert at 24/14 */
+  --nx-u: 1.7143;
+  /* The static glow carries the tone with motion off: the core band on the
+     icon, and the backlight behind it (the item's ::after, below). */
+  --nx-hiv: visible; --nx-hi-a: var(--ab-hi, var(--nx-h-quiet-i));
+  /* anchor for the backlight */
+  anchor-name: --nx-ab-icon;
+  /* The rhythm: the keyframes only touch opacity, so the halo is never
+     fill-mode-clobbered. */
   animation: var(--ab-anim, none);
-  transition: color 200ms var(--ease), filter 200ms var(--ease);
+  transition: color 200ms var(--ease);
 }
-/* Hover and press must still read as hover and press, so the lit icon steps
-   aside for the button's own foreground colour on interaction. */
+/* Each glyph plays its own act while its domain is live, keyed off the tone the
+   module already publishes: the goal arrow strikes, the To-Do ticks check in one
+   after another, the page lines write in, the people rise in turn, the kind marks
+   run their own. Each part plays its own literal loop keyframes (--kl, generated by
+   neon-icons.js: there-and-back, opacity never below .6, transform and opacity only
+   so they composite) at the rhythm's period; the stagger scales with it, and the
+   negative delay keeps the phase offset from the first frame. Anything else: none. */
+html[data-ab-goal="working"] .activity-item[data-hover-domain="goal"] > svg .nx-p,
+html[data-ab-todo="working"] .activity-item[data-hover-domain="todo"] > svg .nx-p,
+html[data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"] > svg .nx-p,
+html[data-ab-crew="working"] .activity-item[data-hover-domain="crew"] > svg .nx-p,
+html[data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"] > svg .nx-p,
+html[data-ab-review="working"] .activity-item[data-hover-domain="review"] > svg .nx-p,
+html[data-ab-chat_room="working"] .activity-item[data-hover-domain="chat_room"] > svg .nx-p,
+html[data-ab-changes="working"] .activity-item[data-hover-domain="changes"] > svg .nx-p,
+html[data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"] > svg .nx-p {
+  animation: var(--kl) 2200ms var(--nx-le) infinite;
+  animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms);
+}
+html[data-ab-goal="attention"] .activity-item[data-hover-domain="goal"] > svg .nx-p,
+html[data-ab-todo="attention"] .activity-item[data-hover-domain="todo"] > svg .nx-p,
+html[data-ab-subagents="attention"] .activity-item[data-hover-domain="subagents"] > svg .nx-p,
+html[data-ab-crew="attention"] .activity-item[data-hover-domain="crew"] > svg .nx-p,
+html[data-ab-brainstorm="attention"] .activity-item[data-hover-domain="brainstorm"] > svg .nx-p,
+html[data-ab-review="attention"] .activity-item[data-hover-domain="review"] > svg .nx-p,
+html[data-ab-chat_room="attention"] .activity-item[data-hover-domain="chat_room"] > svg .nx-p,
+html[data-ab-changes="attention"] .activity-item[data-hover-domain="changes"] > svg .nx-p,
+html[data-ab-artifacts="attention"] .activity-item[data-hover-domain="artifacts"] > svg .nx-p {
+  animation: var(--kl) 3200ms var(--nx-le) infinite;
+  animation-delay: calc(var(--ad, 0) * 3.2ms - 3200ms);
+}
+/* The backlight: the glow's soft tail, a radial gradient of the tone ink about
+   2.2x the icon, behind it, at element opacity (no filter, no color-mix, no
+   edge). It is the item's ::after anchored to the item's own svg (anchor-scope
+   keeps each item to its own icon), because the icon's position differs in
+   every bar variant and compact tier; the item is a small stacking context so
+   the light paints over its background and under its content. Steady: the
+   icon breathes, the light does not. */
+html[data-ab-ready] .activity-item[data-hover-domain] { position: relative; isolation: isolate; anchor-scope: --nx-ab-icon; }
+html[data-ab-ready] .activity-item[data-hover-domain]::after {
+  content: ""; position: absolute; position-anchor: --nx-ab-icon;
+  left: anchor(center); top: anchor(center); width: 31px; height: 31px; translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--ab-ink, var(--subtle)), transparent);
+  opacity: var(--ab-bl, 0);
+}
+/* Hover and press must still read as hover and press: the inner band brightens
+   a step while the button takes its own background. */
 html[data-ab-ready] .activity-item:hover > svg,
-html[data-ab-ready] .activity-item.active > svg { filter: var(--ab-shadow, none) saturate(1.15); }
+html[data-ab-ready] .activity-item.active > svg { --nx-hi-a: calc(var(--ab-hi, var(--nx-h-quiet-i)) + .06); }
 
 @keyframes ab-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .48; } }
 /* Deliberately NOT the same shape as ab-breathe: a hard double blink, so a
@@ -204,6 +269,20 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
 .ab-card [data-tone="done"]      { --ab-t: var(--positive); }
 .ab-card [data-tone="idle"]      { --ab-t: var(--subtle); }
 .ab-card [data-tone="muted"]     { --ab-t: var(--subtle); }
+/* The head glyph (Neon icons step 3B): lit in the domain's tone, the tone ink with its core halo, steady — no loop
+   (hovering the head plays its act once, like every lit glyph in a button). The glyph now carries the tone itself,
+   so the tile stays neutral and the corner dot is retired, as the bar retired its dots. The tone is the card's own
+   (data-tone on .hover-card.ab-card, the same barTone() as the head), so the To-Dos head that todos.js draws is lit
+   the same way. Separate names (--ab-ct, --ab-ch), so a row value without its own data-tone never inherits it. */
+.hover-card.ab-card[data-tone="blocked"]   { --ab-ct: var(--danger);   --ab-ch: var(--nx-h-blocked-i); }
+.hover-card.ab-card[data-tone="attention"] { --ab-ct: var(--warning);  --ab-ch: var(--nx-h-attention-i); }
+.hover-card.ab-card[data-tone="working"]   { --ab-ct: var(--accent);   --ab-ch: var(--nx-h-working-i); }
+.hover-card.ab-card[data-tone="changed"]   { --ab-ct: var(--accent-2); --ab-ch: var(--nx-h-changed-i); }
+.hover-card.ab-card[data-tone="done"]      { --ab-ct: var(--positive); --ab-ch: var(--nx-h-quiet-i); }
+.hover-card.ab-card[data-tone="idle"]      { --ab-ct: var(--subtle);   --ab-ch: var(--nx-h-quiet-i); }
+.ab-card .ab-head-icon > svg.nx,
+.ab-card .todo-hover-head-icon > svg.nx { --nx-ink: var(--ab-ct, var(--muted)); --nx-hiv: visible; --nx-hi-a: var(--ab-ch, var(--nx-h-quiet-i)); }
+.ab-card .ab-head-icon::after { display: none; }
 
 .ab-card .ab-body {
   display: flex; flex-direction: column; gap: 1px;
@@ -375,7 +454,12 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
 
 /* Scroll-to-bottom: overlay the transcript, right side, just above the bar.
    Absolute so it does not grow --thread-float-h. Hidden until the reader
-   leaves the bottom; working treatment is accent + breathe like the bar. */
+   leaves the bottom; working treatment is accent + breathe like the bar.
+   Neon icons (step 3B): the glow is the chevron's halo, not a filter, and while
+   work runs the chevron is live — its own strike act loops (the part drops and
+   returns, transform only) under the bar's working breathe. At rest it is a
+   control that ignites on hover (the generic ignite skips self-lit hosts, so the
+   rule is here). The weight goes through --nx-stroke-base. */
 .jump-bottom {
   position: absolute;
   right: 10px;
@@ -395,34 +479,38 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 160ms var(--ease, ease), visibility 0s linear 160ms, color 200ms var(--ease, ease), filter 200ms var(--ease, ease);
+  transition: opacity 160ms var(--ease, ease), visibility 0s linear 160ms, color 200ms var(--ease, ease);
 }
 .jump-bottom.is-visible {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity 160ms var(--ease, ease), visibility 0s, color 200ms var(--ease, ease), filter 200ms var(--ease, ease);
+  transition: opacity 160ms var(--ease, ease), visibility 0s, color 200ms var(--ease, ease);
 }
 .jump-bottom > svg {
   width: 14px;
   height: 14px;
   flex: 0 0 auto;
-  stroke-width: 1.8;
+  --nx-stroke-base: 1.8;
+  /* drawn at 14, emitted at 12: the moving part's halo copy converts at 24/14 */
+  --nx-u: 1.7143;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+.jump-bottom:not(.is-working):is(:hover, :focus-visible) > svg {
+  --nx-hiv: visible; --nx-hi-a: var(--nx-h-hover-i);
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
 .jump-bottom.is-working {
   color: var(--accent);
 }
 .jump-bottom.is-working > svg {
-  stroke-width: 2.1;
-  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 60%, transparent));
-  animation: ab-breathe 2200ms ease-in-out infinite, jump-bounce 1400ms ease-in-out infinite;
+  --nx-stroke-base: 2.1;
+  --nx-hiv: visible; --nx-hi-a: var(--nx-h-working-i);
+  animation: ab-breathe 2200ms ease-in-out infinite;
 }
-@keyframes jump-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
-}
+.jump-bottom.is-working > svg .nx-p { animation: var(--kl) 1400ms var(--nx-le) infinite; }
+html[data-o55-nier="on"] .jump-bottom.is-working > svg { animation-timing-function: steps(3, end); }
 .jump-bottom:hover {
   color: var(--text);
   background: var(--surface-3);
@@ -538,6 +626,9 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8
   .hover-card.ab-card { animation: none !important; }
   .jump-bottom.is-working > svg { animation: none !important; }
 }
+/* The other two reduced routes (3E2 fix cycle 1): the bar's and jump button's svg.nx loops stop through
+   neon-icons.css section 10 on every route; the hover card's entrance stops here too. */
+body.pm56-reduced .hover-card.ab-card, html[data-motion="reduced"] .hover-card.ab-card { animation: none !important; }
 
 /* The transcript occupies the space under and around the floating pill. */
 .chat-stage > .transcript { grid-row:3; padding-top:18px; padding-bottom:calc(var(--thread-float-h,44px) + 36px); }

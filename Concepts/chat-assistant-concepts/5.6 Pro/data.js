@@ -217,7 +217,10 @@
     artifact:{verb:'Rendering',past:'Rendered',count:'2 artifacts'},
     complete:{verb:'Finishing',past:'Finished',count:'14 tools'},
     mcp:{verb:'Calling MCP tools',past:'Called MCP tools',count:'2 calls'},
-    skill:{verb:'Running a skill',past:'Ran a skill',count:'1 skill'}
+    skill:{verb:'Running a skill',past:'Ran a skill',count:'1 skill'},
+    /* the goal, To-Do and plan work batches (goal-work-batch15, todo-work-batch16, plan-work-batch17) */
+    file:{verb:'Writing files',past:'Wrote files',count:'1 file'},
+    testing:{verb:'Verifying',past:'Verified',count:'1 check'}
   };
 
   /* Concrete rows the chrome shows for each phase: a streamed thought
@@ -3116,7 +3119,9 @@
     { id:'basic-dark', name:'Basic Dark' }, { id:'basic-light', name:'Basic Light' },
     { id:'friendly-dark', name:'Friendly Dark' }, { id:'friendly-light', name:'Friendly Light' },
     { id:'glass-dark', name:'Glass Dark' }, { id:'glass-light', name:'Glass Light' },
-    { id:'retro-dark', name:'Retro Dark' }, { id:'retro-light', name:'Retro Light' }
+    { id:'retro-dark', name:'Retro Dark' }, { id:'retro-light', name:'Retro Light' },
+    /* NieR Mode (nier.js, PMConcept7's contract): paints Basic in NieR: Automata's ink and parchment */
+    { id:'nier-dark', name:'NieR Dark' }, { id:'nier-light', name:'NieR Light' }
   ];
 
 

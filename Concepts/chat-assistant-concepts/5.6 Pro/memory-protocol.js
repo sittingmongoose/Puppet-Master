@@ -123,6 +123,11 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  function groupOf(g){return g.discarded?'discarded':g.teaching_proposal?'decide':g.verification_state==='Verified'?'verified':stale(g)?'stale':'unverified';}
  const GROUPS=[['decide','Needs your decision'],['unverified','Unverified'],['verified','Verified'],['stale','Out of date'],['discarded','Discarded']];
  const GLYPH={decide:'hand',unverified:'ring-dashed',verified:'check-circle',stale:'slash-circle',discarded:'trash'};
+ /* neon step 3E (2026-10-02): a group's state is the shared status set, lit and still (PM56_SHELL.pmxStatus): Needs your
+    decision is needs-you, Unverified pending, Verified complete, Out of date skipped; Discarded keeps the trash glyph
+    (an action's concept, not a state). GLYPH stays as the drawing used when the neon family is absent. */
+ const STATE_MARK={decide:'needs',unverified:'unverified',verified:'verified',stale:'stale'};
+ const mark=(k,size)=>STATE_MARK[k]&&S.pmxStatus?S.pmxStatus(STATE_MARK[k],size):S.pmxGlyph(GLYPH[k],size);
  const FILTER_HELP={All:'Everything, including forgotten notes.',Verified:'A test still backs it up, so it’s used.',Unverified:'Not proven yet. Kept for you to review; not used.'};
  const TAB_HELP={auto:'Saved by itself after a reply',taught:'Things you told it to always do'};
  function inFilter(g,f=filter){return f==='All'||(f==='Verified'?g.verification_state==='Verified':g.verification_state==='Unverified');}
@@ -206,7 +211,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  function rowHtml(e,g,selId,i,af){
   const k=groupOf(g);
   return '<button type="button" class="pmx-mem-row" data-k="gist:'+e(g.id)+'" data-gist="'+e(g.id)+'" data-action="memory-select" data-id="'+e(g.id)+'" data-state="'+k+'" aria-pressed="'+(g.id===selId)+'"'+(k==='decide'?' data-tone="warm"':'')+(af&&g.id===selId?' data-pmx-autofocus':'')+' style="--i:'+Math.min(i,5)+'">'+
-   '<span class="pmx-mem-rglyph" data-k="mrg:'+e(g.id)+'">'+S.pmxGlyph(GLYPH[k],15)+'</span>'+
+   '<span class="pmx-mem-rglyph" data-k="mrg:'+e(g.id)+'">'+mark(k,15)+'</span>'+
    '<span class="pmx-mem-rcopy"><b>'+e(titleOf(g))+'</b><small>'+e(word(g))+' · '+e(coversOf(g))+(g.pinned&&!g.discarded?' · '+e(W.pinned):'')+'</small></span>'+
    '<span class="pmx-mem-time">'+e(hm(g.created_at||g.at))+'</span></button>';
  }
@@ -231,7 +236,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
   const k=lastCheck.get(g.id);if(!k)return '';
   const when=S.pmxTime.ago(k.at)||'just now',v=k.state==='Verified';
   const say=v?(k.used?'verified. It joins your next message.':'verified, but it didn’t fit in the space for notes.'):k.stale?'still out of date. The checks have to run again on the changed file.':'still not proven. Nothing backs it up yet.';
-  return '<p class="pmx-mem-checked" data-k="mchk:'+e(g.id)+':'+k.n+'" role="status">'+S.pmxGlyph(v?'check-circle':'ring-dashed',13)+'<span>Tested again '+e(when)+': '+say+'</span></p>';
+  return '<p class="pmx-mem-checked" data-k="mchk:'+e(g.id)+':'+k.n+'" role="status">'+(S.pmxStatus?S.pmxStatus(v?'verified':'unverified',13):S.pmxGlyph(v?'check-circle':'ring-dashed',13))+'<span>Tested again '+e(when)+': '+say+'</span></p>';
  }
  function decideHtml(e,g){
   const r=ruleOf(g),n=notices.get(g.id),id=e(g.id);
@@ -256,7 +261,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  function detailHtml(e,g,doc){
   const k=groupOf(g),p=proofOf(g);
   return '<div class="pmx-mem-detail" data-k="md:'+e(g.id)+'">'+
-   '<p class="pmx-mem-state"><span class="pmx-mem-sglyph" data-k="mst:'+e(g.id)+'" data-state="'+k+'">'+S.pmxGlyph(GLYPH[k],15)+'</span><span><b>'+e(word(g))+'</b> · '+e(stateHelp(g))+(g.pinned&&!g.discarded?' · '+e(W.pinned):'')+'</span></p>'+
+   '<p class="pmx-mem-state"><span class="pmx-mem-sglyph" data-k="mst:'+e(g.id)+'" data-state="'+k+'">'+mark(k,15)+'</span><span><b>'+e(word(g))+'</b> · '+e(stateHelp(g))+(g.pinned&&!g.discarded?' · '+e(W.pinned):'')+'</span></p>'+
    '<h3 class="pmx-mem-claim">'+e(titleOf(g))+'</h3>'+
    (g.provenance==='recorded'?'<p class="pmx-mem-prov">'+S.pmxGlyph('play-ring',13)+'<span>'+e(S.PMX_COPY.cost.recorded)+'</span></p>':'')+
    (k==='decide'?decideHtml(e,g):'')+

@@ -332,6 +332,8 @@
           if (op.t === 'w' || op.t === 'line') { released++; st.nextAt = t + (reduced() ? 0 : interval(st, op, backlog)); }
           else if (op.t === 'block' && st.cursor > 1) st.nextAt = t + (reduced() ? 0 : 90);
         }
+        /* words are arriving: the composer's Stop breathes at the working cadence (send-stop.js) */
+        if (released && window.PM56_SENDSTOP) window.PM56_SENDSTOP.token(st.tid);
         placeCaret(st);
         if (st.cursor >= st.ops.length && allArrived(st, t)) { setPhase(st, 'settling'); st.settleAt = t; }
       }

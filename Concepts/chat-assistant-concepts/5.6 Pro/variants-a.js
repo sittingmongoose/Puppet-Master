@@ -166,6 +166,9 @@
     const sel = selItem.inst;
     const shut = completed && !expanded;
 
+    /* Neon icons (step 3C): the live disc's glyph is drawn with its moving parts (size 14) only while the run runs and
+       no flag is up, so it acts; every other disc is drawn still (11, below the registry's 12 px gate). The css sizes
+       both at the disc's icon size. */
     const track = items.map((it, i) => {
       const s = it.inst, cur = it.live;
       const cls = 'pm-rail-item rail8-item ' + (cur ? 'current enter' : 'done') + (i === selI && pinI != null ? ' pinned' : '')
@@ -173,7 +176,7 @@
       const st = it.status === 'failed' ? 'failed' : it.status === 'waiting' ? 'waiting for you' : cur ? 'in progress' : 'completed';
       const label = (it.earlier ? 'Earlier' : s.label) + (it.count > 1 ? ' ×' + it.count : '');
       const statBit = it.count > 1 ? label : (s.stat ? `${s.label} · ${s.stat}` : s.label);
-      return `<button type="button" class="${cls}" data-k="ri:${esc(it.uid)}" data-action="rail8-pin" data-value="${i}" data-step-kind="${esc(s.kind)}" data-hover-key="${esc(ctx.cardId + ':r8:' + it.uid)}" data-hover-tip="${esc(statBit + '\n' + (it.count > 1 ? it.count + ' subjects' : s.verb) + ' (' + st + ')')}" aria-pressed="${i === selI && pinI != null ? 'true' : 'false'}" aria-label="${esc(label)}${s.stat && it.count === 1 ? ', ' + esc(s.stat) : ''}">${icon(it.earlier ? 'history' : s.icon, 11)}${it.count > 1 ? `<b class="orbit-node-count">${it.count}</b>` : ''}</button>`;
+      return `<button type="button" class="${cls}" data-k="ri:${esc(it.uid)}" data-action="rail8-pin" data-value="${i}" data-step-kind="${esc(s.kind)}" data-hover-key="${esc(ctx.cardId + ':r8:' + it.uid)}" data-hover-tip="${esc(statBit + '\n' + (it.count > 1 ? it.count + ' subjects' : s.verb) + ' (' + st + ')')}" aria-pressed="${i === selI && pinI != null ? 'true' : 'false'}" aria-label="${esc(label)}${s.stat && it.count === 1 ? ', ' + esc(s.stat) : ''}">${icon(it.earlier ? 'history' : s.icon, cur && running && !it.status ? 14 : 11)}${it.count > 1 ? `<b class="orbit-node-count">${it.count}</b>` : ''}</button>`;
     }).join('');
 
     const m = railMeta(sel);

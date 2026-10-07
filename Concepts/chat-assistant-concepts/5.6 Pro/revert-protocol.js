@@ -230,7 +230,7 @@
    :counts(mf.add,mf.del);
   const right=st==='changed'
    ?'<button type="button" class="text-button pmx-revert-block" data-action="revert-review-conflict" data-value="'+esc(token)+'" data-path="'+esc(f.path)+'">See what’s blocking it</button>'
-   :st==='done'||st==='past'&&r.state==='reverted'?'<span class="pmx-revert-state">'+S.pmxGlyph('check',14,'pmx-revert-check')+'<span class="pmx-revert-put">Put back</span></span>'
+   :st==='done'||st==='past'&&r.state==='reverted'?'<span class="pmx-revert-state">'+S.pmxStatus('complete',14,'pmx-revert-check')+'<span class="pmx-revert-put">Put back</span></span>'
    :st==='past'?''
    :'<span class="pmx-revert-state">'+STATE_WORD[st]+'</span>';
   const verb=st==='changed'?'<b>You changed this since</b>':st==='back'?BACK_VERB[f.kind]:st==='past'?DID[f.kind]+' by the assistant':VERB[f.kind];
@@ -327,13 +327,12 @@
   const tip=r.provenance==='recorded'?' data-hover-key="rvfiles:'+esc(r.id)+'" data-hover-tip="'+esc(PROV())+'"':'';
   const o={key:m.id,cls:'pmx-revert-row',attrs:'data-turn-id="'+esc(r.id)+'" tabindex="-1"'+tip,count:t.n,add:t.add,del:t.del};
   const see=foldedAfter(c,m)?{action:'revert-open',attrs:tid,label:SEE}:null;
-  if(r.state==='reverted')return stateRow({...o,revert:see},S.pmxGlyph('check',13,'pmx-revert-check')+'<span class="pmx-revert-did"><b>'+WORD('reverted')+'</b> · '+esc(plural(t.n,'file'))+' put back</span>');
+  if(r.state==='reverted')return stateRow({...o,revert:see},S.pmxStatus('complete',13,'pmx-revert-check')+'<span class="pmx-revert-did"><b>'+WORD('reverted')+'</b> · '+esc(plural(t.n,'file'))+' put back</span>');
   /* " · nothing to revert" leaves a narrow row first, then "See what happened" reads "Open" (revert-protocol.css) */
-  if(r.state==='skipped')return stateRow({...o,revert:see},S.pmxGlyph('check',13,'pmx-revert-tone-quiet')+'<span class="pmx-revert-did"><b>'+WORD('alreadyBack')+'</b><span class="pmx-revert-did-more"> · nothing to revert</span></span>');
+  if(r.state==='skipped')return stateRow({...o,revert:see},S.pmxStatus('skipped',13)+'<span class="pmx-revert-did"><b>'+WORD('alreadyBack')+'</b><span class="pmx-revert-did-more"> · nothing to revert</span></span>');
   if(a.eligible){if(!retryOpen(r,a))o.revert={action:'af-revert-preview',attrs:tid};}else o.reason=why(a);
   return reasonSep(words(oneSide(S.pmxFilesRow(o),t)));
  }
- const TONE={ok:'pmx-revert-tone-ok',warn:'pmx-revert-tone-warn',bad:'pmx-revert-tone-bad',quiet:'pmx-revert-tone-quiet'};
  /* The headline keeps the outcome word and the file name at every width, and drops words from the end as the
     line narrows: .pmx-revert-hl-l shows only on a wide line, .pmx-revert-hl-m leaves the narrowest (S) line.
     The full sentence is the headline's hover card, after "Recorded example · no AI cost" on a recorded example. */
@@ -344,20 +343,20 @@
   const t=totals(r),a=availability(r.id),tid='data-value="'+esc(r.id)+'"',see={action:'revert-open',attrs:tid,label:SEE};
   const retry=a.eligible&&r.attempts.at(-1)?.id===x.id&&!dismissed.has(x.id)?{action:'af-revert-retry',attrs:tid,label:'Retry'}:null;
   let glyph,headline,actions,tip='';
-  if(x.outcome==='restored_clean'){glyph=S.pmxGlyph('check',14,TONE.ok);tip=outcomeSentence(r,x);headline='<b>'+WORD('reverted')+'</b><span class="pmx-revert-hl-cnt">: '+esc(plural(t.n,'file'))+M(' restored')+'</span>';actions=[see];}
-  else if(x.outcome==='restore_skipped'){glyph=S.pmxGlyph('check',14,TONE.quiet);tip=WORD('alreadyBack')+': nothing to revert.';headline='<b>'+(esc(WORD('alreadyBack')).replace(/ to before$/,M(' to before')))+'</b>'+L(': nothing to revert');actions=[see];}
+  if(x.outcome==='restored_clean'){glyph=S.pmxStatus('complete',14);tip=outcomeSentence(r,x);headline='<b>'+WORD('reverted')+'</b><span class="pmx-revert-hl-cnt">: '+esc(plural(t.n,'file'))+M(' restored')+'</span>';actions=[see];}
+  else if(x.outcome==='restore_skipped'){glyph=S.pmxStatus('skipped',14);tip=WORD('alreadyBack')+': nothing to revert.';headline='<b>'+(esc(WORD('alreadyBack')).replace(/ to before$/,M(' to before')))+'</b>'+L(': nothing to revert');actions=[see];}
   /* a refusal names its reason at every width: "Couldn't revert: checkout.js changed" (and, while its Retry is open
      on a wide line, ". Nothing was touched."), or where it is narrow "Not reverted: checkout.js changed" and on the
      narrowest line "Not reverted · checkout.js" (never "block", DON'T 22 / 9.4): never a bare file
      name after "Couldn't revert", which would read as a partial result (A1-35, DON'T 16) */
-  else if(x.outcome==='restore_refused'&&x.reason==='target_changed'){const who='<span class="pmx-revert-who">'+esc(whoChanged(x.changedPaths||[]))+'</span>';glyph=S.pmxGlyph('warn',14,TONE.warn);
+  else if(x.outcome==='restore_refused'&&x.reason==='target_changed'){const who='<span class="pmx-revert-who">'+esc(whoChanged(x.changedPaths||[]))+'</span>';glyph=S.pmxStatus('attention',14);
    tip='Couldn’t revert: '+whoChanged(x.changedPaths||[])+' changed after the assistant’s edit. Nothing was touched.';
    headline='<span class="pmx-revert-hl-full"><b>Couldn’t revert:</b> '+who+' changed'+(retry?L('. Nothing was touched.'):'')+'</span><span class="pmx-revert-hl-short"><b>Not reverted</b>'+M(': '+who+' changed')+'<span class="pmx-revert-hl-s"> · '+who+'</span></span>';actions=[retry||see];}
-  else if(x.outcome==='restore_refused'){glyph=S.pmxGlyph('warn',14,TONE.warn);tip=WORD('refused')+': nothing changed ('+(x.reason||'refused')+').';headline='<b>'+WORD('refused')+'</b>'+M(': nothing changed')+L(' ('+esc(x.reason||'refused')+')');actions=[retry||see];}
-  else if(x.outcome==='restore_failed'){glyph=S.pmxGlyph('warn',14,TONE.bad);tip='Didn’t finish: your files are exactly as they were before trying.';headline='<b>'+WORD('unfinished')+'</b><span class="pmx-revert-hl-nl">'+M(': nothing changed')+'</span>'+L(': your files are exactly as they were before trying');actions=[retry||see];}
+  else if(x.outcome==='restore_refused'){glyph=S.pmxStatus('attention',14);tip=WORD('refused')+': nothing changed ('+(x.reason||'refused')+').';headline='<b>'+WORD('refused')+'</b>'+M(': nothing changed')+L(' ('+esc(x.reason||'refused')+')');actions=[retry||see];}
+  else if(x.outcome==='restore_failed'){glyph=S.pmxStatus('failed',14);tip='Didn’t finish: your files are exactly as they were before trying.';headline='<b>'+WORD('unfinished')+'</b><span class="pmx-revert-hl-nl">'+M(': nothing changed')+'</span>'+L(': your files are exactly as they were before trying');actions=[retry||see];}
   /* restore_recovery_required: the runtime recovery command comes from allowed_action_ids, and this concept has
      none, so Recover is disabled and its reason is printed in the headline */
-  else{const no=refusal('command_not_registered');glyph=S.pmxGlyph('warn',14,TONE.warn);tip=WORD('recovery')+'. Recover: '+no;headline='<b>'+WORD('recovery')+'</b>'+L(' · '+esc(no.charAt(0).toLowerCase()+no.slice(1).replace(/\.$/,'')));actions=[{label:'Recover',disabled:true,attrs:'data-failure="command_not_registered"'},see];}
+  else{const no=refusal('command_not_registered');glyph=S.pmxStatus('attention',14);tip=WORD('recovery')+'. Recover: '+no;headline='<b>'+WORD('recovery')+'</b>'+L(' · '+esc(no.charAt(0).toLowerCase()+no.slice(1).replace(/\.$/,'')));actions=[{label:'Recover',disabled:true,attrs:'data-failure="command_not_registered"'},see];}
   const time=clock(x.at);
   if(tip)headline='<span data-hover-key="rvtip:'+esc(x.id)+'" data-hover-tip="'+esc([r.provenance==='recorded'?RECORDED():'',tip+(time?' · '+time:'')].filter(Boolean).join('\n'))+'">'+headline+'</span>';
   return S.pmxLedgerLine({key:m.id,cls:'pmx-revert-line',kind:'revert',kindWord:'Revert',title:'Revert Last Agent Edit',attrs:'data-turn-id="'+esc(r.id)+'" data-outcome="'+esc(x.outcome)+'"'+(x.reason?' data-failure="'+esc(x.reason)+'"':''),
@@ -390,8 +389,10 @@
   if(x.outcome==='restore_refused')return WORD('refused')+': nothing changed ('+(x.reason||'refused')+').';
   if(x.outcome==='restore_failed')return 'Didn’t finish: your files are exactly as they were before trying.';
   return WORD('recovery')+'.';}
- const OUT_GLYPH={restored_clean:'check',restore_skipped:'check',restore_refused:'warn',restore_failed:'warn',restore_recovery_required:'warn'};
- const OUT_TONE={restored_clean:TONE.ok,restore_skipped:TONE.quiet,restore_failed:TONE.bad};
+ /* neon step 3E (2026-10-02): an outcome is the shared status set, lit and still (PM56_SHELL.pmxStatus), here and on
+    the receipt line above: put back complete, already back skipped, refused and recovery the attention triangle,
+    failed failed. (It was a check or a warning glyph tinted by a tone class.) */
+ const OUT_STATUS={restored_clean:'complete',restore_skipped:'skipped',restore_refused:'attention',restore_failed:'failed',restore_recovery_required:'attention'};
  function render(c,id){const r=own(id);
   if(!r)return S.pmxView({key:'revert:'+id,cls:'revert-document',kind:'revert',kindWord:'Revert Last Agent Edit',title:'This change is no longer here',statusHtml:'Its chat was reset, so there is nothing to revert or show.'});
   const v=viewOf(id),a=availability(id),t=totals(r),x=r.attempts.at(-1),w=spaces.get(r.workspaceId);
@@ -406,7 +407,7 @@
    .concat([{action:'revert-export',attrs:tid,label:'Download record (.json)'}]);
   const acts=S.pmxActions({key:'rv-acts:'+id,items});
   const entries=[{key:'rvt:'+id+':turn',mid:id+':turn',markHtml:S.pmxGlyph('file-edit',16,'pmx-revert-tlg'),who:'The assistant',when:esc(clock(r.createdAt)),bodyHtml:'It '+esc(didWords(r))+'.'}]
-   .concat(r.attempts.map(y=>({key:'rvt:'+y.id,mid:y.id,markHtml:S.pmxGlyph(OUT_GLYPH[y.outcome]||'warn',16,'pmx-revert-tlg '+(OUT_TONE[y.outcome]||TONE.warn)),who:'Revert',when:esc(clock(y.at)),bodyHtml:esc(outcomeSentence(r,y))})))
+   .concat(r.attempts.map(y=>({key:'rvt:'+y.id,mid:y.id,markHtml:S.pmxStatus(OUT_STATUS[y.outcome]||'attention',16,'pmx-revert-tlg'),who:'Revert',when:esc(clock(y.at)),bodyHtml:esc(outcomeSentence(r,y))})))
    .concat(later.length?[{key:'rvt:'+id+':later',mid:id+':later',markHtml:S.pmxGlyph('edit',16,'pmx-revert-tlg'),who:'Your files',when:'',bodyHtml:esc(whoChanged(later))+' changed after the assistant’s edit.'}]:[]);
   const techKey=id+':tech',techOpen=disclosures.has(techKey)?disclosures.get(techKey):false;
   const main=(window.PM56_REVERT_DEMOS?.guide(c,true)||'')+

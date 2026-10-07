@@ -251,9 +251,13 @@
   };
   AT.MATERIALIZATION_LABELS = MATERIALIZATION_LABELS;
 
-  /* Custom inline icons for kinds/origins app.js's PATHS map does not carry.
-     Same convention as app.js's icon(): viewBox 0 0 24 24, stroked,
-     currentColor, stroke-width 1.8. */
+  /* The four kind/origin glyphs this module once drew itself (folder, upload,
+     clipboard, camera) live in the neon glyph registry (neon-icons.js,
+     window.PM56_NEON: one drawing per concept), so attIcon() is ctx.icon()
+     whenever the registry draws the name. CUSTOM_ICON_PATHS is only the
+     fallback for a page where neon-icons.js failed to load (app.js's own
+     fallback table has none of the four). Same convention as app.js's icon():
+     viewBox 0 0 24 24, stroked, currentColor, stroke-width 1.8. */
   var CUSTOM_ICON_PATHS = {
     folder: '<path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>',
     upload: '<path d="M12 21V9M7 14l5-5 5 5"/><path d="M4 21h16"/>',
@@ -261,7 +265,8 @@
     camera: '<path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="14" r="3.5"/>'
   };
   function attIcon(ctx, name, size, cls) {
-    var custom = CUSTOM_ICON_PATHS[name];
+    var N = window.PM56_NEON;
+    var custom = !(N && typeof N.has === 'function' && N.has(name)) && CUSTOM_ICON_PATHS[name];
     if (custom) {
       return '<svg class="' + (cls || '') + '" width="' + size + '" height="' + size +
         '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"' +
@@ -290,7 +295,7 @@
     if (origin === 'browser_capture') return 'camera';
     if (origin === 'source_control_object') return 'branch';
     if (origin === 'project_frozen_snapshot') return 'lock';
-    if (origin === 'uploaded_snapshot') return 'upload';
+    if (origin === 'uploaded_snapshot') return 'attach';   /* a file you attached: the transcript's attach glyph (one per concept) */
     return null; /* project_live_reference and anything else: fall back to kind icon */
   }
 

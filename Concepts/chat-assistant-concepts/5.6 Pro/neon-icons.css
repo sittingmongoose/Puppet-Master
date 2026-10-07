@@ -1,0 +1,585 @@
+/* neon-icons.css — the neon lighting grammar for every svg.nx that neon-icons.js renders.
+ * OWNER: Neon icons, step 2 Foundation (2026-10-02). Appended after composer.css (build.py), so it is the last
+ * sheet; every generic rule here sits at specificity (0,0,1) (svg:where(...)) or (0,1,1) (svg:where(.nx) .part),
+ * so ANY context rule (.primary-button > svg, the bar's html[data-ab-ready] .activity-item > svg, ...) overrides it
+ * without !important. Only reduced motion uses !important.
+ *
+ * Forbidden here (plan §1, pmx-verify forbidden-props, portability to Slint): filter, color-mix(),
+ * stroke-dashoffset, and "pmx" inside a keyframe name. The glow is a stroke halo (the tube's bloom) plus, on an HTML
+ * host, a radial-gradient backlight at element opacity (the soft tail); draw-ons are clip reveals.
+ * Selector rules (tests/shell-selfcheck.cjs): no rightmost bare :is()/:where() compound (the universal bucket),
+ * so zero-specificity rules are written svg:where(.x); no :has() anywhere.
+ *
+ * THE API (custom properties on svg.nx, inherited by its parts; tokens on body)
+ *   --nx-ink                tube + halo ink (tone classes set it; unset = the host's currentColor)
+ *   --nx-stroke-base        context weight (was each context's stroke-width); --nx-tone-k the tone's factor
+ *   --nx-hi-a / --nx-hiv    the core halo's stroke-opacity and (controls) visibility
+ *   --nx-bl-ink / --nx-bl-a the backlight on an HTML host (.nx-st wrapper; the bar has its own): ink and opacity
+ *   --nx-1                  a one-shot's timing (a hover state sets it); each part's own keyframes play once
+ *   --nx-le                 the loop easing (the voice); a context that runs a loop targets the parts:
+ *                           <ctx> .nx-p { animation: var(--kl) <period> var(--nx-le) infinite;
+ *                                         animation-delay: calc(var(--ad, 0) * <stagger> * 1ms - <period>); }
+ * Each moving part carries --k1 (its one-shot keyframes) and --kl (its loop keyframes), literal keyframes that
+ * neon-icons.js generates from the part's pose (transform and opacity only, so they composite).
+ * Nothing here sets an svg's own `animation` on hover (the Fast bolt's re-strike, 8b, plays on its parts and halo), so the
+ * bar's and the status wrappers' rhythms (ab-breathe, ab-alert) are never touched by hover.
+ * Colour: every ink is a theme token (--danger, --warning, --accent, --accent-2, --positive, --subtle, --muted) and
+ * every halo or backlight strength is a body token (--nx-h-*, --nx-bl-*), so a theme layer (NieR Mode, next step,
+ * on html[data-o55-nier="on"]) repaints the ink and drops the glow by restating tokens: no colour literal here.
+ */
+
+/* ------------------------------------------------------------------ 1. tokens */
+/* Dark themes, fitted to tools/glow-metric.mjs (the bar) and by eye (G1). The core band (-i) is the tube's bloom,
+   in screen px (non-scaling-stroke); the backlight (--nx-bl-*) is the soft tail, a radial gradient behind the
+   glyph on its HTML host at element opacity, so it has no edge. Per tone, because the bar's old filter glow was not
+   one strength (blocked 62 %, attention 58 %, working 60 %, changed 44 % at 4 px). */
+body {
+  --nx-hi-w: 3.6px;
+  --nx-h-blocked-i: .24; --nx-h-attention-i: .20; --nx-h-working-i: .20; --nx-h-changed-i: .12;
+  --nx-h-quiet-i: .10;
+  /* concept "lit steady": a visible bloom on dark; hover ignite (controls, and concepts inside a host) */
+  --nx-h-concept-i: .17; --nx-h-hover-i: .30; --nx-h-swell-i: .30;
+  /* the Fast bolt's flash peak (8b): its halo rests at .32 of this, the attention strength */
+  --nx-h-bolt-i: .62;
+  --nx-bl-blocked: .086; --nx-bl-attention: .08; --nx-bl-working: .082; --nx-bl-changed: .042;
+  /* voices (plan §1): one easing token per theme family; timing and order never change */
+  --nx-ease: cubic-bezier(.2, .75, .25, 1);
+  --nx-le: cubic-bezier(.45, 0, .25, 1);
+  --nx-ease-c: cubic-bezier(.3, .6, .3, 1);
+  --nx-d1: 440ms;
+}
+/* Light themes: a dark-on-light halo reads as a tinted sticker, so the core stays thin and faint, concept and
+   hover icons carry "lit" by ink alone (G1), and the backlight is lower. Final review (2026-10-03): at .12/.095/.10/.05
+   the backlights read as soft tinted discs 8.5-15 px out (CIE76 dE 25-40 % above main's filter glow on the bar: pink
+   behind Todo and Subagents on Basic Light, tan behind the collab marks on Retro Light's cream). They are 15 % lower:
+   the review's 30 % matched main's tint in that ring but took the plan's glow metric (tools/glow-metric.mjs, total
+   within 25 % of main's bar glow) to 64-75 % of main on every light theme, because main's light glow is a wide
+   drop-shadow and most of ours, past the thin core, is this backlight; at 15 % the metric holds (32/32 light rows,
+   total 78-97 %, tail 94-115 %) and the ring tint drops by about a quarter of its excess. A smaller disc failed the
+   metric's edge check. The list's needs-you swell, which no metric holds to main, peaks at .08 (from .11). */
+body[data-theme$="-light"] {
+  --nx-hi-w: 3.4px;
+  --nx-h-blocked-i: .08; --nx-h-attention-i: .08; --nx-h-working-i: .08; --nx-h-changed-i: .07;
+  --nx-h-quiet-i: .06;
+  --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0;
+  --nx-h-bolt-i: .2;
+  --nx-bl-blocked: .102; --nx-bl-attention: .081; --nx-bl-working: .085; --nx-bl-changed: .043;
+}
+/* Idle (Ready) ink on paper (3E2, 2026-10-02): the theme's --subtle read under 3:1 on the thread rows (2.4-2.8), so
+   each light theme's idle ink is precomputed (work/3E2/idlecalc.py): --subtle moved toward --muted in sRGB until it
+   reads 3.08-3.13:1 on the row field, still under every live tone there (the lowest, friendly-light working, is
+   3.22). It stays unlit (no halo, no backlight) and is not the paused or pending ink (--muted, about 4.1-4.9). Dark
+   themes keep --subtle. Literal colours, no color-mix(). */
+/* Fix cycle 1: the row's hover tint (--surface-3) is the darker field, so basic and retro take the ink that holds
+   3.06-3.07:1 there (3.37 and 3.50 at rest, still under their live minimums 4.35 and 4.80). Friendly cannot: its
+   working ink (the theme accent) is only 3.22 at rest, so a darker idle would read above working. Friendly keeps
+   3.08 at rest on every row state (integrate, lead decision 2026-10-02: the hover-only darkening put idle above
+   working on a hovered row, and salience order wins; idle under 3:1 on a hovered or selected row is accepted). Glass
+   holds 3.35+ on its tint. */
+body[data-theme="basic-light"] { --nx-idle: #86868f; }
+body[data-theme="friendly-light"] { --nx-idle: #93838e; }
+body[data-theme="glass-light"] { --nx-idle: #857d98; }
+body[data-theme="retro-light"] { --nx-idle: #6e8174; }
+/* Friendly overshoots, Glass glides, Retro steps. */
+body[data-theme^="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
+body[data-theme^="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
+body[data-theme^="retro"] { --nx-ease: steps(4, end); --nx-le: steps(4, end); --nx-ease-c: steps(4, end); }
+/* Inside the transcript the voice follows .transcript[data-voice], which PM56_DEMO can pin apart from the theme. */
+.transcript[data-voice="basic"] { --nx-ease: cubic-bezier(.2, .75, .25, 1); --nx-le: cubic-bezier(.45, 0, .25, 1); --nx-ease-c: cubic-bezier(.3, .6, .3, 1); }
+.transcript[data-voice="friendly"] { --nx-ease: cubic-bezier(.34, 1.56, .64, 1); --nx-le: cubic-bezier(.34, 1.4, .64, 1); --nx-ease-c: cubic-bezier(.34, 1.3, .64, 1); }
+.transcript[data-voice="glass"] { --nx-ease: cubic-bezier(.4, 0, .1, 1); --nx-le: cubic-bezier(.6, 0, .25, 1); --nx-ease-c: cubic-bezier(.4, 0, .1, 1); }
+.transcript[data-voice="retro"] { --nx-ease: steps(4, end); --nx-le: steps(4, end); --nx-ease-c: steps(4, end); }
+
+/* ------------------------------------------------------------------ 2. the glyph */
+/* Halos and part travel run past the 24-unit box; the ink is inherited by every tube and halo; the weight is a
+   base times the tone factor, so a context (the bar: --ab-stroke) and a tone never fight over stroke-width. */
+svg:where(.nx) {
+  overflow: visible;
+  stroke: var(--nx-ink, currentColor);
+  stroke-width: calc(var(--nx-stroke-base, 1.8) * var(--nx-tone-k, 1));
+}
+/* Filled parts (stop, status satellites) paint the ink as fill and carry no tube stroke. */
+svg:where(.nx) .nx-f { fill: var(--nx-ink, currentColor); stroke: none; }
+/* The quieter half of a two-level drawing (working's ring under the bright bead that orbits on it). */
+svg:where(.nx) .nx-dim { opacity: .65; }
+/* module-shell's picker chevron (CHEVRON) keeps the 2-unit weight it was drawn with. */
+svg.pmx-chevron { --nx-stroke-base: 2; }
+
+/* ------------------------------------------------------------------ 3. halos */
+/* The core band, one merged path. Strength is stroke-opacity on the halo path, never group opacity or color-mix().
+   Never a hit target. */
+svg:where(.nx) .nx-h {
+  fill: none;
+  stroke-width: var(--nx-hi-w, 3.6px);
+  stroke-opacity: var(--nx-hi-a, 0);
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+/* Only a control's halo comes and goes (hover ignite): it alone carries the visibility switch, the 180 ms fade
+   and the flicker slot, so the other halos (most of them) cost no transition or animation bookkeeping in a
+   whole-document restyle. */
+svg:where(.nx-r-control) .nx-h {
+  visibility: var(--nx-hiv, hidden);
+  transition: stroke-opacity 180ms ease-out, visibility 180ms;
+  animation: var(--nx-fl);
+}
+/* Halo copies inside a moving part scale with the drawing instead (non-scaling-stroke would keep the part's
+   transform off the compositor): the same screen width, converted with the root's --nx-u (24 / size). */
+svg:where(.nx) .nx-p .nx-h { vector-effect: none; stroke-width: calc(var(--nx-hi-w, 3.6px) * var(--nx-u, var(--nx-u0, 1.6))); }
+
+/* ------------------------------------------------------------------ 4. roles (plan §1 table) */
+/* concept: the host's ink with a same-ink bloom, lit steady (on light themes the ink alone carries it). */
+svg:where(.nx-r-concept) { --nx-hi-a: var(--nx-h-concept-i); }
+/* control: unlit at rest (no halo painted); it ignites on hover / focus-visible (section 8). */
+svg:where(.nx-r-control) { --nx-hiv: hidden; --nx-hi-a: 0; }
+/* status: lit by its tone class (section 5) and its wrapper's backlight (section 9). */
+svg:where(.nx-r-status) { --nx-hi-a: var(--nx-h-quiet-i); }
+/* brand: provider marks keep their own drawing and get no neon light. */
+svg:where(.nx-r-brand) { --nx-hiv: hidden; }
+/* A concept glyph inside an interactive host (a header button, a menu row) is lit as a control at rest: unlit, it
+   ignites on hover (section 8). Zero specificity, so the bar and other self-lit hosts keep their own rules. */
+:where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > svg:where(.nx-r-concept:not(.nx-self)),
+:where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg:where(.nx-r-concept:not(.nx-self)) {
+  --nx-hi-a: 0;
+}
+
+/* ------------------------------------------------------------------ 5. tones (the bar's, verbatim) */
+/* Ink goes through --nx-ink (never `color`), so the transcript accent budget turn-verify counts is unchanged.
+   The weight factor is the bar's TONE_STROKE over 1.8. */
+svg:where(.nx-t-blocked) { --nx-ink: var(--danger); --nx-tone-k: 1.22; --nx-hi-a: var(--nx-h-blocked-i); }
+svg:where(.nx-t-attention) { --nx-ink: var(--warning); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-attention-i); }
+svg:where(.nx-t-working) { --nx-ink: var(--accent); --nx-tone-k: 1.17; --nx-hi-a: var(--nx-h-working-i); }
+svg:where(.nx-t-changed) { --nx-ink: var(--accent-2); --nx-tone-k: 1; --nx-hi-a: var(--nx-h-changed-i); }
+svg:where(.nx-t-done) { --nx-ink: var(--positive); --nx-tone-k: .83; --nx-hi-a: var(--nx-h-quiet-i); }
+svg:where(.nx-t-idle) { --nx-ink: var(--nx-idle, var(--subtle)); --nx-tone-k: .78; --nx-hi-a: var(--nx-h-quiet-i); }
+/* paused (and skipped): muted, no halo. */
+svg:where(.nx-t-paused) { --nx-ink: var(--muted); --nx-tone-k: 1; --nx-hi-a: 0; }
+
+/* ------------------------------------------------------------------ 6. parts and acts */
+/* A moving part rotates about its pivot (--o, user units on the view box). At rest it carries no transform and no
+   opacity of its own: the base style is the finished, lit drawing. Its one-shot plays when a state sets --nx-1
+   (both unset resolve to none: invalid at computed-value time); the stagger is --ad. No scale anywhere. */
+svg:where(.nx) .nx-p {
+  transform-box: view-box;
+  transform-origin: var(--o, 12px 12px);
+  animation: var(--k1) var(--nx-1);
+  animation-delay: calc(var(--ad, 0) * 1ms);
+}
+/* self-centred parts (strike and scan about their own box) */
+svg:where(.nx) .nx-pf { transform-box: fill-box; transform-origin: center; }
+/* continuous turns are linear in every voice (an eased orbit lurches); retro keeps its stepped texture */
+svg:where(.nx-a-spin) { --nx-le: linear; }
+body[data-theme^="retro"] svg:where(.nx-a-spin) { --nx-le: steps(16, end); }
+/* the ignite flicker lives on the halo path, never the tube */
+@keyframes nx-flick { 0% { opacity: 0; } 16% { opacity: .9; } 28% { opacity: .3; } 46% { opacity: 1; } 60% { opacity: .55; } 100% { opacity: 1; } }
+
+/* ------------------------------------------------------------------ 7. size gate */
+/* neon-icons.js already renders every part static below 12 px; this guards a context that resizes a moving
+   icon below its size argument by adding nx-z0 itself. */
+svg:where(.nx-z0) .nx-p { animation: none; }
+
+/* ------------------------------------------------------------------ 8. hover ignite */
+/* Hosts are button, summary, [role=button] and [data-action]; the glyph is the host's child or grandchild (not
+   inside a nested host). The rightmost compound is svg, with no :has(). Self-lit hosts (the bar, the lens
+   trigger, jump-bottom, the pending chip, Orbit's nodes, discs and rail) and status, nx-self and brand glyphs are
+   excluded. Only custom properties change, never the svg's own animation. */
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > svg:where(.nx-r-control:not(.nx-self)),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg:where(.nx-r-control:not(.nx-self)) {
+  /* control: the halo fades in over 180 ms and flickers once; the act plays once, then rests */
+  --nx-hiv: visible; --nx-hi-a: var(--nx-h-hover-i);
+  --nx-fl: nx-flick 300ms linear;
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > svg:where(.nx-r-concept:not(.nx-self)),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg:where(.nx-r-concept:not(.nx-self)) {
+  /* concept: the halo swells and the act plays once; no flicker, no dimming of the tube */
+  --nx-hi-a: var(--nx-h-swell-i);
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+/* Ignite lights the tube itself (final review, 2026-10-03): a hovered or focused control, and a concept glyph inside a
+   host, takes the text ink. Many hosts restate their muted ink after styles.css's `.icon-button:hover{color:var(--text)}`
+   (the composer's attach, the header's search, the history close: (0,2,0), later), so the host's own hover never
+   reached the glyph: on light themes (no hover halo) a hovered control was pixel-identical to rest once its act ended,
+   and on dark ones the .30 halo was a grey blur round a dim tube. Now light themes light by ink alone (G1: about 2.5:1
+   rising to about 15:1) and the dark halo follows the brighter ink. Hosts that carry a tone or a selection keep their
+   ink (an active, pressed, checked or pinned toggle, a danger or warning row or button, a primary chip, Orbit's core, a
+   [data-tone] host; NieR inverts a pressed filter to paper on ink, which the text ink would blank), and so
+   does a glyph on a tinted tile (.work-output-icon, .event-icon) or one wearing a tone class (nx-t-*, also zero
+   specificity, so it is excluded rather than outranked); any rule that inks a glyph through --nx-ink at a specificity
+   above zero (the Fast bolt, a NieR cursor bar) still wins. neon-verify 17 holds both. (No .af-chip-pending here: no
+   source draws that class any more, and orphan-gate counts it.) */
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(:not(button, summary, [role="button"], [data-action], .work-output-icon, .event-icon)) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])) {
+  --nx-ink: var(--text);
+}
+/* Filled chips (primary buttons) already carry their own fill: the act plays, the halo stays off. (Send/Stop is
+   send-stop.css's solid chip, its glyph inside .ss-face with its own lighting; the .send-button arm went with it.) */
+.primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
+
+/* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15; the strike, 3D) */
+/* OWNER of this block: Neon icons, surface step 3D (2026-10-02). The Fast bolt is drawn only while Fast mode is on
+   (the composer model chip and the picker's model row .fast-bolt, the transcript meta .meta-fast, the model sidecar's
+   Fast row .fast-row-bolt), so the class is the ON state: the bolt is lit in the warning tone, and it STRIKES like
+   lightning, never shaking or moving as a whole (Jared, 2026-10-02: "think of lightning being a crack, like you see
+   lightning coming down from the sky"):
+     1. the crack: the lit bolt snaps dark and its four bands (neon-icons.js lightning: spike, zig, neck, point) light
+        top to bottom, 40 ms apart, so the whole bolt cracks down in about 130 ms;
+     2. the flash: the halo and the backlight spike, dip, and flash again, like a real strike's return stroke;
+     3. the afterglow: both settle to the steady lit state over about 0.7 s;
+     4. the hold: about 4.2 s of steady light until the next strike (a 5.2 s cycle).
+   Everything animates opacity only (the bands, the merged halo path, the host's backlight), so it composites; there
+   is no clip, dash or stroke-opacity in the loop. The halo's stroke-opacity is a strong token (--nx-h-bolt-i) and its
+   element opacity carries the curve (.32 at rest = the attention tone's strength). The backlight is the ::before of
+   the .nx-bolt wrapper the hosts draw round the svg. Hovering the host re-strikes once: a one-shot copy joins the
+   animation list (the loop keeps running underneath, so leaving the host does not strike again). The keyframes are
+   one timeline in milliseconds, written out as percentages of the 5200 ms loop and of the 1100 ms one-shot: the bands
+   light (.12 -> 1) at 52, 92, 132 and 172 ms; the halo (element opacity) and the backlight are dark until 184 ms,
+   flash at 198, dip at 246, flash again at 286, ease to 366 and settle by 1040 (dark .32 halo / .08 backlight; light
+   themes a lower backlight curve, rest .07). Reduced motion: lit and static. NieR: an ink crack in steps, no flash. */
+.nx-bolt {
+  position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle;
+  --nxb-bl: nx-bolt-bl; --nxb-blh: nx-bolt-bl-h; --nxb-rest: var(--nx-bl-attention);
+}
+body[data-theme$="-light"] .nx-bolt { --nxb-bl: nx-bolt-bl-l; --nxb-blh: nx-bolt-bl-lh; --nxb-rest: .07; }
+.nx-bolt > svg.nx { display: block; }
+.nx-bolt::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 200%; height: 200%; translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--warning), transparent);
+  opacity: var(--nxb-rest);
+}
+svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
+.nx-bolt > svg .nx-h { opacity: .32; }
+/* the loop (the composer chip, the picker's model row, the Fast row: always while drawn) */
+.nx-bolt::before { animation: var(--nxb-bl) 5200ms linear infinite; }
+.nx-bolt > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite; }
+.nx-bolt > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
+.nx-bolt > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
+.nx-bolt > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
+.nx-bolt > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
+/* The transcript meta's bolt (.nx-bolt-gated) sits in the message chrome, which is hidden until its message is
+   hovered (transcript.css), so it strikes only while the chrome shows: as the row appears the bolt cracks, then it
+   keeps the cycle; a hidden row runs no animation (one per fast turn would otherwise tick unseen). */
+.nx-bolt-gated::before, .nx-bolt-gated > svg .nx-h, .nx-bolt-gated > svg .nx-p { animation: none; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated::before { animation: var(--nxb-bl) 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite; }
+:where(.message:hover, .message:focus-within, .tx-peek, .message-chrome.is-overflow-open) .nx-bolt-gated > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite; }
+/* hover re-strikes once (hosts: a button, a [data-action] row, the transcript's model chip) */
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt::before { animation: var(--nxb-bl) 5200ms linear infinite, var(--nxb-blh) 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-h { animation: nx-bolt-halo 5200ms linear infinite, nx-bolt-halo-h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p0 { animation: nx-bolt-0 5200ms linear infinite, nx-bolt-0h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p1 { animation: nx-bolt-1 5200ms linear infinite, nx-bolt-1h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p2 { animation: nx-bolt-2 5200ms linear infinite, nx-bolt-2h 1100ms linear 1; }
+:where(button, [data-action], .meta-model):where(:hover, :focus-visible) .nx-bolt > svg .nx-p3 { animation: nx-bolt-3 5200ms linear infinite, nx-bolt-3h 1100ms linear 1; }
+@keyframes nx-bolt-0 { 0%, 1% { opacity: 0.12; } 1.23%, 100% { opacity: 1; } }
+@keyframes nx-bolt-0h { 0%, 4.73% { opacity: 0.12; } 5.82%, 100% { opacity: 1; } }
+@keyframes nx-bolt-1 { 0%, 1.77% { opacity: 0.12; } 2%, 100% { opacity: 1; } }
+@keyframes nx-bolt-1h { 0%, 8.36% { opacity: 0.12; } 9.45%, 100% { opacity: 1; } }
+@keyframes nx-bolt-2 { 0%, 2.54% { opacity: 0.12; } 2.77%, 100% { opacity: 1; } }
+@keyframes nx-bolt-2h { 0%, 12% { opacity: 0.12; } 13.09%, 100% { opacity: 1; } }
+@keyframes nx-bolt-3 { 0%, 3.31% { opacity: 0.12; } 3.54%, 100% { opacity: 1; } }
+@keyframes nx-bolt-3h { 0%, 15.64% { opacity: 0.12; } 16.73%, 100% { opacity: 1; } }
+@keyframes nx-bolt-halo { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 1; } 4.73% { opacity: 0.45; } 5.5% { opacity: 0.95; } 7.04% { opacity: 0.7; } 20%, 100% { opacity: 0.32; } }
+@keyframes nx-bolt-halo-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 1; } 22.36% { opacity: 0.45; } 26% { opacity: 0.95; } 33.27% { opacity: 0.7; } 94.55%, 100% { opacity: 0.32; } }
+@keyframes nx-bolt-bl { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.42; } 4.73% { opacity: 0.12; } 5.5% { opacity: 0.34; } 7.04% { opacity: 0.2; } 20%, 100% { opacity: 0.08; } }
+@keyframes nx-bolt-bl-h { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.42; } 22.36% { opacity: 0.12; } 26% { opacity: 0.34; } 33.27% { opacity: 0.2; } 94.55%, 100% { opacity: 0.08; } }
+@keyframes nx-bolt-bl-l { 0% { opacity: 0; } 3.54% { opacity: 0; } 3.81% { opacity: 0.24; } 4.73% { opacity: 0.07; } 5.5% { opacity: 0.19; } 7.04% { opacity: 0.12; } 20%, 100% { opacity: 0.07; } }
+@keyframes nx-bolt-bl-lh { 0% { opacity: 0; } 16.73% { opacity: 0; } 18% { opacity: 0.24; } 22.36% { opacity: 0.07; } 26% { opacity: 0.19; } 33.27% { opacity: 0.12; } 94.55%, 100% { opacity: 0.07; } }
+
+/* ------------------------------------------------------------------ 9. the status set (plan §3) */
+/* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired
+   into the surfaces by step 3B; here so the gallery and every later surface share one definition. */
+/* The wrapper is a small stacking context, so its backlight paints behind the glyph and above the row. */
+.nx-st { position: relative; isolation: isolate; display: inline-flex; flex: none; line-height: 0; vertical-align: middle; }
+.nx-st > svg.nx { display: block; }
+/* The backlight: the glow's soft tail, a radial gradient of the plain tone token, about 2.2x the mark, faded by
+   element opacity (no color-mix, no filter). It has no edge, unlike stepped stroke bands. */
+.nx-st::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 220%; height: 220%; translate: -50% -50%;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(closest-side, var(--nx-bl-ink, currentColor), transparent);
+  opacity: var(--nx-bl-a, 0);
+}
+.nx-tn-blocked { --nx-bl-ink: var(--danger); --nx-bl-a: var(--nx-bl-blocked); }
+.nx-tn-attention { --nx-bl-ink: var(--warning); --nx-bl-a: var(--nx-bl-attention); }
+.nx-tn-working { --nx-bl-ink: var(--accent); --nx-bl-a: var(--nx-bl-working); }
+.nx-tn-changed { --nx-bl-ink: var(--accent-2); --nx-bl-a: var(--nx-bl-changed); }
+/* the quiet tones are unlit: no backlight box at all */
+.nx-tn-done::before, .nx-tn-idle::before, .nx-tn-paused::before { display: none; }
+/* working: the bead orbits slowly on the still ring (9 s: the quietest live mark, below reviewing), no breathe, no
+   backlight (the inner halo only), the same 9 s in the thread list and alone. Final review (2026-10-03): the list used
+   to turn the whole gapped ring in 16 s, which read as a frozen spinner at a glance (the bead crept 1.84 px/s) while
+   the turning arc's antialiasing still out-moved needs-you; now only the bead moves (neon-icons.js st-working), so a
+   9 s list bead is both livelier and quieter, and needs-you's lead (neon-verify 13) is wider. */
+.nx-st-working::before { display: none; }
+.nx-st-working .nx-p { animation: var(--kl) 9000ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 9ms - 9000ms); }
+/* reviewing: the lens sweeps the page; no outer glow, so it stays below needs-you */
+.nx-st-reviewing::before { display: none; }
+.nx-st-reviewing .nx-p { animation: var(--kl) 2800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.8ms - 2800ms); }
+/* waiting (needs you) leads every list: full steady halo, the "?" hops 3.4 units twice every 2.4 s and the
+   backlight breathes .6-1 (literal keyframes per theme brightness; opacity only, so it composites). In the thread
+   list (.ph-status) the backlight swells with the beat instead: brightest and widest (x1.12) on the hops, ebbing to a
+   quarter and x.88 between them (opacity and transform). Integrate (2026-10-02): the deeper, wider swell is what keeps
+   needs-you above the working bead in every theme's list; fix cycle 1 keeps it to the list (:not(.nx-still), so
+   section 14's still rule keeps the last word on a still mark's backlight). */
+.nx-st-waiting .nx-p { animation: var(--kl) 2400ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.4ms - 2400ms); }
+.nx-st-waiting::before { animation: nx-bl-needs 2400ms ease-in-out infinite; }
+body[data-theme$="-light"] .nx-st-waiting::before { animation-name: nx-bl-needs-l; }
+.ph-status .nx-st-waiting:not(.nx-still)::before { animation-name: nx-bl-swell; }
+body[data-theme$="-light"] .ph-status .nx-st-waiting:not(.nx-still)::before { animation-name: nx-bl-swell-l; }
+@keyframes nx-bl-needs { 0%, 100% { opacity: .08; } 50% { opacity: .048; } }
+@keyframes nx-bl-needs-l { 0%, 100% { opacity: .081; } 50% { opacity: .049; } }
+@keyframes nx-bl-swell { 0%, 100% { opacity: .085; transform: scale(1.12); } 50% { opacity: .025; transform: scale(.88); } }
+/* light themes' list swell peaks at .08 (final review: .11 read as a disc), the light attention backlight's swell */
+@keyframes nx-bl-swell-l { 0%, 100% { opacity: .08; transform: scale(1.12); } 50% { opacity: .025; transform: scale(.88); } }
+/* waiting on a dependency: the hourglass tips once, then holds */
+.nx-st-waiting-dep .nx-p { animation: var(--kl) 3600ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 3.6ms - 3600ms); }
+/* recovering: a counter-clockwise ratchet, one 90-degree tick every 2.4 s (two per 4.8 s cycle) */
+.nx-st-recovering .nx-p { animation: var(--kl) 4800ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 4.8ms - 4800ms); }
+/* complete: a bold check that clip-draws once on mount */
+.nx-st-complete > svg.nx { --nx-stroke-base: 2.4; --nx-tone-k: 1; }
+.nx-st-complete .nx-p { animation: var(--k1) 520ms var(--nx-ease-c) backwards; }
+/* blocked: the shackle drops shut once, then the wrapper takes the bar's hard double blink */
+.nx-st-blocked .nx-p { animation: var(--k1) 520ms var(--nx-ease) backwards; }
+.nx-st-blocked { animation: ab-alert 1900ms steps(1, end) 700ms infinite; }
+/* failed: an irregular stutter, reserved for failed */
+.nx-st-failed { animation: nx-stutter 2700ms linear infinite; }
+@keyframes nx-stutter { 0%, 61%, 66%, 70%, 74%, 100% { opacity: 1; } 63% { opacity: .35; } 68% { opacity: .55; } 72% { opacity: .3; } }
+/* idle (ready), paused, pending, skipped, mixed: static */
+/* idle and pending are unlit, but keep the full weight so a ready or queued row still reads at a glance */
+.nx-st-idle > svg.nx { --nx-hi-a: 0; --nx-hiv: hidden; --nx-tone-k: 1; }
+.nx-st-pending > svg.nx { --nx-tone-k: 1; --nx-ink: var(--muted); }
+
+/* ------------------------------------------------------------------ 10. reduced motion */
+/* All three routes (the media query, body.pm56-reduced and html[data-motion="reduced"], the PMConcept7 contract) stop
+   every neon animation and transition outright; the base style is the finished, lit pose, so ink, halo and weight
+   still carry the state with no infinite animation. This covers every host's loops on an svg.nx or a status wrapper:
+   the Orbit's live glyph parts, the bar's breathe and alert rhythms, the jump button's working breathe, the status
+   beads, the needs-you hop and backlight, blocked's blink and failed's stutter. (The data-motion route was missing
+   until 3E2 fix cycle 1: only NieR's section 11 had it.) */
+@media (prefers-reduced-motion: reduce) {
+  svg.nx, svg.nx .nx-p, svg.nx .nx-h, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
+}
+body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] svg.nx, html[data-motion="reduced"] svg.nx .nx-p, html[data-motion="reduced"] svg.nx .nx-h, html[data-motion="reduced"] .nx-st, html[data-motion="reduced"] .nx-st::before, html[data-motion="reduced"] .nx-bolt::before { animation: none !important; transition: none !important; }
+
+/* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
+/* OWNER of this section: NieR Mode, step N-A (2026-10-02); the rest of the file is the foundation's. Every rule is
+   scoped by html[data-o55-nier="on"] (nier.js writes it only while a NieR theme is painted; nier.css holds the
+   palette), so the default themes never see one. NieR: Automata has no bloom: ink tubes, no halo band and no
+   backlight. Tone inks come from the NieR tables through the same tokens (--accent is the ink, --warning the warning
+   ink, --danger the rust, --positive the olive, --accent-2 the secondary ink); idle and paused are the ink at .45.
+   Motion is stepped (the NieR voice), transform and opacity only. */
+html[data-o55-nier="on"] body {
+  --nx-h-blocked-i: 0; --nx-h-attention-i: 0; --nx-h-working-i: 0; --nx-h-changed-i: 0; --nx-h-quiet-i: 0;
+  --nx-h-concept-i: 0; --nx-h-hover-i: 0; --nx-h-swell-i: 0; --nx-h-bolt-i: 0;
+  --nx-bl-blocked: 0; --nx-bl-attention: 0; --nx-bl-working: 0; --nx-bl-changed: 0;
+  --nx-ease: steps(4, end); --nx-le: steps(6, end); --nx-ease-c: steps(3, end);
+}
+html[data-o55-nier="on"] svg.nx .nx-h { display: none; }
+html[data-o55-nier="on"] .nx-st::before { display: none; }
+html[data-o55-nier="on"] .activity-item[data-hover-domain]::after { display: none; }
+html[data-o55-nier="on"] svg:where(.nx-a-spin) { --nx-le: steps(12, end); }
+html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-ink-rgb), var(--nx-idle-a, .45)); }
+/* NieR Light: idle ink at .545 reads 3.06:1 on the row field (3:1 floor; the rust of blocked is 3.14) (3E2). A token,
+   so the rules that restate a set member's ink (pending's, section 6) keep their specificity over it. */
+html[data-o55-nier="on"] body[data-theme$="-light"] { --nx-idle-a: .545; }
+html[data-o55-nier="on"] svg:where(.nx-t-paused) { --nx-ink: rgba(var(--o55-nier-ink-rgb), var(--nx-paused-a, .45)); }
+/* NieR Light paused and skipped at .63 (3.78:1 on the row field), so the quiet order holds above idle's .545 (fix
+   cycle 1; at .45 they read 2.45, under idle). NieR Dark keeps .45. */
+html[data-o55-nier="on"] body[data-theme$="-light"] { --nx-paused-a: .63; }
+/* On the cursor bar (a hovered or selected thread row) the quiet tones stay quiet: the bar's :where(*) rule
+   (nier-parts.css, 0,3,1) turns every glyph to full paper, and idle's whole ring then outweighed the working diamond,
+   which rotateY narrows in four of its six steps (integrate fix cycle 1). They take the bar's paper at their own
+   alpha instead (0,4,2, so they beat the bar's rule although neon-icons.css comes first). */
+html[data-o55-nier-parts~="cursor"] .thread-row:hover svg.nx-t-idle,
+html[data-o55-nier-parts~="cursor"] .thread-row.active svg.nx-t-idle { --nx-ink: rgba(var(--o55-nier-on-ink-rgb), var(--nx-idle-a, .45)); }
+html[data-o55-nier-parts~="cursor"] .thread-row:hover svg.nx-t-paused,
+html[data-o55-nier-parts~="cursor"] .thread-row.active svg.nx-t-paused { --nx-ink: rgba(var(--o55-nier-on-ink-rgb), var(--nx-paused-a, .45)); }
+/* Square icon strokes [icons]: square caps and mitred joins, with a miter limit of 2 so a right angle stays sharp and
+   anything tighter (the bolt, the wand's sparkle, a chevron at 12 px) bevels instead of spiking. */
+html[data-o55-nier-parts~="icons"] svg.nx { stroke-linecap: square; stroke-linejoin: miter; stroke-miterlimit: 2; }
+/* NieR forbids animated clip-path: a part that draws in by clip appears by stepped opacity instead, from .4 so a
+   hover act never blanks it; the complete check appears in two steps. */
+html[data-o55-nier="on"] svg.nx .nx-pc { animation-name: o55n-nx-reveal; animation-timing-function: steps(3, end); }
+@keyframes o55n-nx-reveal { from { opacity: .4; } to { opacity: 1; } }
+html[data-o55-nier="on"] .nx-st-complete .nx-p { animation: o55n-nx-two 360ms steps(2, end) backwards; }
+@keyframes o55n-nx-two { from { opacity: 0; } to { opacity: 1; } }
+/* Hover ignite is a two-beat stepped flicker of the tube itself (there is no halo to light). One selector per host
+   kind (shell-selfcheck: no rightmost :is() list); the svg's own animation is never touched. */
+html[data-o55-nier="on"] button:hover > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] button:focus-visible > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] button:hover > :not(button) > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] [data-action]:hover > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] [data-action]:focus-visible > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] [data-action]:hover > :not([data-action]) > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] [role="button"]:hover > svg.nx-r-control .nx-c,
+html[data-o55-nier="on"] summary:hover > svg.nx-r-control .nx-c { animation: o55n-nx-flick 240ms steps(1, end); }
+@keyframes o55n-nx-flick { 0% { opacity: .45; } 33% { opacity: 1; } 66% { opacity: .45; } 100% { opacity: 1; } }
+/* The Fast bolt is an ink crack in steps (3D): the bands light top to bottom, every frame held; no flash, because the
+   halo and the backlight are gone. */
+html[data-o55-nier="on"] .nx-bolt > svg.nx .nx-p { animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .nx-bolt::before { display: none; }
+/* The status set keeps every silhouette apart, because NieR's inks are close:
+   needs-you is an inverted ink block with paper strokes and a paper "?" (it outshines everything); */
+html[data-o55-nier="on"] .nx-st-waiting { background: var(--nx-bk, var(--o55-nier-ink)); box-shadow: 0 0 0 2px var(--nx-bk, var(--o55-nier-ink)); }
+html[data-o55-nier="on"] .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
+/* a pmx decision row ("Your move.") inks its mark in --accent (module-shell.css, 0,5,1), and NieR's --accent is the
+   block's own ink, so the "?" vanished into the block (final review, 2026-10-03): the block's strokes stay paper there */
+html[data-o55-nier="on"] .pmx-decision[data-tone] .pmx-decision-mark > .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
+/* on an ink cursor bar the block turns over: paper with ink strokes */
+html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting,
+html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting { --nx-bk: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting > svg.nx,
+html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-ink); }
+/* and, NieR's form of the list swell (it has no backlight): in the thread list four ink corner brackets lock on
+   around the block for the two "?" beats of each 2.4 s cycle, then let go (held frames, opacity only). Integrate
+   (2026-10-02): without them the slowed working diamond still out-moved needs-you in a NieR list (neon-verify 13).
+   List only, like the swell (fix cycle 1): the chat header's mark clips its own box, so the brackets never showed there.
+   They are the Target brackets part's (final fix 2026-10-03): with that part off the block stays, the brackets go. */
+html[data-o55-nier-parts~="brackets"] .ph-status .nx-st-waiting::after {
+  content: ""; position: absolute; inset: -5px; pointer-events: none; opacity: 0; --nx-bk-c: var(--nx-bk, var(--o55-nier-ink));
+  background:
+    linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left top / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left top / 1px 4px no-repeat,
+    linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) right top / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) right top / 1px 4px no-repeat,
+    linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left bottom / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) left bottom / 1px 4px no-repeat,
+    linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) right bottom / 4px 1px no-repeat, linear-gradient(var(--nx-bk-c), var(--nx-bk-c)) right bottom / 1px 4px no-repeat;
+  animation: o55n-nx-lock 2400ms steps(1, end) infinite;
+}
+@keyframes o55n-nx-lock { 0%, 31% { opacity: 1; } 32%, 100% { opacity: 0; } }
+/* blocked keeps the wrapper's hard double blink (ab-alert, already steps(1)); failed glitches once as it arrives
+   (the mark remounts on a change) instead of stuttering for ever; */
+html[data-o55-nier="on"] .nx-st-failed { animation: o55n-nx-glitch 320ms steps(4, end) 1; }
+@keyframes o55n-nx-glitch { 0% { transform: translateX(0); opacity: 1; } 25% { transform: translateX(2px); opacity: .4; } 50% { transform: translateX(-2px); opacity: 1; } 75% { transform: translateX(1px); opacity: .6; } 100% { transform: none; opacity: 1; } }
+/* working is PMConcept7's diamond loader while the diamonds part is on (a hollow diamond turning in depth, its ink
+   flipping to paper on a cursor bar), turned in six held steps of 60 degrees so it is never seen edge-on in a list,
+   one step every 467 ms (2.8 s a turn); in the thread list one step every 1.4 s (8.4 s a turn; integrate, 2026-10-02:
+   at 2.8 s it out-moved needs-you 3-4x in a list; fix cycle 1 keeps the slow turn to the list);
+   otherwise it is the ink bead on the ring, going round in steps (--nx-le above). */
+html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx { visibility: hidden; }
+html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
+  content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;
+  border: 1.5px solid var(--nx-ink, var(--o55-nier-ink)); outline: 1px solid var(--nx-ink, var(--o55-nier-ink)); outline-offset: -4.5px;
+  transform: rotateY(0deg) rotate(45deg) scale(.82);
+  animation: o55n-nx-diamond 2.8s steps(6, end) infinite;
+}
+html[data-o55-nier-parts~="diamonds"] .ph-status .nx-st-working::after { animation-duration: 8.4s; }
+@keyframes o55n-nx-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.82); } to { transform: rotateY(360deg) rotate(45deg) scale(.82); } }
+/* idle and pending are squares while the square part is on (final review, 2026-10-03): PMConcept7's NieR lists draw
+   an idle or draft row as a hollow square (its square part squares every round mark), and the idle ring was the one
+   round mark left in the NieR set. Idle is a hollow square the idle ring's size (its outer edge, 10.8 of 24 units) in
+   the idle ink; pending a dashed square the pending ring's size in its muted ink; both turn to paper at their own
+   alpha on a cursor bar, like the rings they replace. Drawn by the wrapper's ::after (the svg hides), like the diamond,
+   static. The needs-you ink block already matches PMConcept7's filled square. */
+html[data-o55-nier-parts~="square"] .nx-st-idle > svg.nx, html[data-o55-nier-parts~="square"] .nx-st-pending > svg.nx { visibility: hidden; }
+html[data-o55-nier-parts~="square"] .nx-st-idle::after, html[data-o55-nier-parts~="square"] .nx-st-pending::after {
+  content: ""; position: absolute; inset: 27.5%; box-sizing: border-box; pointer-events: none;
+  border: 1.2px solid rgba(var(--o55-nier-ink-rgb), var(--nx-idle-a, .45));
+}
+html[data-o55-nier-parts~="square"] .nx-st-pending::after { inset: 15%; border-style: dashed; border-color: var(--muted); }
+html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row:hover .nx-st-idle::after,
+html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row.active .nx-st-idle::after { border-color: rgba(var(--o55-nier-on-ink-rgb), var(--nx-idle-a, .45)); }
+html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row:hover .nx-st-pending::after,
+html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row.active .nx-st-pending::after { border-color: var(--o55-nier-on-ink); }
+/* The bar: ink glyphs with stepped acts (the tokens above); a working domain carries an ink underline under its
+   glyph, drawn by the item's anchored ::after (the backlight's slot, unused in NieR). */
+html[data-o55-nier="on"][data-ab-goal="working"] .activity-item[data-hover-domain="goal"]::after,
+html[data-o55-nier="on"][data-ab-todo="working"] .activity-item[data-hover-domain="todo"]::after,
+html[data-o55-nier="on"][data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"]::after,
+html[data-o55-nier="on"][data-ab-crew="working"] .activity-item[data-hover-domain="crew"]::after,
+html[data-o55-nier="on"][data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"]::after,
+html[data-o55-nier="on"][data-ab-review="working"] .activity-item[data-hover-domain="review"]::after,
+html[data-o55-nier="on"][data-ab-chat_room="working"] .activity-item[data-hover-domain="chat_room"]::after,
+html[data-o55-nier="on"][data-ab-changes="working"] .activity-item[data-hover-domain="changes"]::after,
+html[data-o55-nier="on"][data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"]::after {
+  display: block; top: anchor(bottom); width: 12px; height: 2px; translate: -50% 3px; border-radius: 0; z-index: 0;
+  background: var(--o55-nier-ink); opacity: 1;
+}
+/* Reduced motion (the media query, html[data-motion], body.pm56-reduced): every NieR act and loop stops; the inverted
+   needs-you block, the diamond and the underline still carry the state. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier="on"] svg.nx .nx-c, html[data-o55-nier="on"] .nx-st::after { animation: none !important; }
+}
+html[data-o55-nier="on"] body.pm56-reduced svg.nx .nx-c, html[data-o55-nier="on"] body.pm56-reduced .nx-st::after { animation: none !important; }
+html[data-o55-nier="on"][data-motion="reduced"] svg.nx, html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-p,
+html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-c, html[data-o55-nier="on"][data-motion="reduced"] .nx-st,
+html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none !important; transition: none !important; }
+
+/* ------------------------------------------------------------------ 12. app.js surfaces (step 3A) */
+/* OWNER of this section: Neon icons, surface step 3A (2026-10-02); the rest of the file is the foundation's and
+   NieR's. styles.css is closed and app.js has no sheet of its own, so the containers app.js draws round a glyph are
+   restated here at the specificity styles.css (or composer.css) gave them: this sheet loads after both.
+   Colour is reserved for status (plan §4): a container is neutral and its glyph is lit in the host ink. Coloured ink
+   comes only from .event-card.danger/.warning, [data-tone], a status mark's own tone (--nx-ink, section 5) and the
+   owners' .is-danger rules (higher specificity, untouched). */
+.event-icon { background: var(--surface-3); color: var(--text); }
+/* (0,1,0) on purpose: the transcript's own family rules (the Needs-you medallion's canon accent, the neutral ledger)
+   stay above it */
+:where(.event-card.warning) > .event-icon { color: var(--warning); }
+:where(.event-card.danger) > .event-icon { color: var(--danger); }
+/* a menu row's glyph takes the row's ink: muted at rest, the text ink on hover, where it ignites (section 8) */
+.menu-item .menu-icon { color: inherit; }
+/* a toggled icon button reads as on by its lit glyph on the raised neutral tile (the pins' idiom, composer.css), not
+   by an accent tile, and never by the hover tile (--surface-3) */
+.icon-button.active { color: var(--text); border-color: var(--border-strong); background: var(--surface-4); }
+.icon-button.active > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
+/* Activity lines name their tone (data-tone), never an inline colour. */
+.activity-line [data-tone="blocked"] { color: var(--danger); }
+.activity-line [data-tone="attention"] { color: var(--warning); }
+.activity-line [data-tone="working"] { color: var(--accent); }
+.activity-line [data-tone="changed"] { color: var(--accent-2); }
+.activity-line [data-tone="done"] { color: var(--positive); }
+.activity-line [data-tone="idle"] { color: var(--subtle); }
+.activity-line [data-tone="paused"] { color: var(--muted); }
+/* Capability dots (the composer): a neutral tile; a dot is drawn only while its capability is on, so its glyph is
+   concept-lit (the text ink with its bloom) and plays its act when hovered. Back Seat Driver On (the open eye) is
+   lit; Auto (the lowered lid) is dim: bsd.css's muted ink and no bloom. */
+.capability-dot, .capability-dot.goal { color: var(--text); background: var(--surface-3); }
+.composer-infield .capability-dot, .composer-infield .capability-dot.goal { color: var(--text); background: var(--surface-3); border-color: var(--border); }
+.composer-infield .capability-dot.bsd > svg.nx[data-nx="eye"] { color: var(--text); }
+.capability-dot.bsd > svg.nx[data-nx="kind-bsd-auto"] { --nx-hi-a: 0; }
+.capability-dot:hover > svg.nx { --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards; }
+/* The working card's head: while the run runs, the step's glyph is a live status mark (working tone and bloom) that
+   breathes like the bar's working domain. It is keyed by step (wpi:<step.id>), so it remounts at every handover and
+   plays the step glyph's act once. The tile is neutral; a paused or finished run shows the glyph at rest. */
+.working-head .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
+.working-head .work-phase-icon > svg.nx-r-status { --nx-1: var(--nx-d1) var(--nx-ease) backwards; animation: ab-breathe 2200ms ease-in-out infinite; }
+html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { animation-timing-function: steps(3, end); }
+/* The chat header's status: the thread's live mark beside the word, and the word in the mark's tone (app.js
+   headerStatusTone; styles.css gave every word the warning amber, so Ready, Paused and Complete read lit beside their
+   quiet marks and Waiting matched Working: final review, 2026-10-03). The quiet tones read muted. */
+.chat-state > .nx-st { margin-right: 1px; }
+.chat-state[data-tone="blocked"] { color: var(--danger); }
+.chat-state[data-tone="attention"] { color: var(--warning); }
+.chat-state[data-tone="working"] { color: var(--accent); }
+.chat-state[data-tone="changed"] { color: var(--accent-2); }
+.chat-state[data-tone="done"] { color: var(--positive); }
+.chat-state[data-tone="idle"], .chat-state[data-tone="paused"] { color: var(--muted); }
+/* the decision panel is needs-you: its head glyph keeps the canon accent (ACD-469) on the neutral tile */
+.decision-top > .event-icon { color: var(--accent); }
+
+/* ------------------------------------------------------------------ 13. 3D surfaces (step 3D) */
+/* OWNER of this section: Neon icons, surface step 3D (2026-10-02). The 3D surfaces keep their rules in their owner
+   sheets (composer.css, composer-state.css, lens.css, turn-stage.css, transcript.css, history.css) and the Fast
+   bolt's strike is block 8b; only the NieR restatement of an owner sheet's rhythm lives here, under the contract. */
+/* the Context Lens trigger's breathe (Mute, Focus) is stepped like every NieR rhythm */
+html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-function: steps(3, end); }
+
+/* ------------------------------------------------------------------ 14. still status marks (step 3E) */
+/* OWNER of this section: Neon icons, surface step 3E (2026-10-02). A status mark whose wrapper carries nx-still is
+   lit and STILL: no list rhythm (the bead's orbit, the needs-you hop, the tip, the ratchet), no breathing backlight,
+   no blocked blink or failed stutter; its moving part plays the mark's one-shot act once as it mounts (the bead comes
+   round, the "?" hops in, the shackle drops, the check draws), and a status change remounts it (data-k="st:<s>").
+   module-shell.js pmxStatus() asks for it: every pmx host allows no loop of its own (pmx-verify loop-census; a live
+   card's two are the pmx-sheen loops). Ink, halo, weight and the static backlight still carry the state. The
+   body-qualified ::before rule outranks the light themes' backlight-breathe name (section 9). */
+.nx-st.nx-still { animation: none; }
+body .nx-st.nx-still::before { animation: none; }
+.nx-st.nx-still .nx-p { animation: var(--k1) var(--nx-d1) var(--nx-ease) backwards; animation-delay: calc(var(--ad, 0) * 1ms); }
+/* NieR: the working diamond holds its pose (no turn), like the pmx running mark of N-A */
+html[data-o55-nier-parts~="diamonds"] .nx-st-working.nx-still::after { animation: none; }
+/* NieR: a still needs-you mark keeps its ink block; the corner brackets stay let go (opacity 0) */
+html[data-o55-nier="on"] .nx-st-waiting.nx-still::after { animation: none; }

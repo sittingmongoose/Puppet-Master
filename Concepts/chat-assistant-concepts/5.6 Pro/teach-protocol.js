@@ -215,10 +215,14 @@
  const TRIES=['Always use pnpm, not npm','Keep answers under 200 words','Write tests before changing a public function'];
  const arriving=new Set(),disclosures=new Map();
  let shown={err:null,rel:null};
- /* the padlock is drawn here (body + a separate shackle), because the shackle closes on Save: an open shackle
-    (raised by CSS on a draft card) drops into the body (transform only, --pmx-t-lock) */
- const lockSvg=(size,cls)=>'<svg class="pmx-teach-lock'+(cls?' '+cls:'')+'" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
-  '<path class="pmx-teach-shackle" d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><rect x="5" y="10.5" width="14" height="10" rx="2.2"/></svg>';
+ /* the padlock: its shackle closes on Save, so an open shackle (raised by CSS on a draft card) drops into the body
+    (transform only, --pmx-t-lock). Neon step 3E (2026-10-02): it is the shared registry's lock (neon-icons.js), whose
+    one moving part IS the shackle and whose act is that drop; read at call time, the drawing below is only the
+    fallback for a page without the neon family. The shackle is .nx-p in the registry's lock, .pmx-teach-shackle here. */
+ const lockSvg=(size,cls)=>{const N=window.PM56_NEON;
+  if(N&&typeof N.icon==='function')return N.icon('lock',size,'pmx-teach-lock'+(cls?' '+cls:''));
+  return '<svg class="pmx-teach-lock'+(cls?' '+cls:'')+'" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+  '<path class="pmx-teach-shackle" d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><rect x="5" y="10.5" width="14" height="10" rx="2.2"/></svg>';};
  function ruleWord(r){return r.supersededBy?W().replaced.replace('{n}',String(get(r.supersededBy)?.version||(r.version||1)+1)):r.revoked?W().off:r.locked?W().inUseLocked:W().inUse;}
  function status(r){return ruleWord(r);}
  function msgTime(s){if(!s||!s.messageId)return '';const m=messages(s.threadId).find(m=>m.id===s.messageId);return m?hm(m.time||m.sentAt||m.at||''):'';}
@@ -394,7 +398,7 @@
   const X=P();if(!X||X.reduced())return;
   const g=document.querySelector('body > .pmx-ghost .pmx-teach-card');if(!g)return;
   X.animate(g,[{transform:'none'},{transform:'scale(1.02)'}],{duration:X.t('lift'),easing:X.ease('out'),fill:'forwards'});
-  const sh=locked&&g.querySelector('.pmx-teach-shackle');
+  const sh=locked&&g.querySelector('.pmx-teach-lock .nx-p, .pmx-teach-shackle');
   if(sh)X.animate(sh,[{transform:'translateY(-3px)'},{transform:'none'}],{duration:X.t('lock'),easing:X.ease('pop'),fill:'forwards'});
  }
  /* the Save runs in one task: the flight is armed (or the save exit is named) before commit(), because commit() appends

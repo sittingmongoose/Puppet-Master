@@ -81,7 +81,7 @@ body[data-theme^="retro"] .pmx-teach-rule{font-size:15.5px;line-height:22.5px;le
 .pmx-teach-lock{flex:none;color:var(--muted);overflow:visible;}
 .pmx-teach-meta[data-state="locked"] .pmx-teach-lock{color:var(--text);}
 /* a draft is not saved yet: its shackle stands open; on Save it drops shut (WAAPI on the leaving sheet) */
-.pmx-teach-card[data-state="draft"] .pmx-teach-shackle{transform:translateY(-2.5px);}
+.pmx-teach-card[data-state="draft"] .pmx-teach-shackle, .pmx-teach-card[data-state="draft"] .pmx-teach-lock .nx-p{transform:translateY(-2.5px);}
 .pmx-teach-src{margin-top:8px;min-width:0;}
 .pmx-teach-sum{display:flex;align-items:center;gap:6px;width:max-content;max-width:100%;min-height:24px;list-style:none;cursor:pointer;font:600 12px/17.5px var(--font-ui);color:var(--muted);}
 .pmx-teach-sum::-webkit-details-marker{display:none;}

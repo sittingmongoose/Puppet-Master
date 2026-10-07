@@ -157,28 +157,53 @@ button.rail8-row {
    refills stop walking a bottom-pinned transcript up and down (repro R3). */
 .working-variant-8:not(.is-done) .rail8-under.rail8-live { min-height:96px; }
 .working-variant-8 .rail8-under:empty { min-height:0; margin-top:0; }
-/* Orbit-strip parity (wave 3): kind-tinted discs, a larger pulsing current
-   disc, and a slight hover grow. data-step-kind on each disc scopes
-   --pm-step exactly like the orbit ring. */
+/* Orbit-strip parity (wave 3): a larger pulsing current disc and a slight
+   hover grow. data-step-kind on each disc scopes --pm-step exactly like the
+   orbit ring. Neon icons (step 3C, orbit.css PART 3): the current disc is the
+   dark disc rimmed and inked in the phase hue, its glyph lit and acting while
+   the run runs (variants-a.js draws it with moving parts only then); done
+   discs are lit green on a neutral tile (Jared: "done steps are lit green").
+   A failed or waiting disc keeps its own flag colours (Chat WOW M4, below). */
 .working-variant-8 .rail8-item {
   transition: transform var(--pm-t-icon) var(--pm-ease-pop),
               background var(--pm-t-icon) var(--pm-ease-out),
               border-color var(--pm-t-icon) var(--pm-ease-out),
               color var(--pm-t-icon) var(--pm-ease-out);
 }
-.working-variant-8 .rail8-item.done {
+.working-variant-8 .rail8-item.done:not(.failed, .waiting) {
+  color: var(--positive);
+  border-color: var(--border);
+  background: var(--surface-3);
+}
+.working-variant-8 .rail8-item.done:not(.failed, .waiting) > svg { --nx-hi-a: var(--nx-h-quiet-i); }
+.working-variant-8 .rail8-item.current:not(.failed, .waiting) {
   color: var(--pm-step, var(--accent));
-  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 34%, var(--border));
-  background: color-mix(in srgb, var(--pm-step, var(--accent)) 9%, var(--surface-3));
+  border: 1.5px solid var(--pm-step, var(--accent));
+  background: var(--nx-disc);
+  /* inside the dark disc the dark themes' glow strengths apply on every theme */
+  --nx-hi-w: 3.6px; --nx-h-working-i: .20;
+}
+.working-variant-8 .rail8-item.current:not(.failed, .waiting) > svg { --nx-hi-a: var(--nx-h-working-i); }
+.working-variant-8 .rail8-item.current > svg .nx-p {
+  animation: var(--kl) 2200ms var(--nx-le) infinite;
+  animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms);
 }
 .working-variant-8 .rail8-item.current {
-  color: var(--pm-step, var(--accent));
-  border-color: color-mix(in srgb, var(--pm-step, var(--accent)) 62%, var(--border));
-  background: color-mix(in srgb, var(--pm-step, var(--accent)) 18%, var(--surface-3));
-  animation: pm-disc-in var(--pm-t-icon) var(--pm-ease-pop) both,
-             orbit-strip-pulse 1900ms var(--ease) infinite;
-  animation-delay: 65ms, 600ms;
+  animation: pm-disc-in var(--pm-t-icon) var(--pm-ease-pop) 65ms both;
 }
+/* The pulse is a ring on ::before that grows and fades (transform and
+   opacity, so it runs on the compositor; the old box-shadow pulse repainted
+   on the main thread every frame). */
+.working-variant-8 .rail8-item.current::before {
+  content: ""; position: absolute; inset: -1.5px; border-radius: 50%; pointer-events: none;
+  border: 1.5px solid var(--pm-step, var(--accent)); opacity: 0;
+  animation: orbit-strip-ring 1900ms var(--ease) 600ms infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .working-variant-8 .rail8-item.current::before { animation: none !important; }
+}
+body.pm56-reduced .working-variant-8 .rail8-item.current::before,
+html[data-motion="reduced"] .working-variant-8 .rail8-item.current::before { animation: none !important; }
 .working-variant-8 .rail8-item:hover { transform: scale(1.12); }
 .working-variant-8 .rail8-item.current:hover { transform: scale(1.06); }
 /* A live rail collapsed to icons-only should not float in 122px of card. */
@@ -652,6 +677,22 @@ button.rail8-row {
     animation:dt-retire 1ms linear 1ms both; filter:none; transform:none;
   }
   .working-variant-11 .dt-row.retired { animation-duration:1ms, 1ms; animation-delay:0ms, 1ms; }
+}
+/* The two class routes (neon 3E2, fix cycle 2): the three loops this file adds stop as under the media query, and
+   the two shimmers drop back to painted text (motion.css restates its own block for these routes). */
+body.pm56-reduced .working-variant-9 .ws-caret,
+html[data-motion="reduced"] .working-variant-9 .ws-caret { animation:none; opacity:.75; }
+body.pm56-reduced .working-variant-11 .dt-feed,
+html[data-motion="reduced"] .working-variant-11 .dt-feed { animation:none; opacity:.75; }
+body.pm56-reduced .working-variant-8 .rail8-verb.pm-shimmer,
+body.pm56-reduced .working-variant-8 .rail8-verb.pm-shimmer.pm-settled,
+body.pm56-reduced .working-variant-10 .tc10-line b.pm-shimmer,
+body.pm56-reduced .working-variant-10 .tc10-line b.pm-shimmer.pm-settled,
+html[data-motion="reduced"] .working-variant-8 .rail8-verb.pm-shimmer,
+html[data-motion="reduced"] .working-variant-8 .rail8-verb.pm-shimmer.pm-settled,
+html[data-motion="reduced"] .working-variant-10 .tc10-line b.pm-shimmer,
+html[data-motion="reduced"] .working-variant-10 .tc10-line b.pm-shimmer.pm-settled {
+  animation:none; background:none; color:var(--text);
 }
 
 /* Chat WOW M4 -- Step Rail parity with Orbit: status flags, clusters, narration. */

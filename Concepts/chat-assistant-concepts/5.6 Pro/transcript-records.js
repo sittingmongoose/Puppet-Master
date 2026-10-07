@@ -20,11 +20,14 @@
   }
   function lookup(ctx,id){for(const t of ctx.state.threads){const m=t.messages.find(m=>m.id===id);if(m)return {m,t};}return null;}
   function reference(m){return m.outputRef||REFERENCES[m.id]||{kind:'note'};}
+  /* an activity record wears its domain's glyph, the activity bar's (one glyph per concept: a Crew update is the Crew
+     mark, not the Subagents people) */
+  const DOMAIN_GLYPH={goal:'goal',todo:'todo',subagents:'users',crew:'kind-crew',brainstorm:'kind-brainstorm',review:'kind-review',chat_room:'kind-chat_room',changes:'changes',artifacts:'page'};
   function kindLabel(ref){return ({change:'File change',inspection:'File inspection',activity:ref.label||'Activity',artifact:'Artifact',plan:'Plan'})[ref.kind]||'Work note';}
   E.slot('workRecord',ctx=>{
     const m=ctx.m;if(m?.type!=='agent-work')return '';
     const ref=reference(m),c=ref.path&&D.changes.find(c=>c.path===ref.path);
-    const label=kindLabel(ref),icon=ref.kind==='change'?'file-edit':ref.kind==='inspection'?'search':ref.kind==='activity'?'users':'document';
+    const label=kindLabel(ref),icon=ref.kind==='change'?'file-edit':ref.kind==='inspection'?'search':ref.kind==='activity'?(DOMAIN_GLYPH[ref.domain]||'users'):'document';
     return '<article class="work-output" data-output-kind="'+ctx.esc(ref.kind)+'" data-message-id="'+ctx.esc(m.id)+'"><button class="work-output-open" type="button" data-action="open-work-record" data-id="'+ctx.esc(m.id)+'"><span class="work-output-icon">'+ctx.icon(icon,16)+'</span><span class="work-output-copy"><span class="work-output-kind">'+ctx.esc(label)+'</span><strong>'+ctx.esc(m.title||label)+'</strong>'+ (ref.path?'<span class="work-output-path">'+ctx.esc(ref.path)+'</span>':'')+'</span><span class="work-output-target">'+(c&&ref.kind==='change'?'<span class="work-output-diff"><span class="diff-added">+'+c.add+'</span> <span class="diff-removed">−'+c.del+'</span></span>':'')+ctx.icon('chevron',13)+'</span></button><div class="work-output-summary">'+formatRecord(ctx,m.detail)+'</div></article>';
   });
   E.action('open-work-record',(ctx,btn)=>{

@@ -8,7 +8,14 @@
   'use strict';
   if (window.PM56_SHELL) return;
 
+  /* The picker's default chevron. CHEVRON is the drawing used when the neon family is absent (and what
+     tests/shell-selfcheck.cjs, which evals this file with no PM56_NEON, compares against); chevron() asks
+     neon-icons.js for the family's chevron-down at call time, never at load (pmx-chevron keeps the 2-unit weight). */
   var CHEVRON = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+  function chevron() {
+    var N = window.PM56_NEON;
+    return N && typeof N.icon === 'function' ? N.icon('chevron-down', 12, 'pmx-chevron') : CHEVRON;
+  }
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -26,7 +33,7 @@
     return '<button type="button" class="shared-picker-button" data-action="' + esc(o.action) + '" data-menu-anchor="' + esc(o.anchor) + '"' + (o.extra ? ' ' + o.extra : '') + '>' +
       (o.markHtml || '') +
       '<span class="shared-picker-copy"><strong>' + (o.strong || '') + '</strong>' + (o.small ? '<small>' + o.small + '</small>' : '') + '</span>' +
-      (o.iconHtml || CHEVRON) +
+      (o.iconHtml || chevron()) +
     '</button>';
   }
 
@@ -186,6 +193,17 @@
     return appHas[name] ? appIconFn(name, size, c) : null;
   }
   var warnedGlyphs = {};
+  /* Neon (step 2, 2026-10-02): the glyph family (neon-icons.js, window.PM56_NEON) lights every glyph. At the first
+     glyph call, never at load (tests/shell-selfcheck.cjs and tests/b16 eval this file with no PM56_NEON), this
+     table is handed to the registry; a drawing the registry already owns (the 14 reconciled names, the kind marks
+     it splits into moving parts) is kept, the rest join it. Without PM56_NEON everything below works as before. */
+  var neonSeen = false;
+  function neon() {
+    var N = window.PM56_NEON;
+    if (!N || typeof N.icon !== 'function' || typeof N.has !== 'function') return null;
+    if (!neonSeen) { neonSeen = true; try { N.registerMany(PMX_GLYPHS); } catch (e) { } }
+    return N;
+  }
   /* pmxGlyph(name,size,cls) - an unknown name never throws (amendment G-11): it
      returns a visible dashed square of the requested size and logs once with
      console.info, and pmx-gallery/pmx-verify fail on any .pmx-glyph-missing. */
@@ -193,6 +211,8 @@
     size = num(size, 14);
     var body = PMX_GLYPHS[name];
     var c = cls('pmx-glyph', extraCls);
+    var N = name ? neon() : null;
+    if (N && N.has(String(name))) return N.icon(String(name), size, c);
     if (body == null && name) { var viaApp = appIcon(String(name), size, c); if (viaApp) return viaApp; }
     if (body == null) {
       if (!warnedGlyphs[name]) { warnedGlyphs[name] = 1; try { console.info('PM56_SHELL.pmxGlyph: unknown glyph "' + name + '"'); } catch (e) { } }
@@ -646,7 +666,7 @@
   function pmxRefusal(o) {
     o = o || {};
     var fix = o.fix;
-    return '<p class="' + cls('pmx-refusal', o.cls) + '" role="alert"' + at('data-failure', o.code) + raw(o.attrs) + '>' + pmxGlyph('warn', 15) + '<span><b>' + str(o.strong || 'Can’t start yet.') + '</b> ' + str(o.text) +
+    return '<p class="' + cls('pmx-refusal', o.cls) + '" role="alert"' + at('data-failure', o.code) + raw(o.attrs) + '>' + pmxGlyph('warn', 15, 'nx-r-status nx-t-attention') + '<span><b>' + str(o.strong || 'Can’t start yet.') + '</b> ' + str(o.text) +
       (fix ? ' <button type="button" class="text-button" data-action="' + esc(fix.action) + '"' + raw(fix.attrs) + '>' + str(fix.label || 'Fix') + '</button>' : '') + '</span></p>';
   }
   /* the number of top-level elements (and loose text runs) in an HTML string: one foot grid column each */
@@ -712,7 +732,10 @@
      prefix, every data-action / data-run / data-run-id / data-pm-keep goes,
      buttons become spans, and every non-pmx class (the hook classes a module
      passed through cls/headCls/badgeCls/...) is dropped, so no harness
-     selector and no action can match the preview. */
+     selector and no action can match the preview. The neon family's own
+     classes (nx, nx-*: role, tone, halo, tube, part, still wrapper) are paint,
+     not hooks, and stay, so the preview's kind badge and status mark are lit
+     like the card's (fpfix F-1: the configure sheets' previews drew them bare). */
   var LOOK = { 'primary-button': 1, 'soft-button': 1, 'text-button': 1, 'icon-button': 1 };
   function inert(html) {
     return str(html)
@@ -720,7 +743,7 @@
       .replace(/\s(?:data-action|data-run|data-run-id|data-pm-keep|data-menu-anchor|data-pmx-autofocus|data-hover-key|data-hover-tip|tabindex)(?:="[^"]*")?(?=[\s>\/])/g, '')
       .replace(/\sdata-k="([^"]*)"/g, function (m, v) { return ' data-k="pv:' + v + '"'; })
       .replace(/\sclass="([^"]*)"/g, function (m, v) {
-        var keep = v.split(/\s+/).filter(function (c) { return c && (c.indexOf('pmx-') === 0 || LOOK[c]); });
+        var keep = v.split(/\s+/).filter(function (c) { return c && (c.indexOf('pmx-') === 0 || c === 'nx' || c.indexOf('nx-') === 0 || LOOK[c]); });
         return keep.length ? ' class="' + keep.join(' ') + '"' : '';
       })
       .replace(/\s(?:type="button"|disabled)(?=[\s>\/])/g, '');
@@ -766,13 +789,36 @@
       (o.cluster != null ? cluster(o.cluster, o.clusterMax) : '') +
       (o.clock != null ? '<span class="pmx-clock"' + k(o.clockKey) + '>' + o.clock + '</span>' : '') + str(o.extra);
   }
+  /* STATUS_GLYPH: the drawing each run status had before the neon family; pmxStatus() falls back to it when
+     PM56_NEON is absent (tests/shell-selfcheck.cjs evals this file bare). */
   var STATUS_GLYPH = { starting: 'ring', waiting: 'ring-dashed', running: 'arc', live: 'arc', needs: 'ring-dot', yourmove: 'ring-dot', paused: 'pause', done: 'check', cancelled: 'slash-circle', canceled: 'slash-circle', failed: 'warn', attention: 'warn', limit: 'warn' };
+  /* pmxStatus(status,size,cls) - neon step 3E (2026-10-02): a status mark from the shared status set (neon-icons.js
+     status()), lit and STILL. Its wrapper carries nx-still, so the set's list rhythms (the bead's orbit, the
+     needs-you hop, blocked's blink, failed's stutter, the breathing backlight) never run inside a pmx host and only
+     the one-shot act plays as the mark mounts: a live card's loop budget is spent by its two pmx-sheen loops and
+     every other pmx host allows none (pmx-verify loop-census). Run statuses map onto the set: a waiting run is
+     queued for its turn (waiting-dep, the hourglass), needs and yourmove are "needs you" (yourmove keeps the accent,
+     neon-icons.css section 14), cancelled is skipped. attention, limit and warn have no member of the set: they
+     are the warning triangle lit in the attention tone, in the same still wrapper. Any other name is a set name or
+     alias (scheduled, verified, stale, held, blocked...), which the module tables pass straight through. cls goes on the wrapper (the fallback drawing's svg). */
+  var PMX_STATUS = { starting: 'working', running: 'working', live: 'working', waiting: 'waiting-dep', needs: 'waiting', yourmove: 'waiting', paused: 'paused', done: 'complete', cancelled: 'skipped', canceled: 'skipped', failed: 'failed' };
+  var PMX_STATUS_WARN = { attention: 1, limit: 1, warn: 1 };
+  var PMX_STATUS_OLD = { complete: 'check', completed: 'check', sent: 'check', verified: 'check-circle', skipped: 'slash-circle', stale: 'slash-circle', expired: 'slash-circle', pending: 'ring-dashed', unverified: 'ring-dashed', scheduled: 'clock', 'waiting-dep': 'ring-dashed', held: 'warn', working: 'arc', blocked: 'lock', invalidated: 'warn', decide: 'hand' };
+  function pmxStatus(status, size, extraCls) {
+    status = str(status) || 'running'; size = num(size, 14);
+    var N = neon(), c = cls('nx-still', extraCls);
+    if (N && typeof N.status === 'function') {
+      if (PMX_STATUS_WARN[status]) return '<span class="nx-st nx-tn-attention ' + esc(c) + '" data-k="st:' + esc(status) + '" aria-hidden="true">' + N.icon('warning', size, 'nx-r-status nx-t-attention') + '</span>';
+      return N.status(PMX_STATUS[status] || status, size, c);
+    }
+    return pmxGlyph(STATUS_GLYPH[status] || PMX_STATUS_OLD[status] || 'ring', size, extraCls);
+  }
   function pmxSentence(o) {
     o = o || {};
     var status = str(o.status) || 'running';
     var word = str(o.word), reason = str(o.reason);
     return '<p class="' + cls('pmx-sentence', o.cls) + '"' + k(o.key) + ' data-status="' + esc(status) + '">' +
-      '<span class="pmx-st-glyph" data-k="stg:' + esc(status) + '">' + g(o.glyph || STATUS_GLYPH[status] || 'ring', 14) + '</span>' +
+      '<span class="pmx-st-glyph" data-k="stg:' + esc(status) + '">' + (o.glyph ? g(o.glyph, 14) : pmxStatus(status, 14)) + '</span>' +
       '<span class="pmx-st-text" data-k="st:' + pmxHash(word + '|' + reason) + '">' + (word ? '<b>' + word + '</b>' : '') + (word && reason ? ' · ' : '') + reason + '</span></p>';
   }
   var STOP_STATES = { done: 1, now: 1, next: 1, skipped: 1, failed: 1 };
@@ -828,20 +874,30 @@
   /* review cycle 2 (7.2 below 260 px): a third answer that is only a text button (Details, Cancel ...) carries
      pmx-act-extra and leaves the decision row below 260 px when the card has a More menu, which lists it; the two
      answers stay. item.extra overrides. */
+  /* neon step 3E: a decision row leads with the status set's needs-you mark, still (pmxStatus): warm is needs
+     (attention), accent is your move (the canon accent); a caller's 'warn' is the attention triangle; any other glyph
+     (memory's hand) is drawn as given. The mark sits in its own slot (an <i>, never a span): the status wrapper is a
+     span, and as a direct span child of the say line it took the reason's clamp (display:-webkit-box, overflow hidden,
+     which cut its backlight) and was the line's first `> span`, the one every caller reads as the reason. */
+  function decisionMark(glyph, tone) {
+    var m = !glyph || glyph === 'ring-dot' ? pmxStatus(tone === 'accent' ? 'yourmove' : 'needs', 14) : glyph === 'warn' ? pmxStatus('attention', 14) : g(glyph, 14);
+    return m ? '<i class="pmx-decision-mark">' + m + '</i>' : '';
+  }
   function pmxDecision(o) {
     o = o || {};
     var tone = o.tone === 'accent' ? 'accent' : 'warm';
     return '<div class="' + cls('pmx-decision', o.cls) + '"' + k(o.key) + ' data-tone="' + tone + '" role="group"' + raw(o.attrs) + '>' +
-      '<p class="pmx-decision-say">' + g(o.glyph || 'ring-dot', 14) + '<span>' + str(o.sentence) + '</span></p>' +
+      '<p class="pmx-decision-say">' + decisionMark(o.glyph, tone) + '<span>' + str(o.sentence) + '</span></p>' +
       '<div class="pmx-decision-acts">' + (o.actions || []).map(function (a, i) {
         a = a || {};
         var extra = a.extra != null ? !!a.extra : (i >= 2 && !a.primary && !a.soft && (!a.tone || a.tone === 'text'));
         return actButton(extra ? Object.assign({}, a, { cls: cls('pmx-act-extra', a.cls) }) : a, 'pmx-act');
       }).join('') + '</div>' + actReasons(o.actions) + '</div>';
   }
+  /* neon step 3E: a result's done mark is the status set's complete, still (pmxStatus); any other glyph is drawn as given */
   function pmxResult(o) {
     o = o || {};
-    return '<div class="' + cls('pmx-result', o.cls) + '"' + k(o.key) + raw(o.attrs) + '><p class="pmx-result-head">' + g(o.glyph || 'check', 18) + '<span class="pmx-result-headline">' + str(o.headline) + '</span></p>' +
+    return '<div class="' + cls('pmx-result', o.cls) + '"' + k(o.key) + raw(o.attrs) + '><p class="pmx-result-head">' + (!o.glyph || o.glyph === 'check' ? pmxStatus('done', 18) : g(o.glyph, 18)) + '<span class="pmx-result-headline">' + str(o.headline) + '</span></p>' +
       (o.sub ? '<p class="pmx-result-sub">' + o.sub + '</p>' : '') + str(o.outputHtml) + str(o.boardHtml) + str(o.creditsHtml) + '</div>';
   }
   function pmxOutput(o) {
@@ -968,10 +1024,14 @@
   }
   var SEV_WORD = { critical: 'Critical', major: 'Major', minor: 'Minor', suggestion: 'Suggestion', nit: 'nit', concern: 'concern' };
   var SEV_GLYPH = { critical: 'sev-critical', major: 'sev-major', concern: 'sev-major', minor: 'sev-minor', nit: 'sev-minor', suggestion: 'sev-suggestion' };
+  /* neon step 3E: the severity marks keep their filled shapes and are lit (status role) in their tone: critical
+     blocked (danger), major attention (warning), minor the host's muted ink, a suggestion idle (subtle). The fill
+     stays on currentColor (module-shell.css .pmx-sev colours), the halo takes the tone ink; static, 11 px. */
+  var SEV_LIT = { critical: 'nx-r-status nx-t-blocked', major: 'nx-r-status nx-t-attention', concern: 'nx-r-status nx-t-attention', minor: 'nx-r-status', nit: 'nx-r-status', suggestion: 'nx-r-status nx-t-idle' };
   function pmxSeverity(level, word) {
     level = str(level).toLowerCase();
     var lv = SEV_WORD[level] ? level : 'minor';
-    return '<span class="pmx-sev" data-sev="' + lv + '">' + pmxGlyph(SEV_GLYPH[lv], 11) + (word != null ? word : SEV_WORD[lv]) + '</span>';
+    return '<span class="pmx-sev" data-sev="' + lv + '">' + pmxGlyph(SEV_GLYPH[lv], 11, SEV_LIT[lv]) + (word != null ? word : SEV_WORD[lv]) + '</span>';
   }
   function agreeDot(v) {
     var c = v.vote === 'agree' ? '<circle class="pmx-ag-fill" cx="6" cy="6" r="3.6"/>' : v.vote === 'disagree' ? '<circle class="pmx-ag-ring" cx="6" cy="6" r="3.6"/><path class="pmx-ag-ring" d="m3.4 8.6 5.2-5.2"/>' : '<circle class="pmx-ag-ring" cx="6" cy="6" r="3.6"/>';
@@ -1686,7 +1746,7 @@
     pmxShelf: pmxShelf, pmxStepper: pmxStepper, pmxSwitch: pmxSwitch, pmxCheck: pmxCheck, pmxWords: pmxWords, pmxPromise: pmxPromise, pmxPromises: pmxPromises,
     pmxAdvancedEntry: pmxAdvancedEntry, pmxAdvancedPage: pmxAdvancedPage, pmxSetting: pmxSetting, pmxPreview: pmxPreview, pmxReadback: pmxReadback, pmxEstimate: pmxEstimate,
     pmxRefusal: pmxRefusal, pmxFoot: pmxFoot, pmxConfirm: pmxConfirm, pmxTabs: pmxTabs,
-    pmxRun: pmxRun, pmxRunHead: pmxRunHead, pmxSentence: pmxSentence, pmxTrack: pmxTrack, pmxLane: pmxLane, pmxLanes: pmxLanes, pmxDecision: pmxDecision,
+    pmxRun: pmxRun, pmxRunHead: pmxRunHead, pmxSentence: pmxSentence, pmxStatus: pmxStatus, pmxTrack: pmxTrack, pmxLane: pmxLane, pmxLanes: pmxLanes, pmxDecision: pmxDecision,
     pmxResult: pmxResult, pmxOutput: pmxOutput, pmxCredits: pmxCredits, pmxMeta: pmxMeta, pmxActions: pmxActions, pmxReceipt: pmxReceipt,
     pmxDockLine: pmxDockLine, pmxDock: pmxDock, pmxFinding: pmxFinding, pmxFindings: pmxFindings, pmxSealed: pmxSealed, pmxSeverity: pmxSeverity, pmxAgree: pmxAgree, pmxVoteBoard: pmxVoteBoard,
     pmxQuote: pmxQuote, pmxWash: pmxWash, pmxNote: pmxNote, pmxTick: pmxTick, pmxDivider: pmxDivider, pmxFilesRow: pmxFilesRow, pmxCodeRow: pmxCodeRow, pmxMd: pmxMd, pmxGuide: pmxGuide,

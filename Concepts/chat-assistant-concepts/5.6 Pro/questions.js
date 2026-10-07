@@ -210,7 +210,7 @@
       type: 'question',
       take: takeOf(ctx),
       key: 'q:' + (flow ? flow.id : 'none') + ':' + (q.id || idx),
-      icon: 'todo',
+      icon: 'question',
       title: (flow && flow.title) || 'Questionnaire',
       subtitle: (flow && flow.note) || '',
       meta: [{ text: ans + '/' + qs.length + ' answered', tone: ans === qs.length ? 'ok' : '' }],
@@ -295,7 +295,7 @@
       type: 'plan',
       take: takeOf(ctx),
       key: 'plan:' + (revise ? 'revise' : 'review') + ':' + rev,
-      icon: 'document',
+      icon: 'plan',
       title: revise ? 'Revise the Plan' : 'Plan ready for review',
       subtitle: art.summary || '',
       /* `DEFAULT.planRevision` is a literal 3 while `artifacts[plan-query].version`
@@ -347,7 +347,7 @@
       type: 'permission',
       take: takeOf(ctx),
       key: 'perm:host',
-      icon: 'lock',
+      icon: 'shield',
       title: 'Permission required',
       subtitle: 'Execution host',
       meta: [{ text: 'Execution host', tone: 'need' }, { text: 'Once', tone: '' }],
@@ -421,6 +421,10 @@
   }
 
   /* ============================================================== FRAGMENTS */
+  /* Glyphs come from the neon registry through ctx.icon (one drawing per concept: the plan decision draws the plan's
+     folded map, the permission decision the shield, as the transcript cards do). They are concept or control glyphs
+     with no loop, so nothing inside a decision sheet runs an infinite animation; the morph's pill face remounts, so
+     it carries no neon act of its own (its orrery is a spinner in token colour). */
   function iconOf(ctx, name, size) { return ctx.icon(name, size || 12); }
 
   function pills(ctx, m) {

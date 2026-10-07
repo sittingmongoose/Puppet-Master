@@ -687,11 +687,7 @@
       ? '<span class="pd-step-par" title="">parallel · '+esc(b.parallel_group_id)+'</span>' : '';
     var kid = b.parent_step_id
       ? '<span class="pd-step-child">child of '+esc(b.parent_step_id)+'</span>' : '';
-    var glyph = st==='completed' ? ICON.check
-              : st==='in_progress' ? ICON.dot
-              : st==='blocked' ? ICON.warning
-              : st==='skipped' ? ICON.skip
-              : st==='mixed' ? ICON.mixed : '';
+    var glyph = stepMark(st);
     var why = (cell && cell.state==='blocked' && cell.reason)
       ? '<span class="pd-step-why">blocked · '+esc(cell.reason)+'</span>' : '';
     var stale = (pr && pr.stale)
@@ -780,17 +776,60 @@
     window.addEventListener('resize',scheduleRail);
   }
 
-  /* Inline SVG only -- the project forbids emoji glyphs outright. These are the
-     few marks app.js's icon() does not carry in the shape this card needs. */
-  var ICON = {
+  /* Inline SVG only -- the project forbids emoji glyphs outright. ICON_16 holds the
+     16-grid marks this card drew for itself; they are now only the fallback for a page
+     without the neon family. Neon step 3E (2026-10-02): every mark is the shared
+     registry's (neon-icons.js), read at call time (never at load), at the size the
+     16-grid mark rendered: the callout and attention marks (info, warning), the done
+     check of the compact card, the Plan kicker and receipt (plan: the folded map, not a
+     page) and the dialog close. Step marks are the status set (stepMark below). */
+  var ICON_16 = {
     check:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 6.2 12 13 4.5"/></svg>',
     dot:'<svg viewBox="0 0 16 16" width="10" height="10" fill="currentColor" stroke="none"><circle cx="8" cy="8" r="4"/></svg>',
     info:'<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="6.4"/><path d="M8 7.2v4M8 4.8v.6"/></svg>',
     warning:'<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.2 14.6 13.4H1.4Z"/><path d="M8 6.6v3.1M8 11.6v.6"/></svg>',
     artifact:'<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 2.6h6l3.6 3.6v7.2H3.2Z"/><path d="M9.2 2.6v3.6h3.6"/></svg>',
     skip:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l5 4-5 4"/><path d="M11.5 4v8"/></svg>',
-    mixed:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h4"/><path d="M9 5.2h4"/><path d="M9 10.8h4"/></svg>'
+    mixed:'<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h4"/><path d="M9 5.2h4"/><path d="M9 10.8h4"/></svg>',
+    close:'<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>'
   };
+  /* warning is only ever drawn on a warning line (a warning callout, a warning attention row, Build blocked), so it is
+     the warning triangle lit as a status mark in the attention tone, as a pmx refusal's is (3E2), not a concept glyph
+     inked by the line's colour */
+  var ICON_NEON = { check:['check',12], info:['info',14], warning:['warning',14,'nx-r-status nx-t-attention'], plan:['plan',15], close:['close',13] };
+  var ICON = {};
+  Object.keys(ICON_NEON).forEach(function(k){
+    Object.defineProperty(ICON, k, { enumerable:true, get:function(){
+      var N=window.PM56_NEON, n=ICON_NEON[k];
+      return N && typeof N.icon==='function' ? N.icon(n[0], n[1], n[2]) : ICON_16[k==='plan'?'artifact':k];
+    }});
+  });
+  /* A Building… plan's support line marks a WAITING state: its wait copy (r.wait), Waiting for Usage, Outside execution
+     window. It carries the shared status set's waiting-dep mark (the hourglass, attention tone) and a paused run the
+     paused mark, through the registry, instead of the info glyph in the accent (integrate, 2026-10-02: colour is
+     reserved for status). A line that says Paused (the window's wind-down, "Paused at window wind-down") takes the
+     paused mark too, so the copy and the mark agree (integrate fix cycle 2). An unknown info condition keeps the
+     concept-lit info glyph. */
+  var WAIT_STATUS = { wait:'waiting-dep', quota:'waiting-dep', quota_wait:'waiting-dep', window:'waiting-dep', paused:'paused' };
+  function waitMark(kind){
+    var N=window.PM56_NEON, s=WAIT_STATUS[kind];
+    return s && N && typeof N.status==='function' ? N.status(s, 14) : ICON.info;
+  }
+  /* Plan step marks are the shared status set (neon-icons.js status(), plan §3), 14 px in
+     the gutter: done complete (the check draws once), in progress working (the bead goes
+     round its ring), blocked blocked (the lock, danger: a blocked step cannot go on, so it
+     is no longer the warning triangle), skipped, mixed (the half-filled disc). The plan
+     card is a transcript card, not a pmx host, so the set's list rhythms run; the mark
+     is deterministic and keyed by its status (data-k="st:<s>"), so a patch keeps it and a
+     state change replays its act. A step with no state (pending, never admitted) keeps
+     the gutter's empty ring. */
+  var STEP_STATUS = { completed:'complete', in_progress:'working', blocked:'blocked', skipped:'skipped', mixed:'mixed' };
+  var STEP_16 = { completed:'check', in_progress:'dot', blocked:'warning', skipped:'skip', mixed:'mixed' };
+  function stepMark(st){
+    var N=window.PM56_NEON;
+    if(!STEP_STATUS[st]) return '';
+    return N && typeof N.status==='function' ? N.status(STEP_STATUS[st], 14) : ICON_16[STEP_16[st]];
+  }
 
 
   /* =====================================================================
@@ -1077,13 +1116,13 @@
   function waitCopy(r){
     if(r.status!=='building') return '';
     var a=attention(r);
-    if(!a) return r.wait ? '<span class="pd-wait">'+ICON.info+esc(r.wait)+'</span>' : '';
+    if(!a) return r.wait ? '<span class="pd-wait">'+waitMark('wait')+esc(r.wait)+'</span>' : '';
     var acts=a.allowed_action_ids.map(function(id){
       return '<button type="button" class="soft-button pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
-      (a.tone==='warning'?ICON.warning:ICON.info)+
+      (a.tone==='warning'?ICON.warning:waitMark(/^Paused\b/.test(a.line)?'paused':a.condition_kind))+
       '<span class="pd-attn-copy"><strong>'+esc(a.line)+'</strong><span>'+esc(a.reason)+'</span>'+att+'</span>'+
       acts+'</span>';
   }
@@ -1236,7 +1275,7 @@
     var why = r.status==='canceled' && r.cancelReason ? '<p class="pd-compact-why">'+esc(r.cancelReason)+'</p>' : '';
     return '<article class="system-card plan-doc plan-doc-compact pd-'+esc(r.status)+'" data-k="pd-'+esc(r.plan_id)+'-c" data-plan-id="'+esc(r.plan_id)+'">'+
       '<div class="pd-compact-row">'+
-        '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?ICON.check:'')+'</span>'+
+        '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?stepMark('completed'):'')+'</span>'+
         '<div class="pd-compact-copy"><strong>'+esc(r.title)+'</strong>'+
           '<span>'+esc(r.strategy)+' · V'+r.version+'</span></div>'+
         '<div class="pd-compact-actions">'+buildControl(r)+
@@ -1267,7 +1306,7 @@
     var first=body(r).find(b=>b.t==='paragraph'),summary=first?first.text:'';
     var e=eligible(r),pr=progress(r);
     return '<article class="system-card plan-doc plan-preview pd-'+esc(r.status)+'" data-k="plan-preview-'+esc(r.plan_id)+'" data-plan-id="'+esc(r.plan_id)+'">'+
-      '<div class="plan-preview-kicker">'+ICON.artifact+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
+      '<div class="plan-preview-kicker">'+ICON.plan+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
       '<div class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(r.status)+'</span></div>'+
@@ -1524,7 +1563,7 @@
      only writes the destination. */
   function reviseTarget(r){
     return { kind:'plan-revision', label:'Revise Plan · V'+r.version, detail:r.title,
-             refId:r.plan_id, glyph:'document',expectedRevision:{thread_id:r.thread_id,version:r.version,hash:hashOf(body(r))},
+             refId:r.plan_id, glyph:'plan',expectedRevision:{thread_id:r.thread_id,version:r.version,hash:hashOf(body(r))},
              placeholder:'Describe what should change. The agent writes V'+(r.version+1)+'.' };
   }
 
@@ -1587,7 +1626,7 @@
     return '<div class="dialog pd-dialog" data-k="pd-dlg-'+esc(id)+'" role="dialog" aria-modal="true" aria-label="'+esc(title)+'">'+
       '<div class="pd-dlg-head"><div><strong>'+esc(title)+'</strong>'+(sub?'<span>'+esc(sub)+'</span>':'')+'</div>'+
       '<button type="button" class="pd-dlg-x" data-action="pd-dlg-close" aria-label="Close">'+
-      '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>'+
+      ICON.close+'</button></div>'+
       '<div class="pd-dlg-body">'+bodyHtml+'</div>'+
       '<div class="pd-dlg-foot">'+footHtml+'</div></div>';
   }
@@ -2285,7 +2324,7 @@
     if(m.type==='pd-wizard-receipt'){
       var w=rec(m.planId); if(!w || !w.wizard) return '';
       return '<article class="event-card pd-receipt" data-k="pdw-'+esc(w.plan_id)+'-'+w.wizard.version+'">'+
-        '<span class="event-icon">'+ICON.artifact+'</span>'+
+        '<span class="event-icon">'+ICON.plan+'</span>'+
         '<div class="event-copy"><strong>Sent to Planning Wizard</strong>'+
         '<p>'+esc(w.title)+' · V'+w.wizard.version+' · '+esc(w.wizard.hash)+'</p>'+
         '<p class="pd-attr">Receipt '+esc(w.wizard.receipt)+' · PRD Builder bypassed · Planning Wizard now owns the PlanningRun, Plan Pack, approval, Plan Compile and Orchestrator navigation.</p></div>'+
@@ -2369,7 +2408,7 @@
  // A Plan receipt is a linked record, not a Goal state or generic work note.
  EXT.slot('transcriptMessage',c=>{
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
-  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('document',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
+  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
 
   EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});

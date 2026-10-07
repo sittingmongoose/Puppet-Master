@@ -20,43 +20,46 @@
   };
   const uid = (p='id') => `${p}-${Math.random().toString(36).slice(2,9)}-${Date.now().toString(36)}`;
 
+  /* The glyph family lives in neon-icons.js (window.PM56_NEON, loaded first of all modules): one drawing per
+     concept, the neon halo, the acts and the status set. icon() delegates to it. PATHS is only the fallback that
+     keeps the lab readable if neon-icons.js ever fails to load; it is not the family and is not extended. It
+     keeps more than twenty core names because tests/shell-selfcheck.cjs reads this table as the app table that
+     module-shell's pmxGlyph falls back to when it runs with no PM56_NEON (A2-09). */
   const PATHS = {
     user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/>',
-    chat:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-2 2V11.5a9.5 9.5 0 0 1 19 0Z"/>',
-    sliders:'<path d="M4 6h5M13 6h7M4 12h10M18 12h2M4 18h2M10 18h10M9 3v6M14 9v6M6 15v6"/>',
     search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
     history:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/>',
-    reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
-    settings:'<path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.55V21h-4v-.08A1.7 1.7 0 0 0 9 19.37a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15a1.7 1.7 0 0 0-1.55-1.03H3v-4h.08A1.7 1.7 0 0 0 4.63 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1.03-1.55V3h4v.08A1.7 1.7 0 0 0 15 4.63a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9c.2.6.8 1 1.55 1H21v4h-.08c-.75 0-1.35.4-1.52 1Z"/>',
     close:'<path d="m6 6 12 12M18 6 6 18"/>',
     more:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
     chevron:'<path d="m9 18 6-6-6-6"/>', down:'<path d="m6 9 6 6 6-6"/>', up:'<path d="m18 15-6-6-6 6"/>', left:'<path d="m15 18-6-6 6-6"/>',
     check:'<path d="m5 12 4 4L19 6"/>', plus:'<path d="M12 5v14M5 12h14"/>', minus:'<path d="M5 12h14"/>',
-    pin:'<path d="M12 17v5"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>',
-    unpin:'<path d="M2 2l20 20"/><path d="M12 17v5"/><path d="M9 9v1.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17h12"/><path d="M15 9.34V6h1a2 2 0 0 0 0-4H7.89"/>',
-    archive:'<path d="M4 7v13h16V7M3 3h18v4H3zM9 11h6"/>', restore:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>', edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>', fork:'<circle cx="6" cy="4" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="20" r="2"/><path d="M6 6v12M8 9c5 0 5-3 8-3"/>',
-    copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>', branch:'<path d="M6 3v12a4 4 0 0 0 4 4h8"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 9h7a4 4 0 0 0 4-4V3"/><circle cx="17" cy="3" r="2"/>',
-    info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>', play:'<path d="m8 5 11 7-11 7Z"/>', pause:'<path d="M9 5v14M15 5v14"/>', step:'<path d="m7 5 9 7-9 7zM18 5v14"/>',     stop:'<rect x="7.5" y="7.5" width="9" height="9" rx="1.75"/>',
-    send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>', attach:'<path d="m21 11-8.5 8.5a6 6 0 0 1-8.5-8.5L13 2a4 4 0 0 1 5.7 5.7l-9 9a2 2 0 0 1-2.8-2.8L15 5.8"/>', wand:'<path d="m15 4 5 5L8 21H3v-5Z"/><path d="m14 5 5 5M6 4V2M5 3H3M20 17v-2M21 16h2M19 3V1M18 2h-2"/>',
+    copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+    edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>',
+    info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>', play:'<path d="m8 5 11 7-11 7Z"/>', pause:'<path d="M9 5v14M15 5v14"/>',
+    stop:'<rect x="7.5" y="7.5" width="9" height="9" rx="1.75"/>',
+    send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+    attach:'<path d="m21 11-8.5 8.5a6 6 0 0 1-8.5-8.5L13 2a4 4 0 0 1 5.7 5.7l-9 9a2 2 0 0 1-2.8-2.8L15 5.8"/>',
     sparkles:'<path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2Z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8Z"/><path d="m5 14 .8 1.7L8 16.5l-2.2.8L5 19l-.8-1.7L2 16.5l2.2-.8Z"/>',
-    goal:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M20 4 15 9"/>', todo:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="m3 6 1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/>', users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>', changes:'<path d="M4 7h11M4 17h16M15 4l3 3-3 3M9 14l-3 3 3 3"/>', artifact:'<path d="M4 3h12l4 4v14H4z"/><path d="M16 3v5h5M8 13h8M8 17h6"/>',
-    brain:'<path d="M9.5 4A3.5 3.5 0 0 0 6 7.5v.4A3.5 3.5 0 0 0 4 11a3.5 3.5 0 0 0 2.2 3.25A3.5 3.5 0 0 0 9.5 19H11V4ZM14.5 4A3.5 3.5 0 0 1 18 7.5v.4a3.5 3.5 0 0 1 2 3.1 3.5 3.5 0 0 1-2.2 3.25A3.5 3.5 0 0 1 14.5 19H13V4Z"/><path d="M7 10h4M13 8h4M13 14h4"/>',
-    'folder-search':'<path d="M3 5h6l2 2h10v12H3z"/><circle cx="12" cy="13" r="3"/><path d="m14.5 15.5 2 2"/>', download:'<path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/>', globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>', terminal:'<path d="m4 7 5 5-5 5M11 17h9"/>', 'file-edit':'<path d="M4 3h11l5 5v13H4z"/><path d="M15 3v5h5M9 17l1-4 6-6 3 3-6 6Z"/>', 'monitor-play':'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M10 7l5 3-5 3Z"/>', flask:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 14h8"/>', 'check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
-    eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>', eyeoff:'<path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.5 5.2A9.8 9.8 0 0 1 12 5c6 0 10 7 10 7a18 18 0 0 1-2.1 2.8M6.6 6.6C3.8 8.4 2 12 2 12s4 7 10 7a9.8 9.8 0 0 0 4.4-1"/>',
-    filter:'<path d="M3 5h18l-7 8v6l-4 2v-8Z"/>', collapse:'<path d="m8 3 4 4 4-4M8 21l4-4 4 4"/>', expand:'<path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/>',
-    lightning:'<path d="M13 2 4 14h7l-1 8 10-13h-7Z"/>', plug:'<path d="M9 7V2M15 7V2"/><path d="M6 7h12v4a6 6 0 0 1-12 0Z"/><path d="M12 17v5"/>', star:'<path d="m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z"/>',
-    document:'<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/>', image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>', code:'<path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 4l-4 16"/>',
-    warning:'<path d="M12 3 2 21h20Z"/><path d="M12 9v5M12 17h.01"/>', lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>', refresh:'<path d="M20 11a8 8 0 1 0-2 5.3M20 4v7h-7"/>',
-    lens:'<circle cx="12" cy="12" r="7"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="15" x2="16" y2="15"/>',
-    effort:'<circle cx="12" cy="12" r="7"/>'
+    eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    document:'<path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h5M8 12h8M8 16h8"/>',
+    warning:'<path d="M12 3 2 21h20Z"/><path d="M12 9v5M12 17h.01"/>',
+    lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+    refresh:'<path d="M20 11a8 8 0 1 0-2 5.3M20 4v7h-7"/>'
   };
   function icon(name, size=15, cls='') {
+    const N = window.PM56_NEON;
+    if (N && typeof N.icon === 'function') return N.icon(name, size, cls);
     const paths = PATHS[name] || PATHS.info;
     /* Stop is a filled media-player square (not a stroked Lucide rect). */
     if(name==='stop'){
       return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">${PATHS.stop}</svg>`;
     }
     return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+  }
+  /* hasIcon(name): whether the family draws this name (module-shell's pmxGlyph asks before it falls back). */
+  function hasIcon(name) {
+    const N = window.PM56_NEON;
+    return N && typeof N.has === 'function' ? N.has(name) : Object.prototype.hasOwnProperty.call(PATHS, name);
   }
   /* Filled provider marks (rail + model rows). Stroke `icon()` cannot draw
      brand silhouettes; these are SVG-only, currentColor, viewBox 24. */
@@ -71,7 +74,7 @@
   function providerMark(p, size=16){
     const d=PROVIDER_MARKS[p];
     if(!d) return icon('sparkles', size);
-    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d}</svg>`;
+    return `<svg class="nx-brand" width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${d}</svg>`;
   }
   /* F0b (f): a module's kind mark (DESIGN-SPEC 4.2 B2) when module-shell provides one at
      call time, else the old stroke icon, so the concept still renders without it. */
@@ -117,11 +120,26 @@
     if(state.capabilities.eli5) dots.push(capDot('eli5',kindMark('eli5',16,'chat'),'Simple explanations in this chat'));
     return dots.slice(0,5).join('');
   }
-  function modeGlyph(mode, size=13){
-    if(mode==='Ask') return icon('info', size);
-    if(String(mode).includes('Plan')) return icon('document', size);
-    if(mode==='Debug') return icon('warning', size);
-    return icon('sparkles', size);
+  /* One glyph per mode (neon cleanup, plan §2): the composer chip (modeGlyph) and the Mode menu read the same map.
+     Ask info, Plan and Deep Plan the folded map, Debug the bug (the warning triangle is a status mark now), Review
+     the review kind mark (page + lens), Agent sparkles. */
+  const MODE_GLYPH = {Ask:'info', Agent:'sparkles', Debug:'bug', Plan:'plan', 'Deep Plan':'plan', Review:'kind-review'};
+  function modeIconName(mode){ return MODE_GLYPH[mode] || (String(mode).includes('Plan') ? 'plan' : 'sparkles'); }
+  function modeGlyph(mode, size=13){ return icon(modeIconName(mode), size); }
+  /* The status set (neon-icons.js PM56_NEON.STATUS): a status word or alias -> its canonical key, or null. */
+  function neonStatusKey(s){
+    const S=window.PM56_NEON&&window.PM56_NEON.STATUS; if(!S) return null;
+    s=String(s==null?'':s); if(S[s]) return s;
+    for(const k of Object.keys(S)) if((S[k].aliases||[]).includes(s)) return k;
+    return null;
+  }
+  /* statusMark(s,size): the status mark lit in its tone, bare -- no rhythm wrapper and no loop -- for records that
+     stay on screen (event cards). A live status uses PM56_NEON.status() instead. */
+  function statusMark(s, size){
+    const k=neonStatusKey(s);
+    if(!k) return icon('info', size, 'nx-r-concept');
+    const S=window.PM56_NEON.STATUS[k];
+    return icon(S.glyph, size, 'nx-t-'+S.tone);
   }
 
   const DEFAULT = {
@@ -316,7 +334,7 @@
   function extCtx(extra){
     return Object.assign({
       /* data */
-      state, D, M, clone, clamp, esc, uid, icon, providerMark,
+      state, D, M, clone, clamp, esc, uid, icon, hasIcon, providerMark,
       thread: activeThread(), model: selectedModel(),
       activeThread, selectedModel, statusLabel, activityDefs, activityScope, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
@@ -467,6 +485,7 @@
   let activityPinLayout=activityPinnedInLayout();
   function savePrefs() {
     safeStorage.set('pm56-prefs', JSON.stringify({theme:state.theme,historyMode:state.historyMode,historyWidth:state.historyWidth,editorWidth:state.editorWidth,activityWidth:state.activityWidth,model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,capabilities:state.capabilities}));
+    if(window.PM56_NIER_SAVED) window.PM56_NIER_SAVED();   /* NieR Mode's Save signal part (nier-world.js) */
   }
   function loadPrefs() {
     const raw = safeStorage.get('pm56-prefs'); if (!raw) return;
@@ -499,7 +518,7 @@
       <div class="header-spacer"></div>
       <div class="header-actions">
         <button class="header-chip" data-action="toggle-history" title="Thread history">${icon('history',14)}<span class="optional">Threads</span></button>
-        <button class="header-chip" data-action="open-demo" title="Open the complete demo and component mixer">${icon('sparkles',14)}<span class="label">Demo Studio</span></button>
+        <button class="header-chip" data-action="open-demo" title="Open the complete demo and component mixer">${icon('sliders',14)}<span class="label">Demo Studio</span></button>
         <button class="header-chip" data-action="reset-all" title="Reset the entire concept to its stock state">${icon('reset',14)}<span class="optional">Reset</span></button>
       </div>
     </header>`;
@@ -862,6 +881,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const v=state.motionVoice;
     if(v&&v!=='auto') return v;
     const fam=String(state.theme||'basic').split('-')[0];
+    /* NieR Mode (nier.js) moves in Retro's stepped, mechanical voice; nier.css strips Retro's glow under its contract. */
+    if(fam==='nier') return 'retro';
     return ['basic','friendly','glass','retro'].includes(fam)?fam:'basic';
   }
   function renderChat(){
@@ -893,6 +914,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return String(t.title||'').split(/\s+/).filter(Boolean)
       .map((w,i)=>`<span class="pmx-chat-title-word" data-k="tw:${i}:${esc(w)}" style="--i:${i}">${esc(w)}</span>`).join(' ');
   }
+  /* The header's status: the thread's live status mark (PM56_NEON.status, keyed st:<status> so a change replays its
+     one-shot) beside the word. The .status-dot it replaces stays for the history takes that draw dots; without the
+     neon module the dot comes back. */
+  function headerStatusMark(s){
+    const N=window.PM56_NEON;
+    return N&&typeof N.status==='function' ? N.status(s,13) : `<i class="status-dot ${esc(s)}"></i>`;
+  }
+  /* The word beside it takes the mark's tone (final review, 2026-10-03: it was the warning amber for every status, so
+     Ready, Paused and Complete read lit beside their unlit or green marks); neon-icons.css section 12 colours it. */
+  function headerStatusTone(s){
+    const k=neonStatusKey(s);
+    return k ? ` data-tone="${esc(window.PM56_NEON.STATUS[k].tone)}"` : '';
+  }
   function renderChatHeader(t){
     /* Context ring percentage. The ring's value is an INLINE style attribute, so no
        module stylesheet can reach it -- it has to be resolved here. PM56_CTX comes from
@@ -902,7 +936,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="chat-header">
       <button class="icon-button" data-action="toggle-history"${hoverAttrs('open-history','Open thread history')}>${icon('history',14)}</button>
       <button class="icon-button" data-action="new-thread"${hoverAttrs('new-thread','Start a new thread')}>${icon('plus',16,'hh-plus-glyph')}</button>
-      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"><i class="status-dot ${t.status}"></i>${esc(statusLabel(t.status))}</span></div>
+      <div class="chat-title" data-pmx-title-state="${titleState(t)}"><span class="pmx-chat-title">${titleWords(t)}</span>${extRender('headerTitleAfter',{thread:t})}<span class="chat-state"${headerStatusTone(t.status)}>${headerStatusMark(t.status)}${esc(statusLabel(t.status))}</span></div>
       <span class="chat-head-spacer"></span>
       ${extRender('headerLeading',{thread:t})}
       <button class="icon-button" data-action="thread-search" data-menu-anchor="thread-search"${hoverAttrs('thread-search','Search this thread or every thread')}>${icon('search',14)}</button>
@@ -1048,7 +1082,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderPlanCard(m){
     const art=D.artifacts.find(a=>a.id===m.artifactId)||D.artifacts[0];
-    return `<article class="system-card plan-card"><div class="system-card-head"><span class="event-icon">${icon('document',14)}</span><div><span class="title">${m.deep?'Deep Plan':'Created Plan'}</span><span class="sub"> · Revision ${state.planRevision}</span></div><span class="spacer"></span><span class="meta-pill">${esc(state.planStatus)}</span><span class="meta-pill">${m.deep?'Exhaustive':'Thorough'}</span></div><div class="system-card-body"><h3>${esc(art.title)}</h3><p>${esc(art.summary)}</p><div class="plan-actions"><button class="soft-button" data-action="open-artifact" data-id="${esc(art.id)}">${icon('eye',13)} View Plan</button><button class="soft-button" data-action="revise-plan" data-id="${esc(art.id)}">${icon('edit',13)} Revise</button><button class="primary-button" data-action="build-plan" data-id="${esc(art.id)}">${icon('play',13)} Build</button></div></div></article>`;
+    return `<article class="system-card plan-card"><div class="system-card-head"><span class="event-icon">${icon('plan',14)}</span><div><span class="title">${m.deep?'Deep Plan':'Created Plan'}</span><span class="sub"> · Revision ${state.planRevision}</span></div><span class="spacer"></span><span class="meta-pill">${esc(state.planStatus)}</span><span class="meta-pill">${m.deep?'Exhaustive':'Thorough'}</span></div><div class="system-card-body"><h3>${esc(art.title)}</h3><p>${esc(art.summary)}</p><div class="plan-actions"><button class="soft-button" data-action="open-artifact" data-id="${esc(art.id)}">${icon('eye',13)} View Plan</button><button class="soft-button" data-action="revise-plan" data-id="${esc(art.id)}">${icon('edit',13)} Revise</button><button class="primary-button" data-action="build-plan" data-id="${esc(art.id)}">${icon('play',13)} Build</button></div></div></article>`;
   }
 
   function renderArtifactMessage(m){
@@ -1069,12 +1103,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<button class="live-agent-row" data-action="open-agent" data-id="${esc(a.id)}" title="Open the read-only live child thread"><span class="agent-avatar">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span><span class="agent-name">${esc(a.name)}</span><span class="agent-now">${esc(a.current)}</span><span class="agent-progress"><i style="width:${a.progress}%"></i></span></span><span class="agent-state ${a.status}">${esc(lblOf('subagentStatus',a.status))}</span></button>`;
   }
 
+  const EVENT_STATUS={offline:'waiting-dep',waiting:'waiting-dep','tool-error':'failed',reconnected:'complete',blocked:'blocked'};
   function renderEventMessage(m){
     const record=extReplace('workRecord',{m},'');if(record)return record;
     const map={
-      'question-receipt':['todo','Questionnaire waiting','warning'],'bsd-evaluating':['search','BSD evaluating',''],'bsd-advice':['warning','Back Seat Driver','warning'],'context-focus':['filter','Context Lens · Focus','positive'],'context-mute':['eyeoff','Context Lens · Mute',''],'context-subcompact':['collapse','Context Lens · Subcompact',''],'offline':['warning','Offline queue','warning'],'reconnected':['refresh','Reconnected','positive'],'attachment':['attach','Attachment','positive'],'attachment-error':['warning','Attachment routing','warning'],'tool-error':['warning','Tool failure','danger'],'permission':['lock','Permission request','warning'],'goal-receipt':['goal','Goal state',''],'route-change':['changes','Route change',''],'crew':['users','Crew',''],'new-message':['down','New messages',''],'model-unavailable':['warning','Model availability','danger'],'agent-work':['artifact','Agent work',''],'blocked':['lock','Blocked','danger'],'waiting':['pause','Waiting','']
+      'question-receipt':['question','Questionnaire waiting','warning'],'bsd-evaluating':['kind-bsd','BSD evaluating',''],'bsd-advice':['kind-bsd','Back Seat Driver','warning'],'context-focus':['filter','Context Lens · Focus','positive'],'context-mute':['eye-off','Context Lens · Mute',''],'context-subcompact':['collapse','Context Lens · Subcompact',''],'offline':['warning','Offline queue','warning'],'reconnected':['refresh','Reconnected','positive'],'attachment':['attach','Attachment','positive'],'attachment-error':['warning','Attachment routing','warning'],'tool-error':['warning','Tool failure','danger'],'permission':['shield','Permission request','warning'],'goal-receipt':['goal','Goal state',''],'route-change':['changes','Route change',''],'crew':['kind-crew','Crew',''],'new-message':['chevron-down','New messages',''],'model-unavailable':['warning','Model availability','danger'],'agent-work':['page','Agent work',''],'blocked':['lock','Blocked','danger'],'waiting':['pause','Waiting','']
     };
     const d=map[m.type]||['info',m.title||m.type,''];
+    /* Event icons are concept glyphs (lit steady, host ink). The status-like events show the status set's mark in its
+       tone instead: queued offline or behind a dependency waits (hourglass), a tool failure failed, a reconnect
+       complete, a blocked step blocked. Static: a record never loops. */
+    const st=EVENT_STATUS[m.type];
+    const glyph=st?statusMark(st,14):icon(d[0],14,'nx-r-concept');
     const actions=[];
     if(m.type==='question-receipt') actions.push(`<button class="soft-button" data-action="open-questionnaire">Resume</button>`);
     if(m.type==='bsd-advice') actions.push(`<button class="soft-button" data-action="open-bsd-details">${icon('eye',12)} Why?</button><button class="text-button" data-action="dismiss-event" data-id="${esc(m.id)}">Dismiss</button>`);
@@ -1084,7 +1124,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     /* The actions array is a fixed if-chain, so module-rendered system cards (restore
        points, rewound regions) could carry no buttons at all. Emits nothing unregistered. */
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
-    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p></div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
+    return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${glyph}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p></div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
   function renderWorkingAnimation(m,ownedProjection){
     const rec=ownedProjection||workRecFor(m)||state.work;
@@ -1092,7 +1132,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const ctx=makeWorkCtx(rec,m), step=ctx.step, pct=ctx.pct;
     const co=CHROME_OPTS[v]||{}, shut=rec.completed&&rec.openPhase==null;
     const cardId=ctx.cardId, recId=(m&&m.workId)||'primary';
-    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
+    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon" data-k="wpi:${esc(step.id)}">${icon(step.icon,14,rec.running?'nx-r-status nx-t-working':'')}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
   }
 
   /* Chat WOW M4: the lab controls (play/pause, step, complete, reset, history)
@@ -1374,7 +1414,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const meta=D.phaseMeta[g.first.kind]||{};
       const cls='pm-rail-item wa-disc '+(completed||i<activeIdx?'done':i===activeIdx?'current enter':'')+(open===g.phase?' open':'');
       const act=completed?` data-action="toggle-work-phase" data-value="${g.phase}"`:'';
-      return `<button type="button" class="${cls}" data-k="wa:${i}:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,11)}</button>`;
+      /* neon icons (orbit.css PART 3): the current disc's glyph gets its moving parts (size 14) only while the run runs,
+         so it acts; every other disc is drawn still (11, under the registry's 12 px gate) */
+      return `<button type="button" class="${cls}" data-k="wa:${i}:${g.phase}"${act} title="${esc(meta.past||meta.verb||g.phase)} ${esc(meta.count||'')}" aria-label="${esc(meta.past||meta.verb||g.phase)}">${icon(g.first.icon,(running&&!completed&&i===activeIdx)?14:11)}</button>`;
     }).join('');
     /* `off` continues the entrance cascade across the steps of one opened
        phase, so rows always land top-to-bottom in document order. */
@@ -1529,6 +1571,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      separate domain -- a Crew member is not a subagent. */
   const ACTIVITY_ORDER=['goal','todo','subagents','crew','brainstorm','review','chat_room','changes','artifacts'];
   const COLLAB_DOMAINS={crew:'Crew',brainstorm:'BrainStorm',review:'Review',chat_room:'Chat Room'};
+  const COLLAB_ATTENTION={attention:1,limit:1,failed:1,blocked:1}, COLLAB_TONE_RANK=['attention','working','done','idle'];
   /* collaboration.js owns the runs; app.js only projects whatever is there, so the bar is
      correct with the module absent (no runs -> no domains) and correct with it loaded. */
   function collabRuns(tid){
@@ -1723,7 +1766,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        run) no longer lists invented members. A thread with Crew runs is projected by the
        COLLAB_DOMAINS loop below, which replaces this entry. */
     if(scope.live.crew){
-      out.crew={icon:'users',label:'Crew',count:'0',state:'changed',tone:'idle',
+      out.crew={icon:'kind-crew',label:'Crew',count:'0',state:'changed',tone:'idle',
         summary:'No Crews in this chat yet.',
         detail:'A Crew you start in this chat shows up here.'};
     }
@@ -1745,14 +1788,25 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const runs=scope.collab[id]||[];
       const running=runs.filter(r=>r.status==='running');
       const failed=runs.filter(r=>r.status==='failed'||r.degraded);
-      const done=runs.filter(r=>r.status==='completed');
       const latest=runs[runs.length-1]||{};
-      out[id]={icon:id==='review'?'eye':['crew','chat_room'].includes(id)?'users':'brain',label:COLLAB_DOMAINS[id],
+      /* fpfix cycle 1: the tone is the worst of each run's own presentation state, the one the cards, dock and receipt
+         read (PM56_COLLAB.presentState, A1-20): blocked, a pending decision, a blocked helper, a Chat Room's "your
+         move", an unclean completion, a limit stop and a failure need you (attention); running and starting work;
+         completed is done; waiting, paused and cancelled stay idle. Raw status is only the fallback without the store. */
+      const C=window.PM56_COLLAB, ps=r=>{try{return C&&C.presentState?C.presentState(r):r.status;}catch(e){return r.status;}};
+      const runTone=r=>{const s=ps(r);return r.degraded||COLLAB_ATTENTION[s]?'attention':s==='running'||s==='starting'?'working':s==='completed'?'done':'idle';};
+      const tones=runs.map(runTone), tone=tones.reduce((w,t)=>COLLAB_TONE_RANK.indexOf(t)<COLLAB_TONE_RANK.indexOf(w)?t:w,'idle');
+      /* fpfix cycle 2: the detail line counts the same per-run tones, so its words match the colour (a Chat Room on
+         "your move" or a blocked run says it needs you instead of "running" or nothing) */
+      const nTone=t=>tones.filter(x=>x===t).length, nYou=nTone('attention'), nRun=nTone('working'), nDone=nTone('done');
+      /* neon 3B: each collaborative domain shows its kind mark (one glyph per concept: the bar, the hover card head and
+         Activity Detail all read this icon) */
+      out[id]={icon:'kind-'+id,label:COLLAB_DOMAINS[id],
         count:String(runs.length),
         state:running.length?'live':failed.length?'changed':'changed',
-        tone:failed.length?'attention':running.length?'working':done.length?'done':'idle',
+        tone,
         summary:latest.title||COLLAB_DOMAINS[id],
-        detail:[running.length?`${running.length} running`:null,done.length?`${done.length} completed`:null,failed.length?`${failed.length} degraded`:null,latest.participants?`${latest.participants.length} participants`:null].filter(Boolean).join(' · ')||'No runs'};
+        detail:[nYou?plural(nYou,'needs you','need you'):null,nRun?`${nRun} running`:null,nDone?`${nDone} completed`:null,latest.participants?plural(latest.participants.length,'participant','participants'):null].filter(Boolean).join(' · ')||'No runs'};
     });
     if(scope.live.artifacts){
       const arts=scope.artifacts;
@@ -1771,11 +1825,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return out;
   }
 
+  /* The bar draws every domain glyph through icon(), the kind marks included (neon 3B): a bar glyph is the bar's own lit
+     icon, not a pmx surface, so it carries no pmx-glyph/pmx-kind class (pmx-verify's loop census would otherwise count
+     the bar's rhythm against a pmx host's zero-loop budget). kindMark() stays the fallback without the neon family. */
   function renderActivityBar(){
     const defs=activityDefs();
     const items=Object.entries(defs);
     if(!items.length) return '';
-    return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]?kindMark(id,12,d.icon):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
+    return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
   }
   function renderJumpBottom(){
     const working=turnBusy();
@@ -1804,7 +1861,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const pinLabel=(state.activity.pinned?'Unpin':'Pin')+' Activity Detail';
     const filterButton=`<button class="icon-button activity-head-filter" data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}"${hoverAttrs('act-filter','Show or hide category filter')}>${icon('filter',13)}</button>`;
     const overflow=`<details class="activity-head-overflow"><summary class="icon-button" aria-label="More Activity Detail actions">${icon('more',13)}</summary><div class="activity-head-menu"><button data-action="toggle-activity-filter" aria-pressed="${state.activity.filterVisible?'true':'false'}">${icon('filter',12)} ${state.activity.filterVisible?'Hide':'Show'} domains</button></div></details>`;
-    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13)}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button" data-action="${pinAction}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}">${icon(x.icon,13)}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
+    return `<aside class="activity-panel ${transient?'transient':''}" data-variant="${state.variants[4]}" data-scope="${allScope?'all':'focus'}" data-domain="${esc(d)}" data-pinned="${activityPinnedInLayout()?'true':'false'}" ${transient?'role="dialog" aria-modal="false"':'role="region"'} aria-label="Activity Detail"><div class="activity-panel-head"><span class="event-icon activity-head-icon">${icon(headDef.icon,13,'nx-t-'+(headDef.tone||'idle'))}</span><strong>Activity Detail</strong><span class="spacer"></span>${filterButton}${overflow}<button class="icon-button${state.activity.pinned?' is-pinned':''}" data-action="${pinAction}" aria-pressed="${state.activity.pinned?'true':'false'}"${hoverAttrs('act-pin',pinLabel)}>${icon(state.activity.pinned?'unpin':'pin',13)}</button><button class="icon-button" data-action="close-activity"${hoverAttrs('act-close','Close Activity Detail')}>${icon('close',13)}</button></div><div class="activity-filter ${state.activity.filterVisible?'':'hidden'}" style="--activity-n:${n}" role="toolbar" aria-label="Activity domains">${live.map(id=>{const x=defs[id],active=!allScope&&d===id;return `<button class="${active?'active':''}" data-action="focus-activity" data-domain="${id}" aria-label="${esc(x.label)} activity, ${esc(x.count)}" aria-pressed="${active?'true':'false'}">${icon(x.icon,13,'nx-t-'+(x.tone||'idle'))}<span>${x.label}</span></button>`;}).join('')}</div><div class="activity-scroll" data-scroll-key="activity">${extReplace('activityPanelBody',{domain:d,transient},sections.map(renderActivitySection).join(''))}</div>${transient?'':'<div class="panel-resize" data-resize="activity" aria-hidden="true"></div>'}</aside>`;
   }
 
   function renderActivitySection(id){
@@ -1813,14 +1870,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<section class="activity-section" data-domain-section="${id}"><button class="activity-section-head" data-action="toggle-activity-section" data-domain="${id}"><span class="event-icon" style="width:24px;height:24px">${icon(d.icon,12)}</span><strong>${d.label}</strong><span style="font-size:10px;color:var(--muted)">${esc(d.summary)}</span><span class="spacer"></span><span class="meta-pill">${d.count}</span>${icon(open?'up':'down',11)}</button>${open?`<div class="activity-section-body">${renderActivitySectionBody(id)}</div>`:''}</section>`;
   }
 
+  /* Activity lines carry their tone as data-tone (neon-icons.css colours the icon), never an inline colour. A To-Do's
+     mark is the status set's (complete check, blocked lock, working ring, pending dashed ring); an unknown status
+     keeps the domain glyph, untoned. */
+  function lineTone(s){ const k=neonStatusKey(s); const t=k&&window.PM56_NEON.STATUS[k].tone; return t?` data-tone="${t}"`:''; }
+  function lineMark(s,fallback){ const k=neonStatusKey(s); return k?icon(window.PM56_NEON.STATUS[k].glyph,10):icon(fallback,10); }
   function renderActivitySectionBody(id){
     const scope=activityScope();
     if(id==='goal') return extReplace('goalSection',{}, `<div class="activity-line"><span class="status-dot working"></span><div class="copy"><strong>Optimize analytics query performance</strong><span>Running · Phase 2/4 · 68% · Revision 4</span></div><span class="right">2m 06s</span></div><div class="activity-line"><span class="event-icon" style="width:20px;height:20px">${icon('warning',10)}</span><div class="copy"><strong>Exact blocker</strong><span>Production schema modification requires explicit approval.</span></div></div><div class="plan-actions"><button class="soft-button" data-action="open-goal">View Goal</button><button class="soft-button" data-action="edit-goal">Edit</button><button class="soft-button" data-action="pause-goal">Pause</button><button class="soft-button" data-action="resume-goal">Resume</button><button class="soft-button" data-action="stop-goal">Stop</button><button class="text-button danger" data-action="clear-goal">Clear</button></div>`);
-    if(id==='todo') return scope.todos.map(x=>`<div class="activity-line"><span class="event-icon" style="width:20px;height:20px;color:${x.status==='done'?'var(--positive)':x.status==='blocked'?'var(--danger)':'var(--accent)'}">${icon(x.status==='done'?'check':x.status==='blocked'?'lock':'todo',10)}</span><div class="copy"><strong>${esc(x.label)}</strong><span>${esc(x.source)}${x.blocker?` · ${esc(x.blocker)}`:''}</span></div><span class="right">${esc(x.status)}</span></div>`).join('');
+    if(id==='todo') return scope.todos.map(x=>`<div class="activity-line"><span class="event-icon" style="width:20px;height:20px"${lineTone(x.status)}>${lineMark(x.status,'todo')}</span><div class="copy"><strong>${esc(x.label)}</strong><span>${esc(x.source)}${x.blocker?` · ${esc(x.blocker)}`:''}</span></div><span class="right">${esc(x.status)}</span></div>`).join('');
     if(id==='subagents') return scope.subagents.map(a=>`<button class="activity-line" data-action="open-agent" data-id="${esc(a.id)}"><span class="agent-avatar" style="width:22px;height:22px;border-radius:7px">${esc(a.name.split(' ').map(x=>x[0]).join('').slice(0,2))}</span><span class="copy"><strong>${esc(a.name)} · ${esc(a.model)}</strong><span>${esc(a.current)}${a.blocker?` · ${esc(a.blocker)}`:''}</span></span><span class="right">${esc(lblOf('subagentStatus',a.status))} · ${esc(a.elapsed)}</span></button>`).join('');
     if(id==='crew') return `<div class="activity-line"><span class="copy"><strong>No Crews in this chat yet.</strong><span>A Crew you start in this chat shows up here.</span></span></div>`;
-    if(id==='changes') return scope.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" style="color:var(--positive)">+${c.add} <i style="color:var(--danger)">−${c.del}</i></span></button>`).join('');
-    return scope.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px;color:${a.status==='error'?'var(--danger)':a.status==='stale'?'var(--warning)':'var(--accent)'}">${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
+    if(id==='changes') return scope.changes.map(c=>`<button class="activity-line" data-action="open-change" data-path="${esc(c.path)}"><span class="event-icon" style="width:20px;height:20px">${icon('file-edit',10)}</span><span class="copy"><strong>${esc(c.path)}:${c.line}</strong><span>${esc(c.summary)}</span></span><span class="right" data-tone="done">+${c.add} <i data-tone="blocked">−${c.del}</i></span></button>`).join('');
+    return scope.artifacts.map(a=>`<button class="activity-line" data-action="open-artifact" data-id="${esc(a.id)}" data-artifact-id="${esc(a.id)}"><span class="event-icon" style="width:20px;height:20px"${a.status==='error'?' data-tone="blocked"':a.status==='stale'?' data-tone="attention"':''}>${icon(a.kind==='image'?'image':a.kind==='mermaid'?'code':'artifact',10)}</span><span class="copy"><strong>${esc(a.title)}</strong><span>${esc(a.kind)} · version ${a.version} · ${esc(a.summary)}</span></span><span class="right">${esc(lblOf('artifactStatus',a.status))}</span></button>`).join('');
   }
   /* D1: .decision-host.empty transitions max-height, but only if children stay
      mounted for the collapse. Snapshot the last surface, render it under .empty,
@@ -1890,15 +1952,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     else if(q.type==='multi') input=`<div class="choice-grid">${q.options.map(o=>`<button class="choice ${Array.isArray(q.answer)&&q.answer.includes(o)?'selected':''}" data-action="answer-multi" data-value="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
     else if(q.type==='text') input=`<textarea class="decision-textarea" data-input="question-text" placeholder="Optional constraints…">${esc(q.answer||'')}</textarea>`;
     else input=`<div class="decision-evidence" style="display:block"><strong>Resolved deployment</strong><p>Server: ${esc(state.questions[0].answer||'Not answered')}</p><p>Windows execution: ${esc((state.questions[1].answer||[]).join(', ')||'Not answered')}</p><p>Fallback: ${esc(state.questions[2].answer||'Not answered')}</p></div>`;
-    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('todo',13)}</span><strong>Deployment questionnaire</strong><span class="meta-pill">${answered}/${state.questions.length} answered</span><span class="spacer"></span><button class="text-button" data-action="skip-question">Skip</button><button class="icon-button" data-action="close-decision" title="Close and return later; answers are preserved">${icon('close',12)}</button></div><div class="decision-body"><div class="question-progress">${state.questions.map((x,i)=>`<i class="${i<state.questionIndex?'done':i===state.questionIndex?'current':''}"></i>`).join('')}</div><div class="question-prompt">${esc(q.prompt)} ${q.required?'<span style="color:var(--danger)">*</span>':''}</div>${input}<div class="decision-evidence"><strong>Why this matters</strong><p>This answer changes host selection, fallback routing, and the resulting Plan artifact.</p></div><div class="decision-actions"><button class="soft-button" data-action="cancel-questionnaire">Cancel questionnaire</button><span style="flex:1"></span><button class="soft-button" data-action="prev-question" ${state.questionIndex===0?'disabled':''}>${icon('left',12)} Back</button>${state.questionIndex===state.questions.length-1?`<button class="primary-button" data-action="submit-questionnaire">Submit answers ${icon('send',12)}</button>`:`<button class="primary-button" data-action="next-question">Next ${icon('chevron',12)}</button>`}</div></div></section>`;
+    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('question',13)}</span><strong>Deployment questionnaire</strong><span class="meta-pill">${answered}/${state.questions.length} answered</span><span class="spacer"></span><button class="text-button" data-action="skip-question">Skip</button><button class="icon-button" data-action="close-decision" title="Close and return later; answers are preserved">${icon('close',12)}</button></div><div class="decision-body"><div class="question-progress">${state.questions.map((x,i)=>`<i class="${i<state.questionIndex?'done':i===state.questionIndex?'current':''}"></i>`).join('')}</div><div class="question-prompt">${esc(q.prompt)} ${q.required?'<span style="color:var(--danger)">*</span>':''}</div>${input}<div class="decision-evidence"><strong>Why this matters</strong><p>This answer changes host selection, fallback routing, and the resulting Plan artifact.</p></div><div class="decision-actions"><button class="soft-button" data-action="cancel-questionnaire">Cancel questionnaire</button><span style="flex:1"></span><button class="soft-button" data-action="prev-question" ${state.questionIndex===0?'disabled':''}>${icon('left',12)} Back</button>${state.questionIndex===state.questions.length-1?`<button class="primary-button" data-action="submit-questionnaire">Submit answers ${icon('send',12)}</button>`:`<button class="primary-button" data-action="next-question">Next ${icon('chevron',12)}</button>`}</div></div></section>`;
   }
 
   function renderPlanDecision(){
     const revise=state.decision.mode==='revise';
-    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('document',13)}</span><strong>${revise?'Revise the Plan':'Plan ready for review'}</strong><span class="meta-pill">Revision ${state.planRevision}</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><strong>${esc(D.artifacts[0].title)}</strong><p style="color:var(--muted);font-size:11px;margin:4px 0 8px">${esc(D.artifacts[0].summary)}</p>${revise?`<textarea class="decision-textarea" data-input="plan-feedback" placeholder="Describe what the next immutable Plan revision should change…">${esc(state.decision.feedback||'')}</textarea>`:`<div class="decision-evidence"><strong>Material evidence</strong><p>p95 482 → 71 ms · 42 tests passed · write overhead +4.8% · rollback gate included</p></div>`}<div class="decision-actions"><button class="text-button" data-action="cancel-plan">Cancel</button><button class="soft-button" data-action="open-artifact" data-id="plan-query">${icon('eye',12)} View full Plan</button>${revise?`<button class="primary-button" data-action="submit-plan-revision">Create revision</button>`:`<button class="soft-button" data-action="revise-plan">${icon('edit',12)} Revise</button><button class="primary-button" data-action="approve-plan">Approve And Build</button>`}</div></div></section>`;
+    return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('plan',13)}</span><strong>${revise?'Revise the Plan':'Plan ready for review'}</strong><span class="meta-pill">Revision ${state.planRevision}</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><strong>${esc(D.artifacts[0].title)}</strong><p style="color:var(--muted);font-size:11px;margin:4px 0 8px">${esc(D.artifacts[0].summary)}</p>${revise?`<textarea class="decision-textarea" data-input="plan-feedback" placeholder="Describe what the next immutable Plan revision should change…">${esc(state.decision.feedback||'')}</textarea>`:`<div class="decision-evidence"><strong>Material evidence</strong><p>p95 482 → 71 ms · 42 tests passed · write overhead +4.8% · rollback gate included</p></div>`}<div class="decision-actions"><button class="text-button" data-action="cancel-plan">Cancel</button><button class="soft-button" data-action="open-artifact" data-id="plan-query">${icon('eye',12)} View full Plan</button>${revise?`<button class="primary-button" data-action="submit-plan-revision">Create revision</button>`:`<button class="soft-button" data-action="revise-plan">${icon('edit',12)} Revise</button><button class="primary-button" data-action="approve-plan">Approve And Build</button>`}</div></div></section>`;
   }
 
-  function renderPermissionDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('lock',13)}</span><strong>Permission required</strong><span class="meta-pill">Execution host</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Reconnect to Windows execution host and resume browser control?</div><p style="color:var(--muted);font-size:11px">The prior host connection dropped during step 7. The checkpoint is intact; no command will be replayed twice.</p><div class="decision-evidence"><strong>Command scope</strong><p>Reconnect host · restore browser session · continue from checkpoint · no schema mutation</p></div><div class="decision-actions"><button class="soft-button" data-action="deny-permission">Deny</button><button class="primary-button" data-action="approve-permission">Approve once</button></div></div></section>`; }
+  function renderPermissionDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('shield',13)}</span><strong>Permission required</strong><span class="meta-pill">Execution host</span><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Reconnect to Windows execution host and resume browser control?</div><p style="color:var(--muted);font-size:11px">The prior host connection dropped during step 7. The checkpoint is intact; no command will be replayed twice.</p><div class="decision-evidence"><strong>Command scope</strong><p>Reconnect host · restore browser session · continue from checkpoint · no schema mutation</p></div><div class="decision-actions"><button class="soft-button" data-action="deny-permission">Deny</button><button class="primary-button" data-action="approve-permission">Approve once</button></div></div></section>`; }
 
   function renderConflictDecision(){ return `<section class="decision-surface"><div class="decision-top"><span class="event-icon">${icon('warning',13)}</span><strong>Resolve agent recommendation</strong><span class="spacer"></span><button class="icon-button" data-action="close-decision">${icon('close',12)}</button></div><div class="decision-body"><div class="question-prompt">Choose the next safe implementation path</div><div class="choice-grid"><button class="choice" data-action="resolve-conflict" data-value="indexes"><strong>Approve indexes</strong><br><span style="font-size:10px;color:var(--muted)">Fast, reversible first step</span></button><button class="choice" data-action="resolve-conflict" data-value="views"><strong>Use materialized views</strong><br><span style="font-size:10px;color:var(--muted)">Faster reads, refresh state</span></button><button class="choice" data-action="resolve-conflict" data-value="override"><strong>Override policy</strong><br><span style="font-size:10px;color:var(--muted)">Permit schema reviewer changes</span></button></div><div class="decision-evidence"><strong>Parent mediation</strong><p>Given the 95% read workload and modest write rate, the composite index is the safer first step. Materialized views remain a follow-up after measuring index performance.</p></div></div></section>`; }
 
@@ -1913,7 +1975,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const showDrafts=drafts.length&&!state.composer.trim();
     const capDots=renderCapabilityDots();
     const sendBtn=sendButtonHtml();
-    return `<div class="composer">${extRender('composerBelow',{position:'above'})}<div class="composer-box" data-k="composer-box">${extRender('composerRibbon',{})}${extRender('composerTray',{})}<div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button><span class="capability-indicators">${capDots}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('users',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?icon('lightning',11,'fast-bolt'):''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('lock',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
+    /* Neon (3D): one glyph per concept -- Persona is the person glyph, Permissions the shield (as on the permission
+       card); the picker glyphs are controls (unlit, they ignite on hover). The Fast bolt sits in its .nx-bolt
+       wrapper, whose backlight flashes with the strike (neon-icons.css 8b). */
+    return `<div class="composer">${extRender('composerBelow',{position:'above'})}<div class="composer-box" data-k="composer-box">${extRender('composerRibbon',{})}${extRender('composerTray',{})}<div class="composer-field"><textarea class="composer-input" data-input="composer" placeholder="Ask Puppet Master, use natural language, or type / for commands…">${esc(state.composer)}</textarea><div class="composer-infield"><div class="composer-infield-l"><button class="icon-button" data-action="attach"${hoverAttrs('attach','Attach files or images')}>${icon('attach',16)}</button><span class="capability-indicators">${capDots}</span></div>${sendBtn}</div></div><div class="composer-tools"><button class="selector-button active" data-kind="persona" data-action="open-menu" data-menu="persona" data-menu-anchor="persona"${hoverAttrs('sel-persona','Persona · '+state.persona)}><span class="sel-icon">${icon('user',13)}</span><span class="sel-label">${esc(state.persona)}</span></button><button class="selector-button active" data-kind="model" data-action="open-menu" data-menu="model" data-menu-anchor="model"${hoverAttrs('sel-model','Model · '+m.name)}><span class="sel-icon">${providerMark(m.provider,13)}</span><span class="sel-label">${esc(m.name)}</span>${state.fast&&m.fast?`<span class="nx-bolt">${icon('lightning',11,'fast-bolt')}</span>`:''}</button><button class="selector-button active" data-kind="mode" data-action="open-menu" data-menu="mode" data-menu-anchor="mode"${hoverAttrs('sel-mode','Mode · '+state.mode)}><span class="sel-icon">${modeGlyph(state.mode,13)}</span><span class="sel-label">${esc(state.mode)}</span></button><button class="selector-button active" data-kind="permissions" data-action="open-menu" data-menu="permissions" data-menu-anchor="permissions"${hoverAttrs('sel-permissions','Permissions · '+state.permissions)}><span class="sel-icon">${icon('shield',13)}</span><span class="sel-label">${esc(state.permissions)}</span></button><button class="icon-button ${Object.values(state.capabilities).some(x=>x===true||x==='On'||x==='Focus'||x==='Expanded')?'active':''}" data-action="open-menu" data-menu="wand" data-menu-anchor="wand"${hoverAttrs('wand','Capabilities and Goal Mode')}>${icon('wand',14)}</button></div><div class="composer-hint">${esc(state.persona)} · ${esc(m.name)} · ${esc(state.mode)} · ${esc(state.permissions)}</div></div></div>`;
   }
 
   function queueOf(){
@@ -1928,6 +1993,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function sendButtonHtml(){
     const liveGoal=window.PM56_GOAL?.get(activeThread().id),livePlan=window.PM56_PLANS?.current(activeThread().id);const busy=turnBusy()||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
     const qlen=(state.sendQueue[state.selectedThread]||[]).length;
+    /* Send/Stop is send-stop.js's (step SS, "solid-living"): one button patched in place, so the plane lifts off,
+       morphs into the square and back as CSS transitions. The two lines below are its no-module fallback. */
+    if(window.PM56_SENDSTOP) return window.PM56_SENDSTOP.html({busy,text:state.composer,qlen,tid:state.selectedThread},hoverAttrs);
     const queueFull=busy&&qlen>=2;
     if(busy && !state.composer.trim()){
       return `<button class="send-button is-stop" data-k="send-btn" data-action="stop-run"${hoverAttrs('send-btn','Stop the current run')}>${icon('stop',13)}</button>`;
@@ -1939,11 +2007,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(!host) return;
     const cur=host.querySelector('[data-k="send-btn"]');
     if(!cur) return;
-    const wrap=document.createElement('div');
-    wrap.innerHTML=sendButtonHtml();
-    const neu=wrap.firstElementChild;
-    if(cur.getAttribute('data-action')===neu.getAttribute('data-action') && cur.className===neu.className && cur.disabled===neu.disabled) return;
-    cur.replaceWith(neu);
+    const tpl=document.createElement('template');
+    tpl.innerHTML=sendButtonHtml();
+    const neu=tpl.content.firstElementChild;
+    /* patched, never replaced: a replaced button would cut the Send/Stop morph (send-stop.js) */
+    if(neu) pmPatchNode(cur,neu);
   }
 
   function renderStatusBar(){ return `<footer class="status-bar"><span>${icon('check-circle',10)} Agent · ${esc(selectedModel().name)} · ${formatElapsed(state.work.elapsed)}</span><span class="center">${esc(state.worktree)} · Local server</span><span class="right">Ready · ${state.context.compacted?'Context compacted':`Context ${(window.PM56_CTX&&window.PM56_CTX.ringPct)?window.PM56_CTX.ringPct():64}%`} ${icon('info',10)}</span></footer>`; }
@@ -1977,7 +2045,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       return;
     }
     const avail=tools.clientWidth||box.clientWidth;
-    const signature=[box.clientWidth,tools.clientWidth,tools.textContent,document.body.dataset.theme,document.fonts?.status].join('|');
+    const signature=[box.clientWidth,tools.clientWidth,tools.textContent,state.theme,document.fonts?.status].join('|');
     if(!composerMeasureCache||composerMeasureCache.node!==tools||composerMeasureCache.key!==signature)
       composerMeasureCache={node:tools,key:signature,value:measureLabeledTools(box,tools)};
     const need=composerMeasureCache.value;
@@ -2042,7 +2110,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const cs=getComputedStyle(wrap);
     const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
     const slack=8;
-    const signature=[wrap.clientWidth,bar.textContent,bar.dataset.variant,document.body.dataset.theme,document.fonts?.status].join('|');
+    const signature=[wrap.clientWidth,bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
     if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
       activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
     const {labeled,compact}=activityMeasureCache;
@@ -2200,7 +2268,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const rollBefore=new Map([...document.querySelectorAll('.pm-roll')].map(el=>[el, el.textContent]));
     const moveTargets=[...document.querySelectorAll('[data-flip-move]')];
     const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
-    document.body.dataset.theme=state.theme;
+    /* NieR Mode paints Basic: nier.js answers basic-light/dark for a NieR theme and writes PMConcept7's contract
+       attributes on <html> in the same call (every other theme id comes back unchanged). */
+    document.body.dataset.theme=window.PM56_NIER_PAINT?window.PM56_NIER_PAINT(state.theme):state.theme;
     const historyPinned=state.historyMode==='pinned'&&!isNarrow();
     const activityPinned=activityPinnedInLayout();
     activityPinLayout=activityPinned;
@@ -3001,8 +3071,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       el.replaceWith(next);
       el=next;
     } else {
-      /* Same tip identity: refresh copy without remounting the card. */
-      el.innerHTML=next.innerHTML;
+      /* Same tip identity: refresh copy without remounting the card. A keyed patch, not innerHTML, so the nodes
+         (and the neon acts and rhythms running inside them) survive the work tick. */
+      pmPatchChildren(el,next);
     }
     positionHoverCard(el);
   }
@@ -3030,7 +3101,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       ? document.querySelector(`[data-hover-key="${CSS.escape(state.hover.key||'')}"]`)
       : document.querySelector(`[data-hover-domain="${CSS.escape(state.hover.domain)}"]`);
     if(anchor&&el){
-      const ar=anchor.getBoundingClientRect(),r=el.getBoundingClientRect();
+      /* The card's layout size, not its rect: an entrance that scales the card (NieR's intel unfold starts at scale
+         1 .08 from the top) would place it a sliver tall above the anchor and then unfold it over the anchor. */
+      const ar=anchor.getBoundingClientRect(),r={width:el.offsetWidth,height:el.offsetHeight};
       let left=clamp(ar.left+ar.width/2-r.width/2,8,window.innerWidth-r.width-8);
       let top=ar.top-r.height-8;
       if(top<8) top=ar.bottom+8;
@@ -3110,7 +3183,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const m=state.menu;
     let content='';
     if(m.type==='choice')content=renderSharedChoice();
-    else if(m.type==='persona') content=renderSimpleMenu('Persona',PERSONA_CATALOG,pickerSelection().persona,'set-persona');
+    else if(m.type==='persona') content=renderSimpleMenu('Persona',window.PM56_NIER_PERSONAS?PERSONA_CATALOG.concat(window.PM56_NIER_PERSONAS()):PERSONA_CATALOG,pickerSelection().persona,'set-persona');
     else if(m.type==='permissions') content=renderSimpleMenu('Permissions',[['Ask for approval','Pause before edits, commands, and external effects'],['Auto accept edits','Accept file edits but ask for other effects'],['Auto','Use policy-aware automatic approval'],['Full Access','Allow all permitted actions without prompting']],state.permissions,'set-permissions');
     /* Rows come from D.operational.worktrees, not from four string literals:
        the fixture covers unbound / bound-clean / bound-dirty / bound-conflict
@@ -3150,7 +3223,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        Ask/Agent/Debug do not. Goal, BSD, ELI5, Crew and scheduling are ORTHOGONAL
        controls and deliberately absent here. */
     const items=[['Ask','Answer without making changes',''],['Agent','Execute the requested work',''],['Debug','Run an instrumented debugging workflow',''],['Plan','Create a read-only Plan document and To-Dos','plan'],['Deep Plan','Research through a scoped ledger, then plan','deep-plan'],['Review','Read-only review with fresh context','review']];
-    return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(x[0]==='Ask'?'info':x[0].includes('Plan')?'document':x[0]==='Debug'?'warning':x[0]==='Review'?'eye':'sparkles',13)}</span><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
+    return `<div class="menu-head"><strong>Mode</strong><span class="spacer"></span><span class="chat-meta">/${state.mode.toLowerCase().replace(' ','-')}</span></div>${items.map(x=>`<button class="menu-item ${state.mode===x[0]?'active':''}" data-action="set-mode" data-value="${esc(x[0])}" ${x[2]?`data-submenu="${x[2]}"`:''}><span class="menu-icon">${icon(modeIconName(x[0]),13)}</span><span class="menu-copy"><strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></span>${x[2]?`<span class="chevron">${icon('chevron',11)}</span>`:state.mode===x[0]?`<span class="check">${icon('check',11)}</span>`:''}</button>`).join('')}`;
   }
 
   function renderWandMenu(){
@@ -3158,7 +3231,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       ['goal','Goal Mode','Create and manage a durable goal','goal-menu',state.capabilities.goal?'On':'Off','goal'],
       /* F0b (d), D-2, E-02 (owner, 2026-09-27): the legacy Crew permission is this chat's Crew Auto override. Same
          submenu and values; the answer is Collaboration's (the Crew Auto check below reads the same flag). */
-      ['crew','Crew Auto in this chat','Lets the assistant call a Crew when a job needs one','crew-menu',crewAutoHere()?'On':'Off','users'],
+      ['crew','Crew Auto in this chat','Lets the assistant call a Crew when a job needs one','crew-menu',crewAutoHere()?'On':'Off','kind-crew'],
       /* Assistant-redesign wave: the BSD and ELI5 rows are gone from here.
          Both were superseded and both now have ONE owner that renders through
          `wandRows`, so leaving these produced two Back Seat Driver rows and two
@@ -3215,7 +3288,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?icon('lightning',10,'fast-bolt'):''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
   }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a
@@ -3278,7 +3351,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderSubmenu(id){
     if(id.startsWith('model:')){
       const model=D.models.find(x=>x.id===id.slice(6))||selectedModel();
-      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${pickerSelection().model===model.id&&pickerSelection().effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}"><i class="effort-dot"></i><span style="flex:1">Fast mode</span>${pickerSelection().model===model.id&&pickerSelection().fast?icon('check',11):''}</button>`:''}`;
+      return `<div class="menu-head"><strong>${esc(model.name)}</strong><span class="spacer"></span><span class="chat-meta">Effort</span></div>${model.efforts.map(e=>`<button class="effort-row ${pickerSelection().model===model.id&&pickerSelection().effort===e?'active':''}" data-action="set-effort" data-model="${esc(model.id)}" data-value="${esc(e)}"><i class="effort-dot"></i><span style="flex:1">${esc(e)}</span>${pickerSelection().model===model.id&&pickerSelection().effort===e?icon('check',11):''}</button>`).join('')}${model.fast?`<div class="menu-divider"></div><button class="effort-row fast-row ${pickerSelection().model===model.id&&pickerSelection().fast?'active':''}" data-action="toggle-fast" data-model="${esc(model.id)}">${pickerSelection().model===model.id&&pickerSelection().fast?`<span class="nx-bolt">${icon('lightning',11,'fast-row-bolt')}</span>`:icon('lightning',11)}<span style="flex:1">Fast mode</span>${pickerSelection().model===model.id&&pickerSelection().fast?icon('check',11):''}</button>`:''}`;
     }
     /* SIX Plan choices, exactly: Plan Quick/Standard/Thorough and Deep Plan
        Thorough/Exhaustive/BrainStorm. Not four regular depths, and no legacy
@@ -3386,7 +3459,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const triggerGroups=demoTriggerGroups();
     const g=clampDemoGeom(state.dialog.geom||lastDemoGeom||defaultDemoGeom());
     state.dialog.geom=g;
-    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sparkles',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Default: Orbit. Simplified: Step Rail Simple.</p><div class="mixer-row"><label>Motion voice</label><select data-input="motion-voice">${[['auto','Follow the theme'],['basic','Basic · ink'],['friendly','Friendly · hop'],['glass','Glass · depth'],['retro','Retro · type']].map(([v,n])=>`<option value="${v}" ${(state.motionVoice||'auto')===v?'selected':''}>${n}</option>`).join('')}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Every theme family moves with its own voice; pick one here to judge it on any theme.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section>${window.PM56_POLISH?window.PM56_POLISH.gallery(EXT.ctx()):''}<div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
+    return `<section class="dialog demo-dialog" style="left:${g.left}px;top:${g.top}px;width:${g.width}px;height:${g.height}px;transform:none"><div class="drawer-head" data-dialog-drag><span class="event-icon">${icon('sliders',13)}</span><strong>Demo Studio</strong><span class="meta-pill">${D.workingTakes.length} working takes · 7 families</span><span class="spacer"></span><button class="soft-button" data-action="reset-all">${icon('reset',12)} Reset all</button><button class="icon-button" data-action="close-dialog">${icon('close',13)}</button></div><div class="dialog-body"><section class="demo-section" style="margin-bottom:8px"><h3>Curated complete recipes and themes</h3><div class="demo-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><div class="mixer-row"><label>Recipe</label><select data-input="recipe"><option value="-1" ${state.recipe<0?'selected':''}>Custom mix</option>${D.recipes.map((r,i)=>`<option value="${i}" ${state.recipe===i?'selected':''}>${esc(r.name)}</option>`).join('')}</select></div><div class="mixer-row"><label>Theme</label><select data-input="theme">${D.themes.map(t=>`<option value="${t.id}" ${state.theme===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><p style="grid-column:1/-1;color:var(--muted);font-size:11px;margin:0">${esc(D.recipes[state.recipe]?.desc||'Custom mix')}</p></div></section>${window.PM56_NIER_STUDIO?window.PM56_NIER_STUDIO(EXT.ctx()):''}<section class="demo-section" style="margin-bottom:8px"><h3>Assistant chat</h3><div class="demo-section-body" style="display:block"><div class="mixer-row"><label>Working activity</label><select data-input="variant" data-family="2">${(()=>{const v=state.variants[2];const opts=[[1,'Orbit · Default'],[8,'Step Rail Simple']];let h=opts.map(([val,name])=>`<option value="${val}" ${v===val?'selected':''}>${name}</option>`).join('');if(v!==1&&v!==8)h+=`<option value="${v}" selected>Lab take ${v+1}</option>`;return h;})()}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Default: Orbit. Simplified: Step Rail Simple.</p><div class="mixer-row"><label>Motion voice</label><select data-input="motion-voice">${[['auto','Follow the theme'],['basic','Basic · ink'],['friendly','Friendly · hop'],['glass','Glass · depth'],['retro','Retro · type']].map(([v,n])=>`<option value="${v}" ${(state.motionVoice||'auto')===v?'selected':''}>${n}</option>`).join('')}</select></div><p style="color:var(--muted);font-size:12px;margin:6px 0 0">Every theme family moves with its own voice; pick one here to judge it on any theme.</p></div></section><section class="demo-section" style="margin-bottom:8px"><h3>Independently swappable concept families</h3><div class="demo-section-body" style="display:block">${families.map((f,i)=>`<div class="mixer-row"><label>${esc(f)}</label><select data-input="variant" data-family="${i}">${optionNames[i].map((n,j)=>`<option value="${j}" ${state.variants[i]===j?'selected':''}>${j+1}. ${esc(n)}</option>`).join('')}</select></div>`).join('')}</div></section>${window.PM56_POLISH?window.PM56_POLISH.gallery(EXT.ctx()):''}<div class="demo-grid">${Object.entries(triggerGroups).map(([name,items])=>`<section class="demo-section"><h3>${esc(name)}</h3><div class="demo-section-body">${items.map(x=>`<button class="demo-trigger" data-action="demo-trigger" data-trigger="${esc(x)}">${esc(x)}</button>`).join('')}</div></section>`).join('')}</div></div>${demoResizeHandles()}</section>`;
   }
 
   function positionOverlays(){
@@ -3733,17 +3806,23 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(el && el.value!=='') el.value='';
   }
   function handleSend(){
-    const raw=state.composer.trim();if(!raw)return;
+    /* Send/Stop one-shots (send-stop.js): a click with nothing to send, or with the queue full, sputters; a send
+       or a queue launches the plane; a send a pre-send validator refuses shakes and flashes. */
+    const SS=window.PM56_SENDSTOP;
+    const raw=state.composer.trim();if(!raw){SS?.sputter();syncSendStop();return;}
     if(turnBusy()){
       const q=queueOf();
-      if(q.length>=2){ toast('Queue full','Send, edit, or cancel a queued message before adding another.'); return; }
+      if(q.length>=2){ SS?.sputter();syncSendStop(); toast('Queue full','Send, edit, or cancel a queued message before adding another.'); return; }
+      SS?.launch('queue');
       q.push({id:uid('q'), text:raw});
       state.composer='';
       clearComposerField();   /* enqueue empties the field too; same focus reason */
       renderApp();
       return;
     }
-    deliverSend(raw);
+    SS?.launch('send');
+    const out=deliverSend(raw);
+    if(out&&out.admitted===false&&/^validator/.test(out.reason||'')){SS?.fail();syncSendStop();}
   }
   function maybeFlushQueue(){
     if(turnBusy() || seqTimer) return;
@@ -3980,6 +4059,12 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(sub&&state.menu&&!btn){ e.stopPropagation(); setSubmenu(sub.dataset.submenu); return; }
     if(!btn){if(state.menu&&!e.target.closest('.overlay-menu,.lens-dock'))closeMenu();return;}
     const a=btn.dataset.action;
+    /* Stop (send-stop.js): the second click of a double-click on Send lands on the Stop it became, so a click with
+       detail > 1 is never a stop (a time window would also swallow a fast deliberate stop); a stop-run click is the
+       one "stopped" signal (a turn, goal or plan that ends any other way has "finished"). Before the module actions,
+       so goals.js's chained stop-run never sees the double-click either. */
+    if(a==='stop-run'){if(e.detail>1)return;window.PM56_SENDSTOP?.halt();}
+    if(a==='send'&&e.detail>1&&!state.composer.trim())return;   /* the rest of a double-click on Stop: no sputter */
     if(a==='return-to-chat'){state.editorRevealed=false;renderApp();return;}
     if(handleScopedPickerAction(a,btn,e)) return;
     const preview=btn.closest('.ab-card');
@@ -4173,7 +4258,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
 
   document.addEventListener('input',e=>{
     const k=e.target.dataset.input;if(!k)return;
-    if(k==='composer'){state.composer=e.target.value;state.drafts[state.selectedThread]=state.composer;syncSendStop();return;}
+    if(k==='composer'){const had=!!state.composer.trim();state.composer=e.target.value;state.drafts[state.selectedThread]=state.composer;if(!had&&state.composer.trim())window.PM56_SENDSTOP?.ignite();syncSendStop();return;}
         if(k==='history-search'){state.historySearch=e.target.value;renderApp();return;}
         if(k==='shared-choice-search'&&state.menu?.type==='choice'){state.menu.query=e.target.value;renderOverlays();return;}
     if(k==='model-search'){state.modelSearch=e.target.value;renderOverlays();return;}
@@ -4273,6 +4358,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
   });
 
   document.addEventListener('pointerdown',e=>{
+    /* Send/Stop (send-stop.js): a pressed chip drops its tip, a pending one too, so no tip re-renders over the hero */
+    if(e.target.closest('.sendstop')){clearTimeout(hoverTimer);if(state.hover){state.hover=null;syncHoverCard();}}
     const actBtn=e.target.closest('[data-action="open-activity"]');
     /* A preview footer must survive through click. Removing its overlay on
        pointerdown disconnects the button before click can dispatch. Bar

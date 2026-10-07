@@ -126,24 +126,28 @@
     working: 'ab-breathe 2200ms ease-in-out infinite',
     changed: 'none', done: 'none', idle: 'none'
   };
-  /* Written as `var(--danger)` etc rather than a resolved colour, and set on
-     <body>, so a theme swap needs no re-sync — see setVar's note below. */
-  function glow(token, px, pct) {
-    return 'drop-shadow(0 0 ' + px + 'px color-mix(in srgb, var(' + token + ') ' + pct + '%, transparent))';
-  }
-  var TONE_SHADOW = {
-    blocked: glow('--danger', 5, 62), attention: glow('--warning', 5, 58),
-    working: glow('--accent', 5, 60), changed: glow('--accent-2', 4, 44),
-    done: 'none', idle: 'none'
+  /* The glow is the neon halo (neon-icons.js / neon-icons.css), not a CSS
+     filter: each tone names the strength token of the tube's core band and of
+     the backlight behind the icon (its soft tail, activity-bar.css). Written as
+     `var(--nx-h-working-i)` etc rather than a number, and set on <body>, so a
+     theme swap (light themes carry their own token values) needs no re-sync —
+     see setVar's note below. Done and idle had no glow under the filter; they
+     keep a faint core band and no backlight, well under the live tones. */
+  var TONE_HALO = {
+    blocked: ['var(--nx-h-blocked-i)', 'var(--nx-bl-blocked)'],
+    attention: ['var(--nx-h-attention-i)', 'var(--nx-bl-attention)'],
+    working: ['var(--nx-h-working-i)', 'var(--nx-bl-working)'],
+    changed: ['var(--nx-h-changed-i)', 'var(--nx-bl-changed)'],
+    done: ['var(--nx-h-quiet-i)', '0'],
+    idle: ['var(--nx-h-quiet-i)', '0']
   };
   /* A FOURTH channel, and it is not decoration. Two themes make colour alone
      ambiguous: retro-light has --accent #19734c against --positive #16734c,
      and retro-dark has #60f39a against #74ffb0 — working and done are the same
      green. Motion separates them normally, but not under prefers-reduced-
-     motion, so weight and glow have to carry it too. stroke-width set in CSS
-     overrides the presentation attribute icon() writes, and it inherits from
-     the <svg> to the paths, so one property does it. */
-  var KIND_DOMAINS = { crew: 1, brainstorm: 1, review: 1, chat_room: 1 };
+     motion, so weight and glow have to carry it too. The weight reaches the
+     glyph as --nx-stroke-base (activity-bar.css), which neon-icons.css turns
+     into the svg's stroke-width, inherited by every tube. */
   var TONE_STROKE = {
     blocked: '2.2', attention: '2.1', working: '2.1',
     changed: '1.8', done: '1.5', idle: '1.4'
@@ -159,33 +163,38 @@
      Live proof this matters: the fixture already carries `queued`, `retrying`,
      `fallback`, `verifying` and `replanned`, none of which are in
      FIXTURE_SCHEMA's enums. */
+  /* The icon column names the shared status set (neon icons step 3B, plan §2-§3): each status that IS a status
+     draws its status mark (st-*, neon-icons.js) — waiting on something is the hourglass, active the working mark,
+     a retry or replan the recovering ratchet, queued the dashed ring, skipped the slash-circle, done the check
+     (Ready stays done here; it is idle only for threads). Statuses that describe a change rather than a state
+     (deleted, added, modified, renamed, a fallback route, stale) keep their concept glyph. */
   var STATUS = {
-    blocked: { label: 'Blocked', tone: 'blocked', icon: 'lock' },
-    failed: { label: 'Failed', tone: 'blocked', icon: 'warning' },
-    error: { label: 'Needs retry', tone: 'attention', icon: 'refresh' },
+    blocked: { label: 'Blocked', tone: 'blocked', icon: 'st-blocked' },
+    failed: { label: 'Failed', tone: 'blocked', icon: 'st-failed' },
+    error: { label: 'Needs retry', tone: 'attention', icon: 'st-recovering' },
     deleted: { label: 'Deleted', tone: 'changed', icon: 'minus' },
-    retrying: { label: 'Retrying', tone: 'attention', icon: 'refresh' },
+    retrying: { label: 'Retrying', tone: 'attention', icon: 'st-recovering' },
     fallback: { label: 'Fallback route', tone: 'attention', icon: 'branch' },
-    replanned: { label: 'Replanned', tone: 'attention', icon: 'refresh' },
+    replanned: { label: 'Replanned', tone: 'attention', icon: 'st-recovering' },
     stale: { label: 'Stale', tone: 'attention', icon: 'history' },
-    waiting: { label: 'Waiting', tone: 'attention', icon: 'pause' },
+    waiting: { label: 'Waiting', tone: 'attention', icon: 'st-waiting-dep' },
     renamed: { label: 'Renamed', tone: 'changed', icon: 'fork' },
-    in_progress: { label: 'Active', tone: 'working', icon: 'play' },
-    doing: { label: 'Active', tone: 'working', icon: 'play' },
-    running: { label: 'Active', tone: 'working', icon: 'play' },
-    working: { label: 'Working', tone: 'working', icon: 'play' },
-    verifying: { label: 'Verifying', tone: 'working', icon: 'flask' },
-    loading: { label: 'Loading', tone: 'working', icon: 'refresh' },
+    in_progress: { label: 'Active', tone: 'working', icon: 'st-working' },
+    doing: { label: 'Active', tone: 'working', icon: 'st-working' },
+    running: { label: 'Active', tone: 'working', icon: 'st-working' },
+    working: { label: 'Working', tone: 'working', icon: 'st-working' },
+    verifying: { label: 'Verifying', tone: 'working', icon: 'st-reviewing' },
+    loading: { label: 'Loading', tone: 'working', icon: 'st-working' },
     modified: { label: 'Modified', tone: 'changed', icon: 'file-edit' },
-    pending: { label: 'Pending', tone: 'idle', icon: 'todo' },
-    next: { label: 'Queued', tone: 'idle', icon: 'todo' },
-    queued: { label: 'Queued', tone: 'idle', icon: 'todo' },
-    completed: { label: 'Done', tone: 'done', icon: 'check' },
-    done: { label: 'Done', tone: 'done', icon: 'check' },
-    complete: { label: 'Complete', tone: 'done', icon: 'check' },
-    ready: { label: 'Ready', tone: 'done', icon: 'check' },
+    pending: { label: 'Pending', tone: 'idle', icon: 'st-pending' },
+    next: { label: 'Queued', tone: 'idle', icon: 'st-pending' },
+    queued: { label: 'Queued', tone: 'idle', icon: 'st-pending' },
+    completed: { label: 'Done', tone: 'done', icon: 'st-complete' },
+    done: { label: 'Done', tone: 'done', icon: 'st-complete' },
+    complete: { label: 'Complete', tone: 'done', icon: 'st-complete' },
+    ready: { label: 'Ready', tone: 'done', icon: 'st-complete' },
     added: { label: 'Added', tone: 'changed', icon: 'plus' },
-    skipped: { label: 'Skipped', tone: 'muted', icon: 'minus' }
+    skipped: { label: 'Skipped', tone: 'muted', icon: 'st-skipped' }
   };
   /* Most-urgent first. A five-row preview of fourteen agents must show the
      stalled ones, not the first five ids in the array. */
@@ -198,7 +207,7 @@
     return s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Unknown';
   }
   function st(status) {
-    return STATUS[status] || { label: humanize(status), tone: 'idle', icon: 'todo' };
+    return STATUS[status] || { label: humanize(status), tone: 'idle', icon: 'st-pending' };
   }
   window.PM56_ACTIVITY_STATUS = {
     get: function (status) {
@@ -255,8 +264,16 @@
       var t2 = worstTone(list(coll(ctx).artifacts));
       return t2 === 'blocked' ? 'attention' : t2;
     }
+    /* Crew, BrainStorm, Review and Chat Room light in the tone of their own runs, as app.js's activityDefs() projects
+       them from each run's presentation state (the card's: blocked, a pending decision, a Chat Room's "your move", an
+       unclean completion, a limit or a failure need you; running and starting work; completed is done). They used to
+       fall through to the subagents list below, so a thread's failed subagent painted its running Review red, and
+       Crew read only the protocol Crews' members, so a seeded Crew blocked mid-run read idle (fpfix F-2, cycle 1). */
+    if (id === 'crew' || id === 'brainstorm' || id === 'review' || id === 'chat_room') {
+      var t3 = defs[id] && defs[id].tone;
+      return TONES.indexOf(t3) >= 0 ? t3 : 'idle';
+    }
     var sc = coll(ctx);
-    if (id === 'crew') return worstTone(list(sc.crew).concat(window.PM56_CREW?.activityMembers(ctx)||[]));
     return worstTone(list(id === 'todo' ? sc.todos : sc.subagents));
   }
 
@@ -292,7 +309,8 @@
         delAttr(root, 'data-ab-' + id);
         delVar(body, '--ab-ink-' + id);
         delVar(body, '--ab-anim-' + id);
-        delVar(body, '--ab-shadow-' + id);
+        delVar(body, '--ab-hi-' + id);
+        delVar(body, '--ab-bl-' + id);
         delVar(body, '--ab-stroke-' + id);
         continue;
       }
@@ -304,13 +322,14 @@
          custom property's var() is substituted on the element that declares
          it. On <html> the token would not resolve. */
       setVar(body, '--ab-ink-' + id, TONE_INK[tone] || TONE_INK.idle);
-      /* The four collaboration domains draw a pmx kind glyph (svg.pmx-kind) in
-         the rail. A run can work for an hour: the pmx grammar allows no
-         breathing loop and no glow halo on it (5.6 DON'T 4). Working is carried
-         by the glyph's ink and stroke weight and the chip's count instead. */
-      var still = KIND_DOMAINS[id] && tone === 'working';
-      setVar(body, '--ab-anim-' + id, still ? 'none' : (TONE_ANIM[tone] || 'none'));
-      setVar(body, '--ab-shadow-' + id, still ? 'none' : (TONE_SHADOW[tone] || 'none'));
+      /* All nine domains animate alike (neon icons, Jared 2026-10-01): the four
+         collaboration kind marks are no longer held still while working. The
+         rhythm is TONE_ANIM on the svg; the glyph's own act is named in
+         activity-bar.css from html[data-ab-<id>]. */
+      var halo = TONE_HALO[tone] || TONE_HALO.idle;
+      setVar(body, '--ab-anim-' + id, TONE_ANIM[tone] || 'none');
+      setVar(body, '--ab-hi-' + id, halo[0]);
+      setVar(body, '--ab-bl-' + id, halo[1]);
       setVar(body, '--ab-stroke-' + id, TONE_STROKE[tone] || '1.8');
     }
     var t = diffTotals(ctx);

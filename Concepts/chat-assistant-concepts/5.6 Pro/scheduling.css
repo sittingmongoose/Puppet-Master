@@ -271,7 +271,7 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 .sched-card .pmx-sched-line .pmx-run-head{height:auto;min-height:44px;align-items:flex-start;}
 .sched-card .pmx-sched-line .pmx-run-kind{margin-top:14px;}
 .sched-card .pmx-sched-line .pmx-receipt-say{align-items:flex-start;padding:12px 0;white-space:normal;overflow:visible;}
-.sched-card .pmx-sched-line .pmx-receipt-say > svg{margin-top:3px;}
+.sched-card .pmx-sched-line .pmx-receipt-say > svg, .sched-card .pmx-sched-line .pmx-receipt-say > .nx-st{margin-top:3px;}
 .sched-card .pmx-sched-line .pmx-receipt-headline{overflow:visible;text-overflow:clip;}
 .sched-card .pmx-sched-line .pmx-receipt-meta{display:none;}
 .sched-card .pmx-sched-line .pmx-run-foot{margin-top:6px;}
@@ -294,7 +294,7 @@ body[data-theme^="retro"] .pmx-sheet.sched-dialog .pmx-promise > span{white-spac
 }
 .pmx-sched-tshort{display:none;}
 @container pmxrun (max-width: 259.98px){
-  .sched-card .pmx-sched-line .pmx-run-kind, .sched-card .pmx-sched-line .pmx-receipt-say > svg, .pmx-sched-line .pmx-sched-go, .pmx-sched-line .pmx-sched-tlong{display:none;}
+  .sched-card .pmx-sched-line .pmx-run-kind, .sched-card .pmx-sched-line .pmx-receipt-say > svg, .sched-card .pmx-sched-line .pmx-receipt-say > .nx-st, .pmx-sched-line .pmx-sched-go, .pmx-sched-line .pmx-sched-tlong{display:none;}
   .pmx-sched-line .pmx-sched-tshort{display:inline;}
 }
 /* stacked receipts share one hairline between them, not two */

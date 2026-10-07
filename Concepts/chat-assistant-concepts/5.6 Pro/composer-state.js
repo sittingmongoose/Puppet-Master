@@ -221,22 +221,22 @@
     items: [
       { id: 'bs-provider-arch', kind: 'workflow', destinationKind: 'brainstorm',
         label: 'BrainStorm · Provider Architecture', detail: '4 participants',
-        refId: 'bs-1', glyph: 'users' },
+        refId: 'bs-1', glyph: 'kind-brainstorm' },
       { id: 'bs-provider-arch:ana', kind: 'participant', destinationKind: 'brainstorm',
         label: 'Provider Architecture → Ana Ruiz', detail: 'direct to participant',
-        refId: 'bs-1', participantId: 'p-ana', glyph: 'users' },
+        refId: 'bs-1', participantId: 'p-ana', glyph: 'user' },
       { id: 'crew-query-perf', kind: 'workflow', destinationKind: 'crew',
         label: 'Crew · Query Performance', detail: '3 agents · coordinator',
-        refId: 'crew-1', glyph: 'users' },
+        refId: 'crew-1', glyph: 'kind-crew' },
       { id: 'review-0043', kind: 'workflow', destinationKind: 'review',
         label: 'Review · Migration 0043', detail: '2 reviewers · frozen',
-        refId: 'rev-1', glyph: 'eye' },
+        refId: 'rev-1', glyph: 'kind-review' },
       { id: 'room-release', kind: 'workflow', destinationKind: 'chat_room',
         label: 'Chat Room · Release War Room', detail: '6 present',
-        refId: 'room-1', glyph: 'brain' },
+        refId: 'room-1', glyph: 'kind-chat_room' },
       { id: 'plan-query-revise', kind: 'plan-revise', destinationKind: 'plan_revision',
         label: 'Revising Plan · V5', detail: 'feedback to the revision agent',
-        refId: 'plan-query', glyph: 'document' },
+        refId: 'plan-query', glyph: 'plan' },
       { id: 'components-migration', kind: 'component-list', destinationKind: 'assistant',
         label: 'Component list · Migration 0043', detail: '7 components selected',
         refId: 'cl-1', glyph: 'code' }
@@ -279,6 +279,16 @@
     return null;
   }
   function composerEl() { return document.querySelector('textarea[data-input="composer"]'); }
+
+  /* One glyph per concept (neon icons, plan §2): a destination shows its kind mark whoever supplied the row. The
+     four collaboration kinds draw their wand kind marks, one participant the person glyph, a plan revision the
+     plan's folded map; any other row keeps the glyph its provider named. This also ends the old swap (brainstorm
+     drew `users`, chat_room `brain`) and crew's generic `users`. */
+  var DEST_GLYPH = { brainstorm: 'kind-brainstorm', crew: 'kind-crew', review: 'kind-review', chat_room: 'kind-chat_room', plan_revision: 'plan' };
+  function destGlyph(d) {
+    if (d.kind === 'participant') return 'user';
+    return DEST_GLYPH[d.destinationKind] || d.glyph || 'users';
+  }
 
   function destAccentVar(kind) {
     /* Never a literal colour: every destination reuses an existing theme token. */
@@ -521,7 +531,7 @@
     var label = d.label || 'Destination';
     var detail = d.detail || '';
     var short = splitDetail(detail);
-    var glyph = d.glyph || 'users';
+    var glyph = destGlyph(d);
     var lead = (kind === 'plan-revise') ? '' : 'To:';
 
     return '<div class="cs-ribbon" data-k="cs-ribbon" data-kind="' + esc(kind) + '"' +
@@ -529,7 +539,7 @@
       '<button class="cs-ribbon-main" data-action="cs-open-destinations"' +
       ' data-hover-key="cs-dest" data-hover-tip="' + esc(label + (detail ? ' · ' + detail : '') + ' — open eligible destinations') + '"' +
       ' aria-label="' + esc('Destination: ' + label + '. Open eligible destinations.') + '">' +
-      '<span class="cs-ribbon-glyph">' + icon(glyph, 13) + '</span>' +
+      '<span class="cs-ribbon-glyph">' + icon(glyph, 16) + '</span>' +
       '<span class="cs-ribbon-copy">' +
       (lead ? '<span class="cs-ribbon-lead">' + lead + '</span> ' : '') +
       '<b>' + esc(label) + '</b>' +
@@ -565,6 +575,13 @@
     return (q.resetSource === 'locally inferred' ? '~' : 'in ') + body;
   }
 
+  /* The wait is a live status, so the strip shows the neon status set's waiting-on-a-dependency mark (the hourglass in
+     the attention tone: it tips once and holds), read at call time; the warning glyph only without the registry. */
+  function quotaMark(icon) {
+    var N = window.PM56_NEON;
+    return N && typeof N.status === 'function' ? N.status('waiting-dep', 13) : icon('warning', 13);
+  }
+
   function renderQuota(ctx) {
     var q = RT.quota;
     if (!q || !q.waiting) return '';
@@ -584,7 +601,7 @@
       : '';
 
     return '<div class="cs-quota" data-k="cs-quota" role="status" aria-live="polite">' +
-      '<span class="cs-quota-icon">' + icon('warning', 13) + '</span>' +
+      '<span class="cs-quota-icon">' + quotaMark(icon) + '</span>' +
       '<span class="cs-quota-copy">' +
       '<b class="cs-quota-state">Paused</b>' +
       '<span class="cs-quota-sep"> · </span>' + esc(q.reason || 'Provider wait') +
@@ -626,7 +643,7 @@
         ((cur.participantId || null) === (r.participantId || null));
       return '<button class="cs-dest-row' + (on ? ' is-current' : '') + '" data-action="cs-pick-destination"' +
         ' data-id="' + esc(r.id) + '" style="--cs-dest:var(--' + destAccentVar(r.kind) + ')">' +
-        '<span class="cs-dest-glyph">' + icon(r.glyph || 'users', 14) + '</span>' +
+        '<span class="cs-dest-glyph">' + icon(destGlyph(r), 14) + '</span>' +
         '<span class="cs-dest-copy"><strong>' + esc(r.label) + '</strong>' +
         '<span>' + esc(r.detail || '') + ' · ' + esc(r.destinationKind || r.kind) + '</span></span>' +
         (on ? '<span class="cs-dest-check">' + icon('check', 13) + '</span>' : '') +

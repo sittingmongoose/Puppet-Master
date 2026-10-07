@@ -8,6 +8,7 @@
  *    transcript item. Each family has its own silhouette, so a plan, a crew run,
  *    a scheduled message and a receipt no longer read as the same card. These
  *    rules are :where()-light so any lab take's own rules still win.
+ * (Neon icons, 3D: the ledger, deliverable and Needs-you glyph rules sit at the end of section 2, marked NEON.)
  * 3. The Stage take (transcript data-variant 16, the default): turn anatomy --
  *    a presence mark opens each assistant turn, a hairline spine runs through
  *    the turn's items and ends in a dot, items hang off it with a family tick,
@@ -77,7 +78,15 @@ body[data-theme="retro-light"] { --fam-deliverable: #166d83; --fam-people: #9a4b
   width: 17px; height: 17px; border-radius: 50%;
   background: var(--surface); box-shadow: 0 0 0 3px var(--surface);
 }
-.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: 0; }
+/* the line's text clears the icon by the gap a ledger line keeps everywhere (its 12 px glyph ends 8.5 px before the
+   text): at the 24 px gutter the icon and its 3 px surface ring end 6 px and 3 px short of the text; the narrow pane's
+   18 px gutter ended the icon on the text, so its ring painted over the first letter ("Back" read "3ack"). The line
+   takes back what the gutter gave away (fpfix F-4). Accepted trade-off (fpfix cycle 2): in the narrow pane a ledger
+   line's text therefore starts 6 px right of the prose column. Flush text cannot keep the gap there: the icon is
+   centred on the spine (turn-stage.js draws it at the item's left - gutter + 9.5 px), so its 12 px glyph ends 2.5 px
+   before flush text at the 18 px gutter whatever ring it wears; only moving the icon 6 px off the spine would, and an
+   icon off its hairline reads worse than a receipt line indented one step under the prose. */
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: max(0px, calc(24px - var(--tx-gutter))); }
 
 /* the spine layer (turn-stage.js draws it): marks, hairlines, ticks, end dots,
    and the comet that runs to whatever is live. It sits behind the items. */
@@ -121,6 +130,10 @@ body[data-theme$="-light"] .sp-comet { filter: none; }
 .transcript[data-voice="retro"] .sp-mark .sp-orbit { animation-timing-function: steps(8, end); }
 .transcript[data-voice="retro"] .sp-mark .sp-ring { stroke-width: 2; }
 @media (prefers-reduced-motion: reduce) { .sp-comet { display: none; } .sp-mark .sp-orbit, .sp-mark .sp-ring { animation: none !important; } }
+/* the other two reduced routes (3E2 fix cycle 1): the same stop, so the live mark's orbit and comet are still there too */
+body.pm56-reduced .sp-comet, html[data-motion="reduced"] .sp-comet { display: none; }
+body.pm56-reduced .sp-mark .sp-orbit, body.pm56-reduced .sp-mark .sp-ring,
+html[data-motion="reduced"] .sp-mark .sp-orbit, html[data-motion="reduced"] .sp-mark .sp-ring { animation: none !important; }
 
 /* ------------------------------------------------------- 2 item families */
 /* WORK -- a sunken instrument. The accent belongs to it only while it is live. */
@@ -226,6 +239,26 @@ body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .arti
 .transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon,
 .transcript-inner > [data-family="people"] .system-card-head > .event-icon,
 .transcript-inner > [data-family="people"] > .event-icon { background: color-mix(in srgb, var(--tx-fam, var(--fam-people)) 14%, transparent); }
+
+/* NEON (icons, step 3D, 2026-10-02; neon-icons.js / neon-icons.css). A ledger line's glyph and a deliverable's eyebrow
+   glyph sit at rest -- the line's ink, no bloom -- and ignite when their line is hovered or holds focus: the ink lifts
+   to the text ink, the halo swells (dark themes) and the glyph plays its act once. A work output's glyph sits in its
+   open button, which the neon hover rules already ignite. Status marks are lit in their tone through --nx-ink (never
+   `color`, so the accent budget is untouched) and stay lit. A warning or danger line's glyph takes its tone through
+   --nx-ink (the colour rules above lose to the neutral (0,4,0) rule just above); a positive line's glyph too
+   (3E2). Only a concept glyph takes the line's tone: a status mark on a toned line keeps its own (fix cycle 1). The Needs-you medallion keeps the canon accent (--needs) for every glyph in it, status marks included. */
+.transcript-inner > [data-family="ledger"] > .event-icon > svg.nx-r-concept,
+.transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon > svg.nx-r-concept { --nx-hi-a: 0; }
+.transcript-inner > [data-family="ledger"] > .event-icon > svg.nx { --nx-u: 2; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) > .event-icon { color: var(--text); }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) > .event-icon > svg.nx-r-concept,
+.transcript-inner > [data-family="deliverable"] .system-card-head:is(:hover, :focus-within) > .event-icon > svg.nx-r-concept {
+  --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+.transcript-inner > [data-family="ledger"].warning > .event-icon > svg.nx-r-concept { --nx-ink: var(--warning); }
+.transcript-inner > [data-family="ledger"].danger > .event-icon > svg.nx-r-concept { --nx-ink: var(--danger); }
+.transcript-inner > [data-family="ledger"].positive > .event-icon > svg.nx-r-concept { --nx-ink: var(--positive); }
+.transcript-inner > [data-family="needs"] > .event-icon > svg.nx { --nx-ink: var(--needs); }
 
 /* needs-you: the action sits at the far edge, the copy takes the room. In a
    narrow chat pane the actions wrap to their own row rather than push past

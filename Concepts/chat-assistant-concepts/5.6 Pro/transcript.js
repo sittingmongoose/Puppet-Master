@@ -157,7 +157,7 @@
           ' · ' + labelFor('effort', rt.effort, 'effort ' + NOT_REPORTED) + ' effort' +
           (rt.persona ? ' · ' + rt.persona : '') +
           (rt.fast ? ' · fast route' : '')) + '>' +
-        (rt.fast ? icon('lightning', 10, 'meta-fast') : '') +
+        (rt.fast ? '<span class="nx-bolt nx-bolt-gated">' + icon('lightning', 10, 'meta-fast') + '</span>' : '') +
         '<b>' + esc(rt.model || NOT_REPORTED) + '</b></span>');
 
       /* --- working for / worked for ---------------------------------------- */

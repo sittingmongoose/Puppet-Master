@@ -1,0 +1,384 @@
+/* nier-parts.css — NieR Mode parts for the 5.6 Pro concept (PMConcept7's 29-part contract). OWNER: NieR Mode, steps
+ * N-A (2026-10-02: the Look parts square, cursor, headers, ground, brackets, diamonds, plus pointer and icons) and N-B
+ * (2026-10-02: the Motion parts reboot, slice, wipe, particles, sweep and the alert effects, and the Sound & voice parts
+ * voice and pod). The script half is nier-parts.js; the World parts are nier-world.css; the palette is nier.css.
+ *
+ * Every rule is scoped by html[data-o55-nier-parts~="<key>"], which nier.js writes only while a NieR theme is painted,
+ * so nothing here applies while NieR Mode is off, and each part goes away when its key is switched off. The shared
+ * layers keep PMConcept7's ids and look verbatim (#o55np-cursor, -reticle, -reboot, -wipe, -ground, -sweep, -pod;
+ * styles.d/14-nier-parts.css; #o55np-fx, the alert effects, is the concept's own), so the
+ * parts read the same in both apps; what is the concept's own is the selector lists (menus, pickers, thread rows,
+ * wand rows, sheets, dialogs, transcript cards, toasts). Colours are the palette's helper tokens only (the pointer
+ * images and the reboot cover's inks, which must exist as literals, are in nier.css's generated block).
+ * Motion rules (PMConcept7's): transform and opacity only, stepped; nothing animates a filter, clip-path, box-shadow
+ * or background; every motion is off under reduced motion (the media query, html[data-motion="reduced"] and the
+ * concept's body.pm56-reduced). Selector rules (tests/shell-selfcheck.cjs): one selector per class rather than a
+ * rightmost :is() list, no :has().
+ */
+
+/* ======================================================================================================== Look */
+
+/* ---- Square hairlines [square]: no rounded corner anywhere, 1px lines, square bullets and boxes ---- */
+html[data-o55-nier-parts~="square"] body {
+  --radius-sm: 0px; --radius: 0px;
+  --pmx-r-xs: 0px; --pmx-r-sm: 0px; --pmx-r-md: 0px; --pmx-r-card: 0px; --pmx-r-sheet: 0px;
+}
+html[data-o55-nier-parts~="square"] *, html[data-o55-nier-parts~="square"] *::before, html[data-o55-nier-parts~="square"] *::after { border-radius: 0 !important; }
+html[data-o55-nier-parts~="square"] ul { list-style-type: square; }
+html[data-o55-nier-parts~="square"] input[type="checkbox"] { accent-color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="square"] input[type="radio"] { accent-color: var(--o55-nier-ink); }
+
+/* ---- Menu cursor [cursor]: the hovered or chosen menu item, picker row, thread row or wand row is an ink bar with
+   paper text; one square cursor (#o55np-cursor, nier-parts.js) sits beside it and nudges in two steps ---- */
+html[data-o55-nier-parts~="cursor"] .menu-item:hover,
+html[data-o55-nier-parts~="cursor"] .menu-item.active,
+html[data-o55-nier-parts~="cursor"] .menu-item:focus-visible,
+html[data-o55-nier-parts~="cursor"] .thread-row:hover,
+html[data-o55-nier-parts~="cursor"] .thread-row.active,
+html[data-o55-nier-parts~="cursor"] .model-row:hover,
+html[data-o55-nier-parts~="cursor"] .model-row.active,
+html[data-o55-nier-parts~="cursor"] .effort-row:hover,
+html[data-o55-nier-parts~="cursor"] .effort-row.active,
+html[data-o55-nier-parts~="cursor"] .pm-tops-item:hover,
+html[data-o55-nier-parts~="cursor"] .att-source-row:hover,
+html[data-o55-nier-parts~="cursor"] .qs-mention-item:hover,
+html[data-o55-nier-parts~="cursor"] .qs-mention-item[aria-selected="true"] {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
+  box-shadow: none !important; text-shadow: none !important;
+}
+/* everything inside the bar reads in paper, the neon glyphs included (their status ink flips to paper too: on the
+   bar the silhouette carries the state); the icon tile under a menu glyph drops away */
+html[data-o55-nier-parts~="cursor"] .menu-item:hover :where(*),
+html[data-o55-nier-parts~="cursor"] .menu-item.active :where(*),
+html[data-o55-nier-parts~="cursor"] .menu-item:focus-visible :where(*),
+html[data-o55-nier-parts~="cursor"] .thread-row:hover :where(*),
+html[data-o55-nier-parts~="cursor"] .thread-row.active :where(*),
+html[data-o55-nier-parts~="cursor"] .model-row:hover :where(*),
+html[data-o55-nier-parts~="cursor"] .model-row.active :where(*),
+html[data-o55-nier-parts~="cursor"] .effort-row:hover :where(*),
+html[data-o55-nier-parts~="cursor"] .effort-row.active :where(*),
+html[data-o55-nier-parts~="cursor"] .pm-tops-item:hover :where(*),
+html[data-o55-nier-parts~="cursor"] .att-source-row:hover :where(*),
+html[data-o55-nier-parts~="cursor"] .qs-mention-item:hover :where(*),
+html[data-o55-nier-parts~="cursor"] .qs-mention-item[aria-selected="true"] :where(*) {
+  color: inherit !important; -webkit-text-fill-color: currentColor; --nx-ink: var(--o55-nier-on-ink);
+}
+html[data-o55-nier-parts~="cursor"] .menu-item:hover .menu-icon,
+html[data-o55-nier-parts~="cursor"] .menu-item.active .menu-icon,
+html[data-o55-nier-parts~="cursor"] .menu-item:focus-visible .menu-icon { background: transparent !important; box-shadow: none !important; }
+/* a count or badge inside the bar turns over again: paper with ink */
+html[data-o55-nier-parts~="cursor"] .menu-item:hover kbd,
+html[data-o55-nier-parts~="cursor"] .menu-item:hover .meta-pill {
+  background: var(--o55-nier-on-ink) !important; color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink) !important;
+}
+/* the one shared cursor: a small ink square with a notch, gliding by transform, nudging in two steps (PMConcept7) */
+#o55np-cursor { position: fixed; left: 0; top: 0; width: 9px; height: 9px; z-index: 2147483000; pointer-events: none; opacity: 0;
+  transform: translate(-40px, -40px); transition: transform 120ms cubic-bezier(.25, .9, .3, 1), opacity 90ms linear; will-change: transform, opacity; contain: strict; }
+#o55np-cursor[data-on] { opacity: 1; }
+#o55np-cursor[data-jump] { transition: opacity 90ms linear; }
+#o55np-cursor > i { position: absolute; inset: 0; display: block;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 6px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 6px 100% no-repeat; }
+#o55np-cursor > i::after { content: ""; position: absolute; left: 2px; top: 2px; width: 2px; height: 2px; background: var(--o55-nier-paper); }
+#o55np-cursor[data-side="right"] > i { transform: scaleX(-1); }
+#o55np-cursor[data-side="below"] > i { transform: rotate(90deg); }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-cursor[data-on] > i { animation: o55np-nudge 1.1s step-end infinite; }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-cursor[data-on][data-side="right"] > i { animation-name: o55np-nudge-r; }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-cursor[data-on][data-side="below"] > i { animation-name: o55np-nudge-b; }
+@keyframes o55np-nudge { 0% { translate: 0 0; } 50% { translate: -3px 0; } 100% { translate: 0 0; } }
+@keyframes o55np-nudge-r { 0% { translate: 0 0; } 50% { translate: 3px 0; } 100% { translate: 0 0; } }
+@keyframes o55np-nudge-b { 0% { translate: 0 0; } 50% { translate: 0 3px; } 100% { translate: 0 0; } }
+html[data-motion="reduced"] #o55np-cursor { transition: none; }
+body.pm56-reduced #o55np-cursor { transition: none; }
+
+/* ---- YoRHa headers [headers]: wide-spaced capitals over a rule with square end caps; ink title bands on dialog and
+   menu heads ---- */
+/* section labels and sheet questions: the game's group titles */
+html[data-o55-nier-parts~="headers"] .section-label,
+html[data-o55-nier-parts~="headers"] .menu-section-label,
+html[data-o55-nier-parts~="headers"] .demo-section > h3,
+html[data-o55-nier-parts~="headers"] .pmx-q-title,
+html[data-o55-nier-parts~="headers"] .pd-h2 {
+  text-transform: uppercase; letter-spacing: .14em;
+}
+/* sheet titles and the live work card's state share their head with chips and buttons: a narrower spacing keeps them
+   whole (artifact and run names are content, not labels, and keep their case) */
+html[data-o55-nier-parts~="headers"] .pmx-head .pmx-title > strong { text-transform: uppercase; letter-spacing: .1em; }
+html[data-o55-nier-parts~="headers"] .working-head strong { text-transform: uppercase; letter-spacing: .07em; }
+html[data-o55-nier-parts~="headers"] .orbit-panel-title { text-transform: uppercase; letter-spacing: .07em; }
+/* the decision card's title (plan ready, permission, questions) */
+html[data-o55-nier-parts~="headers"] .qs-head .qs-title { text-transform: uppercase; letter-spacing: .08em; }
+html[data-o55-nier-parts~="headers"] .decision-top > strong { text-transform: uppercase; letter-spacing: .08em; }
+/* the rule: a hairline across the header box with a square cap at each end. Boxes with bottom padding carry it as
+   their own background (the plan document's h2 trades its 6 px bottom margin for padding, so nothing moves); the
+   sheet heads have none, so the rule is a pseudo-element just below them, in the gap the sheet already leaves. */
+html[data-o55-nier-parts~="headers"] .demo-section > h3,
+html[data-o55-nier-parts~="headers"] .pd-h2,
+html[data-o55-nier-parts~="headers"] .working-head,
+html[data-o55-nier-parts~="headers"] .system-card-head {
+  background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45));
+  background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px;
+  background-position: left bottom, right bottom, center calc(100% - 2px);
+  background-repeat: no-repeat; background-origin: border-box;
+}
+html[data-o55-nier-parts~="headers"] .pd-h2 { padding-bottom: 6px; margin-bottom: 0; }
+/* card heads (the live work card, artifact and system cards): the rule stands in for their bottom border */
+html[data-o55-nier-parts~="headers"] .working-head { border-bottom-color: transparent; }
+html[data-o55-nier-parts~="headers"] .system-card-head { border-bottom-color: transparent; }
+html[data-o55-nier-parts~="headers"] .pmx-sheet .pmx-head { position: relative; }
+html[data-o55-nier-parts~="headers"] .pmx-sheet .pmx-q-head { position: relative; }
+html[data-o55-nier-parts~="headers"] .pmx-sheet .pmx-head::after,
+html[data-o55-nier-parts~="headers"] .pmx-sheet .pmx-q-head::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 5px; pointer-events: none;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left top / 5px 5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right top / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) center 2px / calc(100% - 12px) 1px no-repeat;
+}
+html[data-o55-nier-parts~="headers"] .pmx-sheet .pmx-head::after { bottom: -12px; }
+/* dialogs (Demo Studio, Activity Detail ...) and menus: the ink title band */
+html[data-o55-nier-parts~="headers"] .drawer-head,
+html[data-o55-nier-parts~="headers"] .menu-head {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
+}
+html[data-o55-nier-parts~="headers"] .drawer-head :where(*),
+html[data-o55-nier-parts~="headers"] .menu-head :where(*) { color: inherit !important; --nx-ink: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] .drawer-head > strong,
+html[data-o55-nier-parts~="headers"] .menu-head > strong { text-transform: uppercase; letter-spacing: .14em; }
+html[data-o55-nier-parts~="headers"] .drawer-head .soft-button,
+html[data-o55-nier-parts~="headers"] .drawer-head .icon-button,
+html[data-o55-nier-parts~="headers"] .drawer-head .meta-pill,
+html[data-o55-nier-parts~="headers"] .menu-head .icon-button { background: transparent !important; border-color: rgba(var(--o55-nier-paper-rgb), .5) !important; box-shadow: none !important; }
+html[data-o55-nier-parts~="headers"] .drawer-head .event-icon { background: transparent !important; }
+
+/* ---- Parchment ground [ground]: a still grid and faint scanlines on the window ground, painted once ---- */
+/* The shell is the concept's one ground (panels paint their own surfaces over it), so the grid lives on it rather than
+   on a fixed layer: no extra element, nothing moves. */
+html[data-o55-nier-parts~="ground"] .pm-shell {
+  background-image:
+    repeating-linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), .03) 0 1px, transparent 1px 3px),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .07) 1px, transparent 1px),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .035) 1px, transparent 1px);
+  background-size: 100% 3px, 128px 128px, 128px 128px, 32px 32px, 32px 32px;
+  background-position: 0 0, -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+}
+
+/* ---- Target brackets [brackets]: four square corners on keyboard focus and on a chosen thread or tab; one gliding
+   reticle (#o55np-reticle, nier-parts.js) ---- */
+html[data-o55-nier-parts~="brackets"] :focus-visible { outline: 0 !important; box-shadow: none !important; }
+#o55np-reticle { position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: 2147483001; pointer-events: none; opacity: 0; transition: opacity 110ms linear; }
+#o55np-reticle[data-on] { opacity: 1; }
+#o55np-reticle[data-jump] > i { transition: none; }
+#o55np-reticle > i { position: absolute; left: 0; top: 0; width: 10px; height: 10px; display: block; will-change: transform;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat;
+  transition: transform 150ms cubic-bezier(.25, .9, .3, 1); }
+html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
+body.pm56-reduced #o55np-reticle > i, body.pm56-reduced #o55np-reticle { transition: none; }
+
+/* ---- Diamond loaders [diamonds]: every spinner and loader becomes a slowly turning hollow diamond ---- */
+html[data-o55-nier-parts~="diamonds"] .ctx-spin,
+html[data-o55-nier-parts~="diamonds"] .qs-orbit {
+  color: var(--o55-nier-ink); border: 1px solid currentColor !important; background: transparent !important; box-shadow: none !important;
+  outline: 1px solid currentColor; outline-offset: -4px;
+  transform: rotateY(0deg) rotate(45deg) scale(.72);
+  animation: o55np-diamond 2.8s linear infinite !important;
+}
+html[data-o55-nier-parts~="diamonds"] .qs-orbit i { visibility: hidden; }
+/* (3E2: the pmx running mark's still-diamond rule for svg.nx[data-nx="arc"] is gone: since neon 3E a pmx run status is
+   the shared status set's still working mark, whose diamond is neon-icons.css section 11/14, and nothing draws arc.) */
+@keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .ctx-spin,
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
+html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .ctx-spin,
+html[data-o55-nier-parts~="diamonds"] body.pm56-reduced .qs-orbit { animation: none !important; }
+
+/* ====================================================================================================== Motion */
+
+/* ---- Reboot moment [reboot]: the cover (nier-parts.js runs it inside PM_NIER.setTransition) ----
+   The cover exists before the palette is painted (turning NieR Mode on), so its two inks are custom properties written
+   by nier_palette_56.py into nier.css's generated block, keyed by the cover's own tone (the look it covers). */
+#o55np-reboot { position: fixed; inset: 0; z-index: 2147483600; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-reboot > .o55np-rb-band { position: absolute; inset: 0; background: var(--rb-ink); transform: translateY(-101%); will-change: transform; }
+#o55np-reboot > .o55np-rb-band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--rb-ink); box-shadow: 0 -3px 0 var(--rb-ink); }
+#o55np-reboot > .o55np-rb-band > .o55np-rb-lines { position: absolute; inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(var(--rb-ink-rgb), 0) 0 2px, rgba(var(--rb-shade-rgb), .09) 2px 3px); opacity: .9; }
+#o55np-reboot .o55np-rb-copy { position: absolute; left: 50%; top: 50%; width: 360px; margin: -44px 0 0 -180px; color: var(--rb-paper);
+  font: 500 11px/1.7 "PM NieR Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; letter-spacing: .22em; text-transform: uppercase; }
+#o55np-reboot .o55np-rb-title { font: 600 15px/1.4 "PM NieR Sans", "Inter", system-ui, sans-serif; letter-spacing: .3em; margin-bottom: 10px;
+  padding-bottom: 8px; background: linear-gradient(var(--rb-paper), var(--rb-paper)) left bottom / 5px 5px no-repeat, linear-gradient(var(--rb-paper), var(--rb-paper)) right bottom / 5px 5px no-repeat,
+  linear-gradient(var(--rb-paper), var(--rb-paper)) center calc(100% - 2px) / calc(100% - 12px) 1px no-repeat; }
+#o55np-reboot .o55np-rb-meter { position: relative; height: 6px; margin-top: 12px; border: 1px solid var(--rb-paper); }
+#o55np-reboot .o55np-rb-meter > i { position: absolute; left: 1px; top: 1px; bottom: 1px; right: 1px; background: repeating-linear-gradient(90deg, var(--rb-paper) 0 10px, transparent 10px 13px);
+  transform-origin: left center; transform: scaleX(0); will-change: transform; }
+#o55np-reboot .o55np-rb-line { display: flex; gap: 10px; }
+#o55np-reboot .o55np-rb-line::after { content: "- - -"; margin-left: auto; opacity: .6; }
+#o55np-reboot .o55np-rb-line[data-ok]::after { content: "OK"; opacity: 1; }
+
+/* ---- Slice open [slice]: menus, pickers, dialogs, the context drawer and wand sheets unfold from a 1px line, one
+   flicker step. They mount once per opening (the app's patch keeps an open overlay's node), so the animation runs once.
+   Centred dialogs are placed by translate(-50%, -50%): their slice scales about the box's corner so the line opens at
+   the dialog's own centre; everything else scales about its middle. ---- */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .overlay-menu,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .pmx-sheet {
+  animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50% !important;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog:not(.demo-dialog):not(.pmx-sheet) { transform-origin: 0 0 !important; }
+/* the menus' corner sprout (menus.css: a transform transition from --pm56-sx/sy/tx/ty) becomes identity, so the slice
+   is the only motion of an opening; their fade-in transition goes too (a running transition outranks an animation),
+   and their size springs stay. Closing, the menu's ghost (menus.js re-materialises it on <body>) folds back to a line. */
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu {
+  --pm56-sx: 1 !important; --pm56-sy: 1 !important; --pm56-tx: 0px !important; --pm56-ty: 0px !important;
+  transition-property: height, width !important;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost {
+  transition: scale 150ms cubic-bezier(.6, 0, .85, .35), opacity 70ms linear 120ms !important; transform-origin: 50% 50% !important;
+}
+html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost.pm56-collapsing { transform: none !important; scale: 1 .006; opacity: 0; }
+@keyframes o55np-slice {
+  0% { scale: 1 .006; opacity: 1; animation-timing-function: cubic-bezier(.2, .85, .25, 1); }
+  58% { scale: 1 1; opacity: 1; animation-timing-function: step-end; }
+  66% { scale: 1 1; opacity: .3; animation-timing-function: step-end; }
+  74% { scale: 1 1; opacity: 1; }
+  100% { scale: 1 1; opacity: 1; }
+}
+
+/* ---- Page wipe [wipe]: an ink-edged band over the transcript while a switched-to thread draws (nier-parts.js) ---- */
+#o55np-wipe { position: fixed; z-index: 900; pointer-events: none; overflow: hidden; contain: strict; display: none; }
+#o55np-wipe > i { position: absolute; inset: 0; display: block; will-change: transform;
+  background:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left top / 3px 100% no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 22px, rgba(var(--o55-nier-ink-rgb), .12) 22px 23px),
+    var(--canvas); }
+#o55np-wipe > i::before { content: ""; position: absolute; top: 0; bottom: 0; left: 7px; width: 1px; background: var(--o55-nier-ink); opacity: .55; }
+
+/* ---- Drifting particles [particles]: a dozen small ink squares drifting over the transcript ----
+   The layer is anchored to the transcript (the anchor name exists only under this part), so it covers the stage through
+   every layout change; it never takes a click and sits under the overlays. */
+html[data-o55-nier-parts~="particles"] .chat-stage > .transcript { anchor-name: --o55np-stage; }
+#o55np-ground { position: fixed; position-anchor: --o55np-stage; top: anchor(top, 0px); left: anchor(left, 0px); right: anchor(right, 0px); bottom: anchor(bottom, 0px);
+  z-index: 5; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-ground > .o55np-mote { position: absolute; display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .3); will-change: transform; }
+#o55np-ground > .o55np-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .34); }
+#o55np-ground > .o55np-mote:nth-of-type(4n + 1) { width: 3px; height: 3px; }
+#o55np-ground > .o55np-mote:nth-of-type(1) { left: 8%; top: 22%; --d: 61s; --dl: -12s; }
+#o55np-ground > .o55np-mote:nth-of-type(2) { left: 17%; top: 71%; --d: 83s; --dl: -40s; }
+#o55np-ground > .o55np-mote:nth-of-type(3) { left: 29%; top: 38%; --d: 72s; --dl: -5s; }
+#o55np-ground > .o55np-mote:nth-of-type(4) { left: 37%; top: 86%; --d: 95s; --dl: -60s; }
+#o55np-ground > .o55np-mote:nth-of-type(5) { left: 46%; top: 14%; --d: 68s; --dl: -30s; }
+#o55np-ground > .o55np-mote:nth-of-type(6) { left: 55%; top: 57%; --d: 88s; --dl: -18s; }
+#o55np-ground > .o55np-mote:nth-of-type(7) { left: 63%; top: 29%; --d: 76s; --dl: -52s; }
+#o55np-ground > .o55np-mote:nth-of-type(8) { left: 71%; top: 78%; --d: 64s; --dl: -9s; }
+#o55np-ground > .o55np-mote:nth-of-type(9) { left: 79%; top: 45%; --d: 91s; --dl: -71s; }
+#o55np-ground > .o55np-mote:nth-of-type(10) { left: 86%; top: 12%; --d: 70s; --dl: -26s; }
+#o55np-ground > .o55np-mote:nth-of-type(11) { left: 92%; top: 63%; --d: 84s; --dl: -44s; }
+#o55np-ground > .o55np-mote:nth-of-type(12) { left: 23%; top: 8%; --d: 99s; --dl: -80s; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-ground > .o55np-mote { animation: o55np-drift var(--d, 70s) linear var(--dl, 0s) infinite; }
+html[data-o55-nier-parts~="particles"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-ground > .o55np-mote:nth-of-type(even) { animation-name: o55np-drift-b; }
+#o55np-ground[data-idle] > .o55np-mote { animation-play-state: paused !important; }
+@keyframes o55np-drift { 0% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(38px, -64px) rotate(90deg); } 50% { transform: translate(84px, -22px) rotate(180deg); }
+  75% { transform: translate(40px, 40px) rotate(270deg); } 100% { transform: translate(0, 0) rotate(360deg); } }
+@keyframes o55np-drift-b { 0% { transform: translate(0, 0); } 33% { transform: translate(-52px, 30px); } 66% { transform: translate(-18px, -70px); } 100% { transform: translate(0, 0); } }
+
+/* ---- Scan sweep [sweep]: one faint line crossing the window every twelve seconds (a one-shot Web Animation) ---- */
+#o55np-sweep { position: fixed; left: 0; right: 0; top: 0; height: 56px; z-index: 2147481000; pointer-events: none; opacity: 0; will-change: transform, opacity;
+  background: linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), 0), rgba(var(--o55-nier-ink-rgb), .028) 90%, rgba(var(--o55-nier-ink-rgb), .12) 98.2%, rgba(var(--o55-nier-ink-rgb), 0)); }
+
+/* ---- Alerts [glitch, sweep, particles]: the effects layer over an arriving warning or error toast, a refusal or a
+   failed card. Each child is placed on the alert's box by the script and removed when its one-shot animation ends. ---- */
+#o55np-fx { position: fixed; inset: 0; z-index: 1300; pointer-events: none; overflow: hidden; contain: strict; }
+#o55np-fx > * { position: absolute; pointer-events: none; will-change: transform, opacity; }
+/* glitch: the two clipped copies of a toast that split apart (the copy stands still inside them) */
+#o55np-fx > .o55np-glitch-slice { overflow: visible; }
+#o55np-fx > .o55np-glitch-slice > * { position: static !important; margin: 0 !important; width: 100% !important; height: 100% !important; box-sizing: border-box;
+  max-width: none !important; animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+/* glitch: the tear of a card in the transcript, two ink strips */
+#o55np-fx > .o55np-tear { background: var(--o55-nier-ink); opacity: .78; }
+/* sweep: one scan line down the alert */
+#o55np-fx > .o55np-scan { background: linear-gradient(to bottom, rgba(var(--o55-nier-ink-rgb), 0), rgba(var(--o55-nier-ink-rgb), .1) 80%, rgba(var(--o55-nier-ink-rgb), .45) 96%, rgba(var(--o55-nier-ink-rgb), 0)); }
+/* particles: the ink squares thrown off it */
+#o55np-fx > .o55np-shard { background: var(--o55-nier-ink); }
+
+/* =============================================================================================== Sound & voice */
+
+/* ---- Pod voice [voice]: Report / Alert / Proposal leads on toasts and cards, the POD 042 band on toasts ---- */
+/* a toast's kind is written at arrival (nier-parts.js: data-o55-pod alert | proposal | report, data-o55-sev); the
+   glitch's split copies in #o55np-fx keep it, so the split shows the same band */
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast > strong::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast[data-o55-pod="alert"] > strong::before { content: "Alert: "; }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast[data-o55-pod="proposal"] > strong::before { content: "Proposal: "; }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast::before {
+  content: "POD 042"; display: block; margin: -9px -11px 6px; padding: 3px 11px 2px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+  font: 500 9px/1.4 var(--font-mono); letter-spacing: .28em;
+}
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast[data-o55-sev="error"]::before { background: var(--o55-nier-error); }
+html[data-o55-nier-parts~="voice"] :is(#pmOverlayRoot, #o55np-fx) .toast[data-o55-sev="warn"]::before { background: var(--o55-nier-warn-text); }
+/* the transcript: system cards report, plan cards and decisions propose, danger and warning cards alert */
+html[data-o55-nier-parts~="voice"] .system-card-head .title::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .system-card.plan-card .system-card-head .title::before { content: "Proposal: "; }
+html[data-o55-nier-parts~="voice"] .qs-head .qs-title::before { content: "Proposal: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .decision-top > strong::before { content: "Proposal: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .event-card.danger .event-copy > strong::before { content: "Alert: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] .event-card.warning .event-copy > strong::before { content: "Alert: "; font-weight: 500; }
+
+/* ---- Pod companion [pod]: a small ink-line Pod hovering above the composer's top-right corner ----
+   Anchored to the chat float (the activity bar, the send queue and the jump chip; the anchor name exists only under
+   this part): its right edge 8 px in from the stage's, its foot 6 px under the float's foot, which is just over the
+   composer, or over a decision panel when one is up, so it rides every composer and panel height. Final review
+   (2026-10-03): it sat over the jump-to-latest chip (26x30 px; a thread with no bar drops the chip to the float's
+   foot), over the bar's last item when the bar filled the float, and on a Resume button the transcript's last card
+   brought under it. So while the Pod is on, the bar and the queue keep 40 px clear on each side (the bar stays
+   centred; activity-bar.js's tiers measure the narrower row), the jump chip docks left of the Pod, and the transcript
+   keeps room under its last line (bottom padding at least 26 px of float plus the 36 it always keeps), so at rest
+   nothing interactive sits under the Pod. Content still scrolls past it, as under PMConcept7's, and while a control
+   is under it the Pod fades back (data-shy, below). */
+html[data-o55-nier-parts~="pod"] .chat-stage .chat-float { anchor-name: --o55np-float; }
+html[data-o55-nier-parts~="pod"] .chat-float > .activity-wrap, html[data-o55-nier-parts~="pod"] .chat-float > .send-queue { padding-inline: 40px; }
+html[data-o55-nier-parts~="pod"] .chat-float > .jump-bottom { right: 44px; }
+html[data-o55-nier-parts~="pod"] .chat-stage > .transcript { padding-bottom: calc(max(var(--thread-float-h, 44px), 26px) + 36px); }
+#o55np-pod { position: fixed; position-anchor: --o55np-float; right: calc(anchor(right, 26px) - 4px); bottom: calc(anchor(bottom, 70px) - 6px);
+  width: 40px; height: 52px; z-index: 60; pointer-events: none; contain: layout style; color: var(--o55-nier-ink); display: none; }
+html[data-o55-nier-parts~="pod"] #o55np-pod { display: block; }
+/* while a control lies under it the Pod fades back so the control shows through (nier-parts.js podShy), in two held steps */
+#o55np-pod { transition: opacity 180ms steps(2, end); }
+#o55np-pod[data-shy] { opacity: .16; }
+html[data-motion="reduced"] #o55np-pod, body.pm56-reduced #o55np-pod { transition: none; }
+#o55np-pod .o55np-pod-bob, #o55np-pod .o55np-pod-body, #o55np-pod .o55np-pod-shadow { position: absolute; left: 0; top: 0; width: 40px; height: 52px; will-change: transform; }
+#o55np-pod svg { display: block; width: 40px; height: 52px; overflow: visible; }
+#o55np-pod .o55np-pod-fill { fill: var(--o55-nier-paper); }
+#o55np-pod .o55np-pod-ink { fill: currentColor; }
+#o55np-pod .o55np-pod-shadow { transform-origin: 20px 48px; }
+#o55np-pod .o55np-pod-body { transform-origin: 20px 22px; }
+#o55np-pod .o55np-pod-signal { position: absolute; left: 6px; top: 10px; width: 4px; height: 4px; background: currentColor; opacity: 0; will-change: transform, opacity; }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-pod:not([data-idle]) .o55np-pod-bob { animation: o55np-bob 3.6s ease-in-out infinite alternate; }
+html:not([data-motion="reduced"]) body:not(.pm56-reduced) #o55np-pod:not([data-idle]) .o55np-pod-shadow { animation: o55np-bob-shadow 3.6s ease-in-out infinite alternate; }
+@keyframes o55np-bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@keyframes o55np-bob-shadow { from { transform: scaleX(1); opacity: .9; } to { transform: scaleX(.7); opacity: .5; } }
+
+/* ===================================================================================================== Pointer */
+/* ---- Square pointer [pointer]: the images (literal colours) are in nier.css's generated block ---- */
+
+/* ======================================================================================================= World */
+/* ---- Square icon strokes [icons]: every icon draws with square caps and mitred joins (the neon family's own rule,
+   with its miter limit, is in neon-icons.css section 11). Charts and illustrations keep their own strokes. ---- */
+html[data-o55-nier-parts~="icons"] svg path,
+html[data-o55-nier-parts~="icons"] svg line,
+html[data-o55-nier-parts~="icons"] svg polyline,
+html[data-o55-nier-parts~="icons"] svg polygon,
+html[data-o55-nier-parts~="icons"] svg rect,
+html[data-o55-nier-parts~="icons"] svg circle,
+html[data-o55-nier-parts~="icons"] svg ellipse { stroke-linecap: square; stroke-linejoin: miter; }
+
+/* ============================================================================================ Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
+  html[data-o55-nier-parts~="diamonds"] .ctx-spin, html[data-o55-nier-parts~="diamonds"] .qs-orbit { animation: none !important; }
+  /* the same selectors as the slice rules above (equal weight, later wins) */
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .overlay-menu,
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .dialog,
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .drawer,
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) #pmOverlayRoot .pmx-sheet { animation: none !important; scale: none !important; }
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) body:not(.pm56-reduced) .overlay-menu.pm56-menu-ghost { transition: none !important; }
+}

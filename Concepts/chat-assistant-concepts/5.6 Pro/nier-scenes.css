@@ -1,0 +1,12 @@
+/* nier-scenes.css — NieR Mode's scene backgrounds for the 5.6 Pro concept, the sheet half. OWNER: NieR Mode, step N-B
+ * (2026-10-02). The scene itself is drawn by nier-scenes.js into its own small sheets (#o55ns-scene: the transcript
+ * stage's background under html[data-o55-nier-scene], #o55ns-thumbs: Demo Studio's picker tiles), because an image has
+ * to carry the painted ink and ground as literal colours; the tiles' frame is nier.css's Demo Studio section. What is
+ * left here is the stage itself while a scene shows: its cards, bubbles and composer keep their own surfaces, and the
+ * art stays faint enough (and fades out over the upper stage) that the prose on the stage reads over it without a halo.
+ * The cross-fade between two scenes is a third sheet nier-scenes.js writes only while a fade runs (#o55ns-leave: the
+ * scene that leaves, in the transcript's ::before over the stage background and under the messages); it carries its
+ * own reduced-motion conditions, so nothing for it lives here.
+ * Every rule is scoped by html[data-o55-nier-scene], which exists only while NieR Mode is painted and a scene shows.
+ */
+html[data-o55-nier-scene] .chat-stage > .transcript { background-attachment: scroll; }

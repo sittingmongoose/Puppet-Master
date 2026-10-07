@@ -57,6 +57,11 @@
 [data-step-kind="complete"]   { --pm-step:#3fb27a; }
 [data-step-kind="mcp"] { --pm-step: #e06ea0; }
 [data-step-kind="skill"] { --pm-step: #d9b13b; }
+/* The goal, To-Do and plan work batches run `file` steps (making an output:
+   a lime, kin to the making greens) and `testing` steps (verifying it: an
+   orange, kin to test's amber); without a hue they fell back to the accent. */
+[data-step-kind="file"] { --pm-step: #84b84c; }
+[data-step-kind="testing"] { --pm-step: #e08e45; }
 
 /* ---- Materialize: the signature entrance ----------------------------
    Rows in the reference do not slide in. They resolve out of a blur,
@@ -250,6 +255,80 @@
   .mini-graph i{ animation:none !important; }
   .status-orbit::after{ transform:translateY(-7.5px); }
 }
+/* The other two reduced routes (neon 3E2, fix cycle 2, 2026-10-02): body.pm56-reduced (the Demo Studio switch, the
+   same policy as the media query: app.js F0b) and html[data-motion="reduced"] (the PMConcept7 contract) restate the
+   block above rule for rule. Without them the shimmer band ran forever on the class routes (Step Rail Simple's verb,
+   the v0 verbs) and the word entrances kept their 90 ms. */
+body.pm56-reduced *,
+body.pm56-reduced *::before,
+body.pm56-reduced *::after,
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after{ animation-iteration-count:1 !important; }
+body.pm56-reduced .pm-shimmer,
+html[data-motion="reduced"] .pm-shimmer{ animation:none; background:none; color:var(--text); }
+body.pm56-reduced .pm-materialize,
+body.pm56-reduced .pm-stream .pm-word,
+html[data-motion="reduced"] .pm-materialize,
+html[data-motion="reduced"] .pm-stream .pm-word{ animation-duration:1ms; animation-delay:0ms; filter:none; }
+body.pm56-reduced .pm-leaving,
+body.pm56-reduced .overlay-menu.pm-leaving,
+body.pm56-reduced .hover-card.pm-leaving,
+body.pm56-reduced .drawer.pm-leaving,
+body.pm56-reduced .dialog.pm-leaving,
+body.pm56-reduced .history-flyout.pm-leaving,
+body.pm56-reduced .activity-panel.pm-leaving,
+html[data-motion="reduced"] .pm-leaving,
+html[data-motion="reduced"] .overlay-menu.pm-leaving,
+html[data-motion="reduced"] .hover-card.pm-leaving,
+html[data-motion="reduced"] .drawer.pm-leaving,
+html[data-motion="reduced"] .dialog.pm-leaving,
+html[data-motion="reduced"] .history-flyout.pm-leaving,
+html[data-motion="reduced"] .activity-panel.pm-leaving{
+  animation-duration:1ms; filter:none;
+}
+body.pm56-reduced .pm-rail-item,
+html[data-motion="reduced"] .pm-rail-item{ transition-duration:120ms; }
+body.pm56-reduced .status-dot.working,
+body.pm56-reduced .status-dot.reviewing,
+body.pm56-reduced .status-ring,
+body.pm56-reduced .status-bars i,
+body.pm56-reduced .status-branch,
+body.pm56-reduced .status-orbit::after,
+body.pm56-reduced .status-clock::before,
+body.pm56-reduced .status-underline,
+body.pm56-reduced .orbit-track,
+body.pm56-reduced .orbit-core,
+body.pm56-reduced .calm-glyph,
+body.pm56-reduced .bench-scan,
+body.pm56-reduced .lane-wave i,
+body.pm56-reduced .fast-bolt,
+body.pm56-reduced .activity-bar[data-variant="6"]::before,
+body.pm56-reduced .working-variant-0 .phase-dot.current,
+body.pm56-reduced .calm-dots i.current,
+body.pm56-reduced .activity-goal-tree .tree-child.live,
+body.pm56-reduced .mini-graph i,
+html[data-motion="reduced"] .status-dot.working,
+html[data-motion="reduced"] .status-dot.reviewing,
+html[data-motion="reduced"] .status-ring,
+html[data-motion="reduced"] .status-bars i,
+html[data-motion="reduced"] .status-branch,
+html[data-motion="reduced"] .status-orbit::after,
+html[data-motion="reduced"] .status-clock::before,
+html[data-motion="reduced"] .status-underline,
+html[data-motion="reduced"] .orbit-track,
+html[data-motion="reduced"] .orbit-core,
+html[data-motion="reduced"] .calm-glyph,
+html[data-motion="reduced"] .bench-scan,
+html[data-motion="reduced"] .lane-wave i,
+html[data-motion="reduced"] .fast-bolt,
+html[data-motion="reduced"] .activity-bar[data-variant="6"]::before,
+html[data-motion="reduced"] .working-variant-0 .phase-dot.current,
+html[data-motion="reduced"] .calm-dots i.current,
+html[data-motion="reduced"] .activity-goal-tree .tree-child.live,
+html[data-motion="reduced"] .mini-graph i{ animation:none !important; }
+body.pm56-reduced .status-orbit::after,
+html[data-motion="reduced"] .status-orbit::after{ transform:translateY(-7.5px); }
 
 /* ---- Theme cross-fade -----------------------------------------------
    Armed by applyTheme() only for the duration of a swap, so nothing else
