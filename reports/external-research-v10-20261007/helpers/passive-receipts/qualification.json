@@ -1,0 +1,62 @@
+{
+  "schema": "pm.er10.passive-receipts-qualification.v1",
+  "checked_at_utc": "2026-10-07T19:03:46.413080+00:00",
+  "index_sha256": "0c6fa9f47502de68e6b71af83dc4d756041eb2b2cea939bc94718b6f52d79c9b",
+  "checks": [
+    {
+      "stage": "I-ANCHOR-MUSE/treatment/research-v1",
+      "artifact_sha256": "e26a08d4df45989d99c9010eb1372199e2a2e952c3828820851f269a9587e852",
+      "independently_rechecked_original_response_records": 6,
+      "type_and_redaction_and_unknown_usage_checks": true,
+      "states": [
+        "active",
+        "active",
+        "complete",
+        "active",
+        "active",
+        "complete",
+        "complete"
+      ]
+    },
+    {
+      "stage": "I-ANCHOR-LUNA/treatment/research-v1",
+      "artifact_sha256": "1b9b18f289d074ddd0b1c0dd000d577b5b0c6f78a96fe762296c506bfa017509",
+      "independently_rechecked_original_response_records": 0,
+      "type_and_redaction_and_unknown_usage_checks": true,
+      "states": [
+        "complete"
+      ]
+    },
+    {
+      "stage": "I-ANCHOR-GLM/control/research-v2",
+      "artifact_sha256": "4bbfb2e2c02a03ef2ef0a1facadaa26fb5cf82f3972b99be17b20c6500aadb66",
+      "independently_rechecked_original_response_records": 1,
+      "type_and_redaction_and_unknown_usage_checks": true,
+      "states": [
+        "running",
+        "running",
+        "running"
+      ]
+    },
+    {
+      "stage": "I-ANCHOR-GLM/treatment/research-v2",
+      "artifact_sha256": "160412e1f741cecdf196eb39d24bf59f930f45eabf3f1be683222c5684d6a47f",
+      "independently_rechecked_original_response_records": 2,
+      "type_and_redaction_and_unknown_usage_checks": true,
+      "states": [
+        "paused",
+        "running",
+        "paused"
+      ]
+    }
+  ],
+  "scope_rejection_checks": true,
+  "result": "Engineering source/type/hash/redaction checks passed; no scientific admission or method/speed claim",
+  "limitations": [
+    "Muse actual post-terminal get response missing; complete update and native state observed separately",
+    "Luna T3 actual tool bodies missing; terminal projection only",
+    "GLM driver running/paused contradiction preserved; current state and historical snapshots distinguished by source path/time; ACP/backend alias mapping unknown",
+    "No generated/cached/billing fields exposed in selected sources; no further probes",
+    "Scope audit incomplete_unknown; file-access names/hashes unsupported"
+  ]
+}

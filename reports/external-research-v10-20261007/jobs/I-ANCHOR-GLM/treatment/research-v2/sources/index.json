@@ -1,0 +1,143 @@
+{
+  "note": "Stable source IDs for this arm. Each source was fetched during the stated batch window; evidenceSavedAtUtc is exact. Short quoted excerpts retained under fair quotation for research evidence; full pages were not copied.",
+  "researchSessionWindowUtc": {
+    "start": "2026-10-07T18:51:01Z",
+    "end": "2026-10-07T18:58:10Z"
+  },
+  "sources": [
+    {
+      "id": "SRC-01",
+      "title": "Snyk Security Research: Zip Slip vulnerability",
+      "url": "https://github.com/snyk/zip-slip-vulnerability",
+      "version": "repo as of retrieval; disclosure 2018-06-05 per page",
+      "batch": 1,
+      "keyEvidence": "Disclosure June 5 2018 by Snyk; affected 'thousands of projects'; vulnerable pattern File(destinationDir, e.getName()) without path validation; example entry name '../../evil.sh'; fix: canonicalize each extracted path and verify it stays inside the destination directory; affected libraries list spans Java/JS/.NET/Ruby/Go/Python/PHP/Perl/Clojure/Rust.",
+      "reVerifiedAtUtc": "2026-10-07T19:06:34.232Z",
+      "reVerifiedHttpStatuses": {
+        "https://github.com/snyk/zip-slip-vulnerability": "200"
+      }
+    },
+    {
+      "id": "SRC-02",
+      "title": "SQLite FTS5 documentation",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version": "docs current at retrieval (SQLite docs for FTS5)",
+      "batch": 1,
+      "keyEvidence": "Four built-in tokenizers: unicode61 (default, Unicode 6.1, case-insensitive, token chars L*/N*/Co, remove_diacritics 0/1/2 with documented multi-diacritic bug in mode 1 e.g. U+1ED9), ascii, porter (wrapper), trigram (substring matching + LIKE/GLOB index, min 3 chars, options case_sensitive, remove_diacritics). ICU tokenizer NOT documented in FTS5 page (ICU is a legacy FTS3/4 module); custom tokenizers via C API.",
+      "reVerifiedAtUtc": "2026-10-07T19:06:34.803Z",
+      "reVerifiedHttpStatuses": {
+        "https://www.sqlite.org/fts5.html": "200"
+      }
+    },
+    {
+      "id": "SRC-03",
+      "title": "SQLite 3.34.0 release log",
+      "url": "https://sqlite.org/releaselog/3_34_0.html",
+      "version": "SQLite 3.34.0, released 2020-12-01",
+      "batch": 2,
+      "keyEvidence": "'Enhanced [FTS5] to support [trigram indexes]' in the 3.34.0 changelog (line names trigram indexes; the trigram tokenizer ships in this series).",
+      "reVerifiedAtUtc": "2026-10-07T19:06:35.092Z",
+      "reVerifiedHttpStatuses": {
+        "https://sqlite.org/releaselog/3_34_0.html": "200"
+      }
+    },
+    {
+      "id": "SRC-04",
+      "title": "The Update Framework (TUF) specification + homepage",
+      "url": "https://raw.githubusercontent.com/theupdateframework/specification/master/tuf-spec.md ; https://theupdateframework.io/",
+      "version": "spec v1.0.36, revision 2026-08-05, status Living Standard; homepage copyright 2026, CC BY 4.0, CNCF graduated",
+      "batch": "1+2",
+      "keyEvidence": "Detects/mitigates: arbitrary installation, endless data, extraneous dependencies, fast-forward, indefinite freeze, malicious mirrors, mix-and-match, rollback, key compromise (threshold), wrong software installation. Roles: root (trust anchor, key rotation), targets (hashes/sizes, delegation), snapshot (consistent target-metadata versions), timestamp (online, short-freshness, limits stale replay).",
+      "reVerifiedAtUtc": "2026-10-07T19:06:35.308Z",
+      "reVerifiedHttpStatuses": {
+        "https://raw.githubusercontent.com/theupdateframework/specification/master/tuf-spec.md": "200",
+        "https://theupdateframework.io/": "200"
+      }
+    },
+    {
+      "id": "SRC-05",
+      "title": "Uptane (uptane.org)",
+      "url": "https://uptane.org/",
+      "version": "homepage as of retrieval; Linux Foundation JDF project",
+      "batch": 2,
+      "keyEvidence": "'A Secure Software Update Framework for Automobiles'; 'Acknowledging that all systems will eventually be hacked, Uptane is designed to minimize the damage of a compromise and assure rapid recovery'; layered degradation. Director/Image split and partial-verification details live in the Standard (not fetched this arm — uncertainty noted).",
+      "reVerifiedAtUtc": "2026-10-07T19:06:35.584Z",
+      "reVerifiedHttpStatuses": {
+        "https://uptane.org/": "200"
+      }
+    },
+    {
+      "id": "SRC-06",
+      "title": "Chromium OS update_engine README (A/B updates)",
+      "url": "https://chromium.googlesource.com/aosp/platform/system/update_engine/+/HEAD/README.md",
+      "version": "HEAD at retrieval",
+      "batch": 3,
+      "keyEvidence": "Update written to inactive partition while system runs from active; partition re-read, hashed, compared to metadata hash; postinstall writes dm-verity tree; updater 'periodically checkpoints the last operation ... can continue from the point it missed' after failure/shutdown; failed update: 'The user will continue on the old version'; failed boot: 'rollback to the old partition'; delta payload with fallback to full after repeated failures.",
+      "reVerifiedAtUtc": "2026-10-07T19:06:35.711Z",
+      "reVerifiedHttpStatuses": {
+        "https://chromium.googlesource.com/aosp/platform/system/update_engine/+/HEAD/README.md": "200"
+      }
+    },
+    {
+      "id": "SRC-07",
+      "title": "Android A/B (seamless) system updates",
+      "url": "https://source.android.com/docs/core/ota/ab",
+      "version": "Android docs current at retrieval; Virtual A/B since Android 10",
+      "batch": 3,
+      "keyEvidence": "Two slots; unused slot receives OTA while device runs; 'This approach makes updates fault resistant by keeping the unused slot as a fallback'; interrupted updates resumable; failed boot 'reboot back into the old partition and remains usable'; 'Virtual A/B updates have replaced Legacy A/B system updates in Android 10'.",
+      "reVerifiedAtUtc": "2026-10-07T19:06:36.098Z",
+      "reVerifiedHttpStatuses": {
+        "https://source.android.com/docs/core/ota/ab": "200"
+      }
+    },
+    {
+      "id": "SRC-08",
+      "title": "OSTree (libostree) documentation",
+      "url": "https://ostreedev.github.io/ostree/",
+      "version": "docs current at retrieval",
+      "batch": 2,
+      "keyEvidence": "'checksums individual files and has a content-addressed-object store'; 'checks out the files via hardlinks, and they thus need to be immutable'; 'Transactional upgrades and rollback for the system'; multiple parallel bootable deployments; bootloader configuration managed by libostree. (Per-deployment symlink/boot-swap details are in Deployments docs, not fetched this arm — noted.)",
+      "reVerifiedAtUtc": "2026-10-07T19:06:36.419Z",
+      "reVerifiedHttpStatuses": {
+        "https://ostreedev.github.io/ostree/": "200"
+      }
+    },
+    {
+      "id": "SRC-09",
+      "title": "DOMPurify (Cure53)",
+      "url": "https://github.com/cure53/DOMPurify",
+      "version": "v3.4.16 shown on README at retrieval; project since 2014-02; Apache-2.0/MPL-2.0",
+      "batch": 2,
+      "keyEvidence": "'DOM-only, super-fast, uber-tolerant XSS sanitizer for HTML, MathML and SVG'; 'works with a secure default'; post-sanitization DOM modification 'can easily void the effects of sanitization'; jsdom required current on server; happy-dom 'not considered safe at this point'; CI across 9 browser/OS combos + fuzzing of sanitize() and CONFIG.",
+      "reVerifiedAtUtc": "2026-10-07T19:06:36.557Z",
+      "reVerifiedHttpStatuses": {
+        "https://github.com/cure53/DOMPurify": "200"
+      }
+    },
+    {
+      "id": "SRC-10",
+      "title": "WCAG 2.2 (W3C Recommendation)",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version": "W3C Recommendation, published 2024-12-12; supersedes/extends 2.1 (2018-06); 4.1.1 Parsing removed",
+      "batch": 1,
+      "keyEvidence": "Kiosk-relevant SCs: 1.4.3 contrast 4.5:1 (3:1 large); 1.4.11 non-text contrast 3:1; 1.4.12 text spacing; 2.4.7 focus visible; 2.5.1 single-pointer alternative for path/multipoint gestures; 2.5.5 target size 44x44 (AAA); 2.5.7 dragging alternative (AA, new in 2.2); 2.5.8 target size min 24x24 (AA, new in 2.2); 1.3.4 orientation (fixed-orientation kiosks need essential justification).",
+      "reVerifiedAtUtc": "2026-10-07T19:06:36.998Z",
+      "reVerifiedHttpStatuses": {
+        "https://www.w3.org/TR/WCAG22/": "200"
+      }
+    },
+    {
+      "id": "SRC-11",
+      "title": "WebKitGTK release archive",
+      "url": "https://webkitgtk.org/releases/",
+      "version": "LATEST-STABLE-2.54.1 dated 2026-10-02",
+      "batch": 2,
+      "keyEvidence": "Current stable release series 2.54.x (2.54.1, 2026-10-02); tarballs with .asc/.sums signatures. Plain directory index; release notes not fetched.",
+      "reVerifiedAtUtc": "2026-10-07T19:06:37.112Z",
+      "reVerifiedHttpStatuses": {
+        "https://webkitgtk.org/releases/": "200"
+      }
+    }
+  ],
+  "evidenceSavedAtUtc": "2026-10-07T18:59:15.120Z"
+}

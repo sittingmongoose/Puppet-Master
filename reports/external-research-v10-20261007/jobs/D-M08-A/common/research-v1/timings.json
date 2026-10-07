@@ -1,0 +1,51 @@
+{
+  "dispatch_boundary_utc": "2026-10-07 18:54:29 UTC",
+  "dispatch_boundary_basis": "requestedAt unavailable; clock sampled before fresh Goal creation",
+  "native_start_utc": "2026-10-07 18:54:29 UTC",
+  "first_saved_finding_utc": "2026-10-07 18:57:17.526937903 UTC",
+  "output_save_utc": "2026-10-07 18:57:17.526937903 UTC",
+  "terminal_time_utc": "2026-10-07 19:00:57 UTC",
+  "stage_ceiling_seconds": 180,
+  "stage_deadline_utc": "2026-10-07 18:57:29 UTC",
+  "occupied_time_seconds_from_dispatch_boundary": 388,
+  "stage_overrun_seconds": 208,
+  "output_bytes_utf8": 3932,
+  "source_operations": [
+    {
+      "operation": "read INPUT_MAP.json",
+      "count": 1
+    },
+    {
+      "operation": "read listed brief/source manifest/source files",
+      "count": 4
+    },
+    {
+      "operation": "targeted heading searches in listed RFC source files",
+      "count": 2
+    },
+    {
+      "operation": "targeted section reads in listed RFC source files",
+      "count": 2
+    }
+  ],
+  "source_operation_total": 9,
+  "retries": {
+    "input_reads": 0,
+    "draft_write": 1,
+    "native_goal": 0
+  },
+  "accidental_exposure": "none observed; only INPUT_MAP.json and its listed brief, source manifest, and source files were read",
+  "billing_counters": {
+    "billing": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null
+  },
+  "goal_native_counters_raw": {
+    "activation_tokensUsed": 0,
+    "pre_terminal_tokensUsed": 46365,
+    "pre_terminal_timeUsedSeconds": 179,
+    "terminal_tokensUsed": 46365,
+    "terminal_timeUsedSeconds": 388
+  }
+}

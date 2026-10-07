@@ -1,0 +1,32 @@
+{
+  "status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-B-independent-source-review-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-B-independent-source-review-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-independent-source-review-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-B-independent-source-review-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-independent-source-review-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Saved [review.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/review.md) and [REVIEW.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/REVIEW.json).\n\nAll six obligations assessed for both outputs. Both fail source quality; their deployment rejection remains supported. Candidate hashes are unchanged. Goal completed; actual receipts saved alongside the review.\n\n[Actual elapsed](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/review-time.json): **15m46s**, exceeding the authorized budget by 46 seconds.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-independent-source-review-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:7bc1bbb9-9186-4975-8bb3-0657f627420c",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": "Saved [review.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/review.md) and [REVIEW.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/REVIEW.json).\n\nAll six obligations assessed for both outputs. Both fail source quality; their deployment rejection remains supported. Candidate hashes are unchanged. Goal completed; actual receipts saved alongside the review.\n\n[Actual elapsed](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/review-time.json): **15m46s**, exceeding the authorized budget by 46 seconds.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-independent-source-review-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:7bc1bbb9-9186-4975-8bb3-0657f627420c",
+    "waitTimedOut": false
+  },
+  "runs": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-independent-source-review-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "requestedAt": "2026-10-07T18:54:19.654Z",
+      "startedAt": "2026-10-07T18:54:20.183Z",
+      "completedAt": "2026-10-07T19:10:52.897Z"
+    }
+  ]
+}

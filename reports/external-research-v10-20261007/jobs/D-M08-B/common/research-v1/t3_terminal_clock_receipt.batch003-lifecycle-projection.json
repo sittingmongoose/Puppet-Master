@@ -1,0 +1,65 @@
+{
+  "original_identity": {
+    "availability_at_curation": "existing_local_path_hash_verified",
+    "bytes": 6783,
+    "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+    "github_retention": "NOT_ASSERTED",
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/research-v1/t3_terminal_clock_receipt.json",
+    "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+    "retention": "UNKNOWN/unverified",
+    "sha256": "f9cb0062fea5f727bfab0f67c339a90f5cc39b95f9178480de6f7bc83d498bfb"
+  },
+  "projection": {
+    "content_sha256": "d4c0f2092738c0321190ae9fd21dfb6a0e4d851e40ed578fd0e4be7a8b44ae1f",
+    "isError": false,
+    "structuredContent": {
+      "hasMore": true,
+      "items_sha256": "d324f8b83cc7242b0fb5f5a3f8486b3f54710e2c2ee52484392845392344ba94",
+      "nextPosition": 0,
+      "recentRuns": [
+        {
+          "completedAt": "2026-10-07T19:08:19.578Z",
+          "model": "gpt-6-luna",
+          "ordinal": 1,
+          "providerInstanceId": "codex_gmail",
+          "requestedAt": "2026-10-07T19:04:27.651Z",
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-common-research-v1:ordinal:1",
+          "startedAt": "2026-10-07T19:04:28.182Z",
+          "status": "completed"
+        }
+      ],
+      "thread": {
+        "activeRunId": null,
+        "archived": false,
+        "branch": "t3/research/er10-research-efficiency-campaign",
+        "createdAt": "2026-10-07T19:04:27.641Z",
+        "createdBy": "agent",
+        "creationSource": "mcp",
+        "interactionMode": "default",
+        "itemCount": 73,
+        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-common-research-v1:ordinal:1",
+        "link": "[ER10 COHORT3 D-M08-B common draft](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-B-common-research-v1)",
+        "linkedPullRequest": null,
+        "model": "gpt-6-luna",
+        "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+        "pendingRequestCount": 0,
+        "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+        "providerInstanceId": "codex_gmail",
+        "relationshipToParent": "subagent",
+        "runCount": 1,
+        "runtimeMode": "full-access",
+        "settled": false,
+        "settledAt": null,
+        "snoozed": false,
+        "snoozedUntil": null,
+        "status": "completed",
+        "threadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-B-common-research-v1",
+        "titleRegeneration": null,
+        "title_sha256": "5eb522753f297328b5f44dcf15b0cf98bb2fd366c66fd27f6aa62f7430f0951b",
+        "updatedAt": "2026-10-07T19:08:19.578Z",
+        "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f"
+      }
+    }
+  },
+  "projection_policy": "Separate bounded metadata copy; original untouched. Text/history hashed, actual scalar lifecycle preserved; never a raw tool response."
+}

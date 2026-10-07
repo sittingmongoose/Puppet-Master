@@ -1,0 +1,29 @@
+{
+  "armActivationStartUtc": "2026-10-07T18:44:24.635Z",
+  "armActivationSource": "createdAt of installed driver state .zcode/scratch/goals/sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723/state.json",
+  "workerStartUtc": "2026-10-07T18:46:07Z",
+  "firstUsefulFindingSavedUtc": "2026-10-07T18:57:23.890Z",
+  "firstUsefulFinding": "sources/executed-checks.json (CHK-1/CHK-2 pinned-version behavior)",
+  "draftReadyUtc": "2026-10-07T19:09:30Z",
+  "nativeGoal": {
+    "observedStatusAtTicket4": "running",
+    "rounds": 3,
+    "ticketStatuses": {
+      "t1": "done",
+      "t2": "done",
+      "t3": "done",
+      "t4": "pending"
+    },
+    "endedReasonField": "cancelled",
+    "observedAtUtc": "2026-10-07T19:11:45.786Z",
+    "terminalLifecycle": "Per root clarification (2026-10-07T18:49:37Z): the worker does NOT write the driver's terminal status and uses no invented create/get tools. The installed zcode-acp-server 0.65.1 GoalLoopDriver settles the loop itself at the round boundary after verification (real status set: running/paused/paused-budget/paused-stall/paused-crash/complete/impossible/stopped); root captures the final actual state separately. This field records the honest as-observed status at ticket-4 time, not a claimed terminal state.",
+    "statePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723/state.json",
+    "backendSessionId": "sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723"
+  },
+  "unknowns": [
+    "model usage/billing figures (no observable interface)",
+    "driver terminal status at read time (owned by driver contract/root, see nativeGoal.terminalLifecycle)"
+  ],
+  "writtenAtUtc": "2026-10-07T19:11:45.786Z",
+  "draftReadyNote": "draft.md final mtime after ticket-3 round inserted \u00a75 'Component/code behavior at pinned versions (consolidated)' and renumbered sections; initial draft saved 19:02:58Z"
+}

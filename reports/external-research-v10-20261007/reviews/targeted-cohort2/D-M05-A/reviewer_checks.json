@@ -1,0 +1,263 @@
+{
+  "host_interpreter": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "execution_limit": "Exact mapped tarfile.py modules on host 3.14.4; not complete exact-release interpreters.",
+  "sources": {
+    "tarold": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarold.py",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8"
+    },
+    "tardocold": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocold.rst",
+      "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99"
+    },
+    "tarnew": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarnew.py",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d"
+    },
+    "tardocnew": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocnew.rst",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f"
+    }
+  },
+  "cases": [
+    {
+      "case": "omitted_default",
+      "release": "3.12.3",
+      "function": "fully_trusted_filter",
+      "warnings": [
+        "DeprecationWarning"
+      ]
+    },
+    {
+      "case": "filter_error_taxonomy",
+      "release": "3.12.3",
+      "subclasses": [
+        "AbsolutePathError",
+        "OutsideDestinationError",
+        "SpecialFileError",
+        "AbsoluteLinkError",
+        "LinkOutsideDestinationError"
+      ]
+    },
+    {
+      "case": "data_filter_absolute_regular",
+      "release": "3.12.3",
+      "result": "accepted",
+      "name": "safe_absolute_regular",
+      "mode": "0o644",
+      "linkname": ""
+    },
+    {
+      "case": "data_filter_setuid_regular",
+      "release": "3.12.3",
+      "result": "accepted",
+      "name": "setuid_regular",
+      "mode": "0o755",
+      "linkname": ""
+    },
+    {
+      "case": "data_filter_fifo",
+      "release": "3.12.3",
+      "result": "raised",
+      "exception": "SpecialFileError"
+    },
+    {
+      "case": "data_filter_absolute_symlink",
+      "release": "3.12.3",
+      "result": "raised",
+      "exception": "AbsoluteLinkError"
+    },
+    {
+      "case": "data_filter_outside_symlink",
+      "release": "3.12.3",
+      "result": "raised",
+      "exception": "LinkOutsideDestinationError"
+    },
+    {
+      "case": "data_filter_normalized_symlink",
+      "release": "3.12.3",
+      "result": "accepted",
+      "name": "normalized_symlink",
+      "mode": null,
+      "linkname": "a/../b"
+    },
+    {
+      "case": "data_filter_symlink_loop",
+      "release": "3.12.3",
+      "result": "accepted",
+      "name": "loop/item"
+    },
+    {
+      "case": "explicit_data_fifo_errorlevel",
+      "release": "3.12.3",
+      "errorlevel": 0,
+      "raised": null,
+      "member_exists": true,
+      "is_fifo": true
+    },
+    {
+      "case": "explicit_data_fifo_errorlevel",
+      "release": "3.12.3",
+      "errorlevel": 1,
+      "raised": "SpecialFileError",
+      "member_exists": false,
+      "is_fifo": false
+    },
+    {
+      "case": "explicit_data_fifo_errorlevel",
+      "release": "3.12.3",
+      "errorlevel": 2,
+      "raised": "SpecialFileError",
+      "member_exists": false,
+      "is_fifo": false
+    },
+    {
+      "case": "link_fallback_target_revalidation",
+      "release": "3.12.3",
+      "api": "extractall",
+      "raised": null,
+      "cause": null,
+      "member_exists": true,
+      "is_fifo": true
+    },
+    {
+      "case": "link_fallback_target_revalidation",
+      "release": "3.12.3",
+      "api": "extract",
+      "raised": null,
+      "cause": null,
+      "member_exists": true,
+      "is_fifo": true
+    },
+    {
+      "case": "directory_fixup_refilter",
+      "release": "3.12.3",
+      "filter_calls": [
+        "dir"
+      ],
+      "errorlevel": 2,
+      "raised": null
+    },
+    {
+      "case": "omitted_default",
+      "release": "3.14.0",
+      "function": "data_filter",
+      "warnings": []
+    },
+    {
+      "case": "filter_error_taxonomy",
+      "release": "3.14.0",
+      "subclasses": [
+        "AbsolutePathError",
+        "OutsideDestinationError",
+        "SpecialFileError",
+        "AbsoluteLinkError",
+        "LinkOutsideDestinationError",
+        "LinkFallbackError"
+      ]
+    },
+    {
+      "case": "data_filter_absolute_regular",
+      "release": "3.14.0",
+      "result": "accepted",
+      "name": "safe_absolute_regular",
+      "mode": "0o644",
+      "linkname": ""
+    },
+    {
+      "case": "data_filter_setuid_regular",
+      "release": "3.14.0",
+      "result": "accepted",
+      "name": "setuid_regular",
+      "mode": "0o755",
+      "linkname": ""
+    },
+    {
+      "case": "data_filter_fifo",
+      "release": "3.14.0",
+      "result": "raised",
+      "exception": "SpecialFileError"
+    },
+    {
+      "case": "data_filter_absolute_symlink",
+      "release": "3.14.0",
+      "result": "raised",
+      "exception": "AbsoluteLinkError"
+    },
+    {
+      "case": "data_filter_outside_symlink",
+      "release": "3.14.0",
+      "result": "raised",
+      "exception": "LinkOutsideDestinationError"
+    },
+    {
+      "case": "data_filter_normalized_symlink",
+      "release": "3.14.0",
+      "result": "accepted",
+      "name": "normalized_symlink",
+      "mode": null,
+      "linkname": "b"
+    },
+    {
+      "case": "data_filter_symlink_loop",
+      "release": "3.14.0",
+      "result": "raised",
+      "exception": "OSError",
+      "errno": 40
+    },
+    {
+      "case": "explicit_data_fifo_errorlevel",
+      "release": "3.14.0",
+      "errorlevel": 0,
+      "raised": null,
+      "member_exists": false,
+      "is_fifo": false
+    },
+    {
+      "case": "explicit_data_fifo_errorlevel",
+      "release": "3.14.0",
+      "errorlevel": 1,
+      "raised": "SpecialFileError",
+      "member_exists": false,
+      "is_fifo": false
+    },
+    {
+      "case": "explicit_data_fifo_errorlevel",
+      "release": "3.14.0",
+      "errorlevel": 2,
+      "raised": "SpecialFileError",
+      "member_exists": false,
+      "is_fifo": false
+    },
+    {
+      "case": "link_fallback_target_revalidation",
+      "release": "3.14.0",
+      "api": "extractall",
+      "raised": "LinkFallbackError",
+      "cause": "SpecialFileError",
+      "member_exists": false,
+      "is_fifo": false
+    },
+    {
+      "case": "link_fallback_target_revalidation",
+      "release": "3.14.0",
+      "api": "extract",
+      "raised": null,
+      "cause": null,
+      "member_exists": true,
+      "is_fifo": true
+    },
+    {
+      "case": "directory_fixup_refilter",
+      "release": "3.14.0",
+      "filter_calls": [
+        "dir",
+        "dir"
+      ],
+      "errorlevel": 2,
+      "raised": null
+    }
+  ],
+  "scratch_cleaned": true
+}

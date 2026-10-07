@@ -1,0 +1,76 @@
+{
+  "files": {
+    "review_receipt_summary.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/review_receipt_summary.json",
+      "sha256": "f30b6b5bf26d5458538d82b90104aa6984572912245a7545b1743fda5b1a110a",
+      "bytes": 3477
+    },
+    "reviewer_checks.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+      "sha256": "2e3334ba3533d98c972b1fbd645a6a072bbc1e2b3c6716760347d66c0dbbfb55",
+      "bytes": 6833
+    },
+    "goal_create_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_create_receipt.json",
+      "sha256": "d0b5b9ed685ebc84ef35bda85e2bb889b0e2d62a99239dad7ae553e6746a4861",
+      "bytes": 319
+    },
+    "goal_complete_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_complete_receipt.json",
+      "sha256": "4835ecab567feaa07b4f4a489552feecb308d08ce90f233f855d6f494675db9e",
+      "bytes": 648
+    },
+    "goal_terminal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_terminal_receipt.json",
+      "sha256": "046aa61e282027c34073dae9cfccaf5d080acbca97efef596e672fd210e1c6e0",
+      "bytes": 328
+    },
+    "goal_active_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_active_receipt.json",
+      "sha256": "d0b5b9ed685ebc84ef35bda85e2bb889b0e2d62a99239dad7ae553e6746a4861",
+      "bytes": 319
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/t3-terminal-observed.json",
+      "sha256": "c4778dd1df88c9b6a9ed07ace175bd482d08e523ab96dc3d2daf51101eb658b2",
+      "bytes": 3779
+    },
+    "reviewer_link_normalization.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_link_normalization.json",
+      "sha256": "60ae01d5e24e00734bc8c54a3209f212fb42650f61e1b8e2a976ccd766b0eaa3",
+      "bytes": 1204
+    },
+    "review.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/review.md",
+      "sha256": "51cff2c72fa3be63501153d3c6d782b8c533bd2a7c946abfd186d6eab4cf7e97",
+      "bytes": 16609
+    },
+    "reviewer_checks.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.py",
+      "sha256": "c58b2970c801ffd915e3583d734aa9744e9e5f7da46d33383da1c06de568ddd4",
+      "bytes": 6433
+    },
+    "reviewer_link_normalization.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_link_normalization.py",
+      "sha256": "d47531722333cbd9f3d2e987b499778e216b08e4870d14819191a2491a72cf8f",
+      "bytes": 2104
+    },
+    "REVIEW.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/REVIEW.json",
+      "sha256": "5d6f2257577842ee8f5f4066d30bf80c1ebf6d84afab40d648657a433bca67d4",
+      "bytes": 81330
+    }
+  },
+  "terminal": "2026-10-07T19:05:14.998Z",
+  "complete_scope_assessed_both": true,
+  "review_output_labels": {
+    "Output1": "control",
+    "Output2": "treatment"
+  },
+  "source_quality": {
+    "Output1": "FAIL",
+    "Output2": "FAIL"
+  },
+  "native_terminal": "complete",
+  "review_status": "INDEPENDENT_FULL_SCOPE_EVALUATED"
+}

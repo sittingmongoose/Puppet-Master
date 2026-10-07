@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-10-07T18:43:03.989977+00:00",
+  "deviation": "Independent treatment review dispatched before counterpart control final and native terminal frozen",
+  "original_attempt_preserved": true,
+  "observed_status_at_repair": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-MUSE-treatment-source-review-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-MUSE-treatment-source-review-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-MUSE-treatment-source-review-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-MUSE-treatment-source-review-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6.1-sol\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-MUSE-treatment-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-MUSE-treatment-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-MUSE-treatment-source-review-v1:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-MUSE-treatment-source-review-v1",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "isError": false
+  },
+  "provenance_exposure": "UNKNOWN",
+  "comparative_provenance_eligibility": "HOLD",
+  "candidate_findings_delivered": false,
+  "repair": "Immediate safe saved partial boundary requested through steer; no further research or new grade; fresh full review only after both final outputs and native terminal receipts frozen",
+  "future_admission_rule": "Full exact pair freeze before any independent review; review keys must not exist during still-scored counterpart work",
+  "filesystem_isolation": "Scoped input maps are not proof of filesystem firewall"
+}

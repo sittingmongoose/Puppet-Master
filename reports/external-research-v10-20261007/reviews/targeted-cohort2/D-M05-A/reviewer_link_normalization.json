@@ -1,0 +1,30 @@
+{
+  "host_interpreter": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "limitation": "Exact mapped library code on the existing host; no complete exact-release interpreter run. No archive extraction performed in this check.",
+  "layout": {
+    "destination/a": "symlink to x/y",
+    "destination/b": "symlink to sibling outside directory, still within review scratch",
+    "destination/x/b": "ordinary file within destination"
+  },
+  "observations": [
+    {
+      "release_library": "3.12.3",
+      "source_sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "filter_result": "accepted",
+      "original_linkname": "a/../b",
+      "result_linkname": "a/../b",
+      "effective_target_relative_to_scratch": "destination/x/b",
+      "target_within_extraction_destination": true
+    },
+    {
+      "release_library": "3.14.0",
+      "source_sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "filter_result": "accepted",
+      "original_linkname": "a/../b",
+      "result_linkname": "b",
+      "effective_target_relative_to_scratch": "outside",
+      "target_within_extraction_destination": false
+    }
+  ],
+  "scratch_cleaned": true
+}

@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+  "status": "interrupted",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:3",
+  "latestTerminalStatus": "interrupted",
+  "latestTerminalSummary": "⏸ goal loop paused (cancelled) — /auto resume to continue",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:9cb9a99a-34ac-48bc-93ce-0b5fdd1d03a6",
+  "providerInstanceId": "zcode",
+  "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+  "summary": "⏸ goal loop paused (cancelled) — /auto resume to continue",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:9cb9a99a-34ac-48bc-93ce-0b5fdd1d03a6",
+  "waitTimedOut": false
+}

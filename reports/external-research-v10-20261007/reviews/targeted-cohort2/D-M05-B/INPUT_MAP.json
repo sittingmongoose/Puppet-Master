@@ -1,0 +1,72 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/brief.md",
+  "changes": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/changes.json",
+  "prior_state": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/prior-state.md",
+  "primary_sources": [
+    {
+      "source_id": "sqlwal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwal.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlwalcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+      "version_or_capture": "SQLite version-3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwalcode.c",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqltransaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_capture": "SQLite transaction documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqltransaction.html",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "outputs": [
+    {
+      "label": "Output1",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/frozen-inputs/Output1/final.md",
+          "sha256": "0db1dee0b7a7f7302549bb33fe0e458cec31ebe209d5a8117ff59f5e1bbf8d3c"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/frozen-inputs/Output1/sources.json",
+          "sha256": "ce6021c3779415403d97fe0384ccd6e34331796cc3efdcf32d17481516816b1d"
+        }
+      }
+    },
+    {
+      "label": "Output2",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/frozen-inputs/Output2/final.md",
+          "sha256": "bcf2a81003a387b277b4febfa0599f40b27c60b3599d8bda66b7052cd6f4ea7d"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/frozen-inputs/Output2/sources.json",
+          "sha256": "5306b89570301fc04ba0c48c079b0bcf5f5714ab4ad2bea4572762c125acf386"
+        }
+      }
+    }
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B",
+  "scope": [
+    "Bind prior findings to exact deployment and source dependencies.",
+    "Treat the rename as no-op only where dependencies establish that.",
+    "Re-evaluate the network-filesystem and process-location assumptions.",
+    "Revisit locking, shared memory, durability, and operational promises affected by deployment.",
+    "Keep unaffected findings only with evidence of equivalence.",
+    "State a bounded revised disposition, uncertainty, and proposed validation."
+  ],
+  "blinding": "Neutral byte-exact output copies omit arm names in paths. Content may expose method; disclose. Do not read source sibling paths, task prompts, economics, state, other reviews or grades."
+}

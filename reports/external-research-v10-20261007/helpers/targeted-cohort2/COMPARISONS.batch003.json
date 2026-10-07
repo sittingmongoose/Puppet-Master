@@ -1,0 +1,821 @@
+{
+  "cases": [
+    {
+      "arms": {
+        "control": {
+          "deliverable": "FROZEN",
+          "final": {
+            "bytes": 8852,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/control/refresh-v1/final.md",
+            "sha256": "6f554580d65186229e795ca87ab46cfd699bff4214ececf39bf61595d17db85c"
+          },
+          "native_lifecycle_limit": "Initial create/get active, pre-terminal get paused, update and fresh get complete. Continuous active state eligibility HOLD; no cause inferred. Exact native outputs retained.",
+          "quality": {
+            "complete_scope_assessed": true,
+            "defects": [
+              {
+                "assessment": "False for a filter refusal suppressed by errorlevel=0. In 3.12.3 the failed assignment leaves tarinfo equal to the original member, and extraction continues with that member. In 3.14.0 filtered starts as None and a suppressed refusal excludes the member. Identical handlers and identical documentation do not make these caller paths identical.",
+                "id": "D-01",
+                "kind": "incorrect retained behavior",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "The original five subclasses remain, but 3.14.0 adds the public LinkFallbackError and changes extractall fallback to re-filter the referenced archive member. This is a consequential change, not a renamed old class. extract() and extractall() also differ in propagation of the fallback filter in this exact file.",
+                "id": "D-02",
+                "kind": "public API/security change misclassified or omitted",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "Leading Linux slashes are stripped. A remaining absolute path is the conditional refusal, exemplified by Windows drive paths. A regular file's high mode bits are cleared rather than refused. Linux /safe_absolute_regular becomes safe_absolute_regular; regular mode 0o4755 becomes 0o755.",
+                "id": "D-03",
+                "kind": "incorrect proposed rejection assertions",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "Explicit data selects the same policy name, not identical implementations. Link normalization, strict realpath behavior and suppressed-refusal handling differ. A narrowly chosen basic refusal corpus can match; that does not prove general parity.",
+                "id": "D-04",
+                "kind": "overbroad compatibility equivalence",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "The mechanics claim is correct, but its individual anchors are inaccurate: old calls are 758, 768 and 813, not 758/771/810; new calls start at 784, 794 and 843, not 784/792/826. New normpath is 833-835, not approximately 818-820.",
+                "id": "D-06",
+                "kind": "imprecise primary locators",
+                "materiality": "NON_MATERIAL"
+              }
+            ],
+            "obligations": [
+              {
+                "assessment": "The source aliases, exact releases/full hashes in each sources.json, and the F1-F7 dependency family are retained. No dependency is renamed with the UI label. Identity verification is independent of the behavioral claims.",
+                "disposition": "SATISFIED",
+                "evidence_ids": [
+                  "S-01"
+                ],
+                "id": "O1",
+                "obligation": "Preserve exact prior source and dependency identities."
+              },
+              {
+                "assessment": "Both explicitly separate the name-only change from 3.12.3 to 3.14.0 invalidation.",
+                "disposition": "SATISFIED",
+                "evidence_ids": [
+                  "S-02"
+                ],
+                "id": "O2",
+                "obligation": "Dispose of the no-op rename separately from semantic invalidation."
+              },
+              {
+                "assessment": "Default resolution is correct at both exact tags. Relevant refusal behavior is wrongly retained and the new public fallback exception/conditions are missing or misclassified.",
+                "disposition": "PARTIAL",
+                "evidence_ids": [
+                  "S-03",
+                  "S-05",
+                  "D-01",
+                  "D-02"
+                ],
+                "id": "O3",
+                "obligation": "Re-evaluate default filter/API behavior at both exact releases."
+              },
+              {
+                "assessment": "Both correctly retain the need for inspection and caller limits and update older-runtime guidance. Their error/fallback dispositions omit material conditions; additional output-specific compatibility claims are identified below.",
+                "disposition": "PARTIAL",
+                "evidence_ids": [
+                  "S-07",
+                  "S-08",
+                  "D-01",
+                  "D-02"
+                ],
+                "id": "O4",
+                "obligation": "Revisit security and compatibility claims depending on that default."
+              },
+              {
+                "assessment": "U1-U6 remain open. U5 is narrowed by the new pin without falsely resolving fleet support. Already-covered is expressly separated from implemented, tested or adequate. F4's incorrect retention is a source-behavior defect, not evidence that they silently closed a U-item.",
+                "disposition": "SATISFIED",
+                "evidence_ids": [],
+                "id": "O5",
+                "obligation": "Do not classify unresolved prior dependencies as already covered."
+              },
+              {
+                "assessment": "Both deliver all three disposition categories and label tests proposed-only. Incorrect retention and incorrect Linux path/mode expectations make parts of those deliverables unreliable.",
+                "disposition": "PARTIAL",
+                "evidence_ids": [
+                  "D-01",
+                  "D-02",
+                  "D-03"
+                ],
+                "id": "O6",
+                "obligation": "Deliver retained/changed/unresolved dispositions and proposed regression checks."
+              }
+            ],
+            "source_quality": "FAIL",
+            "unassessed_remainder": {
+              "boundary": "All six declared obligations and consequential candidate claims were assessed. These retained unknowns are not blanket abstention or an exhaustive unknown-answer recall claim.",
+              "declared_obligations_unassessed": [],
+              "remaining_empirical_unknowns": [
+                "No complete CPython 3.12.3 and 3.14.0 interpreter pair was run. Reviewer execution uses the exact mapped tarfile modules on host CPython 3.14.4.",
+                "No full source review or exhaustive behavioral comparison of the two releases' os.path implementations, filesystem races, or every archive format/edge was attempted.",
+                "Concrete U1-U5 product/configuration values and operational cleanup ownership remain unknown."
+              ]
+            },
+            "useful_deliverable": {
+              "reason": "Provides usable source identities, default-change evidence, caller-safeguard guidance and preserved unresolved items. Material behavior/test assertions require correction before adoption; no candidate revisions were made.",
+              "standalone_reliable_recommendation": false,
+              "status": "USEFUL_WITH_MATERIAL_DEFECTS",
+              "useful": true
+            }
+          },
+          "timing": {
+            "candidate_cold_inclusive_seconds": 431.904,
+            "dispatch_to_terminal_stage_seconds": 269.022,
+            "intervening_seed_queue_seconds": 49.644,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts",
+            "seed_seconds": 113.238,
+            "within900": true
+          }
+        },
+        "treatment": {
+          "deliverable": "FROZEN",
+          "final": {
+            "bytes": 8717,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/treatment/refresh-v1/final.md",
+            "sha256": "502885bcb521b89c298bd7fb20444a981f2bfa56a4aef4b575eadde942c16627"
+          },
+          "native_lifecycle_limit": null,
+          "quality": {
+            "complete_scope_assessed": true,
+            "defects": [
+              {
+                "assessment": "False for a filter refusal suppressed by errorlevel=0. In 3.12.3 the failed assignment leaves tarinfo equal to the original member, and extraction continues with that member. In 3.14.0 filtered starts as None and a suppressed refusal excludes the member. Identical handlers and identical documentation do not make these caller paths identical.",
+                "id": "D-01",
+                "kind": "incorrect retained behavior",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "The original five subclasses remain, but 3.14.0 adds the public LinkFallbackError and changes extractall fallback to re-filter the referenced archive member. This is a consequential change, not a renamed old class. extract() and extractall() also differ in propagation of the fallback filter in this exact file.",
+                "id": "D-02",
+                "kind": "public API/security change misclassified or omitted",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "Leading Linux slashes are stripped. A remaining absolute path is the conditional refusal, exemplified by Windows drive paths. A regular file's high mode bits are cleared rather than refused. Linux /safe_absolute_regular becomes safe_absolute_regular; regular mode 0o4755 becomes 0o755.",
+                "id": "D-03",
+                "kind": "incorrect proposed rejection assertions",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "The exact docs warn that normalization can change link meaning when the target traverses symlinks. The code records the normalized linkname but resolves member.linkname, the original string, for the containment check. This is not a generally monotonic tightening guarantee.",
+                "id": "D-05",
+                "kind": "unsupported security characterization and missing governing condition",
+                "materiality": "MATERIAL"
+              }
+            ],
+            "obligations": [
+              {
+                "assessment": "The source aliases, exact releases/full hashes in each sources.json, and the F1-F7 dependency family are retained. No dependency is renamed with the UI label. Identity verification is independent of the behavioral claims.",
+                "disposition": "SATISFIED",
+                "evidence_ids": [
+                  "S-01"
+                ],
+                "id": "O1",
+                "obligation": "Preserve exact prior source and dependency identities."
+              },
+              {
+                "assessment": "Both explicitly separate the name-only change from 3.12.3 to 3.14.0 invalidation.",
+                "disposition": "SATISFIED",
+                "evidence_ids": [
+                  "S-02"
+                ],
+                "id": "O2",
+                "obligation": "Dispose of the no-op rename separately from semantic invalidation."
+              },
+              {
+                "assessment": "Default resolution is correct at both exact tags. Relevant refusal behavior is wrongly retained and the new public fallback exception/conditions are missing or misclassified.",
+                "disposition": "PARTIAL",
+                "evidence_ids": [
+                  "S-03",
+                  "S-05",
+                  "D-01",
+                  "D-02"
+                ],
+                "id": "O3",
+                "obligation": "Re-evaluate default filter/API behavior at both exact releases."
+              },
+              {
+                "assessment": "Both correctly retain the need for inspection and caller limits and update older-runtime guidance. Their error/fallback dispositions omit material conditions; additional output-specific compatibility claims are identified below.",
+                "disposition": "PARTIAL",
+                "evidence_ids": [
+                  "S-07",
+                  "S-08",
+                  "D-01",
+                  "D-02"
+                ],
+                "id": "O4",
+                "obligation": "Revisit security and compatibility claims depending on that default."
+              },
+              {
+                "assessment": "U1-U6 remain open. U5 is narrowed by the new pin without falsely resolving fleet support. Already-covered is expressly separated from implemented, tested or adequate. F4's incorrect retention is a source-behavior defect, not evidence that they silently closed a U-item.",
+                "disposition": "SATISFIED",
+                "evidence_ids": [],
+                "id": "O5",
+                "obligation": "Do not classify unresolved prior dependencies as already covered."
+              },
+              {
+                "assessment": "Both deliver all three disposition categories and label tests proposed-only. Incorrect retention and incorrect Linux path/mode expectations make parts of those deliverables unreliable.",
+                "disposition": "PARTIAL",
+                "evidence_ids": [
+                  "D-01",
+                  "D-02",
+                  "D-03"
+                ],
+                "id": "O6",
+                "obligation": "Deliver retained/changed/unresolved dispositions and proposed regression checks."
+              }
+            ],
+            "source_quality": "FAIL",
+            "unassessed_remainder": {
+              "boundary": "All six declared obligations and consequential candidate claims were assessed. These retained unknowns are not blanket abstention or an exhaustive unknown-answer recall claim.",
+              "declared_obligations_unassessed": [],
+              "remaining_empirical_unknowns": [
+                "No complete CPython 3.12.3 and 3.14.0 interpreter pair was run. Reviewer execution uses the exact mapped tarfile modules on host CPython 3.14.4.",
+                "No full source review or exhaustive behavioral comparison of the two releases' os.path implementations, filesystem races, or every archive format/edge was attempted.",
+                "Concrete U1-U5 product/configuration values and operational cleanup ownership remain unknown."
+              ]
+            },
+            "useful_deliverable": {
+              "reason": "Provides usable source identities, default-change evidence, caller-safeguard guidance and preserved unresolved items. Material behavior/test assertions require correction before adoption; no candidate revisions were made.",
+              "standalone_reliable_recommendation": false,
+              "status": "USEFUL_WITH_MATERIAL_DEFECTS",
+              "useful": true
+            }
+          },
+          "timing": {
+            "candidate_cold_inclusive_seconds": 715.337,
+            "dispatch_to_terminal_stage_seconds": 252.931,
+            "intervening_seed_queue_seconds": 349.168,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts",
+            "seed_seconds": 113.238,
+            "within900": true
+          }
+        }
+      },
+      "case_id": "D-M05-A",
+      "disposition": "TERMINAL_EVALUATED",
+      "eligibility": {
+        "blindness": "Method labels remain in frozen contents; independent reviewer cost/target/grade blinded",
+        "filesystem_confinement": "HOLD: explicit maps advisory, no enforced firewall established",
+        "limitations": []
+      },
+      "method_id": "M05",
+      "quality_comparison": "Both correctly establish the exact default change and preserve U1-U6. Both fail material retained-error/fallback and proposed-path assertions. Output1 additionally preserves the known normalization caveat, new symlink hint and directory refilter lead, but overpromises cross-release parity. Output2 frames normalization as tightening without its known meaning condition. These are source-backed quality differences, not an economic ranking or winner.",
+      "quota": {
+        "billing": null,
+        "cached_input_tokens": null,
+        "generated_output_tokens": null,
+        "input_tokens": null,
+        "native_counters": "Preserved in per-stage actual receipts; semantics provider dependent, no double-counting/enclosing addition"
+      },
+      "review": {
+        "complete_scope_assessed_both": true,
+        "files": {
+          "REVIEW.json": {
+            "bytes": 81330,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/REVIEW.json",
+            "sha256": "5d6f2257577842ee8f5f4066d30bf80c1ebf6d84afab40d648657a433bca67d4"
+          },
+          "goal_active_receipt.json": {
+            "bytes": 319,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_active_receipt.json",
+            "sha256": "d0b5b9ed685ebc84ef35bda85e2bb889b0e2d62a99239dad7ae553e6746a4861"
+          },
+          "goal_complete_receipt.json": {
+            "bytes": 648,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_complete_receipt.json",
+            "sha256": "4835ecab567feaa07b4f4a489552feecb308d08ce90f233f855d6f494675db9e"
+          },
+          "goal_create_receipt.json": {
+            "bytes": 319,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_create_receipt.json",
+            "sha256": "d0b5b9ed685ebc84ef35bda85e2bb889b0e2d62a99239dad7ae553e6746a4861"
+          },
+          "goal_terminal_receipt.json": {
+            "bytes": 328,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_terminal_receipt.json",
+            "sha256": "046aa61e282027c34073dae9cfccaf5d080acbca97efef596e672fd210e1c6e0"
+          },
+          "review.md": {
+            "bytes": 16609,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/review.md",
+            "sha256": "51cff2c72fa3be63501153d3c6d782b8c533bd2a7c946abfd186d6eab4cf7e97"
+          },
+          "review_receipt_summary.json": {
+            "bytes": 3477,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/review_receipt_summary.json",
+            "sha256": "f30b6b5bf26d5458538d82b90104aa6984572912245a7545b1743fda5b1a110a"
+          },
+          "reviewer_checks.json": {
+            "bytes": 6833,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "sha256": "2e3334ba3533d98c972b1fbd645a6a072bbc1e2b3c6716760347d66c0dbbfb55"
+          },
+          "reviewer_checks.py": {
+            "bytes": 6433,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.py",
+            "sha256": "c58b2970c801ffd915e3583d734aa9744e9e5f7da46d33383da1c06de568ddd4"
+          },
+          "reviewer_link_normalization.json": {
+            "bytes": 1204,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_link_normalization.json",
+            "sha256": "60ae01d5e24e00734bc8c54a3209f212fb42650f61e1b8e2a976ccd766b0eaa3"
+          },
+          "reviewer_link_normalization.py": {
+            "bytes": 2104,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_link_normalization.py",
+            "sha256": "d47531722333cbd9f3d2e987b499778e216b08e4870d14819191a2491a72cf8f"
+          },
+          "t3-terminal-observed.json": {
+            "bytes": 3779,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/t3-terminal-observed.json",
+            "sha256": "c4778dd1df88c9b6a9ed07ace175bd482d08e523ab96dc3d2daf51101eb658b2"
+          }
+        },
+        "native_terminal": "complete",
+        "review_output_labels": {
+          "Output1": "control",
+          "Output2": "treatment"
+        },
+        "review_status": "INDEPENDENT_FULL_SCOPE_EVALUATED",
+        "source_quality": {
+          "Output1": "FAIL",
+          "Output2": "FAIL"
+        },
+        "terminal": "2026-10-07T19:05:14.998Z"
+      }
+    },
+    {
+      "arms": {
+        "control": {
+          "deliverable": "FROZEN",
+          "final": {
+            "bytes": 11519,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/final.md",
+            "sha256": "0db1dee0b7a7f7302549bb33fe0e458cec31ebe209d5a8117ff59f5e1bbf8d3c"
+          },
+          "native_lifecycle_limit": null,
+          "quality": {
+            "complete_scope_assessed": true,
+            "defects": [
+              {
+                "assessment": "The generic transaction-page warning is not an ordinary WAL COMMIT rule. Readers can block checkpoint/reset and stale read upgrades can fail; neither means an ordinary reader blocks a separate writer's WAL COMMIT. The unsupported network layout also provides no deterministic BUSY oracle.",
+                "id": "D1",
+                "kind": "incorrect retained journal-mode condition",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "The frozen WAL documentation contains this simplified wording, but released 3.51.3 code initializes syncHeader, clears it for SQLITE_IOCAP_SEQUENTIAL, and invokes sqlite3OsSync with nonzero checkpoint sync flags while writing the new/reused header on the foreground WAL-frame path. NORMAL omits the extra ordinary per-commit sync; it does not imply a strict no-foreground-sync guarantee.",
+                "id": "D2",
+                "kind": "incorrect retained operational promise",
+                "materiality": "MATERIAL"
+              }
+            ],
+            "obligations": [
+              {
+                "assessed": true,
+                "assessment": "Explicitly maps all prior F1-F7 DEP inputs and changed/held/open conditions to frozen sources; two retained operational claims fail journal-mode/release qualification.",
+                "defect_ids": [
+                  "D1",
+                  "D2"
+                ],
+                "disposition": "PARTIAL",
+                "obligation": "Bind prior findings to exact deployment and source dependencies.",
+                "obligation_id": 1,
+                "primary_evidence": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4",
+                  "P5",
+                  "P6",
+                  "P7",
+                  "P8"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Name-only rename is bound to dependency inputs, with a sensible boundary for out-of-module string-keyed artifacts.",
+                "defect_ids": [],
+                "disposition": "PASS",
+                "obligation": "Treat the rename as no-op only where dependencies establish that.",
+                "obligation_id": 2,
+                "primary_evidence": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4",
+                  "P6",
+                  "P7",
+                  "P8"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Direct two-host shared-network opening is rejected using the same-host constraint and mapped-file shared-memory mechanism; sole-process EXCLUSIVE is ruled out for this requirement.",
+                "defect_ids": [],
+                "disposition": "PASS",
+                "obligation": "Re-evaluate the network-filesystem and process-location assumptions.",
+                "obligation_id": 3,
+                "primary_evidence": [
+                  "P1",
+                  "P12"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Revisits locking, shared memory, checkpoint progress, durability, recovery and custody. Ordinary-reader COMMIT BUSY and strict foreground-sync avoidance are materially incorrect retained promises.",
+                "defect_ids": [
+                  "D1",
+                  "D2"
+                ],
+                "disposition": "PARTIAL",
+                "obligation": "Revisit locking, shared memory, durability, and operational promises affected by deployment.",
+                "obligation_id": 4,
+                "primary_evidence": [
+                  "P3",
+                  "P4",
+                  "P5",
+                  "P6",
+                  "P9",
+                  "P10"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Retains version/fundamental mechanics with unchanged-runtime evidence, but unchanged source bytes do not make generic COMMIT locking or simplified sync language equivalent for this selected WAL release.",
+                "defect_ids": [
+                  "D1",
+                  "D2"
+                ],
+                "disposition": "PARTIAL",
+                "obligation": "Keep unaffected findings only with evidence of equivalence.",
+                "obligation_id": 5,
+                "primary_evidence": [
+                  "P2",
+                  "P7",
+                  "P8",
+                  "P9",
+                  "P10"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Gives a bounded rejection, explicit unknowns and proposed-only checks. Its must-BUSY COMMIT oracle is invalid; unsupported-mount experimental success cannot certify correctness.",
+                "defect_ids": [
+                  "D1"
+                ],
+                "disposition": "PARTIAL",
+                "obligation": "State a bounded revised disposition, uncertainty, and proposed validation.",
+                "obligation_id": 6,
+                "primary_evidence": [
+                  "P1",
+                  "P9"
+                ]
+              }
+            ],
+            "source_quality": "FAIL",
+            "unassessed_remainder": [
+              "Actual two-machine mount/VFS implementation, locking and mmap coherence; no target mount or second-machine access supplied.",
+              "Selected-release runtime execution, deployment binaries/build flags, real workload checkpoint tuning, crash/power-loss injection, fsync latency and backup operations.",
+              "Exhaustive unknown SQLite defects, all code paths/build options, and architectures outside this bounded WAL/deployment module."
+            ],
+            "useful_deliverable": {
+              "limit": "Whole recommendation cannot receive a source-quality pass while the material retained COMMIT claim is wrong.",
+              "status": "PARTIAL",
+              "supported_use": "Useful bounded rejection of the stated deployment and inventory of outstanding operational conditions.",
+              "useful": true
+            }
+          },
+          "timing": {
+            "candidate_cold_inclusive_seconds": 700.729,
+            "dispatch_to_terminal_stage_seconds": 220.547,
+            "intervening_seed_queue_seconds": 317.435,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts",
+            "seed_seconds": 162.747,
+            "within900": true
+          }
+        },
+        "treatment": {
+          "deliverable": "FROZEN",
+          "final": {
+            "bytes": 11325,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/final.md",
+            "sha256": "bcf2a81003a387b277b4febfa0599f40b27c60b3599d8bda66b7052cd6f4ea7d"
+          },
+          "native_lifecycle_limit": "Initial create/get active, pre-terminal get paused, update and fresh get complete. Continuous active state eligibility HOLD; no cause inferred. Exact native outputs retained.",
+          "quality": {
+            "complete_scope_assessed": true,
+            "defects": [
+              {
+                "assessment": "The generic transaction-page warning is not an ordinary WAL COMMIT rule. Readers can block checkpoint/reset and stale read upgrades can fail; neither means an ordinary reader blocks a separate writer's WAL COMMIT. The unsupported network layout also provides no deterministic BUSY oracle.",
+                "id": "D1",
+                "kind": "incorrect retained journal-mode condition",
+                "materiality": "MATERIAL"
+              },
+              {
+                "assessment": "The frozen documentation says it rarely exceeds 32 KiB; released code supports multiple 32 KiB index blocks. A total upper bound is false.",
+                "id": "D3",
+                "kind": "incorrect source paraphrase",
+                "materiality": "NONMATERIAL"
+              },
+              {
+                "assessment": "The mapped untrusted prior F3 conditions require reader gaps; its unresolved workload-tuning items and cross-cutting item 2 leave reader-gap provision open. Neither brief nor changes establishes that gaps were actually provisioned.",
+                "id": "D4",
+                "kind": "incorrect prior dependency binding",
+                "materiality": "NONMATERIAL"
+              }
+            ],
+            "obligations": [
+              {
+                "assessed": true,
+                "assessment": "Maps F1-F7 source/deployment dependencies; mistakenly promotes reader-gap provision to established prior state, and retains the generic COMMIT condition.",
+                "defect_ids": [
+                  "D1",
+                  "D4"
+                ],
+                "disposition": "PARTIAL",
+                "obligation": "Bind prior findings to exact deployment and source dependencies.",
+                "obligation_id": 1,
+                "primary_evidence": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4",
+                  "P5",
+                  "P6",
+                  "P7",
+                  "P8"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Explicit DEP inventory shows store-name independence, consistent with the mapped name-only change.",
+                "defect_ids": [],
+                "disposition": "PASS",
+                "obligation": "Treat the rename as no-op only where dependencies establish that.",
+                "obligation_id": 2,
+                "primary_evidence": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4",
+                  "P6",
+                  "P7",
+                  "P8"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Re-evaluates host/process location and network mount, and applies the documented same-host/no-network rule; rejects no-shm/read-only rescue.",
+                "defect_ids": [],
+                "disposition": "PASS",
+                "obligation": "Re-evaluate the network-filesystem and process-location assumptions.",
+                "obligation_id": 3,
+                "primary_evidence": [
+                  "P1",
+                  "P12"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Revisits all four affected topics and suspends deployment guarantees. The retained ordinary-reader COMMIT BUSY rule is wrong; a 32KiB upper bound is a separate nonmaterial paraphrase error.",
+                "defect_ids": [
+                  "D1",
+                  "D3"
+                ],
+                "disposition": "PARTIAL",
+                "obligation": "Revisit locking, shared memory, durability, and operational promises affected by deployment.",
+                "obligation_id": 4,
+                "primary_evidence": [
+                  "P3",
+                  "P4",
+                  "P5",
+                  "P6",
+                  "P9",
+                  "P11"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Evidence supports retained version/snapshot/default mechanisms. Retaining F7's generic reader-COMMIT warning as a WAL rule lacks equivalence; identical captures alone do not establish domain correctness.",
+                "defect_ids": [
+                  "D1"
+                ],
+                "disposition": "PARTIAL",
+                "obligation": "Keep unaffected findings only with evidence of equivalence.",
+                "obligation_id": 5,
+                "primary_evidence": [
+                  "P2",
+                  "P7",
+                  "P8",
+                  "P9"
+                ]
+              },
+              {
+                "assessed": true,
+                "assessment": "Gives a bounded unsupported-deployment disposition, preserves storage/VFS/durability unknowns, and separates proposed checks from reported inspection. Check descriptions need configuration/timing details before execution; these are optional refinements.",
+                "defect_ids": [],
+                "disposition": "PASS",
+                "obligation": "State a bounded revised disposition, uncertainty, and proposed validation.",
+                "obligation_id": 6,
+                "primary_evidence": [
+                  "P1",
+                  "P3",
+                  "P5",
+                  "P6",
+                  "P7"
+                ]
+              }
+            ],
+            "source_quality": "FAIL",
+            "unassessed_remainder": [
+              "Actual two-machine mount/VFS implementation, locking and mmap coherence; no target mount or second-machine access supplied.",
+              "Selected-release runtime execution, deployment binaries/build flags, real workload checkpoint tuning, crash/power-loss injection, fsync latency and backup operations.",
+              "Exhaustive unknown SQLite defects, all code paths/build options, and architectures outside this bounded WAL/deployment module."
+            ],
+            "useful_deliverable": {
+              "limit": "Whole recommendation cannot receive a source-quality pass while the material retained COMMIT claim is wrong.",
+              "status": "PARTIAL",
+              "supported_use": "Useful bounded rejection of the stated deployment and inventory of outstanding operational conditions.",
+              "useful": true
+            }
+          },
+          "timing": {
+            "candidate_cold_inclusive_seconds": 437.65,
+            "dispatch_to_terminal_stage_seconds": 235.843,
+            "intervening_seed_queue_seconds": 39.06,
+            "scope": "M04 entire research+handoff+critic critical path; M05 coldseed+intervening queue+refresh; physical occupied intervals separately reconstructible from dispatch/native receipts",
+            "seed_seconds": 162.747,
+            "within900": true
+          }
+        }
+      },
+      "case_id": "D-M05-B",
+      "disposition": "TERMINAL_EVALUATED",
+      "eligibility": {
+        "blindness": "Method labels remain in frozen contents; independent reviewer cost/target/grade blinded",
+        "filesystem_confinement": "HOLD: explicit maps advisory, no enforced firewall established",
+        "limitations": []
+      },
+      "method_id": "M05",
+      "quality_comparison": "Both have a supported narrow deployment rejection and a material retained COMMIT/BUSY error. Output1 additionally makes an incorrect foreground-sync promise and a must-BUSY test oracle. Output2's explicit size upper bound and reader-gap prior-state row are localized errors. No economic ranking, preferred winner or target grade is assigned.",
+      "quota": {
+        "billing": null,
+        "cached_input_tokens": null,
+        "generated_output_tokens": null,
+        "input_tokens": null,
+        "native_counters": "Preserved in per-stage actual receipts; semantics provider dependent, no double-counting/enclosing addition"
+      },
+      "review": {
+        "complete_scope_assessed_both": true,
+        "files": {
+          "REVIEW.json": {
+            "bytes": 49191,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/REVIEW.json",
+            "sha256": "21ec4b4467f5d40f5611759c806f6c62d2b3a1ba8987c2d1bbd7ea4adbe48c11"
+          },
+          "counterexamples.json": {
+            "bytes": 950,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/counterexamples.json",
+            "sha256": "e0141f235969c627d1a2fd005dd6ac4f094773b28a05f86e89ab80c56925299e"
+          },
+          "counterexamples.py": {
+            "bytes": 2501,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/counterexamples.py",
+            "sha256": "d6d062cfdc898161eef3a50ee56822a1da410c1844b7935fd60fea5ecae7efdc"
+          },
+          "frozen-inputs/Output1/final.md": {
+            "bytes": 11519,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/frozen-inputs/Output1/final.md",
+            "sha256": "0db1dee0b7a7f7302549bb33fe0e458cec31ebe209d5a8117ff59f5e1bbf8d3c"
+          },
+          "frozen-inputs/Output1/sources.json": {
+            "bytes": 6387,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/frozen-inputs/Output1/sources.json",
+            "sha256": "ce6021c3779415403d97fe0384ccd6e34331796cc3efdcf32d17481516816b1d"
+          },
+          "frozen-inputs/Output2/final.md": {
+            "bytes": 11325,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/frozen-inputs/Output2/final.md",
+            "sha256": "bcf2a81003a387b277b4febfa0599f40b27c60b3599d8bda66b7052cd6f4ea7d"
+          },
+          "frozen-inputs/Output2/sources.json": {
+            "bytes": 6567,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/frozen-inputs/Output2/sources.json",
+            "sha256": "5306b89570301fc04ba0c48c079b0bcf5f5714ab4ad2bea4572762c125acf386"
+          },
+          "goal-active.json": {
+            "bytes": 319,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/goal-active.json",
+            "sha256": "f023af473fe12da22f84b04dddeca6eefb7b3ec927832e2a0baedfe7366aae67"
+          },
+          "goal-complete.json": {
+            "bytes": 648,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/goal-complete.json",
+            "sha256": "e4ed72e23962e64eab0f522c1d37bea11f95a5a8362942dffed2e82c43316f2d"
+          },
+          "goal-create.json": {
+            "bytes": 319,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/goal-create.json",
+            "sha256": "f023af473fe12da22f84b04dddeca6eefb7b3ec927832e2a0baedfe7366aae67"
+          },
+          "goal-terminal-get.json": {
+            "bytes": 328,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/goal-terminal-get.json",
+            "sha256": "3f54f5b8095f00a53747d646525f316a8f4a96ca7e4f68cc76d76cbd24e2c877"
+          },
+          "review-time.json": {
+            "bytes": 533,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/review-time.json",
+            "sha256": "334ee38e16a656918d32c550899ddabdcb027648b0e4c8d8d94dce6a03e75efc"
+          },
+          "review.md": {
+            "bytes": 6303,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/review.md",
+            "sha256": "accae7d381c0d8d4ba647066845d3942b3773a82f63c4409ce4eb243e2555573"
+          },
+          "reviewer-primary.json": {
+            "bytes": 3450,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary.json",
+            "sha256": "5a515401c5bd4a8c9de2b510082d4bf21731fb0ab57f3ef573a960538d578439"
+          },
+          "reviewer-primary/isolation.html": {
+            "bytes": 17364,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/isolation.html",
+            "sha256": "23395653f04984e4310b287ed548202d874e06ecd2cba17f32b2714e5b7ebef7"
+          },
+          "reviewer-primary/pager-3.51.3.c": {
+            "bytes": 302918,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/pager-3.51.3.c",
+            "sha256": "5ef7135d2d67ba7f2be6da0197854788ece57bccd2a743f6f1a5f33c94e8ce7b"
+          },
+          "reviewer-primary/pragma.html": {
+            "bytes": 139778,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/pragma.html",
+            "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d"
+          },
+          "reviewer-primary/release-3.51.3.html": {
+            "bytes": 9857,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/release-3.51.3.html",
+            "sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8"
+          },
+          "reviewer-primary/vdbeaux-3.51.3.c": {
+            "bytes": 178353,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/vdbeaux-3.51.3.c",
+            "sha256": "2f5313c95ea96782d5af11773e9b1e526a5dd8f7e6925d3e64c74501fa2dd22a"
+          },
+          "reviewer-primary/wal-3.51.3.c": {
+            "bytes": 177587,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/wal-3.51.3.c",
+            "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be"
+          },
+          "reviewer-primary/wal-3.51.3.h": {
+            "bytes": 6127,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/wal-3.51.3.h",
+            "sha256": "f6bfe44247d1abdebac7fef7fd1f55c307335bb8668888e1dfd0414da565e3cb"
+          },
+          "t3-terminal-observed.json": {
+            "bytes": 3847,
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/t3-terminal-observed.json",
+            "sha256": "6e7b64ac8ed65057ba062c7fc5c0c9f3eba4da1886c42891669937cfb9377a9b"
+          }
+        },
+        "native_terminal": "complete",
+        "review_budget_seconds": 900,
+        "review_dispatch_to_terminal_seconds": 993.278,
+        "review_output_labels": {
+          "Output1": "control",
+          "Output2": "treatment"
+        },
+        "review_overrun_seconds": 93.27800000000002,
+        "review_status": "INDEPENDENT_FULL_SCOPE_EVALUATED",
+        "source_quality": {
+          "Output1": "FAIL",
+          "Output2": "FAIL"
+        },
+        "terminal": "2026-10-07T19:10:52.897Z"
+      }
+    }
+  ],
+  "copy_identity": "Selected case subtrees preserve every authored field/value; wrapper is curation metadata; full original unchanged",
+  "later_or_unrelated_rows": "DEFERRED; not included or counted",
+  "original_identity": {
+    "github_retention": "NOT_ASSERTED",
+    "original_bytes": 100740,
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/COMPARISONS.json",
+    "original_sha256": "027e9a4e8c9724f0429ba2890d213b3b49bf91d2555ddf7457c6b02bae6db273",
+    "retention": "UNKNOWN/unverified"
+  },
+  "retained_json_pointers": [
+    "/cases/2",
+    "/cases/3"
+  ],
+  "scope_cutoff_utc": "2026-10-07T19:18:49.960897+00:00",
+  "snapshot_type": "scope_bounded_exact_authored_JSON_subtrees"
+}

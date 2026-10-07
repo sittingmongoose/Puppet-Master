@@ -1,0 +1,39 @@
+{
+  "case": "D-M08-B",
+  "version": "v1",
+  "disposition": "HELD_FAILED_SEED_DELIVERY_OVERRUN",
+  "scientific_classification": "INFRASTRUCTURE_SEED_FAILURE_NOT_METHOD_COMPARISON",
+  "is_method_comparison": false,
+  "arms": {
+    "control": "NOT_ADMITTED_FAILED_COMMON_SEED",
+    "treatment": "NOT_ADMITTED_FAILED_COMMON_SEED"
+  },
+  "source_quality": "UNASSESSED",
+  "native_goal_id": "01a117c0-b581-7262-95f2-1b9652238ff0",
+  "native_status": "complete",
+  "native_first_update_response": "NOT_PERSISTED: receipt construction TextEncoder failure; actual repeated completion response/state retained",
+  "native_tokens_raw": 23810,
+  "native_elapsed_raw_seconds": 107,
+  "generated_tokens": null,
+  "billing": null,
+  "requestedAt": "2026-10-07T19:04:27.651Z",
+  "startedAt": "2026-10-07T19:04:28.182Z",
+  "delivery_completedAt": "2026-10-07T19:08:19.578Z",
+  "dispatch_to_delivery_seconds": 231.927,
+  "delivery_overrun_seconds": 51.92699999999999,
+  "quiet": true,
+  "settled": true,
+  "hashes": {
+    "native_terminal_receipt.json": "eaefc09a351675a9e4cfbee21d190f04af6106be1125633248f4a108be083bd5",
+    "quiet_task_receipt.json": "ec11017645148590ede464d7abc12a16a8f22dd0f7ac9013ebf35a80a78e8219",
+    "INPUT_MAP.json": "22ed109311ab4420aaf72dc988e447ac537e5f72a19f66dbf32881ebe2162190",
+    "boundary.json": "f7ab52fd700bcbba13c801424d48c668b7e4810d714698b98d1f57b5b93db0b8",
+    "t3_terminal_clock_receipt.json": "f9cb0062fea5f727bfab0f67c339a90f5cc39b95f9178480de6f7bc83d498bfb",
+    "draft.md": "6b73e52c01bd15f9f2b85f676a92e2f7d0359fc30e5c7e4529f570bf39bfedae",
+    "task.txt": "cdf0ffefe5f2cd80bc1ac0a3419c825a3835db4a821107c77740ff2b1ee9e9be",
+    "native_activation_receipt.json": "59a2107e96ba1b0e254fc51773d7cf57efa4caee43fc858cdb9718d09619d581",
+    "timings.json": "b783b1a6b90c7663ffee529185bf82ca79a53ada5497d8e87b62d890c9e38a00",
+    "dispatch_response.json": "4768769acc1df3119b595d61dd7cdf1c8c43fda9108443c75998b9a1b8a7d9a0"
+  },
+  "frozen_at": "2026-10-07T19:09:57.189063+00:00"
+}

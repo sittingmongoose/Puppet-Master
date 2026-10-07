@@ -1,0 +1,132 @@
+{
+  "note": "exact bounded re-verification retrievals (HTTP HEAD, 8s timeout each, no code executed from responses) to pin precise per-source retrieval timestamps; original content fetches were the WebFetch calls recorded in index.json batches",
+  "entries": [
+    {
+      "id": "SRC-01",
+      "reVerifiedAtUtc": "2026-10-07T19:06:34.232Z",
+      "urls": [
+        {
+          "url": "https://github.com/snyk/zip-slip-vulnerability",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:34.803Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-02",
+      "reVerifiedAtUtc": "2026-10-07T19:06:34.803Z",
+      "urls": [
+        {
+          "url": "https://www.sqlite.org/fts5.html",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:35.091Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-03",
+      "reVerifiedAtUtc": "2026-10-07T19:06:35.092Z",
+      "urls": [
+        {
+          "url": "https://sqlite.org/releaselog/3_34_0.html",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:35.308Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-04",
+      "reVerifiedAtUtc": "2026-10-07T19:06:35.308Z",
+      "urls": [
+        {
+          "url": "https://raw.githubusercontent.com/theupdateframework/specification/master/tuf-spec.md",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:35.485Z"
+        },
+        {
+          "url": "https://theupdateframework.io/",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:35.584Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-05",
+      "reVerifiedAtUtc": "2026-10-07T19:06:35.584Z",
+      "urls": [
+        {
+          "url": "https://uptane.org/",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:35.711Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-06",
+      "reVerifiedAtUtc": "2026-10-07T19:06:35.711Z",
+      "urls": [
+        {
+          "url": "https://chromium.googlesource.com/aosp/platform/system/update_engine/+/HEAD/README.md",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:36.098Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-07",
+      "reVerifiedAtUtc": "2026-10-07T19:06:36.098Z",
+      "urls": [
+        {
+          "url": "https://source.android.com/docs/core/ota/ab",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:36.419Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-08",
+      "reVerifiedAtUtc": "2026-10-07T19:06:36.419Z",
+      "urls": [
+        {
+          "url": "https://ostreedev.github.io/ostree/",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:36.557Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-09",
+      "reVerifiedAtUtc": "2026-10-07T19:06:36.557Z",
+      "urls": [
+        {
+          "url": "https://github.com/cure53/DOMPurify",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:36.998Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-10",
+      "reVerifiedAtUtc": "2026-10-07T19:06:36.998Z",
+      "urls": [
+        {
+          "url": "https://www.w3.org/TR/WCAG22/",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:37.112Z"
+        }
+      ]
+    },
+    {
+      "id": "SRC-11",
+      "reVerifiedAtUtc": "2026-10-07T19:06:37.112Z",
+      "urls": [
+        {
+          "url": "https://webkitgtk.org/releases/",
+          "httpStatus": "200",
+          "checkedAtUtc": "2026-10-07T19:06:37.608Z"
+        }
+      ]
+    }
+  ],
+  "completedAtUtc": "2026-10-07T19:06:37.608Z"
+}

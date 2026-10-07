@@ -1,0 +1,1995 @@
+{
+  "schema_version": "independent-source-review-v1",
+  "review_id": "I-ANCHOR-MUSE/control/source-review-v1",
+  "subject": "Frozen reviser-v1/final.md research proposal",
+  "status": "FULL_DECLARED_SCOPE_ASSESSED",
+  "overall_judgment": "NOT_FULL_POSITIVE",
+  "full_positive": false,
+  "failed_screen": false,
+  "source_correctness": {
+    "assessment": "PARTIALLY_SUPPORTED_WITH_MATERIAL_DEFECTS",
+    "reason": "Core primary quotations/code/history mostly verify; consequential guarantees, tag-baseline sequence, auto-publication/byte-access inference, and Archivematica negative source scope do not.",
+    "material_defect_ids": [
+      "D1",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D8"
+    ]
+  },
+  "completeness": {
+    "assessment": "PARTIAL",
+    "reason": "All declared artifact sections assessed; actual proposal does not close failed-storage restoration, durable DB/tree reconciliation, or rights-change/delivery conditions. Alternatives and media-policy research shallow.",
+    "material_defect_ids": [
+      "D2",
+      "D3",
+      "D7"
+    ]
+  },
+  "planning_usefulness": {
+    "assessment": "SUBSTANTIAL_BUT_CONDITIONAL",
+    "reason": "Many concrete corrections and useful drills; several proposed safeguards are incomplete or inaccurately guaranteed, so proposal is not ready to certify preservation/access safety."
+  },
+  "breadth": {
+    "assessment": "MODERATE_SUPPORTED_BREADTH",
+    "reason": "Multiple preservation/catalog risk domains researched; only two concrete architecture families supported. Three alternatives and media formats mostly synthesis. Same-page repeated verification is depth, not added discovery breadth.",
+    "candidate_credit_basis": "Substantive supported discoveries, not labels/files/citation counts.",
+    "independent_reviewer_sources_add_candidate_credit": false
+  },
+  "covered_obligations": [
+    {
+      "id": "O1",
+      "obligation": "Real primary public-source selection from user brief",
+      "assessment": "MET_WITH_VISIBLE_SELECTION_LIMIT",
+      "evidence_assessment": "RFC/LOC validator and history, SQLite, Omeka, Archivematica are appropriate public primary selections tied to actual ingest/fixity/rights/recovery/catalog needs; hidden selection route cannot be proven.",
+      "artifact_locations": [
+        "final.md:18",
+        "research-v1/SOURCES.md:5-30"
+      ],
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        },
+        {
+          "id": "P03",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "evidence_file": "sources/P03.html",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "assessed_range": "atomic commit §§3,4,5,9; extracted lines 387-425,450-644,993-1080; attached-DB versus arbitrary file distinction"
+        },
+        {
+          "id": "P04",
+          "url": "https://omeka.org/s/docs/user-manual/content/items/",
+          "evidence_file": "sources/P04.html",
+          "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da",
+          "assessed_range": "Items: permissions table, private-object roles, owner deletion, site/user defaults, property visibility, public/private media; extracted lines 116-238,300-324; linked-resource/template presence"
+        },
+        {
+          "id": "P05",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/getting-started/overview/intro/",
+          "evidence_file": "sources/P05.html",
+          "sha256": "245b64ef520e43be5d951eea66f4bd442655f0cd3c87d0b967d7f4b1caa32809",
+          "assessed_range": "introduction body, extracted lines 28-69; OAIS, AtoM, SIP appraisal, audience, licenses; intro-only negative term check"
+        }
+      ]
+    },
+    {
+      "id": "O2",
+      "obligation": "Materially different mechanisms and useful alternatives",
+      "assessment": "PARTIAL_RESEARCH_BREADTH",
+      "evidence_assessment": "Five distinct families compared, but only BagIt/SQLite and Archivematica are researched concretely. M-c/M-d/M-e are candidly unsourced. Generic versioning/immutability and implicit-integrity assertions lack conditions.",
+      "artifact_locations": [
+        "final.md:127-147"
+      ],
+      "primary_evidence": [
+        {
+          "id": "P05",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/getting-started/overview/intro/",
+          "evidence_file": "sources/P05.html",
+          "sha256": "245b64ef520e43be5d951eea66f4bd442655f0cd3c87d0b967d7f4b1caa32809",
+          "assessed_range": "introduction body, extracted lines 28-69; OAIS, AtoM, SIP appraisal, audience, licenses; intro-only negative term check"
+        },
+        {
+          "id": "P07",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/",
+          "evidence_file": "sources/P07.html",
+          "sha256": "c4bb42b8115950619983934dabb707482113ee766038ac7465e995ad6a560173",
+          "assessed_range": "documentation root: transfer/BagIt, SIP-AIP-DIP, PREMIS, normalization, format policy; extracted lines 35-50,66-76,100-163"
+        },
+        {
+          "id": "P25",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html",
+          "evidence_file": "sources/P25.html",
+          "sha256": "84cdbe56b2484c985c2f9b7a17a4485945dae6abd0e8ea52996f07cdf8b63d1f",
+          "assessed_range": "Object Lock versus versioning, per-version retention, modes; extracted lines 6-38,59-68,109-125"
+        },
+        {
+          "id": "P26",
+          "url": "https://openzfs.github.io/openzfs-docs/man/master/8/zpool-scrub.8.html",
+          "evidence_file": "sources/P26.html",
+          "sha256": "0103bc9c8356495131580755687cbac7f1c0b5c5e55785884d351d88c114a90c",
+          "assessed_range": "scrub verification and redundant-pool repair, I/O limits; extracted lines 143-165"
+        },
+        {
+          "id": "P27",
+          "url": "https://restic.readthedocs.io/en/stable/100_references.html",
+          "evidence_file": "sources/P27.html",
+          "sha256": "40cc7855bbbdab09699bac73c5d094f7cf519980e3d5a75a7e2172a497e18264",
+          "assessed_range": "repository snapshot ordering and chunk dedup; extracted lines 600-638; threat-model assumptions and detection limitations 639-670"
+        },
+        {
+          "id": "P35",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectVersions.html",
+          "evidence_file": "sources/P35.html",
+          "sha256": "4216af1b1cbbe352a409948753f9ae79fcc12df091d2f04e8f8454a1b298eda2",
+          "assessed_range": "version expiry/permanent deletion; extracted lines8-18,29-43,59-61"
+        }
+      ]
+    },
+    {
+      "id": "O3",
+      "obligation": "Actual component/code behavior at a pinned version",
+      "assessment": "MET_WITH_MATERIAL_APPLICATION_LIMITS",
+      "evidence_assessment": "Pinned code and tag identity verify default full checking, aggregate oxum, fail-early ordering, checksum details, CLI and tag coverage. Creator0.97, regeneration/reference semantics and aggregate-presence limits matter.",
+      "artifact_locations": [
+        "final.md:149-164"
+      ],
+      "primary_evidence": [
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        },
+        {
+          "id": "P15",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+          "evidence_file": "sources/P15.json",
+          "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a",
+          "assessed_range": "tag ref object SHA/type; v1.9.0 resolves directly to commit 861ddacb339d5b92659f0187a402f501d841abbe"
+        },
+        {
+          "id": "P28",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "evidence_file": "sources/P28.source.txt",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)"
+        }
+      ]
+    },
+    {
+      "id": "O4",
+      "obligation": "Pertinent issue/fix/regression/release or justified equivalent implementation history",
+      "assessment": "MET_BY_EQUIVALENT_HISTORY_LIMITED_REGRESSION_DEPTH",
+      "evidence_assessment": "Unfixed reporting complaint, rejected unmerged PR and persistent pinned behavior justify equivalent-history branch. Release applicability verified. Candidate does not inspect an actual regression file; reviewer checks PR183/162 patches and pinned tests without adding candidate credit.",
+      "artifact_locations": [
+        "final.md:166-183"
+      ],
+      "primary_evidence": [
+        {
+          "id": "P08",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177",
+          "evidence_file": "sources/P08.json",
+          "sha256": "ceb4962d11162e4a99c7b612a2c511d456fe28ad76dfde093987dd69ab08deee",
+          "assessed_range": "issue state, title, created_at, body; no claimed fix accepted"
+        },
+        {
+          "id": "P09",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/174",
+          "evidence_file": "sources/P09.json",
+          "sha256": "126d0bc5c0a1f61ff8711e7545e247cb7139537cc0e819a1d13aea8b78683c95",
+          "assessed_range": "PR state, merged, created_at, closed_at, merge_commit_sha, body; unmerged status"
+        },
+        {
+          "id": "P10",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/174/comments",
+          "evidence_file": "sources/P10.json",
+          "sha256": "8a5432cc15c5324c7614d16d6a103ad80389ddbca9ca96c072b04f87f6db3f31",
+          "assessed_range": "all six PR174 comments; maintainer/reporter exchange and author close explanation"
+        },
+        {
+          "id": "P11",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+          "evidence_file": "sources/P11.json",
+          "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e",
+          "assessed_range": "tag_name, published_at, created_at, full release body and PR references"
+        },
+        {
+          "id": "P12",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/183",
+          "evidence_file": "sources/P12.json",
+          "sha256": "c9134bddde6fa253d38aa7d461264c077cb8e624022842ee65d24f0874e10bc9",
+          "assessed_range": "PR183 body, merged state/date and merge_commit_sha; pool lifecycle/constructor failure"
+        },
+        {
+          "id": "P13",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/162",
+          "evidence_file": "sources/P13.json",
+          "sha256": "cf0ec73d0d0133c93be4dc8553e2b66324d4e68d1703527585c348042ccc17a4",
+          "assessed_range": "PR162 body, merged state/date and merge_commit_sha; CLI tests and completeness diagnostics"
+        },
+        {
+          "id": "P17",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/183/files",
+          "evidence_file": "sources/P17.json",
+          "sha256": "87417bf650db10ec885edc893c7f985910748ae216331fae2cee78db04f5bb48",
+          "assessed_range": "both file patches: bagit.py pool close/join and test.py RuntimeError constructor regression"
+        },
+        {
+          "id": "P18",
+          "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/162/files",
+          "evidence_file": "sources/P18.json",
+          "sha256": "b90489d0d620918ee2c602177704fdd332e8c8e286df7479648f2d79d0362ab8",
+          "assessed_range": "bagit.py CLI/completeness patch; test.py CLI cases, independently cross-checked against P28"
+        },
+        {
+          "id": "P28",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "evidence_file": "sources/P28.source.txt",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)"
+        }
+      ]
+    },
+    {
+      "id": "O5",
+      "obligation": "Every relevant discovery compared with frozen plan",
+      "assessment": "PARTIAL_SUBSTANTIVE_COVERAGE",
+      "evidence_assessment": "Every F-item has a comparison and all specified gaps are named; plan retention of SQLite/directory structure is acknowledged. Coverage claims overstate recovery and rights changes, and serving-all is an inference.",
+      "artifact_locations": [
+        "final.md:31-125",
+        "final.md:253-274",
+        "plan.md:3"
+      ],
+      "primary_evidence": [
+        {
+          "id": "P03",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "evidence_file": "sources/P03.html",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "assessed_range": "atomic commit §§3,4,5,9; extracted lines 387-425,450-644,993-1080; attached-DB versus arbitrary file distinction"
+        },
+        {
+          "id": "P04",
+          "url": "https://omeka.org/s/docs/user-manual/content/items/",
+          "evidence_file": "sources/P04.html",
+          "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da",
+          "assessed_range": "Items: permissions table, private-object roles, owner deletion, site/user defaults, property visibility, public/private media; extracted lines 116-238,300-324; linked-resource/template presence"
+        },
+        {
+          "id": "P20",
+          "url": "https://forum.omeka.org/t/media-privacy-and-direct-file-urls/29696.json",
+          "evidence_file": "sources/P20.json",
+          "sha256": "3311c08063ae9f79e7cd1a5202557005c8cc671d1fda86e20031587ee0f07900",
+          "assessed_range": "July8 maintainer response by jflatnes, post3; direct-file availability and permission-enforcing storage alternatives; reporter chronology distinguished"
+        },
+        {
+          "id": "P23",
+          "url": "https://www.sqlite.org/howtocorrupt.html",
+          "evidence_file": "sources/P23.html",
+          "sha256": "e00709e3f37e95332d8e6df243510665e9cab1d7938d4fd85cbf5f47648a50bf",
+          "assessed_range": "How To Corrupt §1.2 live backup, journal/WAL companionship; §1.3 journal loss and filesystem/flush conditions"
+        }
+      ]
+    },
+    {
+      "id": "O6",
+      "obligation": "Supported corrections, choices, covered dispositions, optional leads, uncertainties and useful validation proposals",
+      "assessment": "PARTIAL_OVERALL_PRESERVATION_MET",
+      "evidence_assessment": "All enumerated F/M/O/U/V and 13 critique dispositions retained. Preserving a disposition does not certify correctness; blanket regeneration, incomplete commit/promotion, restoration and rights conditions remain.",
+      "artifact_locations": [
+        "final.md:31-256",
+        "critique-dispositions.md:1-96"
+      ],
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        },
+        {
+          "id": "P03",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "evidence_file": "sources/P03.html",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "assessed_range": "atomic commit §§3,4,5,9; extracted lines 387-425,450-644,993-1080; attached-DB versus arbitrary file distinction"
+        },
+        {
+          "id": "P04",
+          "url": "https://omeka.org/s/docs/user-manual/content/items/",
+          "evidence_file": "sources/P04.html",
+          "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da",
+          "assessed_range": "Items: permissions table, private-object roles, owner deletion, site/user defaults, property visibility, public/private media; extracted lines 116-238,300-324; linked-resource/template presence"
+        },
+        {
+          "id": "P20",
+          "url": "https://forum.omeka.org/t/media-privacy-and-direct-file-urls/29696.json",
+          "evidence_file": "sources/P20.json",
+          "sha256": "3311c08063ae9f79e7cd1a5202557005c8cc671d1fda86e20031587ee0f07900",
+          "assessed_range": "July8 maintainer response by jflatnes, post3; direct-file availability and permission-enforcing storage alternatives; reporter chronology distinguished"
+        },
+        {
+          "id": "P24",
+          "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+          "evidence_file": "sources/P24.html",
+          "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+          "assessed_range": "fsync file versus directory distinction; extracted lines 26-39"
+        }
+      ]
+    },
+    {
+      "id": "O7",
+      "obligation": "Complete same-family criticism and final proposal; preserve required criticism",
+      "assessment": "MET_AT_ARTIFACT_CONTENT_SCOPE",
+      "evidence_assessment": "Critique, dispositions and final read. All C-1..C-13 reflected. Same-family identity asserted in authored output; runtime receipts excluded from authorized map and not inspected.",
+      "artifact_locations": [
+        "critic-v1/critique.md:1-225",
+        "reviser-v1/critique-dispositions.md",
+        "final.md"
+      ],
+      "primary_evidence": []
+    },
+    {
+      "id": "O8",
+      "obligation": "Distinguish executed checks from proposals",
+      "assessment": "MET",
+      "evidence_assessment": "Final explicitly states no executed component checks and labels V1..V8 as proposals. No claimed successful execution credited. Static retrieval is not a runtime drill.",
+      "artifact_locations": [
+        "final.md:9-12",
+        "final.md:231-251"
+      ],
+      "primary_evidence": []
+    }
+  ],
+  "original_product_scope": [
+    {
+      "id": "B1",
+      "obligation": "Small stations/affordability",
+      "assessment": "PARTIAL",
+      "evidence_assessment": "Single-machine choice plausible; no cost/throughput evidence; U3/U4 retain unknowns."
+    },
+    {
+      "id": "B2",
+      "obligation": "Volunteer catalog",
+      "assessment": "SUBSTANTIAL",
+      "evidence_assessment": "Roles, ownership reassignment and structured catalog useful; publication permission separation unresolved."
+    },
+    {
+      "id": "B3",
+      "obligation": "Photos/audio/scans and original bytes/derivatives",
+      "assessment": "PARTIAL",
+      "evidence_assessment": "Opaque byte preservation and provenance proposed; media-specific formats and normalization standards not researched."
+    },
+    {
+      "id": "B4",
+      "obligation": "Safe dedup",
+      "assessment": "SUBSTANTIAL_CONDITIONAL",
+      "evidence_assessment": "Both filename/size errors corrected; storage sharing and reconstructible ledger not physically specified."
+    },
+    {
+      "id": "B5",
+      "obligation": "Rights/restricted access and public/internal boundary",
+      "assessment": "PARTIAL_MATERIAL_GAP",
+      "evidence_assessment": "Correct metadata visibility; direct-file delivery and rights-change revocation missing."
+    },
+    {
+      "id": "B6",
+      "obligation": "Silent corruption detection",
+      "assessment": "PARTIAL_WITH_DEFECTS",
+      "evidence_assessment": "Full checksum behavior real; aggregate fast wording and tag baseline resetting require correction."
+    },
+    {
+      "id": "B7",
+      "obligation": "Interrupted ingest recovery",
+      "assessment": "PARTIAL_MATERIAL_GAP",
+      "evidence_assessment": "Stage/verify helpful; durable promotion and DB reconciliation incomplete."
+    },
+    {
+      "id": "B8",
+      "obligation": "Failed storage recovery",
+      "assessment": "NOT_SATISFIED",
+      "evidence_assessment": "Copy and overwrite refusal given; restore sequence and restoration test absent."
+    }
+  ],
+  "finding_assessments": [
+    {
+      "id": "F1",
+      "assessment": "PARTLY_SUPPORTED",
+      "evidence_assessment": "Required/optional BagIt framing and security conditions correct; authorized tag updates need regeneration, but blanket pre-validation regeneration is unsafe. Creator defaults to0.97 despite adopted1.0 rule.",
+      "plan_comparison": "P1,P7-checksums",
+      "final_lines": "33-45",
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        },
+        {
+          "id": "P28",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "evidence_file": "sources/P28.source.txt",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)"
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "assessment": "PARTLY_SUPPORTED",
+      "evidence_assessment": "Two-tier design useful; fast tier only sums aggregate counts, not expected-path presence. Weekly schedule is an unmeasured product choice.",
+      "plan_comparison": "P7-fixity",
+      "final_lines": "47-53",
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        },
+        {
+          "id": "P28",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "evidence_file": "sources/P28.source.txt",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)"
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "assessment": "SUPPORTED_CORRECTION_CONDITIONAL_DESIGN",
+      "evidence_assessment": "Hash dedup fixes both filename/size failure modes. Below-bag physical sharing and back-reference restoration are unspecified implementation/product choices; no dedup execution demonstrated.",
+      "plan_comparison": "P2",
+      "final_lines": "55-63",
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "assessment": "SUPPORTED_PREMISE_INCOMPLETE_PROTOCOL",
+      "evidence_assessment": "DB rollback supported, arbitrary-tree atomicity absent. Separate commit/rename durability and reconciliation cases not specified.",
+      "plan_comparison": "P1,P3,P7-recovery",
+      "final_lines": "65-74",
+      "primary_evidence": [
+        {
+          "id": "P03",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "evidence_file": "sources/P03.html",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "assessed_range": "atomic commit §§3,4,5,9; extracted lines 387-425,450-644,993-1080; attached-DB versus arbitrary file distinction"
+        },
+        {
+          "id": "P24",
+          "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+          "evidence_file": "sources/P24.html",
+          "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+          "assessed_range": "fsync file versus directory distinction; extracted lines 26-39"
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "assessment": "SUPPORTED_RISK_OVERSTATED_GUARANTEE",
+      "evidence_assessment": "Live-copy risk real. Source spot checks can miss same-size corruption. Versioned snapshots and post-copy verification help but do not establish cannot-copy guarantee or recovery.",
+      "plan_comparison": "P5",
+      "final_lines": "76-83",
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P23",
+          "url": "https://www.sqlite.org/howtocorrupt.html",
+          "evidence_file": "sources/P23.html",
+          "sha256": "e00709e3f37e95332d8e6df243510665e9cab1d7938d4fd85cbf5f47648a50bf",
+          "assessed_range": "How To Corrupt §1.2 live backup, journal/WAL companionship; §1.3 journal loss and filesystem/flush conditions"
+        },
+        {
+          "id": "P28",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "evidence_file": "sources/P28.source.txt",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)"
+        }
+      ]
+    },
+    {
+      "id": "F6",
+      "assessment": "SUPPORTED_PRECEDENT_LABELED_DESIGN",
+      "evidence_assessment": "AtoM access separation supported; proposed derivative fields/provenance/stale status are useful synthesis, not a sourced implemented schema.",
+      "plan_comparison": "P4,P7-provenance",
+      "final_lines": "85-91",
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P05",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/getting-started/overview/intro/",
+          "evidence_file": "sources/P05.html",
+          "sha256": "245b64ef520e43be5d951eea66f4bd442655f0cd3c87d0b967d7f4b1caa32809",
+          "assessed_range": "introduction body, extracted lines 28-69; OAIS, AtoM, SIP appraisal, audience, licenses; intro-only negative term check"
+        }
+      ]
+    },
+    {
+      "id": "F7",
+      "assessment": "SUPPORTED_RECORD_RULES_MISSING_BYTE_AUTHORIZATION",
+      "evidence_assessment": "Mixed visibility/role-scoped fields true. Auto-site membership not public-status change; known static URLs require delivery controls. Publish/edit permission separation and rights revocation unspecified.",
+      "plan_comparison": "P6,P7-rights",
+      "final_lines": "93-103",
+      "primary_evidence": [
+        {
+          "id": "P04",
+          "url": "https://omeka.org/s/docs/user-manual/content/items/",
+          "evidence_file": "sources/P04.html",
+          "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da",
+          "assessed_range": "Items: permissions table, private-object roles, owner deletion, site/user defaults, property visibility, public/private media; extracted lines 116-238,300-324; linked-resource/template presence"
+        },
+        {
+          "id": "P20",
+          "url": "https://forum.omeka.org/t/media-privacy-and-direct-file-urls/29696.json",
+          "evidence_file": "sources/P20.json",
+          "sha256": "3311c08063ae9f79e7cd1a5202557005c8cc671d1fda86e20031587ee0f07900",
+          "assessed_range": "July8 maintainer response by jflatnes, post3; direct-file availability and permission-enforcing storage alternatives; reporter chronology distinguished"
+        },
+        {
+          "id": "P21",
+          "url": "https://omeka.org/s/modules/Access/",
+          "evidence_file": "sources/P21.html",
+          "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41",
+          "assessed_range": "module-owned server configuration and delivery conditions; extracted lines 115-118,190-205,299-302"
+        },
+        {
+          "id": "P31",
+          "url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/File/Store/Local.php",
+          "evidence_file": "sources/P31.source.txt",
+          "sha256": "a31a28a5b461e00efa066044d5e80b0f46c3cf4d4a9bd330e68fb7e6f30cd50a",
+          "assessed_range": "Local store lines 36-53,72-90; file copy/local path and direct URI"
+        },
+        {
+          "id": "P38",
+          "url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/Service/File/Store/LocalFactory.php",
+          "evidence_file": "sources/P38.source.txt",
+          "sha256": "b14be249c63b49e8404019849d37a7250fd81a7de8ba22cad66146bd3562e839",
+          "assessed_range": "LocalFactory lines20-33; default filesystem and URI root /files"
+        },
+        {
+          "id": "P39",
+          "url": "https://raw.githubusercontent.com/omeka/omeka-s/7e428a3296a399e21a6a6418578175ad8c7edf60/.htaccess.dist",
+          "evidence_file": "sources/P39.source.txt",
+          "sha256": "da4d6119e55b3f36ecc55ce9f7054c4801dde65c9af4ee563b75b1228281674e",
+          "assessed_range": "exact-commit .htaccess.dist lines5-10; existing static files served before application routing"
+        }
+      ]
+    },
+    {
+      "id": "F8",
+      "assessment": "SUPPORTED",
+      "evidence_assessment": "User deletion orphans items; reassignment policy directly useful to volunteer-managed catalog.",
+      "plan_comparison": "P3,P6",
+      "final_lines": "105-109",
+      "primary_evidence": [
+        {
+          "id": "P04",
+          "url": "https://omeka.org/s/docs/user-manual/content/items/",
+          "evidence_file": "sources/P04.html",
+          "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da",
+          "assessed_range": "Items: permissions table, private-object roles, owner deletion, site/user defaults, property visibility, public/private media; extracted lines 116-238,300-324; linked-resource/template presence"
+        }
+      ]
+    },
+    {
+      "id": "F9",
+      "assessment": "DESIGN_PROPOSAL_WITH_FALSE_NEGATIVE_SOURCE_SCOPE",
+      "evidence_assessment": "Format/master/event proposal honestly labeled, but no-contributing-coverage assertion false for declared S6 docs root (BagIt/PREMIS/normalization/FPR). Index still cannot establish detailed logging/affordability.",
+      "plan_comparison": "P7-formats",
+      "final_lines": "111-118",
+      "primary_evidence": [
+        {
+          "id": "P07",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/",
+          "evidence_file": "sources/P07.html",
+          "sha256": "c4bb42b8115950619983934dabb707482113ee766038ac7465e995ad6a560173",
+          "assessed_range": "documentation root: transfer/BagIt, SIP-AIP-DIP, PREMIS, normalization, format policy; extracted lines 35-50,66-76,100-163"
+        },
+        {
+          "id": "P33",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/user-manual/preservation/preservation-planning/",
+          "evidence_file": "sources/P33.html",
+          "sha256": "1347e1d59491587fb60d20383b68ce841ded6339dd21b7857df0ad6ba33ccc5e",
+          "assessed_range": "Preservation Planning body, extracted lines29-45; FPR rules/tools and upgrade-preserved local policy"
+        }
+      ]
+    },
+    {
+      "id": "F10",
+      "assessment": "SUPPORTED_DIRECTION_INFERRED_SEARCH_PROBLEM",
+      "evidence_assessment": "Omeka structured fields supported. RFC filenames do not directly prove volunteer naming search failure; linked resource absence is only narrowed candidate scope, not absence from Items page.",
+      "plan_comparison": "P6",
+      "final_lines": "120-125",
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P04",
+          "url": "https://omeka.org/s/docs/user-manual/content/items/",
+          "evidence_file": "sources/P04.html",
+          "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da",
+          "assessed_range": "Items: permissions table, private-object roles, owner deletion, site/user defaults, property visibility, public/private media; extracted lines 116-238,300-324; linked-resource/template presence"
+        }
+      ]
+    }
+  ],
+  "alternative_assessments": [
+    {
+      "id": "M-a",
+      "frozen_disposition": "RECOMMENDED",
+      "evidence_assessment": "BagIt+SQLite is a real component combination; affordability/maintenance burden not measured; does not itself solve cross-system transactions.",
+      "primary_evidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        },
+        {
+          "id": "P03",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "evidence_file": "sources/P03.html",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "assessed_range": "atomic commit §§3,4,5,9; extracted lines 387-425,450-644,993-1080; attached-DB versus arbitrary file distinction"
+        }
+      ]
+    },
+    {
+      "id": "M-b",
+      "frozen_disposition": "MIGRATION_TARGET",
+      "evidence_assessment": "Real materially different OAIS/SIP-AIP-DIP workflow with appraisal/access and FPR. Heavier deployment judgment is not a comparative deployment study.",
+      "primary_evidence": [
+        {
+          "id": "P05",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/getting-started/overview/intro/",
+          "evidence_file": "sources/P05.html",
+          "sha256": "245b64ef520e43be5d951eea66f4bd442655f0cd3c87d0b967d7f4b1caa32809",
+          "assessed_range": "introduction body, extracted lines 28-69; OAIS, AtoM, SIP appraisal, audience, licenses; intro-only negative term check"
+        },
+        {
+          "id": "P07",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/",
+          "evidence_file": "sources/P07.html",
+          "sha256": "c4bb42b8115950619983934dabb707482113ee766038ac7465e995ad6a560173",
+          "assessed_range": "documentation root: transfer/BagIt, SIP-AIP-DIP, PREMIS, normalization, format policy; extracted lines 35-50,66-76,100-163"
+        },
+        {
+          "id": "P33",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/user-manual/preservation/preservation-planning/",
+          "evidence_file": "sources/P33.html",
+          "sha256": "1347e1d59491587fb60d20383b68ce841ded6339dd21b7857df0ad6ba33ccc5e",
+          "assessed_range": "Preservation Planning body, extracted lines29-45; FPR rules/tools and upgrade-preserved local policy"
+        },
+        {
+          "id": "P34",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/user-manual/archival-storage/archival-storage/",
+          "evidence_file": "sources/P34.html",
+          "sha256": "a61f103be14bcb610b594db39237c8bfce858b3c73d4acf175a9149cc470d487",
+          "assessed_range": "Archival Storage body extracted lines29-40; AIP inventory/download and DIP separation only"
+        }
+      ]
+    },
+    {
+      "id": "M-c",
+      "frozen_disposition": "LATER_OPTIMIZATION",
+      "evidence_assessment": "Distinct but unresearched generic CAS; address/hash is not verification schedule, custom tooling claim unbounded, physical dedup choice unresolved.",
+      "primary_evidence": [
+        {
+          "id": "P27",
+          "url": "https://restic.readthedocs.io/en/stable/100_references.html",
+          "evidence_file": "sources/P27.html",
+          "sha256": "40cc7855bbbdab09699bac73c5d094f7cf519980e3d5a75a7e2172a497e18264",
+          "assessed_range": "repository snapshot ordering and chunk dedup; extracted lines 600-638; threat-model assumptions and detection limitations 639-670"
+        }
+      ]
+    },
+    {
+      "id": "M-d",
+      "frozen_disposition": "COMPLEMENT",
+      "evidence_assessment": "Distinct filesystem scrub; plausible but unresearched candidate mechanism. Reviewer confirms checksum scrub and redundant-pool repair requirements; no new candidate credit.",
+      "primary_evidence": [
+        {
+          "id": "P26",
+          "url": "https://openzfs.github.io/openzfs-docs/man/master/8/zpool-scrub.8.html",
+          "evidence_file": "sources/P26.html",
+          "sha256": "0103bc9c8356495131580755687cbac7f1c0b5c5e55785884d351d88c114a90c",
+          "assessed_range": "scrub verification and redundant-pool repair, I/O limits; extracted lines 143-165"
+        }
+      ]
+    },
+    {
+      "id": "M-e",
+      "frozen_disposition": "OPTIONAL_THIRD_COPY",
+      "evidence_assessment": "Distinct off-site option, unresearched; versioning does not imply retention lock/immutability; encrypted copies still deletable.",
+      "primary_evidence": [
+        {
+          "id": "P25",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html",
+          "evidence_file": "sources/P25.html",
+          "sha256": "84cdbe56b2484c985c2f9b7a17a4485945dae6abd0e8ea52996f07cdf8b63d1f",
+          "assessed_range": "Object Lock versus versioning, per-version retention, modes; extracted lines 6-38,59-68,109-125"
+        },
+        {
+          "id": "P35",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectVersions.html",
+          "evidence_file": "sources/P35.html",
+          "sha256": "4216af1b1cbbe352a409948753f9ae79fcc12df091d2f04e8f8454a1b298eda2",
+          "assessed_range": "version expiry/permanent deletion; extracted lines8-18,29-43,59-61"
+        }
+      ]
+    }
+  ],
+  "optional_opportunity_assessments": [
+    {
+      "id": "O1",
+      "topic": "Consent/segment metadata",
+      "preserved": true,
+      "optional": true,
+      "evidence_assessment": "Useful labeled lead; no consent schema or protected consent-file delivery source."
+    },
+    {
+      "id": "O2",
+      "topic": "Signed audit exports",
+      "preserved": true,
+      "optional": true,
+      "evidence_assessment": "RFC active-attack/signatures premise supported; monthly frequency and custody-proof extent are proposals."
+    },
+    {
+      "id": "O3",
+      "topic": "Duplicate reports",
+      "preserved": true,
+      "optional": true,
+      "evidence_assessment": "Useful accession-description opportunity derived from F3; no execution."
+    },
+    {
+      "id": "O4",
+      "topic": "Format-watch",
+      "preserved": true,
+      "optional": true,
+      "evidence_assessment": "Useful optional lead; no particular obsolescence registry inspected by candidate."
+    },
+    {
+      "id": "O5",
+      "topic": "Encrypted third copy",
+      "preserved": true,
+      "optional": true,
+      "evidence_assessment": "Useful optional disaster-copy lead; retention/key custody and full restore still unspecified."
+    }
+  ],
+  "uncertainty_assessments": [
+    {
+      "id": "U1",
+      "assessment": "JUSTIFIED_UNRESOLVED",
+      "evidence_assessment": "No rights vocabulary/PREMIS dictionary researched; distinction from Omeka visibility remains."
+    },
+    {
+      "id": "U2",
+      "assessment": "RESOLVED",
+      "evidence_assessment": "v1.9.0 published2025-06-13T17:43:22Z independently confirmed."
+    },
+    {
+      "id": "U3",
+      "assessment": "JUSTIFIED_UNRESOLVED",
+      "evidence_assessment": "Deployment OS/hardware not in brief; portability/storage feasibility unknown."
+    },
+    {
+      "id": "U4",
+      "assessment": "JUSTIFIED_UNRESOLVED",
+      "evidence_assessment": "Scale/cadence/replica throughput unmeasured."
+    },
+    {
+      "id": "U5",
+      "assessment": "JUSTIFIED_UNRESOLVED",
+      "evidence_assessment": "Sensitivity and jurisdiction/policy not established; no legal determination credited."
+    }
+  ],
+  "validation_assessments": [
+    {
+      "id": "V1",
+      "assessment": "USEFUL_WITH_REFERENCE_AND_FIXTURE_LIMITS",
+      "final_lines": "233-236",
+      "evidence_assessment": "Payload/tag byte corruption and oxum reporting both useful; same-length flip cannot produce oxum-failure case. Do not reset checksum baseline before testing corruption.",
+      "executed": false
+    },
+    {
+      "id": "V2",
+      "assessment": "USEFUL_INCOMPLETE_CRASH_BOUNDARIES",
+      "final_lines": "237-238",
+      "evidence_assessment": "Mid-copy and mid-SQLite kill useful; no separate post-rename/post-commit/directory durability cases or promoted-orphan reconstruction.",
+      "executed": false
+    },
+    {
+      "id": "V3",
+      "assessment": "USEFUL_NOT_RESTORE",
+      "final_lines": "239-240",
+      "evidence_assessment": "Tests keeping good replica and alert; does not recover lost first disk or restore index/rights/provenance.",
+      "executed": false
+    },
+    {
+      "id": "V4",
+      "assessment": "USEFUL",
+      "final_lines": "241-242",
+      "evidence_assessment": "Direct tests of both dedup failure modes and standalone bags; physical sharing/isolation still unselected.",
+      "executed": false
+    },
+    {
+      "id": "V5",
+      "assessment": "USEFUL_MISSING_PROTECTING_MECHANISM",
+      "final_lines": "243-245",
+      "evidence_assessment": "Anonymous browse/search/direct-media/API assertions appropriately strong; only catalog visibility sourced; no revocation/cache test.",
+      "executed": false
+    },
+    {
+      "id": "V6",
+      "assessment": "USEFUL",
+      "final_lines": "246-247",
+      "evidence_assessment": "Records versioned transformation and derivative staleness; schema is a product choice.",
+      "executed": false
+    },
+    {
+      "id": "V7",
+      "assessment": "USEFUL",
+      "final_lines": "248-249",
+      "evidence_assessment": "Reassignment-before-delete directly tests sourced volunteer ownership risk.",
+      "executed": false
+    },
+    {
+      "id": "V8",
+      "assessment": "USEFUL_BOUNDED",
+      "final_lines": "250-251",
+      "evidence_assessment": "Named textual path rejection useful; symlink/prefix-boundary containment not included.",
+      "executed": false
+    }
+  ],
+  "critique_preservation": [
+    {
+      "id": "C-1",
+      "assessment": "PRESERVED_REFRAME_WITH_SOURCE_SCOPE_ERROR",
+      "evidence_assessment": "F9 label retained, but D8 intro-only absence generalized."
+    },
+    {
+      "id": "C-2",
+      "assessment": "PRESERVED_DELETION_WITH_SOURCE_SCOPE_ERROR",
+      "evidence_assessment": "Detailed consumption claim removed; same D8 scope rationale wrong."
+    },
+    {
+      "id": "C-3",
+      "assessment": "PRESERVED_CORRECT",
+      "evidence_assessment": "RFC section5.2 versus5.4 fixed."
+    },
+    {
+      "id": "C-4",
+      "assessment": "PRESERVED_CORRECT",
+      "evidence_assessment": "Role-scoped hiding and staff caveat retained."
+    },
+    {
+      "id": "C-5",
+      "assessment": "PRESERVED_WITH_INHERITED_CONFLATION",
+      "evidence_assessment": "Both default site paths retained; site membership is not automatic public-status switch."
+    },
+    {
+      "id": "C-6",
+      "assessment": "PRESERVED_CORRECT",
+      "evidence_assessment": "Required/optional distinction and dual-manifest policy explicit; SHA512 SHOULD only in source note, not a fabricated mandatory bag element."
+    },
+    {
+      "id": "C-7",
+      "assessment": "PRESERVED_LABELS",
+      "evidence_assessment": "Synthesis marked; labeling does not guarantee its safety/correctness."
+    },
+    {
+      "id": "C-8",
+      "assessment": "PRESERVED_CONDITION",
+      "evidence_assessment": "Below-bag dedup and standalone-bag condition explicit, physical method not selected."
+    },
+    {
+      "id": "C-9",
+      "assessment": "PRESERVED_RESOLVED",
+      "evidence_assessment": "Published date confirmed."
+    },
+    {
+      "id": "C-10",
+      "assessment": "PRESERVED_CORRECT",
+      "evidence_assessment": "Audio scope retained, no video expansion."
+    },
+    {
+      "id": "C-11",
+      "assessment": "PRESERVED_ADDITION",
+      "evidence_assessment": "Path policy and V8 present, broad containment remains unexecuted."
+    },
+    {
+      "id": "C-12",
+      "assessment": "PRESERVED_WITH_UNSAFE_BLANKET_SEQUENCE",
+      "evidence_assessment": "Generation coverage caveat retained; regenerate-before-validate blanket rule is D1."
+    },
+    {
+      "id": "C-13",
+      "assessment": "PRESERVED_CORRECT_CONDITIONAL",
+      "evidence_assessment": "Entry verification wrapper/per-file records and both oxum branches retained as proposals."
+    }
+  ],
+  "material_defects": [
+    {
+      "id": "D1",
+      "severity": "high",
+      "dimensions": [
+        "source_correctness",
+        "planning_usefulness"
+      ],
+      "exact_claim": "regenerate-then-validate, never validate-then-trust",
+      "location": "final.md:214-216; qualified authorized-change discussion33-45",
+      "primary_counterevidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        },
+        {
+          "id": "P28",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "evidence_file": "sources/P28.source.txt",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)"
+        }
+      ],
+      "counterevidence_assessment": "Recorded checksums are the validation reference. Regeneration hashes current tag/manifest bytes; code explicitly avoids default payload baseline reset.",
+      "impact": "Blanket pre-validation tag regeneration can bless pre-existing tag or payload-manifest corruption. Legitimate authorized edits differ.",
+      "epistemic_scope": "Static semantic inference; no runtime reproduction."
+    },
+    {
+      "id": "D2",
+      "severity": "high",
+      "dimensions": [
+        "completeness",
+        "planning_usefulness"
+      ],
+      "exact_claim": "flip the row to \"complete\" inside a single SQLite transaction and atomically move into the store",
+      "location": "final.md:65-74;264",
+      "primary_counterevidence": [
+        {
+          "id": "P03",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "evidence_file": "sources/P03.html",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "assessed_range": "atomic commit §§3,4,5,9; extracted lines 387-425,450-644,993-1080; attached-DB versus arbitrary file distinction"
+        },
+        {
+          "id": "P24",
+          "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+          "evidence_file": "sources/P24.html",
+          "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+          "assessed_range": "fsync file versus directory distinction; extracted lines 26-39"
+        }
+      ],
+      "counterevidence_assessment": "SQLite attached-database journal coordination excludes arbitrary renames; file fsync does not ensure directory persistence.",
+      "impact": "Commit-before-rename versus rename-before-commit produce different recoverable states, neither reconciled explicitly; pre-promotion fsync insufficiently specifies durability.",
+      "epistemic_scope": "Incomplete proposed protocol; no implemented bug claimed."
+    },
+    {
+      "id": "D3",
+      "severity": "high",
+      "dimensions": [
+        "completeness",
+        "planning_usefulness",
+        "source_attribution"
+      ],
+      "exact_claim": "Rights and restricted access, three layers; BOTH auto-publication paths stay off",
+      "location": "final.md:93-103;223-226;267; proposed V5:243-245",
+      "primary_counterevidence": [
+        {
+          "id": "P04",
+          "url": "https://omeka.org/s/docs/user-manual/content/items/",
+          "evidence_file": "sources/P04.html",
+          "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da",
+          "assessed_range": "Items: permissions table, private-object roles, owner deletion, site/user defaults, property visibility, public/private media; extracted lines 116-238,300-324; linked-resource/template presence"
+        },
+        {
+          "id": "P20",
+          "url": "https://forum.omeka.org/t/media-privacy-and-direct-file-urls/29696.json",
+          "evidence_file": "sources/P20.json",
+          "sha256": "3311c08063ae9f79e7cd1a5202557005c8cc671d1fda86e20031587ee0f07900",
+          "assessed_range": "July8 maintainer response by jflatnes, post3; direct-file availability and permission-enforcing storage alternatives; reporter chronology distinguished"
+        },
+        {
+          "id": "P21",
+          "url": "https://omeka.org/s/modules/Access/",
+          "evidence_file": "sources/P21.html",
+          "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41",
+          "assessed_range": "module-owned server configuration and delivery conditions; extracted lines 115-118,190-205,299-302"
+        },
+        {
+          "id": "P31",
+          "url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/File/Store/Local.php",
+          "evidence_file": "sources/P31.source.txt",
+          "sha256": "a31a28a5b461e00efa066044d5e80b0f46c3cf4d4a9bd330e68fb7e6f30cd50a",
+          "assessed_range": "Local store lines 36-53,72-90; file copy/local path and direct URI"
+        },
+        {
+          "id": "P38",
+          "url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/Service/File/Store/LocalFactory.php",
+          "evidence_file": "sources/P38.source.txt",
+          "sha256": "b14be249c63b49e8404019849d37a7250fd81a7de8ba22cad66146bd3562e839",
+          "assessed_range": "LocalFactory lines20-33; default filesystem and URI root /files"
+        },
+        {
+          "id": "P39",
+          "url": "https://raw.githubusercontent.com/omeka/omeka-s/7e428a3296a399e21a6a6418578175ad8c7edf60/.htaccess.dist",
+          "evidence_file": "sources/P39.source.txt",
+          "sha256": "da4d6119e55b3f36ecc55ce9f7054c4801dde65c9af4ee563b75b1228281674e",
+          "assessed_range": "exact-commit .htaccess.dist lines5-10; existing static files served before application routing"
+        }
+      ],
+      "counterevidence_assessment": "Known default Omeka static files bypass application visibility; private item status differs from site membership auto-add. Protected delivery requires additional storage/server conditions.",
+      "impact": "Catalog hiding does not establish sensitive-original access or revocation; role table has no separate publish permission.",
+      "epistemic_scope": "Conditional counterexample for analogue, not claim future custom app must use Omeka; V5 recognized as proposal."
+    },
+    {
+      "id": "D4",
+      "severity": "medium",
+      "dimensions": [
+        "source_correctness"
+      ],
+      "exact_claim": "nightly fast presence/size sweep; log it as presence-only",
+      "location": "final.md:47-53;152-153",
+      "primary_counterevidence": [
+        {
+          "id": "P02",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+          "evidence_file": "sources/P02.py.txt",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600"
+        },
+        {
+          "id": "P28",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "evidence_file": "sources/P28.source.txt",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)"
+        }
+      ],
+      "counterevidence_assessment": "Fast checks total bytes/file count, returning before expected-path completeness; pinned rename test passes fast and fails completeness.",
+      "impact": "Aggregate cancellation can conceal absent/replaced expected paths; nightly presence wording overstates observation.",
+      "epistemic_scope": "Pinned source/regression read only."
+    },
+    {
+      "id": "D5",
+      "severity": "medium",
+      "dimensions": [
+        "source_correctness",
+        "planning_usefulness"
+      ],
+      "exact_claim": "Replica that cannot copy corruption; or at least completeness + spot fixity",
+      "location": "final.md:76-79;265",
+      "primary_counterevidence": [
+        {
+          "id": "P01",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+          "evidence_file": "sources/P01.html",
+          "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+          "assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection"
+        },
+        {
+          "id": "P28",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "evidence_file": "sources/P28.source.txt",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)"
+        }
+      ],
+      "counterevidence_assessment": "Same-length changed bytes can pass count/completeness. RFC validity requires all recorded checksums.",
+      "impact": "Unsampled corruption can be copied; post-copy validation/version retention mitigate but do not support absolute heading or specify known-good acceptance.",
+      "epistemic_scope": "No assertion that an old version is necessarily overwritten."
+    },
+    {
+      "id": "D6",
+      "severity": "medium",
+      "dimensions": [
+        "source_correctness",
+        "breadth"
+      ],
+      "exact_claim": "Cloud object storage with versioning: off-site durability and cheap immutability",
+      "location": "final.md:144-147",
+      "primary_counterevidence": [
+        {
+          "id": "P25",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html",
+          "evidence_file": "sources/P25.html",
+          "sha256": "84cdbe56b2484c985c2f9b7a17a4485945dae6abd0e8ea52996f07cdf8b63d1f",
+          "assessed_range": "Object Lock versus versioning, per-version retention, modes; extracted lines 6-38,59-68,109-125"
+        },
+        {
+          "id": "P35",
+          "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectVersions.html",
+          "evidence_file": "sources/P35.html",
+          "sha256": "4216af1b1cbbe352a409948753f9ae79fcc12df091d2f04e8f8454a1b298eda2",
+          "assessed_range": "version expiry/permanent deletion; extracted lines8-18,29-43,59-61"
+        }
+      ],
+      "counterevidence_assessment": "S3 permits permanent version deletion/expiry; Object Lock adds distinct per-version retention and permission conditions.",
+      "impact": "Optional comparison conflates history with enforced retention and lacks affordability evidence; encryption does not stop deletion.",
+      "epistemic_scope": "Primary counterexample to generic family claim; no provider choice inferred."
+    },
+    {
+      "id": "D7",
+      "severity": "high",
+      "dimensions": [
+        "completeness"
+      ],
+      "exact_claim": "No plan clause is unaddressed; this final covers all six",
+      "location": "final.md:264;273-274; F5:76-83; V3:239-240; brief.md:3-5",
+      "primary_counterevidence": [
+        {
+          "id": "P23",
+          "url": "https://www.sqlite.org/howtocorrupt.html",
+          "evidence_file": "sources/P23.html",
+          "sha256": "e00709e3f37e95332d8e6df243510665e9cab1d7938d4fd85cbf5f47648a50bf",
+          "assessed_range": "How To Corrupt §1.2 live backup, journal/WAL companionship; §1.3 journal loss and filesystem/flush conditions"
+        }
+      ],
+      "counterevidence_assessment": "Original brief requires failed-storage recovery; DB copies require journal/WAL/consistent-state care; no final section describes restore.",
+      "impact": "No replacement-disk restore, verified replica selection or restoration of SQLite/back-references/provenance/rights. Keeping a good copy is not a recovery procedure.",
+      "epistemic_scope": "Fully read artifact omission, no failed test claimed."
+    },
+    {
+      "id": "D8",
+      "severity": "medium",
+      "dimensions": [
+        "source_correctness",
+        "breadth"
+      ],
+      "exact_claim": "the retrieved Archivematica ranges contain no normalization/format-policy/PREMIS/BagIt coverage",
+      "location": "final.md:115-117; critic C-1/C-2 and C6 note; dispositions C-1",
+      "primary_counterevidence": [
+        {
+          "id": "P07",
+          "url": "https://www.archivematica.org/en/docs/archivematica-1.18/",
+          "evidence_file": "sources/P07.html",
+          "sha256": "c4bb42b8115950619983934dabb707482113ee766038ac7465e995ad6a560173",
+          "assessed_range": "documentation root: transfer/BagIt, SIP-AIP-DIP, PREMIS, normalization, format policy; extracted lines 35-50,66-76,100-163"
+        }
+      ],
+      "counterevidence_assessment": "Declared S6 docs root contains BagIt76, SIP-AIP-DIP102-103, PREMIS106/163, Normalize107, FPR144-146. Intro-only absence not entire-set absence.",
+      "impact": "Incorrect negative source conclusion dismisses already-retrieved pertinent leads; index still does not establish detailed logging/affordability.",
+      "epistemic_scope": "Inherited critique error preserved and independently identified, without rewritten candidate final."
+    }
+  ],
+  "additional_limits": [
+    "Pinned maker writes BagIt0.97 while policy adopts RFC1.0; no explicit compatibility choice.",
+    "Below-bag physical dedup, shared-copy isolation and recovery not selected.",
+    "Bare content addressing is not an executed verifier or verification schedule.",
+    "Plan says rights unspecified; serves-all comparison is inferred, not explicit.",
+    "Omeka role table does not grant a separate publish action.",
+    "Equal byte count not equal-content proof; candidate discarded captures cannot be retroactively certified.",
+    "Lexical path rules and pinned string commonprefix check do not establish symlink containment."
+  ],
+  "unassessed_remainder": [],
+  "primary_sources_checked": [
+    {
+      "id": "P01",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "version": "RFC 8493, October 2018",
+      "declared_range": "Sections 1.3,2.1-2.4,3,5,6.1",
+      "retrieved_at": "2026-10-07T18:50:30.748131+00:00",
+      "started_at": "2026-10-07T18:50:30.552109+00:00",
+      "elapsed_seconds": 0.196,
+      "status": 200,
+      "bytes": 63600,
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "evidence_file": "sources/P01.html",
+      "etag": "W/\"d766b96ac2f6fd1b60bf0f5102c5888e\"",
+      "last_modified": null,
+      "actually_assessed_range": "RFC §§1.3,2.1-2.4,3,5.1-5.4,6.1.1-6.1.2; extracted lines 130-159,180-343,383-475,526-575,583-635 plus naming subsection",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P02",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+      "final_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+      "version": "v1.9.0",
+      "declared_range": "make_bag, Bag loading/validation/tagmanifest, CLI, hashing pool",
+      "retrieved_at": "2026-10-07T18:50:30.632061+00:00",
+      "started_at": "2026-10-07T18:50:30.553991+00:00",
+      "elapsed_seconds": 0.078,
+      "status": 200,
+      "bytes": 54632,
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "evidence_file": "sources/P02.py.txt",
+      "etag": "\"f9da4e2deaf0074e5cc2b91439449b3b4a511b6fb2b5c050a91e2b60cbd60115\"",
+      "last_modified": null,
+      "actually_assessed_range": "bagit.py lines 128-148,195-259,383-460,451-543,545-572,586-630,628-728,729-940,1111-1148,1275-1313,1433-1518,1535-1600",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P03",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "final_url": "https://www.sqlite.org/atomiccommit.html",
+      "version": "rolling doc",
+      "declared_range": "Sections 3-5,9",
+      "retrieved_at": "2026-10-07T18:50:30.778406+00:00",
+      "started_at": "2026-10-07T18:50:30.555156+00:00",
+      "elapsed_seconds": 0.223,
+      "status": 200,
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "evidence_file": "sources/P03.html",
+      "etag": "\"m6aa3e181s13090\"",
+      "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+      "actually_assessed_range": "atomic commit §§3,4,5,9; extracted lines 387-425,450-644,993-1080; attached-DB versus arbitrary file distinction",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P04",
+      "url": "https://omeka.org/s/docs/user-manual/content/items/",
+      "final_url": "https://omeka.org/s/docs/user-manual/content/items/",
+      "version": "rolling manual",
+      "declared_range": "roles, site membership, visibility, properties, orphaning",
+      "retrieved_at": "2026-10-07T18:50:30.679799+00:00",
+      "started_at": "2026-10-07T18:50:30.560615+00:00",
+      "elapsed_seconds": 0.119,
+      "status": 200,
+      "bytes": 64527,
+      "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da",
+      "evidence_file": "sources/P04.html",
+      "etag": "\"fc0f-65d390f45eca8\"",
+      "last_modified": "Wed, 07 Oct 2026 05:05:11 GMT",
+      "actually_assessed_range": "Items: permissions table, private-object roles, owner deletion, site/user defaults, property visibility, public/private media; extracted lines 116-238,300-324; linked-resource/template presence",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P05",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.18/getting-started/overview/intro/",
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.18/getting-started/overview/intro/",
+      "version": "Archivematica 1.18",
+      "declared_range": "full introduction",
+      "retrieved_at": "2026-10-07T18:50:30.766173+00:00",
+      "started_at": "2026-10-07T18:50:30.561955+00:00",
+      "elapsed_seconds": 0.204,
+      "status": 200,
+      "bytes": 24438,
+      "sha256": "245b64ef520e43be5d951eea66f4bd442655f0cd3c87d0b967d7f4b1caa32809",
+      "evidence_file": "sources/P05.html",
+      "etag": null,
+      "last_modified": "Wed, 07 Oct 2026 18:50:30 GMT",
+      "actually_assessed_range": "introduction body, extracted lines 28-69; OAIS, AtoM, SIP appraisal, audience, licenses; intro-only negative term check",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P06",
+      "url": "https://www.archivematica.org/en/docs/",
+      "final_url": "https://www.archivematica.org/en/docs/",
+      "version": "rolling version index",
+      "declared_range": "version declarations",
+      "retrieved_at": "2026-10-07T18:50:30.792197+00:00",
+      "started_at": "2026-10-07T18:50:30.563086+00:00",
+      "elapsed_seconds": 0.229,
+      "status": 200,
+      "bytes": 16437,
+      "sha256": "1914917c686e6b9615969da556692b9324dc094906a643e694962e93a1bce04a",
+      "evidence_file": "sources/P06.html",
+      "etag": null,
+      "last_modified": null,
+      "actually_assessed_range": "version index: stable-current1.18.0 and storage-service headings; extracted lines 1-11,30-38",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P07",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.18/",
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.18/",
+      "version": "Archivematica 1.18",
+      "declared_range": "index and headings",
+      "retrieved_at": "2026-10-07T18:50:30.798571+00:00",
+      "started_at": "2026-10-07T18:50:30.632573+00:00",
+      "elapsed_seconds": 0.166,
+      "status": 200,
+      "bytes": 44903,
+      "sha256": "c4bb42b8115950619983934dabb707482113ee766038ac7465e995ad6a560173",
+      "evidence_file": "sources/P07.html",
+      "etag": null,
+      "last_modified": "Wed, 07 Oct 2026 18:44:59 GMT",
+      "actually_assessed_range": "documentation root: transfer/BagIt, SIP-AIP-DIP, PREMIS, normalization, format policy; extracted lines 35-50,66-76,100-163",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P08",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177",
+      "version": "issue 177 retrieval snapshot",
+      "declared_range": "state, body, created_at",
+      "retrieved_at": "2026-10-07T18:50:30.891711+00:00",
+      "started_at": "2026-10-07T18:50:30.680365+00:00",
+      "elapsed_seconds": 0.211,
+      "status": 200,
+      "bytes": 2771,
+      "sha256": "ceb4962d11162e4a99c7b612a2c511d456fe28ad76dfde093987dd69ab08deee",
+      "evidence_file": "sources/P08.json",
+      "etag": "W/\"51ab771b34288e8ce336cbf59a1f4d4231509e4ce2b38dadd92d0e40b31ffb36\"",
+      "last_modified": "Fri, 11 Sep 2026 15:37:21 GMT",
+      "actually_assessed_range": "issue state, title, created_at, body; no claimed fix accepted",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P09",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/174",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/174",
+      "version": "PR 174 retrieval snapshot",
+      "declared_range": "state, merged, timeline, commit SHA",
+      "retrieved_at": "2026-10-07T18:50:31.045231+00:00",
+      "started_at": "2026-10-07T18:50:30.748758+00:00",
+      "elapsed_seconds": 0.296,
+      "status": 200,
+      "bytes": 16696,
+      "sha256": "126d0bc5c0a1f61ff8711e7545e247cb7139537cc0e819a1d13aea8b78683c95",
+      "evidence_file": "sources/P09.json",
+      "etag": "\"bb67fcb4564a27365811cbdfdd16ed2e48c7c274eaaaae559a114fe7127054fd\"",
+      "last_modified": "Fri, 11 Sep 2026 15:37:21 GMT",
+      "actually_assessed_range": "PR state, merged, created_at, closed_at, merge_commit_sha, body; unmerged status",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P10",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/174/comments",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/174/comments",
+      "version": "PR 174 discussion retrieval snapshot",
+      "declared_range": "all 6 comments",
+      "retrieved_at": "2026-10-07T18:50:31.288985+00:00",
+      "started_at": "2026-10-07T18:50:30.766443+00:00",
+      "elapsed_seconds": 0.523,
+      "status": 200,
+      "bytes": 12373,
+      "sha256": "8a5432cc15c5324c7614d16d6a103ad80389ddbca9ca96c072b04f87f6db3f31",
+      "evidence_file": "sources/P10.json",
+      "etag": "W/\"e8b06967571ff07bef9966530e7def94b15a882c25692ec2b0ccf5598cccff0f\"",
+      "last_modified": null,
+      "actually_assessed_range": "all six PR174 comments; maintainer/reporter exchange and author close explanation",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P11",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+      "version": "v1.9.0 release metadata",
+      "declared_range": "published_at, full release body",
+      "retrieved_at": "2026-10-07T18:50:30.935567+00:00",
+      "started_at": "2026-10-07T18:50:30.778995+00:00",
+      "elapsed_seconds": 0.157,
+      "status": 200,
+      "bytes": 4053,
+      "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e",
+      "evidence_file": "sources/P11.json",
+      "etag": "W/\"21abd5f6b9c2c87fc66f9c0c2b508d22d3a7f8dd3aba10c60bf34b10f642201f\"",
+      "last_modified": "Fri, 13 Jun 2025 17:43:22 GMT",
+      "actually_assessed_range": "tag_name, published_at, created_at, full release body and PR references",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P12",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/183",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/183",
+      "version": "PR 183 retrieval snapshot",
+      "declared_range": "merged commit, change description",
+      "retrieved_at": "2026-10-07T18:50:31.105797+00:00",
+      "started_at": "2026-10-07T18:50:30.792421+00:00",
+      "elapsed_seconds": 0.313,
+      "status": 200,
+      "bytes": 17640,
+      "sha256": "c9134bddde6fa253d38aa7d461264c077cb8e624022842ee65d24f0874e10bc9",
+      "evidence_file": "sources/P12.json",
+      "etag": "\"16ff8fe82ef5a0669cff733d7db2be816c4d2a7c21218b88e3228dd47f78fb2b\"",
+      "last_modified": "Wed, 09 Sep 2026 08:19:25 GMT",
+      "actually_assessed_range": "PR183 body, merged state/date and merge_commit_sha; pool lifecycle/constructor failure",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P13",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/162",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/162",
+      "version": "PR 162 retrieval snapshot",
+      "declared_range": "merged commit, change description",
+      "retrieved_at": "2026-10-07T18:50:31.085973+00:00",
+      "started_at": "2026-10-07T18:50:30.799256+00:00",
+      "elapsed_seconds": 0.287,
+      "status": 200,
+      "bytes": 17936,
+      "sha256": "cf0ec73d0d0133c93be4dc8553e2b66324d4e68d1703527585c348042ccc17a4",
+      "evidence_file": "sources/P13.json",
+      "etag": "\"68ddffa1090fcb9d9506b0735a2404021c85a899b1c21f472a970026c1518166\"",
+      "last_modified": "Mon, 29 Jun 2026 01:14:47 GMT",
+      "actually_assessed_range": "PR162 body, merged state/date and merge_commit_sha; CLI tests and completeness diagnostics",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P14",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184",
+      "version": "PR 184 retrieval snapshot",
+      "declared_range": "path handling change",
+      "retrieved_at": "2026-10-07T18:50:31.192081+00:00",
+      "started_at": "2026-10-07T18:50:30.891850+00:00",
+      "elapsed_seconds": 0.3,
+      "status": 200,
+      "bytes": 17852,
+      "sha256": "3f82b9c64514a1d9510033d62b83908e3cb65f449f68dae97bcb116e11c8d430",
+      "evidence_file": "sources/P14.json",
+      "etag": "\"b694d84d2e40b93e6e23560a433bac9e139ee8589c71bedcb251020573b06147\"",
+      "last_modified": "Wed, 11 Feb 2026 17:46:50 GMT",
+      "actually_assessed_range": "PR184 body, merged state/date and merge_commit_sha; removing expandvars only",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P15",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+      "version": "v1.9.0 tag identity",
+      "declared_range": "object SHA/type",
+      "retrieved_at": "2026-10-07T18:50:31.247018+00:00",
+      "started_at": "2026-10-07T18:50:30.935679+00:00",
+      "elapsed_seconds": 0.311,
+      "status": 200,
+      "bytes": 369,
+      "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a",
+      "evidence_file": "sources/P15.json",
+      "etag": "W/\"e3a27db6f50d0e0fa1fd2ee13b90f18eecd72e00bc6b37c18787f4089d2beaf9\"",
+      "last_modified": "Fri, 02 Oct 2026 14:20:56 GMT",
+      "actually_assessed_range": "tag ref object SHA/type; v1.9.0 resolves directly to commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P17",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/183/files",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/183/files",
+      "version": "PR183 snapshot",
+      "declared_range": "full bounded file patches",
+      "retrieved_at": "2026-10-07T18:51:42.669141+00:00",
+      "started_at": "2026-10-07T18:51:42.311929+00:00",
+      "elapsed_seconds": 0.357,
+      "status": 200,
+      "bytes": 2462,
+      "sha256": "87417bf650db10ec885edc893c7f985910748ae216331fae2cee78db04f5bb48",
+      "evidence_file": "sources/P17.json",
+      "etag": "W/\"87417bf650db10ec885edc893c7f985910748ae216331fae2cee78db04f5bb48\"",
+      "last_modified": "Wed, 09 Sep 2026 08:19:25 GMT",
+      "actually_assessed_range": "both file patches: bagit.py pool close/join and test.py RuntimeError constructor regression",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P18",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/162/files",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/162/files",
+      "version": "PR162 snapshot",
+      "declared_range": "code and CLI test patches",
+      "retrieved_at": "2026-10-07T18:51:42.699984+00:00",
+      "started_at": "2026-10-07T18:51:42.313263+00:00",
+      "elapsed_seconds": 0.387,
+      "status": 200,
+      "bytes": 10513,
+      "sha256": "b90489d0d620918ee2c602177704fdd332e8c8e286df7479648f2d79d0362ab8",
+      "evidence_file": "sources/P18.json",
+      "etag": "W/\"b90489d0d620918ee2c602177704fdd332e8c8e286df7479648f2d79d0362ab8\"",
+      "last_modified": "Mon, 29 Jun 2026 01:14:47 GMT",
+      "actually_assessed_range": "bagit.py CLI/completeness patch; test.py CLI cases, independently cross-checked against P28",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P19",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/173",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/173",
+      "version": "issue173 snapshot",
+      "declared_range": "failure report fixed by PR183",
+      "retrieved_at": "2026-10-07T18:51:42.543533+00:00",
+      "started_at": "2026-10-07T18:51:42.317789+00:00",
+      "elapsed_seconds": 0.226,
+      "status": 200,
+      "bytes": 6970,
+      "sha256": "d919c4e26d7ec7af10576269abdc62757757ea886dd58b09888e7065689fdc18",
+      "evidence_file": "sources/P19.json",
+      "etag": "W/\"d919c4e26d7ec7af10576269abdc62757757ea886dd58b09888e7065689fdc18\"",
+      "last_modified": "Wed, 11 Mar 2026 07:25:36 GMT",
+      "actually_assessed_range": "issue body Issue2 and traceback (UnboundLocalError after pool construction failure); fix context, not every reporter mechanism endorsed",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P20",
+      "url": "https://forum.omeka.org/t/media-privacy-and-direct-file-urls/29696.json",
+      "final_url": "https://forum.omeka.org/t/media-privacy-and-direct-file-urls/29696.json",
+      "version": "forum discussion July2026 snapshot",
+      "declared_range": "maintainer response and reporter evidence",
+      "retrieved_at": "2026-10-07T18:51:42.494447+00:00",
+      "started_at": "2026-10-07T18:51:42.319267+00:00",
+      "elapsed_seconds": 0.175,
+      "status": 200,
+      "bytes": 19952,
+      "sha256": "3311c08063ae9f79e7cd1a5202557005c8cc671d1fda86e20031587ee0f07900",
+      "evidence_file": "sources/P20.json",
+      "etag": null,
+      "last_modified": null,
+      "actually_assessed_range": "July8 maintainer response by jflatnes, post3; direct-file availability and permission-enforcing storage alternatives; reporter chronology distinguished",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P21",
+      "url": "https://omeka.org/s/modules/Access/",
+      "final_url": "https://omeka.org/s/modules/Access/",
+      "version": "rolling module-owned documentation",
+      "declared_range": "direct access protection and server rewrite condition",
+      "retrieved_at": "2026-10-07T18:51:42.434985+00:00",
+      "started_at": "2026-10-07T18:51:42.320705+00:00",
+      "elapsed_seconds": 0.114,
+      "status": 200,
+      "bytes": 51281,
+      "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41",
+      "evidence_file": "sources/P21.html",
+      "etag": "\"c851-65d3908ac47ca\"",
+      "last_modified": "Wed, 07 Oct 2026 05:03:20 GMT",
+      "actually_assessed_range": "module-owned server configuration and delivery conditions; extracted lines 115-118,190-205,299-302",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P22",
+      "url": "https://api.github.com/repos/omeka/omeka-s/releases/latest",
+      "final_url": "https://api.github.com/repos/omeka/omeka-s/releases/latest",
+      "version": "published release snapshot",
+      "declared_range": "version identity for independent conditional check",
+      "retrieved_at": "2026-10-07T18:51:42.643362+00:00",
+      "started_at": "2026-10-07T18:51:42.433494+00:00",
+      "elapsed_seconds": 0.21,
+      "status": 200,
+      "bytes": 6290,
+      "sha256": "dd723f863772ba196e6a6713b911146d8efe38af11205a3d6e302912809d0f68",
+      "evidence_file": "sources/P22.json",
+      "etag": "W/\"dd723f863772ba196e6a6713b911146d8efe38af11205a3d6e302912809d0f68\"",
+      "last_modified": "Thu, 18 Jun 2026 17:25:14 GMT",
+      "actually_assessed_range": "release tag_name=v4.2.1 and published_at=2026-06-18T17:25:14Z; independent conditional analogue pin only",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P23",
+      "url": "https://www.sqlite.org/howtocorrupt.html",
+      "final_url": "https://www.sqlite.org/howtocorrupt.html",
+      "version": "rolling documentation",
+      "declared_range": "1.2,1.3,2.1,3.1,3.2",
+      "retrieved_at": "2026-10-07T18:51:42.598347+00:00",
+      "started_at": "2026-10-07T18:51:42.435502+00:00",
+      "elapsed_seconds": 0.163,
+      "status": 200,
+      "bytes": 46737,
+      "sha256": "e00709e3f37e95332d8e6df243510665e9cab1d7938d4fd85cbf5f47648a50bf",
+      "evidence_file": "sources/P23.html",
+      "etag": "\"m6aa3e181sb691\"",
+      "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+      "actually_assessed_range": "How To Corrupt §1.2 live backup, journal/WAL companionship; §1.3 journal loss and filesystem/flush conditions",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P24",
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+      "final_url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+      "version": "Linux man-pages rolling published man page",
+      "declared_range": "fsync file versus directory durability",
+      "retrieved_at": "2026-10-07T18:51:42.945930+00:00",
+      "started_at": "2026-10-07T18:51:42.494690+00:00",
+      "elapsed_seconds": 0.451,
+      "status": 200,
+      "bytes": 15152,
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "evidence_file": "sources/P24.html",
+      "etag": "\"3b30-65d1ba326e7c0\"",
+      "last_modified": "Mon, 05 Oct 2026 17:59:03 GMT",
+      "actually_assessed_range": "fsync file versus directory distinction; extracted lines 26-39",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P25",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html",
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html",
+      "version": "AWS S3 rolling official documentation",
+      "declared_range": "Object Lock requires versioning, protections, compliance/governance",
+      "retrieved_at": "2026-10-07T18:51:42.620019+00:00",
+      "started_at": "2026-10-07T18:51:42.543701+00:00",
+      "elapsed_seconds": 0.076,
+      "status": 200,
+      "bytes": 36101,
+      "sha256": "84cdbe56b2484c985c2f9b7a17a4485945dae6abd0e8ea52996f07cdf8b63d1f",
+      "evidence_file": "sources/P25.html",
+      "etag": "\"ZGk9kf7CNHrataCvvEBJKtnpB1E=\"",
+      "last_modified": "Wed, 07 Oct 2026 09:57:08 GMT",
+      "actually_assessed_range": "Object Lock versus versioning, per-version retention, modes; extracted lines 6-38,59-68,109-125",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P26",
+      "url": "https://openzfs.github.io/openzfs-docs/man/master/8/zpool-scrub.8.html",
+      "final_url": "https://openzfs.github.io/openzfs-docs/man/master/8/zpool-scrub.8.html",
+      "version": "OpenZFS master manpage snapshot",
+      "declared_range": "scrub detects and redundant pools repair",
+      "retrieved_at": "2026-10-07T18:51:42.719446+00:00",
+      "started_at": "2026-10-07T18:51:42.598758+00:00",
+      "elapsed_seconds": 0.121,
+      "status": 200,
+      "bytes": 28396,
+      "sha256": "0103bc9c8356495131580755687cbac7f1c0b5c5e55785884d351d88c114a90c",
+      "evidence_file": "sources/P26.html",
+      "etag": "\"6ac5bc8e-6eec\"",
+      "last_modified": "Wed, 07 Oct 2026 03:29:18 GMT",
+      "actually_assessed_range": "scrub verification and redundant-pool repair, I/O limits; extracted lines 143-165",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P27",
+      "url": "https://restic.readthedocs.io/en/stable/100_references.html",
+      "final_url": "https://restic.readthedocs.io/en/stable/100_references.html",
+      "version": "restic stable repository-design reference snapshot",
+      "declared_range": "content addressing, encryption, dedup, repository checking",
+      "retrieved_at": "2026-10-07T18:51:42.739445+00:00",
+      "started_at": "2026-10-07T18:51:42.620384+00:00",
+      "elapsed_seconds": 0.119,
+      "status": 200,
+      "bytes": 109592,
+      "sha256": "40cc7855bbbdab09699bac73c5d094f7cf519980e3d5a75a7e2172a497e18264",
+      "evidence_file": "sources/P27.html",
+      "etag": "W/\"741bc4798863cbc6235d6ab1db8270f3\"",
+      "last_modified": "Sun, 05 Jul 2026 08:04:21 GMT",
+      "actually_assessed_range": "repository snapshot ordering and chunk dedup; extracted lines 600-638; threat-model assumptions and detection limitations 639-670",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P28",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "final_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version": "bagit-python v1.9.0 exact commit",
+      "declared_range": "full source; validation, multiprocessing regression, CLI cases",
+      "retrieved_at": "2026-10-07T18:52:09.935106+00:00",
+      "started_at": "2026-10-07T18:52:09.738657+00:00",
+      "elapsed_seconds": 0.196,
+      "status": 200,
+      "bytes": 49297,
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "evidence_file": "sources/P28.source.txt",
+      "etag": "\"c6d11ff9bb3785279a3e10b7dacebecde56dd4bd3e6b19c1a34306b0bc2e56eb\"",
+      "last_modified": null,
+      "actually_assessed_range": "pinned test.py lines 100-144 (bit flip/rename/oxum),383-407 (tag reference),449-468 (pool error),482-485 (0.97),868-903 (authorized save),1141-1263 (CLI)",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P29",
+      "url": "https://api.github.com/repos/omeka/omeka-s/git/ref/tags/v4.2.1",
+      "final_url": "https://api.github.com/repos/omeka/omeka-s/git/ref/tags/v4.2.1",
+      "version": "Omeka S v4.2.1",
+      "declared_range": "tag commit identity",
+      "retrieved_at": "2026-10-07T18:52:09.941907+00:00",
+      "started_at": "2026-10-07T18:52:09.740864+00:00",
+      "elapsed_seconds": 0.201,
+      "status": 200,
+      "bytes": 329,
+      "sha256": "91a9403a156d5d36d0873dd6892c83439683ec228373f612235f873b61bb9aab",
+      "evidence_file": "sources/P29.json",
+      "etag": "W/\"91a9403a156d5d36d0873dd6892c83439683ec228373f612235f873b61bb9aab\"",
+      "last_modified": "Mon, 05 Oct 2026 22:10:29 GMT",
+      "actually_assessed_range": "annotated tag object SHA/type; resolved by P36",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P31",
+      "url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/File/Store/Local.php",
+      "final_url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/File/Store/Local.php",
+      "version": "Omeka S v4.2.1",
+      "declared_range": "default local file paths and URLs",
+      "retrieved_at": "2026-10-07T18:52:10.072711+00:00",
+      "started_at": "2026-10-07T18:52:09.748533+00:00",
+      "elapsed_seconds": 0.324,
+      "status": 200,
+      "bytes": 2692,
+      "sha256": "a31a28a5b461e00efa066044d5e80b0f46c3cf4d4a9bd330e68fb7e6f30cd50a",
+      "evidence_file": "sources/P31.source.txt",
+      "etag": "\"0c110a36447a3bd9dd22edc70278fee98b33db45cda2b9193054f7b0aa96a6b9\"",
+      "last_modified": null,
+      "actually_assessed_range": "Local store lines 36-53,72-90; file copy/local path and direct URI",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P32",
+      "url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/Api/Representation/MediaRepresentation.php",
+      "final_url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/Api/Representation/MediaRepresentation.php",
+      "version": "Omeka S v4.2.1",
+      "declared_range": "originalUrl and thumbnailUrl",
+      "retrieved_at": "2026-10-07T18:52:09.969662+00:00",
+      "started_at": "2026-10-07T18:52:09.749804+00:00",
+      "elapsed_seconds": 0.22,
+      "status": 200,
+      "bytes": 8273,
+      "sha256": "7c9675c97a79caa5d2702f8f6097501e87b72c25904d9827d8a865f96b54c20a",
+      "evidence_file": "sources/P32.source.txt",
+      "etag": "\"5eec9137a4dd36704fa7962d23d8e54af68e94d13660fb1b38a501b1a60ea47a\"",
+      "last_modified": null,
+      "actually_assessed_range": "MediaRepresentation originalUrl lines 50-56 and thumbnailUrl64-86; URL assembly checked with Local factory/store, no permission-inference from this method alone",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P33",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.18/user-manual/preservation/preservation-planning/",
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.18/user-manual/preservation/preservation-planning/",
+      "version": "Archivematica1.18",
+      "declared_range": "format policy support; verify comparison only",
+      "retrieved_at": "2026-10-07T18:52:10.035781+00:00",
+      "started_at": "2026-10-07T18:52:09.751049+00:00",
+      "elapsed_seconds": 0.285,
+      "status": 200,
+      "bytes": 100840,
+      "sha256": "1347e1d59491587fb60d20383b68ce841ded6339dd21b7857df0ad6ba33ccc5e",
+      "evidence_file": "sources/P33.html",
+      "etag": null,
+      "last_modified": "Wed, 07 Oct 2026 18:42:12 GMT",
+      "actually_assessed_range": "Preservation Planning body, extracted lines29-45; FPR rules/tools and upgrade-preserved local policy",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P34",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.18/user-manual/archival-storage/archival-storage/",
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.18/user-manual/archival-storage/archival-storage/",
+      "version": "Archivematica1.18",
+      "declared_range": "AIP fixity/storage/error limitations",
+      "retrieved_at": "2026-10-07T18:52:10.142350+00:00",
+      "started_at": "2026-10-07T18:52:09.883786+00:00",
+      "elapsed_seconds": 0.259,
+      "status": 200,
+      "bytes": 47178,
+      "sha256": "a61f103be14bcb610b594db39237c8bfce858b3c73d4acf175a9149cc470d487",
+      "evidence_file": "sources/P34.html",
+      "etag": null,
+      "last_modified": "Wed, 07 Oct 2026 18:52:10 GMT",
+      "actually_assessed_range": "Archival Storage body extracted lines29-40; AIP inventory/download and DIP separation only",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P35",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectVersions.html",
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectVersions.html",
+      "version": "AWS S3 rolling official documentation",
+      "declared_range": "permanent version deletion",
+      "retrieved_at": "2026-10-07T18:53:19.176927+00:00",
+      "started_at": "2026-10-07T18:53:18.957673+00:00",
+      "elapsed_seconds": 0.219,
+      "status": 200,
+      "bytes": 23837,
+      "sha256": "4216af1b1cbbe352a409948753f9ae79fcc12df091d2f04e8f8454a1b298eda2",
+      "evidence_file": "sources/P35.html",
+      "etag": "\"gSbUT5RQRTioQqA9MeFF/r9iEHU=\"",
+      "last_modified": "Wed, 07 Oct 2026 09:56:57 GMT",
+      "actually_assessed_range": "version expiry/permanent deletion; extracted lines8-18,29-43,59-61",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P36",
+      "url": "https://api.github.com/repos/omeka/omeka-s/git/tags/dbdfcd335d41c6391af17e944c42d1ff288fb855",
+      "final_url": "https://api.github.com/repos/omeka/omeka-s/git/tags/dbdfcd335d41c6391af17e944c42d1ff288fb855",
+      "version": "Omeka v4.2.1 annotated tag",
+      "declared_range": "resolved commit SHA",
+      "retrieved_at": "2026-10-07T18:53:19.348883+00:00",
+      "started_at": "2026-10-07T18:53:19.177201+00:00",
+      "elapsed_seconds": 0.172,
+      "status": 200,
+      "bytes": 656,
+      "sha256": "d55bc58a67eb1175c0e715bd4441aea39d8cdbc256ca1573b4186f5c514ce982",
+      "evidence_file": "sources/P36.json",
+      "etag": "W/\"d55bc58a67eb1175c0e715bd4441aea39d8cdbc256ca1573b4186f5c514ce982\"",
+      "last_modified": "Mon, 05 Oct 2026 22:10:29 GMT",
+      "actually_assessed_range": "annotated tag object resolves to commit7e428a3296a399e21a6a6418578175ad8c7edf60",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P38",
+      "url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/Service/File/Store/LocalFactory.php",
+      "final_url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/application/src/Service/File/Store/LocalFactory.php",
+      "version": "Omeka v4.2.1",
+      "declared_range": "default local store and publicly rooted URI",
+      "retrieved_at": "2026-10-07T18:53:19.658393+00:00",
+      "started_at": "2026-10-07T18:53:19.539421+00:00",
+      "elapsed_seconds": 0.119,
+      "status": 200,
+      "bytes": 1102,
+      "sha256": "b14be249c63b49e8404019849d37a7250fd81a7de8ba22cad66146bd3562e839",
+      "evidence_file": "sources/P38.source.txt",
+      "etag": "\"f3ff2e5808928103a1f4531d64e5cc6f9ccd4d86ba06ef5e65707563e1194b82\"",
+      "last_modified": null,
+      "actually_assessed_range": "LocalFactory lines20-33; default filesystem and URI root /files",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    },
+    {
+      "id": "P39",
+      "url": "https://raw.githubusercontent.com/omeka/omeka-s/7e428a3296a399e21a6a6418578175ad8c7edf60/.htaccess.dist",
+      "final_url": "https://raw.githubusercontent.com/omeka/omeka-s/7e428a3296a399e21a6a6418578175ad8c7edf60/.htaccess.dist",
+      "version": "Omeka S v4.2.1 exact commit 7e428a3296a399e21a6a6418578175ad8c7edf60",
+      "declared_range": "existing file and directory exemptions from PHP routing",
+      "retrieved_at": "2026-10-07T18:53:38.080959+00:00",
+      "status": 200,
+      "bytes": 1229,
+      "sha256": "da4d6119e55b3f36ecc55ce9f7054c4801dde65c9af4ee563b75b1228281674e",
+      "evidence_file": "sources/P39.source.txt",
+      "etag": "\"edba846854278d10737ea99e17aa28e749a0e75242b6989d2f4395596c63eee2\"",
+      "actually_assessed_range": "exact-commit .htaccess.dist lines5-10; existing static files served before application routing",
+      "assessment_method": "independent static primary-source reading; not component execution"
+    }
+  ],
+  "retrieval_failures": [
+    {
+      "id": "P16",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test_bagit.py",
+      "error": "HTTP Error 404: Not Found",
+      "corrected_locator_id": "P28",
+      "impact": "No missing assessment: correct pinned test.py retrieved/read."
+    },
+    {
+      "id": "P30",
+      "url": "https://raw.githubusercontent.com/omeka/omeka-s/v4.2.1/.htaccess",
+      "error": "HTTP Error 404: Not Found",
+      "corrected_locator_id": "P39",
+      "impact": "No missing assessment: distributed .htaccess.dist retrieved/read at exact commit."
+    }
+  ],
+  "locator_only_primary_retrievals": [
+    {
+      "id": "P37",
+      "url": "https://api.github.com/repos/omeka/omeka-s/contents?ref=v4.2.1",
+      "range": "Root filenames only; locates .htaccess.dist; no discovery credit."
+    }
+  ],
+  "blinding_limits": {
+    "counterpart_answers_read": false,
+    "other_arm_reviews_or_partials_read": false,
+    "other_graders_read": false,
+    "parent_root_historical_analysis_read": false,
+    "candidate_cost_timing_native_counters_read": false,
+    "visible_authored_method_clues": [
+      "control and I-ANCHOR-MUSE labels in paths/titles",
+      "research-v1,critic-v1,reviser-v1 stages and stable S/C/R IDs",
+      "critic references ~/.claude/CLAUDE.md and same-family predecessor workflow",
+      "repeated source retrievals and byte-count match claims",
+      "U1 stated time ceiling; no costs/counters read"
+    ],
+    "accidental_exposure": "Initial broad filename-only AGENTS/CLAUDE instruction search exposed unrelated historical experiment directory names. No contents were read and no grade uses them.",
+    "provenance_limits": "Stage identities/family cannot be independently certified without excluded receipts. Equal byte counts do not establish byte identity. Candidate source retrieval timestamps are authorized provenance, not allowance metrics."
+  },
+  "original_supplied_grades": {
+    "source": "control/critic-v1/critique.md",
+    "scope": "Supplied critic assessments of research draft, not this independent source review. No prior source-review/partial grade supplied or read.",
+    "verdict": "the draft is strong and nearly reviser-ready",
+    "obligations": {
+      "O1": "PASS",
+      "O2": "PASS with correction",
+      "O3": "PASS",
+      "O4": "PASS",
+      "O5": "PASS",
+      "O6": "PASS with dispositions",
+      "O7": "PASS (critic half)",
+      "O8": "PASS"
+    },
+    "preservation": "Original files, verdicts and failures left intact; independent material defects recorded separately."
+  },
+  "grade_scope": {
+    "mode": "FULL_DECLARED_SCOPE_ASSESSED",
+    "entire_declared_scope_assessed": true,
+    "review_subject": "source-supported research proposal, planning completeness/usefulness/breadth; no relative scientific winner grade",
+    "authorized_local_inputs_only": true,
+    "notes_on_input_limit": "Applicable instruction files read as explicitly required. Initial filename-only instruction discovery disclosed.",
+    "not_assessed_or_credited": [
+      "actual ingest/restore/access/corruption test execution",
+      "component build/install or performance benchmark",
+      "deployment/legal validity",
+      "provider billing/routing receipts",
+      "all possible public-source alternatives"
+    ],
+    "no_rewritten_final": true,
+    "no_extra_candidate_critic": true,
+    "no_nested_delegation": true
+  },
+  "requested_runtime_profile": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority",
+    "observed_runtime_model": "gpt-6.1-sol",
+    "observed_runtime_effort": "xhigh",
+    "provider_and_tier_independently_verified": false,
+    "account_or_provider_changes": false,
+    "billing": "unknown"
+  },
+  "outputs": {
+    "review": "REVIEW.md",
+    "judgment": "judgment.json",
+    "timings": "timings.json",
+    "source_map": "sources/SOURCES.md",
+    "retrieval_manifest": "sources/manifest.json",
+    "input_identities": "sources/input-identities.json"
+  }
+}

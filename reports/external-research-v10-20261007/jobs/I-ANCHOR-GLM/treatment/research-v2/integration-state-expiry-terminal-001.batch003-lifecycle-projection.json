@@ -1,0 +1,59 @@
+{
+  "original_identity": {
+    "availability_at_curation": "existing_local_path_hash_verified",
+    "bytes": 5436,
+    "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+    "github_retention": "NOT_ASSERTED",
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/integration-state-expiry-terminal-001.json",
+    "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+    "retention": "UNKNOWN/unverified",
+    "sha256": "2e06535666f7f3bba693125044d71de6ed0ff8baf59dfea746e5c38f8c5fcd25"
+  },
+  "projection": {
+    "interruption_and_continuation_costs_retained": true,
+    "native_complete": false,
+    "native_running_before_intentional_expiry_stop": true,
+    "native_state": {
+      "createdAt": 1791398664635,
+      "endedReason": "cancelled",
+      "handoffFresh": false,
+      "objective_sha256": "f1f03172755f25a59277a2015daaf95642956eebd35ba1ac13a51bb38fc4ca04",
+      "rounds": 4,
+      "status": "paused",
+      "tickets": [
+        {
+          "acceptance_sha256": "f7e68bd569c1b8295e91acdb3b31396f39e004f818fba2cec4f0b496e68ced7d",
+          "id": "t1",
+          "status": "done",
+          "title_sha256": "fcbd32cbd0372addfb23cc2da95424ab618232f96b3b326c5a2d7f3b88c1044d"
+        },
+        {
+          "acceptance_sha256": "27095bfd820cbb3014ac54f59c559805cf4e19e57f2388fc5ba40997cdf68b69",
+          "id": "t2",
+          "status": "done",
+          "title_sha256": "205e64709d84262ac4afb131f41316a5c803ab77b86a22c58b8f4650663444cf"
+        },
+        {
+          "acceptance_sha256": "05308cb2d7a17da218fd338b9e95bac8e4aacaf0c368dc4858d631f8608f28b7",
+          "id": "t3",
+          "status": "done",
+          "title_sha256": "8e1fc6192055c7997561026127dda3d457dd3e60b528a7c8a06053e6e4fbb172"
+        },
+        {
+          "acceptance_sha256": "774cd0018ae03e953f25d810c46b43bb8aca27e6ced4d05cf49cffa9af93606c",
+          "id": "t4",
+          "status": "in_progress",
+          "title_sha256": "d7a0ec4057cfe0fd8e843c628c6c8237f017c165ed4da63d2b8a6dbcfb6a6cd0"
+        }
+      ],
+      "updatedAt": 1791400371667
+    },
+    "native_state_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723/state.json",
+    "native_state_sha256": "79525bcc1e55dc4c7669a1400c7cf40e84195a0b60cffdeeb7448402a1258d45",
+    "observed_at": "2026-10-07T19:13:49.978152+00:00",
+    "stage_deadline": "2026-10-07T19:09:18.054Z",
+    "t3_terminal_quiet_receipt": "state/glm-treatment-v2-expiry-task-terminal.json",
+    "whole_arm_deadline": "2026-10-07T19:29:18.054Z"
+  },
+  "projection_policy": "Separate bounded metadata copy; original untouched. Text/history hashed, actual scalar lifecycle preserved; never a raw tool response."
+}

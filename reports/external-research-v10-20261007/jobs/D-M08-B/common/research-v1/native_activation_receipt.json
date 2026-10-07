@@ -1,0 +1,37 @@
+{
+  "requestedAt_observed_utc": "2026-10-07 19:04:45 UTC",
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117c0-b581-7262-95f2-1b9652238ff0",
+      "objective": "Author the common untrusted D-M08-B preliminary proposal",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399885,
+      "updatedAt": 1791399885
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal_observation": {
+    "goal": {
+      "threadId": "01a117c0-b581-7262-95f2-1b9652238ff0",
+      "objective": "Author the common untrusted D-M08-B preliminary proposal",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399885,
+      "updatedAt": 1791399885
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "execution_identity": {
+    "account": "codex_gmail sittingmongoose@gmail.com",
+    "driver": "codex",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "max",
+    "priority": "priority",
+    "access_profile": "full-access/default"
+  }
+}

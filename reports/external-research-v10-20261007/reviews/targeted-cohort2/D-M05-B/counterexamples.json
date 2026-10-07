@@ -1,0 +1,27 @@
+{
+  "executed_utc": "2026-10-07T19:00:52.647984+00:00",
+  "runtime": "3.46.1",
+  "source_id": "2024-08-13 09:16:08 c9c2ab54ba1f5f46360f1b4f35d849cd3f080e6fc2b6c60e91b16c63f69aalt1",
+  "scope": "Reviewer-authored bounded local-disk witnesses using installed Python sqlite3; not two-host/network testing; not candidate execution or selected-release certification.",
+  "reader_does_not_block_commit": {
+    "journal_mode": "wal",
+    "reader_in_transaction_during_commit": true,
+    "commit": "success",
+    "reader_before": 1,
+    "reader_after_writer_commit": 1,
+    "writer_value": 2
+  },
+  "stale_snapshot_upgrade": {
+    "errorcode": 517,
+    "errorname": "SQLITE_BUSY_SNAPSHOT",
+    "message": "database is locked",
+    "other_writer_transaction_active": false
+  },
+  "wal_index_size": {
+    "committed_updates": 4200,
+    "shm_bytes": 65536,
+    "wal_bytes": 17312272,
+    "checkpoint_disabled": true
+  },
+  "temporary_databases_removed": true
+}

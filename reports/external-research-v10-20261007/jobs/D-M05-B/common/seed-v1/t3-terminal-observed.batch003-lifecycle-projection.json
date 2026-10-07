@@ -1,0 +1,83 @@
+{
+  "original_identity": {
+    "availability_at_curation": "existing_local_path_hash_verified",
+    "bytes": 19238,
+    "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+    "github_retention": "NOT_ASSERTED",
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/t3-terminal-observed.json",
+    "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+    "retention": "UNKNOWN/unverified",
+    "sha256": "f937754ccdd8f307fc8eaee07dbc932bf9043430d61174965f1e3183765cd8a2"
+  },
+  "projection": {
+    "native": {
+      "items_sha256": "0786ae041406230a90ae226d560754739eb703452157294bb1ac9e201edfaf4c",
+      "recentRuns": [
+        {
+          "completedAt": "2026-10-07T18:44:45.421Z",
+          "model": "muse-spark-1.3-contributor",
+          "ordinal": 1,
+          "providerInstanceId": "muse",
+          "requestedAt": "2026-10-07T18:42:02.984Z",
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-common-seed-v1:ordinal:1",
+          "startedAt": "2026-10-07T18:42:05.445Z",
+          "status": "completed"
+        }
+      ],
+      "thread": {
+        "activeRunId": null,
+        "archived": false,
+        "branch": "t3/research/er10-research-efficiency-campaign",
+        "createdAt": "2026-10-07T18:42:02.736Z",
+        "createdBy": "agent",
+        "creationSource": "mcp",
+        "interactionMode": "default",
+        "itemCount": 41,
+        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-common-seed-v1:ordinal:1",
+        "link": "[ER10 D-M05-B legitimate prior seed](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-common-seed-v1)",
+        "linkedPullRequest": null,
+        "model": "muse-spark-1.3-contributor",
+        "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort2-v1",
+        "pendingRequestCount": 0,
+        "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+        "providerInstanceId": "muse",
+        "relationshipToParent": "subagent",
+        "runCount": 1,
+        "runtimeMode": "full-access",
+        "settled": false,
+        "settledAt": null,
+        "snoozed": false,
+        "snoozedUntil": null,
+        "status": "completed",
+        "threadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-B-common-seed-v1",
+        "titleRegeneration": null,
+        "title_sha256": "b9bec301b41c8c62b74775d4c4f09bec6d41e1d1364f5e849d4bc2392ff9675a",
+        "updatedAt": "2026-10-07T18:44:45.421Z",
+        "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f"
+      }
+    },
+    "status": {
+      "content_sha256": "166e49dfbbeaaa9a5889e2b602252c3fa95ad61337e11c276c399ae68158af5c",
+      "isError": false,
+      "structuredContent": {
+        "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-B-common-seed-v1",
+        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-common-seed-v1:ordinal:1",
+        "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-B-common-seed-v1",
+        "hasPendingChildRuns": false,
+        "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-common-seed-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:9bde89dd-a21a-4e47-ae01-7d7a154b8e7c",
+        "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-common-seed-v1:ordinal:1",
+        "latestTerminalStatus": "completed",
+        "latestTerminalSummary": "D-M05-B prior-state seed finished with all artifacts delivered and the native Goal completed.\n\nArtifacts (all under `/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/`):\n\n- prior-state.md — 7 findings (F1–F7) with exact source line references, conditions, dependency identities (DEP-*), explicit already-covered marks, and cross-cutting unresolved items\n- sources.json — manifest of the 3 mapped sources with mapped vs observed sha256 (all matched)\n- native_goal_receipt.json — actual create_goal + get_goal responses\n- native_terminal_receipt.json — actual pre-terminal get_goal, update_goal complete, and post-terminal get_goal responses\n\nObserved native identity/state:\n\n- goal_id `goal-01a117ac-61a1-7183-8f47-b31902b116b7`, session `01a117ac-3808-75a0-936b-847ace7c4a55`, objective \"D-M05-B prior-state seed\"\n- Activation: active, verified active before science; terminal: complete, 100%, same goal throughout\n- Scope observed: read only INPUT_MAP.json, prior-brief.md, and the 3 mapped sources; did not read dispatch/task files, changed brief/changes/new-release material, other cases, arms, evaluators, campaign state, or ER9 answers\n- Counters/billing: unknown, recorded null",
+        "model": "muse-spark-1.3-contributor",
+        "providerInstanceId": "muse",
+        "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-B-common-seed-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:9bde89dd-a21a-4e47-ae01-7d7a154b8e7c",
+        "status": "completed",
+        "summary": "D-M05-B prior-state seed finished with all artifacts delivered and the native Goal completed.\n\nArtifacts (all under `/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/`):\n\n- prior-state.md — 7 findings (F1–F7) with exact source line references, conditions, dependency identities (DEP-*), explicit already-covered marks, and cross-cutting unresolved items\n- sources.json — manifest of the 3 mapped sources with mapped vs observed sha256 (all matched)\n- native_goal_receipt.json — actual create_goal + get_goal responses\n- native_terminal_receipt.json — actual pre-terminal get_goal, update_goal complete, and post-terminal get_goal responses\n\nObserved native identity/state:\n\n- goal_id `goal-01a117ac-61a1-7183-8f47-b31902b116b7`, session `01a117ac-3808-75a0-936b-847ace7c4a55`, objective \"D-M05-B prior-state seed\"\n- Activation: active, verified active before science; terminal: complete, 100%, same goal throughout\n- Scope observed: read only INPUT_MAP.json, prior-brief.md, and the 3 mapped sources; did not read dispatch/task files, changed brief/changes/new-release material, other cases, arms, evaluators, campaign state, or ER9 answers\n- Counters/billing: unknown, recorded null",
+        "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-B-common-seed-v1",
+        "waitTimedOut": false,
+        "workState": "result_available"
+      }
+    }
+  },
+  "projection_policy": "Separate bounded metadata copy; original untouched. Text/history hashed, actual scalar lifecycle preserved; never a raw tool response."
+}

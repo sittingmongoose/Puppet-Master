@@ -1,0 +1,312 @@
+{
+  "review_id": "I-ANCHOR-MUSE/control/source-review-v1",
+  "evaluation_allowance_seconds": 1800,
+  "first_recorded_started_at_utc": "2026-10-07T18:49:49.571073+00:00",
+  "finished_at_utc": "2026-10-07T18:59:53.769303+00:00",
+  "recorded_elapsed_seconds": 604.198,
+  "start_definition": "First recorded UTC timestamp during instruction/input intake. Initial commentary and filename-only discovery occurred before this timestamp by an unmeasured short interval.",
+  "candidate_timings_or_costs_read": false,
+  "candidate_allowance_consumed": false,
+  "billing": "unknown",
+  "independent_experiment_cost": null,
+  "component_checks_executed": [],
+  "reviewer_operations": [
+    "authorized instruction/input reading",
+    "primary HTTPS retrieval",
+    "static source/test/issue/release inspection",
+    "local evidence hashes and review output JSON validation"
+  ],
+  "retrieval_events": [
+    {
+      "id": "P01",
+      "retrieved_at": "2026-10-07T18:50:30.748131+00:00",
+      "elapsed_seconds": 0.196,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P02",
+      "retrieved_at": "2026-10-07T18:50:30.632061+00:00",
+      "elapsed_seconds": 0.078,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P03",
+      "retrieved_at": "2026-10-07T18:50:30.778406+00:00",
+      "elapsed_seconds": 0.223,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P04",
+      "retrieved_at": "2026-10-07T18:50:30.679799+00:00",
+      "elapsed_seconds": 0.119,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P05",
+      "retrieved_at": "2026-10-07T18:50:30.766173+00:00",
+      "elapsed_seconds": 0.204,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P06",
+      "retrieved_at": "2026-10-07T18:50:30.792197+00:00",
+      "elapsed_seconds": 0.229,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P07",
+      "retrieved_at": "2026-10-07T18:50:30.798571+00:00",
+      "elapsed_seconds": 0.166,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P08",
+      "retrieved_at": "2026-10-07T18:50:30.891711+00:00",
+      "elapsed_seconds": 0.211,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P09",
+      "retrieved_at": "2026-10-07T18:50:31.045231+00:00",
+      "elapsed_seconds": 0.296,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P10",
+      "retrieved_at": "2026-10-07T18:50:31.288985+00:00",
+      "elapsed_seconds": 0.523,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P11",
+      "retrieved_at": "2026-10-07T18:50:30.935567+00:00",
+      "elapsed_seconds": 0.157,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P12",
+      "retrieved_at": "2026-10-07T18:50:31.105797+00:00",
+      "elapsed_seconds": 0.313,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P13",
+      "retrieved_at": "2026-10-07T18:50:31.085973+00:00",
+      "elapsed_seconds": 0.287,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P14",
+      "retrieved_at": "2026-10-07T18:50:31.192081+00:00",
+      "elapsed_seconds": 0.3,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P15",
+      "retrieved_at": "2026-10-07T18:50:31.247018+00:00",
+      "elapsed_seconds": 0.311,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P16",
+      "retrieved_at": "2026-10-07T18:51:42.433050+00:00",
+      "elapsed_seconds": null,
+      "status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "P17",
+      "retrieved_at": "2026-10-07T18:51:42.669141+00:00",
+      "elapsed_seconds": 0.357,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P18",
+      "retrieved_at": "2026-10-07T18:51:42.699984+00:00",
+      "elapsed_seconds": 0.387,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P19",
+      "retrieved_at": "2026-10-07T18:51:42.543533+00:00",
+      "elapsed_seconds": 0.226,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P20",
+      "retrieved_at": "2026-10-07T18:51:42.494447+00:00",
+      "elapsed_seconds": 0.175,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P21",
+      "retrieved_at": "2026-10-07T18:51:42.434985+00:00",
+      "elapsed_seconds": 0.114,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P22",
+      "retrieved_at": "2026-10-07T18:51:42.643362+00:00",
+      "elapsed_seconds": 0.21,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P23",
+      "retrieved_at": "2026-10-07T18:51:42.598347+00:00",
+      "elapsed_seconds": 0.163,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P24",
+      "retrieved_at": "2026-10-07T18:51:42.945930+00:00",
+      "elapsed_seconds": 0.451,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P25",
+      "retrieved_at": "2026-10-07T18:51:42.620019+00:00",
+      "elapsed_seconds": 0.076,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P26",
+      "retrieved_at": "2026-10-07T18:51:42.719446+00:00",
+      "elapsed_seconds": 0.121,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P27",
+      "retrieved_at": "2026-10-07T18:51:42.739445+00:00",
+      "elapsed_seconds": 0.119,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P28",
+      "retrieved_at": "2026-10-07T18:52:09.935106+00:00",
+      "elapsed_seconds": 0.196,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P29",
+      "retrieved_at": "2026-10-07T18:52:09.941907+00:00",
+      "elapsed_seconds": 0.201,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P30",
+      "retrieved_at": "2026-10-07T18:52:09.883367+00:00",
+      "elapsed_seconds": null,
+      "status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "P31",
+      "retrieved_at": "2026-10-07T18:52:10.072711+00:00",
+      "elapsed_seconds": 0.324,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P32",
+      "retrieved_at": "2026-10-07T18:52:09.969662+00:00",
+      "elapsed_seconds": 0.22,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P33",
+      "retrieved_at": "2026-10-07T18:52:10.035781+00:00",
+      "elapsed_seconds": 0.285,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P34",
+      "retrieved_at": "2026-10-07T18:52:10.142350+00:00",
+      "elapsed_seconds": 0.259,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P35",
+      "retrieved_at": "2026-10-07T18:53:19.176927+00:00",
+      "elapsed_seconds": 0.219,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P36",
+      "retrieved_at": "2026-10-07T18:53:19.348883+00:00",
+      "elapsed_seconds": 0.172,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P37",
+      "retrieved_at": "2026-10-07T18:53:19.539174+00:00",
+      "elapsed_seconds": 0.19,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P38",
+      "retrieved_at": "2026-10-07T18:53:19.658393+00:00",
+      "elapsed_seconds": 0.119,
+      "status": 200,
+      "error": null
+    },
+    {
+      "id": "P39",
+      "retrieved_at": "2026-10-07T18:53:38.080959+00:00",
+      "elapsed_seconds": null,
+      "status": 200,
+      "error": null
+    }
+  ],
+  "verification": {
+    "judgment_required_fields": true,
+    "all_evidence_hashes_match": true,
+    "frozen_authorized_inputs_match_recorded_hashes": true,
+    "input_files_changed": [],
+    "no_candidate_component_or_installer_executed": true
+  },
+  "runtime_request": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority",
+    "observed_runtime_model": "gpt-6.1-sol",
+    "observed_runtime_effort": "xhigh",
+    "provider_and_tier_independently_verified": false,
+    "account_or_provider_changes": false,
+    "billing": "unknown"
+  }
+}

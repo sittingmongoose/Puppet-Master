@@ -1,0 +1,96 @@
+{
+  "original_identity": {
+    "availability_at_curation": "existing_local_path_hash_verified",
+    "bytes": 39123,
+    "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+    "github_retention": "NOT_ASSERTED",
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/native_goal_receipt.json",
+    "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+    "retention": "UNKNOWN/unverified",
+    "sha256": "2915e2ad50e098956cfa7ad018f82fa6c4ba7d2f81759d4e9bd10486eceaaacf"
+  },
+  "projection": {
+    "finalObservedStatus": {
+      "atUtc": "2026-10-07T19:11:45.786Z",
+      "rounds": 3,
+      "status": "running"
+    },
+    "honestScopeNotes": [
+      "This receipt records the installed provider integration's (zcode-acp-server 0.65.1 GoalLoopDriver) native goal state only.",
+      "It does NOT establish vendor-backend session/goal target activation; no vendor-backend goal target is claimed.",
+      "No goalMode field is asserted: the handler references a backend goal mode setting (dist/config/settings.js goalModeIsBackend) but nothing about a backend goal engine was observed or activated, and none is claimed.",
+      "Observed via filesystem reads of the driver's persistent state; the worker runs inside the loop's ticket-1 dispatch turn."
+    ],
+    "job": "I-ANCHOR-GLM/treatment/research-v2",
+    "lifecycleClarification": {
+      "content": "Root independently observed this same installed /goal driver state RUNNING (exact v2 objective, sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723) while the worker turn ran. Directives: no second/nested Goal; no vendor backend/config mutation; save/read this actual existing state as the activation receipt; proceed with the exact original assignment brief/plan only; terminal lifecycle strictly via the installed driver completion contract (no invented create/get tools or terminal status); root captures final actual state separately; original bounded v2 stage/arm deadlines continue.",
+      "from": "root orchestrator (lifecycle clarification only)",
+      "postClarificationObservation": {
+        "endedReason": "cancelled",
+        "rounds": 0,
+        "status": "paused",
+        "updatedAtUtc": "2026-10-07T18:48:41"
+      },
+      "receivedAtUtc": "2026-10-07T18:49:37Z",
+      "workerResponse": "No new Goal started and none will be; receipt keeps the observed actual state only; assignment proceeds under the original brief/plan and deadlines; terminal status left to the installed driver/root — worker records only what it observes."
+    },
+    "omitted_observations_sha256": "291001972a9aaaf32ea966f919016495a7ec3d3f1fc92995f3c8ba24af46ccf3",
+    "receiptType": "er10-native-goal-activation-receipt",
+    "route": {
+      "activationCommand": "leading /goal command in the general-role dispatch (jobs/I-ANCHOR-GLM/treatment/research-v2/task.txt begins with '/goal')",
+      "backendSessionId": "sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723",
+      "driver": "GoalLoopDriver (dist/goal-loop/driver.js), bridge-driven autonomous turn chain per ADR-0022",
+      "handlerEvidence": "dist/handlers/slash.js: 'Route /goal through the bridge-driven loop (ADR-0022)' importing GoalLoopDriver from ../goal-loop/driver.js",
+      "integration": "zcode-acp-server 0.65.1 (installed: /home/sittingmongoose/.local/lib/node_modules/zcode-acp-server, package version 0.65.1)",
+      "persistentStatePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723/state.json",
+      "realStatusSet": [
+        "running",
+        "paused",
+        "paused-budget",
+        "paused-stall",
+        "paused-crash",
+        "complete",
+        "impossible",
+        "stopped"
+      ],
+      "stateCreatedAtUtc": "2026-10-07T18:44:24.635Z",
+      "stateUpdatedAtUtc": "2026-10-07T18:45:07.945Z"
+    },
+    "state": {
+      "createdAt": 1791398664635,
+      "handoffFresh": false,
+      "objective_sha256": "f1f03172755f25a59277a2015daaf95642956eebd35ba1ac13a51bb38fc4ca04",
+      "rounds": 0,
+      "status": "running",
+      "tickets": [
+        {
+          "acceptance_sha256": "f7e68bd569c1b8295e91acdb3b31396f39e004f818fba2cec4f0b496e68ced7d",
+          "id": "t1",
+          "status": "pending",
+          "title_sha256": "fcbd32cbd0372addfb23cc2da95424ab618232f96b3b326c5a2d7f3b88c1044d"
+        },
+        {
+          "acceptance_sha256": "27095bfd820cbb3014ac54f59c559805cf4e19e57f2388fc5ba40997cdf68b69",
+          "id": "t2",
+          "status": "pending",
+          "title_sha256": "205e64709d84262ac4afb131f41316a5c803ab77b86a22c58b8f4650663444cf"
+        },
+        {
+          "acceptance_sha256": "05308cb2d7a17da218fd338b9e95bac8e4aacaf0c368dc4858d631f8608f28b7",
+          "id": "t3",
+          "status": "pending",
+          "title_sha256": "8e1fc6192055c7997561026127dda3d457dd3e60b528a7c8a06053e6e4fbb172"
+        },
+        {
+          "acceptance_sha256": "774cd0018ae03e953f25d810c46b43bb8aca27e6ced4d05cf49cffa9af93606c",
+          "id": "t4",
+          "status": "pending",
+          "title_sha256": "d7a0ec4057cfe0fd8e843c628c6c8237f017c165ed4da63d2b8a6dbcfb6a6cd0"
+        }
+      ],
+      "updatedAt": 1791398707945
+    },
+    "writtenAtUtc": "2026-10-07T18:48:15.680Z"
+  },
+  "projection_policy": "Separate bounded metadata copy; original untouched. Text/history hashed, actual scalar lifecycle preserved; never a raw tool response."
+}

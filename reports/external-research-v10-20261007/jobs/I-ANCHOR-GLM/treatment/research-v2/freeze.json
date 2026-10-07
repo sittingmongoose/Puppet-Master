@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "frozen_at": "2026-10-07T19:13:49.981792+00:00",
+  "files": [
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/INPUTS.md",
+      "bytes": 504,
+      "sha256": "9b21ef688113aa29387a1cd7927ee207307517ac580e91d08de04eeb89d75c6e",
+      "mtime": "2026-10-07T18:44:17.895083+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md",
+      "bytes": 3744,
+      "sha256": "f3b36bd67ebe9af04ca2536c884d4d39735590c16962a8df902151cb04ced334",
+      "mtime": "2026-10-07T18:44:17.894940+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/dispatch.json",
+      "bytes": 1545,
+      "sha256": "a8476aa518c8cf146fdc3ec8574f4bc22989a5469713578a4f42f894bab10dcf",
+      "mtime": "2026-10-07T18:44:18.292270+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/draft.md",
+      "bytes": 21477,
+      "sha256": "f3955d8df36c210521e39af802a7263d229294a92f8497187b6982cadc0345ef",
+      "mtime": "2026-10-07T19:09:30.963151+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/integration-state-expiry-terminal-001.json",
+      "bytes": 5436,
+      "sha256": "2e06535666f7f3bba693125044d71de6ed0ff8baf59dfea746e5c38f8c5fcd25",
+      "mtime": "2026-10-07T19:13:49.978618+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/native_goal_receipt.json",
+      "bytes": 39123,
+      "sha256": "2915e2ad50e098956cfa7ad018f82fa6c4ba7d2f81759d4e9bd10486eceaaacf",
+      "mtime": "2026-10-07T19:11:45.789510+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/sources/executed-checks.json",
+      "bytes": 1940,
+      "sha256": "4196a75bd1b64523db3119b39615f6e16a89393079c23ba6aea4c7347bf0dd80",
+      "mtime": "2026-10-07T18:58:10.226427+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/sources/index.json",
+      "bytes": 8823,
+      "sha256": "70929aa0cfd3598a3e638402a9373d04a26f98b58790c48e20c468bd8e3a2dac",
+      "mtime": "2026-10-07T19:06:37.610517+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/sources/retrieval-stamps.json",
+      "bytes": 3557,
+      "sha256": "1f811176517e4bb69bc266fde9f42643b4cf20f67c487af00c6502081a4c23dc",
+      "mtime": "2026-10-07T19:06:37.608740+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/task.txt",
+      "bytes": 486,
+      "sha256": "77c442123c2d8c1bb1404dd1cdcf30b3ec874429e56c200eaccadfc5e5a415ba",
+      "mtime": "2026-10-07T18:44:18.292062+00:00"
+    },
+    {
+      "path": "jobs/I-ANCHOR-GLM/treatment/research-v2/timings.json",
+      "bytes": 1910,
+      "sha256": "5f8f1deb26186ac9ebecbc31de53dfeabc7daed2c48fabcdbfaec18ef9e2083c",
+      "mtime": "2026-10-07T19:11:45.788055+00:00"
+    }
+  ],
+  "t3_status": "interrupted",
+  "pending_child_runs": false,
+  "native_status": "paused",
+  "native_createdAt": 1791398664635,
+  "native_goal_lifecycle_eligibility": "HOLD",
+  "draft_saved_seconds_after_stage_ceiling": 12.909151,
+  "full_stage_overrun_retained": true,
+  "independent_source_quality": "UNASSESSED",
+  "no_native_completion_inferred": true,
+  "successor_only_within_original_whole_arm_deadline": "2026-10-07T19:29:18.054Z"
+}

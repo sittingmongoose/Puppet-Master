@@ -1,0 +1,2215 @@
+{
+  "entries": [
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "sqlbackup",
+        "url": "https://www.sqlite.org/backup.html",
+        "version_or_capture": "SQLite documentation captured 2026-10-07; reconcile behavior to SQLite 3.51.3 code"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 28195,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackup.html",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "sqlbackupapi",
+        "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+        "version_or_capture": "SQLite C API documentation capture 2026-10-07"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15852,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackupapi.html",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "sqlbackupcode",
+        "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+        "version_or_capture": "SQLite version-3.51.3"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 27099,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackupcode.c",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "tardocnew",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+        "version_or_capture": "CPython 3.14.0"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 53746,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocnew.rst",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "tardocold",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+        "version_or_capture": "CPython 3.12.3"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 49758,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocold.rst",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "tarnew",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+        "version_or_capture": "CPython 3.14.0"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 117029,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarnew.py",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "tarold",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+        "version_or_capture": "CPython 3.12.3"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 106883,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarold.py",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "sqltransaction",
+        "url": "https://www.sqlite.org/lang_transaction.html",
+        "version_or_capture": "SQLite transaction documentation capture 2026-10-07"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 27068,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqltransaction.html",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "sqlwal",
+        "url": "https://www.sqlite.org/wal.html",
+        "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 42143,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwal.html",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "sqlwalcode",
+        "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+        "version_or_capture": "SQLite version-3.51.3"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 177587,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwalcode.c",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "httpcache",
+        "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+        "version_or_capture": "RFC 9111 June 2022; exact RFC text"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 84477,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "httpsem",
+        "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+        "version_or_capture": "RFC 9110 June 2022; exact RFC text"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 502941,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "geotransform",
+        "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+        "version_or_capture": "GDAL 3.9.0"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 1713,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "rastermask",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+        "version_or_capture": "Rasterio 1.3.10"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 9114,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9"
+    },
+    {
+      "authored_locator": {
+        "capture_date_utc": "2026-10-07",
+        "source_id": "rasterresample",
+        "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+        "version_or_capture": "Rasterio 1.3.10"
+      },
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 2267,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst",
+      "reason_not_copied": "Case mapped raw source body excluded; exact IDs/URL/version retained in authored map.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 34311,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/muse-t3-timing-observations.json",
+      "reason_not_copied": "Thread observation contains embedded message item; history-free timing projection used.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "4eee7734267517fb283426a4fadf533cbdc0f7f68c58c66ddbbbb05ae01b8058"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 20698,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/t3-terminal-observed.json",
+      "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "929ee14370f3a9631e9a96630b84146c605ec26b7e7cff33b3cea3f425149e0a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 19238,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/t3-terminal-observed.json",
+      "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f937754ccdd8f307fc8eaee07dbc932bf9043430d61174965f1e3183765cd8a2"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6855,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/research-v1/t3_dispatch_clock_receipt.json",
+      "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6dcf447bb861f5573b92ae3cd9bafce474273e2d6eaf100661ab0594b546aee4"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6783,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/research-v1/t3_terminal_clock_receipt.json",
+      "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f9cb0062fea5f727bfab0f67c339a90f5cc39b95f9178480de6f7bc83d498bfb"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 5436,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/integration-state-expiry-terminal-001.json",
+      "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "2e06535666f7f3bba693125044d71de6ed0ff8baf59dfea746e5c38f8c5fcd25"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 39123,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/native_goal_receipt.json",
+      "reason_not_copied": "Original receipt includes embedded native/thread task/source text; bounded lifecycle projection published separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "2915e2ad50e098956cfa7ad018f82fa6c4ba7d2f81759d4e9bd10486eceaaacf"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 3149,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/control/critic-v1/sources/C5-issue177.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "2b65e13f3b57c10f71543a69f357400917c126ba80a9b92f1831c97d6108acc2"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 19242,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/control/critic-v1/sources/C5-pr174.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ef0213f3d626ff2bae53ac9eb587d3374bcf362f655e023743726b02cbef4f1e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4260,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/control/critic-v1/sources/C5-release190.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "29857461eef516ec94c773da502f1be7aa98ba763d3e927219231ec8b3ccc345"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 1172,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/research-v1/sources/pr174.patch",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "42a2f800ea10d5d85e1114f213fee26292d6ef5f5b64e7b0deee1348b821a485"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 63600,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P01.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 44433,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P01.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ba089d070ad037879c53b2ac6b6306c7678d9c52b7dd3ac3224750745f65424f"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 54632,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P02.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 77968,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P03.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 62000,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P03.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "61bf481ac63b1a0e4542e7c17034a016c9be4c399a76389d4c57b7f26f7c2978"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 64527,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P04.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f36a64815742c75aac25927348b9f5a0e0f4b96d3de571d8d8703934ebba69da"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 32163,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P04.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "dd2290ffca246814345148f0d9def7c85d30cbab8c4ee80610874a0a886d6f54"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 24438,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P05.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "245b64ef520e43be5d951eea66f4bd442655f0cd3c87d0b967d7f4b1caa32809"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 5256,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P05.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "af89a376035471ae0f73514e3daeaa6bbaa6095f42d936d7c1b1e02e3a727a35"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 16437,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P06.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1914917c686e6b9615969da556692b9324dc094906a643e694962e93a1bce04a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 1874,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P06.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e0f50a6e4386c07deda4a1312fcbee2fd47b3b5ed7c3208aa9729b1d4649576e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 44903,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P07.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "c4bb42b8115950619983934dabb707482113ee766038ac7465e995ad6a560173"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 8428,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P07.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d68b670c415e62feaa7871538d2edd6af2baafebb9f4569ae054b6bf62393b4d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 2771,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P08.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ceb4962d11162e4a99c7b612a2c511d456fe28ad76dfde093987dd69ab08deee"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 16696,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P09.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "126d0bc5c0a1f61ff8711e7545e247cb7139537cc0e819a1d13aea8b78683c95"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 12373,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P10.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "8a5432cc15c5324c7614d16d6a103ad80389ddbca9ca96c072b04f87f6db3f31"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4053,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P11.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 17640,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P12.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "c9134bddde6fa253d38aa7d461264c077cb8e624022842ee65d24f0874e10bc9"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 17936,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P13.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "cf0ec73d0d0133c93be4dc8553e2b66324d4e68d1703527585c348042ccc17a4"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 17852,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P14.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "3f82b9c64514a1d9510033d62b83908e3cb65f449f68dae97bcb116e11c8d430"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 369,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P15.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 2462,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P17.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "87417bf650db10ec885edc893c7f985910748ae216331fae2cee78db04f5bb48"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 10513,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P18.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b90489d0d620918ee2c602177704fdd332e8c8e286df7479648f2d79d0362ab8"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6970,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P19.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d919c4e26d7ec7af10576269abdc62757757ea886dd58b09888e7065689fdc18"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 19952,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P20.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "3311c08063ae9f79e7cd1a5202557005c8cc671d1fda86e20031587ee0f07900"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 51281,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P21.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 31123,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P21.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "0325d32f5382da2907a4333e9db4c1fc663e1d5bc53bf9ac8555ae68d89c067f"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6290,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P22.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "dd723f863772ba196e6a6713b911146d8efe38af11205a3d6e302912809d0f68"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 46737,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P23.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e00709e3f37e95332d8e6df243510665e9cab1d7938d4fd85cbf5f47648a50bf"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 34099,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P23.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "24c58aa51cc4c3ce8aaf1ff29324e74137cd18e5b12eaa8ffaab5174ef5b9d01"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15152,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P24.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6034,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P24.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 36101,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P25.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "84cdbe56b2484c985c2f9b7a17a4485945dae6abd0e8ea52996f07cdf8b63d1f"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15650,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P25.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "fb77cb048bcae7bb44dd505329ecfae6a01b8b0cec30241533d790122ad61630"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 28396,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P26.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "0103bc9c8356495131580755687cbac7f1c0b5c5e55785884d351d88c114a90c"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 7472,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P26.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "14e7a168395f99d6d1cbff022612d6cdb25ba715ccf9fe4b4444de9b509455a7"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 109592,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P27.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "40cc7855bbbdab09699bac73c5d094f7cf519980e3d5a75a7e2172a497e18264"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 51665,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P27.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d52a735c4945f995d457811858eb2e6d4e5041e55d1b5175fc8ad271f0343ac2"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 49297,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P28.source.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 329,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P29.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "91a9403a156d5d36d0873dd6892c83439683ec228373f612235f873b61bb9aab"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 2692,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P31.source.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "a31a28a5b461e00efa066044d5e80b0f46c3cf4d4a9bd330e68fb7e6f30cd50a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 8273,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P32.source.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "7c9675c97a79caa5d2702f8f6097501e87b72c25904d9827d8a865f96b54c20a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 100840,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P33.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1347e1d59491587fb60d20383b68ce841ded6339dd21b7857df0ad6ba33ccc5e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 44838,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P33.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "56073848d53c812497d6305dcb185a58e600069e586d0d23f3c3166b2a703940"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 47178,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P34.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "a61f103be14bcb610b594db39237c8bfce858b3c73d4acf175a9149cc470d487"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15120,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P34.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6d420816c1c6b18aa5e5290d15d5e4b9f8caa107f31949965e3a3cd6fa9f2e63"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 23837,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P35.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "4216af1b1cbbe352a409948753f9ae79fcc12df091d2f04e8f8454a1b298eda2"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6320,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P35.text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "08962d5d7ea8ba7ad3894a63f0c3883dd2da6592f10f6fabe6192fef3679fb18"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 656,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P36.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d55bc58a67eb1175c0e715bd4441aea39d8cdbc256ca1573b4186f5c514ce982"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15343,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P37.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "75b77ac6c9aee31c9a45a555baa1ef0a531cfe9fa1cb9f9593d5f41281431a2a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 1102,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P38.source.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b14be249c63b49e8404019849d37a7250fd81a7de8ba22cad66146bd3562e839"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 1229,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/sources/P39.source.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "da4d6119e55b3f36ecc55ce9f7054c4801dde65c9af4ee563b75b1228281674e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 39588,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-aip.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "4524dc5f7d14c9ba275f6b20f08f7f50b3901138acaef6bc0f7a52467f5535d1"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 59705,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-metadata.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "82f9c2a548557e4b180293cfd5f7d97f4ea5405e86ebaaae6a28dd99794151ae"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 54145,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-quickstart.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e5d4470a4a0900fd9766f2745ada0d4b02cf2c3e91560083ab3c634f4c025069"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 22249,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-quickstart.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e031049e3855dca649151ce2940d031cd3cb68d4631fa7c41ffa657458b7548f"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 2326,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-issue137-comments.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6880848f32998ace94ad0c28afb48da9dd6520becff021f7dcaf05951b4f1483"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 3484,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-issue137.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "50e188c4da4282ad43e186c3b810c4469dfa7c2af02734656e7c6c24d904680d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 5,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-issue177-comments.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 3149,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-issue177.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "2b65e13f3b57c10f71543a69f357400917c126ba80a9b92f1831c97d6108acc2"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 14331,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-pr174-comments.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "c41b629d9f31cd7152310c546fb6acff95c607617d9c7230d1ddd06d091df89c"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 19242,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-pr174.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ef0213f3d626ff2bae53ac9eb587d3374bcf362f655e023743726b02cbef4f1e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 990,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-pr174.patch",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "c6e220031fb6e308a1b18cc8c446fa92a8abf17251941ae17b1df5f4d353953e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4260,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-release-v190.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "29857461eef516ec94c773da502f1be7aa98ba763d3e927219231ec8b3ccc345"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 49297,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-tests-v190.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 9607,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-tree-v190.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "7c49c3a9bd325ca738b667fe8b987dc14cb10631940232bff8621bfd15e3bd4b"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 55013,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v181-immutable.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 408,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v181-ref.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "643d87c5078af15fa8c83f108099e118fbac9d89839a0581692d037022de11df"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 55013,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v181.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 54632,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v190-immutable.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 408,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v190-ref.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "8f4c097411db6e4da492abea300ca390c032d921788e32f3692549b3392d8efd"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 54632,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v190.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15152,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/fsync-manpage.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 11101,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-premis.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "43fcb026d365f3ef826b13d9f9a0aa119e2fbc2211f5e0a975d72b2949882f35"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 19259,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-audio.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b6b336284f3acf6464ab6e5116742c33e6af1bdafb7c1893576bc687e7ab5b53"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4342,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-audio.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d9b8bf8f62f131b7657b29c64caac6715589f760e83b6f0604ad157e3457e526"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 32365,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-stillimg.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "8354e61842ba4beb660c00821ff4f4a7f7621750c5bfa15040ee3ec49c8dc995"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 8159,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-stillimg.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "836dcbdf26af767fe8affabfeca51798985672f3352b772e4cb4cabce3f10f50"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 31001,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-text.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b1a04b083248e18df9ec304bf25d5b0918918372560b1881067c2bfd73412d13"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 10038,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "de78d21139577ccd07030d3b01d47365ba488d0cda022619876092dd8adaa90d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 35963,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ndsa-levels.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d82e909d217e9a08979ec18e844855894aeaffd76c0ebf76df128a98320fc08a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 7658,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ndsa-levels.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "32f716500839e4ee52cc895bc72824911fa298187c7f2d887a17d43c7a1e48b8"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 143061,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ndsa-matrix-v21.png",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "af3bc9e998ba4d3ab7424687d388c9f3e1bc6f6cb76b48987cc49fe977ccb37d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 139510,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ocfl-spec-v11.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6cd3434f46df0d2b73c776f40453715e1bf7b780e5b46945c5b1aa275cd6c112"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 59757,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ocfl-spec-v11.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "22c67ebf3c4b1bf8fae483d969600079367da9e812bc5cc79c4bf314a08b9515"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 14795,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-file-controller.php.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6c7cf708fc9aec7f268166ce0c273e1516f67223380151e4205f9db8dc31a2d0"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4688,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-matrix-test.php.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "bac02d39dc3060e5103915d168218f32354c4759d13c7166db900c50a519e8b8"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 20050,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-media-check.php.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e06e9316a906c726ec0d26a3ec29798f92628ca41c6094f6b2a161a1d14fcf46"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 117656,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-module34747.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f0c534e16931559574848044cc04a20bf6e835277e43029bf793c66797b4a324"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 51281,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-page.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 31063,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-page.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "213558144e865ad98659d75201778d0d295d4d0ef6e08f61d2b5b50b82aa0667"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 33774,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-readme34747.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "84eae2c62a7641faf78b7a6c6ec178851498c738c742864a0cb8d93f5efc3fff"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 410,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-tag34747.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "dc51223c90406006cbe5e14bd18380a6d050a73b8620c09c71512a04c0f98f49"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 66715,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-tree34747.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6d150742687013785072cb38df1f0a9029d9be737653f62c2acc4cba66b0fc0e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 23571,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/rename-manpage.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 61215,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/restic-repository-checks.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d76d004ededbb3f7d5fdaa4510dd88e809d503ed8f4fd27dd5db5534c9c69880"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 25834,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/restic-repository-checks.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "33cc957236fce95c23aa974c0d72723d6b8edd8ee3d7db4ec4d6ccee36ef6fab"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 48783,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/rfc8493.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 77968,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-atomiccommit.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 61644,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-atomiccommit.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "08e859c0d598b1e60279292432d572ba8ce63eee7ef137ee12f54cf14186be42"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 28195,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-backup.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15388,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-backup.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "640eb0940beb7bd32146a416c79ee326b1ea2a32e05f134d43ea51ce50bee622"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 139778,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-pragma.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 13237,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-rsync.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "30b70362b95ddb9293b98757f87a3d3d9552f0e2ee45a96578af1578e17fc73d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 7813,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-rsync.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "83aef7a99b7961c9593032c1b838762b735ce4c9ab90d1158dd85348d8a42354"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15215,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-vacuum.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "740f02ade00626f50c7a71ded2615995362fedfc30e09aa22dbe4535b7615c54"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6443,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-vacuum.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "34af29ebcbb8ba5a6c5d123307d942581e496f28c5febd4e29c8731e17c67995"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 42143,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-wal.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 31423,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-wal.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b26f7a935eaf42713229e38a40754b5c3bf67d36253e1a5b0e776596e5cd5211"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 39588,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-aip.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "4524dc5f7d14c9ba275f6b20f08f7f50b3901138acaef6bc0f7a52467f5535d1"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 12161,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-aip.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "9e9c2fc03020d0f123d0695b48d226cc7cd0021101e7f6e051c66dada8881f38"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 59705,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-metadata.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "82f9c2a548557e4b180293cfd5f7d97f4ea5405e86ebaaae6a28dd99794151ae"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 19321,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-metadata.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ae036c424cb0688703418caa7f552c3a2a2ae137d989e73b86b867c7cb8659a1"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 54145,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-quickstart.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e5d4470a4a0900fd9766f2745ada0d4b02cf2c3e91560083ab3c634f4c025069"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 22250,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/archivematica-113-quickstart.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "326e4b7fd464c09891ff63d5a961655140dc1f4ee7c4c00143d7d7b2cdd07244"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 1992,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-issue137-comments.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "74702d88639299825d721c634a8d0c4ed3fbbb7f5610e787e2604014d5a645a3"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 3106,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-issue137.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "80f70410151b3e71e6be6c5762f590f5306b855d238191ffcfef91d9dcd8a1ee"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 2,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-issue177-comments.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 2771,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-issue177.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ceb4962d11162e4a99c7b612a2c511d456fe28ad76dfde093987dd69ab08deee"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 12373,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-pr174-comments.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "8a5432cc15c5324c7614d16d6a103ad80389ddbca9ca96c072b04f87f6db3f31"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 16696,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-pr174.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "126d0bc5c0a1f61ff8711e7545e247cb7139537cc0e819a1d13aea8b78683c95"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 990,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-pr174.patch",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "c6e220031fb6e308a1b18cc8c446fa92a8abf17251941ae17b1df5f4d353953e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4053,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-release-v190.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 49297,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-tests-v190.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 55013,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v181-immutable.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 369,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v181-ref.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "c8700ce1f613672ed13ee0ced9b979865b813a177d98fc4e67ee7adb79e0c7e5"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 55013,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v181.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 54632,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v190-immutable.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 369,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v190-ref.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 54632,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/bagit-v190.py.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15152,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/fsync-manpage.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6034,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/fsync-manpage.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 10805,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-premis.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6bf3f606c1058e946810fc1756d851bbe8e9ece2e1a8ce8f10da0fbee60ab4b6"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 3220,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-premis.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "a3b77633af5da5dac3fe2a710c9870deef98c8cb2165624094799746b59534db"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 18963,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-audio.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1cb0276d5b78a3058de5d86057b053e39bd224b098c6151508e49cca4452c72b"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4369,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-audio.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "9cf6203a1502f118091f732841206e10395110d003562c6928275c5e9bfeca57"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 17195,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-faq.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ad1f8f0dec4ba8c37a28552b9f1b45f70a70c95a56ac6e0ea65169c9a3623ca6"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6313,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-faq.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f5bda896a0ea63ca336bac251033dcaefc649b33e10d9180f7fcf7d5bc069618"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 19695,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-introduction.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f6cf956cf4a03d3de473e0667d8452934229d1a6b95965b7b88eb9e4f8f253c9"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 8141,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-introduction.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "30ecb72c65d935209cd64e6e9f9458edeea8cbe7a53a4b2e9d059d1d2b8c6e6f"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 32069,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-stillimg.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "46f0763e8d893d8684bdd2b77179a1fec6726f636c191b4ee3f486e67c12c3ce"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 8174,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-stillimg.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5d848c8956f72b0a068f4380a6ac6c8bc41e1640eac80b11a86cd8c5f260efe6"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 30706,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-text.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b9e2c4f35be2deddd851c6c46255a162967e913a356493674109082e90d7ba36"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 10060,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/loc-rfs-text.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "71e9e4b360c5c1a2e02ef6cfef3d6de2b22db0aefe57447d8d8abddf87693d66"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 35963,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/ndsa-levels.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d82e909d217e9a08979ec18e844855894aeaffd76c0ebf76df128a98320fc08a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 7666,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/ndsa-levels.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e0e233881f30ac29ca8744bc8eeef6af8dd2cdfd512b6888a528c386e1a6135b"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 143061,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/ndsa-matrix-v21.png",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "af3bc9e998ba4d3ab7424687d388c9f3e1bc6f6cb76b48987cc49fe977ccb37d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 139510,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/ocfl-spec-v11.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6cd3434f46df0d2b73c776f40453715e1bf7b780e5b46945c5b1aa275cd6c112"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 60628,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/ocfl-spec-v11.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "bbb6521fa1c343b79d5b8390bec0f197ea9a8abd0e60b2c998b0ae6995b3ed41"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 14795,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-file-controller.php.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "6c7cf708fc9aec7f268166ce0c273e1516f67223380151e4205f9db8dc31a2d0"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4688,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-matrix-test.php.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "bac02d39dc3060e5103915d168218f32354c4759d13c7166db900c50a519e8b8"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 20050,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-media-check.php.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e06e9316a906c726ec0d26a3ec29798f92628ca41c6094f6b2a161a1d14fcf46"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 51281,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-page.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 31063,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-page.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "213558144e865ad98659d75201778d0d295d4d0ef6e08f61d2b5b50b82aa0667"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 33774,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-readme34747.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "84eae2c62a7641faf78b7a6c6ec178851498c738c742864a0cb8d93f5efc3fff"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 371,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/omeka-access-tag34747.json",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "e8be17ed4b180dbacf372ee0f4c6e6a05917d050f961f86fbf5724e38909aad3"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 23571,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/rename-manpage.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 12196,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/rename-manpage.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1bcfe1b37be314a3bb1ddc4c8eb0376d9f34dd66627bf593c7d3767cb5e61678"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 8843,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-introduction.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "c7be9c3cbdbbbd0afd4d386e9cdd46392dea8ef7c6f97464b64c070677a5cc3b"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 1339,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-introduction.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "0b18b0739c10372a7972a46731c1d8c9e0ba69f4155a97d74c6be6d243b8f20e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 61215,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-repository-checks.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "d76d004ededbb3f7d5fdaa4510dd88e809d503ed8f4fd27dd5db5534c9c69880"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 26347,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-repository-checks.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "ded4b13e8f3f1df23a9e4b1eec5f2931d6f69de7d0cfcc32c772925e204a6421"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 53898,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-retention.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "2ac9aafb598368864bf42da3f74198d45fc1ea91bf155a9c3021b90348fdad64"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 25002,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/restic-retention.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "acfcfe276040724941dd65e99fc0b927fc1f5b0cdd5d12f016ce01cce23f054c"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 48783,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/rfc8493.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 77968,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-atomiccommit.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 62000,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-atomiccommit.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "61bf481ac63b1a0e4542e7c17034a016c9be4c399a76389d4c57b7f26f7c2978"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 28195,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-backup.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15504,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-backup.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5a5b6fd842c72b4e1d56d0d0aff7baa39b0d0882b93d683dbcfd51dffeb0c7df"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 139778,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-pragma.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 83444,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-pragma.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "de760976bae639686e5dbfb583c12f97f27af51aeea1ffd7df47fdf25cb1ab7f"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 9857,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-release-3513.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 4353,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-release-3513.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "100d66daeba4c6bf11ca912cec79f15765f09ce68bf41a965900fdf1028a20b7"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 13237,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-rsync.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "30b70362b95ddb9293b98757f87a3d3d9552f0e2ee45a96578af1578e17fc73d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 7836,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-rsync.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "27349080f2aaa914385b8d0ed742cb84ce45f386d39469afe8e5ffd3644fe55e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 15215,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-vacuum.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "740f02ade00626f50c7a71ded2615995362fedfc30e09aa22dbe4535b7615c54"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6454,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-vacuum.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "1b40c263cbc7507e22a19722547c68d08873c3c63341a25e9757984fdddcd675"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 42143,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-wal.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 31523,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/sources/sqlite-wal.txt",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5509b222e2f322272d2a22f57bbce0154a0dcf1bb53a9b8cb3d5608837f00f68"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 17364,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/isolation.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "23395653f04984e4310b287ed548202d874e06ecd2cba17f32b2714e5b7ebef7"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 302918,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/pager-3.51.3.c",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "5ef7135d2d67ba7f2be6da0197854788ece57bccd2a743f6f1a5f33c94e8ce7b"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 139778,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/pragma.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 9857,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/release-3.51.3.html",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 178353,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/vdbeaux-3.51.3.c",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "2f5313c95ea96782d5af11773e9b1e526a5dd8f7e6925d3e64c74501fa2dd22a"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 177587,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/wal-3.51.3.c",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be"
+    },
+    {
+      "availability_at_curation": "existing_local_path_hash_verified",
+      "bytes": 6127,
+      "content_use": "Raw primary bodies hash-only; for embedded native/thread text, only bounded metadata projection parsed, no external histories or databases opened",
+      "github_retention": "NOT_ASSERTED",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-B/reviewer-primary/wal-3.51.3.h",
+      "reason_not_copied": "Raw primary body/vendor code/HTML/corpus excluded; authored source locator/excerpts retained separately.",
+      "retention": "UNKNOWN/unverified",
+      "sha256": "f6bfe44247d1abdebac7fef7fd1f55c307335bb8668888e1dfd0414da565e3cb"
+    }
+  ],
+  "retention_policy": "UNKNOWN/unverified. Presence and hash at curation do not establish durable retention or GitHub availability. No raw source/native histories/DB/config/secrets copied."
+}

@@ -1,0 +1,40 @@
+{
+  "verified_at": "2026-10-07T19:15:36.939687+00:00",
+  "github_branch": "t3/research/er10-research-efficiency-campaign",
+  "github_commit": "4efd9d7c5a0dca13ef77ba1079288d21e3e2b057",
+  "github_branch_ref_verified": true,
+  "critical_files": [
+    {
+      "path": "reports/external-research-v10-20261007/BATCH002_MANIFEST.json",
+      "bytes": 479260,
+      "sha256": "944b0c77a64fb31c773cc45c0b70b374c95737b1d458fa8648f25e8e2af9740c",
+      "actual_github_bytes_equal": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+      "bytes": 15370,
+      "sha256": "14c83b7ab228a151a03393144c967a14a472d5f4cc561c663f868a9789e18202",
+      "actual_github_bytes_equal": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/cases/D-M08-A/case-card.json",
+      "bytes": 12086,
+      "sha256": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+      "actual_github_bytes_equal": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/m14-renderer/render.py",
+      "bytes": 5721,
+      "sha256": "80e925fe69e7ccc2d58297fd48ab857795545d6d94572b653bffc5803ace9ef0",
+      "actual_github_bytes_equal": true
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/glm-v2-integration-goal-state-active.json",
+      "bytes": 5205,
+      "sha256": "df7c3f4316664ea3bc6a5a85bd178bb695e78a492cc88f61236320cc43b1d0ac",
+      "actual_github_bytes_equal": true
+    }
+  ],
+  "all700curated_file_hashes_verified_locally": true,
+  "campaign_complete": false
+}

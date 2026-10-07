@@ -1,0 +1,11 @@
+{
+  "start_utc": "2026-10-07 18:54:40 UTC",
+  "end_after_terminal_receipts_utc": "2026-10-07 19:10:26 UTC",
+  "elapsed_wall_seconds": 946,
+  "budget_seconds": 900,
+  "within_budget": false,
+  "native_complete_receipt": "goal-complete.json",
+  "fresh_native_terminal_get": "goal-terminal-get.json",
+  "native_terminal_time_used_seconds": 946,
+  "limitations": "Elapsed covers review, primary checks, authoring and terminal receipt saving through this clock reading; final time-artifact save and concise handoff immediately follow."
+}

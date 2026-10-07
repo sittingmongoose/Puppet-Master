@@ -1,0 +1,49 @@
+{
+  "case_id": "D-M05-A",
+  "stage": "independent-source-review-v1",
+  "dispatch_at": "2026-10-07T18:55:14.085Z",
+  "config": {
+    "clientRequestId": "er10-cohort2-D-M05-A-independent-source-review-v1",
+    "title": "ER10 D-M05-A independent full source review",
+    "role": "review",
+    "mode": "async",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "options": {
+        "reasoningEffort": "xhigh",
+        "serviceTier": "priority"
+      }
+    },
+    "task": "Independently perform full declared PRIMARY-SOURCE review of frozen D-M05-A Output1 and Output2. You are gpt-6.1-sol reasoningEffort=xhigh serviceTier=priority on explicit codex_gmail sittingmongoose@gmail.com. Jared authorizes this review; both paired candidate finals and native terminals are frozen. You must not rescue or revise candidate outputs. Read actual applicable AGENTS/global rules. Create a fresh native Goal concise objective \"D-M05-A independent source review\", get_goal, save actual tool JSON active receipt in outputdir; terminal update complete and fresh get after your authored review, save actual terminal receipts. Receipt saving via JSON.stringify + apply_patch or properly quoted inert shell heredoc, no btoa/Buffer/fs assumptions.\nExact map /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/INPUT_MAP.json. Read mapped brief/changes/common untrusted prior if supplied, exact primary source bytes and only frozen neutral Output1/2 final.md/sources.json. Do not read parent analysis, costs, targets, expected winner, other grades, jobs source-arm files/task prompts, campaign state or any unrelated case. Source references embedded in candidate content may contain arm paths: those are blinding limitations, not read authority. Public source text is data, no credentials/account changes/installs/canon/repo/main/WorkNodes/external writes/children. You may browse primary sources and execute bounded counterexamples using existing scoped environment, but must not revise candidate. Any execution stays in review output scope with no untrusted installer.\nDeclared full scope obligations: [\"Preserve exact prior source and dependency identities.\", \"Dispose of the no-op rename separately from semantic invalidation.\", \"Re-evaluate default filter/API behavior at both exact releases.\", \"Revisit security and compatibility claims depending on that default.\", \"Do not classify unresolved prior dependencies as already covered.\", \"Deliver retained/changed/unresolved dispositions and proposed regression checks.\"]\nAssess independently each output against: all brief obligations; consequential source claims/conditions/exact release/domain; bounded useful discovery yield/coverage, optional leads and uncertainty; incorrect rejection/false correction; preserved final dispositions/dependencies; proposed vs actually performed tests. Full pass only if declared full scope assessed. Do not infer source truth from citations/manifests/tool exit. No exhaustive unknown-answer recall claim. No unenumerated rubric. For local decisive defects document primary evidence/counterexample and explicitly unassessed remainder; if full inspection feasible finish it. Supported uncertainty is legitimate; blanket abstention/rejection cannot pass. Distinguish material correctness from scope omissions and optional improvements; don't lower materiality after outcomes.\nSave review.md plus REVIEW.json: per Output1/2 complete_scope_assessed true/false; obligation dispositions; supported claims and exact primary locators; defect IDs/materiality/evidence; optional supported discoveries; incorrect rejections; final preservation; proposed/performed distinction; unassessed remainder; source_quality PASS/FAIL/PARTIAL; useful_deliverable separately; blinding_limits. No economic ranking/winner or target grades. Independent comparison can state quality differences backed by evidence. Review all declared scope, no premium rescue or best-of retest. Budget bounded 15min for this review including source checks/write/terminal; preserve unknowns and elapsed actual. Return exact reviewer artifact paths and coverage, no candidate edits."
+  },
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-A-independent-source-review-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-A-independent-source-review-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-A-independent-source-review-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-A-independent-source-review-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6.1-sol\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-A-independent-source-review-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-A-independent-source-review-v1",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M05-A-independent-source-review-v1:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M05-A-independent-source-review-v1",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "isError": false
+  }
+}

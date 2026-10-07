@@ -1,0 +1,19 @@
+# Legitimate test input — untrusted candidate preliminary proposal
+
+For a resumable **GET**, preserve a partial file only as a prefix of a particular selected representation. Append only after the response establishes that the bytes continue that representation.
+
+1. **Bind the request to the saved representation.** Store the effective target and selection context (including relevant negotiation headers), byte count, response metadata, and validator. Prefer a strong ETag; request `Range: bytes=<saved-length>-` with `If-Range: <strong-etag>`. A weak ETag is forbidden in a generated If-Range. A date is a fallback only when there is no ETag and that date is a strong validator. ETags are opaque validators for a selected representation and can distinguish negotiated variants; a URL or weak tag alone does not establish byte identity. (httpsem, RFC 9110 §§8.8.3, 13.1.5.)
+
+2. **Append a validated 206 only.** For this single-range client, accept a single-part `206 Partial Content`; require a valid `Content-Range: bytes start-end/total` whose start equals the saved byte count, whose bounds are consistent, and whose body is complete for that interval. Append only if the If-Range condition was satisfied and the existing and new bytes share the same strong validator. Reject unsupported multipart responses and malformed or mismatched ranges. RFC 9110 permits a server to return only a subset, so use the returned range rather than assuming the requested remainder arrived. (httpsem, §§14.4, 15.3.7–15.3.7.3; httpcache, RFC 9111 §3.4.)
+
+3. **Treat 200 as a replacement.** A server can ignore Range; if If-Range is false, it ignores Range and sends the full selected representation. Truncate/replace the old partial and its metadata, then store the 200 body from byte zero. Never append a 200 body at the old offset. (httpsem, §§13.1.5, 14.2, 15.3.1.)
+
+4. **Treat 416 as a reconciliation signal.** Never append its body. If present, `Content-Range: bytes */N` reports the current selected representation length, not proof that the local prefix is valid. If offset, total, validator, or completion state conflict or are uncertain, discard/restart from zero; only regard an already-full local file as complete when its strong identity and length are established. (httpsem, §§14.4, 15.5.17.)
+
+5. **Keep byte and length accounting in the representation’s encoding.** Byte ranges address octets of the encoded representation when `Content-Encoding` is applied. Persist those exact bytes, or request a stable coding and prevent transparent decompression/re-encoding from changing offsets. In 206, `Content-Length` is the message-part length, while `Content-Range` supplies the representation total; `*` means total length is unknown. Do not mark complete from a part length or unknown total. (httpsem, §§8.4, 8.6, 14.1.2, 15.3.7.)
+
+6. **Test the boundaries.** Exercise matching and changed strong ETags, weak/no validator, a server ignoring Range (200 reset), correct and partial 206s, interruption/short body, bad or wrong-offset Content-Range, 416 with changed and equal lengths, unknown total, multipart rejection, and compressed bytes with transparent decompression and changed negotiation headers. Assert no mixed-representation file is exposed as complete.
+
+**Uncertainty / open lead.** The allowed input map names no candidate-authored critique, so I cannot claim these points resolve critique findings. These are protocol-level rules; verify the chosen HTTP stack’s decompression and header behavior. Without a usable strong validator, restarting is safer than combining.
+
+**Sources.** httpsem: RFC 9110 (June 2022), https://www.rfc-editor.org/rfc/rfc9110.txt, capture SHA-256 `21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a`. httpcache: RFC 9111 (June 2022), https://www.rfc-editor.org/rfc/rfc9111.txt, capture SHA-256 `aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e`.

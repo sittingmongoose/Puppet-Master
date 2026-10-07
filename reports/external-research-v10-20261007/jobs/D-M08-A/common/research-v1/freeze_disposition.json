@@ -1,0 +1,36 @@
+{
+  "case": "D-M08-A",
+  "disposition": "HELD_FAILED_SEED_STAGE_OVERRUN",
+  "source_quality": "UNASSESSED",
+  "arms": {
+    "control": "NOT_ADMITTED_FAILED_COMMON_SEED",
+    "treatment": "NOT_ADMITTED_FAILED_COMMON_SEED"
+  },
+  "actual_requestedAt": "2026-10-07T18:54:13.374Z",
+  "actual_deadline": "2026-10-07T18:57:13.374Z",
+  "draft_saved": "2026-10-07T18:57:17.526937903Z",
+  "native_terminal": "2026-10-07T19:00:57Z",
+  "native_status": "complete",
+  "delivery_status": "completed_late",
+  "draft_save_overrun_seconds": 4.153,
+  "native_terminal_elapsed_seconds": 403.626,
+  "native_terminal_overrun_seconds": 223.626,
+  "clock_annotation": "Original child receipts retained unchanged; actual T3 requestedAt supersedes child sampled18:54:29 boundary. Draft itself was also late on actual boundary.",
+  "goal_tokens_raw": 46365,
+  "generated_tokens": null,
+  "billing": null,
+  "quiet": true,
+  "pending_descendants": false,
+  "hashes": {
+    "native_terminal_receipt.json": "6c0a5d66d61e4c946081b431c32da07050433d6af1f0f3db9ae058e4bba636fc",
+    "quiet_task_receipt.json": "7bea0408ed55b128845a280ae308bbf74b061d48ffe058c590cd35df61fb999e",
+    "INPUT_MAP.json": "3aca4805d71722a3f65aef949fd5ebeb1c7b4352eea5b65558d168ed1dd54c8d",
+    "draft.md": "455eed015bee0d97839da28528b6f18c7b98277f3437dc54dc8739dd3adc305b",
+    "task.txt": "2865463bd311b2cbd05c1259b6081d402b315185c60516dbe65a38688e407a24",
+    "native_activation_receipt.json": "7033625e1ab0acb1001777b7e626f0a8c47979a137c92faae303a9a337569e6b",
+    "t3_dispatch_clock_receipt.json": "6dcf447bb861f5573b92ae3cd9bafce474273e2d6eaf100661ab0594b546aee4",
+    "timings.json": "3bd504af42ca1e7412201d6cc1846a29cdfbb131a35349285540b349fb093cd2",
+    "dispatch_response.json": "7bd33c92aba1d4751301172606bc824b3129ba25813acc2e66b3aed2676925d1"
+  },
+  "updated_at": "2026-10-07T19:02:42.314822+00:00"
+}

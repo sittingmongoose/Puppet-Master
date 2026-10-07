@@ -1,0 +1,1715 @@
+{
+  "schema_version": "1",
+  "case_id": "D-M05-A",
+  "review_kind": "independent full declared PRIMARY-SOURCE review of frozen paired outputs",
+  "reviewer_context": {
+    "role": "review sub-agent",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "service_tier_requested": "priority",
+    "account_label_supplied_by_user": "codex_gmail sittingmongoose@gmail.com",
+    "account_inspection": "None; no credentials or account changes."
+  },
+  "timing": {
+    "budget_seconds": 900,
+    "started_utc": "2026-10-07 18:55:26 UTC",
+    "authored_utc": "2026-10-07 19:04:38 UTC",
+    "elapsed_to_authored_seconds": 552,
+    "terminal_elapsed_location": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/review_receipt_summary.json"
+  },
+  "rules_read": [
+    "/home/sittingmongoose/.codex/AGENTS.md",
+    "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md"
+  ],
+  "rules_application": "Skipped pm-mail/extra-worker rules inside T3. No children, repository/canon changes, account actions, installers or external writes. Review files and all executed fixtures stay in the mapped output directory. No repository governance/build work was relevant.",
+  "input_evidence": {
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/INPUT_MAP.json",
+      "sha256": "28b5e0c2dc4ea5c684af4e37de845e6d74898af279f7b71d24982d13c9fb8a08",
+      "bytes": 4231
+    },
+    "case_inputs": {
+      "brief": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/brief.md",
+        "sha256": "be1a4c02f23bc39bffaeed0d99d8c53f1a20dadbf98b304fe27273274a950b9b",
+        "bytes": 1960
+      },
+      "changes": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/changes.json",
+        "sha256": "99616901024e172b2f0d4678c1319f9212b2b88dcf84dda936392c05d587dc34",
+        "bytes": 620
+      },
+      "prior_state": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/prior-state.md",
+        "sha256": "48ca796fd27d4898a030f430d68a5a5975da63b1d911835a5af502c4a837dca8",
+        "bytes": 8908
+      }
+    },
+    "primary_sources": [
+      {
+        "source_id": "tarold",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+        "version_or_capture": "CPython 3.12.3",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarold.py",
+        "kind": "public primary raw bytes",
+        "observed_sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+        "matches_map": true
+      },
+      {
+        "source_id": "tardocold",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+        "version_or_capture": "CPython 3.12.3",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocold.rst",
+        "kind": "public primary raw bytes",
+        "observed_sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+        "matches_map": true
+      },
+      {
+        "source_id": "tarnew",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+        "version_or_capture": "CPython 3.14.0",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarnew.py",
+        "kind": "public primary raw bytes",
+        "observed_sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+        "matches_map": true
+      },
+      {
+        "source_id": "tardocnew",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+        "version_or_capture": "CPython 3.14.0",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocnew.rst",
+        "kind": "public primary raw bytes",
+        "observed_sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+        "matches_map": true
+      }
+    ],
+    "frozen_outputs": [
+      {
+        "label": "Output1",
+        "artifacts": {
+          "final.md": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/frozen-inputs/Output1/final.md",
+            "sha256": "6f554580d65186229e795ca87ab46cfd699bff4214ececf39bf61595d17db85c",
+            "bytes": 8852,
+            "frozen_sha256": "6f554580d65186229e795ca87ab46cfd699bff4214ececf39bf61595d17db85c",
+            "matches_map": true
+          },
+          "sources.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/frozen-inputs/Output1/sources.json",
+            "sha256": "d364c3c85fba413c27665024759f1aaf8379a7516f273666bdb24ad261bdb20c",
+            "bytes": 7581,
+            "frozen_sha256": "d364c3c85fba413c27665024759f1aaf8379a7516f273666bdb24ad261bdb20c",
+            "matches_map": true
+          }
+        },
+        "final_whitespace_word_count": 1062
+      },
+      {
+        "label": "Output2",
+        "artifacts": {
+          "final.md": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/frozen-inputs/Output2/final.md",
+            "sha256": "502885bcb521b89c298bd7fb20444a981f2bfa56a4aef4b575eadde942c16627",
+            "bytes": 8717,
+            "frozen_sha256": "502885bcb521b89c298bd7fb20444a981f2bfa56a4aef4b575eadde942c16627",
+            "matches_map": true
+          },
+          "sources.json": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/frozen-inputs/Output2/sources.json",
+            "sha256": "61b3b666180749bbd1819f09c0a7fa38acfb2cdefaf62048a40b4e744fc08075",
+            "bytes": 5490,
+            "frozen_sha256": "61b3b666180749bbd1819f09c0a7fa38acfb2cdefaf62048a40b4e744fc08075",
+            "matches_map": true
+          }
+        },
+        "final_whitespace_word_count": 1091
+      }
+    ],
+    "reviewer_evidence": {
+      "reviewer_checks.py": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.py",
+        "sha256": "c58b2970c801ffd915e3583d734aa9744e9e5f7da46d33383da1c06de568ddd4",
+        "bytes": 6433
+      },
+      "reviewer_checks.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+        "sha256": "2e3334ba3533d98c972b1fbd645a6a072bbc1e2b3c6716760347d66c0dbbfb55",
+        "bytes": 6833
+      },
+      "reviewer_link_normalization.py": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_link_normalization.py",
+        "sha256": "d47531722333cbd9f3d2e987b499778e216b08e4870d14819191a2491a72cf8f"
+      },
+      "reviewer_link_normalization.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_link_normalization.json",
+        "sha256": "60ae01d5e24e00734bc8c54a3209f212fb42650f61e1b8e2a976ccd766b0eaa3"
+      }
+    }
+  },
+  "evidence_semantics": "SHA-256 confirms byte identity only. Behavioral conclusions come from inspected primary bodies and callers. Reviewer execution uses exact mapped library code on an existing host, not complete exact-release runtimes.",
+  "evidence_locators": "Every primary source_id in claim/defect line locators resolves to the exact path, URL, release and SHA-256 in input_evidence.primary_sources. Candidate final.md locators resolve to each frozen artifact in input_evidence.frozen_outputs.",
+  "materiality_basis": "Material defects affect a declared source-dependent security/API/compatibility disposition or a proposed regression's expected result. Locator precision and additional optional hint/test coverage are separately classified; no economic ranking, target grade or winner was used.",
+  "outputs": {
+    "Output1": {
+      "label": "Output1",
+      "complete_scope_assessed": true,
+      "all_declared_obligations_satisfied": false,
+      "obligation_dispositions": [
+        {
+          "id": "O1",
+          "obligation": "Preserve exact prior source and dependency identities.",
+          "disposition": "SATISFIED",
+          "assessment": "The source aliases, exact releases/full hashes in each sources.json, and the F1-F7 dependency family are retained. No dependency is renamed with the UI label. Identity verification is independent of the behavioral claims.",
+          "evidence_ids": [
+            "S-01"
+          ]
+        },
+        {
+          "id": "O2",
+          "obligation": "Dispose of the no-op rename separately from semantic invalidation.",
+          "disposition": "SATISFIED",
+          "assessment": "Both explicitly separate the name-only change from 3.12.3 to 3.14.0 invalidation.",
+          "evidence_ids": [
+            "S-02"
+          ]
+        },
+        {
+          "id": "O3",
+          "obligation": "Re-evaluate default filter/API behavior at both exact releases.",
+          "disposition": "PARTIAL",
+          "assessment": "Default resolution is correct at both exact tags. Relevant refusal behavior is wrongly retained and the new public fallback exception/conditions are missing or misclassified.",
+          "evidence_ids": [
+            "S-03",
+            "S-05",
+            "D-01",
+            "D-02"
+          ]
+        },
+        {
+          "id": "O4",
+          "obligation": "Revisit security and compatibility claims depending on that default.",
+          "disposition": "PARTIAL",
+          "assessment": "Both correctly retain the need for inspection and caller limits and update older-runtime guidance. Their error/fallback dispositions omit material conditions; additional output-specific compatibility claims are identified below.",
+          "evidence_ids": [
+            "S-07",
+            "S-08",
+            "D-01",
+            "D-02"
+          ]
+        },
+        {
+          "id": "O5",
+          "obligation": "Do not classify unresolved prior dependencies as already covered.",
+          "disposition": "SATISFIED",
+          "assessment": "U1-U6 remain open. U5 is narrowed by the new pin without falsely resolving fleet support. Already-covered is expressly separated from implemented, tested or adequate. F4's incorrect retention is a source-behavior defect, not evidence that they silently closed a U-item.",
+          "evidence_ids": []
+        },
+        {
+          "id": "O6",
+          "obligation": "Deliver retained/changed/unresolved dispositions and proposed regression checks.",
+          "disposition": "PARTIAL",
+          "assessment": "Both deliver all three disposition categories and label tests proposed-only. Incorrect retention and incorrect Linux path/mode expectations make parts of those deliverables unreliable.",
+          "evidence_ids": [
+            "D-01",
+            "D-02",
+            "D-03"
+          ]
+        }
+      ],
+      "supported_claims": [
+        {
+          "id": "S-01",
+          "claim": "Exact source IDs, releases and source bytes are preserved, and the original dependency family remains traceable.",
+          "evidence": "Independently verified mapped and frozen byte hashes in input_evidence; this verifies identity, not source truth.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "818-837",
+              "symbol": "named filters"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "849-868",
+              "symbol": "named filters"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "1639",
+              "symbol": "extraction_filter identity"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "1724",
+              "symbol": "extraction_filter identity"
+            }
+          ]
+        },
+        {
+          "id": "S-02",
+          "claim": "The rename is a no-op separate from runtime invalidation.",
+          "case_input": "changes.json changes.noop.semantics; brief.md opening paragraph",
+          "primary_locators": []
+        },
+        {
+          "id": "S-03",
+          "claim": "With both per-call filter and extraction_filter unset, 3.12.3 emits DeprecationWarning and selects fully_trusted_filter; 3.14.0 selects data_filter without that warning. The stored attribute remains None.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "2217-2226",
+              "symbol": "old None/None resolution"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2370-2374",
+              "symbol": "new None/None resolution"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "596-603",
+              "symbol": "old default docs"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "649-666",
+              "symbol": "new default docs"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "1639",
+              "symbol": "old stored default"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "1724",
+              "symbol": "new stored default"
+            }
+          ]
+        },
+        {
+          "id": "S-04",
+          "claim": "The named-filter ladder, wrapper names, ordinary metadata masking/nulling and direct special-file/link refusal branches are retained, with realpath and linkname changes requiring separate conditions.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "755-837",
+              "symbol": "old filters and wrappers"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "781-868",
+              "symbol": "new filters and wrappers"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "964-978",
+              "symbol": "old ladder"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1032-1043",
+              "symbol": "new ladder"
+            }
+          ]
+        },
+        {
+          "id": "S-05",
+          "claim": "Per-call callable/named filter configuration, rejection of string extraction_filter values, unknown-name ValueError and documented instance/subclass/global staticmethod mechanics remain. The old early-opt-in rationale changes.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "2227-2238",
+              "symbol": "config resolver"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2375-2386",
+              "symbol": "config resolver"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "584-611",
+              "symbol": "old configuration docs"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "637-666",
+              "symbol": "new configuration docs"
+            }
+          ]
+        },
+        {
+          "id": "S-06",
+          "claim": "The two handler bodies and standard errorlevel=1/2 fatal/nonfatal split persist; extraction may be partial and callers own cleanup. This narrower fact does not support retaining all refusal behavior.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "2340-2357",
+              "symbol": "handlers"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2531-2548",
+              "symbol": "handlers"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "563-582",
+              "symbol": "errorlevel and cleanup"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "616-635",
+              "symbol": "errorlevel and cleanup"
+            }
+          ]
+        },
+        {
+          "id": "S-07",
+          "claim": "Data alone remains insufficient for untrusted input: prior inspection, caller limits and cleanup considerations persist, including DoS, repeated-member overwrite and live-directory tampering limitations.",
+          "primary_locators": [
+            {
+              "source_id": "tardocold",
+              "line_range": "496-504",
+              "symbol": "old extraction warning"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "1083-1115",
+              "symbol": "old verification hints"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "545-551",
+              "symbol": "new warning"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1167-1198",
+              "symbol": "new verification hints"
+            }
+          ]
+        },
+        {
+          "id": "S-08",
+          "claim": "Capability detection/backport guidance and inspection APIs remain. numeric_owner is present but data nulls ownership metadata; explicit data is recommended for older runtimes supporting the feature.",
+          "primary_locators": [
+            {
+              "source_id": "tardocold",
+              "line_range": "1118-1153",
+              "symbol": "old compatibility guidance"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1204-1241",
+              "symbol": "new compatibility guidance"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "435-488",
+              "symbol": "old inspection and numeric_owner"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "485-536",
+              "symbol": "new inspection and numeric_owner"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "541-543",
+              "symbol": "explicit data recommendation"
+            }
+          ]
+        },
+        {
+          "id": "S-09",
+          "claim": "The remaining tarnew DeprecationWarnings inspected concern TarInfo.tarfile removal in 3.16, not the omitted extraction default.",
+          "primary_locators": [
+            {
+              "source_id": "tarnew",
+              "line_range": "939-955",
+              "symbol": "TarInfo.tarfile getter/setter warnings"
+            }
+          ]
+        },
+        {
+          "id": "S-10",
+          "claim": "Output1 correctly carries the normalization symlink-meaning caveat and new optional symlink-disallow hint.",
+          "primary_locators": [
+            {
+              "source_id": "tardocnew",
+              "line_range": "1108-1112",
+              "symbol": "meaning caveat"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1177",
+              "symbol": "symlink hint"
+            }
+          ]
+        }
+      ],
+      "defects": [
+        {
+          "id": "D-01",
+          "materiality": "MATERIAL",
+          "severity": "high",
+          "kind": "incorrect retained behavior",
+          "claim": "The prior F4 refusal/skip behavior and errorlevel contract can be retained unchanged at both exact releases.",
+          "assessment": "False for a filter refusal suppressed by errorlevel=0. In 3.12.3 the failed assignment leaves tarinfo equal to the original member, and extraction continues with that member. In 3.14.0 filtered starts as None and a suppressed refusal excludes the member. Identical handlers and identical documentation do not make these caller paths identical.",
+          "primary_evidence": [
+            {
+              "source_id": "tarold",
+              "line_range": "2304-2325",
+              "symbol": "TarFile._get_extract_tarinfo"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "2260-2270",
+              "symbol": "extractall consumes non-None original"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "2347-2357",
+              "symbol": "_handle_fatal_error"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2481-2509",
+              "symbol": "_get_extract_tarinfo initializes filtered=None"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2408-2420",
+              "symbol": "extractall skips excluded members"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "1076-1080",
+              "symbol": "old prose says skip despite implementation"
+            }
+          ],
+          "counterexample": {
+            "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "case": "explicit_data_fifo_errorlevel",
+            "observed": "With explicit data and errorlevel=0, the 3.12.3 library creates the FIFO; the 3.14.0 library skips it. At errorlevel=1 and 2 both raise SpecialFileError.",
+            "limitation": "Exact source modules on existing host CPython 3.14.4, not full exact-release interpreter runs; the decisive branch difference is also visible directly in the frozen implementation."
+          },
+          "consequences": "Incorrect security and compatibility disposition of F4 and U2; documentation must not override the selected released implementation.",
+          "output_locators": {
+            "Output1": "final.md:19-21,29",
+            "Output2": "final.md:22-24,40"
+          },
+          "output_specific": {
+            "Output1": "Explicitly reports identical contracts and retains F4.",
+            "Output2": "Says prior F4 stands after comparing handler identifiers. Its qualified uncertainty does not repair this affirmative retention."
+          }
+        },
+        {
+          "id": "D-02",
+          "materiality": "MATERIAL",
+          "severity": "high",
+          "kind": "public API/security change misclassified or omitted",
+          "claim": "The refusal taxonomy is unchanged / the error taxonomy can be wholly classified as retained.",
+          "assessment": "The original five subclasses remain, but 3.14.0 adds the public LinkFallbackError and changes extractall fallback to re-filter the referenced archive member. This is a consequential change, not a renamed old class. extract() and extractall() also differ in propagation of the fallback filter in this exact file.",
+          "primary_evidence": [
+            {
+              "source_id": "tarold",
+              "line_range": "723-754",
+              "symbol": "original five subclasses"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "769-779",
+              "symbol": "LinkFallbackError and _FILTER_ERRORS"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "286-293",
+              "symbol": "public LinkFallbackError, versionadded 3.14"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "2505-2528",
+              "symbol": "unfiltered fallback extraction"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2408-2420",
+              "symbol": "extractall passes filter_function"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2461-2479",
+              "symbol": "extract does not pass filter_function to _extract_one"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2511-2528",
+              "symbol": "fallback propagation"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2731-2754",
+              "symbol": "referenced member re-filtered, rejection wrapped"
+            }
+          ],
+          "counterexample": {
+            "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "case": "link_fallback_target_revalidation",
+            "observed": "Select a hardlink whose earlier archived target is a FIFO absent on disk. With explicit data, 3.12.3 extractall creates a FIFO at the link path; 3.14.0 extractall raises LinkFallbackError caused by SpecialFileError. In the exact 3.14.0 library extract() still creates the FIFO in this fixture.",
+            "limitation": "Selected-member archive fixture; existing host interpreter. Since 3.14.0 resolves an omitted filter to this same data_filter, applicability to that default is a source-based inference, not a separately executed omitted-filter extraction."
+          },
+          "consequences": "Exception handling, security and regression coverage need the new class and fallback conditions; an unqualified fail-closed description across extraction APIs is too broad.",
+          "output_locators": {
+            "Output1": "final.md:13,19,21,29",
+            "Output2": "final.md:16,22-24,40"
+          },
+          "output_specific": {
+            "Output1": "The explicit unchanged-taxonomy statement is false. It notices directory plumbing but misses this public addition.",
+            "Output2": "The narrow statement that the old five are preserved is true. The defect is its whole-taxonomy retained disposition and omission of the new public exception and fallback behavior, rather than denial that the old five still exist."
+          }
+        },
+        {
+          "id": "D-03",
+          "materiality": "MATERIAL",
+          "severity": "medium",
+          "kind": "incorrect proposed rejection assertions",
+          "claim": "An ordinary absolute-path regular member on Linux raises AbsolutePathError under data; Output1 also expects a setuid regular member to raise a FilterError.",
+          "assessment": "Leading Linux slashes are stripped. A remaining absolute path is the conditional refusal, exemplified by Windows drive paths. A regular file's high mode bits are cleared rather than refused. Linux /safe_absolute_regular becomes safe_absolute_regular; regular mode 0o4755 becomes 0o755.",
+          "primary_evidence": [
+            {
+              "source_id": "tarold",
+              "line_range": "759-789",
+              "symbol": "strip leading slashes, conditional absolute refusal, mode rewrite"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "785-818",
+              "symbol": "same conditional path and mode branches"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1090-1099",
+              "symbol": "absolute-after-stripping condition and high-bit clearing"
+            }
+          ],
+          "counterexample": {
+            "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "cases": [
+              "data_filter_absolute_regular",
+              "data_filter_setuid_regular"
+            ],
+            "observed": "Both exact library files accept and transform these regular members; no FilterError is raised.",
+            "limitation": "Direct filter checks on existing host, no outside-scope extraction."
+          },
+          "consequences": "Proposed tests would incorrectly reject intended behavior. Ordinary sanitized members must be distinguished from absolute links, outside destinations and special files.",
+          "output_locators": {
+            "Output1": "final.md:36",
+            "Output2": "final.md:48 P1"
+          },
+          "output_specific": {
+            "Output1": "Both the absolute regular file and setuid regular file assertions are wrong. Its absolute symlink and FIFO rejection expectations are valid when tested separately.",
+            "Output2": "P1's AbsolutePathError expectation for an ordinary Linux absolute-path member is wrong. Its FIFO and outside-link expectations are valid at errorlevel=1 when isolated."
+          }
+        },
+        {
+          "id": "D-04",
+          "materiality": "MATERIAL",
+          "severity": "medium",
+          "kind": "overbroad compatibility equivalence",
+          "claim": "Output1's optional explicit-data recommendation makes 3.12 and 3.14 behave identically.",
+          "assessment": "Explicit data selects the same policy name, not identical implementations. Link normalization, strict realpath behavior and suppressed-refusal handling differ. A narrowly chosen basic refusal corpus can match; that does not prove general parity.",
+          "primary_evidence": [
+            {
+              "source_id": "tarold",
+              "line_range": "803-815",
+              "symbol": "original linkname retained"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "830-846",
+              "symbol": "linkname normalization and strict realpath"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1108-1112",
+              "symbol": "symlink meaning may change"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "2311-2325",
+              "symbol": "suppressed refusal retains original"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2494-2503",
+              "symbol": "suppressed refusal excludes"
+            }
+          ],
+          "counterexample": {
+            "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "cases": [
+              "data_filter_normalized_symlink",
+              "data_filter_symlink_loop",
+              "explicit_data_fifo_errorlevel"
+            ],
+            "observed": "The same explicit-data linkname a/../b is retained by the old library and becomes b in the new. On this host a symlink-loop member is accepted by the old filter and raises ELOOP in the new.",
+            "limitation": "Full exact-release os.path implementations and interpreters were not independently run; source normalization and exception-flow changes are directly established."
+          },
+          "consequences": "Compatibility depends on U1/U2/U5 and cannot be promised merely by passing the same filter name.",
+          "output_locators": {
+            "Output1": "final.md:38-39,46"
+          }
+        },
+        {
+          "id": "D-06",
+          "materiality": "NON_MATERIAL",
+          "severity": "low",
+          "kind": "imprecise primary locators",
+          "claim": "Output1 lists the three old/new realpath call sites.",
+          "assessment": "The mechanics claim is correct, but its individual anchors are inaccurate: old calls are 758, 768 and 813, not 758/771/810; new calls start at 784, 794 and 843, not 784/792/826. New normpath is 833-835, not approximately 818-820.",
+          "primary_evidence": [
+            {
+              "source_id": "tarold",
+              "line_range": "755-816",
+              "symbol": "actual old call sites"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "781-847",
+              "symbol": "actual new call sites"
+            }
+          ],
+          "consequences": "Locator precision should improve; the correct full function ranges in the manifest still permit verification. This does not independently determine source_quality.",
+          "output_locators": {
+            "Output1": "final.md:13"
+          }
+        }
+      ],
+      "optional_supported_discoveries": [
+        {
+          "id": "L-01",
+          "claim": "Directory fixup re-runs the filter in 3.14.0 and catches _FILTER_ERRORS for that fixup rather than routing them through errorlevel handlers; it also lstat-checks whether the path is still a directory.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "2275-2283",
+              "symbol": "old one-pass fixup"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2426-2455",
+              "symbol": "new refilter and directory checks"
+            }
+          ],
+          "performed_evidence": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "case": "directory_fixup_refilter",
+            "observation": "Old library calls the custom directory filter once; new calls it twice and logs/skips a fixup refusal even with errorlevel=2."
+          },
+          "coverage_note": "Output1 notices refilter plumbing, Output2 omits it. A callback/fixup regression would strengthen either bounded proposal; no exhaustive library-change inventory is required."
+        },
+        {
+          "id": "L-02",
+          "claim": "The further-verification docs add a recommendation to disallow symbolic links when they are unnecessary.",
+          "primary_locators": [
+            {
+              "source_id": "tardocnew",
+              "line_range": "1174-1179",
+              "symbol": "new symlink-disallow hint"
+            }
+          ],
+          "coverage_note": "Output1 carries this useful new hint. Output2 preserves the prior incomplete hints list; omission of this optional bullet alone is not a material failure."
+        }
+      ],
+      "incorrect_rejections": [
+        {
+          "defect_id": "D-03",
+          "member": "Ordinary Linux absolute-path regular member",
+          "disposition": "Accept with leading slashes removed; not AbsolutePathError.",
+          "primary_locators": [
+            {
+              "source_id": "tarnew",
+              "line_range": "785-797",
+              "symbol": "path sanitization"
+            }
+          ]
+        },
+        {
+          "defect_id": "D-03",
+          "member": "Regular file with mode 0o4755",
+          "disposition": "Accept with mode 0o755; not FilterError.",
+          "primary_locators": [
+            {
+              "source_id": "tarnew",
+              "line_range": "799-818",
+              "symbol": "mode sanitization"
+            }
+          ]
+        }
+      ],
+      "false_corrections": "No unsupported rejection of prior F1 was found: its update is correct. The material lineage failures are false retentions/overstatements listed in defects.",
+      "final_preservation": {
+        "prior_finding_and_open_item_dispositions": {
+          "F1": {
+            "candidate": "CHANGED for new release, RETAINED historical old behavior",
+            "review": "SUPPORTED",
+            "evidence_ids": [
+              "S-03"
+            ]
+          },
+          "F2": {
+            "candidate": "RETAINED",
+            "review": "SUPPORTED named ladder",
+            "evidence_ids": [
+              "S-04"
+            ]
+          },
+          "F3": {
+            "candidate": "RETAINED with strict realpath and normpath deltas",
+            "review": "PARTIAL: common branches persist, but deltas need their governing conditions",
+            "evidence_ids": [
+              "S-04"
+            ]
+          },
+          "F4": {
+            "candidate": "RETAINED",
+            "review": "INCORRECT as an unchanged complete refusal/error contract",
+            "evidence_ids": [
+              "D-01",
+              "D-02",
+              "S-06"
+            ]
+          },
+          "F5": {
+            "candidate": "RETAINED mechanics",
+            "review": "SUPPORTED mechanics; early opt-in is no longer needed for the pinned 3.14.0 default",
+            "evidence_ids": [
+              "S-05"
+            ]
+          },
+          "F6": {
+            "candidate": "RETAINED",
+            "review": "SUPPORTED incomplete hints and insufficiency conclusion",
+            "evidence_ids": [
+              "S-07"
+            ]
+          },
+          "F7": {
+            "candidate": "RETAINED mechanics, updated runtime and guidance",
+            "review": "SUPPORTED primitives; broad behavioral parity is not implied",
+            "evidence_ids": [
+              "S-08"
+            ]
+          },
+          "U1": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: required archive features remain unspecified"
+          },
+          "U2": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: errorlevel/logging/cleanup choice remains open; its source behavior needs D-01/D-02"
+          },
+          "U3": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: config scope and top-level-app status"
+          },
+          "U4": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: inspection/limits/allow-list/lifecycle values"
+          },
+          "U5": {
+            "candidate": "UNRESOLVED, narrowed by 3.14.0 pin",
+            "review": "PRESERVED: fleet beyond pinned runtime remains open"
+          },
+          "U6": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: no candidate live-interpreter verification; reviewer host-module checks do not close exact-release runtime verification"
+          }
+        },
+        "exact_dependency_identities_preserved": true,
+        "all_U1_U6_retained_unresolved": true,
+        "defective_retention_ids": [
+          "F4"
+        ],
+        "output_specific": "F3 normalization caveat and new symlink hint are carried; broad identical-behavior advice nevertheless conflicts with those deltas."
+      },
+      "proposed_vs_performed": {
+        "candidate_reported": "Hash verification and static source reads/comparisons only; no execution or live-interpreter tests.",
+        "independent_attestation_limit": "Frozen finals/manifests are self-reports, not terminal evidence. Candidate terminals/working files were outside this review's read authority. No conclusion of source correctness was inferred from operation lists or tool exit.",
+        "reviewer_performed": "Independent byte-hash checks; actual primary implementation/docs inspection including callers, subclasses and fallback; bounded source-module checks and one link-topology check on host 3.14.4.",
+        "candidate_regression_checks_actually_performed": [],
+        "reviewer_execution_does_not_upgrade_candidate_tests": true,
+        "proposed_checks_assessed": [
+          {
+            "id": "P1",
+            "candidate_locator": "final.md:35",
+            "review": "SUPPORTED proposed default-resolver test.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-03"
+            ]
+          },
+          {
+            "id": "P2",
+            "candidate_locator": "final.md:36",
+            "review": "INCORRECT for ordinary Linux absolute regular paths and setuid regular files; valid for absolute symlinks and FIFOs tested individually.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "D-03"
+            ]
+          },
+          {
+            "id": "P3",
+            "candidate_locator": "final.md:37",
+            "review": "SUPPORTED linkname rewrite; tests should also retain the known symlink-meaning condition.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-04"
+            ]
+          },
+          {
+            "id": "P4",
+            "candidate_locator": "final.md:38",
+            "review": "Typing exceptions supported. Old explicit-data versus new omitted-data selects the same policy rung, but a whole-behavior equivalence is too broad.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-05",
+              "D-04"
+            ]
+          },
+          {
+            "id": "P5",
+            "candidate_locator": "final.md:39",
+            "review": "A bounded simple refusal corpus may match after correcting P2; cannot establish general parity across versions.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "D-03",
+              "D-04"
+            ]
+          },
+          {
+            "id": "P6",
+            "candidate_locator": "final.md:40",
+            "review": "SUPPORTED proposal for caller limits/allow-list/temp-dir checks. Concrete limits and implementation remain U4.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-07"
+            ]
+          }
+        ]
+      },
+      "useful_discovery_yield": {
+        "bounded": true,
+        "scope_coverage": "All six obligations were inspected. The correct default flip and retained safeguards have practical value; there is no exhaustive unknown-answer recall claim.",
+        "supported_new_leads": [
+          "silent data default",
+          "strict realpath calls",
+          "normalized linkname with meaning caveat",
+          "new symlink-disallow hint",
+          "directory refilter plumbing"
+        ],
+        "missed_or_misclassified_supported_changes": [
+          "suppressed-refusal handling",
+          "new LinkFallbackError and referenced-member filtering"
+        ],
+        "optional_regression_leads": [
+          "separate transform and reject member fixtures",
+          "errorlevel=0 behavior across exact releases",
+          "link fallback for extractall versus extract",
+          "directory refilter/fixup callback behavior",
+          "non-fatal ExtractError matrix for levels 1/2"
+        ]
+      },
+      "unassessed_remainder": {
+        "declared_obligations_unassessed": [],
+        "remaining_empirical_unknowns": [
+          "No complete CPython 3.12.3 and 3.14.0 interpreter pair was run. Reviewer execution uses the exact mapped tarfile modules on host CPython 3.14.4.",
+          "No full source review or exhaustive behavioral comparison of the two releases' os.path implementations, filesystem races, or every archive format/edge was attempted.",
+          "Concrete U1-U5 product/configuration values and operational cleanup ownership remain unknown."
+        ],
+        "boundary": "All six declared obligations and consequential candidate claims were assessed. These retained unknowns are not blanket abstention or an exhaustive unknown-answer recall claim."
+      },
+      "source_quality": "FAIL",
+      "source_quality_reason": "Complete declared-scope assessment found material incorrect retention and proposed rejection assertions, independent of intact source hashes and correct core default finding.",
+      "useful_deliverable": {
+        "useful": true,
+        "status": "USEFUL_WITH_MATERIAL_DEFECTS",
+        "standalone_reliable_recommendation": false,
+        "reason": "Provides usable source identities, default-change evidence, caller-safeguard guidance and preserved unresolved items. Material behavior/test assertions require correction before adoption; no candidate revisions were made."
+      },
+      "blinding_limits": {
+        "limits": [
+          "Output1 final header and sources.json expose the control/full-refresh method and arm label.",
+          "Output2 final header and sources.json expose the treatment/incremental method and arm/output path.",
+          "Embedded source/arm/prior-manifest paths were treated as blinding limitations, not read authority."
+        ],
+        "prohibited_reads_performed": false,
+        "accessed_scope": "Actual global/project AGENTS rules; exact INPUT_MAP, mapped brief/changes/common prior-state, four mapped primary sources, and only frozen neutral final.md/sources.json for Output1/2. No parent analysis, economics, target grades/winner, campaign state, job prompts, source-arm files, other grades/cases or candidate terminals were read."
+      }
+    },
+    "Output2": {
+      "label": "Output2",
+      "complete_scope_assessed": true,
+      "all_declared_obligations_satisfied": false,
+      "obligation_dispositions": [
+        {
+          "id": "O1",
+          "obligation": "Preserve exact prior source and dependency identities.",
+          "disposition": "SATISFIED",
+          "assessment": "The source aliases, exact releases/full hashes in each sources.json, and the F1-F7 dependency family are retained. No dependency is renamed with the UI label. Identity verification is independent of the behavioral claims.",
+          "evidence_ids": [
+            "S-01"
+          ]
+        },
+        {
+          "id": "O2",
+          "obligation": "Dispose of the no-op rename separately from semantic invalidation.",
+          "disposition": "SATISFIED",
+          "assessment": "Both explicitly separate the name-only change from 3.12.3 to 3.14.0 invalidation.",
+          "evidence_ids": [
+            "S-02"
+          ]
+        },
+        {
+          "id": "O3",
+          "obligation": "Re-evaluate default filter/API behavior at both exact releases.",
+          "disposition": "PARTIAL",
+          "assessment": "Default resolution is correct at both exact tags. Relevant refusal behavior is wrongly retained and the new public fallback exception/conditions are missing or misclassified.",
+          "evidence_ids": [
+            "S-03",
+            "S-05",
+            "D-01",
+            "D-02"
+          ]
+        },
+        {
+          "id": "O4",
+          "obligation": "Revisit security and compatibility claims depending on that default.",
+          "disposition": "PARTIAL",
+          "assessment": "Both correctly retain the need for inspection and caller limits and update older-runtime guidance. Their error/fallback dispositions omit material conditions; additional output-specific compatibility claims are identified below.",
+          "evidence_ids": [
+            "S-07",
+            "S-08",
+            "D-01",
+            "D-02"
+          ]
+        },
+        {
+          "id": "O5",
+          "obligation": "Do not classify unresolved prior dependencies as already covered.",
+          "disposition": "SATISFIED",
+          "assessment": "U1-U6 remain open. U5 is narrowed by the new pin without falsely resolving fleet support. Already-covered is expressly separated from implemented, tested or adequate. F4's incorrect retention is a source-behavior defect, not evidence that they silently closed a U-item.",
+          "evidence_ids": []
+        },
+        {
+          "id": "O6",
+          "obligation": "Deliver retained/changed/unresolved dispositions and proposed regression checks.",
+          "disposition": "PARTIAL",
+          "assessment": "Both deliver all three disposition categories and label tests proposed-only. Incorrect retention and incorrect Linux path/mode expectations make parts of those deliverables unreliable.",
+          "evidence_ids": [
+            "D-01",
+            "D-02",
+            "D-03"
+          ]
+        }
+      ],
+      "supported_claims": [
+        {
+          "id": "S-01",
+          "claim": "Exact source IDs, releases and source bytes are preserved, and the original dependency family remains traceable.",
+          "evidence": "Independently verified mapped and frozen byte hashes in input_evidence; this verifies identity, not source truth.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "818-837",
+              "symbol": "named filters"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "849-868",
+              "symbol": "named filters"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "1639",
+              "symbol": "extraction_filter identity"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "1724",
+              "symbol": "extraction_filter identity"
+            }
+          ]
+        },
+        {
+          "id": "S-02",
+          "claim": "The rename is a no-op separate from runtime invalidation.",
+          "case_input": "changes.json changes.noop.semantics; brief.md opening paragraph",
+          "primary_locators": []
+        },
+        {
+          "id": "S-03",
+          "claim": "With both per-call filter and extraction_filter unset, 3.12.3 emits DeprecationWarning and selects fully_trusted_filter; 3.14.0 selects data_filter without that warning. The stored attribute remains None.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "2217-2226",
+              "symbol": "old None/None resolution"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2370-2374",
+              "symbol": "new None/None resolution"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "596-603",
+              "symbol": "old default docs"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "649-666",
+              "symbol": "new default docs"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "1639",
+              "symbol": "old stored default"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "1724",
+              "symbol": "new stored default"
+            }
+          ]
+        },
+        {
+          "id": "S-04",
+          "claim": "The named-filter ladder, wrapper names, ordinary metadata masking/nulling and direct special-file/link refusal branches are retained, with realpath and linkname changes requiring separate conditions.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "755-837",
+              "symbol": "old filters and wrappers"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "781-868",
+              "symbol": "new filters and wrappers"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "964-978",
+              "symbol": "old ladder"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1032-1043",
+              "symbol": "new ladder"
+            }
+          ]
+        },
+        {
+          "id": "S-05",
+          "claim": "Per-call callable/named filter configuration, rejection of string extraction_filter values, unknown-name ValueError and documented instance/subclass/global staticmethod mechanics remain. The old early-opt-in rationale changes.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "2227-2238",
+              "symbol": "config resolver"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2375-2386",
+              "symbol": "config resolver"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "584-611",
+              "symbol": "old configuration docs"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "637-666",
+              "symbol": "new configuration docs"
+            }
+          ]
+        },
+        {
+          "id": "S-06",
+          "claim": "The two handler bodies and standard errorlevel=1/2 fatal/nonfatal split persist; extraction may be partial and callers own cleanup. This narrower fact does not support retaining all refusal behavior.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "2340-2357",
+              "symbol": "handlers"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2531-2548",
+              "symbol": "handlers"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "563-582",
+              "symbol": "errorlevel and cleanup"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "616-635",
+              "symbol": "errorlevel and cleanup"
+            }
+          ]
+        },
+        {
+          "id": "S-07",
+          "claim": "Data alone remains insufficient for untrusted input: prior inspection, caller limits and cleanup considerations persist, including DoS, repeated-member overwrite and live-directory tampering limitations.",
+          "primary_locators": [
+            {
+              "source_id": "tardocold",
+              "line_range": "496-504",
+              "symbol": "old extraction warning"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "1083-1115",
+              "symbol": "old verification hints"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "545-551",
+              "symbol": "new warning"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1167-1198",
+              "symbol": "new verification hints"
+            }
+          ]
+        },
+        {
+          "id": "S-08",
+          "claim": "Capability detection/backport guidance and inspection APIs remain. numeric_owner is present but data nulls ownership metadata; explicit data is recommended for older runtimes supporting the feature.",
+          "primary_locators": [
+            {
+              "source_id": "tardocold",
+              "line_range": "1118-1153",
+              "symbol": "old compatibility guidance"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1204-1241",
+              "symbol": "new compatibility guidance"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "435-488",
+              "symbol": "old inspection and numeric_owner"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "485-536",
+              "symbol": "new inspection and numeric_owner"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "541-543",
+              "symbol": "explicit data recommendation"
+            }
+          ]
+        },
+        {
+          "id": "S-09",
+          "claim": "The remaining tarnew DeprecationWarnings inspected concern TarInfo.tarfile removal in 3.16, not the omitted extraction default.",
+          "primary_locators": [
+            {
+              "source_id": "tarnew",
+              "line_range": "939-955",
+              "symbol": "TarInfo.tarfile getter/setter warnings"
+            }
+          ]
+        }
+      ],
+      "defects": [
+        {
+          "id": "D-01",
+          "materiality": "MATERIAL",
+          "severity": "high",
+          "kind": "incorrect retained behavior",
+          "claim": "The prior F4 refusal/skip behavior and errorlevel contract can be retained unchanged at both exact releases.",
+          "assessment": "False for a filter refusal suppressed by errorlevel=0. In 3.12.3 the failed assignment leaves tarinfo equal to the original member, and extraction continues with that member. In 3.14.0 filtered starts as None and a suppressed refusal excludes the member. Identical handlers and identical documentation do not make these caller paths identical.",
+          "primary_evidence": [
+            {
+              "source_id": "tarold",
+              "line_range": "2304-2325",
+              "symbol": "TarFile._get_extract_tarinfo"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "2260-2270",
+              "symbol": "extractall consumes non-None original"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "2347-2357",
+              "symbol": "_handle_fatal_error"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2481-2509",
+              "symbol": "_get_extract_tarinfo initializes filtered=None"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2408-2420",
+              "symbol": "extractall skips excluded members"
+            },
+            {
+              "source_id": "tardocold",
+              "line_range": "1076-1080",
+              "symbol": "old prose says skip despite implementation"
+            }
+          ],
+          "counterexample": {
+            "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "case": "explicit_data_fifo_errorlevel",
+            "observed": "With explicit data and errorlevel=0, the 3.12.3 library creates the FIFO; the 3.14.0 library skips it. At errorlevel=1 and 2 both raise SpecialFileError.",
+            "limitation": "Exact source modules on existing host CPython 3.14.4, not full exact-release interpreter runs; the decisive branch difference is also visible directly in the frozen implementation."
+          },
+          "consequences": "Incorrect security and compatibility disposition of F4 and U2; documentation must not override the selected released implementation.",
+          "output_locators": {
+            "Output1": "final.md:19-21,29",
+            "Output2": "final.md:22-24,40"
+          },
+          "output_specific": {
+            "Output1": "Explicitly reports identical contracts and retains F4.",
+            "Output2": "Says prior F4 stands after comparing handler identifiers. Its qualified uncertainty does not repair this affirmative retention."
+          }
+        },
+        {
+          "id": "D-02",
+          "materiality": "MATERIAL",
+          "severity": "high",
+          "kind": "public API/security change misclassified or omitted",
+          "claim": "The refusal taxonomy is unchanged / the error taxonomy can be wholly classified as retained.",
+          "assessment": "The original five subclasses remain, but 3.14.0 adds the public LinkFallbackError and changes extractall fallback to re-filter the referenced archive member. This is a consequential change, not a renamed old class. extract() and extractall() also differ in propagation of the fallback filter in this exact file.",
+          "primary_evidence": [
+            {
+              "source_id": "tarold",
+              "line_range": "723-754",
+              "symbol": "original five subclasses"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "769-779",
+              "symbol": "LinkFallbackError and _FILTER_ERRORS"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "286-293",
+              "symbol": "public LinkFallbackError, versionadded 3.14"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "2505-2528",
+              "symbol": "unfiltered fallback extraction"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2408-2420",
+              "symbol": "extractall passes filter_function"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2461-2479",
+              "symbol": "extract does not pass filter_function to _extract_one"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2511-2528",
+              "symbol": "fallback propagation"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2731-2754",
+              "symbol": "referenced member re-filtered, rejection wrapped"
+            }
+          ],
+          "counterexample": {
+            "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "case": "link_fallback_target_revalidation",
+            "observed": "Select a hardlink whose earlier archived target is a FIFO absent on disk. With explicit data, 3.12.3 extractall creates a FIFO at the link path; 3.14.0 extractall raises LinkFallbackError caused by SpecialFileError. In the exact 3.14.0 library extract() still creates the FIFO in this fixture.",
+            "limitation": "Selected-member archive fixture; existing host interpreter. Since 3.14.0 resolves an omitted filter to this same data_filter, applicability to that default is a source-based inference, not a separately executed omitted-filter extraction."
+          },
+          "consequences": "Exception handling, security and regression coverage need the new class and fallback conditions; an unqualified fail-closed description across extraction APIs is too broad.",
+          "output_locators": {
+            "Output1": "final.md:13,19,21,29",
+            "Output2": "final.md:16,22-24,40"
+          },
+          "output_specific": {
+            "Output1": "The explicit unchanged-taxonomy statement is false. It notices directory plumbing but misses this public addition.",
+            "Output2": "The narrow statement that the old five are preserved is true. The defect is its whole-taxonomy retained disposition and omission of the new public exception and fallback behavior, rather than denial that the old five still exist."
+          }
+        },
+        {
+          "id": "D-03",
+          "materiality": "MATERIAL",
+          "severity": "medium",
+          "kind": "incorrect proposed rejection assertions",
+          "claim": "An ordinary absolute-path regular member on Linux raises AbsolutePathError under data; Output1 also expects a setuid regular member to raise a FilterError.",
+          "assessment": "Leading Linux slashes are stripped. A remaining absolute path is the conditional refusal, exemplified by Windows drive paths. A regular file's high mode bits are cleared rather than refused. Linux /safe_absolute_regular becomes safe_absolute_regular; regular mode 0o4755 becomes 0o755.",
+          "primary_evidence": [
+            {
+              "source_id": "tarold",
+              "line_range": "759-789",
+              "symbol": "strip leading slashes, conditional absolute refusal, mode rewrite"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "785-818",
+              "symbol": "same conditional path and mode branches"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1090-1099",
+              "symbol": "absolute-after-stripping condition and high-bit clearing"
+            }
+          ],
+          "counterexample": {
+            "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "cases": [
+              "data_filter_absolute_regular",
+              "data_filter_setuid_regular"
+            ],
+            "observed": "Both exact library files accept and transform these regular members; no FilterError is raised.",
+            "limitation": "Direct filter checks on existing host, no outside-scope extraction."
+          },
+          "consequences": "Proposed tests would incorrectly reject intended behavior. Ordinary sanitized members must be distinguished from absolute links, outside destinations and special files.",
+          "output_locators": {
+            "Output1": "final.md:36",
+            "Output2": "final.md:48 P1"
+          },
+          "output_specific": {
+            "Output1": "Both the absolute regular file and setuid regular file assertions are wrong. Its absolute symlink and FIFO rejection expectations are valid when tested separately.",
+            "Output2": "P1's AbsolutePathError expectation for an ordinary Linux absolute-path member is wrong. Its FIFO and outside-link expectations are valid at errorlevel=1 when isolated."
+          }
+        },
+        {
+          "id": "D-05",
+          "materiality": "MATERIAL",
+          "severity": "medium",
+          "kind": "unsupported security characterization and missing governing condition",
+          "claim": "Output2 calls link normalization tightening within unchanged guarantees.",
+          "assessment": "The exact docs warn that normalization can change link meaning when the target traverses symlinks. The code records the normalized linkname but resolves member.linkname, the original string, for the containment check. This is not a generally monotonic tightening guarantee.",
+          "primary_evidence": [
+            {
+              "source_id": "tarnew",
+              "line_range": "830-846",
+              "symbol": "record normalized linkname, containment-check original"
+            },
+            {
+              "source_id": "tardocnew",
+              "line_range": "1108-1112",
+              "symbol": "symlink traversal meaning caveat"
+            },
+            {
+              "source_id": "tarold",
+              "line_range": "803-815",
+              "symbol": "old link checking without rewrite"
+            }
+          ],
+          "counterexample": {
+            "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_link_normalization.json",
+            "observed": "With destination/a -> x/y, destination/x/b an internal file and destination/b -> a sibling outside directory, both filters accept a/../b. The old resulting target stays destination/x/b; the new normalized b resolves outside the extraction destination. All fixtures remain inside reviewer scratch, and no archive is extracted by this supplemental check.",
+            "limitation": "Exact library functions on existing host 3.14.4; not full exact-release interpreters. This is a bounded topology counterexample, not a universal exploit claim."
+          },
+          "consequences": "A known source condition must be carried into compatibility/security dispositions when link needs U1 remain unresolved. Generic unprobed-symlink uncertainty is not a substitute for the known normalization caveat.",
+          "output_locators": {
+            "Output2": "final.md:20,40,52"
+          }
+        }
+      ],
+      "optional_supported_discoveries": [
+        {
+          "id": "L-01",
+          "claim": "Directory fixup re-runs the filter in 3.14.0 and catches _FILTER_ERRORS for that fixup rather than routing them through errorlevel handlers; it also lstat-checks whether the path is still a directory.",
+          "primary_locators": [
+            {
+              "source_id": "tarold",
+              "line_range": "2275-2283",
+              "symbol": "old one-pass fixup"
+            },
+            {
+              "source_id": "tarnew",
+              "line_range": "2426-2455",
+              "symbol": "new refilter and directory checks"
+            }
+          ],
+          "performed_evidence": {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/reviewer_checks.json",
+            "case": "directory_fixup_refilter",
+            "observation": "Old library calls the custom directory filter once; new calls it twice and logs/skips a fixup refusal even with errorlevel=2."
+          },
+          "coverage_note": "Output1 notices refilter plumbing, Output2 omits it. A callback/fixup regression would strengthen either bounded proposal; no exhaustive library-change inventory is required."
+        },
+        {
+          "id": "L-02",
+          "claim": "The further-verification docs add a recommendation to disallow symbolic links when they are unnecessary.",
+          "primary_locators": [
+            {
+              "source_id": "tardocnew",
+              "line_range": "1174-1179",
+              "symbol": "new symlink-disallow hint"
+            }
+          ],
+          "coverage_note": "Output1 carries this useful new hint. Output2 preserves the prior incomplete hints list; omission of this optional bullet alone is not a material failure."
+        }
+      ],
+      "incorrect_rejections": [
+        {
+          "defect_id": "D-03",
+          "member": "Ordinary Linux absolute-path regular member",
+          "disposition": "Accept with leading slashes removed; not AbsolutePathError.",
+          "primary_locators": [
+            {
+              "source_id": "tarnew",
+              "line_range": "785-797",
+              "symbol": "path sanitization"
+            }
+          ]
+        }
+      ],
+      "false_corrections": "No unsupported rejection of prior F1 was found: its update is correct. The material lineage failures are false retentions/overstatements listed in defects.",
+      "final_preservation": {
+        "prior_finding_and_open_item_dispositions": {
+          "F1": {
+            "candidate": "CHANGED for new release, RETAINED historical old behavior",
+            "review": "SUPPORTED",
+            "evidence_ids": [
+              "S-03"
+            ]
+          },
+          "F2": {
+            "candidate": "RETAINED",
+            "review": "SUPPORTED named ladder",
+            "evidence_ids": [
+              "S-04"
+            ]
+          },
+          "F3": {
+            "candidate": "RETAINED with strict realpath and normpath deltas",
+            "review": "PARTIAL: common branches persist, but deltas need their governing conditions",
+            "evidence_ids": [
+              "S-04"
+            ]
+          },
+          "F4": {
+            "candidate": "RETAINED",
+            "review": "INCORRECT as an unchanged complete refusal/error contract",
+            "evidence_ids": [
+              "D-01",
+              "D-02",
+              "S-06"
+            ]
+          },
+          "F5": {
+            "candidate": "RETAINED mechanics",
+            "review": "SUPPORTED mechanics; early opt-in is no longer needed for the pinned 3.14.0 default",
+            "evidence_ids": [
+              "S-05"
+            ]
+          },
+          "F6": {
+            "candidate": "RETAINED",
+            "review": "SUPPORTED incomplete hints and insufficiency conclusion",
+            "evidence_ids": [
+              "S-07"
+            ]
+          },
+          "F7": {
+            "candidate": "RETAINED mechanics, updated runtime and guidance",
+            "review": "SUPPORTED primitives; broad behavioral parity is not implied",
+            "evidence_ids": [
+              "S-08"
+            ]
+          },
+          "U1": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: required archive features remain unspecified"
+          },
+          "U2": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: errorlevel/logging/cleanup choice remains open; its source behavior needs D-01/D-02"
+          },
+          "U3": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: config scope and top-level-app status"
+          },
+          "U4": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: inspection/limits/allow-list/lifecycle values"
+          },
+          "U5": {
+            "candidate": "UNRESOLVED, narrowed by 3.14.0 pin",
+            "review": "PRESERVED: fleet beyond pinned runtime remains open"
+          },
+          "U6": {
+            "candidate": "UNRESOLVED",
+            "review": "PRESERVED: no candidate live-interpreter verification; reviewer host-module checks do not close exact-release runtime verification"
+          }
+        },
+        "exact_dependency_identities_preserved": true,
+        "all_U1_U6_retained_unresolved": true,
+        "defective_retention_ids": [
+          "F4"
+        ],
+        "output_specific": "F3's normalization is recorded but incorrectly framed as only tightening within unchanged guarantees."
+      },
+      "proposed_vs_performed": {
+        "candidate_reported": "Hash verification and static source reads/comparisons only; no execution or live-interpreter tests.",
+        "independent_attestation_limit": "Frozen finals/manifests are self-reports, not terminal evidence. Candidate terminals/working files were outside this review's read authority. No conclusion of source correctness was inferred from operation lists or tool exit.",
+        "reviewer_performed": "Independent byte-hash checks; actual primary implementation/docs inspection including callers, subclasses and fallback; bounded source-module checks and one link-topology check on host 3.14.4.",
+        "candidate_regression_checks_actually_performed": [],
+        "reviewer_execution_does_not_upgrade_candidate_tests": true,
+        "proposed_checks_assessed": [
+          {
+            "id": "P1",
+            "candidate_locator": "final.md:48 P1",
+            "review": "Default warning change and FIFO/outside-link refusals supported; AbsolutePathError for an ordinary absolute Linux member is incorrect. Isolate members to avoid the first exception masking later assertions.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-03",
+              "D-03"
+            ]
+          },
+          {
+            "id": "P2",
+            "candidate_locator": "final.md:48 P2",
+            "review": "CONDITIONALLY SUPPORTED for the small simple-member corpus at the normal errorlevel=1 after P1 is corrected; does not establish general cross-release parity.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-04",
+              "D-01"
+            ]
+          },
+          {
+            "id": "P3",
+            "candidate_locator": "final.md:48 P3",
+            "review": "SUPPORTED string-attribute rejection and equivalence of explicit callable data to the omitted default within 3.14.0.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-03",
+              "S-05"
+            ]
+          },
+          {
+            "id": "P4",
+            "candidate_locator": "final.md:48 P4",
+            "review": "SUPPORTED for initial FilterError refusal on 3.14.0. Add an ExtractError case to distinguish levels 1 and 2; the new link-fallback path needs its own conditions.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-06",
+              "D-02"
+            ]
+          },
+          {
+            "id": "P5",
+            "candidate_locator": "final.md:48 P5",
+            "review": "SUPPORTED proposed metadata-normalization observation; the missing compatibility/security caveat in R3 still matters.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "D-05"
+            ]
+          },
+          {
+            "id": "P6",
+            "candidate_locator": "final.md:48 P6",
+            "review": "SUPPORTED bounded demonstration that data alone imposes no member-count/total-byte quota. A sample is not proof of every DoS mode; no actual DoS run was claimed.",
+            "performed_by_candidate": false,
+            "evidence_ids": [
+              "S-07"
+            ]
+          }
+        ]
+      },
+      "useful_discovery_yield": {
+        "bounded": true,
+        "scope_coverage": "All six obligations were inspected. The correct default flip and retained safeguards have practical value; there is no exhaustive unknown-answer recall claim.",
+        "supported_new_leads": [
+          "silent data default",
+          "strict realpath calls",
+          "normalized linkname",
+          "early-opt-in rationale becomes moot"
+        ],
+        "missed_or_misclassified_supported_changes": [
+          "suppressed-refusal handling",
+          "new LinkFallbackError and referenced-member filtering"
+        ],
+        "optional_regression_leads": [
+          "separate transform and reject member fixtures",
+          "errorlevel=0 behavior across exact releases",
+          "link fallback for extractall versus extract",
+          "directory refilter/fixup callback behavior",
+          "non-fatal ExtractError matrix for levels 1/2"
+        ]
+      },
+      "unassessed_remainder": {
+        "declared_obligations_unassessed": [],
+        "remaining_empirical_unknowns": [
+          "No complete CPython 3.12.3 and 3.14.0 interpreter pair was run. Reviewer execution uses the exact mapped tarfile modules on host CPython 3.14.4.",
+          "No full source review or exhaustive behavioral comparison of the two releases' os.path implementations, filesystem races, or every archive format/edge was attempted.",
+          "Concrete U1-U5 product/configuration values and operational cleanup ownership remain unknown."
+        ],
+        "boundary": "All six declared obligations and consequential candidate claims were assessed. These retained unknowns are not blanket abstention or an exhaustive unknown-answer recall claim."
+      },
+      "source_quality": "FAIL",
+      "source_quality_reason": "Complete declared-scope assessment found material incorrect retention and proposed rejection assertions, independent of intact source hashes and correct core default finding.",
+      "useful_deliverable": {
+        "useful": true,
+        "status": "USEFUL_WITH_MATERIAL_DEFECTS",
+        "standalone_reliable_recommendation": false,
+        "reason": "Provides usable source identities, default-change evidence, caller-safeguard guidance and preserved unresolved items. Material behavior/test assertions require correction before adoption; no candidate revisions were made."
+      },
+      "blinding_limits": {
+        "limits": [
+          "Output1 final header and sources.json expose the control/full-refresh method and arm label.",
+          "Output2 final header and sources.json expose the treatment/incremental method and arm/output path.",
+          "Embedded source/arm/prior-manifest paths were treated as blinding limitations, not read authority."
+        ],
+        "prohibited_reads_performed": false,
+        "accessed_scope": "Actual global/project AGENTS rules; exact INPUT_MAP, mapped brief/changes/common prior-state, four mapped primary sources, and only frozen neutral final.md/sources.json for Output1/2. No parent analysis, economics, target grades/winner, campaign state, job prompts, source-arm files, other grades/cases or candidate terminals were read."
+      }
+    }
+  },
+  "comparison": "Both correctly establish the exact default change and preserve U1-U6. Both fail material retained-error/fallback and proposed-path assertions. Output1 additionally preserves the known normalization caveat, new symlink hint and directory refilter lead, but overpromises cross-release parity. Output2 frames normalization as tightening without its known meaning condition. These are source-backed quality differences, not an economic ranking or winner.",
+  "receipts": {
+    "goal_create": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_create_receipt.json",
+    "active_get_goal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_active_receipt.json",
+    "complete_update_goal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_complete_receipt.json",
+    "terminal_get_goal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/goal_terminal_receipt.json",
+    "summary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/review_receipt_summary.json",
+    "saving_method": "Actual native tool return objects serialized with JSON.stringify and written through apply_patch; completion and terminal get occur after the authored review."
+  },
+  "candidate_edits": false,
+  "blinding_limits": {
+    "limits": [
+      "Output1 final header and sources.json expose the control/full-refresh method and arm label.",
+      "Output2 final header and sources.json expose the treatment/incremental method and arm/output path.",
+      "Embedded source/arm/prior-manifest paths were treated as blinding limitations, not read authority."
+    ],
+    "prohibited_reads_performed": false,
+    "accessed_scope": "Actual global/project AGENTS rules; exact INPUT_MAP, mapped brief/changes/common prior-state, four mapped primary sources, and only frozen neutral final.md/sources.json for Output1/2. No parent analysis, economics, target grades/winner, campaign state, job prompts, source-arm files, other grades/cases or candidate terminals were read."
+  },
+  "external_primary_checks": [],
+  "cleanup": "All temporary fixture directories were removed by their scoped TemporaryDirectory contexts. Only the requested review, receipts and reproducible reviewer evidence remain."
+}

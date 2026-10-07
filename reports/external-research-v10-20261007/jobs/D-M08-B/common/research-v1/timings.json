@@ -1,0 +1,43 @@
+{
+  "requestedAt_utc_from_boundary": "2026-10-07T19:04:27.651Z",
+  "timing_basis": "Supervisor boundary.json immutable T3 requestedAt; end sampled with execution runtime UTC clock.",
+  "observed_end_utc": "2026-10-07T19:07:41.577Z",
+  "clock_tool_observation": "2026-10-07 19:07:41 UTC",
+  "elapsed_ms_from_requestedAt": 193926,
+  "elapsed_seconds_from_requestedAt": 193.926,
+  "deadline_utc": "2026-10-07T19:07:27.651Z",
+  "source_operation_counts": {
+    "input_map_reads": 1,
+    "allowlisted_brief_and_manifest_reads": 2,
+    "frozen_public_source_reads": 3,
+    "supervisor_boundary_reads": 1,
+    "total_read_operations": 7,
+    "source_read_retries": 0,
+    "failed_script_attempts": 3,
+    "native_terminal_capture_retries": 1
+  },
+  "retries_and_failures": [
+    "Initial exec script parse failed before any operations.",
+    "After draft save and native completion, receipt construction failed because TextEncoder was unavailable; the first update response was not persisted.",
+    "A repeated complete-status call and get_goal state were saved in native_terminal_receipt.json. A subsequent timing write attempt failed due to a self-reference in its data construction; this timing record replaces that failed attempt."
+  ],
+  "output_bytes": {
+    "draft_utf8": 4169,
+    "native_activation_receipt_json": 1086,
+    "native_terminal_receipt_json": 2384,
+    "timings_json": 1726
+  },
+  "billing_input_output_cache": {
+    "billing": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null
+  },
+  "raw_native_goal_cumulative_counters_separate": {
+    "status": "complete",
+    "tokensUsed": 23810,
+    "timeUsedSeconds": 107,
+    "createdAt": 1791399885,
+    "updatedAt": 1791400032
+  }
+}

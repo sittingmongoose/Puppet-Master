@@ -1,0 +1,351 @@
+{
+  "frozen_at": "2026-10-07T19:05:14.770669+00:00",
+  "required": [
+    "REVIEW.md",
+    "judgment.json",
+    "timings.json"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "0edb7af6d8a2c1145176588e4174175b2d78c151c4a3259fea24592066ea099d",
+      "bytes": 1642
+    },
+    "REVIEW.md": {
+      "sha256": "8eefc5382c937be4bf13bdef8bfa510db06382d8e4605dd14dea82196318b26c",
+      "bytes": 53246
+    },
+    "config.json": {
+      "sha256": "6878886384af0a430e9977edd39ce722d2cd21fbd36ae36d708700a1dc6643cc",
+      "bytes": 149
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "0b9140934ad9476917fd63836423fd2022e9f256c175c1a36547efd2e01b4dd3",
+      "bytes": 2202
+    },
+    "judgment.json": {
+      "sha256": "0bd7b14f685cd02fb785685b0dc8c97bfdc4d94d64a05e1b4ddc5e7e954d7b72",
+      "bytes": 120747
+    },
+    "prepared.json": {
+      "sha256": "af5f731c6f0dbea954cf1e81276e72f67a92e927fcf8d97c3014e3099f2dd974",
+      "bytes": 1812
+    },
+    "sources/SOURCES.md": {
+      "sha256": "17ca2843ca4ee5397f826ce0996301b6a54d0623ccdace75a25b38124dc6bc6f",
+      "bytes": 27778
+    },
+    "sources/archivematica-113-aip.html": {
+      "sha256": "4524dc5f7d14c9ba275f6b20f08f7f50b3901138acaef6bc0f7a52467f5535d1",
+      "bytes": 39588
+    },
+    "sources/archivematica-113-aip.txt": {
+      "sha256": "9e9c2fc03020d0f123d0695b48d226cc7cd0021101e7f6e051c66dada8881f38",
+      "bytes": 12161
+    },
+    "sources/archivematica-113-metadata.html": {
+      "sha256": "82f9c2a548557e4b180293cfd5f7d97f4ea5405e86ebaaae6a28dd99794151ae",
+      "bytes": 59705
+    },
+    "sources/archivematica-113-metadata.txt": {
+      "sha256": "ae036c424cb0688703418caa7f552c3a2a2ae137d989e73b86b867c7cb8659a1",
+      "bytes": 19321
+    },
+    "sources/archivematica-113-quickstart.html": {
+      "sha256": "e5d4470a4a0900fd9766f2745ada0d4b02cf2c3e91560083ab3c634f4c025069",
+      "bytes": 54145
+    },
+    "sources/archivematica-113-quickstart.txt": {
+      "sha256": "326e4b7fd464c09891ff63d5a961655140dc1f4ee7c4c00143d7d7b2cdd07244",
+      "bytes": 22250
+    },
+    "sources/bagit-issue137-comments.json": {
+      "sha256": "74702d88639299825d721c634a8d0c4ed3fbbb7f5610e787e2604014d5a645a3",
+      "bytes": 1992
+    },
+    "sources/bagit-issue137.json": {
+      "sha256": "80f70410151b3e71e6be6c5762f590f5306b855d238191ffcfef91d9dcd8a1ee",
+      "bytes": 3106
+    },
+    "sources/bagit-issue177-comments.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "sources/bagit-issue177.json": {
+      "sha256": "ceb4962d11162e4a99c7b612a2c511d456fe28ad76dfde093987dd69ab08deee",
+      "bytes": 2771
+    },
+    "sources/bagit-pr174-comments.json": {
+      "sha256": "8a5432cc15c5324c7614d16d6a103ad80389ddbca9ca96c072b04f87f6db3f31",
+      "bytes": 12373
+    },
+    "sources/bagit-pr174.json": {
+      "sha256": "126d0bc5c0a1f61ff8711e7545e247cb7139537cc0e819a1d13aea8b78683c95",
+      "bytes": 16696
+    },
+    "sources/bagit-pr174.patch": {
+      "sha256": "c6e220031fb6e308a1b18cc8c446fa92a8abf17251941ae17b1df5f4d353953e",
+      "bytes": 990
+    },
+    "sources/bagit-release-v190.json": {
+      "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e",
+      "bytes": 4053
+    },
+    "sources/bagit-tests-v190.py.txt": {
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "bytes": 49297
+    },
+    "sources/bagit-v181-immutable.py.txt": {
+      "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57",
+      "bytes": 55013
+    },
+    "sources/bagit-v181-ref.json": {
+      "sha256": "c8700ce1f613672ed13ee0ced9b979865b813a177d98fc4e67ee7adb79e0c7e5",
+      "bytes": 369
+    },
+    "sources/bagit-v181.py.txt": {
+      "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57",
+      "bytes": 55013
+    },
+    "sources/bagit-v190-immutable.py.txt": {
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "bytes": 54632
+    },
+    "sources/bagit-v190-ref.json": {
+      "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a",
+      "bytes": 369
+    },
+    "sources/bagit-v190.py.txt": {
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "bytes": 54632
+    },
+    "sources/checked-sources.json": {
+      "sha256": "a05cd450c0c337ba9635cc0b1606c1a25abcc4f0e97731ee45a772c470fac1bc",
+      "bytes": 46750
+    },
+    "sources/fsync-manpage.html": {
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "bytes": 15152
+    },
+    "sources/fsync-manpage.txt": {
+      "sha256": "e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c",
+      "bytes": 6034
+    },
+    "sources/input-identities.json": {
+      "sha256": "890296523f4f1ac550a3631fa4a017f987400ab9e0f2fbb6ad576a0a7aa730c4",
+      "bytes": 2161
+    },
+    "sources/loc-premis.html": {
+      "sha256": "6bf3f606c1058e946810fc1756d851bbe8e9ece2e1a8ce8f10da0fbee60ab4b6",
+      "bytes": 10805
+    },
+    "sources/loc-premis.txt": {
+      "sha256": "a3b77633af5da5dac3fe2a710c9870deef98c8cb2165624094799746b59534db",
+      "bytes": 3220
+    },
+    "sources/loc-rfs-audio.html": {
+      "sha256": "1cb0276d5b78a3058de5d86057b053e39bd224b098c6151508e49cca4452c72b",
+      "bytes": 18963
+    },
+    "sources/loc-rfs-audio.txt": {
+      "sha256": "9cf6203a1502f118091f732841206e10395110d003562c6928275c5e9bfeca57",
+      "bytes": 4369
+    },
+    "sources/loc-rfs-faq.html": {
+      "sha256": "ad1f8f0dec4ba8c37a28552b9f1b45f70a70c95a56ac6e0ea65169c9a3623ca6",
+      "bytes": 17195
+    },
+    "sources/loc-rfs-faq.txt": {
+      "sha256": "f5bda896a0ea63ca336bac251033dcaefc649b33e10d9180f7fcf7d5bc069618",
+      "bytes": 6313
+    },
+    "sources/loc-rfs-introduction.html": {
+      "sha256": "f6cf956cf4a03d3de473e0667d8452934229d1a6b95965b7b88eb9e4f8f253c9",
+      "bytes": 19695
+    },
+    "sources/loc-rfs-introduction.txt": {
+      "sha256": "30ecb72c65d935209cd64e6e9f9458edeea8cbe7a53a4b2e9d059d1d2b8c6e6f",
+      "bytes": 8141
+    },
+    "sources/loc-rfs-stillimg.html": {
+      "sha256": "46f0763e8d893d8684bdd2b77179a1fec6726f636c191b4ee3f486e67c12c3ce",
+      "bytes": 32069
+    },
+    "sources/loc-rfs-stillimg.txt": {
+      "sha256": "5d848c8956f72b0a068f4380a6ac6c8bc41e1640eac80b11a86cd8c5f260efe6",
+      "bytes": 8174
+    },
+    "sources/loc-rfs-text.html": {
+      "sha256": "b9e2c4f35be2deddd851c6c46255a162967e913a356493674109082e90d7ba36",
+      "bytes": 30706
+    },
+    "sources/loc-rfs-text.txt": {
+      "sha256": "71e9e4b360c5c1a2e02ef6cfef3d6de2b22db0aefe57447d8d8abddf87693d66",
+      "bytes": 10060
+    },
+    "sources/ndsa-levels.html": {
+      "sha256": "d82e909d217e9a08979ec18e844855894aeaffd76c0ebf76df128a98320fc08a",
+      "bytes": 35963
+    },
+    "sources/ndsa-levels.txt": {
+      "sha256": "e0e233881f30ac29ca8744bc8eeef6af8dd2cdfd512b6888a528c386e1a6135b",
+      "bytes": 7666
+    },
+    "sources/ndsa-matrix-v21.png": {
+      "sha256": "af3bc9e998ba4d3ab7424687d388c9f3e1bc6f6cb76b48987cc49fe977ccb37d",
+      "bytes": 143061
+    },
+    "sources/ocfl-spec-v11.html": {
+      "sha256": "6cd3434f46df0d2b73c776f40453715e1bf7b780e5b46945c5b1aa275cd6c112",
+      "bytes": 139510
+    },
+    "sources/ocfl-spec-v11.txt": {
+      "sha256": "bbb6521fa1c343b79d5b8390bec0f197ea9a8abd0e60b2c998b0ae6995b3ed41",
+      "bytes": 60628
+    },
+    "sources/omeka-access-file-controller.php.txt": {
+      "sha256": "6c7cf708fc9aec7f268166ce0c273e1516f67223380151e4205f9db8dc31a2d0",
+      "bytes": 14795
+    },
+    "sources/omeka-access-matrix-test.php.txt": {
+      "sha256": "bac02d39dc3060e5103915d168218f32354c4759d13c7166db900c50a519e8b8",
+      "bytes": 4688
+    },
+    "sources/omeka-access-media-check.php.txt": {
+      "sha256": "e06e9316a906c726ec0d26a3ec29798f92628ca41c6094f6b2a161a1d14fcf46",
+      "bytes": 20050
+    },
+    "sources/omeka-access-page.html": {
+      "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41",
+      "bytes": 51281
+    },
+    "sources/omeka-access-page.txt": {
+      "sha256": "213558144e865ad98659d75201778d0d295d4d0ef6e08f61d2b5b50b82aa0667",
+      "bytes": 31063
+    },
+    "sources/omeka-access-readme34747.txt": {
+      "sha256": "84eae2c62a7641faf78b7a6c6ec178851498c738c742864a0cb8d93f5efc3fff",
+      "bytes": 33774
+    },
+    "sources/omeka-access-tag34747.json": {
+      "sha256": "e8be17ed4b180dbacf372ee0f4c6e6a05917d050f961f86fbf5724e38909aad3",
+      "bytes": 371
+    },
+    "sources/prior-boundary.json": {
+      "sha256": "dce49f853daecd56b468a9e1d88ae8674c033f7ed513720458fdb92968256cc1",
+      "bytes": 3506
+    },
+    "sources/rename-manpage.html": {
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571
+    },
+    "sources/rename-manpage.txt": {
+      "sha256": "1bcfe1b37be314a3bb1ddc4c8eb0376d9f34dd66627bf593c7d3767cb5e61678",
+      "bytes": 12196
+    },
+    "sources/restic-introduction.html": {
+      "sha256": "c7be9c3cbdbbbd0afd4d386e9cdd46392dea8ef7c6f97464b64c070677a5cc3b",
+      "bytes": 8843
+    },
+    "sources/restic-introduction.txt": {
+      "sha256": "0b18b0739c10372a7972a46731c1d8c9e0ba69f4155a97d74c6be6d243b8f20e",
+      "bytes": 1339
+    },
+    "sources/restic-repository-checks.html": {
+      "sha256": "d76d004ededbb3f7d5fdaa4510dd88e809d503ed8f4fd27dd5db5534c9c69880",
+      "bytes": 61215
+    },
+    "sources/restic-repository-checks.txt": {
+      "sha256": "ded4b13e8f3f1df23a9e4b1eec5f2931d6f69de7d0cfcc32c772925e204a6421",
+      "bytes": 26347
+    },
+    "sources/restic-retention.html": {
+      "sha256": "2ac9aafb598368864bf42da3f74198d45fc1ea91bf155a9c3021b90348fdad64",
+      "bytes": 53898
+    },
+    "sources/restic-retention.txt": {
+      "sha256": "acfcfe276040724941dd65e99fc0b927fc1f5b0cdd5d12f016ce01cce23f054c",
+      "bytes": 25002
+    },
+    "sources/retrievals.json": {
+      "sha256": "3eb0b4a3fc393ccd3f3c58c7d743b4ad7063f5dc09fa727657f5f74dea3eb4fd",
+      "bytes": 48154
+    },
+    "sources/rfc8493.txt": {
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "bytes": 48783
+    },
+    "sources/sqlite-atomiccommit.html": {
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968
+    },
+    "sources/sqlite-atomiccommit.txt": {
+      "sha256": "61bf481ac63b1a0e4542e7c17034a016c9be4c399a76389d4c57b7f26f7c2978",
+      "bytes": 62000
+    },
+    "sources/sqlite-backup.html": {
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "bytes": 28195
+    },
+    "sources/sqlite-backup.txt": {
+      "sha256": "5a5b6fd842c72b4e1d56d0d0aff7baa39b0d0882b93d683dbcfd51dffeb0c7df",
+      "bytes": 15504
+    },
+    "sources/sqlite-pragma.html": {
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "bytes": 139778
+    },
+    "sources/sqlite-pragma.txt": {
+      "sha256": "de760976bae639686e5dbfb583c12f97f27af51aeea1ffd7df47fdf25cb1ab7f",
+      "bytes": 83444
+    },
+    "sources/sqlite-release-3513.html": {
+      "sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8",
+      "bytes": 9857
+    },
+    "sources/sqlite-release-3513.txt": {
+      "sha256": "100d66daeba4c6bf11ca912cec79f15765f09ce68bf41a965900fdf1028a20b7",
+      "bytes": 4353
+    },
+    "sources/sqlite-rsync.html": {
+      "sha256": "30b70362b95ddb9293b98757f87a3d3d9552f0e2ee45a96578af1578e17fc73d",
+      "bytes": 13237
+    },
+    "sources/sqlite-rsync.txt": {
+      "sha256": "27349080f2aaa914385b8d0ed742cb84ce45f386d39469afe8e5ffd3644fe55e",
+      "bytes": 7836
+    },
+    "sources/sqlite-vacuum.html": {
+      "sha256": "740f02ade00626f50c7a71ded2615995362fedfc30e09aa22dbe4535b7615c54",
+      "bytes": 15215
+    },
+    "sources/sqlite-vacuum.txt": {
+      "sha256": "1b40c263cbc7507e22a19722547c68d08873c3c63341a25e9757984fdddcd675",
+      "bytes": 6454
+    },
+    "sources/sqlite-wal.html": {
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143
+    },
+    "sources/sqlite-wal.txt": {
+      "sha256": "5509b222e2f322272d2a22f57bbce0154a0dcf1bb53a9b8cb3d5608837f00f68",
+      "bytes": 31523
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "bc050265e48026b85d8f046197369449e04d0c876cdaa4b80b82545ddf2ab8c0",
+      "bytes": 7392
+    },
+    "task.txt": {
+      "sha256": "3ae2a2be001e696aba04d9f4ad4cd35a8ed73d5fccf62eb40ef369c9f9a1fdba",
+      "bytes": 3469
+    },
+    "timings.json": {
+      "sha256": "301d3ce030b175edacb3c25c5a900a2089e3e771be5695451a83b31f0ffd5c53",
+      "bytes": 986
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "376b60381286b9d3e50aeb13006d1ca47c03d2eb71486c1132433a637dd822e7",
+      "bytes": 5514
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

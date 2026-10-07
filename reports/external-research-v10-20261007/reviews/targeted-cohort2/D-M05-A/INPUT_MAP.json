@@ -1,0 +1,81 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/brief.md",
+  "changes": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/changes.json",
+  "prior_state": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/prior-state.md",
+  "primary_sources": [
+    {
+      "source_id": "tarold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarold.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocold.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarnew.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocnew.rst",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "outputs": [
+    {
+      "label": "Output1",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/frozen-inputs/Output1/final.md",
+          "sha256": "6f554580d65186229e795ca87ab46cfd699bff4214ececf39bf61595d17db85c"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/frozen-inputs/Output1/sources.json",
+          "sha256": "d364c3c85fba413c27665024759f1aaf8379a7516f273666bdb24ad261bdb20c"
+        }
+      }
+    },
+    {
+      "label": "Output2",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/frozen-inputs/Output2/final.md",
+          "sha256": "502885bcb521b89c298bd7fb20444a981f2bfa56a4aef4b575eadde942c16627"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A/frozen-inputs/Output2/sources.json",
+          "sha256": "61b3b666180749bbd1819f09c0a7fa38acfb2cdefaf62048a40b4e744fc08075"
+        }
+      }
+    }
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M05-A",
+  "scope": [
+    "Preserve exact prior source and dependency identities.",
+    "Dispose of the no-op rename separately from semantic invalidation.",
+    "Re-evaluate default filter/API behavior at both exact releases.",
+    "Revisit security and compatibility claims depending on that default.",
+    "Do not classify unresolved prior dependencies as already covered.",
+    "Deliver retained/changed/unresolved dispositions and proposed regression checks."
+  ],
+  "blinding": "Neutral byte-exact output copies omit arm names in paths. Content may expose method; disclose. Do not read source sibling paths, task prompts, economics, state, other reviews or grades."
+}

@@ -1,0 +1,38 @@
+{
+  "prior_status": "PARTIAL_STOPPED_FOR_PROTOCOL_REPAIR",
+  "prior_grade_issued": false,
+  "prior_grades": {
+    "source_correctness": null,
+    "completeness": null,
+    "planning_usefulness": null,
+    "breadth": null
+  },
+  "original_unassessed_remainder": [
+    "Finish an independent per-obligation assessment of every domain requirement: affordable digitization stations/volunteer operation, photos/audio/scanned documents, immutable original bytes and derivatives, safe dedup, rights/restricted access, silent-corruption detection, interrupted-ingest recovery, failed-storage recovery, and internal/public separation.",
+    "Finish genuine primary-source selection/appropriateness and bounded discovery-yield assessment; independently fetched/located sources do not by themselves complete this obligation.",
+    "Finish materially different mechanism/useful alternative comparisons, including actual adoption tradeoffs and affordability. The partial includes source snippets, not a breadth grade.",
+    "Finish all consequential pinned-component conditions, especially BagIt 1.0 versus make_bag's 0.97 output, any wrapper validity/reporting semantics, actual intended generator path, and full file/tag conformance.",
+    "Finish issue/fix/regression-test/release applicability assessment using observed PR rejection discussion and pinned test definitions; no final judgment or executed regression evidence exists.",
+    "Finish source-specific comparison of every relevant finding against all frozen plan clauses and final F1\u2013F10, M1\u2013M8, P1\u2013P10, R1\u2013R8, O1\u2013O4, U1\u2013U4, T1\u2013T4, V1\u2013V7, \u00a76 analogies, and \u00a711 source conditions. These groups were read as candidate text but not all independently adjudicated.",
+    "Finish supported-correction/product-choice/already-covered/optional/uncertainty/validation-proposal dispositions; partial observations do not establish final planning usefulness.",
+    "Finish file-plus-row crash/durability/journal ordering, combined DB/payload backup consistency, replica repair and restore assertions, and proposed versus guaranteed recovery claims. rename/fsync/pragma evidence was fetched but not read.",
+    "Finish normalization/formats/provenance applicability, NDSA matrix-to-plan mapping, complete rights/serve-time conditions, and workload/sampling/retention/resource implications.",
+    "Finish supplied-critique preservation check across K1\u2013K13, including nuances and limits; the critique and final were read, but no complete delta/disposition map or preservation verdict was authored.",
+    "Finish executed-versus-proposed/status assessment: the text distinguishes observations/proposals, but no complete claimed-execution audit or historical verification was performed. Native terminal receipts must not be inferred from page/code reads.",
+    "After both arms and native terminal receipts are frozen, the separately authorized fresh full-review task must supply REVIEW.md/judgment.json and any scientific result; this partial has no grade."
+  ],
+  "original_observation_ids": [
+    "OBS-BAGIT-VALIDATOR",
+    "OBS-BAGIT-ISSUE-PR-RELEASE",
+    "OBS-BAGIT-TESTS",
+    "OBS-BAGIT-FORMAT-VERSION",
+    "OBS-FETCH-CONDITIONS",
+    "OBS-SQLITE",
+    "OBS-OMEKA",
+    "OBS-ARCHIVEMATICA",
+    "OBS-NDSA",
+    "OBS-LOC-FORMATS",
+    "OBS-ALTERNATIVE-SNIPPETS"
+  ],
+  "source": "Exact authorized prior partial-status.json; observations are independently adjudicated in the new review, not reused as grades."
+}

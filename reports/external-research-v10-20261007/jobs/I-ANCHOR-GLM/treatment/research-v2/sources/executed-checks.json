@@ -1,0 +1,64 @@
+{
+  "checks": [
+    {
+      "id": "CHK-1",
+      "component": "CPython zipfile",
+      "version": "3.14.4",
+      "atUtc": "2026-10-07T18:57:23.884Z",
+      "scope": "isolated /tmp tempfile, no sockets, no secrets, cleaned up",
+      "observations": {
+        "result": "extracted without error",
+        "extractedNames": [
+          "evil_outside.txt",
+          "ok_inside.txt"
+        ],
+        "evilLandedAt": [
+          "bundle/evil_outside.txt"
+        ]
+      }
+    },
+    {
+      "id": "CHK-2",
+      "component": "SQLite FTS5 (python3 sqlite3)",
+      "version": "3.46.1",
+      "atUtc": "2026-10-07T18:57:23.888Z",
+      "scope": "in-memory database, no filesystem, no sockets",
+      "observations": {
+        "trigramTokenizerAvailable": true,
+        "trigramCjkMatch": [
+          [
+            "Musée Rodin 美术馆 Cézanne"
+          ]
+        ],
+        "trigramSubstringMatch": [],
+        "unicode61Diacritics2Available": true,
+        "diacriticFoldQuery_cezanne": [
+          [
+            "Musée Cézanne"
+          ]
+        ],
+        "icuTokenizerAvailable": false,
+        "icuError": "OperationalError: no such tokenizer: icu",
+        "trigramSubstringMatch_corrected": {
+          "note": "earlier probe 'éez' does not occur in the sample text (bad probe, not a tokenizer failure); corrected probes below",
+          "match_sée": [
+            [
+              "Musée Rodin 美术馆 Cézanne"
+            ]
+          ],
+          "match_sanne": [],
+          "atUtc": "2026-10-07T18:57:50.495Z"
+        },
+        "trigramSubstringMatch_final": {
+          "note": "final corrected probe set: genuine substrings only ('sanne' in the previous note was also non-substring; Cézanne has 'zanne')",
+          "match_anne_true_substring": [
+            [
+              "Musée Rodin 美术馆 Cézanne"
+            ]
+          ],
+          "atUtc": "2026-10-07T18:58:10.225Z"
+        }
+      }
+    }
+  ]
+}
