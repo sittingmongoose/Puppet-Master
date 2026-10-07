@@ -4,6 +4,9 @@
   'use strict';
   const O55 = window.O55, C = O55.c, U = O55.util, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
 
+  /* sound options (priority: 1 a control's own sound over the generic tap, 2 an outcome, 3 a commitment) */
+  const FOUND = { intensity: 0.5, priority: 2 };
+
   /* The quick read-only check of this computer (read_only_preflight): free space, Safe History tool, internet.
      Runs once per session when "This computer" is chosen; results are cached in the session. */
   function runCheck(S) {
@@ -12,8 +15,14 @@
     S.sess.ui.check = { state: 'running', done: [] }; S.save();
     O55.owners.dispatch('cmd.project.source_location.test', { target: 'this_device' }, S.ctx(), () =>
       O55.owners.operation('preflight:this_device', [{ key: 'space', ms: 420 }, { key: 'history', ms: 380 }, { key: 'net', ms: 360 }], (st) => {
+        const had = (S.sess.ui.check && S.sess.ui.check.done || []).length;
         S.sess.ui.check = { state: st.state, done: st.phases.filter((p) => p.status === 'done').map((p) => p.key), current: st.current };
-        S.save(); if (S.sess.screen === 'where') O55.ui.refresh();
+        S.save();
+        if (S.sess.screen !== 'where') return;
+        O55.ui.refresh();
+        /* a chip that flips to its tick ticks with it, climbing; the last one is the finding (only while the chips show) */
+        const n = S.sess.ui.check.done.length;
+        if (S.open && n > had && (S.sess.ui.where || 'this') === 'this') O55.sound.play(st.state === 'done' ? 'found' : 'phase', st.state === 'done' ? FOUND : { step: n, intensity: 0.25 + 0.15 * n });
       }));
   }
   function checkChips(S) {

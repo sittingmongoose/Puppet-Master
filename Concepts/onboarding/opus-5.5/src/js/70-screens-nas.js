@@ -14,6 +14,12 @@
   const dev = (S) => S.env.devices.find((d) => d.id === N(S).device) || null;
   const dname = (S) => (dev(S) || { name: '' }).name;
   const words = (seed) => O55.art.identity(seed).words.join(' ');
+  /* sound options (priority: 1 a control's own sound over the generic tap, 2 an outcome). Owner operations name their
+     done/fail/phase sounds in opts.sound (O55.flow.op): what discovery turns up is `found`, a wrong code or password
+     is a soft `warn` (the field or banner says what to do), and an approval on the other device is `found`. */
+  const SND = { own: { priority: 1 }, reveal: { priority: 1 }, found: { intensity: 0.55, priority: 2 }, warn: { priority: 2 } };
+  const FOUND_SOUND = { done: 'found', intensity: 0.55 };
+  const depth = (path) => ({ step: path.split('/').length - 1, priority: 1 }); /* deeper folders sound higher */
   /* the picture follows the screen: as many keys as were found, the chosen one lit, a new key when one is chosen */
   const sceneParams = (S, extra) => {
     const ks = keyring(S), sel = N(S).key || (dev(S) ? defaultKey(S) : null);
@@ -59,7 +65,7 @@
       }
       return out;
     },
-    mounted(S) { if ((N(S).method || 'ssh') === 'ssh' && !N(S).manual) F.op(S, 'discover:ssh', 'cmd.server.discovery.refresh', [{ key: 'mdns', ms: 1100 }], { payload: { services: ['_ssh._tcp', '_sftp-ssh._tcp', '_smb._tcp'] } }); },
+    mounted(S) { if ((N(S).method || 'ssh') === 'ssh' && !N(S).manual) F.op(S, 'discover:ssh', 'cmd.server.discovery.refresh', [{ key: 'mdns', ms: 1100 }], { payload: { services: ['_ssh._tcp', '_sftp-ssh._tcp', '_smb._tcp'] }, sound: FOUND_SOUND }); },
     foot(S) {
       const n = N(S), m = n.method || 'ssh', d = dev(S);
       let ok = false, reason = T('missing.storage');
@@ -88,7 +94,7 @@
       },
       share(S, v) { N(S).share = v; S.save(); O55.ui.refresh(); },
       volume(S, v) { N(S).volume = v; S.save(); O55.ui.refresh(); },
-      manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); },
+      manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal', SND.reveal); },
       next(S) {
         const n = N(S), m = n.method || 'ssh';
         if (m === 'ssh' && n.manual) { const d = S.env.devices.find((x) => x.address === String(n.addr || '').trim()); n.device = d && d.id; }
@@ -96,7 +102,11 @@
         O55.ui.go(m === 'ssh' ? entry(S) : { smb: 'nas-smb', nfs: 'nas-nfs', mounted: 'nas-mounted' }[m]);
       }
     },
-    bind: { addr(S, v) { N(S).addr = v; S.save(); O55.ui.refresh(); }, port(S, v) { N(S).port = v.replace(/[^0-9]/g, '').slice(0, 5); S.save(); } }
+    bind: { addr(S, v) {
+      const known = (a) => S.env.devices.some((x) => x.address === String(a || '').trim()), was = known(N(S).addr);
+      N(S).addr = v; S.save(); O55.ui.refresh();
+      if (!was && known(v)) O55.sound.play('found', SND.found); /* the typed address answers: Continue wakes up */
+    }, port(S, v) { N(S).port = v.replace(/[^0-9]/g, '').slice(0, 5); S.save(); } }
   });
 
   /* ------------------------------------------------------------------ is this your device? (identity before trust) */
@@ -195,16 +205,17 @@
       if (n.passCancelled) out += C.note(T('nas.install.fail.cancelled', { key: (keyring(S).find((x) => x.id === sel) || {}).comment || '' }), 'warn');
       return out;
     },
-    mounted(S) { const d = dev(S); F.op(S, 'keys:' + d.id, 'cmd.ssh_connection.keys.discover', [{ key: 'discover', ms: 700 }, { key: 'probe', ms: 1000 }], { payload: { device: d.id, publicOnly: true } }); },
+    mounted(S) { const d = dev(S); F.op(S, 'keys:' + d.id, 'cmd.ssh_connection.keys.discover', [{ key: 'discover', ms: 700 }, { key: 'probe', ms: 1000 }], { payload: { device: d.id, publicOnly: true }, sound: FOUND_SOUND }); },
     foot(S) { const st = F.state(S, 'keys:' + dev(S).id); return { primary: { label: T('chrome.continue'), do: 'next', disabled: !(st && st.state === 'done'), reason: T('nas.key.looking') } }; },
     do: {
       pick(S, v, el) { N(S).key = v; N(S).passCancelled = false; S.save(); O55.ui.refresh(); },
-      passCancel(S) { N(S).passCancelled = true; S.sess.ui.sheet = null; S.save(); O55.sound.play('error'); O55.ui.refresh(); },
-      passOk(S) { const i = S.root.querySelector('#o55f-pass'); if (!i || !i.value) { N(S).passEmpty = true; S.save(); O55.sound.play('error'); O55.ui.refresh(); O55.ui.shake('pass'); return; } N(S).passEmpty = false; i.value = ''; N(S).unlocked = true; S.sess.ui.sheet = null; S.save(); O55.screens.defs['nas-key'].do.next(S); },
+      /* a deliberate cancel closes the sheet (it is not an error; the note under the keys says what it means) */
+      passCancel(S) { N(S).passCancelled = true; S.sess.ui.sheet = null; S.save(); O55.sound.play('unsheet', SND.own); O55.ui.refresh(); },
+      passOk(S) { const i = S.root.querySelector('#o55f-pass'); if (!i || !i.value) { N(S).passEmpty = true; S.save(); O55.sound.play('warn', SND.warn); O55.ui.refresh(); O55.ui.shake('pass'); return; } N(S).passEmpty = false; i.value = ''; N(S).unlocked = true; S.sess.ui.sheet = null; S.save(); O55.screens.defs['nas-key'].do.next(S); },
       next(S) {
         const n = N(S); n.key = n.key || defaultKey(S);
         const k = keyring(S).find((x) => x.id === n.key);
-        if (k && k.passphrase && !n.unlocked) { S.sess.ui.sheet = 'passphrase'; S.save(); return O55.ui.refresh(); }
+        if (k && k.passphrase && !n.unlocked) { S.sess.ui.sheet = 'passphrase'; S.save(); O55.ui.refresh(); return O55.sound.play('sheet', SND.own); }
         S.save();
         if (k && keyStatus(S, k) === 'works') return O55.ui.go('nas-install', { verifyOnly: true });
         O55.ui.go('nas-signin');
@@ -245,7 +256,7 @@
       return { primary: { label: T('nas.signin.button'), do: 'add', disabled: !ready, reason: T('nas.signin.passwordHint') } };
     },
     do: {
-      selfOn(S) { N(S).self = true; N(S).selfMissing = false; S.save(); O55.ui.refresh(); makeIfNeeded(S); },
+      selfOn(S) { N(S).self = true; N(S).selfMissing = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal', SND.reveal); makeIfNeeded(S); },
       selfOff(S) { N(S).self = false; N(S).selfMissing = false; S.save(); O55.ui.refresh(); },
       /* The person adds the line on the device themselves. The concept's device receives it at this click (the demo's
          stand-in for their step) unless the scenario says it is not there yet; the check that follows is real either way. */
@@ -313,7 +324,7 @@
         const st = F.state(S, installKey(S));
         if (st && st.code === 'wrong_password') { N(S).pwError = true; N(S).pwFails = (N(S).pwFails || 0) + 1; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); return O55.ui.back(); }
         if (st && st.code === 'not_added') { N(S).selfMissing = true; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); return O55.ui.back(); }
-        F.reset(S, installKey(S)); N(S).opKey = null; O55.ui.refresh(); run(S);
+        F.reset(S, installKey(S)); N(S).opKey = null; O55.ui.refresh(); O55.sound.play('select', SND.own); run(S);
       },
       fixPerms(S) { dev(S).homePermsOpen = false; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); O55.ui.refresh(); run(S); },
       next(S) { connected(S); }
@@ -343,7 +354,7 @@
     };
     const ms = { make: 700, unlock: 500, add: 1100, verify: 800, perms: 700 };
     F.op(S, installKey(S), 'cmd.ssh_connection.key.install', order.map((k) => ({ key: k, ms: ms[k], fail: failFor[k] })), {
-      payload: { device: d.id, key: n.key, publicOnly: true },
+      payload: { device: d.id, key: n.key, publicOnly: true }, sound: { fail: 'warn', intensity: 0.8 }, /* every failure here offers its fix */
       onDone: () => {
         if (!n.verifyOnly) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); }
         n.installed = true;
@@ -383,7 +394,7 @@
   }
   /* read-only: can this computer see the folders it will be offered (the write test waits for Creating); idempotent,
      so a reopen resumes it */
-  function checkFolders(S) { F.op(S, pairKey(S, 'perms'), 'cmd.project.source_location.test', [{ key: 'perms', ms: 700 }], { payload: { device: N(S).device, readOnly: true } }); }
+  function checkFolders(S) { F.op(S, pairKey(S, 'perms'), 'cmd.project.source_location.test', [{ key: 'perms', ms: 700 }], { payload: { device: N(S).device, readOnly: true }, sound: FOUND_SOUND }); }
   function startPmPair(S) {
     const n = N(S), p = pmOf(S), m = n.pairing || 'approval', ctx = { sourcePairConfirmed: true };
     if (!n.pairAsked || n.paired) return;
@@ -391,7 +402,8 @@
     const payload = { server: p.id, method: m, scope: 'selected_source_read', purpose: n.purpose };
     if (m === 'code') return F.op(S, pairKey(S, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }], { payload, ctx });
     const mid = m === 'qr' ? { key: 'qr', ms: 1900 } : { key: 'approve', ms: 2800 };
-    F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload, ctx, onDone: () => pairDone(S) });
+    /* the approval on the other device (or the QR read) is a finding; trust done is the pairing's success */
+    F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload, ctx, sound: { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 }, onDone: () => pairDone(S) });
   }
   def('nas-pmpair', {
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
@@ -449,13 +461,13 @@
     },
     do: {
       pairing(S, v) { if (N(S).pairAsked) return; N(S).pairing = v; S.save(); O55.ui.refresh(); },
-      pair(S) { const n = N(S); n.pairAsked = true; n.useSsh = false; n.pairStart = Date.now(); S.save(); O55.ui.refresh(); startPmPair(S); if ((n.pairing || 'approval') === 'approval') F.ticker(S, 'nas-pmpair', 1000, () => N(S).paired); },
+      pair(S) { const n = N(S); n.pairAsked = true; n.useSsh = false; n.pairStart = Date.now(); S.save(); O55.ui.refresh(); O55.sound.play('select', SND.own); startPmPair(S); if ((n.pairing || 'approval') === 'approval') F.ticker(S, 'nas-pmpair', 1000, () => N(S).paired); },
       resend(S) { N(S).pairStart = Date.now(); S.save(); O55.ui.refresh(); U.announce(T('connect.pair.phases.approve', { device: (pmOf(S) || {}).approver || '' }), S.root.querySelector('.o55-win')); },
       checkCode(S) {
         const n = N(S), p = pmOf(S), ok = String(n.code || '').replace(/[\s-]/g, '').toUpperCase() === String(p.code || '').replace(/-/g, '');
         F.reset(S, pairKey(S, 'code'));
         F.op(S, pairKey(S, 'code'), 'cmd.client.pair.start', [{ key: 'code', ms: 500, fail: () => (ok ? null : 'code_mismatch') }, { key: 'trust', ms: 800 }],
-          { payload: { server: p.id, method: 'code', scope: 'selected_source_read' }, ctx: { sourcePairConfirmed: true }, onDone: () => pairDone(S) });
+          { payload: { server: p.id, method: 'code', scope: 'selected_source_read' }, ctx: { sourcePairConfirmed: true }, sound: { fail: 'warn', intensity: 0.8 }, onDone: () => pairDone(S) });
       },
       /* turning away cancels the owner's pairing run and records nothing */
       another(S) {
@@ -494,7 +506,7 @@
     },
     foot(S) { const n = N(S), d = dev(S), at = n.at || d.roots[0]; const bad = readOnlyAt(S, at) || at === d.roots[0]; return { primary: { label: T('nas.folder.use'), do: 'use', disabled: bad, reason: readOnlyAt(S, at) ? T('nas.folder.readOnly', { user: n.user || d.user }) : T('missing.storage') } }; },
     do: {
-      cd(S, path) { N(S).at = path; S.save(); O55.ui.refresh(); },
+      cd(S, path) { N(S).at = path; S.save(); O55.ui.refresh(); O55.sound.play('move', depth(path)); },
       adding(S) { N(S).adding = true; S.save(); O55.ui.refresh(); },
       addFolder(S) { const n = N(S), at = n.at || dev(S).roots[0]; n.newFolders = (n.newFolders || []).concat([{ parent: at, name: n.newName.trim() }]); n.adding = false; n.at = at + '/' + n.newName.trim(); n.newName = ''; S.save(); O55.ui.refresh(); },
       use(S) {
@@ -532,7 +544,7 @@
     },
     foot(S) { const n = N(S), st = F.state(S, 'smb:' + n.share); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !F.nonEmpty(n.user) || !n.pwTyped, reason: T('nas.signin.passwordHint') } }; },
     do: {
-      check(S) { const i = S.root.querySelector('#o55f-pw'); if (i) i.value = ''; N(S).pwTyped = false; F.op(S, 'smb:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
+      check(S) { const i = S.root.querySelector('#o55f-pw'); if (i) i.value = ''; N(S).pwTyped = false; O55.sound.play('select', SND.own); F.op(S, 'smb:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
       use(S) { const sh = S.env.shares.find((s) => s.id === N(S).share); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + sh.path.replace(/^\/\//, ''), 'smb'); }
     },
     bind: { user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); }, pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } } }

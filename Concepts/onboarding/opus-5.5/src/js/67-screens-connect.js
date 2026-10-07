@@ -10,6 +10,13 @@
   const server = (S, id) => allServers(S).find((s) => s.id === (id || cd(S).server_ref)) || null;
   const words = (seed) => O55.art.identity(seed).words.join(' ');
   const nProjects = (n) => T(n === 1 ? 'connect.route.oneProject' : 'connect.route.projects', { n });
+  /* sound options (priority: 1 a control's own sound over the generic tap, 2 an outcome, 3 a commitment). Owner
+     operations name their done/fail/phase sounds in opts.sound (O55.flow.op); a typed address that names a Server
+     sounds `found` once, as the hint under the field turns into that Server's name. */
+  const SND = { found: { intensity: 0.55, priority: 2 }, reveal: { priority: 1 }, connect: { intensity: 0.5, priority: 3 } };
+  const PAIR_SOUND = { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 };
+  const CODE_SOUND = { fail: 'warn', intensity: 0.8 };
+  function foundIf(before, srv) { if (srv && srv.id !== before) O55.sound.play('found', SND.found); }
 
   /* read-only discovery, cached per network scope (cmd.server.discovery.refresh). It looks on the local network and on
      a VPN this device is already connected to: the person turns a VPN on or off on their own device, so there is no
@@ -19,7 +26,10 @@
   function scan(S) {
     const vpn = vpnOn(S);
     if (cd(S).include_vpn_networks !== vpn) { O55.draft.set(cd(S), { include_vpn_networks: vpn }); S.save(); }
-    F.op(S, scanKey(S), 'cmd.server.discovery.refresh', [{ key: 'lan', ms: 1100 }].concat(vpn ? [{ key: 'vpn', ms: 800 }] : []), { payload: { scope: vpn ? 'lan+vpn' : 'lan' } });
+    /* the list grows as each network answers: `found` when its Servers appear, a soft `warn` with the "none found" note */
+    const lan = S.env.pmServers.length > 0, more = vpn && (S.env.vpnServers || []).length > 0;
+    const sound = { phase: lan ? { lan: 'found' } : false, done: more || (!vpn && lan) ? 'found' : lan ? false : 'warn', intensity: 0.55 };
+    F.op(S, scanKey(S), 'cmd.server.discovery.refresh', [{ key: 'lan', ms: 1100 }].concat(vpn ? [{ key: 'vpn', ms: 800 }] : []), { payload: { scope: vpn ? 'lan+vpn' : 'lan' }, sound });
   }
   function found(S) {
     const st = F.state(S, scanKey(S)); if (!st) return [];
@@ -95,7 +105,7 @@
     },
     do: {
       pickServer(S, id, el) { const s = server(S, id); choose(S, s, { server_connection_mode: 'discover' }); O55.ui.refresh(); O55.ui.charm(el, s.name, 'server'); },
-      manualOn(S) { S.sess.connect.manual = true; S.save(); O55.ui.refresh(); const i = S.root.querySelector('#o55f-addr'); if (i) i.focus(); },
+      manualOn(S) { S.sess.connect.manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal', SND.reveal); const i = S.root.querySelector('#o55f-addr'); if (i) i.focus(); },
       /* back to the list: a Server found only through the typed address is not chosen any more (C24) */
       manualOff(S) { const c = S.sess.connect; if (c.manual) choose(S, null, { server_connection_mode: 'discover' }); c.manual = false; S.save(); O55.ui.refresh(); },
       more(S) { O55.draft.set(cd(S), { remote_more: !cd(S).remote_more }); S.save(); O55.ui.refresh(); },
@@ -114,10 +124,10 @@
       next(S) { O55.ui.go('c-review'); }
     },
     bind: {
-      addr(S, v) { S.sess.connect.addr = v; const hit = resolveAddress(S, v, 'address'); choose(S, hit, { server_connection_mode: 'manual' }); O55.ui.refresh(); },
+      addr(S, v) { S.sess.connect.addr = v; const was = cd(S).server_ref, hit = resolveAddress(S, v, 'address'); choose(S, hit, { server_connection_mode: 'manual' }); O55.ui.refresh(); foundIf(was, hit); },
       headscale(S, v) { O55.draft.set(cd(S), { headscale_url: v.trim() }); S.save(); O55.ui.refresh(); },
-      proxy(S, v) { const hit = resolveAddress(S, v, 'proxy'); choose(S, hit, { proxy_hostname: v.trim() }); O55.ui.refresh(); },
-      link(S, v) { const hit = resolveAddress(S, v, 'link'); choose(S, hit, { remote_endpoint: v.trim() }); O55.ui.refresh(); }
+      proxy(S, v) { const was = cd(S).server_ref, hit = resolveAddress(S, v, 'proxy'); choose(S, hit, { proxy_hostname: v.trim() }); O55.ui.refresh(); foundIf(was, hit); },
+      link(S, v) { const was = cd(S).server_ref, hit = resolveAddress(S, v, 'link'); choose(S, hit, { remote_endpoint: v.trim() }); O55.ui.refresh(); foundIf(was, hit); }
     }
   });
 
@@ -148,8 +158,11 @@
     do: {
       pairing(S, v) { if (S.sess.connect.paired) return; O55.draft.set(cd(S), { connection_pairing: v }); S.save(); O55.ui.refresh(); },
       connect(S) {
-        if (!S.sess.connect.paired) { S.sess.connect.confirmed = true; O55.draft.set(cd(S), { review_confirmed: true }); S.save(); }
-        O55.ui.go(S.sess.connect.paired ? 'c-ready' : 'c-pair');
+        if (S.sess.connect.paired) return O55.ui.go('c-ready');
+        S.sess.connect.confirmed = true; O55.draft.set(cd(S), { review_confirmed: true }); S.save();
+        /* the connect journey's one confirmation: its own sound carries the screen change (one moment, not two) */
+        O55.sound.play('commit', SND.connect);
+        O55.ui.go('c-pair', { silent: true });
       }
     }
   });
@@ -164,7 +177,7 @@
       return;
     }
     const mid = d.connection_pairing === 'qr' ? { key: 'qr', ms: 1900 } : { key: 'approve', ms: 2800 };
-    F.op(S, 'pair:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload: { server: s.id, method: d.connection_pairing }, onDone: done });
+    F.op(S, 'pair:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload: { server: s.id, method: d.connection_pairing }, sound: PAIR_SOUND, onDone: done });
   }
   def('c-pair', {
     chapter: 'computer', stage: 'automatic_preparation',
@@ -207,7 +220,7 @@
         const ok = String(c.code || '').replace(/[\s-]/g, '').toUpperCase() === String(s.code).replace(/-/g, '');
         F.reset(S, 'paircode:' + s.id);
         F.op(S, 'paircode:' + s.id, 'cmd.client.pair.start', [{ key: 'code', ms: 500, fail: () => (ok ? null : 'code_mismatch') }, { key: 'trust', ms: 800 }],
-          { payload: { server: s.id, method: 'code' }, onDone: () => { c.paired = true; O55.draft.set(cd(S), { server_trust_confirmed: true }); S.save(); O55.ui.refresh(); } });
+          { payload: { server: s.id, method: 'code' }, sound: CODE_SOUND, onDone: () => { c.paired = true; O55.draft.set(cd(S), { server_trust_confirmed: true }); S.save(); O55.ui.refresh(); } });
       },
       next(S) { O55.ui.go('c-ready'); }
     },
@@ -230,7 +243,7 @@
       const sel = c.openProject || (s.projects[0] && s.projects[0].id);
       /* Create a new Project comes first: it is the one choice this page adds (Jared's ask); opening an existing
          Project is a quiet pick from the Server's list */
-      let out = `<button type="button" class="o55-card o55-card-link" data-o55-do="createNew" data-pm-hover-exempt="true" data-key="create">${C.glyph('seed')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('connect.ready.create'))}</span><span class="o55-cardsub">${U.esc(T('connect.ready.createSub', { name: s.name }))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`;
+      let out = `<button type="button" class="o55-card o55-card-link" data-o55-do="createNew" data-o55-sound="self" data-pm-hover-exempt="true" data-key="create">${C.glyph('seed')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('connect.ready.create'))}</span><span class="o55-cardsub">${U.esc(T('connect.ready.createSub', { name: s.name }))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`;
       out += s.projects.length ? C.group(T('connect.ready.projectsTitle', { name: s.name }), C.cards('pickProject', s.projects.map((p) => ({ v: p.id, glyph: 'folder', title: p.name, sub: T('like.updated', { when: p.updated }), quiet: true })), sel, { cls: 'o55-choices-quiet', label: T('connect.ready.projectsTitle', { name: s.name }) }))
         : C.note(T('connect.ready.noProjects', { name: s.name }), 'info', 'seed');
       if (s.accounts.length) out += C.group(T('connect.ready.aiTitle', { name: s.name }), s.accounts.map((a) => C.row({ key: a.label, glyph: 'spark', title: a.label, state: a.ready ? ['ready', T('ai.ready')] : ['needs', T('ai.notReady')] })).join(''));

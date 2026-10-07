@@ -15,6 +15,8 @@
   const serverProjects = (S) => { const d = md(S); const s = d.server_mode === 'existing_server' && O55.connect ? O55.connect.allServers(S).find((x) => x.id === d.server_ref) : null; return s ? s.projects : []; };
   const pretty = (s) => String(s || '').replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim().replace(/^./, (c) => c.toUpperCase());
   const docsPath = (S, name) => S.env.here.projectsRoot + ' › ' + (name || T('name.placeholder'));
+  /* sound options (priority: 1 a control's own sound over the generic tap, 2 an outcome) */
+  const SND = { own: { priority: 1 }, warn: { intensity: 0.4, priority: 2 } };
 
   /* ------------------------------------------------------------------ how should your Project begin? */
   const choiceOf = (S) => {
@@ -145,10 +147,12 @@
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !(st && st.state === 'done'), reason: T('missing.folder') } };
     },
     do: {
-      pick(S, path) { S.sess.folder = { path }; S.save(); F.op(S, 'folder:' + path, 'cmd.project.source_location.test', [{ key: 'read', ms: 700 }], { payload: { path } }); O55.ui.refresh(); },
-      browse(S) { S.sess.ui.sheet = 'tree'; S.sess.ui.treeAt = treeRoot(S); S.save(); O55.ui.refresh(); },
-      treeGo(S, path) { const tree = treeOf(S); S.sess.ui.treeAt = path; if (!tree[path]) tree[path] = []; S.save(); O55.ui.refresh(); },
-      treePick(S) { const path = S.sess.ui.treeAt; S.sess.ui.sheet = null; S.save(); O55.screens.defs['ex-folder'].do.pick(S, path); },
+      /* the read-only look at a folder finds what it holds (its history, its online copy) */
+      pick(S, path) { S.sess.folder = { path }; S.save(); F.op(S, 'folder:' + path, 'cmd.project.source_location.test', [{ key: 'read', ms: 700 }], { payload: { path }, sound: { done: 'found', intensity: 0.5 } }); O55.ui.refresh(); },
+      browse(S) { S.sess.ui.sheet = 'tree'; S.sess.ui.treeAt = treeRoot(S); S.save(); O55.ui.refresh(); O55.sound.play('sheet', SND.own); },
+      /* each level deeper sounds a step higher, as the crumbs grow */
+      treeGo(S, path) { const tree = treeOf(S); S.sess.ui.treeAt = path; if (!tree[path]) tree[path] = []; S.save(); O55.ui.refresh(); O55.sound.play('move', { step: path.split('/').length - 1, priority: 1 }); },
+      treePick(S) { const path = S.sess.ui.treeAt; S.sess.ui.sheet = null; S.save(); O55.sound.play('select', SND.own); O55.screens.defs['ex-folder'].do.pick(S, path); },
       next(S) {
         const path = S.sess.folder.path, info = folderInfo(S, path), d = md(S);
         O55.draft.set(d, { project_source_ref: 'folder:' + path.replace(/^~\//, 'home/').replace(/\s+/g, '-'), local_location_mode: 'custom', local_location: path, history_backend: info.history === 'jujutsu' ? 'jujutsu' : d.history_backend, project_name: d.project_name || pretty(info.name), preflight_result_refs: Array.from(new Set(d.preflight_result_refs.concat(['preflight:folder:' + U.slug(path)]))).slice(0, 32) });
@@ -224,7 +228,7 @@
         if (v === 'network_location' && !md(S).storage_location) { S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'storage' }); S.save(); return O55.ui.go('nas-find'); }
         O55.ui.refresh();
       },
-      change(S) { S.sess.ui.sheet = 'loc'; S.save(); O55.ui.refresh(); },
+      change(S) { S.sess.ui.sheet = 'loc'; S.save(); O55.ui.refresh(); O55.sound.play('sheet', SND.own); },
       loc(S, v) {
         const d = md(S);
         if (v === 'auto') O55.draft.set(d, { local_location_mode: 'automatic', local_location: '', storage_mode: 'this_device' });
@@ -241,7 +245,13 @@
       }
     },
     bind: {
-      name(S, v) { const was = !nameProblem(S, md(S).project_name) && F.nonEmpty(md(S).project_name), grew = v.length > (md(S).project_name || '').length; S.sess.ui.nameTouched = true; O55.draft.set(md(S), { project_name: v }); S.save(); O55.ui.refresh(); lettered(S, v, grew, was); },
+      name(S, v) {
+        const before = nameProblem(S, md(S).project_name), was = !before && F.nonEmpty(md(S).project_name), grew = v.length > (md(S).project_name || '').length;
+        S.sess.ui.nameTouched = true; O55.draft.set(md(S), { project_name: v }); S.save(); O55.ui.refresh(); lettered(S, v, grew, was);
+        /* a name that becomes one that cannot be used (taken, too long) warns softly with the hint that says why */
+        const now = F.nonEmpty(v) ? nameProblem(S, v) : '';
+        if (now && now !== before) O55.sound.play('warn', SND.warn);
+      },
       custom(S, v) { O55.draft.set(md(S), { local_location: v }); S.save(); }
     },
     leave(S) { if (S.sess.ui.sheet === 'loc') { S.sess.ui.sheet = null; S.save(); } }
@@ -323,7 +333,7 @@
         const hash = await sha256(JSON.stringify(pv || {}));
         if (md(S).settings_transfer.source_project_id === v) { md(S).settings_transfer.draft_preview_sha256 = hash; S.save(); }
       },
-      choose(S) { S.sess.ui.sheet = 'cats'; S.save(); O55.ui.refresh(); },
+      choose(S) { S.sess.ui.sheet = 'cats'; S.save(); O55.ui.refresh(); O55.sound.play('sheet', SND.own); },
       cat(S, cat) {
         const all = ST().categories(), cur = new Set((S.sess.like && S.sess.like.categories) || all);
         if (cur.has(cat)) cur.delete(cat); else cur.add(cat);
