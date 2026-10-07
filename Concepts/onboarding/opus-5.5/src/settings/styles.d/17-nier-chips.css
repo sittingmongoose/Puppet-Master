@@ -179,3 +179,15 @@ html[data-motion="reduced"] :is(#panel-settings, .o55nc-host) :is(.o55nc-chip, .
   .o55nc-host .o55nc-top { grid-template-columns: 1fr; }
   .o55nc-host .o55nc-scenes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* ---------- popup and mount chrome: the lead line and the Done footer, the same as the drawer's ----------
+   The drawer renders its lead as .pm51-hero-summary and its footer as .pm51-panel-foot with a ghost Done
+   button; both are styled only under #panel-settings, so outside the sheet the same classes need these
+   host-scoped rules, reading the drawer's values through the host's --k3-* bridge. */
+.o55nc-pop-titles .pm51-hero-summary { margin: 6px 0 0; font-size: 13px; line-height: 1.6; color: var(--k3-text-2, var(--text-secondary)); max-width: 60ch; }
+.o55nc-mount-lead { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: var(--k3-text-2, var(--text-secondary)); max-width: 60ch; }
+:is(.o55nc-pop-foot, .o55nc-mount-foot) { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--k3-line, var(--border)); background: var(--k3-surface-1, var(--surface)); }
+.o55nc-pop-foot { flex: 0 0 auto; }
+.o55nc-mount-foot { margin-top: 14px; }
+:is(.o55nc-pop-foot, .o55nc-mount-foot) .btn { min-height: 36px; padding: 0 16px; border: 1px solid transparent; border-radius: 9px; background: none; color: var(--k3-text-2, var(--text-secondary)); font-size: 12.5px; font-weight: 650; cursor: pointer; }
+:is(.o55nc-pop-foot, .o55nc-mount-foot) .btn:hover { background: var(--k3-bg-2, var(--surface)); color: var(--k3-text-1, var(--text-primary)); }

@@ -229,21 +229,31 @@ var localLiveStore;
     const btn = document.getElementById('themeSelect');
     if (btn) { try { btn.focus(); } catch (e) { /* leave focus where it is */ } }
   }
+  /* The lead line under the title, the drawer's summary; a preview store's changes land with the look. */
+  const LEAD_LIVE = 'Install or remove each part. A change applies at once and is saved.';
+  const LEAD_PREVIEW = 'Install or remove each part. You see each change now; it is kept with your look when setup finishes.';
+  const leadFor = store => (store && store.kind === 'preview' ? LEAD_PREVIEW : LEAD_LIVE);
+  /* The page's hover/focus tag layer paints a label card over buttons; popup and mount opt out of it. */
+  const exemptHover = root => root.querySelectorAll('button, [href], input, select, textarea, [tabindex]')
+    .forEach(el => el.setAttribute('data-pm-hover-exempt', 'true'));
   function popup(opts) {
     opts = opts || {};
     if (popApi) popApi.close();
     const store = opts.store || storeFor('live');
     const title = opts.title ? String(opts.title) : 'NieR Mode';
+    const lead = leadFor(store);
     const from = opts.from || null;
     const root = document.createElement('div');
     root.className = 'o55nc-pop'; root.id = 'o55nc-pop';
     root.innerHTML = `<div class="o55nc-pop-scrim" data-o55nc-pop="scrim"></div>`
       + `<div class="o55nc-pop-dialog o55nc-host" role="dialog" aria-modal="true" aria-labelledby="o55nc-pop-title" style="z-index:1">`
       + `<header class="o55nc-pop-head"><div class="o55nc-pop-titles"><p class="o55nc-pop-eye">Plug-in Chips</p>`
-      + `<h2 class="o55nc-pop-title" id="o55nc-pop-title">${esc(title)}</h2></div>`
+      + `<h2 class="o55nc-pop-title" id="o55nc-pop-title">${esc(title)}</h2><p class="pm51-hero-summary o55nc-pop-lead">${esc(lead)}</p></div>`
       + `<button type="button" class="o55nc-pop-x" data-o55nc-pop="close" aria-label="Close">`
       + `<svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 3 L11 11 M11 3 L3 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>`
-      + `</button></header><div class="o55nc-pop-body">${body(store)}</div></div>`;
+      + `</button></header><div class="o55nc-pop-body">${body(store)}</div>`
+      + `<footer class="pm51-panel-foot o55nc-pop-foot"><button type="button" class="btn" data-o55nc-pop="close">Done</button></footer></div>`;
+    exemptHover(root);
     root.style.zIndex = String(POP_Z);
     const dialog = root.querySelector('.o55nc-pop-dialog');
     let dead = false;
@@ -287,13 +297,19 @@ var localLiveStore;
     host.classList.add('o55nc-host');
     const shell = document.createElement('div');
     shell.className = 'o55nc-mount';
-    shell.innerHTML = body(store);
+    shell.innerHTML = `<p class="pm51-hero-summary o55nc-mount-lead">${esc(leadFor(store))}</p>` + body(store)
+      + `<footer class="pm51-panel-foot o55nc-mount-foot"><button type="button" class="btn" data-o55nc-done>Done</button></footer>`;
     host.appendChild(shell);
+    exemptHover(shell);
     const session = bind(shell, store);
+    const done = shell.querySelector('[data-o55nc-done]');
+    const onDone = () => { if (typeof opts.onClose === 'function') { try { opts.onClose(); } catch (e) { /* the host owns its own close */ } } };
+    if (done) done.addEventListener('click', onDone);
     let dead = false;
     return { unmount() {
       if (dead) return; dead = true;
       session.destroy();
+      if (done) done.removeEventListener('click', onDone);
       shell.remove();
       if (!host.querySelector('.o55nc')) host.classList.remove('o55nc-host');
       if (typeof opts.onClose === 'function') { try { opts.onClose(); } catch (e) { /* the host owns its own close */ } }
