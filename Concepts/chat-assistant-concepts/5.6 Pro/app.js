@@ -186,6 +186,10 @@
   let workTimer = null;
   let seqTimer = null;
   let hoverTimer = null;
+  /* Label tips: 1s cold, 120ms while a tip is up or within 300ms after one closed.
+     Activity previews dwell 650ms. A press suppresses that anchor's tip until the pointer leaves. */
+  const TIP_OPEN_MS=1000, TIP_WARM_MS=120, TIP_WARM_WINDOW_MS=300, ACT_PREVIEW_MS=650;
+  let tipLastVisibleAt=0, tipSuppressKey=null;
   let copyFlashTimer = null;
   let submenuTimer = null;
   let dragState = null;
@@ -517,9 +521,9 @@
       <div class="brand"><i class="brand-mark"></i><span>Puppet Master</span><small data-concept-model="5.6 Pro">Assistant Concept Lab · 5.6 Pro</small></div>
       <div class="header-spacer"></div>
       <div class="header-actions">
-        <button class="header-chip" data-action="toggle-history" title="Thread history">${icon('history',14)}<span class="optional">Threads</span></button>
-        <button class="header-chip" data-action="open-demo" title="Open the complete demo and component mixer">${icon('sliders',14)}<span class="label">Demo Studio</span></button>
-        <button class="header-chip" data-action="reset-all" title="Reset the entire concept to its stock state">${icon('reset',14)}<span class="optional">Reset</span></button>
+        <button class="header-chip" data-action="toggle-history"${hoverAttrs('header-threads','Thread history')}>${icon('history',14)}<span class="optional">Threads</span></button>
+        <button class="header-chip" data-action="open-demo"${hoverAttrs('header-demo','Open the complete demo and component mixer')}>${icon('sliders',14)}<span class="label">Demo Studio</span></button>
+        <button class="header-chip" data-action="reset-all"${hoverAttrs('header-reset','Reset the entire concept to its stock state')}>${icon('reset',14)}<span class="optional">Reset</span></button>
       </div>
     </header>`;
   }
@@ -561,9 +565,9 @@
   }
   function renderEditor() {
     return `<section class="editor-pane">
-      <div class="editor-tabs"><button class="editor-return icon-button" data-action="return-to-chat" title="Return to chat">${icon('chat',15)}</button>${state.editorTabs.map(id => {
+      <div class="editor-tabs"><button class="editor-return icon-button" data-action="return-to-chat"${hoverAttrs('editor-return','Return to chat')}>${icon('chat',15)}</button>${state.editorTabs.map(id => {
         const label=editorTabLabel(id);
-        return `<button class="editor-tab ${state.activeEditor===id?'active':''}" data-action="select-editor" data-id="${esc(id)}" title="${esc(label)}"><span class="editor-tab-label">${esc(label)}</span><span class="close" data-action="close-editor" data-id="${esc(id)}">${icon('close',12)}</span></button>`;
+        return `<button class="editor-tab ${state.activeEditor===id?'active':''}" data-action="select-editor" data-id="${esc(id)}"${hoverAttrs('editor-tab:'+id, label)}><span class="editor-tab-label">${esc(label)}</span><span class="close" data-action="close-editor" data-id="${esc(id)}">${icon('close',12)}</span></button>`;
       }).join('')}</div>
       <div class="editor-body" data-scroll-key="editor">${renderEditorBody()}</div>
     </section>`;
@@ -3045,20 +3049,23 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(state.hover.type==='activity') return !state.menu;
     return false;
   }
+  function noteTextTipGone(el){
+    if(el && String(el.dataset.hoverSig||'').startsWith('text|')) tipLastVisibleAt=performance.now();
+  }
   function syncHoverCard(){
     const root=document.getElementById('pmOverlayRoot');
     if(!root) return;
     let el=root.querySelector(':scope > [data-overlay="hover"]');
     if(!hoverCardAllowed()){
-      if(el) el.remove();
+      if(el){ noteTextTipGone(el); el.remove(); }
       return;
     }
     const html=renderHoverCard();
-    if(!html){ if(el) el.remove(); return; }
+    if(!html){ if(el){ noteTextTipGone(el); el.remove(); } return; }
     const wrap=document.createElement('div');
     wrap.innerHTML=html;
     const next=wrap.firstElementChild;
-    if(!next){ if(el) el.remove(); return; }
+    if(!next){ if(el){ noteTextTipGone(el); el.remove(); } return; }
     /* Remount only when the tip identity changes. Same key with updated copy
        (e.g. live Orbit disc status) patches text in place so the card does
        not blink across work ticks. */
@@ -3068,6 +3075,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       root.appendChild(next);
       el=next;
     } else if(el.dataset.hoverSig!==idSig){
+      noteTextTipGone(el);
       el.replaceWith(next);
       el=next;
     } else {
@@ -3111,6 +3119,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       el.style.top=`${clamp(top,8,window.innerHeight-r.height-8)}px`;
     } else if(!anchor&&el&&state.hover.type==='text'){
       state.hover=null;
+      noteTextTipGone(el);
       el.remove();
     }
   }
@@ -3292,7 +3301,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
            modelMenuHeight() so the two cannot disagree.
        Measured, not assumed: verified in-browser that .model-scroll's
        scrollHeight exceeds its clientHeight and that it really scrolls. */
-    return `<div class="model-layout" style="height:100%;max-height:none;grid-template-rows:minmax(0,1fr)"><div class="provider-rail"><button class="provider-button ${state.modelProvider==='favorites'?'active':''}" data-action="model-provider" data-value="favorites" title="Favorites">${icon('star',14)}</button><button class="provider-button ${state.modelProvider==='all'?'active':''}" data-action="model-provider" data-value="all" title="All configured providers">${icon('users',14)}</button>${providers.map(p=>`<button class="provider-button ${state.modelProvider===p?'active':''}" data-action="model-provider" data-value="${esc(p)}" title="${esc(p)}">${providerMark(p,16)}</button>`).join('')}</div><div class="model-main"><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="model-search" value="${esc(state.modelSearch)}" placeholder="Search configured models…"></label></div><div class="model-scroll">${models.length?groupModels(models):`<div style="padding:18px;text-align:center;color:var(--muted);font-size:11px">No configured model matches this view.</div>`}</div></div></div>`;
+    return `<div class="model-layout" style="height:100%;max-height:none;grid-template-rows:minmax(0,1fr)"><div class="provider-rail"><button class="provider-button ${state.modelProvider==='favorites'?'active':''}" data-action="model-provider" data-value="favorites"${hoverAttrs('model-provider:favorites','Favorites')}>${icon('star',14)}</button><button class="provider-button ${state.modelProvider==='all'?'active':''}" data-action="model-provider" data-value="all"${hoverAttrs('model-provider:all','All configured providers')}>${icon('users',14)}</button>${providers.map(p=>`<button class="provider-button ${state.modelProvider===p?'active':''}" data-action="model-provider" data-value="${esc(p)}"${hoverAttrs('model-provider:'+p, p)}>${providerMark(p,16)}</button>`).join('')}</div><div class="model-main"><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="model-search" value="${esc(state.modelSearch)}" placeholder="Search configured models…"></label></div><div class="model-scroll">${models.length?groupModels(models):`<div style="padding:18px;text-align:center;color:var(--muted);font-size:11px">No configured model matches this view.</div>`}</div></div></div>`;
   }
   function effortWords(m){
     return `<span class="effort-words">${m.efforts.map((e,i)=>{
@@ -3302,7 +3311,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}" title="${isFavorite(m.id)?'Remove from':'Add to'} favorites">${icon('star',12)}</button></div>`).join('')}`).join('');
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}"${hoverAttrs('model-fav:'+m.id,(isFavorite(m.id)?'Remove from':'Add to')+' favorites')}>${icon('star',12)}</button></div>`).join('')}`).join('');
   }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a
@@ -4320,16 +4329,21 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const tip=e.target.closest('[data-hover-tip]');
     if(tip){
       const key=tip.dataset.hoverKey||'';
+      /* A press on this anchor dismissed its tip; keep it shut until pointerout. */
+      if(key===tipSuppressKey){ clearTimeout(hoverTimer); return; }
       if(state.hover && state.hover.type==='text' && state.hover.key===key) return;
       clearTimeout(hoverTimer);
       const tipText=tip.dataset.hoverTip||'';
+      /* The pointer usually crosses a gap that hides the first tip before this
+         event, so the warm window is what makes an adjacent icon hand off. */
+      const warm=(state.hover&&state.hover.type==='text')||(performance.now()-tipLastVisibleAt<TIP_WARM_WINDOW_MS);
       hoverTimer=setTimeout(()=>{
         if(!tip.isConnected || !tip.contains(document.elementFromPoint(lastPointer.x,lastPointer.y))) return;
         state.hover={type:'text',tip:tipText,key};
         /* Tip-only: do not re-patch menus/drawers in #pmOverlayRoot. */
         syncHoverCard();
         requestAnimationFrame(()=>positionHoverCard());
-      },400);
+      },warm?TIP_WARM_MS:TIP_OPEN_MS);
       return;
     }
     if(state.menu){
@@ -4351,7 +4365,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
         return;
       }
       clearTimeout(hoverTimer);
-      hoverTimer=setTimeout(()=>{ state.hover={type:'activity',domain}; syncHoverCard(); requestAnimationFrame(()=>positionHoverCard()); },220);
+      hoverTimer=setTimeout(()=>{ state.hover={type:'activity',domain}; syncHoverCard(); requestAnimationFrame(()=>positionHoverCard()); },ACT_PREVIEW_MS);
       return;
     }
   });
@@ -4362,6 +4376,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const act=e.target.closest('[data-hover-domain],[data-hover-tip]');
     if(act&&!act.contains(e.relatedTarget)){
       clearTimeout(hoverTimer);
+      if(act.hasAttribute('data-hover-tip') && (act.dataset.hoverKey||'')===tipSuppressKey) tipSuppressKey=null;
       hoverTimer=setTimeout(()=>{
         if(!document.querySelector('.hover-card:hover')){
           state.hover=null;
@@ -4374,6 +4389,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
   document.addEventListener('pointerdown',e=>{
     /* Send/Stop (send-stop.js): a pressed chip drops its tip, a pending one too, so no tip re-renders over the hero */
     if(e.target.closest('.sendstop')){clearTimeout(hoverTimer);if(state.hover){state.hover=null;syncHoverCard();}}
+    const ta=e.target.closest('[data-hover-tip]');
+    if(ta){clearTimeout(hoverTimer); tipSuppressKey=ta.dataset.hoverKey||''; if(state.hover?.type==='text'){state.hover=null;syncHoverCard();}}
     const actBtn=e.target.closest('[data-action="open-activity"]');
     /* A preview footer must survive through click. Removing its overlay on
        pointerdown disconnects the button before click can dispatch. Bar
