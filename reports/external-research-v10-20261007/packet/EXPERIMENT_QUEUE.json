@@ -1,0 +1,622 @@
+{
+  "schema": "pm.er10.t3.experiment-menu.v1",
+  "status": "AUTHORING_ONLY_NOT_EXECUTED",
+  "objective": "Substantially reduce research-to-usable-proposal latency and quota at unchanged required source quality and discovery coverage.",
+  "counts": {
+    "method_hypotheses": 16,
+    "targeted_pairs": 24,
+    "integrated_pairs": 12,
+    "confirmation_pairs": 4,
+    "total_pairs": 40,
+    "logical_arms": 80,
+    "complete_pipeline_executions_target": 32
+  },
+  "registration_note": "This is a finite design menu, not an activation, an assurance of completion or a fixed case answer key. Executing orchestrator binds legitimate cases, exact tools, per-job limits and models prospectively.",
+  "methods": [
+    {
+      "id": "M01",
+      "title": "Two substantive stages rather than three",
+      "group": "topology",
+      "second_case": true,
+      "control": "Fresh researcher, fresh critic, then a separate final revision.",
+      "treatment": "Fresh researcher, then a fresh critic that checks and authors the complete final; preserve real critique dispositions.",
+      "unit": "A coherent research-and-proposal module; integrated topology contrasts also exercise the complete brief.",
+      "measure": "Final correctness and supported coverage; handoff loss; total latency, occupancy and output. Equal aggregate budget; record stage allocation.",
+      "guard": "Do not import old I-07 answers or reuse its timing as a contemporaneous control. Fewer stages are not automatically better."
+    },
+    {
+      "id": "M02",
+      "title": "Coherent multi-question batching",
+      "group": "research throughput",
+      "second_case": true,
+      "control": "Comparable related questions handled in separate bounded candidate research assignments.",
+      "treatment": "One coherent assignment researches the same questions together and reuses their shared context.",
+      "unit": "Two or three related questions with cross-cutting conditions; not unrelated full product domains.",
+      "measure": "Repeated reading/writing and cold-start cost, same supported question coverage, cross-question confusion.",
+      "guard": "Keep a per-question disposition and shared-condition map. Count all control jobs and all treatment work; no gratuitously wasteful baseline."
+    },
+    {
+      "id": "M03",
+      "title": "Progressive, repository-guided evidence retrieval",
+      "group": "retrieval",
+      "second_case": true,
+      "control": "Reasonable native search/read workflow, without forced whole-repository scans.",
+      "treatment": "Use available file/symbol/section navigation, read focused evidence, and expand to governing definitions and call paths when needed.",
+      "unit": "Actual component behavior at a pinned version, including a condition outside the first matching passage.",
+      "measure": "Source-reading time and delivered context versus correct mechanism interpretation, missed conditions and versions.",
+      "guard": "Do not replace source inspection with an architecture summary or hide relevant sources from control. Navigation is an index, not evidence of truth."
+    },
+    {
+      "id": "M04",
+      "title": "Exact evidence reuse across stages",
+      "group": "retrieval",
+      "second_case": true,
+      "control": "Each stage independently obtains its requested source bytes through ordinary access.",
+      "treatment": "Same-case source cache resolves exact requested URLs/commits and extraction versions; critics retain independent query freedom.",
+      "unit": "Repeated use of public documentation and code across research and criticism.",
+      "measure": "Cold fetch plus subsequent cost, cache hits, source freshness and critique quality.",
+      "guard": "Do not give treatment evaluator summaries or preselected answers. Content-address raw bytes, never share sibling answers; report cold and warm economics separately."
+    },
+    {
+      "id": "M05",
+      "title": "Incremental research and already-covered reuse",
+      "group": "incremental work",
+      "second_case": true,
+      "control": "A legitimate full refresh after a predefined plan/source change.",
+      "treatment": "Reuse exact supported prior findings whose declared dependencies remain unchanged; research the changed dependency closure.",
+      "unit": "A no-op change plus a substantive source/API/plan change, with obligations at the dependency boundary.",
+      "measure": "Refresh time, missed invalidations, false already-covered classifications, cold-seed cost and amortized cost.",
+      "guard": "Both arms receive the same legitimate prior state. Similar wording is not equivalence; unresolved dependencies cannot silently be accepted as covered."
+    },
+    {
+      "id": "M06",
+      "title": "Executed checks with an independent oracle",
+      "group": "semantic verification",
+      "second_case": true,
+      "control": "Source-grounded checking using ordinary reasoning and existing general tools, without the specific oracle recipe.",
+      "treatment": "Candidate selects bounded trusted operations, independent derivations, differential or metamorphic checks, then binds the result to its report.",
+      "unit": "A consequential numerical, serialization, ordering or identity claim with correct and incorrect controls.",
+      "measure": "Correct defect detection, false rejection, executed-result/report agreement, verification time and usage.",
+      "guard": "Executing the claimed formula is not an oracle. A round trip between mutually wrong functions is insufficient. Check applicability, units, versions, and test discrimination."
+    },
+    {
+      "id": "M07",
+      "title": "Critical-dependency-first verification with protected coverage",
+      "group": "semantic verification",
+      "second_case": true,
+      "control": "Reasonable full-scope critic allocating attention in normal document order.",
+      "treatment": "Verify assumptions that could invalidate the selected recommendation first, while reserving an explicit lower-risk and breadth check.",
+      "unit": "A selected design with essential dependencies and independently useful optional discoveries.",
+      "measure": "Critical-error detection and time to useful correction; full required coverage and missed lower-ranked findings.",
+      "guard": "No top-k deletion of remaining leads. Unchecked optional evidence remains visible; a required promise cannot be relabeled optional to pass."
+    },
+    {
+      "id": "M08",
+      "title": "Amendment-first repair and final-change checking",
+      "group": "finalization",
+      "second_case": true,
+      "control": "Critic feedback followed by a normal coherent final rewrite.",
+      "treatment": "Amend supported finding records locally; check every changed consequential claim and affected dependency before rendering the final.",
+      "unit": "A draft containing supported material, local errors, uncertainty and interacting changes.",
+      "measure": "Lost valid findings, new final errors, citation/result drift, repeated output and finalization latency.",
+      "guard": "Required corrections can change or reject upstream claims. Exact retention of false content earns no credit; do not add an unbudgeted fourth full review."
+    },
+    {
+      "id": "M09",
+      "title": "Parallel complementary critics at equal total work budget",
+      "group": "topology",
+      "second_case": false,
+      "control": "One critic reviews the declared bounded scope.",
+      "treatment": "Two same-family critics cover complementary evidence/implementation risks in parallel, followed by explicit reconciliation.",
+      "unit": "One bounded module whose two review responsibilities are meaningful and overlap on a small critical seam.",
+      "measure": "Critical-path time, aggregate occupied time, unique correct defects, contradictions and reconciliation cost.",
+      "guard": "Total candidate budget includes both critics and reconciliation. Majority agreement is not source truth; nested tasks consume the family concurrency allocation."
+    },
+    {
+      "id": "M10",
+      "title": "Evidence-first criticism to reduce agreement bias",
+      "group": "semantic verification",
+      "second_case": false,
+      "control": "Critic reads the proposal before checking the evidence.",
+      "treatment": "Critic first derives a short answer to the same bounded question from legitimate sources, then receives the candidate claim and reconciles.",
+      "unit": "Supported claims, plausible false claims and justified uncertainty on the same source task.",
+      "measure": "False endorsement, false rejection, discovery of counterevidence and additional cost.",
+      "guard": "Candidate critic is still flash-level. Do not leak evaluator-derived answers or turn the first phase into unbounded duplicate research."
+    },
+    {
+      "id": "M11",
+      "title": "Early release/API and unit/domain binding",
+      "group": "source interpretation",
+      "second_case": false,
+      "control": "Normal source-grounded research that resolves versions and units as it proceeds.",
+      "treatment": "Bind the chosen component release, API/default behavior, coordinate/unit/type domains and applicability before dependent derivations.",
+      "unit": "A component recommendation with an older issue, a fix, a current release and a nontrivial applicability condition.",
+      "measure": "Avoided false incompatibilities and rework, correct affected-version boundaries, total reading and writing.",
+      "guard": "A released fix is not proof all platforms are safe. Do not treat missing units as absent calibration or a comment as proof of every code path."
+    },
+    {
+      "id": "M12",
+      "title": "Protected breadth, assumptions and cross-component analogies",
+      "group": "discovery",
+      "second_case": false,
+      "control": "Competent brief-only open discovery without a diversity-specific recipe.",
+      "treatment": "Explore different mechanism families and challenge product assumptions, including analogous components outside direct competitors.",
+      "unit": "An open research question based on a thin plan/brief, not an assigned answer-bearing source list.",
+      "measure": "Distinct useful supported opportunities, avoided risks, breadth, redundant leads and time to decision-ready findings.",
+      "guard": "A fixed source count is not breadth. Preserve negative discoveries and uncertainty; no evaluator answer list or premium subject-matter hints."
+    },
+    {
+      "id": "M13",
+      "title": "Implementation and issue-to-regression investigation",
+      "group": "discovery",
+      "second_case": false,
+      "control": "Ordinary documentation plus relevant issue/repository reading.",
+      "treatment": "Trace an implementation branch and a real issue through fix, regression test and applicable release; stop when the bounded decision is supported.",
+      "unit": "A discovered component failure or improvement with potential planning implications.",
+      "measure": "Useful new mechanisms, false defect generalizations, history-reading cost and actionable test proposals.",
+      "guard": "An open issue is a lead, not consensus. A merged change is not automatically in the chosen release. Running one extracted function has a limited scope."
+    },
+    {
+      "id": "M14",
+      "title": "Decision-focused single-source delivery",
+      "group": "representation",
+      "second_case": false,
+      "control": "One competent narrative research proposal with its normal source references.",
+      "treatment": "Maintain one authoritative semantic finding set; render a concise decision view plus complete evidence, conditions and optional-lead views mechanically.",
+      "unit": "A substantial output with decisions, alternatives, source conditions, validation proposals and open questions.",
+      "measure": "Authoring/reading time, meaning preservation, downstream usability and evidence lookup failures.",
+      "guard": "Shortening by omission is failure. The host may render and assign identities but cannot write scientific conclusions; do not require four manually synchronized catalogs."
+    },
+    {
+      "id": "M15",
+      "title": "Parallel research scouts with bounded synthesis",
+      "group": "research throughput",
+      "second_case": false,
+      "control": "One candidate investigates the full bounded component question.",
+      "treatment": "Two same-family scouts investigate complementary mechanism families concurrently, then one bounded synthesis reconciles the union.",
+      "unit": "A question with independent source families and a real overlap/interaction to resolve.",
+      "measure": "Latency, aggregate cost, supported discovery coverage, duplication and synthesis loss.",
+      "guard": "No unlimited scout multiplication. Same total candidate-work ceiling; multi-account experimentation must not masquerade as a single-account product win."
+    },
+    {
+      "id": "M16",
+      "title": "One broad discovery pass shared across related plan topics",
+      "group": "research throughput",
+      "second_case": false,
+      "control": "Two or three related sandbox plan topics each perform their normal independent discovery/comparison.",
+      "treatment": "One flash-authored shared discovery inventory feeds topic-specific comparisons; independent topic obligations remain explicit.",
+      "unit": "A small multi-topic project bundle sharing a component or failure mechanism.",
+      "measure": "Whole-bundle completion time, duplicate acquisition, unique topic coverage and reuse invalidation.",
+      "guard": "Include discovery/synthesis costs and prevent shared inventory bias from erasing topic-specific unknowns. Do not mix this task-level sharing with cross-arm answer leakage."
+    }
+  ],
+  "slots": [
+    {
+      "slot_id": "D-M01-A",
+      "track": "targeted",
+      "method_id": "M01",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M01-B",
+      "track": "targeted",
+      "method_id": "M01",
+      "scenario": "B",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M02-A",
+      "track": "targeted",
+      "method_id": "M02",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M02-B",
+      "track": "targeted",
+      "method_id": "M02",
+      "scenario": "B",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M03-A",
+      "track": "targeted",
+      "method_id": "M03",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M03-B",
+      "track": "targeted",
+      "method_id": "M03",
+      "scenario": "B",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M04-A",
+      "track": "targeted",
+      "method_id": "M04",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M04-B",
+      "track": "targeted",
+      "method_id": "M04",
+      "scenario": "B",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M05-A",
+      "track": "targeted",
+      "method_id": "M05",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M05-B",
+      "track": "targeted",
+      "method_id": "M05",
+      "scenario": "B",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M06-A",
+      "track": "targeted",
+      "method_id": "M06",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M06-B",
+      "track": "targeted",
+      "method_id": "M06",
+      "scenario": "B",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M07-A",
+      "track": "targeted",
+      "method_id": "M07",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M07-B",
+      "track": "targeted",
+      "method_id": "M07",
+      "scenario": "B",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M08-A",
+      "track": "targeted",
+      "method_id": "M08",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M08-B",
+      "track": "targeted",
+      "method_id": "M08",
+      "scenario": "B",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M09-A",
+      "track": "targeted",
+      "method_id": "M09",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M10-A",
+      "track": "targeted",
+      "method_id": "M10",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M11-A",
+      "track": "targeted",
+      "method_id": "M11",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M12-A",
+      "track": "targeted",
+      "method_id": "M12",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M13-A",
+      "track": "targeted",
+      "method_id": "M13",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M14-A",
+      "track": "targeted",
+      "method_id": "M14",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M15-A",
+      "track": "targeted",
+      "method_id": "M15",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "D-M16-A",
+      "track": "targeted",
+      "method_id": "M16",
+      "scenario": "A",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-ANCHOR-MUSE",
+      "track": "integrated",
+      "recipe": "competent 3-stage versus I07-inspired 2-stage",
+      "preferred_family": "Muse",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-ANCHOR-GLM",
+      "track": "integrated",
+      "recipe": "competent 3-stage versus I07-inspired 2-stage",
+      "preferred_family": "GLM",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-ANCHOR-LUNA",
+      "track": "integrated",
+      "recipe": "competent 3-stage versus I07-inspired 2-stage",
+      "preferred_family": "Luna",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-METHOD-01",
+      "track": "integrated",
+      "recipe": "prospectively select a distinct promising technique or explicit bundle",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-METHOD-02",
+      "track": "integrated",
+      "recipe": "prospectively select a distinct promising technique or explicit bundle",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-METHOD-03",
+      "track": "integrated",
+      "recipe": "prospectively select a distinct promising technique or explicit bundle",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-METHOD-04",
+      "track": "integrated",
+      "recipe": "prospectively select a distinct promising technique or explicit bundle",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-METHOD-05",
+      "track": "integrated",
+      "recipe": "prospectively select a distinct promising technique or explicit bundle",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-METHOD-06",
+      "track": "integrated",
+      "recipe": "prospectively select a distinct promising technique or explicit bundle",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-FAST-01",
+      "track": "integrated",
+      "recipe": "standard-budget baseline versus predeclared compressed-budget recipe",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-FAST-02",
+      "track": "integrated",
+      "recipe": "standard-budget baseline versus predeclared compressed-budget recipe",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "I-FAST-03",
+      "track": "integrated",
+      "recipe": "standard-budget baseline versus predeclared compressed-budget recipe",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "C-01",
+      "track": "confirmation",
+      "recipe": "one locked recipe versus baseline; 2 held-out domains x 2 repetitions",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "C-02",
+      "track": "confirmation",
+      "recipe": "one locked recipe versus baseline; 2 held-out domains x 2 repetitions",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "C-03",
+      "track": "confirmation",
+      "recipe": "one locked recipe versus baseline; 2 held-out domains x 2 repetitions",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    },
+    {
+      "slot_id": "C-04",
+      "track": "confirmation",
+      "recipe": "one locked recipe versus baseline; 2 held-out domains x 2 repetitions",
+      "arms": [
+        "control",
+        "treatment"
+      ],
+      "status": "PLANNED_NOT_RUN"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "pm.er10.state.v1",
+  "campaign": "er10-20261007-5a126dd5",
+  "root_thread": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad",
+  "runtime_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/er10-20261007-5a126dd5",
+  "publication_checkout": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+  "branch": "t3/research/er10-research-efficiency-campaign",
+  "report_path": "reports/external-research-v10-20261007",
+  "base": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+  "history": "d22f476f89a2a8fb772056d5624b95017c49fdba",
+  "limits": {
+    "muse_goals": 4,
+    "glm_goals": 2,
+    "min_memory_available_gb": 6,
+    "scratch_high_water_bytes": 8589934592,
+    "compact_retention_budget_bytes": 536870912
+  },
+  "root_effort_override": "Current user says Max, superseding packet Ultra",
+  "native_goal_claim": "Root Goal activated. Candidate activation is independently inspected separately; task status alone is insufficient.",
+  "provider_bindings": [
+    {
+      "role": "root",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    {
+      "role": "candidate",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    {
+      "role": "candidate",
+      "providerInstanceId": "muse",
+      "model": "muse-spark-1.3-contributor",
+      "reasoning_effort": "max"
+    },
+    {
+      "role": "candidate",
+      "providerInstanceId": "zcode",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "thought": "max"
+    }
+  ]
+}

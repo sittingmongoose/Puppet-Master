@@ -1,0 +1,137 @@
+{
+  "schema": "pm.er10.packet-authoring-checks.v1",
+  "status": "PASS_AUTHORING_CHECKS_ONLY",
+  "start_prompt_characters": 3923,
+  "handoff_words": 6931,
+  "checks_passed": 29,
+  "checks": [
+    {
+      "check": "start prompt below 4000 characters",
+      "passed": true
+    },
+    {
+      "check": "start prompt begins native Goal command",
+      "passed": true
+    },
+    {
+      "check": "16 distinct method IDs",
+      "passed": true
+    },
+    {
+      "check": "16 handoff technique cards exactly match queue titles",
+      "passed": true
+    },
+    {
+      "check": "40 unique comparison slots",
+      "passed": true
+    },
+    {
+      "check": "24 targeted / 12 integrated / 4 confirmation",
+      "passed": true
+    },
+    {
+      "check": "80 logical arms",
+      "passed": true
+    },
+    {
+      "check": "32 full pipeline executions",
+      "passed": true
+    },
+    {
+      "check": "all slots prospective, not reported executed",
+      "passed": true
+    },
+    {
+      "check": "eight predefined second diagnostic cases",
+      "passed": true
+    },
+    {
+      "check": "every method has control treatment unit measures and guard",
+      "passed": true
+    },
+    {
+      "check": "root Ultra and monitoring Medium explicitly in handoff and start",
+      "passed": true
+    },
+    {
+      "check": "all four helper efforts explicitly represented",
+      "passed": true
+    },
+    {
+      "check": "single Codex account bound in both main instructions",
+      "passed": true
+    },
+    {
+      "check": "native T3 delegation is preferred, including Luna",
+      "passed": true
+    },
+    {
+      "check": "observed model slugs retained without guessing options",
+      "passed": true
+    },
+    {
+      "check": "native-mode capability not claimed qualified",
+      "passed": true
+    },
+    {
+      "check": "current AGENTS re-read required and T3 worktree override present",
+      "passed": true
+    },
+    {
+      "check": "publication verified before evidence deletion",
+      "passed": true
+    },
+    {
+      "check": "owned-only cleanup and worktree lifecycle safety",
+      "passed": true
+    },
+    {
+      "check": "frozen results and real permissions preserved",
+      "passed": true
+    },
+    {
+      "check": "no preparation-only stop and no old microapproval loop",
+      "passed": true
+    },
+    {
+      "check": "quality/timing goal and product-vs-campaign distinction",
+      "passed": true
+    },
+    {
+      "check": "targeted diagnostics not inflated to full-brief scope",
+      "passed": true
+    },
+    {
+      "check": "fresh real pipelines start before all targeted work completes",
+      "passed": true
+    },
+    {
+      "check": "confirmation has two domains and independent repetitions",
+      "passed": true
+    },
+    {
+      "check": "known unsafe provider holds not waved away",
+      "passed": true
+    },
+    {
+      "check": "scope and completion criteria retain unassessed states",
+      "passed": true
+    },
+    {
+      "check": "Markdown fenced-code blocks balanced",
+      "passed": true
+    }
+  ],
+  "native_campaigns_launched": 0,
+  "provider_inference_calls": 0,
+  "t3_changes": 0,
+  "claims_not_made": [
+    "Native Goal delegation qualification",
+    "Experiment outcomes",
+    "Provider quota availability",
+    "Scientific efficacy",
+    "Read access to newer local AGENTS",
+    "Actual cleanup of user resources"
+  ],
+  "verification_scope": "Internal packet counts, named selections, execution boundaries, content invariants and ZIP byte preservation; not runtime tests or scientific review."
+}
