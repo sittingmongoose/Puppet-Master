@@ -167,9 +167,9 @@ svg:where(.nx) .nx-p {
 }
 /* self-centred parts (strike and scan about their own box) */
 svg:where(.nx) .nx-pf { transform-box: fill-box; transform-origin: center; }
-/* Act overlays (nx-ov: the Fast bolt's strike fills): drawn in the
+/* Act overlays (nx-ov: the Fast bolt's strike fills, the wand's sparkle bursts): drawn in the
    glyph but hidden and still at rest everywhere, so no generic one-shot or loop ever shows them; only a context's own
-   keyframes light them (8b). They have no halo (neon-icons.js nh). Reduced motion leaves them hidden. */
+   keyframes light them (8b, 8c). They have no halo (neon-icons.js nh). Reduced motion leaves them hidden. */
 svg:where(.nx) .nx-ov { opacity: 0; animation: none; }
 /* continuous turns are linear in every voice (an eased orbit lurches); retro keeps its stepped texture */
 svg:where(.nx-a-spin) { --nx-le: linear; }
@@ -326,6 +326,66 @@ body[data-theme$="-light"] .nx-bolt > svg .nx-bk { fill: var(--nx-ink, currentCo
 @keyframes nx-bolt-bl-h { 0%, 18.91% { opacity: 0.08; } 20% { opacity: 0.42; } 24% { opacity: 0.14; } 27.64% { opacity: 0.34; } 32.73% { opacity: 0.2; } 100% { opacity: 0.08; } }
 @keyframes nx-bolt-bl-l { 0%, 4% { opacity: 0.07; } 4.23% { opacity: 0.24; } 5.08% { opacity: 0.09; } 5.85% { opacity: 0.19; } 6.92% { opacity: 0.12; } 21.15%, 100% { opacity: 0.07; } }
 @keyframes nx-bolt-bl-lh { 0%, 18.91% { opacity: 0.07; } 20% { opacity: 0.24; } 24% { opacity: 0.09; } 27.64% { opacity: 0.19; } 32.73% { opacity: 0.12; } 100% { opacity: 0.07; } }
+
+/* ------------------------------------------------------------------ 8c. the capabilities wand in colour (2026-10-07) */
+/* OWNER of this block: Neon icons (Jared, 2026-10-07: "The Assistant capabilities wand should be colored. Maybe silver
+   handle, gold star end, with the 3 sparkles being colored, maybe blue, pink, green? It should still read as neon ...
+   after the shake it should sparkle the colored sparkles"). The one deliberate exception to "colour is reserved for
+   status" (section 12): the composer's capabilities wand ([data-menu-anchor="wand"]) and its menu head (the
+   Assistant capabilities menu's .menu-head) paint the wand's element inks (neon-icons.js wand: nx-i-silver, -gold,
+   -blue, -pink, -green on each tube and on its own halo path), so each tube blooms in its own colour on dark themes.
+   The Skill step's wand (Orbit, the working card) is not in scope: it inks by status as before.
+   The inks are literal per theme brightness (like --nx-idle, section 1: no color-mix()), the deeper set on paper,
+   where halos are off and the ink alone carries the colour (each >= 3:1 on the light composer and menu fields). The
+   svg pins --nx-ink to the silver, so the hover ink rule (section 8, zero specificity) never greys it and neon-verify
+   17b reads it as a glyph with its own ink. NieR draws it in ink (no colour; the handle a lighter ink tone and the
+   star filled, so the star end still reads), with square caps and no glow. */
+body {
+  --nx-wand-silver: #c6cdda; --nx-wand-gold: #ffc940; --nx-wand-blue: #55aeff; --nx-wand-pink: #ff6fbc; --nx-wand-green: #46df93;
+  /* the sparkle's bloom at the peak of its twinkle (element opacity carries the curve, so it composites) */
+  --nx-h-spark-i: .8;
+}
+body[data-theme$="-light"] {
+  --nx-wand-silver: #6a7280; --nx-wand-gold: #a26f00; --nx-wand-blue: #1d6ccc; --nx-wand-pink: #c42f7c; --nx-wand-green: #16834a;
+  --nx-h-spark-i: 0;
+}
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"],
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] { --nx-ink: var(--nx-wand-silver); }
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-i-gold,
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] .nx-i-gold { stroke: var(--nx-wand-gold); }
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-i-blue,
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] .nx-i-blue { stroke: var(--nx-wand-blue); }
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-i-pink,
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] .nx-i-pink { stroke: var(--nx-wand-pink); }
+html:not([data-o55-nier="on"]) [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-i-green,
+html:not([data-o55-nier="on"]) .menu-head > svg[data-nx="wand"] .nx-i-green { stroke: var(--nx-wand-green); }
+/* NieR: ink only; a lighter ink tone on the handle and a filled star tell the parts apart without colour */
+html[data-o55-nier="on"] [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-c.nx-i-silver,
+html[data-o55-nier="on"] .menu-head > svg[data-nx="wand"] .nx-c.nx-i-silver { stroke-opacity: .55; }
+html[data-o55-nier="on"] [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-c.nx-i-gold,
+html[data-o55-nier="on"] .menu-head > svg[data-nx="wand"] .nx-c.nx-i-gold { fill: var(--nx-ink, currentColor); }
+/* The sparkle. After the hover/focus flick (the rod's 440 ms bounce), the sparkles twinkle in turn, blue, pink,
+   green, 120 ms apart (240 ms + each sparkle's --ad: 360, 480, 600 ms): each dims, turns (a plus turned 90 degrees
+   lands on itself, so it reads as a glint, never a spin), bursts into an eight-point glint (its thin diagonal cross,
+   an nx-ov overlay, flashes) with its bloom flaring to --nx-h-spark-i, and settles; all done about 1.1 s after the
+   hover. Opacity and transform only. The bloom's flare is opacity: while hovered the sparkle's halo takes the strong
+   token as its stroke-opacity and the host's halo strength over it as its element opacity, and the keyframes name
+   only the peak (the rest is the underlying value). Light themes have no halo (the token is 0, so the halo stays at
+   stroke-opacity 0 whatever its element opacity): there the dip, the turn and the burst carry it. Retro and NieR step it
+   (their --nx-ease; NieR steps(2)). Reduced motion (section 10) stops all of it. */
+[data-menu-anchor="wand"]:where(:hover, :focus-visible) > svg[data-nx="wand"] .nx-wsp { animation: nx-wand-spark 520ms var(--nx-ease) calc(240ms + var(--ad, 0) * 1ms) backwards; }
+[data-menu-anchor="wand"]:where(:hover, :focus-visible) > svg[data-nx="wand"] .nx-wsp > .nx-wray { animation: nx-wand-ray 520ms linear calc(240ms + var(--ad, 0) * 1ms) backwards; }
+[data-menu-anchor="wand"]:where(:hover, :focus-visible) > svg[data-nx="wand"] .nx-wsp > .nx-h {
+  stroke-opacity: var(--nx-h-spark-i); opacity: calc(var(--nx-hi-a, 0) / var(--nx-h-spark-i));
+  animation: nx-wand-flare 520ms linear calc(240ms + var(--ad, 0) * 1ms) backwards;
+}
+html[data-o55-nier="on"] [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-wsp,
+html[data-o55-nier="on"] [data-menu-anchor="wand"] > svg[data-nx="wand"] .nx-wray { animation-timing-function: steps(2, end); }
+/* the glint's rays are thin (the tube's weight x .55), so the burst reads as a star, not a ball */
+svg:where([data-nx="wand"]) .nx-wray { stroke-width: calc(var(--nx-stroke-base, 1.8) * var(--nx-tone-k, 1) * .55); }
+@keyframes nx-wand-spark { 0% { transform: rotate(0deg); opacity: 1; } 28% { transform: rotate(40deg); opacity: .5; } 50% { transform: rotate(68deg); opacity: 1; } 100% { transform: rotate(90deg); opacity: 1; } }
+@keyframes nx-wand-ray { 0%, 34% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes nx-wand-flare { 50% { opacity: 1; } }
 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired

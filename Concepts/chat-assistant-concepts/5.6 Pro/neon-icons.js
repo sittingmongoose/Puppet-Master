@@ -14,7 +14,8 @@
  *   parts; if module-shell changes one of those drawings, mirror it here (see RECONCILED and the per-glyph notes).
  * - The neon anatomy (plan §1). Every glyph renders as
  *     1. the merged core halo, one <path class="nx-h"> whose single d holds every static part's geometry
- *        (rect/circle/ellipse/line converted), so halos never stack;
+ *        (rect/circle/ellipse/line converted), so halos never stack (an inked element, el() x.ink, gets one path per
+ *        ink instead, so each ink can bloom in its own colour: the capabilities wand, neon-icons.css 8c);
  *     2. the static tubes (.nx-c), each keeping its original element (check keeps d="m5 12 4 4L19 6", copy keeps
  *        <rect x="8" y="8" ...>: transcript-verify pins both);
  *     3. each moving part as <g class="nx-p nx-p<i>" style="--ax:..;--ay:..;--ar:..;--ao:..;--ad:.."> holding its
@@ -54,8 +55,10 @@
     function num(v, d) { var n = Number(v); return isFinite(n) && n > 0 ? n : d; }
 
     /* element constructors (24-unit grid). x: {c: extra class, dash: stroke-dasharray, f: filled, nh: no halo (an
-       overlay that only lights during an act, like the Fast bolt's strike fills, stays out of every halo)} */
-    function el(tag, attrs, x) { var o = { tag: tag, attrs: attrs }; if (x) { if (x.c) o.cls = x.c; if (x.dash) o.dash = x.dash; if (x.f) o.f = 1; if (x.nh) o.nh = 1; } return o; }
+       overlay that only lights during an act, like the Fast bolt's strike fills, stays out of every halo), ink: a
+       named ink (the tube and its halo carry nx-i nx-i-<ink>, and the halo of each ink is its own path, so a context
+       can paint the parts of one glyph in different colours, each with its own bloom: the capabilities wand)} */
+    function el(tag, attrs, x) { var o = { tag: tag, attrs: attrs }; if (x) { if (x.c) o.cls = x.c; if (x.dash) o.dash = x.dash; if (x.f) o.f = 1; if (x.nh) o.nh = 1; if (x.ink) o.ink = String(x.ink); } return o; }
     function P(d, x) { return el('path', { d: d }, x); }
     function C(cx, cy, r, x) { return el('circle', { cx: cx, cy: cy, r: r }, x); }
     function R(x0, y0, w, h, rx, x) { var a = { x: x0, y: y0, width: w, height: h }; if (rx) a.rx = rx; return el('rect', a, x); }
@@ -142,8 +145,9 @@
        THE GLYPHS. Part poses: ax/ay translate and cr circle radius (user units), ar rotate (deg, + = clockwise),
        ao opacity at the pose, ad stagger (ms), ac/ae clip insets on the view box (user units, top right bottom
        left), o pivot [x,y] or 'c' (fill-box centre), b bounce one-shot, n sits out loops, x an opacity-only
-       reveal that stays a part below 12 px (the Fast bolt's strike overlays only). An element with class nx-ov is
-       an act overlay: hidden at rest everywhere (neon-icons.css section 6) and lit only by a context's own keyframes.
+       reveal that stays a part below 12 px (the Fast bolt's strike overlays only), c extra part classes (a hook
+       for a context's own act: the wand's sparkles). An element with class nx-ov is an act overlay: hidden at
+       rest everywhere (neon-icons.css section 6) and lit only by a context's own keyframes.
        Acts (loop shapes, neon-icons.css nx-L-*): strike, seq, fill, wave, swap, spin, hop, drop, ratchet, blink.
        ====================================================================== */
     var BUBBLE = 'M4.5 5.5h15A1.5 1.5 0 0 1 21 7v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17h-1A1.5 1.5 0 0 1 3 15.5V7a1.5 1.5 0 0 1 1.5-1.5z';
@@ -227,10 +231,20 @@
         M(P('M4 20V10'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '9 0 3 0' }), M(P('M10 20V4'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '3 0 3 0', ad: 120 }),
         M(P('M16 20v-7'), { ay: 2.6, ao: .6, ac: '21 0 3 0', ae: '12 0 3 0', ad: 240 })], 'seq'),
       plug: G([M([P('M9 7V2M15 7V2'), P('M6 7h12v4a6 6 0 0 1-12 0Z'), P('M12 17v5')], { ay: 3, b: 1 })], 'wave'),
-      /* a magic wand, not a pencil: a thin straight rod (no nib) with a four-point star at its tip and sparkles
-         set apart around it; the rod flicks 8 degrees about the handle end and the sparkles pop in turn */
-      wand: G([M([P('M4 20 13.4 10.6'), P('M16 3.8l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z')], { ar: -8, o: [4, 20], b: 1 }),
-        M(P('M21 1.5v3M19.5 3h3'), { ay: 2, ao: .6, ad: 120 }), M(P('M21.5 12v3M20 13.5h3'), { ay: 2, ao: .6, ad: 240 }), M(P('M9.5 2v3M8 3.5h3'), { ay: 2, ao: .6, ad: 360 })], 'seq'),
+      /* a magic wand, not a pencil: a thin straight rod (no nib) with a four-point star at its tip and three sparkles
+         set apart around it; the rod flicks 8 degrees about the handle end and the sparkles twinkle in turn.
+         Every element is inked (Jared, 2026-10-07: "silver handle, gold star end, with the 3 sparkles being colored,
+         maybe blue, pink, green"): the composer's capabilities wand and its menu head paint those inks, each tube
+         with its own bloom (neon-icons.css 8c); everywhere else (the Skill step in Orbit and the working card) the
+         inks are unset and the wand takes its host's status ink as before. The sparkles are opacity-only parts, so
+         they stay parts at 12-14 px (the composer's 14) and can twinkle there; each carries a longer, thinner diagonal
+         cross (nx-ov, no halo) that is hidden at rest and flashes in its twinkle, so the plus bursts into an
+         eight-point glint.
+         Order (and their --ad in loops): blue top-left, pink top-right, green right. */
+      wand: G([M([P('M4 20 13.4 10.6', { ink: 'silver' }), P('M16 3.8l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z', { ink: 'gold' })], { ar: -8, o: [4, 20], b: 1 }),
+        M([P('M9.5 2v3M8 3.5h3', { ink: 'blue' }), P('M7.8 1.8l3.4 3.4M11.2 1.8l-3.4 3.4', { ink: 'blue', nh: 1, c: 'nx-ov nx-wray' })], { ao: .5, o: 'c', ad: 120, c: 'nx-wsp nx-wsp1' }),
+        M([P('M21 1.5v3M19.5 3h3', { ink: 'pink' }), P('M19.3 1.3l3.4 3.4M22.7 1.3l-3.4 3.4', { ink: 'pink', nh: 1, c: 'nx-ov nx-wray' })], { ao: .5, o: 'c', ad: 240, c: 'nx-wsp nx-wsp2' }),
+        M([P('M21.5 12v3M20 13.5h3', { ink: 'green' }), P('M19.8 11.8l3.4 3.4M23.2 11.8l-3.4 3.4', { ink: 'green', nh: 1, c: 'nx-ov nx-wray' })], { ao: .5, o: 'c', ad: 360, c: 'nx-wsp nx-wsp3' })], 'seq'),
       history: G([P(BACK_ARC), P('M3 3v5h5'), M(P('M12 7v5l3 2'), { ar: 70, o: [12, 12] })], 'wave'),
 
       /* ---- controls (unlit at rest; act once on ignite) ---- */
@@ -462,21 +476,25 @@
       if (e.dash) s += ' stroke-dasharray="' + esc(e.dash) + '"';
       return s;
     }
+    function inkCls(e) { return e.ink ? ' nx-i nx-i-' + e.ink : ''; }
     function tube(e, filled) {
-      var c = 'nx-c' + (e.f || filled ? ' nx-f' : '') + (e.cls ? ' ' + e.cls : '');
+      var c = 'nx-c' + (e.f || filled ? ' nx-f' : '') + inkCls(e) + (e.cls ? ' ' + e.cls : '');
       return '<' + e.tag + ' class="' + c + '"' + attrs(e) + '/>';
     }
     /* One halo layer for a list of elements: merged into one d, except an element carrying a transform attribute
-       (role-orbit's ellipse), which keeps its own halo element so its geometry stays exact. An nh element has no
-       halo. */
+       (role-orbit's ellipse), which keeps its own halo element so its geometry stays exact, and except inked
+       elements: each ink's elements merge into their own path (nx-h nx-i nx-i-<ink>), so each halo can take its
+       tube's colour. An nh element has no halo. */
     function halo(els, cls) {
-      var ds = [], solo = '';
+      var ds = [], solo = '', inks = [], byInk = Object.create(null);
       els.forEach(function (e) {
         if (e.nh) return;
-        if (e.attrs.transform) solo += '<' + e.tag + ' class="' + cls + '"' + attrs({ attrs: e.attrs }) + '/>';
+        if (e.attrs.transform) solo += '<' + e.tag + ' class="' + cls + inkCls(e) + '"' + attrs({ attrs: e.attrs }) + '/>';
+        else if (e.ink) { if (!byInk[e.ink]) { byInk[e.ink] = []; inks.push(e.ink); } byInk[e.ink].push(pathOf(e)); }
         else ds.push(pathOf(e));
       });
-      return (ds.length ? '<path class="' + cls + '" d="' + esc(ds.join('')) + '"/>' : '') + solo;
+      return (ds.length ? '<path class="' + cls + '" d="' + esc(ds.join('')) + '"/>' : '') +
+        inks.map(function (k) { return '<path class="' + cls + ' nx-i nx-i-' + k + '" d="' + esc(byInk[k].join('')) + '"/>'; }).join('') + solo;
     }
     /* the size gate for one moving part at `size` px (plan §1) */
     function moves(p, size, origin) {
@@ -581,7 +599,9 @@
     }
     /* The glyphs the activity bar lights through its tone: their moving parts always carry their own halo copy, so
        the glow moves with the tube in the bar's loops. Status marks do the same; any glyph can ask with nx-lit. */
-    var LIT = { goal: 1, todo: 1, users: 1, changes: 1, page: 1, 'kind-crew': 1, 'kind-brainstorm': 1, 'kind-review': 1, 'kind-chat_room': 1 };
+    var LIT = { goal: 1, todo: 1, users: 1, changes: 1, page: 1, 'kind-crew': 1, 'kind-brainstorm': 1, 'kind-review': 1, 'kind-chat_room': 1,
+      /* the wand: each sparkle's coloured bloom twinkles with its tube (8c) */
+      wand: 1 };
     function travels(m) { return !!(m.ax || m.ay || m.ar || m.cr); }
     function render(name, size, cls, statusWrap) {
       var key = name + '|' + size + '|' + cls + '|' + (statusWrap ? 1 : 0);
@@ -610,11 +630,11 @@
       live.forEach(function (it) {
         var p = it.p, m = p.m, st = partStyle(n, it.j, m, d.origin);
         /* nx-pc marks a reveal (clip) part, as the header says; NieR Mode (neon-icons.css section 11) restyles it */
-        var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (m.ac ? ' nx-pc' : '') + (statusWrap ? ' nx-st-move' : '');
+        var pcls = 'nx-p nx-p' + i + (m.n ? ' nx-pn' : '') + (m.o === 'c' ? ' nx-pf' : '') + (m.ac ? ' nx-pc' : '') + (m.c ? ' ' + m.c : '') + (statusWrap ? ' nx-st-move' : '');
         if (!whole && !m.ac && (role === 'control' || (!lit && !travels(m)))) {
           core = core.concat(p.els);
           if (p.els.length === 1) {
-            var e1 = p.els[0], c1 = 'nx-c ' + pcls + (e1.f || d.fill ? ' nx-f' : '') + (e1.cls ? ' ' + e1.cls : '');
+            var e1 = p.els[0], c1 = 'nx-c ' + pcls + (e1.f || d.fill ? ' nx-f' : '') + inkCls(e1) + (e1.cls ? ' ' + e1.cls : '');
             moving += '<' + e1.tag + ' class="' + c1 + '"' + attrs(e1) + ' style="' + st + '"/>';
           } else moving += '<g class="' + pcls + '" style="' + st + '">' + p.els.map(function (e) { return tube(e, d.fill); }).join('') + '</g>';
         } else {
