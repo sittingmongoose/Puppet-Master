@@ -123,6 +123,7 @@ Use `agent-browser` for browser tests and test videos: each agent gets its own C
 
 - Record: `agent-browser start --record /abs/path.mp4 --url <url>`, drive it with Playwright `connectOverCDP(cdp_endpoint)` on the page whose URL does not start with `recorder_url`, finish with `agent-browser stop <id>`.
 - Headless: `agent-browser start --url <url>`. Never use Playwright `recordVideo`, CPU screen recorders, `--disable-gpu` or SwiftShader.
+- Nas1 Intel VM (`ubuntu-agent-nas1`, DHCP `192.168.50.136`) is under validation and unavailable for production work. Single-stream GPU capture failed; recording, Moonlight and independent GUI limits are not established. Use the P1000 VM (`192.168.50.179`) until the canonical guide marks Nas1 ready.
 
 ## Extra worker agents
 
