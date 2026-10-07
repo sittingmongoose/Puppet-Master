@@ -244,7 +244,6 @@
   }
   function goalActions(ctx) {
     return '<div class="plan-actions" data-k="pmap-goal-actions">' +
-      '<button class="soft-button" data-action="open-goal">View Goal</button>' +
       '<button class="soft-button" data-action="edit-goal">Edit</button>' +
       '<button class="soft-button" data-action="pause-goal">Pause</button>' +
       '<button class="soft-button" data-action="resume-goal">Resume</button>' +
@@ -714,7 +713,6 @@
       '<section class="pmap-records" data-k="pmap-records:' + f + '"><div class="pmap-records-head"><strong>' +
       (f === 'goal' ? 'Goal progress' : 'Recent records') + '</strong><span>' +
       (f === 'goal' ? esc(ctx, d.detail || '') : p.list.length + ' total') + '</span></div>' + records +
-      (f === 'goal' ? '<button class="pmap-route-action" data-action="open-goal"><span>View Goal</span>' + ctx.icon('chevron', 11) + '</button>' : '') +
       '</section></div>';
   }
 
