@@ -14,7 +14,11 @@
        (PM_NIER.replay)
      - a note on the Motion group while Reduce motion is on; a note and a switch while NieR Mode is off (the list can
        be edited for later)
-   Styles: styles.d/17-nier-chips.css. The sheet follows PM_NIER.onChange while it is open and writes only what changed. */
+   Styles: styles.d/17-nier-chips.css. The sheet follows the store's onChange while it is open and writes only what changed.
+   The same markup renders in the Settings drawer (open), in a body-level dialog (popup) and inside any host (mount).
+   Reads and writes go through a store: PM_NIER.store(kind) when that exists, otherwise localLiveStore() below, which
+   commits through the existing PM_NIER API and o55NierCommitRow for the background. */
+var localLiveStore;
 (function o55NierChipsModule() {
   const ID = 'general.visual.nier-parts', BG = 'general.visual.nier-background';
   const NIER = () => window.PM_NIER || null;
@@ -50,9 +54,19 @@
   const BG_TILES = [['Parchment', null], ['City Ruins', 'city'], ['The Bunker', 'bunker'], ['Desert', 'desert'], ['Forest Castle', 'forest'],
     ['Amusement Park', 'park'], ['Flooded City', 'flooded'], ['Follow the page', 'follow']];
   const same = (x, y) => x.length === y.length && x.every((v, i) => v === y[i]);
-  const installed = () => { const n = NIER(); return n ? n.parts() : []; };
-  const background = () => { const n = NIER(); return n ? n.background() : 'City Ruins'; };
   const presetOf = keys => { const p = PRESETS.find(x => same(x.keys(), keys)); return p ? p.id : ''; };
+  /* PM_NIER.store(kind) when the look layer provides it; otherwise the live fallback assigned to localLiveStore. */
+  function storeFor(kind) {
+    const N = window.PM_NIER;
+    if (N && typeof N.store === 'function') {
+      try { const s = N.store(kind || 'live'); if (s) return s; } catch (e) { /* fall through to the live store */ }
+    }
+    return localLiveStore();
+  }
+  function sceneTiles(store) {
+    const labels = store && Array.isArray(store.BACKGROUNDS) && store.BACKGROUNDS.length ? store.BACKGROUNDS : BG_TILES.map(t => t[0]);
+    return labels.map(label => { const known = BG_TILES.find(t => t[0] === label); return [label, known ? known[1] : null]; });
+  }
 
   /* ---------- the row: a summary of the chips that opens the editor ------------------------------------------------- */
   const o55ncControl = renderControl;
@@ -87,7 +101,7 @@
       + `<span class="o55nc-chip-copy"><span class="o55nc-chip-name">${esc(p.label)}</span><span class="o55nc-chip-help">${esc(help)}</span>`
       + `<span class="o55nc-chip-foot"><span>Size ${size}</span><span class="o55nc-chip-state">Removed</span></span></span></button>`;
   }
-  function body() {
+  function body(store) {
     const list = PARTS();
     const groups = GROUPS.map(g => {
       const ps = list.filter(p => p.group === g); if (!ps.length) return '';
@@ -95,7 +109,7 @@
       return `<section class="o55nc-group" data-o55nc-group="${esc(g)}"><header class="o55nc-ghead"><h4>${esc(g)}</h4><span class="o55nc-gcount"></span></header>${note}`
         + `<div class="o55nc-chips">${ps.map(chip).join('')}</div></section>`;
     }).join('');
-    const tiles = BG_TILES.map(([label, key]) => `<button type="button" class="o55nc-scene" role="radio" aria-checked="false" data-o55nc-bg="${esc(label)}" data-key="${esc(key || 'plain')}">`
+    const tiles = sceneTiles(store).map(([label, key]) => `<button type="button" class="o55nc-scene" role="radio" aria-checked="false" data-o55nc-bg="${esc(label)}" data-key="${esc(key || 'plain')}">`
       + `<span class="o55nc-scene-art"></span><span class="o55nc-scene-name">${esc(label)}</span></button>`).join('');
     return '<div class="o55nc">'
       + `<div class="o55nc-top">${preview()}<div class="o55nc-side">`
@@ -120,9 +134,9 @@
     return uri;
   }
 
-  function paint(wrap) {
-    const box = wrap && wrap.querySelector('.o55nc'); if (!box) return;
-    const keys = installed(), have = new Set(keys), list = PARTS(), on = !!(NIER() && NIER().on());
+  function paint(wrap, store) {
+    const box = wrap && store && wrap.querySelector('.o55nc'); if (!box) return;
+    const raw = store.parts(), keys = Array.isArray(raw) ? raw : [], have = new Set(keys), list = PARTS(), on = !!store.on();
     const setA = (el, name, v) => { if (el.getAttribute(name) !== v) el.setAttribute(name, v); };
     setA(box, 'data-parts', keys.join(' '));
     box.toggleAttribute('data-nier-off', !on);
@@ -140,7 +154,7 @@
     box.querySelectorAll('.o55nc-meter-cells > i').forEach((c, i) => c.classList.toggle('on', i < keys.length));
     const pre = presetOf(keys);
     box.querySelectorAll('.o55nc-preset').forEach(b => setA(b, 'aria-pressed', String(b.dataset.o55ncPreset === pre)));
-    const bg = background();
+    const bg = store.background();
     box.querySelectorAll('.o55nc-scene').forEach(b => setA(b, 'aria-checked', String(b.dataset.o55ncBg === bg)));
     const rb = box.querySelector('[data-o55nc-replay]'), why = box.querySelector('.o55nc-replay-why');
     const reason = !have.has('reboot') ? 'Install Reboot moment to play it.' : still() ? 'Reduce motion is on, so it does not play.' : '';
@@ -154,33 +168,179 @@
     box.querySelectorAll('.o55nc-scene').forEach(b => { const u = thumb(b.dataset.key, ink); if (u) b.querySelector('.o55nc-scene-art').style.backgroundImage = u; });
   }
 
-  function onClick(e, wrap) {
-    const t = e.target && e.target.closest ? e.target : null; if (!t) return;
-    const N = NIER(); if (!N) return;
+  function onClick(e, wrap, store) {
+    const t = e.target && e.target.closest ? e.target : null; if (!t || !store) return;
     const c = t.closest('.o55nc-chip');
-    if (c) { const k = c.dataset.o55ncKey, have = new Set(N.parts()); if (have.has(k)) have.delete(k); else have.add(k); N.setParts([...have]); paint(wrap); return; }
+    if (c) { const k = c.dataset.o55ncKey, have = new Set(store.parts()); if (have.has(k)) have.delete(k); else have.add(k); store.setParts([...have]); paint(wrap, store); return; }
     const p = t.closest('[data-o55nc-preset]');
-    if (p) { const def = PRESETS.find(x => x.id === p.dataset.o55ncPreset); if (def) { N.setParts(def.keys()); paint(wrap); } return; }
+    if (p) { const def = PRESETS.find(x => x.id === p.dataset.o55ncPreset); if (def) { store.setParts(def.keys()); paint(wrap, store); } return; }
     const s = t.closest('[data-o55nc-bg]');
-    if (s) { const v = s.dataset.o55ncBg; if (v !== N.background() && o55NierCommitRow(BG, v)) paint(wrap); return; }
+    if (s) { const v = s.dataset.o55ncBg; if (v !== store.background()) store.setBackground(v); paint(wrap, store); return; }
     const r = t.closest('[data-o55nc-replay]');
-    if (r) { if (r.getAttribute('aria-disabled') !== 'true') N.replay(); return; }
-    if (t.closest('[data-o55nc-on]')) { N.set(true); }
+    if (r) { if (r.getAttribute('aria-disabled') !== 'true') { const N = NIER(); if (N && typeof N.replay === 'function') N.replay(); } return; }
+    if (t.closest('[data-o55nc-on]')) { store.set(true); paint(wrap, store); }
+  }
+  /* One editor in a host. destroy drops the store subscription immediately (popup and mount) or, for the drawer,
+     on the next change after the host is gone, which is how the sheet closed before. */
+  function bind(host, store) {
+    const fire = e => onClick(e, host, store);
+    host.addEventListener('click', fire);
+    paint(host, store); paintThumbs(host);
+    let off = () => {}, dead = false;
+    if (store && typeof store.onChange === 'function') {
+      const un = store.onChange(info => {
+        if (!host.isConnected) { destroy(); return; }
+        paint(host, store);
+        if (info && (info.reason === 'mode' || (info.changed || []).includes('mode') || info.reason === 'on' || info.reason === 'off')) paintThumbs(host);
+      });
+      if (typeof un === 'function') off = un;
+    }
+    function destroy() {
+      if (dead) return; dead = true;
+      try { off(); } catch (e) { /* already dropped */ }
+      off = () => {};
+      host.removeEventListener('click', fire);
+    }
+    return { destroy };
   }
   function open() {
-    const N = NIER(); if (!N) return false;
+    if (!NIER()) return false;
+    const store = storeFor('live');
     const wrap = PM51.panel({ title: 'NieR Mode', eyebrow: 'Plug-in Chips', icon: 'sliders', size: 'wide', cls: 'o55nc-panel', closeLabel: 'Done',
-      summary: 'Install or remove each part. A change applies at once and is saved.', body: body() });
+      summary: 'Install or remove each part. A change applies at once and is saved.', body: body(store) });
     if (!wrap) return false;
-    wrap.addEventListener('click', e => onClick(e, wrap));
-    paint(wrap); paintThumbs(wrap);
-    const off = N.onChange(info => {
-      if (!wrap.isConnected) { off(); return; }
-      paint(wrap);
-      if (info && (info.reason === 'mode' || (info.changed || []).includes('mode') || info.reason === 'on' || info.reason === 'off')) paintThumbs(wrap);
-    });
+    bind(wrap, store);
     return true;
   }
+
+  const POP_Z = 2147482050; /* below #o55np-reboot (2147483600), above the tour root (2147481500) and the title bar */
+  let popApi = null;
+  const reducedMotion = () => document.documentElement.getAttribute('data-motion') === 'reduced'
+    || !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const focusable = root => [...root.querySelectorAll('button, [href], input, select, textarea, [tabindex]')].filter(el => {
+    if (el.disabled || el.getAttribute('aria-hidden') === 'true' || el.tabIndex < 0) return false;
+    const s = getComputedStyle(el); return s.visibility !== 'hidden' && s.display !== 'none';
+  });
+  function restoreFocus(from) {
+    if (from && from.isConnected && typeof from.focus === 'function') {
+      try { from.focus(); } catch (e) { /* the menu may be closed */ }
+      if (document.activeElement === from) return;
+    }
+    const btn = document.getElementById('themeSelect');
+    if (btn) { try { btn.focus(); } catch (e) { /* leave focus where it is */ } }
+  }
+  function popup(opts) {
+    opts = opts || {};
+    if (popApi) popApi.close();
+    const store = opts.store || storeFor('live');
+    const title = opts.title ? String(opts.title) : 'NieR Mode';
+    const from = opts.from || null;
+    const root = document.createElement('div');
+    root.className = 'o55nc-pop'; root.id = 'o55nc-pop';
+    root.innerHTML = `<div class="o55nc-pop-scrim" data-o55nc-pop="scrim"></div>`
+      + `<div class="o55nc-pop-dialog o55nc-host" role="dialog" aria-modal="true" aria-labelledby="o55nc-pop-title" style="z-index:1">`
+      + `<header class="o55nc-pop-head"><div class="o55nc-pop-titles"><p class="o55nc-pop-eye">Plug-in Chips</p>`
+      + `<h2 class="o55nc-pop-title" id="o55nc-pop-title">${esc(title)}</h2></div>`
+      + `<button type="button" class="o55nc-pop-x" data-o55nc-pop="close" aria-label="Close">`
+      + `<svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 3 L11 11 M11 3 L3 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>`
+      + `</button></header><div class="o55nc-pop-body">${body(store)}</div></div>`;
+    root.style.zIndex = String(POP_Z);
+    const dialog = root.querySelector('.o55nc-pop-dialog');
+    let dead = false;
+    let session = { destroy() {} };
+    function onKey(e) {
+      if (dead || !root.isConnected) return;
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(); return; }
+      if (e.key !== 'Tab') return;
+      const items = focusable(dialog);
+      if (!items.length) { e.preventDefault(); return; }
+      const first = items[0], last = items[items.length - 1], active = document.activeElement;
+      if (e.shiftKey) { if (active === first || !dialog.contains(active)) { e.preventDefault(); last.focus(); } }
+      else if (active === last || !dialog.contains(active)) { e.preventDefault(); first.focus(); }
+    }
+    function close() {
+      if (dead) return; dead = true;
+      document.removeEventListener('keydown', onKey, true);
+      session.destroy();
+      root.remove();
+      if (popApi && popApi.close === close) popApi = null;
+      restoreFocus(from);
+    }
+    root.addEventListener('click', e => {
+      const hit = e.target && e.target.closest ? e.target.closest('[data-o55nc-pop="close"], [data-o55nc-pop="scrim"]') : null;
+      if (hit) close();
+    });
+    document.addEventListener('keydown', onKey, true);
+    if (reducedMotion()) root.dataset.open = 'true';
+    document.body.appendChild(root);
+    session = bind(dialog, store);
+    if (!reducedMotion()) requestAnimationFrame(() => { if (root.isConnected) root.dataset.open = 'true'; });
+    const x = root.querySelector('[data-o55nc-pop="close"]');
+    if (x) { try { x.focus(); } catch (e) { /* the dialog is still the trap */ } }
+    popApi = { close };
+    return popApi;
+  }
+  function mount(host, opts) {
+    opts = opts || {};
+    if (!host || typeof host.appendChild !== 'function') return { unmount() {} };
+    const store = opts.store || storeFor('live');
+    host.classList.add('o55nc-host');
+    const shell = document.createElement('div');
+    shell.className = 'o55nc-mount';
+    shell.innerHTML = body(store);
+    host.appendChild(shell);
+    const session = bind(shell, store);
+    let dead = false;
+    return { unmount() {
+      if (dead) return; dead = true;
+      session.destroy();
+      shell.remove();
+      if (!host.querySelector('.o55nc')) host.classList.remove('o55nc-host');
+      if (typeof opts.onClose === 'function') { try { opts.onClose(); } catch (e) { /* the host owns its own close */ } }
+    } };
+  }
+
+  /* Live fallback until kit.d/18-nier.js exports PM_NIER.store. File 23 calls this same function. */
+  localLiveStore = function () {
+    const listeners = new Set();
+    let upstream = null;
+    const emit = info => listeners.forEach(cb => { try { cb(info); } catch (e) { /* one listener never blocks the rest */ } });
+    function ensure() {
+      if (upstream) return;
+      const n = NIER();
+      if (n && typeof n.onChange === 'function') upstream = n.onChange(emit);
+    }
+    function drop() {
+      if (listeners.size || !upstream) return;
+      try { upstream(); } catch (e) { /* already dropped */ }
+      upstream = null;
+    }
+    return {
+      kind: 'live',
+      on: () => { const n = NIER(); return !!(n && n.on()); },
+      set: on => { const n = NIER(); return !!(n && n.set(!!on)); },
+      parts: () => { const n = NIER(); return n && n.parts ? n.parts().slice() : []; },
+      setParts: keys => { const n = NIER(); return !!(n && n.setParts(keys)); },
+      background: () => { const n = NIER(); return n && n.background ? n.background() : 'City Ruins'; },
+      setBackground: label => {
+        const n = NIER();
+        if (n && typeof n.setBackground === 'function') return !!n.setBackground(label);
+        return !!o55NierCommitRow(BG, label);
+      },
+      BACKGROUNDS: BG_TILES.map(t => t[0]),
+      onChange: cb => {
+        if (typeof cb !== 'function') return () => {};
+        ensure(); listeners.add(cb);
+        return () => { listeners.delete(cb); drop(); };
+      }
+    };
+  };
+
   PM51.on('o55-nier-chips', () => open());
-  window.PM_NIER_CHIPS = Object.freeze({ open, presets: () => PRESETS.map(p => ({ id: p.id, label: p.label, keys: p.keys() })) });
+  window.PM_NIER_CHIPS = Object.freeze({
+    open,
+    popup,
+    mount,
+    presets: () => PRESETS.map(p => ({ id: p.id, label: p.label, keys: p.keys() }))
+  });
 })();
