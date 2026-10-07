@@ -1,5 +1,5 @@
-/* neon-verify.mjs — the neon icon family's own verifier (TestPMChat5.6Pro, plan "Verification > node
- * neon-verify.mjs").
+/* neon-verify.mjs — the neon icon family's own verifier for the 5.6 Pro chat (folded into the shipped concept on
+ * 2026-10-07; Plans/FinalGUISpec.md F3-584 to F3-589).
  *
  * OWNER: Neon icons. Written by a helper worker (M2, 2026-10-02) to the plan's list, reviewed and completed by
  * surface step 3E2 (2026-10-02), which added the checks the first draft lacked (bar, thread-row and To-Do
@@ -8,8 +8,8 @@
  *
  *   node neon-verify.mjs [--file <html>] [--themes all|<id,id..>] [--json <out.json>] [--reduced]
  *
- * --file defaults to index.html next to this script. --themes defaults to every id in PM56_DATA.themes (ten on
- * the neon build: the eight of data.js plus NieR Dark and NieR Light, which paint Basic under
+ * --file defaults to index.html next to this script. --themes defaults to every id in PM56_DATA.themes (ten:
+ * the eight family themes plus NieR Dark and NieR Light, which paint Basic under
  * html[data-o55-nier="on"]). --reduced drives every page with reducedMotion:'reduce': the checks that need motion
  * (3 satellite, 7 hover-card start times, 13 salience) report SKIP and check 2 asserts the reduced end state.
  * Exit 0 all pass, 1 any FAIL, 2 bad invocation.
