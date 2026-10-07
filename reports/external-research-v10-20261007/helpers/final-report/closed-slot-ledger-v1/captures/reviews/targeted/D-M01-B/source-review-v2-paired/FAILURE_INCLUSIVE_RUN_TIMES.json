@@ -1,0 +1,140 @@
+[
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M01-B-treatment-research-v1",
+    "arm": "treatment",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-treatment-research-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M01-B-treatment-research-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T18:37:37.743Z",
+        "startedAt": "2026-10-07T18:37:38.298Z",
+        "completedAt": "2026-10-07T18:49:12.303Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M01-B-treatment-critic_and_final-v1",
+    "arm": "treatment",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-treatment-critic_and_final-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M01-B-treatment-critic_and_final-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T18:49:52.435Z",
+        "startedAt": "2026-10-07T18:49:52.741Z",
+        "completedAt": "2026-10-07T18:52:59.153Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M01-B-control-research-v1",
+    "arm": "control",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-research-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M01-B-control-research-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T18:53:41.151Z",
+        "startedAt": "2026-10-07T18:53:41.600Z",
+        "completedAt": "2026-10-07T18:58:34.167Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M01-B-control-criticism-v1",
+    "arm": "control",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-criticism-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M01-B-control-criticism-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T19:01:32.266Z",
+        "startedAt": "2026-10-07T19:01:32.829Z",
+        "completedAt": "2026-10-07T19:04:27.953Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M01-B-control-revision-v1",
+    "arm": "control",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-control-revision-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M01-B-control-revision-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T19:05:07.667Z",
+        "startedAt": "2026-10-07T19:05:08.251Z",
+        "completedAt": "2026-10-07T19:07:13.737Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "review",
+    "id": "er10-cohort1-D-M01-B-source-review-v1",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-source-review-v1",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M01-B-source-review-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "interrupted",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T19:08:09.897Z",
+        "startedAt": "2026-10-07T19:08:28.786Z",
+        "completedAt": "2026-10-07T19:28:13.330Z"
+      }
+    ],
+    "threadStatus": "interrupted",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "review",
+    "id": "er10-cohort1-D-M01-B-source-review-paired-v2",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M01-B-source-review-paired-v2",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M01-B-source-review-paired-v2:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T19:40:05.332Z",
+        "startedAt": "2026-10-07T19:40:05.837Z",
+        "completedAt": "2026-10-07T19:48:20.025Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  }
+]

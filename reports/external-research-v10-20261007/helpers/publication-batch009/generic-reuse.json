@@ -1,0 +1,30 @@
+{
+  "schema": "ER10-batch009-generic-reuse-v1",
+  "reused": [
+    {
+      "path": "reports/external-research-v10-20261007/helpers/publication-batch008/curate.py",
+      "sha256": "290bf784e2ce65a65c421b115131284f08426a6239654070c3f171bcea381515",
+      "bytes": 55558,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/publication-batch008/validate.py",
+      "sha256": "72dcf6d7462df36b95cfb6f24da7123b8505084579155e7740702265ca29a4dc",
+      "bytes": 4636,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/resolve_public_evidence.py",
+      "sha256": "2dde5b614dd4d83cbb32541a97b62bcaa7e8ffa9cbf1e5627e4296219ed32784",
+      "bytes": 3320,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    }
+  ],
+  "adaptations": [
+    "BATCH009 explicit closed scope/cutoff",
+    "prior B1-B8 identities; six B8 target aliases canonicalized inside report base",
+    "exact retained offline adapter replay",
+    "metadata-only selection whitelist; no private matchers/fragments",
+    "no science repair"
+  ]
+}

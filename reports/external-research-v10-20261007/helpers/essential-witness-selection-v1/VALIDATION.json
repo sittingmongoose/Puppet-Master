@@ -1,0 +1,87 @@
+{
+  "schema": "er10.selector-validation.v1",
+  "started_at_utc": "2026-10-07T22:48:43.934392+00:00",
+  "completed_at_utc": "2026-10-07T22:48:47.818966+00:00",
+  "original_deadline_utc": "2026-10-07T23:00:07.217605+00:00",
+  "writing_reserve_seconds": 300,
+  "completed_before_original_writing_reserve": true,
+  "checks": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/essential-witness-selection-v1/select.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "result": {
+        "mode": "validate",
+        "offline_replay_identical": true,
+        "original_eligible_objects": 76,
+        "original_eligible_unique_bytes_read": 8756827,
+        "predicate_classes": {
+          "LIVE_MUTABLE_DOC_API_HISTORY": 54,
+          "VERSIONED_RELEASE_OR_TAG": 22
+        },
+        "actual_selection_objects": 47,
+        "proposed_retained_literal_bytes": 29842,
+        "dispositions": {
+          "SELECT_PRIVATE_PROPOSED": 47,
+          "ALTERNATIVE_SELECTED_EXTRACT": 12,
+          "EXCLUDED_IMMUTABLE_PRECISE_CODE_ALTERNATIVE": 9,
+          "ALTERNATIVE_AUTHORED_CHECK_AND_CONDITIONAL_CODE": 2,
+          "ALTERNATIVE_SELECTED_RELEASED_FAILURE_WITNESSES": 1,
+          "ALTERNATIVE_IMMUTABLE_COMMIT_GRAPH": 1,
+          "HOLD_PDF_LITERAL_RANGE_DEPENDENCIES_UNRESOLVED": 1,
+          "HOLD_MAPPING_COMPONENT_UNRESOLVED": 1,
+          "ALTERNATIVE_IMMUTABLE_RELEASED_CORRECTION": 1,
+          "ALTERNATIVE_AUTHORED_BOUNDED_NONCLAIM": 1
+        },
+        "unresolved_range_method_HOLD_objects": 2,
+        "selected_objects_with_additional_assertion_components_HOLD": 3,
+        "full_documents_selected": 0,
+        "root_adjudication_pending_objects": 76,
+        "delete_authorized_objects": 0,
+        "archive_candidate_count_if_root_accepts": 1,
+        "campaign_complete": false,
+        "retention_verified": false,
+        "deduplicated_proposed_payload_bytes": 29630,
+        "deduplicated_proposed_fragment_count": 220
+      },
+      "code_sha256": "cd68399e271f45c06931ae9ba38dd5a91b05d2fb70988cfad83a45f643471a02"
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/essential-witness-selection-v1/validate_bundle.py"
+      ],
+      "exit_code": 0,
+      "result": {
+        "validation_passed": true,
+        "scope": "all 76 eligible original SHA/length identities and all proposed literal range hashes; immutable upstream availability remains unverified",
+        "eligible_source_identities_checked": 76,
+        "selected_objects": 47,
+        "ranges_checked": 243,
+        "unique_fragment_identities": 220,
+        "deduplicated_proposed_bytes": 29630,
+        "existing_material_defect_pointers_preserved": [
+          "/defects/0",
+          "/defects/1",
+          "/defects/2",
+          "/defects/3"
+        ],
+        "unresolved_range_or_mapping_HOLD_objects": 2,
+        "archive_created": false,
+        "cleanup_performed": false,
+        "semantic_grading": false,
+        "retention_verified": false
+      },
+      "code_sha256": "4bc29f78bebce4e4d4745d518014772c10109572c75c582122961961012eb158"
+    }
+  ],
+  "no_candidate_or_vendor_code_executed": true,
+  "no_source_semantic_grading": true,
+  "no_archive_or_cleanup": true,
+  "retention_verified": false
+}

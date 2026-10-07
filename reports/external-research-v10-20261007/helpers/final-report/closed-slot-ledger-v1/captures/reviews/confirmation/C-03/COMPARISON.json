@@ -1,0 +1,1056 @@
+{
+  "schema": "pm.er10.confirmation-comparison.v1",
+  "case": "C-03",
+  "domain": "B",
+  "repetition": 1,
+  "frozen_at": "2026-10-07T21:44:06.323979+00:00",
+  "qualification": "DIAGNOSTIC_UNQUALIFIED",
+  "original_grades_preserved": true,
+  "native_and_comparative_eligibility": "HOLD",
+  "original_qualified_native_gate": "NOT_PASSED",
+  "diagnostic_review_exception": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/C-03-failed-native-diagnostic-review-gate-exception-v1.json",
+    "sha256": "0a40f04ed1593d108a7806fc228ba3fb8e021744069729a10bedc5af6444b2b7",
+    "own_hash_readability_rechecked_at": "2026-10-07T21:30:36.283974+00:00"
+  },
+  "assessed_pair": true,
+  "both_arm_full_declared_source_coverage": false,
+  "assessment_disposition": "DELIVERED",
+  "arms": {
+    "control": {
+      "original_scientific_grade": {
+        "status": "HOLD",
+        "reason": "O1 mandatory discovery-before-narrowing chronology remains independently unverifiable in the permitted record. Confirmed D01/D02 material coverage/preservation defects also preclude PASS. Unknown scope is HOLD, never a quality win.",
+        "known_material_defects_present": true,
+        "immutable": true
+      },
+      "full_declared_scope_assessed": false,
+      "source6_axes_original": [
+        {
+          "axis_id": "S1",
+          "name": "full brief obligations",
+          "status": "HOLD",
+          "assessed_evidence_refs": [
+            "BRIEF:13-21",
+            "F:18-29",
+            "F:55-109",
+            "PLAN:B-P1..B-P7"
+          ],
+          "defect_refs": [
+            "D01",
+            "D02"
+          ],
+          "assessed_scope": "All obligations examined; O1 temporal condition unknown, with confirmed O2/O6 failures."
+        },
+        {
+          "axis_id": "S2",
+          "name": "consequential source claims and governing conditions",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "V01",
+            "V02",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "V09",
+            "V10",
+            "V11",
+            "V12",
+            "V13",
+            "V14",
+            "V15",
+            "V16",
+            "H01",
+            "H02",
+            "H03",
+            "H04",
+            "H05",
+            "H06",
+            "H07",
+            "H08",
+            "H09",
+            "H10"
+          ],
+          "defect_refs": [
+            "N01",
+            "N02"
+          ],
+          "assessed_scope": "Main claims corroborated against fresh primary bytes, pinned code and exact history; metadata/origin caveats disclosed."
+        },
+        {
+          "axis_id": "S3",
+          "name": "useful open discovery coverage, options, analogies, components and history",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "F:18-39",
+            "F:100",
+            "Q:53",
+            "C:29",
+            "P01",
+            "P02",
+            "D02",
+            "D03",
+            "D04",
+            "D05",
+            "H01",
+            "H02",
+            "H03",
+            "H04",
+            "H05",
+            "H06",
+            "H07",
+            "H08",
+            "H09",
+            "H10"
+          ],
+          "defect_refs": [
+            "D01"
+          ],
+          "assessed_scope": "Distinct mechanisms and external analogies useful; no actual final competing-component comparison."
+        },
+        {
+          "axis_id": "S4",
+          "name": "incorrect rejection or correction",
+          "status": "PASS_WITH_LIMITATIONS",
+          "assessed_evidence_refs": [
+            "Q:22-55",
+            "C:11-18",
+            "F:43-49",
+            "F:94-103",
+            "FP:29-39",
+            "V12",
+            "V14",
+            "V15",
+            "H04",
+            "H07",
+            "H08"
+          ],
+          "defect_refs": [
+            "N03"
+          ],
+          "assessed_scope": "Supported technical clarification and incident narrowing; no material incorrect technical rejection found; antecedent geometry characterization inaccurate."
+        },
+        {
+          "axis_id": "S5",
+          "name": "preservation of constraints, options, source identity, admitted corrections and uncertainty into final",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "Q:47",
+            "Q:53",
+            "Q:95-101",
+            "C:13-18",
+            "C:75-82",
+            "F:16",
+            "F:43-65",
+            "F:94-103",
+            "FP:29-39",
+            "P01",
+            "P02",
+            "D04"
+          ],
+          "defect_refs": [
+            "D01",
+            "D02",
+            "N01"
+          ],
+          "assessed_scope": "Core workflow/conditions survive, but useful comparative information, explicit negative constraint and named optional branch are lost; PR-head metadata also incorrect."
+        },
+        {
+          "axis_id": "S6",
+          "name": "proposed versus actually performed validation",
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "PLAN:B-P7",
+            "F:79-92",
+            "F:105-109",
+            "FP:41-47",
+            "sources/input-integrity.json",
+            "sources/candidate-capture-integrity.json",
+            "sources/manifest.json"
+          ],
+          "defect_refs": [],
+          "assessed_scope": "Future checks distinguished from captured/source-inspected evidence; no product execution or independent reproduction credited."
+        }
+      ],
+      "obligations_original": {
+        "O1": {
+          "status": "HOLD",
+          "evidence_refs": [
+            "BRIEF:15",
+            "F:18-29",
+            "F:107",
+            "Q:16",
+            "C:22",
+            "P01",
+            "P02",
+            "D02",
+            "D03",
+            "D04",
+            "D05"
+          ],
+          "defect_refs": [],
+          "limitation_refs": [
+            "L02"
+          ]
+        },
+        "O2": {
+          "status": "FAIL",
+          "evidence_refs": [
+            "F:22-29",
+            "F:100",
+            "Q:53",
+            "C:29",
+            "P01",
+            "P02"
+          ],
+          "defect_refs": [
+            "D01"
+          ],
+          "limitation_refs": []
+        },
+        "O3": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence_refs": [
+            "F:35-53",
+            "V01",
+            "V02",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V12",
+            "V13",
+            "V14",
+            "V15",
+            "V16",
+            "H01",
+            "H02",
+            "H03",
+            "H04",
+            "H07"
+          ],
+          "defect_refs": [
+            "N01",
+            "N02"
+          ],
+          "limitation_refs": []
+        },
+        "O4": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence_refs": [
+            "F:35-39",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V09",
+            "H01",
+            "H02",
+            "H03",
+            "H04",
+            "H05",
+            "H06",
+            "H07",
+            "H08",
+            "H09",
+            "H10"
+          ],
+          "defect_refs": [
+            "N01"
+          ],
+          "limitation_refs": [
+            "L03"
+          ]
+        },
+        "O5": {
+          "status": "PASS",
+          "evidence_refs": [
+            "PLAN:B-P1",
+            "PLAN:B-P2",
+            "PLAN:B-P3",
+            "PLAN:B-P4",
+            "PLAN:B-P5",
+            "PLAN:B-P6",
+            "PLAN:B-P7",
+            "F:67-77"
+          ],
+          "defect_refs": [],
+          "limitation_refs": []
+        },
+        "O6": {
+          "status": "FAIL",
+          "evidence_refs": [
+            "Q:47",
+            "Q:53",
+            "Q:98",
+            "F:55-109",
+            "P01",
+            "P02",
+            "D04"
+          ],
+          "defect_refs": [
+            "D01",
+            "D02"
+          ],
+          "limitation_refs": []
+        },
+        "O7": {
+          "status": "PASS",
+          "evidence_refs": [
+            "BRIEF:5-11",
+            "BRIEF:19-21",
+            "F:16",
+            "F:55-65",
+            "F:79-103"
+          ],
+          "defect_refs": [],
+          "limitation_refs": []
+        }
+      },
+      "material_defect_count": 2,
+      "limitations_original_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/control/source-review-v1/REVIEW_FREEZE.json",
+      "review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/control/source-review-v1/REVIEW_FREEZE.json",
+        "sha256": "ce70bed7e340db8d175f4c2a13419b50537d12d4bdbe0fd221a962375f6dcc70"
+      },
+      "review_delivered": true,
+      "assessment_disposition": "DELIVERED",
+      "host_review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+        "sha256": "26f2ef8b128c5d78e4e415c400130cdc435868cb37ccd02d7c7149be461d026e"
+      },
+      "cold_predispatch_at": "2026-10-07T20:57:54.244705+00:00",
+      "candidate_service_terminal_at": "2026-10-07T21:26:26.346000+00:00",
+      "resource_release_observed_upper_bound": "2026-10-07T21:26:40.588265+00:00",
+      "failure_inclusive_service_latency_seconds": 1712.101295,
+      "failure_inclusive_host_closeout_latency_seconds": 1726.34356,
+      "aggregate_stage_occupied_seconds": 1665.693,
+      "host_and_between_stage_elapsed_seconds": 60.65056000000004,
+      "whole_arm_deadline": "2026-10-07T21:42:54.244705+00:00",
+      "service_terminal_within45min": true,
+      "closeout_within45min": true,
+      "stages": [
+        {
+          "stage": "researcher-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-researcher-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-researcher-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-researcher-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11828-924b-7ef2-a872-7aebba908be9",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T20:57:54.411Z",
+          "startedAt": "2026-10-07T20:57:54.986Z",
+          "completedAt": "2026-10-07T21:10:29.536Z",
+          "stage_occupied_seconds": 755.125,
+          "queue_startup_seconds": 0.575,
+          "deadline": "2026-10-07T21:17:54.244705+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "9914d8f315682c04a1c12041a437fb11b9736e441e63c73be37d12ef0aa7a625",
+              "status": "complete",
+              "tokensUsed": 204934,
+              "tokenBudget": null,
+              "timeUsedSeconds": 724
+            }
+          ],
+          "output_bytes": 2841202,
+          "scientific_artifact_bytes": 52842,
+          "source_capture_bytes": 2788360,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/researcher-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "critic-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-critic-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-critic-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11834-870a-77b2-ae52-151399245a1d",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T21:10:57.050Z",
+          "startedAt": "2026-10-07T21:10:58.567Z",
+          "completedAt": "2026-10-07T21:15:50.589Z",
+          "stage_occupied_seconds": 293.539,
+          "queue_startup_seconds": 1.517,
+          "deadline": "2026-10-07T21:20:56.656806+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "21b3a8da91333714ceaaa6bceb85025d9ec7d3015a89154e41645b00c5c86105",
+              "status": "complete",
+              "tokensUsed": 137034,
+              "tokenBudget": null,
+              "timeUsedSeconds": 270
+            }
+          ],
+          "output_bytes": 2644141,
+          "scientific_artifact_bytes": 46154,
+          "source_capture_bytes": 2597987,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/critic-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "reviser-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-reviser-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-reviser-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-reviser-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11839-4792-7e32-a198-eb9039187b6c",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T21:16:09.317Z",
+          "startedAt": "2026-10-07T21:16:10.176Z",
+          "completedAt": "2026-10-07T21:26:26.346Z",
+          "stage_occupied_seconds": 617.029,
+          "queue_startup_seconds": 0.859,
+          "deadline": "2026-10-07T21:31:09.189370+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "b7c7fa95a6cb1da9ee9ae9fdf67beac9e63dbacb52c9c5fa935adb91f82269cf",
+              "status": "complete",
+              "tokensUsed": 254782,
+              "tokenBudget": null,
+              "timeUsedSeconds": 575
+            }
+          ],
+          "output_bytes": 2269892,
+          "scientific_artifact_bytes": 52499,
+          "source_capture_bytes": 2217393,
+          "observable_dynamic_tool_counts": {
+            "t3-code.orchestrator_capabilities": 1,
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/reviser-v1/host/scientific-files-terminal-freeze.json"
+        }
+      ],
+      "review_time_separate": {
+        "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-control-source-review-v1:ordinal:1",
+        "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-control-source-review-v1",
+        "status": "completed",
+        "requestedAt": "2026-10-07T21:30:47.134Z",
+        "startedAt": "2026-10-07T21:30:47.791Z",
+        "completedAt": "2026-10-07T21:42:38.283Z"
+      },
+      "usage": {
+        "input": null,
+        "cached_input": null,
+        "generated_output": null,
+        "reasoning_subset": null,
+        "billing": null
+      },
+      "source_operations": null,
+      "scope_audit": "incomplete_unknown; advisory maps not filesystem firewall",
+      "native_raw_API_bodies": "missing; actual active and terminal projection evidence distinct",
+      "affordability_claim": false
+    },
+    "treatment": {
+      "original_scientific_grade": {
+        "status": "FAIL",
+        "immutable": true,
+        "basis": "Full declared scientific-content scope assessed; material unsupported HOMR source attribution/correction and loss of admitted useful predecessor options/constraints.",
+        "material_defect_refs": [
+          "D01",
+          "D02"
+        ],
+        "eligibility_can_upgrade": false
+      },
+      "full_declared_scope_assessed": true,
+      "source6_axes_original": [
+        {
+          "id": "A1",
+          "name": "full brief obligations",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "BRIEF.md",
+            "PLAN.md",
+            "final_artifact",
+            "predecessor_artifact",
+            "O1",
+            "O2",
+            "O3",
+            "O4",
+            "O5",
+            "O6",
+            "O7"
+          ],
+          "defect_refs": [
+            "D01",
+            "D02"
+          ]
+        },
+        {
+          "id": "A2",
+          "name": "consequential source claims and governing conditions",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "F01",
+            "F02",
+            "F03",
+            "F04",
+            "F06",
+            "F07",
+            "F15",
+            "F16",
+            "F17",
+            "F19",
+            "F20",
+            "F21",
+            "F23",
+            "F24",
+            "Q01",
+            "Q02",
+            "Q04",
+            "Q06",
+            "Q10",
+            "Q11",
+            "Q12",
+            "Q14",
+            "G01",
+            "G02",
+            "G03",
+            "K01",
+            "K02",
+            "K03",
+            "K04",
+            "K05"
+          ],
+          "defect_refs": [
+            "D02"
+          ]
+        },
+        {
+          "id": "A3",
+          "name": "useful open discovery coverage/options/analogies/components/history",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "final_artifact:18\u201347,65\u201371",
+            "predecessor_artifact:15\u201358",
+            "F01",
+            "F04",
+            "F08",
+            "F09",
+            "F10",
+            "F14",
+            "F17",
+            "F18",
+            "P06",
+            "P07",
+            "P08",
+            "P09",
+            "P10",
+            "P11",
+            "P26",
+            "P28",
+            "Q01",
+            "Q02",
+            "Q03",
+            "Q07",
+            "Q10",
+            "Q11",
+            "Q12",
+            "Q13",
+            "Q14",
+            "D01",
+            "D02",
+            "D03",
+            "D04"
+          ],
+          "defect_refs": [
+            "D01"
+          ]
+        },
+        {
+          "id": "A4",
+          "name": "incorrect rejection/correction",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "final_artifact:81\u201387,95\u2013101",
+            "final_preservation_check:34\u201340",
+            "F19",
+            "F20",
+            "F21",
+            "P24",
+            "P25",
+            "Q01",
+            "Q02",
+            "Q04",
+            "F15",
+            "F16"
+          ],
+          "defect_refs": [
+            "D02"
+          ]
+        },
+        {
+          "id": "A5",
+          "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+          "status": "FAIL",
+          "assessed_evidence_refs": [
+            "all eight mapped scientific files",
+            "INPUT_INTEGRITY.json",
+            "P06",
+            "P07",
+            "P08",
+            "P09",
+            "P10",
+            "P11",
+            "P23",
+            "P26",
+            "P27",
+            "P28",
+            "P34"
+          ],
+          "defect_refs": [
+            "D01"
+          ]
+        },
+        {
+          "id": "A6",
+          "name": "proposed versus actually performed validation",
+          "status": "PASS",
+          "assessed_evidence_refs": [
+            "final_artifact:103\u2013112",
+            "final_preservation_check:42\u201350",
+            "predecessor_artifact:119\u2013134",
+            "predecessor_preservation_check:40\u201354",
+            "INPUT_INTEGRITY.json"
+          ],
+          "defect_refs": []
+        }
+      ],
+      "obligations_original": {
+        "O1": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence": [
+            "final_artifact:18\u201329",
+            "predecessor_artifact:15\u201358",
+            "predecessor_preservation_check:11",
+            "D01",
+            "D02",
+            "D03",
+            "D04"
+          ],
+          "limitations": [
+            "Candidate search-call chronology is self-reported; source breadth and problem-first research framing are assessed without runtime access."
+          ]
+        },
+        "O2": {
+          "status": "PASS",
+          "evidence": [
+            "final_artifact:22\u201329,33\u201341,67\u201371",
+            "F01",
+            "F05",
+            "F19",
+            "F20",
+            "F15",
+            "F16"
+          ],
+          "defect_refs": []
+        },
+        "O3": {
+          "status": "FAIL",
+          "evidence": [
+            "final_artifact:33\u201347,60",
+            "F01",
+            "F02",
+            "F03",
+            "F15",
+            "F19",
+            "F20",
+            "F21",
+            "F23",
+            "F24",
+            "G01",
+            "G02",
+            "G03",
+            "K01"
+          ],
+          "defect_refs": [
+            "D02"
+          ]
+        },
+        "O4": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence": [
+            "F06",
+            "F07",
+            "P24",
+            "P25",
+            "F15",
+            "F20",
+            "Q01",
+            "Q02",
+            "Q03",
+            "Q04",
+            "Q06",
+            "Q07",
+            "Q10",
+            "Q11",
+            "Q12",
+            "Q13",
+            "Q14",
+            "K01",
+            "K02",
+            "K03",
+            "K04",
+            "K05"
+          ],
+          "limitations": [
+            "Audiveris manual regression report and OSMD visual-regression claims were inspected, not executed. HOMR and unselected sync leads receive no stability/readiness credit from unassessed further history."
+          ]
+        },
+        "O5": {
+          "status": "PASS",
+          "evidence": [
+            "PLAN.md:B-P1\u2013B-P7",
+            "final_artifact:91\u2013101",
+            "plan_section_assessment"
+          ],
+          "defect_refs": []
+        },
+        "O6": {
+          "status": "FAIL",
+          "evidence": [
+            "final_artifact:49\u2013112",
+            "predecessor_artifact:29\u201358,91,105\u2013128",
+            "final_preservation_check"
+          ],
+          "defect_refs": [
+            "D01",
+            "D02"
+          ]
+        },
+        "O7": {
+          "status": "PASS_WITH_LIMITATIONS",
+          "evidence": [
+            "final_artifact:49\u201379,95\u2013110",
+            "BRIEF.md:5\u201311,19\u201321"
+          ],
+          "limitations": [
+            "Rights, retention duration, coordinate/viewer selection and hosted sync remain explicitly prospective group choices."
+          ]
+        }
+      },
+      "material_defect_count": 2,
+      "limitations_original_reference": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/REVIEW_FREEZE.json",
+        "sha256": "eeba40176438b7034e4955f834f393f03dd1c606732e04e899ae9c5562d065c7"
+      },
+      "review_delivered": true,
+      "assessment_disposition": "DELIVERED",
+      "host_review_freeze": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+        "sha256": "5583d40d106c0ad1575e500b05416dc4482aa18e178f5e3d9de6b6a4a1324479"
+      },
+      "cold_predispatch_at": "2026-10-07T20:57:59.130701+00:00",
+      "candidate_service_terminal_at": "2026-10-07T21:28:23.386000+00:00",
+      "resource_release_observed_upper_bound": "2026-10-07T21:28:34.695081+00:00",
+      "failure_inclusive_service_latency_seconds": 1824.255299,
+      "failure_inclusive_host_closeout_latency_seconds": 1835.56438,
+      "aggregate_stage_occupied_seconds": 1806.753,
+      "host_and_between_stage_elapsed_seconds": 28.8113800000001,
+      "whole_arm_deadline": "2026-10-07T21:42:59.130701+00:00",
+      "service_terminal_within45min": true,
+      "closeout_within45min": true,
+      "stages": [
+        {
+          "stage": "researcher-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-researcher-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-researcher-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-treatment-researcher-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11828-a54e-76c3-af7a-4b0b322b649c",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "complete"
+          ],
+          "requestedAt": "2026-10-07T20:57:59.242Z",
+          "startedAt": "2026-10-07T20:57:59.802Z",
+          "completedAt": "2026-10-07T21:11:15.883Z",
+          "stage_occupied_seconds": 796.641,
+          "queue_startup_seconds": 0.56,
+          "deadline": "2026-10-07T21:22:59.130701+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "f32c096239ddf2df54f9727cb8eccbc5b3cb5d5a05b9b0de80c173b739b6d864",
+              "status": "complete",
+              "tokensUsed": 233771,
+              "tokenBudget": null,
+              "timeUsedSeconds": 741
+            }
+          ],
+          "output_bytes": 3313680,
+          "scientific_artifact_bytes": 60806,
+          "source_capture_bytes": 3252874,
+          "observable_dynamic_tool_counts": {
+            "t3-code.orchestrator_capabilities": 1,
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1/host/scientific-files-terminal-freeze.json"
+        },
+        {
+          "stage": "critic-v1",
+          "taskId": "node:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-critic-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-treatment-critic-v1:ordinal:1",
+          "nativeThreadRefs": [
+            {
+              "driver": "codex",
+              "nativeId": "01a11835-110e-7a01-9615-e7601d8dd329",
+              "strength": "strong"
+            }
+          ],
+          "actual_binding": {
+            "modelSelection": {
+              "instanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": [
+                {
+                  "id": "reasoningEffort",
+                  "value": "max"
+                },
+                {
+                  "id": "serviceTier",
+                  "value": "priority"
+                }
+              ]
+            },
+            "providerInstanceId": "codex_gmail",
+            "runtimeMode": "full-access",
+            "interactionMode": "default",
+            "lineage": {
+              "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-confirmation-supervisor-v1",
+              "relationshipToParent": "subagent",
+              "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+            }
+          },
+          "native_terminal_statuses": [
+            "blocked"
+          ],
+          "requestedAt": "2026-10-07T21:11:33.274Z",
+          "startedAt": "2026-10-07T21:11:34.111Z",
+          "completedAt": "2026-10-07T21:28:23.386Z",
+          "stage_occupied_seconds": 1010.112,
+          "queue_startup_seconds": 0.837,
+          "deadline": "2026-10-07T21:31:33.131452+00:00",
+          "stage_within_allowance": true,
+          "native_counters_original_not_generated_or_billing": [
+            {
+              "objective_sha256": "50ea7c9f76a7588307d51090c76002c069cb7ae0eea83f2e2427ba6b4be34d09",
+              "status": "blocked",
+              "tokensUsed": 293051,
+              "tokenBudget": null,
+              "timeUsedSeconds": 976
+            }
+          ],
+          "output_bytes": 2541757,
+          "scientific_artifact_bytes": 51563,
+          "source_capture_bytes": 2490194,
+          "observable_dynamic_tool_counts": {
+            "t3-code.t3_thread_send": 1
+          },
+          "source_operations": null,
+          "raw_usage": {
+            "input": null,
+            "cached_input": null,
+            "generated_output": null,
+            "reasoning_subset": null,
+            "billing": null
+          },
+          "terminal_freeze_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1/host/scientific-files-terminal-freeze.json"
+        }
+      ],
+      "review_time_separate": {
+        "id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A68211e58-8957-484a-b1a0-473740607b99%253Adelegate-task%253Aer10-confirmation-C-03-treatment-source-review-v1:ordinal:1",
+        "threadId": "thread:delegated-task:command%3Amcp%3A68211e58-8957-484a-b1a0-473740607b99%3Adelegate-task%3Aer10-confirmation-C-03-treatment-source-review-v1",
+        "status": "completed",
+        "requestedAt": "2026-10-07T21:30:48.308Z",
+        "startedAt": "2026-10-07T21:30:49.435Z",
+        "completedAt": "2026-10-07T21:42:58.333Z"
+      },
+      "usage": {
+        "input": null,
+        "cached_input": null,
+        "generated_output": null,
+        "reasoning_subset": null,
+        "billing": null
+      },
+      "source_operations": null,
+      "scope_audit": "incomplete_unknown; advisory maps not filesystem firewall",
+      "native_raw_API_bodies": "missing; actual active and terminal projection evidence distinct",
+      "affordability_claim": false
+    }
+  },
+  "service_latency_ratio_control_over_treatment": 0.9385206642614774,
+  "host_closeout_latency_ratio_control_over_treatment": 0.9404974180202821,
+  "repeat_median_range": "Deferred until all four original comparisons frozen; no best-of",
+  "quota_economics": "Unknown usage/billing; no affordability claim",
+  "source_operations_limitation": "Tool projection incomplete; file/capture counts are not source operations",
+  "native_counters_policy": "Original cumulative counters retained per stage; no nested/enclosing/cumulative sum",
+  "single_account_context": "First two matched pairs overlapped four candidates; account/sibling contention not fully attributable; not serialized single-project estimate",
+  "candidate_feedback_sent": false,
+  "outcome_tuning": false
+}

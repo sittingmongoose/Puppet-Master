@@ -1,0 +1,187 @@
+{
+  "checked_at": "2026-10-07T22:33:04.040933+00:00",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9111.txt",
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "expected_sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc5861.txt",
+      "bytes": 10359,
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "expected_sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9110.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "expected_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/osmf-tile-policy.html",
+      "bytes": 18563,
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "expected_sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/osm-wiki-tile-disk-usage.html",
+      "bytes": 24578,
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "expected_sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/aws-sdk-retry-behavior.html",
+      "bytes": 63037,
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "expected_sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc9111-http-caching.txt",
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "expected_sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc5861-stale.txt",
+      "bytes": 10359,
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "expected_sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/osmf-tile-policy.html",
+      "bytes": 18563,
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "expected_sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/osm-wiki-slippy-tilenames.html",
+      "bytes": 333283,
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "expected_sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/mapbox-raster-tiles-api.html",
+      "bytes": 57884,
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "expected_sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/mod_tile-README.rst",
+      "bytes": 9248,
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "expected_sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/leaflet-offline-README.md",
+      "bytes": 1970,
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "expected_sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "expected_sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+      "bytes": 10359,
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "expected_sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "expected_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html",
+      "bytes": 18563,
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "expected_sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html",
+      "bytes": 24578,
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "expected_sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html",
+      "bytes": 63037,
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "expected_sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-slippy-tilenames.html",
+      "bytes": 333283,
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "expected_sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html",
+      "bytes": 57884,
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "expected_sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+      "bytes": 9248,
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "expected_sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+      "bytes": 1970,
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "expected_sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+      "bytes": 4791,
+      "sha256": "2931b7baab7992a031c109476fb2bd16e9b0bcb4f10ab7381f6ecaa4a46139f5",
+      "expected_sha256": "2931b7baab7992a031c109476fb2bd16e9b0bcb4f10ab7381f6ecaa4a46139f5",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+      "bytes": 6005,
+      "sha256": "428542c513bdf0a9f34d6d6d6e2bfb7d68a99c0de3b5b012d745893e8e06685f",
+      "expected_sha256": "428542c513bdf0a9f34d6d6d6e2bfb7d68a99c0de3b5b012d745893e8e06685f",
+      "match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+      "bytes": 9281,
+      "sha256": "256258b1bfa42e958e011ec09b14df1bb6636b0ac3a039d97e93c3cf996ef6fa",
+      "expected_sha256": "256258b1bfa42e958e011ec09b14df1bb6636b0ac3a039d97e93c3cf996ef6fa",
+      "match": true
+    }
+  ]
+}

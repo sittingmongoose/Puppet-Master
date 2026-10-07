@@ -1,0 +1,217 @@
+{
+ "schema": "pm.er10.discovery-source-index.v1",
+ "case_id": "D-M16-A",
+ "stage": "fresh_shared_discovery-v3",
+ "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+ "captured_at_utc": "2026-10-07T21:29:32Z",
+ "selection_rule": "public primary docs/code only, chosen during work; no sibling/counterpart/v1v2/evaluator sources; no code executed",
+ "discovery_leads": {
+  "positive": [
+   "per-tile retry + skip-existing resumability (leaflet.offline TileManager, osmdroid saveFile)",
+   "conditional revalidation via ETag/Last-Modified (RFC9110 S8.8/S13; OSMF policy expects cache/conditional use)",
+   "stale-while-revalidate serve-stale display (RFC5861 S3)",
+   "size/expiry-bounded retention with purge (libshumate size_limit+purge_cache_async; osmdroid COLUMN_EXPIRES+runCleanupOperation)",
+   "connectivity gating before download (osmdroid NetworkAvailabliltyCheck)"
+  ],
+  "negative": [
+   "OSMF policy prohibits bulk downloading/scraping and discourages offline bulk use \u2014 acquisition volume must stay bounded per-view",
+   "HTTP byte-range resume (RFC9110 S14) not used by any captured tile client for individual small tiles; unknown whether any mainstream tile client does (open check)",
+   "MBTiles 1.3 has no freshness/retention fields \u2014 retention schema must be supplied by the viewer",
+   "leaflet.offline createTile has no staleness check \u2014 stored-first display can show indefinitely old tiles"
+  ],
+  "optional": [
+   "stale-if-error as offline fallback (RFC5861 S4)",
+   "osmdroid cleanOnStartup as retention trigger variant",
+   "If-Range partial reuse for large rasters, not standard tiles",
+   "cache_key namespacing in libshumate for shared-source identity"
+  ]
+ },
+ "entries": [
+  {
+   "id": "rfc9111-http-caching",
+   "file": "rfc9111-http-caching.txt",
+   "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+   "version": "RFC 9111 (June 2022), stable",
+   "capture": "2026-10-07T21:27:59Z",
+   "bytes": 84477,
+   "hash": "sha256:aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+   "locator": "lines 282/581/652/719/784/801/1017 = S3 storing, S4.2 freshness, S4.2.1 freshness lifetime, S4.2.3 Age, S4.2.4 serving stale, S4.3 validation, S4.4 invalidation; S5.2.2.1 max-age (line 1208)",
+   "limits": "IETF full text; stable spec; obsoletes RFC 7234; read-only capture, not executed",
+   "topic_binding": [
+    "shared"
+   ],
+   "mechanism_lead": "Core freshness/validation/invalidation model both topics reuse: explicit max-age or heuristic freshness, conditional revalidation, invalidation on recognized unsafe methods"
+  },
+  {
+   "id": "rfc9110-http-semantics",
+   "file": "rfc9110-http-semantics.txt",
+   "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+   "version": "RFC 9110 (June 2022), stable",
+   "capture": "2026-10-07T21:27:59Z",
+   "bytes": 502941,
+   "hash": "sha256:21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+   "locator": "lines 3362/3480/3570 = S8.8 validators, S8.8.2 Last-Modified, S8.8.3 ETag; S13 conditional requests (If-None-Match S13.1.2, If-Modified-Since S13.1.3, If-Range S13.1.5); line 6308 = S14.1 range units (S14 Range Requests)",
+   "limits": "IETF full text (~503KB); stable spec; read-only capture",
+   "topic_binding": [
+    "shared",
+    "topic1"
+   ],
+   "mechanism_lead": "Shared identity = URL+validators (ETag/Last-Modified) enable cheap refresh checks; S14 byte-range machinery exists but no captured tile client uses it for tiles"
+  },
+  {
+   "id": "rfc5861-swr-sie",
+   "file": "rfc5861-swr-sie.txt",
+   "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+   "version": "RFC 5861 (May 2010), informational, stable",
+   "capture": "2026-10-07T21:29:32Z",
+   "bytes": 10359,
+   "hash": "sha256:1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+   "locator": "S3 stale-while-revalidate (S3.1 example, line 131); S4 stale-if-error",
+   "limits": "IETF full text; informational status (cache-hit window bounds not normatively required); read-only capture",
+   "topic_binding": [
+    "topic2",
+    "topic1-optional"
+   ],
+   "mechanism_lead": "Serve stale while background revalidation (topic2 display), stale-if-error as offline fallback (topic1 intermittent links)"
+  },
+  {
+   "id": "osm-tile-policy",
+   "file": "osm-tile-policy.html",
+   "url": "https://operations.osmfoundation.org/policies/tiles/",
+   "version": "OSMF Operations tile policy web page, undated, as captured 2026-10-07",
+   "capture": "2026-10-07T21:28:00Z",
+   "bytes": 18563,
+   "hash": "sha256:43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+   "locator": "clauses: bulk downloading ('scraping') and offline use discouraged; 'cache each tile' recommendation; 'cache headers by default'; link 'Conditional Requests' (MediaWiki API conditional requests); HTTP 409 responses; block/require-app-contact sections",
+   "limits": "Dynamic web page, may change any time; capture frozen by hash; no version header exists",
+   "topic_binding": [
+    "topic1",
+    "shared"
+   ],
+   "mechanism_lead": "Negative lead: bulk acquisition/mirroring prohibited \u2014 acquisition must be bounded per-view; refresh expected via conditional requests honoring cache headers"
+  },
+  {
+   "id": "osmdroid-sqltilewriter-6.1.20",
+   "file": "osmdroid-sqltilewriter-6.1.20.java",
+   "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/SqlTileWriter.java",
+   "version": "tag osmdroid-parent-6.1.20",
+   "capture": "2026-10-07T21:28:00Z",
+   "bytes": 38315,
+   "hash": "sha256:c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6",
+   "locator": "line 53 COLUMN_EXPIRES, 56 cleanOnStartup=true, 66 setCleanupOnStart, 102 runCleanupOperation, 128 saveFile(stream, expirationTime), 213/233 purgeCache, 480 getFirstExpiry, 538 getExpirationTimestamp",
+   "limits": "Apache-2.0 per repo (not re-verified in capture); single file, full class captured",
+   "topic_binding": [
+    "topic2",
+    "topic1"
+   ],
+   "mechanism_lead": "Retention: per-tile expires timestamp + startup/purge cleanup by expiry (topic2); saveFile keyed by tilesource+index skip/overwrite (topic1 resume primitive)"
+  },
+  {
+   "id": "osmdroid-networkavailabilitycheck-6.1.20",
+   "file": "osmdroid-networkavailabilitycheck-6.1.20.java",
+   "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/NetworkAvailabliltyCheck.java",
+   "version": "tag osmdroid-parent-6.1.20",
+   "capture": "2026-10-07T21:28:00Z",
+   "bytes": 2846,
+   "hash": "sha256:3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06",
+   "locator": "line 16 class, 33 getNetworkAvailable, 51 getWiFiNetworkAvailable, 62 getCellularDataNetworkAvailable, 74 getRouteToPathExists",
+   "limits": "Apache-2.0 per repo; single file; filename typo 'Availablilty' is upstream",
+   "topic_binding": [
+    "topic1"
+   ],
+   "mechanism_lead": "Intermittent-link gating: provider checks connectivity before issuing tile downloads; no backoff/hysteresis in this file (uncertainty)"
+  },
+  {
+   "id": "libshumate-file-cache-1.7.0",
+   "file": "libshumate-file-cache-1.7.0.c",
+   "url": "https://gitlab.gnome.org/GNOME/libshumate/-/raw/1.7.0/shumate/shumate-file-cache.c",
+   "version": "tag 1.7.0",
+   "capture": "2026-10-07T21:28:00Z",
+   "bytes": 32823,
+   "hash": "sha256:da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea",
+   "locator": "lines 378 new_full(size_limit,cache_dir,cache_key), 455 set_size_limit, 543 mark_up_to_date, 728 purge_cache_async, 803 get_tile_async, 957 store_tile_async",
+   "limits": "LGPL-2.1+ per file header; single file, full class captured",
+   "topic_binding": [
+    "topic2",
+    "topic1-optional"
+   ],
+   "mechanism_lead": "Retention: size_limit-capped cache with async purge (evict by rank/age) \u2014 bounded retention policy; mark_up_to_date refreshes stored freshness"
+  },
+  {
+   "id": "mbtiles-1.3-spec",
+   "file": "mbtiles-1.3-spec.md",
+   "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+   "version": "MBTiles spec 1.3 (master branch as captured)",
+   "capture": "2026-10-07T21:28:13Z",
+   "bytes": 15807,
+   "hash": "sha256:e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+   "locator": "S Tiles schema (lines 99-115): tiles(map_zoom_level,map_column,map_row,tile_data); S Metadata (48-59)",
+   "limits": "spec text; master branch may move; capture frozen by hash",
+   "topic_binding": [
+    "shared"
+   ],
+   "mechanism_lead": "Shared tile identity = (z,x,y) (+tilesource); flat-key store; no built-in freshness/retention fields in 1.3 (uncertainty: freshness must be added out-of-band)"
+  },
+  {
+   "id": "leaflet-offline-TileManager",
+   "file": "leaflet-offline-TileManager.ts",
+   "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileManager.ts",
+   "version": "tag v3.2.1",
+   "capture": "2026-10-07T21:28:23Z",
+   "bytes": 5819,
+   "hash": "sha256:ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23",
+   "locator": "lines 29 openTilesDataBase, 57 getStorageLength, 69 getStorageInfo, 84 downloadTile, 97 saveTile, 192 removeTile, 206 hasTile, 215 truncate",
+   "limits": "license per repo (not re-verified); single file; IndexedDB storage assumed",
+   "topic_binding": [
+    "topic1"
+   ],
+   "mechanism_lead": "Resumable acquisition: downloadTile returns Blob per tile; saveTile persists keyed by URL; hasTile lets a restarted session skip already-stored tiles (resume by skip-existing, no byte-range)"
+  },
+  {
+   "id": "leaflet-offline-TileLayerOffline",
+   "file": "leaflet-offline-TileLayerOffline.ts",
+   "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileLayerOffline.ts",
+   "version": "tag v3.2.1",
+   "capture": "2026-10-07T21:28:23Z",
+   "bytes": 2479,
+   "hash": "sha256:55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b",
+   "locator": "lines 17 class, 20 createTile(coords,done), 37 getTileUrl, 61 getTileUrls(bounds,zoom)",
+   "limits": "license per repo; single file",
+   "topic_binding": [
+    "topic2",
+    "topic1"
+   ],
+   "mechanism_lead": "Display side: createTile serves stored tile if present else online \u2014 stored-first display, no staleness age-check in this file (uncertainty: no refresh trigger on display)"
+  },
+  {
+   "id": "leaflet-offline-ControlSaveTiles",
+   "file": "leaflet-offline-ControlSaveTiles.ts",
+   "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/ControlSaveTiles.ts",
+   "version": "tag v3.2.1",
+   "capture": "2026-10-07T21:28:24Z",
+   "bytes": 6625,
+   "hash": "sha256:3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c",
+   "locator": "lines 95 getStorageSize, 114/139 _saveTiles, 151 _saveTile call, 230 _saveTile",
+   "limits": "license per repo; single file",
+   "topic_binding": [
+    "topic1"
+   ],
+   "mechanism_lead": "Bounded acquisition driver: computes tile list for viewport/zooms then per-tile _saveTile loop; retriable per tile; no global queue persistence across reloads (uncertainty)"
+  },
+  {
+   "id": "leaflet-offline-tree",
+   "file": "leaflet-offline-tree.json",
+   "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/v3.2.1?recursive=1",
+   "version": "GitHub git/trees API for tag v3.2.1, as captured",
+   "capture": "2026-10-07T21:28:13Z",
+   "bytes": 23309,
+   "hash": "sha256:5e50cae7edf2743fc0dbd47906bd6c160aafc5583b12f2dc196a6fd48b3e325d",
+   "locator": "src/ entries list used to pick the three .ts files above",
+   "limits": "API JSON provenance record for the v3.2.1 file set; rate-limited endpoint; capture frozen by hash",
+   "topic_binding": [
+    "provenance"
+   ],
+   "mechanism_lead": "Provenance only: pins which upstream files exist at the captured tag"
+  }
+ ]
+}

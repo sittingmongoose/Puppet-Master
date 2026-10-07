@@ -1,0 +1,214 @@
+{
+  "case_id": "D-M16-A",
+  "target": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    }
+  },
+  "account": "explicit provider instance; provider authentication not independently inferred",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "hashes": {
+    "case-card.json": "7d42f944dffc38459640bbca41bd515c78ad235618b83b7b4b89d2b1ffe1f3de",
+    "CASE_CARD.md": "b780a51964a4a03d01aa86cf46fbef4ed413057bc08c6e7532ad8d43e1ae5012",
+    "INPUT_MAP.json": "7c27dfb9c5e7b8e589df50ab932ae6f6e45c48f2b33ac391eb3faaca64464d3b",
+    "READY.json": "391ed1931861d972b2b14dec303dfb3eb5012341d27460c076ba63d524aa4b2a"
+  },
+  "input_hashes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/case-card.json",
+      "sha256": "7d42f944dffc38459640bbca41bd515c78ad235618b83b7b4b89d2b1ffe1f3de"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/CASE_CARD.md",
+      "sha256": "b780a51964a4a03d01aa86cf46fbef4ed413057bc08c6e7532ad8d43e1ae5012"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/INPUT_MAP.json",
+      "sha256": "7c27dfb9c5e7b8e589df50ab932ae6f6e45c48f2b33ac391eb3faaca64464d3b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/brief.md",
+      "sha256": "7d15cde85d0b0fbf171f16f4d26aa6f88607ed6c1675eadd3bccd0c2dd42fa28"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/sources.json",
+      "sha256": "1f021fdcc5f65f2d4e4c91454e2e109952804860a41bb9706d237a02923661a5"
+    }
+  ],
+  "sources": [],
+  "stages": {
+    "control": [
+      {
+        "stage": "topic_1_independent",
+        "candidate_minutes": 6,
+        "procedure": "Fresh same-family researcher independently discovers/comparisons for Topic 1; no sibling inventory.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/control/topic_1_independent.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_1_independent-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_1_independent-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_1_independent-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_1_independent-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_1_independent-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_1_independent-v1/sources"
+      },
+      {
+        "stage": "topic_2_independent",
+        "candidate_minutes": 6,
+        "procedure": "Fresh same-family researcher independently discovers/comparisons for Topic 2 from the same thin bundle.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/control/topic_2_independent.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_2_independent-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_2_independent-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_2_independent-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_2_independent-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_2_independent-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic_2_independent-v1/sources"
+      },
+      {
+        "stage": "bundle_join",
+        "candidate_minutes": 3,
+        "procedure": "Reconcile shared dependency conflicts and deliver both complete topic dispositions.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/control/bundle_join.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/bundle_join-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/bundle_join-v1/final.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/bundle_join-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/bundle_join-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/bundle_join-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/bundle_join-v1/sources"
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "shared_discovery",
+        "candidate_minutes": 6,
+        "procedure": "One same-family researcher creates one public-source discovery inventory useful across the two topics without erasing topic unknowns.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/shared_discovery.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/shared_discovery-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/shared_discovery-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/shared_discovery-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/shared_discovery-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/shared_discovery-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/shared_discovery-v1/sources"
+      },
+      {
+        "stage": "topic_1_comparison",
+        "candidate_minutes": 3,
+        "procedure": "Same-family candidate compares Topic 1 against the inventory, checking applicability and topic-specific unknowns.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/topic_1_comparison.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_1_comparison-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_1_comparison-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_1_comparison-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_1_comparison-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_1_comparison-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_1_comparison-v1/sources"
+      },
+      {
+        "stage": "topic_2_comparison",
+        "candidate_minutes": 3,
+        "procedure": "Same-family candidate compares Topic 2 against the same inventory, with independent topic obligations.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/topic_2_comparison.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_2_comparison-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_2_comparison-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_2_comparison-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_2_comparison-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_2_comparison-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/topic_2_comparison-v1/sources"
+      },
+      {
+        "stage": "bundle_join",
+        "candidate_minutes": 3,
+        "procedure": "Reconcile reuse invalidations and deliver both complete topic dispositions.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/bundle_join.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/bundle_join-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/bundle_join-v1/final.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/bundle_join-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/bundle_join-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/bundle_join-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/bundle_join-v1/sources"
+      }
+    ]
+  },
+  "original_budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "topic_1_independent",
+          "candidate_minutes": 6,
+          "procedure": "Fresh same-family researcher independently discovers/comparisons for Topic 1; no sibling inventory.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/control/topic_1_independent.md"
+        },
+        {
+          "stage": "topic_2_independent",
+          "candidate_minutes": 6,
+          "procedure": "Fresh same-family researcher independently discovers/comparisons for Topic 2 from the same thin bundle.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/control/topic_2_independent.md"
+        },
+        {
+          "stage": "bundle_join",
+          "candidate_minutes": 3,
+          "procedure": "Reconcile shared dependency conflicts and deliver both complete topic dispositions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/control/bundle_join.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "shared_discovery",
+          "candidate_minutes": 6,
+          "procedure": "One same-family researcher creates one public-source discovery inventory useful across the two topics without erasing topic unknowns.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/shared_discovery.md"
+        },
+        {
+          "stage": "topic_1_comparison",
+          "candidate_minutes": 3,
+          "procedure": "Same-family candidate compares Topic 1 against the inventory, checking applicability and topic-specific unknowns.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/topic_1_comparison.md"
+        },
+        {
+          "stage": "topic_2_comparison",
+          "candidate_minutes": 3,
+          "procedure": "Same-family candidate compares Topic 2 against the same inventory, with independent topic obligations.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/topic_2_comparison.md"
+        },
+        {
+          "stage": "bundle_join",
+          "candidate_minutes": 3,
+          "procedure": "Reconcile reuse invalidations and deliver both complete topic dispositions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/bundle_join.md"
+        }
+      ]
+    }
+  },
+  "arm_order": [
+    "treatment",
+    "control"
+  ],
+  "access": "Only brief, input map/source manifest and listed sources; own predecessors only; no sibling arms/cases, reviews, campaign history or helper corpus. Advisory scope is not a filesystem firewall.",
+  "native_goal": "Fresh actual create_goal/get_goal activation and update_goal/get_goal terminal per substantive stage; objective <=4000 chars; no inherited goals or nested agents.",
+  "final_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/bundle_join-v1/final.md",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/bundle_join-v1/final.md"
+  }
+}

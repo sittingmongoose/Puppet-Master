@@ -1,0 +1,56 @@
+{
+  "observed_at": "2026-10-07T21:53:45.369372+00:00",
+  "nomination": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/m16-topic2-both-native-active-root-nominations-v1.json",
+  "nomination_sha256": "45aa0b217de14226cf65713025435cbc9cad3134d19d7c46fbfef6f12f03af2d",
+  "actual_nomination": {
+    "arm": "treatment",
+    "stage": "fresh_topic2_comparison-v3",
+    "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/assignment.md",
+    "assignment_sha256": "21d9025fe286663f4cc3ec98af2bf6a7bb195be465d593d4b1e508c4b568b308",
+    "matching_objectives": 0,
+    "lookup_seconds": 0.01760589900004561,
+    "rows": []
+  },
+  "separate_actual_config_binding": {
+    "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3",
+    "case_id": "D-M16-A",
+    "arm": "treatment",
+    "stage": "fresh_topic2_comparison-v3",
+    "target": {
+      "providerInstanceId": "zcode",
+      "driverKind": "acpRegistry",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": {
+        "thought": "max",
+        "mode": "yolo"
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic2_comparison-v3\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic2_comparison-v3\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-treatment-fresh_topic2_comparison-v3:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic2_comparison-v3\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic2_comparison-v3",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic2_comparison-v3",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-treatment-fresh_topic2_comparison-v3:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic2_comparison-v3",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "zcode",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "isError": false
+  },
+  "native_activation": "NOT_OBSERVED",
+  "limitation": "T3 running is not native Goal proof."
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "pm.er10.source-index.v1",
+  "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+  "topic": "topic2_independent-v3: stale-tile display/retention (independent arm, no shared corpus with topic1)",
+  "note": "Public primary docs/code selected during work; no supplied sources existed. Failures during discovery (MDN raw paths, mapproxy.org/JS docs, geoserver GWC docs) were not retained.",
+  "entries": [
+    {
+      "file": "rfc9111-http-caching.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version": "RFC 9111 (June 2022), IETF HTTP semantics: caching",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 84,477 bytes",
+      "locator": "Sec 4 (constructing responses / freshness model: Age, fresh vs stale); Sec 5.2 (Cache-Control: max-age, must-revalidate, no-cache, no-store, max-stale); Sec 5.5 (revalidation)",
+      "limits": "Generic HTTP cache semantics, not tile- or map-specific; specifies cache behavior, not viewer display or retention policy; does NOT define stale-while-revalidate/stale-if-error (see rfc5861-stale.txt)",
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+    },
+    {
+      "file": "rfc5861-stale.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+      "version": "RFC 5861 (May 2010), Informational",
+      "capture": "2026-10-07T21:47:34Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 10,359 bytes",
+      "locator": "Sec 3 (stale-while-revalidate Cache-Control extension: serve stale while async revalidation); Sec 4 (stale-if-error)",
+      "limits": "Informational status; not honored by all caches/tile clients; defines cache-side stale serving, not an offline viewer's retention or identity scheme",
+      "bytes": 10359,
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e"
+    },
+    {
+      "file": "osmf-tile-policy.html",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "version": "OSMF Operations tile policy page; Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 18,563 bytes",
+      "locator": "Policy body sections mentioning caching/updates of the standard osm.org tile layer (6 'cache' matches; server-side caching and bulk-use limits)",
+      "limits": "Acceptable-use policy for OSMF tile servers (single provider), not a client design spec; HTML includes site chrome; server cache/freshness statements here are policy context, not an API contract",
+      "bytes": 18563,
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2"
+    },
+    {
+      "file": "osm-wiki-slippy-tilenames.html",
+      "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+      "version": "OSM community wiki page; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 333,283 bytes",
+      "locator": "z/x/y tile coordinate scheme, zoom-level resolution table, 'Tile Servers' section (identity scheme for raster tiles)",
+      "limits": "Community-maintained wiki, content can change without notice; covers tile identity/numbering only, not freshness, staleness display, or retention; 333 KB HTML includes MediaWiki chrome/scripts",
+      "bytes": 333283,
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd"
+    },
+    {
+      "file": "mapbox-raster-tiles-api.html",
+      "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+      "version": "Mapbox vendor docs, undated page, fetched 2026-10-07",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 57,884 bytes",
+      "locator": "Caching section: 'Cache-Control headers to ... cache TTL of 12 hours and a CDN cache TTL of 5 minutes. New tileset data is cached for up to a ...' (browser vs CDN TTL distinction, ETag/conditional revalidation context)",
+      "limits": "Commercial vendor docs for Mapbox raster tiles; documents server-set cache headers, not client offline retention or stale-display policy; static HTML fetch may miss JS-rendered parts; includes site chrome",
+      "bytes": 57884,
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad"
+    },
+    {
+      "file": "mod_tile-README.rst",
+      "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+      "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 9,248 bytes",
+      "locator": "README sections on tile expiry / Expires+Last-Modified headers and mod_tile/renderd caching behavior (2 'expir' matches)",
+      "limits": "Server-side (Apache module + renderd) renderer README; documents tile-serving server behavior, not client storage/retention; per-zoom expiry configuration details live in other mod_tile docs not captured here",
+      "bytes": 9248,
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8"
+    },
+    {
+      "file": "leaflet-offline-README.md",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+      "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 1,970 bytes",
+      "locator": "README overview ('still available when you are offline') and Dependencies (idb: 'To store the tiles with promises'); API list deferred to generated docs, not captured",
+      "limits": "Very small README; proves an offline tile layer stores tiles in browser storage but specifies no stale-display, version, or retention/eviction policy; implementation internals not captured",
+      "bytes": 1970,
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a"
+    }
+  ]
+}

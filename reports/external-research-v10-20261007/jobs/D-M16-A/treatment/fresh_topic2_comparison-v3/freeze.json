@@ -1,0 +1,144 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T22:08:09.464666+00:00",
+  "case_id": "D-M16-A",
+  "arm": "treatment",
+  "stage": "fresh_topic2_comparison",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/INPUT_MAP.json",
+      "sha256": "8cf9fdc7e8e21a7a1c0417237c326d0672cf739ba17deb2a2e745bffc441662d",
+      "bytes": 2200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/admission-timing.json",
+      "sha256": "94a42d290b040e3b7a818c908dbda8471f4d0493a19d35a9e2a62fe4ccd563ca",
+      "bytes": 472
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/assignment.md",
+      "sha256": "21d9025fe286663f4cc3ec98af2bf6a7bb195be465d593d4b1e508c4b568b308",
+      "bytes": 4082
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/dispatch-receipt.json",
+      "sha256": "9e548f285622658a250c3e15d67888559565e9b3a9455a268c473daeb9c144be",
+      "bytes": 2342
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/dispatch-registration-wrapper-error.json",
+      "sha256": "3fb3ff025edc645a8c1ff904cf03825589e27795c15042f04a7a668e1ac7443f",
+      "bytes": 3107
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/dispatch-request.json",
+      "sha256": "2cfdfb2a46c0c114a3c26c87d85fd10612915b14c7c80480b701f5feac9f8891",
+      "bytes": 693
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/dispatch.json",
+      "sha256": "4b23d1b33a1a553f3eb6a0ba96b4738587ca36241fa2e12aa8750d0041605c59",
+      "bytes": 1528
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/integration-state-active.json",
+      "sha256": "83664f6f9efa8f1b55691a65b367a70e47bf7e03cd280865c19533929d58daec",
+      "bytes": 7198
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/integration-state-terminal.json",
+      "sha256": "80b5b17e6a44aacac767f4eb04970ea2c2c1f154e1d158215619e1fdcf61698f",
+      "bytes": 6758
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/native-active-absence-root-v1.json",
+      "sha256": "38253ac59f83f6f94c9f6308ac8996ebfb80af6f8dcb2a7793306e89e2c3bea8",
+      "bytes": 3687
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/passive-active-capture-cost.json",
+      "sha256": "bef3576c3c14e0d6bf086f8918785419037143750b7a2eef199481c7a0a1febd",
+      "bytes": 1345
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/passive-terminal-capture-cost.json",
+      "sha256": "4e69b1273edf7acd3f3210213ed8880ab56806f76e3e48bed4118250f7c6ac8b",
+      "bytes": 1314
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/passive-terminal.json",
+      "sha256": "526934246de2234ec8e9d7ac1d27246c3f77addf37ea590bf58b3dd08e431a0d",
+      "bytes": 20002
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/report.md",
+      "sha256": "4a9103edca44f28d2e46d09503ced8120bc6b3b5572cfe7c60afa25f611012fd",
+      "bytes": 8912
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/scratch/draft-report.md",
+      "sha256": "abbb353fc76c57a077e92c318f39fa25d50ac025bdd0d1e051ad2cdb73879d1f",
+      "bytes": 11077
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/scratch/ingestion.md",
+      "sha256": "f1e5cce840aace4f489716188077c95898dfc5ec3f58f56ff48207a1715f8a97",
+      "bytes": 5511
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/index.json",
+      "sha256": "f9573c86dd5facb3985efdec9d720234e29c644973c0d08ae121cddc87131ff2",
+      "bytes": 5359
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/leaflet-offline-TileLayerOffline.ts",
+      "sha256": "55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b",
+      "bytes": 2479
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/libshumate-file-cache-1.7.0.c",
+      "sha256": "da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea",
+      "bytes": 32823
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/mbtiles-1.3-spec.md",
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "bytes": 15807
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/osmdroid-sqltilewriter-6.1.20.java",
+      "sha256": "c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6",
+      "bytes": 38315
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc5861-swr-sie.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9110-http-semantics.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9111-http-caching.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/task-terminal.json",
+      "sha256": "239e55d79502e026e0810c5e6907070b23f7025f61cad0eb0f1b7114279c8fa0",
+      "bytes": 4464
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/timings.json",
+      "sha256": "a86e76ff1f82089a2ca9e3405ae5a4b09b81e48780fd698d9c49adb0bc348443",
+      "bytes": 2301
+    }
+  ]
+}

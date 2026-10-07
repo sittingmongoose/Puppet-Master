@@ -1,0 +1,88 @@
+{
+ "schema": "pm.er10.stage-source-index.v1",
+ "case_id": "D-M16-A",
+ "stage": "fresh_bundle_join_final-v3",
+ "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+ "captured_at_utc": "2026-10-07T22:16:00Z",
+ "selection_rule": "independent spot-check captures for the bundle join: one bounded re-probe of the amended header-emission claim, plus fresh bytes for the four predecessor citations that had no bytes in listed predecessor sources (OSMP, OSN, LO-CS, LO-TM); no sibling/counterpart/v1v2/evaluator sources; nothing executed",
+ "entries": [
+  {
+   "id": "osm-tile-headers-probe2-20261007",
+   "file": "osm-tile-headers-probe2-20261007.txt",
+   "url": "https://tile.openstreetmap.org/0/0/0.png",
+   "version": "live HTTP response headers from canonical OSM tile endpoint, as returned 2026-10-07T22:15:39Z",
+   "capture": "2026-10-07T22:15:39Z",
+   "locator": "line 8 x-blocked: Access denied (policy pointer https://operations.osmfoundation.org/policies/tiles/); line 4 cache-control: no-cache; line 3 retry-after: 0; line 9 accept-ranges: bytes; lines 13-14 varnish HIT",
+   "limits": "SINGLE bounded request, body discarded, nothing executed; response differs from predecessor OSMH capture (21:45Z: etag+max-age+stale-while-revalidate) \u2014 this probe returned an access-denied/no-cache variant, evidencing per-request/per-client header variation under the endpoint's policy gating",
+   "topic_binding": [
+    "topic1",
+    "topic2",
+    "shared"
+   ],
+   "mechanism_lead": "Independent re-check of the amended claim 'per-source header variation': variation is real and can go all the way to validators/max-age being withheld behind access gating \u2014 the header-absent fallback (time-based re-download) must be the designed default path",
+   "hash": "sha256:45e1dfafe270826209cf19de207c64817a4b9a0cccbf6a286240015d98e714c7",
+   "bytes": 544
+  },
+  {
+   "id": "osmf-tile-policy-20261007",
+   "file": "osmf-tile-policy-20261007.html",
+   "url": "https://operations.osmfoundation.org/policies/tiles/",
+   "version": "OSMF tile usage policy page, current as captured 2026-10-07T22:16Z",
+   "capture": "2026-10-07T22:16:00Z",
+   "locator": "line 75 'Bulk download (\"scrape\") tiles or offer prefetch features' (prohibited); line 51 heavy/inappropriate use may be blocked; lines 66/117 valid identifying User-Agent required; line 79 UA masquerading prohibited",
+   "limits": "project web page, may change; frozen by hash; read-only; converts predecessor inherited citation [OSMP] into independently held bytes",
+   "topic_binding": [
+    "topic1"
+   ],
+   "mechanism_lead": "Confirms the bulk-acquisition prohibition and adds the enforcement fact that blocking happens in practice (see probe2) \u2014 the viewer's acquisition bounds are policy-required, not optional",
+   "hash": "sha256:43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+   "bytes": 18563
+  },
+  {
+   "id": "osmdroid-networkavailabliltycheck-6.1.20",
+   "file": "osmdroid-networkavailabliltycheck-6.1.20.java",
+   "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/NetworkAvailabliltyCheck.java",
+   "version": "tag osmdroid-parent-6.1.20",
+   "capture": "2026-10-07T22:16:00Z",
+   "locator": "line 16 class implements INetworkAvailabliltyCheck; line 33 getNetworkAvailable(); lines 51/62 wifi/cellular variants; whole-file negative check: no retry/backoff/sleep keywords",
+   "limits": "Apache-2.0 per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citation [OSN:33] into independently held bytes",
+   "topic_binding": [
+    "topic1"
+   ],
+   "mechanism_lead": "Connectivity gating in osmdroid is pure state polling with no backoff \u2014 confirms the [OSN] half of the predecessor negative lead (the [MTD] half is REFUTED, see spotcheck.md)",
+   "hash": "sha256:3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06",
+   "bytes": 2846
+  },
+  {
+   "id": "leaflet-offline-ControlSaveTiles-v3.2.1",
+   "file": "leaflet-offline-ControlSaveTiles-v3.2.1.ts",
+   "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/ControlSaveTiles.ts",
+   "version": "leaflet.offline tag v3.2.1",
+   "capture": "2026-10-07T22:16:00Z",
+   "locator": "line 139 _saveTiles(); line 190 this.options.bounds || this._map.getBounds() (computed viewport list); lines 15/17 imports saveTile/hasTile",
+   "limits": "license per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citation [LO-CS:139] into independently held bytes",
+   "topic_binding": [
+    "topic1"
+   ],
+   "mechanism_lead": "Viewport/session-bounded tile-list computation confirmed at the exact cited line \u2014 the compliant bounded-acquisition pattern OSMF policy implies",
+   "hash": "sha256:3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c",
+   "bytes": 6625
+  },
+  {
+   "id": "leaflet-offline-TileManager-v3.2.1",
+   "file": "leaflet-offline-TileManager-v3.2.1.ts",
+   "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileManager.ts",
+   "version": "leaflet.offline tag v3.2.1",
+   "capture": "2026-10-07T22:16:00Z",
+   "locator": "line 84 downloadTile(tileUrl); line 97 saveTile(...); line 206 hasTile(key); line 220 const shouldUseUrl = !(await hasTile(key)) \u2014 skip-existing on hit",
+   "limits": "license per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citations [LO-TM:84,97,206] into independently held bytes",
+   "topic_binding": [
+    "topic1",
+    "topic2"
+   ],
+   "mechanism_lead": "Per-tile download\u2192save keyed by resolved URL with hasTile skip confirmed at the exact cited lines \u2014 the resume unit is the tile, not the byte range",
+   "hash": "sha256:ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23",
+   "bytes": 5819
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "er10.timings.v1",
+  "case": "D-M16-A/control/topic1_independent-v3",
+  "clock_source": "host UTC clock (date -u) and filesystem mtimes; host-written admission-timing.json governs admission",
+  "common_T0": "2026-10-07T21:21:56.716615+00:00",
+  "prospective_admission_at": "2026-10-07T21:22:08.542239+00:00",
+  "stage_latest_absolute_deadline": "2026-10-07T21:51:56.716615+00:00",
+  "common_pair_deadline": "2026-10-07T22:41:56.716615+00:00",
+  "actual_source_ops": {
+    "first_allowed_input_read": "2026-10-07T21:24:46Z",
+    "inputs_read": ["INPUT_MAP.json", "admission-timing.json", "original_brief brief.md", "original_source_manifest sources.json"],
+    "source_fetch_round": "2026-10-07T21:27:25Z-21:27:35Z",
+    "http_fetches_completed": 6,
+    "duplicate_fetch_removed": 1,
+    "sources_indexed_at": "2026-10-07T21:30:28Z",
+    "notes": "one wiki URL (Tile_disk_usage) redirected into Servers/Tile Rendering; duplicate capture deleted before indexing"
+  },
+  "capture": {
+    "completed_at": "2026-10-07T21:27:35Z",
+    "index_written_at": "2026-10-07T21:30:28Z",
+    "entries": 6,
+    "sha256_verified": "6/6 recomputed matching"
+  },
+  "first_useful_saved_finding": "2026-10-07T21:33:20Z",
+  "first_useful_saved_finding_artifact": "scratch draft (outside job dir); superseded content lives in report.md findings 1-8",
+  "output": {
+    "report_md_written_at": "2026-10-07T21:36:00Z",
+    "report_md_words": 1049,
+    "timings_json_written_at": "2026-10-07T21:37:40Z",
+    "post_terminal_edits": "none planned; no amendments to report.md or sources/ after this write"
+  },
+  "known_usage": {
+    "t3_goal_loop_rounds_used": 5,
+    "verification_rounds_used": 4,
+    "http_tool": "curl 6 successful fetches, 1 removed as duplicate",
+    "network_calls_outside_sources": 0
+  },
+  "unknown": {
+    "input_tokens": null,
+    "cache": null,
+    "generated": null,
+    "billing": null
+  },
+  "native_counters": {
+    "distinct": true,
+    "note": "native Goal-engine counters are tracked separately by the engine and are not merged into known_usage or the null fields above"
+  }
+}

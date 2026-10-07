@@ -1,0 +1,2936 @@
+{
+  "mappings": [
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "34f5576039678d04e9fe17e6e2581f2c1097543ce779d60a9b4c4dbfe19cbe0a",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 3,
+              "content_sha256": "a7f5397443359ea76c50be82c77f1f893a060925b51a332cc5da906f83d3344e",
+              "end_exclusive": 2252,
+              "start": 2249,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "040ca512b5297b3d05dbfd138c99671b615e16cb12770ee2744efe968de7d2f4",
+              "end_exclusive": 2284,
+              "start": 2278,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 22,
+              "content_sha256": "cad1c9a298d50d6ae35298048eae234d678e3250c39983579ef6252c94aa784c",
+              "end_exclusive": 2345,
+              "start": 2323,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "15fb40668eebf284d68ada1d15eca8271e96ad704e198ffd748fd027dcf61c59"
+        },
+        {
+          "compared_normalized_content_sha256": "8247d4586a848db6ee7203ace6c2594723503aa56104f523896ceb74c4743575",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 5,
+              "content_sha256": "92521fc3cbd964bdc9f584a991b89fddaa5754ed1cc96d6d42445338669c1305",
+              "end_exclusive": 22390,
+              "start": 22385,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "a137f17a19a09cbe511ba654931ed30fd9c52205140ec096fa6180f1a0577546",
+              "end_exclusive": 22400,
+              "start": 22398,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "0e570ca6fabe24f94e52c1833f3ffd25567022beb826fa16891f3322051bc221",
+              "end_exclusive": 22462,
+              "start": 22456,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "700049181cda33bf5c24b86f51bdf52ebc851e7ee5197e66e54dde315a57d72e",
+              "end_exclusive": 22503,
+              "start": 22497,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "fa8847b0c33183273f5945508b31c3208a9e4ece58ca47233a05628d8dba3799",
+              "end_exclusive": 22546,
+              "start": 22540,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "5bb8b2f66b4137492419bf344796d5a20263c4c06761ac0aca0ea99a14fa96dc",
+              "end_exclusive": 22556,
+              "start": 22550,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "d6a75af7c687ede3c2ae7888a569da9de96c49295c04eb3c5ed72b21a24726e6",
+              "end_exclusive": 22648,
+              "start": 22643,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "3885ff5ae3386f58e4f1f1363d4863d8c9a5f280fe15e346ad7c78a09529637a",
+              "end_exclusive": 22656,
+              "start": 22652,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "62fa5a5b0d3c318835a213e22a4b335c42515443d598741d0413e8c47f9ecf67",
+              "end_exclusive": 22741,
+              "start": 22737,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 23,
+              "content_sha256": "48f54b881b59ed913ff95219b73b6abbe1a851691d4ac6b56d65a634d7736a9e",
+              "end_exclusive": 22768,
+              "start": 22745,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "6e7d50e84f4731ef74187cf8cfa2672184eed8866b0b0074a772f4a64e0f4ba2",
+              "end_exclusive": 22850,
+              "start": 22844,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "3885ff5ae3386f58e4f1f1363d4863d8c9a5f280fe15e346ad7c78a09529637a",
+              "end_exclusive": 22858,
+              "start": 22854,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "50009ce1da4d15e1c4a04024df691eed5f0d598e2c4c67092f205366d0adf99e",
+              "end_exclusive": 22933,
+              "start": 22929,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "77d57e39b407cbca2770fb31b55c148c757f4f84d1e2ce824c7d5cf9412a6298",
+              "end_exclusive": 22941,
+              "start": 22937,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 32,
+              "content_sha256": "75b4ad10129c700cdac6456fc6662b65af0c124cff83d5d8cec418706fb3ba4b",
+              "end_exclusive": 23023,
+              "start": 22991,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 87,
+              "content_sha256": "2f73e394da156ec1a8fd8dc9fced171feede268b62758f6ecfe83924627ca889",
+              "end_exclusive": 23118,
+              "start": 23031,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "37387c57a9e511acef44c4f6868ea3c91d35674d69f669212da4f8e4279d5497"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 4,
+      "selected_eligible_index": 41,
+      "selection_id": "EW041",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-File-create.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-File-create.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-File-create.html",
+        "read_sha256": "12a7ef0cbfff6ef095673182218c8957dce5061c6a84ca5ee3f4ad0d5508d455",
+        "sha256": "12a7ef0cbfff6ef095673182218c8957dce5061c6a84ca5ee3f4ad0d5508d455",
+        "size_bytes": 196174
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "6267ab4e0dfe0f1683c63dda3c4acb695073073d850247c123639d6a1b0735dc",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 26108,
+              "start": 26106,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 19,
+              "content_sha256": "3b3d9184f2d6d375fc420ccc3a3c308af7de842aee49783edbda39c9d4e2749a",
+              "end_exclusive": 26131,
+              "start": 26112,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 150,
+              "content_sha256": "fb3d33bc698a7c777b05a06f1a67fa19e9ad74bb52803aa1743d4a978b20d34a",
+              "end_exclusive": 26290,
+              "start": 26140,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 10,
+              "content_sha256": "25df137aca8618cce8f44ce600a47a059a664db51568b9678789a1f0c1ca8c7c",
+              "end_exclusive": 26357,
+              "start": 26347,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "c4b2896a2081395e282313d6683f07c81e3339ef8b9d2b5a299ea5b626a0998f",
+              "end_exclusive": 26363,
+              "start": 26361,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 19,
+              "content_sha256": "d85b33fdc92190e7e4b01e7148020e6ec02b7f03a37128fa6644a9f721da3c9f",
+              "end_exclusive": 26390,
+              "start": 26371,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 11,
+              "content_sha256": "aa0bfcfd268a593a8990b374848d8004bd86779ffe273d326fc76ac49d526eca",
+              "end_exclusive": 26488,
+              "start": 26477,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "f533745282dbec623b2f1191c273a885dca96e4b182536de264a70af292245ec",
+              "end_exclusive": 26508,
+              "start": 26500,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "16335c3bd754681a690b13012237ac96e2213f8c666e0aab91e61a1161614f19"
+        },
+        {
+          "compared_normalized_content_sha256": "b579328c4102e633e9eec91773118ccbf1f52c9990d32e6ed3b869514024b6c3",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 27653,
+              "start": 27651,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "702b6e21de0ea34e62092c0702812d47aa62c67fe89e365e9dd9eadb53f4a247",
+              "end_exclusive": 27673,
+              "start": 27657,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 220,
+              "content_sha256": "144b056be23d5f05022043d9e8ffc03811989d3b64f5c9c58c92ba650824fd7c",
+              "end_exclusive": 27902,
+              "start": 27682,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "1eb79602411ef02cf6fe117897015fff89f80face4eccd50425c45149b148408",
+              "end_exclusive": 27964,
+              "start": 27960,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "6201111b83a0cb5b0922cb37cc442b9a40e24e3b1ce100a4bb204f4c63fd2ac0",
+              "end_exclusive": 27972,
+              "start": 27969,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "1eb79602411ef02cf6fe117897015fff89f80face4eccd50425c45149b148408",
+              "end_exclusive": 28057,
+              "start": 28053,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 19,
+              "content_sha256": "0e219eb5cb8afe4d15235f79228308ea2a925231d7620bdb633eb89114fa4ca0",
+              "end_exclusive": 28081,
+              "start": 28062,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "de3a69bee64367080607fb81ffe7ad3790218a34e66ea29e200d6a12b59c1d01"
+        },
+        {
+          "compared_normalized_content_sha256": "8b9e003b9257070f0fdbf7dbbfd7117c0561e7b9e18fdf42ce1cf6bbebd7bea8",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 28565,
+              "start": 28563,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 35,
+              "content_sha256": "a3e6621caeb33e87495da236007ca958edf922fb5d7b4d9992f7546e71e94744",
+              "end_exclusive": 28604,
+              "start": 28569,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 21,
+              "content_sha256": "db360759eb1c4041f1d8c8747641c9e2215796984ef7caf6f930d50b3e48bb9c",
+              "end_exclusive": 28634,
+              "start": 28613,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "71ad1dfa1de556decbd6d7314196552e349d66067b49ab6bf8d4865faa663441",
+              "end_exclusive": 28646,
+              "start": 28641,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "6201111b83a0cb5b0922cb37cc442b9a40e24e3b1ce100a4bb204f4c63fd2ac0",
+              "end_exclusive": 28657,
+              "start": 28654,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "0bb7b4e45ea451fc58b3444bace01ea87ad00efe015a186bf5bc90a2e830f32e",
+              "end_exclusive": 28668,
+              "start": 28664,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 110,
+              "content_sha256": "0357c03110620ca3d796ea3ffb90f7b4b44c26fddb99704c0e08d6aa2ef2ecad",
+              "end_exclusive": 28786,
+              "start": 28676,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 11,
+              "content_sha256": "aa0bfcfd268a593a8990b374848d8004bd86779ffe273d326fc76ac49d526eca",
+              "end_exclusive": 28884,
+              "start": 28873,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "0f549f8b37f516a2214280d1c79e7531da324ffcf430d387007659651db00a8c",
+              "end_exclusive": 28904,
+              "start": 28896,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "aa25628deb2b65154994c50ec549a4594982124297e2a23e91e3a0e0ce2a7313",
+              "end_exclusive": 28927,
+              "start": 28911,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "50f6f281c7bac853de4466e8f0160dcf787c8a5bc5e80c4b2b0d42cd19842ae9",
+              "end_exclusive": 28942,
+              "start": 28935,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "0834ce2d4e5128ea8197d37ddd882c5a9aed2b07655ced493fcf847a13427538"
+        },
+        {
+          "compared_normalized_content_sha256": "b41ee2a15b81d3d25ee01f9d9a6df941a6acfe011d29348c3e8c7456d014964b",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 29974,
+              "start": 29972,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 26,
+              "content_sha256": "a6717829f0c6b631b8d6b37e05b36c85056b92d4bb247989ab25c94a79ef0dc5",
+              "end_exclusive": 30004,
+              "start": 29978,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 175,
+              "content_sha256": "9d8e53a6318eb2eb7d266a2f0b9c098b0bb3762808966c5083b6e88a2c09b8d1",
+              "end_exclusive": 30188,
+              "start": 30013,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "212dd7b1cf46913d998771a5a4241919952c84c7e0a957d237b0bbf32138a5fb",
+              "end_exclusive": 30250,
+              "start": 30246,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "end_exclusive": 30255,
+              "start": 30254,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "f600b4a540afdde1da77b2a34e54d8963e8de0a70eccd2b05e27cb80a765d4bd"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 9,
+      "selected_eligible_index": 39,
+      "selection_id": "EW039",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/notify-8.2.0.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/notify-8.2.0.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/notify-8.2.0.html",
+        "read_sha256": "1f2def8b150833b5f6238364c84d8f8c45c5819a7e5ef84e83b4a9d46df6dc0a",
+        "sha256": "1f2def8b150833b5f6238364c84d8f8c45c5819a7e5ef84e83b4a9d46df6dc0a",
+        "size_bytes": 40537
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "7cc722b6feabe0e73586e2d0a9d80f086e8d74f9d18250a635b9f349a33456d1",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 13,
+              "content_sha256": "5a031088d9272f3c83b43da5637ea4c0cfa6fd1902cf6d42232c5e169cdddc15",
+              "end_exclusive": 289116,
+              "start": 289103,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "d11501f01e223ddcfe05069a7767252b233861e154373b70d0a9d2699e62fa1c",
+              "end_exclusive": 289240,
+              "start": 289233,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "6b847a0ed0b2c484c73f2749e29b4db576dd6b06cf7110180dd43b8871dc14b3",
+              "end_exclusive": 289266,
+              "start": 289262,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 14,
+              "content_sha256": "bb6cbda0f8ee758ee0eb474c7d4506007d4fc8e315aa66023d412fa69e3fa6a4",
+              "end_exclusive": 289407,
+              "start": 289393,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "e7ac0786668e0ff0f02b62bd04f45ff636fd82db63b1104601c975dc005f3a67",
+              "end_exclusive": 289415,
+              "start": 289414,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605",
+              "end_exclusive": 289453,
+              "start": 289449,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 12,
+              "content_sha256": "e59bee795b9a6470a101ba372c9fea38f193fffebbdb76564cacee887b37eaf6",
+              "end_exclusive": 289664,
+              "start": 289652,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "b790579831383531ebe746b2a8361f27533e70f9708521cce5f9943b06214d6b",
+              "end_exclusive": 289765,
+              "start": 289749,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "0da5b089729d381ed42caf6db5cd6753f1c6022c9cfa6b2b3c77c62d32b32e82"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 12,
+      "selected_eligible_index": 3,
+      "selection_id": "EW003",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037.html",
+        "read_sha256": "287a037fb9c25cda22aaca79bec80d4050794fdd2c469487902bf99c0a21fe33",
+        "sha256": "287a037fb9c25cda22aaca79bec80d4050794fdd2c469487902bf99c0a21fe33",
+        "size_bytes": 361236
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "276300eacd3411a3fd896dc594e1f92e811e2d4df4f8a53a434e6e1fc0a8b2d4",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 45,
+              "content_sha256": "6856ab6fd283c2271f13bf6cbf3841aca3b7e5b5f18313b26f70d8970c28322b",
+              "end_exclusive": 167332,
+              "start": 167287,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "5de95319f17467ed6dc58e4e0b16c1193a13b35d60dc48bcf06bf6b7beebbe6c",
+              "end_exclusive": 167361,
+              "start": 167353,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 43,
+              "content_sha256": "f6b4cc3a61d41121efd2b8fea958e9d818cac610f3306184b28b413d0ffe63a3",
+              "end_exclusive": 167411,
+              "start": 167368,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "462830bcc392754954a60bf70a5228b40db99b139cd7f8c3d2df08f634cb8a9b",
+              "end_exclusive": 167434,
+              "start": 167428,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 68,
+              "content_sha256": "22d7d6240cba364632546bcb0f0bf18a93fba0d4297e313b60891b54891b1bb5",
+              "end_exclusive": 167509,
+              "start": 167441,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 12,
+              "content_sha256": "3fc0e5c4c484797a0035141c53252fba96ec5923ec719b5c73d2b9078b31bf08",
+              "end_exclusive": 167538,
+              "start": 167526,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 98,
+              "content_sha256": "5363a6f9c1d9bf644d2101f4dea3f3dcace65e54e05e8fa140485e210846c5df",
+              "end_exclusive": 167643,
+              "start": 167545,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "55834352d3510c67eb3c1c28d30623a999bdfcf8c82fe15b1aa728af450b47b0",
+              "end_exclusive": 167661,
+              "start": 167653,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "dc0e75ebf014c470d0303583ada59669731252cfe1d3be87b38628440fe4df42",
+              "end_exclusive": 167683,
+              "start": 167667,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "d03502c43d74a30b936740a9517dc4ea2b2ad7168caa0a774cefe793ce0b33e7",
+              "end_exclusive": 167691,
+              "start": 167690,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 18,
+              "content_sha256": "14e3ab2a85ad1c60194a42e079ce7fc6136a3b1fc1d605a12398dc276f590bd3",
+              "end_exclusive": 167716,
+              "start": 167698,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "d03502c43d74a30b936740a9517dc4ea2b2ad7168caa0a774cefe793ce0b33e7",
+              "end_exclusive": 167724,
+              "start": 167723,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 9,
+              "content_sha256": "b940a6654ced657014a56f19dacba7ee445c08ff35a0d91c808d04de8fbed5a3",
+              "end_exclusive": 167740,
+              "start": 167731,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 47,
+              "content_sha256": "f77290043e5904c4d78b13fda63fb8c778a5b52225db16ce4355c8716b8f7254",
+              "end_exclusive": 167794,
+              "start": 167747,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 9,
+              "content_sha256": "8af2533815fcf0468c36bcec9720b326e1d560c15e2f695ba174b8585da513f4",
+              "end_exclusive": 167813,
+              "start": 167804,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "54d00d867758cef816bc4685f58e327b949712b07ebd17c3485f3ffc9e9f5133",
+              "end_exclusive": 167825,
+              "start": 167819,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "d03502c43d74a30b936740a9517dc4ea2b2ad7168caa0a774cefe793ce0b33e7",
+              "end_exclusive": 167833,
+              "start": 167832,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "157dca92e4250458339d4b835250d44c238f3355e1b7986195188ee434e9baff",
+              "end_exclusive": 167844,
+              "start": 167840,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "d03502c43d74a30b936740a9517dc4ea2b2ad7168caa0a774cefe793ce0b33e7",
+              "end_exclusive": 167852,
+              "start": 167851,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "07913239c9e8d42fcd39da156d79fea4dcc8b373ef5cd2696b49275bc7887669",
+              "end_exclusive": 167865,
+              "start": 167859,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 80,
+              "content_sha256": "b57f383099f7e4ce9b6301bc21f28e813bcb62328cb239a1861d1e52a8af6f34",
+              "end_exclusive": 167952,
+              "start": 167872,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "b64de1dc3e81072cef283012b5491531fe85c95fcd05bc2bd394c9f056195ef7"
+        },
+        {
+          "compared_normalized_content_sha256": "086317026335674613d9f9cfb0a14a7b8cc6d9d5809cf2434d05359f4d8968b5",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 53,
+              "content_sha256": "52e4a5c246ea0f182e8ee176754fac7936c3fbaa553f3294a253e1a6de915391",
+              "end_exclusive": 169382,
+              "start": 169329,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 39,
+              "content_sha256": "d64de8a77a5bf34438766e26c6332814363689a9dcfc15954caf0f284bf3958f",
+              "end_exclusive": 169592,
+              "start": 169553,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 96,
+              "content_sha256": "cd0f5e3a50d29bf4938461105145e35829272ba80e0ad69b75cffed5aecb3e6e",
+              "end_exclusive": 169699,
+              "start": 169603,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 74,
+              "content_sha256": "c9dca69f55a68bdc09337d2175b1ac1c1ccb840daa046fa7c68d44c51fccfad9",
+              "end_exclusive": 169781,
+              "start": 169707,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "1150f05446e4d34452b320c78645f5d7f717b745ab3165abde97c15ddc650da5",
+              "end_exclusive": 169802,
+              "start": 169797,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 83,
+              "content_sha256": "ad33a9fb0fec2413bcee5612eda64411e8c6c634d1f7501b1130e07d2f708632",
+              "end_exclusive": 169895,
+              "start": 169812,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "5de95319f17467ed6dc58e4e0b16c1193a13b35d60dc48bcf06bf6b7beebbe6c",
+              "end_exclusive": 169910,
+              "start": 169902,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "6201111b83a0cb5b0922cb37cc442b9a40e24e3b1ce100a4bb204f4c63fd2ac0",
+              "end_exclusive": 169921,
+              "start": 169918,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "462830bcc392754954a60bf70a5228b40db99b139cd7f8c3d2df08f634cb8a9b",
+              "end_exclusive": 169934,
+              "start": 169928,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 53,
+              "content_sha256": "3cb5d0e2c8b824db939d84bad6fd1f7d41dde1285d1bdc9573714730689949dc",
+              "end_exclusive": 169995,
+              "start": 169942,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "c0fec1356911510bdbd2fec2657a2d86a8e20b1dd4e3bcd683d2ec8541b1f19d"
+        },
+        {
+          "compared_normalized_content_sha256": "ad0eb7247d4f7516f2b42eccfc5fa1305d101e2e768b461e2fa8e77c9b11becc",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 81,
+              "content_sha256": "cc3365e7a73621df75fc3560f663a92b9f5a41f1fa98be414a26077cabae2ed9",
+              "end_exclusive": 170977,
+              "start": 170896,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "54d00d867758cef816bc4685f58e327b949712b07ebd17c3485f3ffc9e9f5133",
+              "end_exclusive": 170990,
+              "start": 170984,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 78,
+              "content_sha256": "2500ea59886f31133df0ae510b830fb01fb1739fd9bd13ad81b77883d1c6d464",
+              "end_exclusive": 171076,
+              "start": 170998,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 11,
+              "content_sha256": "57866be9414be757e82e604079bb6878868215ee57149ebac60e144a045ff0e2",
+              "end_exclusive": 171101,
+              "start": 171090,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73",
+              "end_exclusive": 171115,
+              "start": 171108,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 23,
+              "content_sha256": "d4672801e93afb7f7e29b9d10d34b8fd937a9c79425dc7d4e823e7be1f576c85",
+              "end_exclusive": 171146,
+              "start": 171123,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 12,
+              "content_sha256": "13ba8150225125e7917accd90ab13ecd3d8177973bdb39850a5bd63fced28f6d",
+              "end_exclusive": 171168,
+              "start": 171156,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "ea3bd73e2b506e00527232b3ed743c066da83a8e3066f62a71e75eb9b4aa1db6",
+              "end_exclusive": 171179,
+              "start": 171175,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 48,
+              "content_sha256": "c975830b5f203bc6b76e93cc35d773400ca8926281f1a861ceb13f713b19a06d",
+              "end_exclusive": 171235,
+              "start": 171187,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "1150f05446e4d34452b320c78645f5d7f717b745ab3165abde97c15ddc650da5",
+              "end_exclusive": 171263,
+              "start": 171258,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 96,
+              "content_sha256": "acc92fbff228f84cb53b452c9f1a32af106286005a16e909ba6f60b54f8a956d",
+              "end_exclusive": 171369,
+              "start": 171273,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 17,
+              "content_sha256": "92e1c0a74eb24a69ebbca3ec58a30d1529322483f401ee5de6675909e2bf4541",
+              "end_exclusive": 171449,
+              "start": 171432,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 192,
+              "content_sha256": "269362b4c7a87d76678b06cae2bd2b518bfa458e8b9b1082be7d1b7d12dc351a",
+              "end_exclusive": 172462,
+              "start": 172270,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 33,
+              "content_sha256": "5897dbb21f52ada4ef07bd17450d21de35fc9a5570aebe0e395387717281d8b2",
+              "end_exclusive": 172664,
+              "start": 172631,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 21,
+              "content_sha256": "6515ada8f9dd838ffe9342f379c5af406cc0027ceb08d36cee79c02909e24dfc",
+              "end_exclusive": 172697,
+              "start": 172676,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "5de95319f17467ed6dc58e4e0b16c1193a13b35d60dc48bcf06bf6b7beebbe6c",
+              "end_exclusive": 172711,
+              "start": 172703,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "6201111b83a0cb5b0922cb37cc442b9a40e24e3b1ce100a4bb204f4c63fd2ac0",
+              "end_exclusive": 172722,
+              "start": 172719,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "462830bcc392754954a60bf70a5228b40db99b139cd7f8c3d2df08f634cb8a9b",
+              "end_exclusive": 172735,
+              "start": 172729,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 123,
+              "content_sha256": "be1ca5fdd4d6a88ead7a2a400898cfce9c0f7771ebacf04fd7a48868d7c8d2e6",
+              "end_exclusive": 172865,
+              "start": 172742,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "a6435097113fe93f4906329ececdcf42ade6b2f44c75fe0c728f2a248a7b51e3"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 23,
+      "selected_eligible_index": 8,
+      "selection_id": "EW008",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/vscode-working-copies.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/vscode-working-copies.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/vscode-working-copies.html",
+        "read_sha256": "529ec002cbab87b9333191c27802fae42919181651f1b7c04118325247bf62ff",
+        "sha256": "529ec002cbab87b9333191c27802fae42919181651f1b7c04118325247bf62ff",
+        "size_bytes": 443413
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "34f5576039678d04e9fe17e6e2581f2c1097543ce779d60a9b4c4dbfe19cbe0a",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 3,
+              "content_sha256": "a7f5397443359ea76c50be82c77f1f893a060925b51a332cc5da906f83d3344e",
+              "end_exclusive": 2285,
+              "start": 2282,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "040ca512b5297b3d05dbfd138c99671b615e16cb12770ee2744efe968de7d2f4",
+              "end_exclusive": 2317,
+              "start": 2311,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 22,
+              "content_sha256": "cad1c9a298d50d6ae35298048eae234d678e3250c39983579ef6252c94aa784c",
+              "end_exclusive": 2378,
+              "start": 2356,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "15fb40668eebf284d68ada1d15eca8271e96ad704e198ffd748fd027dcf61c59"
+        },
+        {
+          "compared_normalized_content_sha256": "e0def8bb00a6cc46175bdb716e8e6e3492575373f592ff1f3aff56dcb8535a2d",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 19,
+              "content_sha256": "017b77cc6249772566b436afe0c326fef8da40b05b333021c81c1c90a1040302",
+              "end_exclusive": 3561,
+              "start": 3542,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "d6a75af7c687ede3c2ae7888a569da9de96c49295c04eb3c5ed72b21a24726e6",
+              "end_exclusive": 3653,
+              "start": 3648,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "3885ff5ae3386f58e4f1f1363d4863d8c9a5f280fe15e346ad7c78a09529637a",
+              "end_exclusive": 3661,
+              "start": 3657,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "62fa5a5b0d3c318835a213e22a4b335c42515443d598741d0413e8c47f9ecf67",
+              "end_exclusive": 3746,
+              "start": 3742,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "962c3c99b78843ce885bf0616e271f2a081158e3b09b2ceb9752874e35713e87",
+              "end_exclusive": 3758,
+              "start": 3750,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "d6a75af7c687ede3c2ae7888a569da9de96c49295c04eb3c5ed72b21a24726e6",
+              "end_exclusive": 3850,
+              "start": 3845,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "3885ff5ae3386f58e4f1f1363d4863d8c9a5f280fe15e346ad7c78a09529637a",
+              "end_exclusive": 3858,
+              "start": 3854,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "62fa5a5b0d3c318835a213e22a4b335c42515443d598741d0413e8c47f9ecf67",
+              "end_exclusive": 3943,
+              "start": 3939,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 30,
+              "content_sha256": "0d8a465bb466bd750a5928e906ce3dc3b818a03b9404807eb53e04c52ee0d0f3",
+              "end_exclusive": 3977,
+              "start": 3947,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "6e7d50e84f4731ef74187cf8cfa2672184eed8866b0b0074a772f4a64e0f4ba2",
+              "end_exclusive": 4059,
+              "start": 4053,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "3885ff5ae3386f58e4f1f1363d4863d8c9a5f280fe15e346ad7c78a09529637a",
+              "end_exclusive": 4067,
+              "start": 4063,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+              "end_exclusive": 4120,
+              "start": 4118,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "77d57e39b407cbca2770fb31b55c148c757f4f84d1e2ce824c7d5cf9412a6298",
+              "end_exclusive": 4128,
+              "start": 4124,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 18,
+              "content_sha256": "c87aa50518db6a295e9f6d5cf9ce86666df1bff4f1b4bb7b568804fb52c12116",
+              "end_exclusive": 4226,
+              "start": 4208,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 73,
+              "content_sha256": "6808a1c6c2ede592c6871457535d0f5f01368f170494eb7553a1582c2f7a563a",
+              "end_exclusive": 4341,
+              "start": 4268,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "663ea1bfffe5038f3f0cf667f14c4257eff52d77ce7f2a218f72e9286616ea39",
+              "end_exclusive": 4350,
+              "start": 4348,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "6e446353b3c64c6ae3c19a51cdc9c28f19a4e2391241418d960c07fad6319150",
+              "end_exclusive": 4373,
+              "start": 4358,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 65,
+              "content_sha256": "1a7f6fc9084b58e809f5df1ced27627c89320dbcd636d336fe87cf6fa0eaef21",
+              "end_exclusive": 4446,
+              "start": 4381,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 4546,
+              "start": 4544,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 26,
+              "content_sha256": "20bb3956bb8913a46dbc501a29356ff0efcb3541ab662da1c33b3010065b1b2a",
+              "end_exclusive": 4576,
+              "start": 4550,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 42,
+              "content_sha256": "6910847947490cdab51d9084f815b5389a2ebb9be73140cb1bfaa286ffe65769",
+              "end_exclusive": 4627,
+              "start": 4585,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "9e84869d369b2a5336f6aa599b6e91116cc3d761827ef5f4b90841b8848ec35e",
+              "end_exclusive": 4715,
+              "start": 4709,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 21,
+              "content_sha256": "7f64e99488e2d9cb30ae4c788d31d2b332da98a7b9930961fdc2d7897535035d",
+              "end_exclusive": 4741,
+              "start": 4720,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 11,
+              "content_sha256": "c62782bb3639eaf73c580a78682adb84ec6f7aa70131122bc6a1fc645d398c97",
+              "end_exclusive": 4759,
+              "start": 4748,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 18,
+              "content_sha256": "01e834158e660743a83e6f9b3a34b5d5351b00126c3bebc0344026ddfc0b9498",
+              "end_exclusive": 4785,
+              "start": 4767,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 26,
+              "content_sha256": "265e5d65085266f72a0289be28531ebdaaa6c82c98b1407381b0aeb2b77195e6",
+              "end_exclusive": 4818,
+              "start": 4792,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 39,
+              "content_sha256": "27debd351b508f1f16576ea19971c1694350c0066ff34a6e8f535e282f1f9960",
+              "end_exclusive": 4865,
+              "start": 4826,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "1e3abf61a37e3cad36b11b459b1cc39e76feb6a0c369fe5270957468288dcc5c",
+              "end_exclusive": 4881,
+              "start": 4879,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "663ea1bfffe5038f3f0cf667f14c4257eff52d77ce7f2a218f72e9286616ea39",
+              "end_exclusive": 4890,
+              "start": 4888,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "4478a9be33775a01e07e2744ff52f8def8259e3ff626efc681d1727530a30b69",
+              "end_exclusive": 4913,
+              "start": 4898,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "75857a45899985be4c4d941e90b6b396d6c92a4c7437aaf0bf102089fe21379d",
+              "end_exclusive": 4924,
+              "start": 4920,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "b578320ee9dc552cee888e6d174628faf30ebf17ed99a0e57cef840f65509ba1",
+              "end_exclusive": 4948,
+              "start": 4932,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 13,
+              "content_sha256": "1b0f19b79fc06ea5bdd43bac318d483e303257e42fdff2f381eaf5883769f0fc",
+              "end_exclusive": 4971,
+              "start": 4958,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "75857a45899985be4c4d941e90b6b396d6c92a4c7437aaf0bf102089fe21379d",
+              "end_exclusive": 4982,
+              "start": 4978,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 18,
+              "content_sha256": "4b76fe401b7be101aef52b4efa8a72797c27d3de033154b426da850d90624b04",
+              "end_exclusive": 5008,
+              "start": 4990,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "663ea1bfffe5038f3f0cf667f14c4257eff52d77ce7f2a218f72e9286616ea39",
+              "end_exclusive": 5017,
+              "start": 5015,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "0204a472fe68b26e22b05480b14cc7853db8ac182c908f22d7aa71aac9b413a8",
+              "end_exclusive": 5032,
+              "start": 5025,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "663ea1bfffe5038f3f0cf667f14c4257eff52d77ce7f2a218f72e9286616ea39",
+              "end_exclusive": 5041,
+              "start": 5039,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 27,
+              "content_sha256": "f5922a5b65f14f6da7f60335d50bd19588581ca49fb9bcfb4a9419fe4d8985be",
+              "end_exclusive": 5076,
+              "start": 5049,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 13,
+              "content_sha256": "1b0f19b79fc06ea5bdd43bac318d483e303257e42fdff2f381eaf5883769f0fc",
+              "end_exclusive": 5099,
+              "start": 5086,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "75857a45899985be4c4d941e90b6b396d6c92a4c7437aaf0bf102089fe21379d",
+              "end_exclusive": 5110,
+              "start": 5106,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 22,
+              "content_sha256": "489c39beafd4523c2e8cfa6e952052773f01152ec7e85127397fd47b9176c082",
+              "end_exclusive": 5140,
+              "start": 5118,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "663ea1bfffe5038f3f0cf667f14c4257eff52d77ce7f2a218f72e9286616ea39",
+              "end_exclusive": 5149,
+              "start": 5147,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "0204a472fe68b26e22b05480b14cc7853db8ac182c908f22d7aa71aac9b413a8",
+              "end_exclusive": 5164,
+              "start": 5157,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "663ea1bfffe5038f3f0cf667f14c4257eff52d77ce7f2a218f72e9286616ea39",
+              "end_exclusive": 5173,
+              "start": 5171,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 23,
+              "content_sha256": "540f28ec088211ffc29dc7de77f84a1471644a182e12f834cbc453cffbf6fb4b",
+              "end_exclusive": 5204,
+              "start": 5181,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 97,
+              "content_sha256": "37c3c63e8d7062291a2a6fa6af2addf021cf7aff4a5e4b9edbfda349bd8cf130",
+              "end_exclusive": 5311,
+              "start": 5214,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "fb4d623ffc104135f490e4cfeb2cc395b2a552894c3b1e444c01a4cffa399c2f",
+              "end_exclusive": 5335,
+              "start": 5319,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "end_exclusive": 5343,
+              "start": 5342,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 21,
+              "content_sha256": "d504f5028d8256223444c32632f0c4483c6873e2e55a00a0e704a0b946fa3e68",
+              "end_exclusive": 5374,
+              "start": 5353,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "75857a45899985be4c4d941e90b6b396d6c92a4c7437aaf0bf102089fe21379d",
+              "end_exclusive": 5385,
+              "start": 5381,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 19,
+              "content_sha256": "b02bb9ed2c643dfb73e253fafe57c05e1342d6837a1cde1d00a9911973250bc7",
+              "end_exclusive": 5412,
+              "start": 5393,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "663ea1bfffe5038f3f0cf667f14c4257eff52d77ce7f2a218f72e9286616ea39",
+              "end_exclusive": 5421,
+              "start": 5419,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 24,
+              "content_sha256": "c8025e906cb21231abceb0673d8c0d7afca8ad6541fa0940777314bf36531129",
+              "end_exclusive": 5453,
+              "start": 5429,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "2222dd9a428c189b5688b9a38a5306e51863009f349ac24a60357a35240a00d6",
+              "end_exclusive": 5483,
+              "start": 5468,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 24,
+              "content_sha256": "0f337f5da939f1d5edfae1af21d442a89aa75b7c564acb28122700a45da53f04",
+              "end_exclusive": 5582,
+              "start": 5558,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "end_exclusive": 5587,
+              "start": 5586,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "ef08d6ad241e85fd06ed0c3e4fd5d0cb8dd26f9336fc3ff0fe89ebe587f7a92c"
+        },
+        {
+          "compared_normalized_content_sha256": "2fb53f69e6ae9720d5b515e1e7a8af97a8cf661fdf4055d39120d1e2e7af9531",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 103,
+              "content_sha256": "bd653fc2be947b960c27e0107293b9239353f03a88dd66365afe34dd68a2a168",
+              "end_exclusive": 5769,
+              "start": 5666,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "75857a45899985be4c4d941e90b6b396d6c92a4c7437aaf0bf102089fe21379d",
+              "end_exclusive": 5793,
+              "start": 5789,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "f14200ff09c3e261240d3e1c56a60bab9ff1e00305f4432d7b0a4e7dd88167f1",
+              "end_exclusive": 5816,
+              "start": 5801,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 44,
+              "content_sha256": "d8e769557fda4069264ee888c7ea7be49255d10058525577ea907ab944f92ad0",
+              "end_exclusive": 5870,
+              "start": 5826,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "75857a45899985be4c4d941e90b6b396d6c92a4c7437aaf0bf102089fe21379d",
+              "end_exclusive": 5890,
+              "start": 5886,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "6201111b83a0cb5b0922cb37cc442b9a40e24e3b1ce100a4bb204f4c63fd2ac0",
+              "end_exclusive": 5901,
+              "start": 5898,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "663ea1bfffe5038f3f0cf667f14c4257eff52d77ce7f2a218f72e9286616ea39",
+              "end_exclusive": 5910,
+              "start": 5908,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 28,
+              "content_sha256": "c8c1cec33dd9b71cde22f42a0c510237dc83d1e7a01873a9f920752cd537916a",
+              "end_exclusive": 5946,
+              "start": 5918,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "38048cec81ecf40290d27e6a6d0fdc52b58618ca6c1a9668b9d514427d3e3b80"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 24,
+      "selected_eligible_index": 46,
+      "selection_id": "EW046",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-rename.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-rename.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-rename.html",
+        "read_sha256": "5c05d50ff2ade3b75bb8b05c049d35f6541bf9d412671a707c35e565e50b231d",
+        "sha256": "5c05d50ff2ade3b75bb8b05c049d35f6541bf9d412671a707c35e565e50b231d",
+        "size_bytes": 6802
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "34f5576039678d04e9fe17e6e2581f2c1097543ce779d60a9b4c4dbfe19cbe0a",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 3,
+              "content_sha256": "a7f5397443359ea76c50be82c77f1f893a060925b51a332cc5da906f83d3344e",
+              "end_exclusive": 2257,
+              "start": 2254,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "040ca512b5297b3d05dbfd138c99671b615e16cb12770ee2744efe968de7d2f4",
+              "end_exclusive": 2289,
+              "start": 2283,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 22,
+              "content_sha256": "cad1c9a298d50d6ae35298048eae234d678e3250c39983579ef6252c94aa784c",
+              "end_exclusive": 2350,
+              "start": 2328,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "15fb40668eebf284d68ada1d15eca8271e96ad704e198ffd748fd027dcf61c59"
+        },
+        {
+          "compared_normalized_content_sha256": "c1836dd3050eae06d57b12015eb6f7bd4de441eb4e0f42256f52e8f151fdba79",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 5,
+              "content_sha256": "92521fc3cbd964bdc9f584a991b89fddaa5754ed1cc96d6d42445338669c1305",
+              "end_exclusive": 7193,
+              "start": 7188,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "a137f17a19a09cbe511ba654931ed30fd9c52205140ec096fa6180f1a0577546",
+              "end_exclusive": 7203,
+              "start": 7201,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "0e570ca6fabe24f94e52c1833f3ffd25567022beb826fa16891f3322051bc221",
+              "end_exclusive": 7267,
+              "start": 7261,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "700049181cda33bf5c24b86f51bdf52ebc851e7ee5197e66e54dde315a57d72e",
+              "end_exclusive": 7308,
+              "start": 7302,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "8171bacf32668a8f44b90087ad107ed63170f57154763ba7e44047bf9e5a7be3",
+              "end_exclusive": 7355,
+              "start": 7347,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 17,
+              "content_sha256": "537e5c115784e6db5967212a3f137091483f493815198d576ce52ab726b72f99",
+              "end_exclusive": 7376,
+              "start": 7359,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+              "end_exclusive": 7432,
+              "start": 7428,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "16dcaa923f16b449fb2089fd7f135465339cc1e6638c8e5fcf7f143d60f4a0d3",
+              "end_exclusive": 7493,
+              "start": 7486,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+              "end_exclusive": 7504,
+              "start": 7500,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 59,
+              "content_sha256": "94b60bcff43a8d78dec640e9b6cf51ad82eeaf4189a9b297bcd7ea6aaf3c9e4f",
+              "end_exclusive": 7571,
+              "start": 7512,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 7627,
+              "start": 7625,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "d8da2c49df39d91df7ecd199b92da7bf264f026242ccc69b08daeadfe587c45b",
+              "end_exclusive": 7635,
+              "start": 7631,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 253,
+              "content_sha256": "ccd92021b0a812a18ec4e2ff047c65b2cd8399bdcd0c2fda313b02c825c0eb47",
+              "end_exclusive": 7897,
+              "start": 7644,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 7959,
+              "start": 7957,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "d598026a9cbc60505f138ce53ac78088d582100c196d0f70c7e2538d4a8d7e10",
+              "end_exclusive": 7970,
+              "start": 7963,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 23,
+              "content_sha256": "9493f14cb644bf6458c834e9f2984d70c87933de024dcd8ad131f6e68df88cf7",
+              "end_exclusive": 8002,
+              "start": 7979,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 23,
+              "content_sha256": "803e417be8196a49630c0eb5a6bc560af1bb3cbd5bea9c35d44f3790fad9cedc",
+              "end_exclusive": 8121,
+              "start": 8098,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "46b148692814d33035226dd7ac136a9e48c306ffc999e6a6f5a58a1cf33710bf",
+              "end_exclusive": 8136,
+              "start": 8132,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 23,
+              "content_sha256": "803e417be8196a49630c0eb5a6bc560af1bb3cbd5bea9c35d44f3790fad9cedc",
+              "end_exclusive": 8166,
+              "start": 8143,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 103,
+              "content_sha256": "e53d98cbeaa457abce143f07bcbab7fddb7d44829d87e75917aaeccfe4ac25e6",
+              "end_exclusive": 8277,
+              "start": 8174,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 23,
+              "content_sha256": "803e417be8196a49630c0eb5a6bc560af1bb3cbd5bea9c35d44f3790fad9cedc",
+              "end_exclusive": 8307,
+              "start": 8284,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "fa51fd49abf67705d6a35d18218c115ff5633aec1f9ebfdc9d5d4956416f57f6",
+              "end_exclusive": 8317,
+              "start": 8315,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "254bb97b57f12e1608fefc4517de768427b2fd6d2cffbbfcbc09f3c818198d5f",
+              "end_exclusive": 8325,
+              "start": 8322,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 142,
+              "content_sha256": "cff78fba22c53bbfc0c4bf2f6810e4325a57c8e5f4a2a27243e874188cd1e8e8",
+              "end_exclusive": 8473,
+              "start": 8331,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 8561,
+              "start": 8559,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 22,
+              "content_sha256": "f047241a78a2731d9fd50993ef7245c31e0756ee3f3ff8ef86a090cddf7a0af7",
+              "end_exclusive": 8587,
+              "start": 8565,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 38,
+              "content_sha256": "1138f0859c54b50899bb901d104c72f76f8bd122260bf2b1408247bba00f3554",
+              "end_exclusive": 8634,
+              "start": 8596,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "d6a7cd2a7371b1a15d543196979ff74fdb027023ebf187d5d329be11055c77fd",
+              "end_exclusive": 8642,
+              "start": 8639,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 107,
+              "content_sha256": "89e44eb90fc140c414e34b691c76e7bdc3c6fadee3c73c7e88c66310e2dc3790",
+              "end_exclusive": 8755,
+              "start": 8648,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 59,
+              "content_sha256": "9121fdd45109309735def4d1c21c39c09c939345cd07bf36bed7b07f1aa80fb7",
+              "end_exclusive": 8828,
+              "start": 8769,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 27,
+              "content_sha256": "27779665540be19f7193429ab25c2b3043110fde6cf73cbb80cfd673fe011edc",
+              "end_exclusive": 8865,
+              "start": 8838,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "0f87c1aedc815b5b14c68760627204a04b2cf5e631658269ebcb7db5ca442c43",
+              "end_exclusive": 8879,
+              "start": 8875,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2",
+              "end_exclusive": 8890,
+              "start": 8886,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 60,
+              "content_sha256": "db8de2f262a25ee3385b04652c54c8da809f96fdfa8d07cfd11103f6600bae3c",
+              "end_exclusive": 8958,
+              "start": 8898,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 57,
+              "content_sha256": "f186034ee7232687357acd8cf8c7905e1225f7cb79eb1bda99ff2ee7c9e69944",
+              "end_exclusive": 9025,
+              "start": 8968,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "b344d80e24a3679999fa964450b34bc24d1578a35509f934c1418b0a20d21a67",
+              "end_exclusive": 9043,
+              "start": 9040,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 14,
+              "content_sha256": "10fccf2bfc7f1df02462d34c62c8bb7fae840bc7e600233b5cb21d1bab2afdd0",
+              "end_exclusive": 9162,
+              "start": 9148,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 77,
+              "content_sha256": "304529a9b14df3bcb22d23df5a0871b9a580ce6b3211dd8e689479579511a815",
+              "end_exclusive": 9251,
+              "start": 9174,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "efe85238f064733a0a3279db8596790fbe1189a5c7677eef2a3a032aec6f0313"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 42,
+      "selected_eligible_index": 51,
+      "selection_id": "EW051",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-Permissions.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-Permissions.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-Permissions.html",
+        "read_sha256": "9b155b401b5a20abfaa2b54d554378560417720509217408ba8d7e36277045cc",
+        "sha256": "9b155b401b5a20abfaa2b54d554378560417720509217408ba8d7e36277045cc",
+        "size_bytes": 44308
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "f7455c946488f70c837d05cb8ee6a24ba556de65391f245e0000d85b4d81fc62",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 5,
+              "content_sha256": "92521fc3cbd964bdc9f584a991b89fddaa5754ed1cc96d6d42445338669c1305",
+              "end_exclusive": 130945,
+              "start": 130940,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "a137f17a19a09cbe511ba654931ed30fd9c52205140ec096fa6180f1a0577546",
+              "end_exclusive": 130955,
+              "start": 130953,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "0e570ca6fabe24f94e52c1833f3ffd25567022beb826fa16891f3322051bc221",
+              "end_exclusive": 131020,
+              "start": 131014,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "700049181cda33bf5c24b86f51bdf52ebc851e7ee5197e66e54dde315a57d72e",
+              "end_exclusive": 131061,
+              "start": 131055,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "1e22560cee2c4b727c6a117792e04a6769efbe2395f8e2528c603a153a446477",
+              "end_exclusive": 131104,
+              "start": 131098,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 20,
+              "content_sha256": "7fb5452bf337b34cd5ea3807e521036ebbcc81b75208a8eac21e7bef73709e4e",
+              "end_exclusive": 131128,
+              "start": 131108,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "f4176652dfce34ed72ecc9a5aa164dee1d7d1b6cb65c98dc300ea9c0f543e75e",
+              "end_exclusive": 131186,
+              "start": 131181,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "a64956e57c6aa7cf25b07e7c33529e0f1170150333ba21aab8e699005ef6472d",
+              "end_exclusive": 131195,
+              "start": 131190,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "411b0496da5eeced5314a3b5e9532bac97008d09ce9969ab4fa6a52b8c7ef634",
+              "end_exclusive": 131251,
+              "start": 131247,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "ba5ec51d07a4ac0e951608704431d59a02b21a4e951acc10505a8dc407c501ee",
+              "end_exclusive": 131256,
+              "start": 131255,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 29,
+              "content_sha256": "ad1a6519424c1d5121db9f5b3e9514d43b38571166cca41ae5b87d40ca651e77",
+              "end_exclusive": 131335,
+              "start": 131306,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "b2ef230e7f4f315a28cdcc863028da31f7110f3209feb76e76fed0f37b3d8580",
+              "end_exclusive": 131348,
+              "start": 131342,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "09395d6c374c3f3ab3ced95cbe13d03c4a3f62f79824ecc8b9b89d141ebd8113",
+              "end_exclusive": 131372,
+              "start": 131356,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "c66a8eb7e6a7e395bf000e8884c7de131a5cf32a9f42de44a1b9ceaf47c8900e",
+              "end_exclusive": 131382,
+              "start": 131379,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "end_exclusive": 131390,
+              "start": 131389,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 14,
+              "content_sha256": "31348e192082c2af2fcc422daf847f537f728e97f88b9e566c841c129fda1411",
+              "end_exclusive": 131412,
+              "start": 131398,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "15e91bffd2cf9af3cc31c8709d9b78b706bd694cef540a546744a03afdfffbea",
+              "end_exclusive": 131434,
+              "start": 131419,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 46,
+              "content_sha256": "02bc6664156f176f62bd13496d06bf55449414cb7996cbfde507b77bb53ac6dd",
+              "end_exclusive": 131488,
+              "start": 131442,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "15e91bffd2cf9af3cc31c8709d9b78b706bd694cef540a546744a03afdfffbea",
+              "end_exclusive": 131510,
+              "start": 131495,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 60,
+              "content_sha256": "7e863b14a725306888fdda2482ace062f66bb05e59ef45bd39077f02d177abd9",
+              "end_exclusive": 131578,
+              "start": 131518,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "eb7606d45f471b52186acbe9600bdcadfc8fc91ce68cbd41913f8f38646b77d3",
+              "end_exclusive": 131601,
+              "start": 131585,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 17,
+              "content_sha256": "a383e1b015056148ad59ead389032f95bda321936005e56df827e0f238d40e3f",
+              "end_exclusive": 131626,
+              "start": 131609,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 66,
+              "content_sha256": "6ae8e07680f98f738687564a05fe85881d459089b01bd1b11baf2007ca7c2498",
+              "end_exclusive": 131700,
+              "start": 131634,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 131764,
+              "start": 131762,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "e46a9ce099562ed8b579fa12189469edcd0aec497be2227ca84672c98d9bee30",
+              "end_exclusive": 131774,
+              "start": 131768,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 9,
+              "content_sha256": "ba4378af2e02bda053ec9c28dfca55643fec99017369611d15fb2a121946a13f",
+              "end_exclusive": 131792,
+              "start": 131783,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "c66a8eb7e6a7e395bf000e8884c7de131a5cf32a9f42de44a1b9ceaf47c8900e",
+              "end_exclusive": 131802,
+              "start": 131799,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 18,
+              "content_sha256": "6ed006851f899c997d1e430a902070bacab3e4fd45b182649ac8883ef950d5de",
+              "end_exclusive": 131828,
+              "start": 131810,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "b2ef230e7f4f315a28cdcc863028da31f7110f3209feb76e76fed0f37b3d8580",
+              "end_exclusive": 131841,
+              "start": 131835,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 39,
+              "content_sha256": "3eb8aa7526917c6ef222e6871b5aec4e519f75bf1fe5cb6c5c143e1bb6da9400",
+              "end_exclusive": 131887,
+              "start": 131848,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "411b0496da5eeced5314a3b5e9532bac97008d09ce9969ab4fa6a52b8c7ef634",
+              "end_exclusive": 131954,
+              "start": 131950,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 9,
+              "content_sha256": "ab08ec50bf9c4b24b4107864bf63c8d8e9d284bcf887776a77f3cdabb31ae4f7",
+              "end_exclusive": 131975,
+              "start": 131966,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "6ec2e677a9098c00e51f0d4e6f3e4abaaa09d1a7ac3b0beca5083af8ff2aeaba"
+        },
+        {
+          "compared_normalized_content_sha256": "69027119c0b8e2abc324b37d14ab32f168201f01600d48ccfb9705079ad50700",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 6,
+              "content_sha256": "3b41f45fe69f6f347d1c880395c9cd55bb2d00ea0006e3672bdc6fab43992d52",
+              "end_exclusive": 133100,
+              "start": 133094,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "a137f17a19a09cbe511ba654931ed30fd9c52205140ec096fa6180f1a0577546",
+              "end_exclusive": 133110,
+              "start": 133108,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "0e570ca6fabe24f94e52c1833f3ffd25567022beb826fa16891f3322051bc221",
+              "end_exclusive": 133175,
+              "start": 133169,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "700049181cda33bf5c24b86f51bdf52ebc851e7ee5197e66e54dde315a57d72e",
+              "end_exclusive": 133216,
+              "start": 133210,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 10,
+              "content_sha256": "aa6af11d8c090d10f5a82a491460000bc67af017d9110ebbdd84268a7e40e09d",
+              "end_exclusive": 133267,
+              "start": 133257,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 20,
+              "content_sha256": "7fb5452bf337b34cd5ea3807e521036ebbcc81b75208a8eac21e7bef73709e4e",
+              "end_exclusive": 133291,
+              "start": 133271,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 5,
+              "content_sha256": "f4176652dfce34ed72ecc9a5aa164dee1d7d1b6cb65c98dc300ea9c0f543e75e",
+              "end_exclusive": 133349,
+              "start": 133344,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "548d9f228c11ab6b8ae860005a12003d0348f232ef2b4b8baf84cdc33b298534",
+              "end_exclusive": 133368,
+              "start": 133353,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a",
+              "end_exclusive": 133421,
+              "start": 133418,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "ba5ec51d07a4ac0e951608704431d59a02b21a4e951acc10505a8dc407c501ee",
+              "end_exclusive": 133426,
+              "start": 133425,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 32,
+              "content_sha256": "e27d01596415e755964808340db49bfded6536ab9522b891567bc42588a8c2f8",
+              "end_exclusive": 133508,
+              "start": 133476,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "b2ef230e7f4f315a28cdcc863028da31f7110f3209feb76e76fed0f37b3d8580",
+              "end_exclusive": 133521,
+              "start": 133515,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "09395d6c374c3f3ab3ced95cbe13d03c4a3f62f79824ecc8b9b89d141ebd8113",
+              "end_exclusive": 133545,
+              "start": 133529,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "c66a8eb7e6a7e395bf000e8884c7de131a5cf32a9f42de44a1b9ceaf47c8900e",
+              "end_exclusive": 133555,
+              "start": 133552,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "end_exclusive": 133563,
+              "start": 133562,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 14,
+              "content_sha256": "31348e192082c2af2fcc422daf847f537f728e97f88b9e566c841c129fda1411",
+              "end_exclusive": 133585,
+              "start": 133571,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "15e91bffd2cf9af3cc31c8709d9b78b706bd694cef540a546744a03afdfffbea",
+              "end_exclusive": 133607,
+              "start": 133592,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 46,
+              "content_sha256": "02bc6664156f176f62bd13496d06bf55449414cb7996cbfde507b77bb53ac6dd",
+              "end_exclusive": 133661,
+              "start": 133615,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "15e91bffd2cf9af3cc31c8709d9b78b706bd694cef540a546744a03afdfffbea",
+              "end_exclusive": 133683,
+              "start": 133668,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 60,
+              "content_sha256": "7e863b14a725306888fdda2482ace062f66bb05e59ef45bd39077f02d177abd9",
+              "end_exclusive": 133751,
+              "start": 133691,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "eb7606d45f471b52186acbe9600bdcadfc8fc91ce68cbd41913f8f38646b77d3",
+              "end_exclusive": 133774,
+              "start": 133758,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 17,
+              "content_sha256": "a383e1b015056148ad59ead389032f95bda321936005e56df827e0f238d40e3f",
+              "end_exclusive": 133799,
+              "start": 133782,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 66,
+              "content_sha256": "6ae8e07680f98f738687564a05fe85881d459089b01bd1b11baf2007ca7c2498",
+              "end_exclusive": 133873,
+              "start": 133807,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 133937,
+              "start": 133935,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "e46a9ce099562ed8b579fa12189469edcd0aec497be2227ca84672c98d9bee30",
+              "end_exclusive": 133947,
+              "start": 133941,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 9,
+              "content_sha256": "ba4378af2e02bda053ec9c28dfca55643fec99017369611d15fb2a121946a13f",
+              "end_exclusive": 133965,
+              "start": 133956,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "c66a8eb7e6a7e395bf000e8884c7de131a5cf32a9f42de44a1b9ceaf47c8900e",
+              "end_exclusive": 133975,
+              "start": 133972,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 18,
+              "content_sha256": "6ed006851f899c997d1e430a902070bacab3e4fd45b182649ac8883ef950d5de",
+              "end_exclusive": 134001,
+              "start": 133983,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "b2ef230e7f4f315a28cdcc863028da31f7110f3209feb76e76fed0f37b3d8580",
+              "end_exclusive": 134014,
+              "start": 134008,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 39,
+              "content_sha256": "3eb8aa7526917c6ef222e6871b5aec4e519f75bf1fe5cb6c5c143e1bb6da9400",
+              "end_exclusive": 134060,
+              "start": 134021,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "411b0496da5eeced5314a3b5e9532bac97008d09ce9969ab4fa6a52b8c7ef634",
+              "end_exclusive": 134127,
+              "start": 134123,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 9,
+              "content_sha256": "ab08ec50bf9c4b24b4107864bf63c8d8e9d284bcf887776a77f3cdabb31ae4f7",
+              "end_exclusive": 134148,
+              "start": 134139,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "2bcb3e6e6cae04bd39f8046fce773df773c77ba0b344d623c48b516d0d795f97"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 45,
+      "selected_eligible_index": 0,
+      "selection_id": "EW000",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-String.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-String.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-String.html",
+        "read_sha256": "a3cd9eaa72f1283dda4da4b23ed5dfd9ba53f6a43fc450a38b96a08d3c54dda6",
+        "sha256": "a3cd9eaa72f1283dda4da4b23ed5dfd9ba53f6a43fc450a38b96a08d3c54dda6",
+        "size_bytes": 667290
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": false,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "1d5830bae2f8d81b1b0079c352ceab7df22f6f82453e6a2a736cd8b3649c10cf",
+          "exact_visible_match_count": 3,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": false,
+          "raw_literal_ranges": [
+            {
+              "bytes": 4,
+              "content_sha256": "1d5830bae2f8d81b1b0079c352ceab7df22f6f82453e6a2a736cd8b3649c10cf",
+              "end_exclusive": 33866,
+              "start": 33862,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "1d5830bae2f8d81b1b0079c352ceab7df22f6f82453e6a2a736cd8b3649c10cf"
+        },
+        {
+          "compared_normalized_content_sha256": "aa2e4a7ec908c9253ccc50f4781977508936b60a48fb97e3f45094aa4a23c89c",
+          "exact_visible_match_count": 0,
+          "necessary_text_component": false,
+          "raw_literal_ranges": [],
+          "selected_range_sha256": "1f0624bffed581c9a01a4efd911c0a5b0922d92dd739ec1bdb1973a85c1841f8"
+        },
+        {
+          "compared_normalized_content_sha256": "18d95c05414132dd2ddb12c8d0e4bd51d423b982df1c359f59cd7cb1b6c3e78a",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 114,
+              "content_sha256": "b59e443fe854b49708569f4e08bed5a709492f2030c9eaee9fe52e660792959e",
+              "end_exclusive": 234362,
+              "start": 234248,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "b59e443fe854b49708569f4e08bed5a709492f2030c9eaee9fe52e660792959e"
+        },
+        {
+          "compared_normalized_content_sha256": "188d83338727b320453ddd97ea9be1c9534102109b9a9e5f4448aa3e7ec705d6",
+          "exact_visible_match_count": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [],
+          "selected_range_sha256": "2d53dae290de7f3579f87639b7aa5eb93b2b7f14b5d10799f9bb906dc24669e9"
+        },
+        {
+          "compared_normalized_content_sha256": "9bf7d0b20e9fea75e402e31f6e0de50aa59146d2d0543e1bdf5da53bc8ec08d7",
+          "exact_visible_match_count": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [],
+          "selected_range_sha256": "b88d3b35e356a27e7ae6904e76c9902694b45a2e4f5e013d2c5114f1270f3f4e"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 52,
+      "selected_eligible_index": 26,
+      "selection_id": "EW026",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-8877.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-8877.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-8877.html",
+        "read_sha256": "bd83431033ff7a82a62216515c572463557f6204d507e07b7c26117376e9432b",
+        "sha256": "bd83431033ff7a82a62216515c572463557f6204d507e07b7c26117376e9432b",
+        "size_bytes": 266113
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "7d78017d6581f831d2e886f45a59c5688586ade9c80da2631ced43f68c8e176e",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 254,
+              "content_sha256": "6cf6cf1aa19e6fe8a1fead9dda0fed69571f7c25886ea247cf481d638d2811b6",
+              "end_exclusive": 235183,
+              "start": 234929,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "c9c1d677304ca48e6319a7a2fb6281df32c8482dbba98317b49efe66b3fbe28b"
+        },
+        {
+          "compared_normalized_content_sha256": "8a4f141fc22908abf30e79916bfff211299d7c34328efefb97c26e09e1b354f8",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 2,
+              "content_sha256": "2d6c9a90dd38f6852515274cde41a8cd8e7e1a7a053835334ec7e29f61b918dd",
+              "end_exclusive": 239072,
+              "start": 239070,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "2c4e68664fd393928e6368e344947440e7fd7fe1b8a6a5a51bb48b6562f6459a",
+              "end_exclusive": 239082,
+              "start": 239080,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "907ab9937a53fb024d01fdd72ca78f84f0a8e1c077a9109bb5a5145f1fbea913",
+              "end_exclusive": 239111,
+              "start": 239103,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96",
+              "end_exclusive": 239120,
+              "start": 239119,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "982d9e3eb996f559e633f4d194def3761d909f5a3b647d1a851fead67c32c9d1",
+              "end_exclusive": 239158,
+              "start": 239154,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "e7ac0786668e0ff0f02b62bd04f45ff636fd82db63b1104601c975dc005f3a67",
+              "end_exclusive": 239166,
+              "start": 239165,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 24,
+              "content_sha256": "c493bbc6fee1a2c9604536ae94490a2a827a019c4a05953a6af9f02eae869d3c",
+              "end_exclusive": 239210,
+              "start": 239186,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "41b805ea7ac014e23556e98bb374702a08344268f92489a02f0880849394a1e4",
+              "end_exclusive": 239218,
+              "start": 239217,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "f0a289923ed634acec748941a7fab6a057e5d4a5cb29e5e2b6136d639897c74a",
+              "end_exclusive": 239256,
+              "start": 239252,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 12,
+              "content_sha256": "11cde19bfa7c8ab85fba824d6149ec7986145ba085386f007bd68a700c9f1dd6",
+              "end_exclusive": 239275,
+              "start": 239263,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 11,
+              "content_sha256": "0a9c09e4be9d2a4aac0e19b8f8481c4d778c6f09a2ac401d219c0d34737caeac",
+              "end_exclusive": 239319,
+              "start": 239308,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 15,
+              "content_sha256": "f50b25311600eee2c5eacd543787a425f3a10d382d111ea60119a01c5237f4ab",
+              "end_exclusive": 239341,
+              "start": 239326,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "935f68319d4f227e02bfd54a0ddf85b8a242e42a4277aa5ef5eaab691710924e",
+              "end_exclusive": 239379,
+              "start": 239377,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 25,
+              "content_sha256": "88833d1d07ba243db6c196cf8f8819f1a77b508e8b083c6eec9f20436caf7308",
+              "end_exclusive": 239412,
+              "start": 239387,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "06c604b332b386b6cce8355ccf27fffd3a98b7a7a5b9b3a550c039c6ebae38e4",
+              "end_exclusive": 239457,
+              "start": 239453,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "3c65c66290d7bfe72646734a415827df19c84e9c3af22c359997556772f04afa",
+              "end_exclusive": 239471,
+              "start": 239464,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "end_exclusive": 239493,
+              "start": 239491,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "41b805ea7ac014e23556e98bb374702a08344268f92489a02f0880849394a1e4",
+              "end_exclusive": 239501,
+              "start": 239500,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "7187f0675eb3827939741acf7342ba78836ecec21a31ecf3f34a55309d3bee8a",
+              "end_exclusive": 239548,
+              "start": 239542,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 25,
+              "content_sha256": "dfb172072f35b4f9e37dfed9b6bb2f514644b8d3169d8f9dc4861b4b304f3dfb",
+              "end_exclusive": 239581,
+              "start": 239556,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "7187f0675eb3827939741acf7342ba78836ecec21a31ecf3f34a55309d3bee8a",
+              "end_exclusive": 239623,
+              "start": 239617,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "608a9cb55a29c77914be42ae97e2579696fce5958211d3420321d44785f4cf80",
+              "end_exclusive": 239638,
+              "start": 239631,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "93f816af7d44bd522b5e31343d8a7ed1a516cd440827d9c0d9b3befe306f94bd"
+        },
+        {
+          "compared_normalized_content_sha256": "eeb5e7e418f6c78eb429f213ad123cdc8d12f8e2f2b72f1dc22e3c0382cc860c",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 19,
+              "content_sha256": "737103679ee2d4c18310a1e95127ff9fcafa08b440438ecf67a9c1997d3814c5",
+              "end_exclusive": 239718,
+              "start": 239699,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 18,
+              "content_sha256": "597a43e14e8b1a916f970b2985ab25b70155d9084d34fdb2dd0be0545f73d3aa",
+              "end_exclusive": 239762,
+              "start": 239744,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 19,
+              "content_sha256": "83a6882f073778180af6bf520e417af87d19e322654d223ea255d18f2654e97c",
+              "end_exclusive": 239791,
+              "start": 239772,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "9d143da68580988101c6e9fdc5f5741f4218dea43a7cff9126d1f9153c49d5b7"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 57,
+      "selected_eligible_index": 18,
+      "selection_id": "EW018",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/slint-issue-8147.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/slint-issue-8147.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/slint-issue-8147.html",
+        "read_sha256": "c1f1a24e9e1b2a9261a14a99d18efb368fd1903eb15a9385159f405b7cf8a91a",
+        "sha256": "c1f1a24e9e1b2a9261a14a99d18efb368fd1903eb15a9385159f405b7cf8a91a",
+        "size_bytes": 263402
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "b26757642bc4379413acd18548b6558c1184e8b481d0cf8967b781395ea4154b",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 46,
+              "content_sha256": "84ec64d5162f354f5fde9b84234e979cba79118ff3eca2764eaec7edb8f2f73f",
+              "end_exclusive": 27972,
+              "start": 27926,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 109,
+              "content_sha256": "ac0df0bd9fb37aba2020cfdebd720501f79ff58f76737a0212a4a768c835fcee",
+              "end_exclusive": 28089,
+              "start": 27980,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "06c604b332b386b6cce8355ccf27fffd3a98b7a7a5b9b3a550c039c6ebae38e4",
+              "end_exclusive": 28100,
+              "start": 28096,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "242d960c5114b31918679c5877b821f7f5f31b9ba254e78e42de3f02e78de146",
+              "end_exclusive": 28124,
+              "start": 28108,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 16,
+              "content_sha256": "2366e86e5ed28f5a765886f6f80bd1a02b2c34891066513dfb8dd2d475a71275",
+              "end_exclusive": 28186,
+              "start": 28170,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "end_exclusive": 28198,
+              "start": 28197,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 192,
+              "content_sha256": "c137f87e494a5483235d5df7b09ffdb0f59fb48db3f3c93dc232ca88f750a2af",
+              "end_exclusive": 28398,
+              "start": 28206,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "1c61425b1ba94748e725edd6fbc902b80e08483116a8affb4b8829143e486f1e",
+              "end_exclusive": 28412,
+              "start": 28405,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "e47f62285daa6204ee05e4ba8d7bd3f065304783650c0c36aecee4cd465ac6ba",
+              "end_exclusive": 28428,
+              "start": 28420,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 28492,
+              "start": 28490,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "8f6fb4eb7f42c0e245e29e63f5b82cc3ba19852681d1ed9aed291f59cf75ec0e",
+              "end_exclusive": 28504,
+              "start": 28496,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 171,
+              "content_sha256": "7c79de6dbd170ce2adf90374d2b9bd4179d720477f6b7c8a1f93ee198f9bc554",
+              "end_exclusive": 28684,
+              "start": 28513,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 2,
+              "content_sha256": "f8bf310263c1ac3ecd39fadaf73ef233d3a1e7f423e02afd8da0d4e8e38264af",
+              "end_exclusive": 28748,
+              "start": 28746,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "cb702378f31507efa79a2a2c6046050bc9f578f149c88e3c0a3d9532ab4b5300",
+              "end_exclusive": 28758,
+              "start": 28752,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 48,
+              "content_sha256": "5dd9cd8435ef7802576964f70359784df7838303797808e627893545e93db626",
+              "end_exclusive": 28815,
+              "start": 28767,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "f265d4d8f5e4e2d80d63136a39fc90210ac899de75ac2816b9f0843ad091e8c5",
+              "end_exclusive": 28825,
+              "start": 28822,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 12,
+              "content_sha256": "1fc44f3b299d66b6610af574d90fd310f67c9f8788801e801b5cbdf62ba6dc04",
+              "end_exclusive": 28845,
+              "start": 28833,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "821f48441306e24d792c43950abedb115060727b76d536cf0ad0a0ea35f75ad9"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 65,
+      "selected_eligible_index": 50,
+      "selection_id": "EW050",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/tempfile-3.27.0-TempPath.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/tempfile-3.27.0-TempPath.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/tempfile-3.27.0-TempPath.html",
+        "read_sha256": "de9798a15f1b3b93b8f17bc4d7cd4b5a6a7f0b4157db966f3dd8dbe89df55aea",
+        "sha256": "de9798a15f1b3b93b8f17bc4d7cd4b5a6a7f0b4157db966f3dd8dbe89df55aea",
+        "size_bytes": 155647
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "983574d3cc1a72bcbb07aa533ee302a2f66a802068d2a91f27e2e7432466a4ce",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 6,
+              "content_sha256": "4975582300271920d1ad7eb9f666c7b10fe4cf1328aa65a520535d6440f0fa65",
+              "end_exclusive": 17776,
+              "start": 17770,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 4,
+              "content_sha256": "b1565820a5cdac40e0520d23f9d0b1497f240ddc51d72eac6423d97d952d444f",
+              "end_exclusive": 17787,
+              "start": 17783,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "4975582300271920d1ad7eb9f666c7b10fe4cf1328aa65a520535d6440f0fa65",
+              "end_exclusive": 17881,
+              "start": 17875,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 1,
+              "content_sha256": "e7ac0786668e0ff0f02b62bd04f45ff636fd82db63b1104601c975dc005f3a67",
+              "end_exclusive": 18050,
+              "start": 18049,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "4975582300271920d1ad7eb9f666c7b10fe4cf1328aa65a520535d6440f0fa65",
+              "end_exclusive": 18295,
+              "start": 18289,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 40,
+              "content_sha256": "639bf928bfe5c1b9599041e8e810f6ebde2205904ad8d16be604f83553bf9a35",
+              "end_exclusive": 18342,
+              "start": 18302,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 6,
+              "content_sha256": "4975582300271920d1ad7eb9f666c7b10fe4cf1328aa65a520535d6440f0fa65",
+              "end_exclusive": 18436,
+              "start": 18430,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "38587c646c241aa47511914f1c36c093deb49aedc495d41826c65b437080b4b5"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 67,
+      "selected_eligible_index": 16,
+      "selection_id": "EW016",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-package-vcs.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-package-vcs.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-package-vcs.html",
+        "read_sha256": "e4e73292acecc61baf502cf0320e44f769c274191dff82cd122d8ed676e3a5ff",
+        "sha256": "e4e73292acecc61baf502cf0320e44f769c274191dff82cd122d8ed676e3a5ff",
+        "size_bytes": 19921
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "ddba7feb6fee03e14f63c57300ae95c1047ad2019f4d9fbb5775f42204fe259f",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 14,
+              "content_sha256": "86e299fb5e1494bfe35e3539d7e411c0f980303f38812d8d69a7e4d62435206a",
+              "end_exclusive": 176403,
+              "start": 176389,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 13,
+              "content_sha256": "522469709a6ceba9fef63d5b2cdf69bf9fbd7d984e508f5a23555dde6be07a2c",
+              "end_exclusive": 176426,
+              "start": 176413,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 12,
+              "content_sha256": "c03fe0e605344b9056d8c83797b6626da42ca843079fb3f16d4488fe39328861",
+              "end_exclusive": 176528,
+              "start": 176516,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 8,
+              "content_sha256": "7173e79ec9298b9d1f13d4d4f0b51b9355414296a4901fdaafb3aaa1e8f67fd6",
+              "end_exclusive": 176619,
+              "start": 176611,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "21c4ea47bb8813b6a56c1d8fed4ee3b154ebb93f587beb1ac34330c911b2abdf"
+        },
+        {
+          "compared_normalized_content_sha256": "b0139907d75fab4c1b8d488e39acbe1befa55e9342f011f6835a411b849bab76",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 8,
+              "content_sha256": "7a8a4a55707ddb8ea01e3a4454d89fe60b13c39869260eb9e0d9d65775e90bc3",
+              "end_exclusive": 177638,
+              "start": 177630,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 7,
+              "content_sha256": "7f97454c903dd652459ceaa1a0e9bb61ee8fdbad5807a26cd58b4b1ba2485927",
+              "end_exclusive": 178454,
+              "start": 178447,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "b0bc50236d0a18b334497c61c13f7cd90686d7ab05bbe0bbcd7788338e396d1d"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 69,
+      "selected_eligible_index": 15,
+      "selection_id": "EW015",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-v0.229.0.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-v0.229.0.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-v0.229.0.html",
+        "read_sha256": "f162cb8667f01136a747169dc16fd6d2212ee0ed9364be8c83026f0e742f5e30",
+        "sha256": "f162cb8667f01136a747169dc16fd6d2212ee0ed9364be8c83026f0e742f5e30",
+        "size_bytes": 232340
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    },
+    {
+      "all_necessary_text_components_match": true,
+      "fragments": [
+        {
+          "compared_normalized_content_sha256": "756ad87201e6e4dfb7e2703126142cbc7b7f7b260488fd224d9a0d1994767703",
+          "exact_visible_match_count": 1,
+          "matched_occurrence_0based": 0,
+          "necessary_text_component": true,
+          "raw_literal_ranges": [
+            {
+              "bytes": 48,
+              "content_sha256": "bfc5052966d7be3dc3bdbb7afc2383ce9fccc961f8a674d4c1d915355fa39a90",
+              "end_exclusive": 1573,
+              "start": 1525,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 3,
+              "content_sha256": "54d5dbf0124e59afba31626db737667cba02fa73560691be0cdb0e7cab9b1fc7",
+              "end_exclusive": 1593,
+              "start": 1590,
+              "transform_for_retention": "identity; no raw payload stored"
+            },
+            {
+              "bytes": 435,
+              "content_sha256": "df0a99904ce24c14287d98ce5ae4b7ec35b2facb3004d2bd3e2f0133218a48bf",
+              "end_exclusive": 2034,
+              "start": 1599,
+              "transform_for_retention": "identity; no raw payload stored"
+            }
+          ],
+          "selected_range_sha256": "f03d0c4f4c08787cec5e139fd37246f43516b3636f577027ade58a7c589b90c6"
+        }
+      ],
+      "not_whole_document_equivalence": true,
+      "raw_eligible_index": 75,
+      "selected_eligible_index": 7,
+      "selection_id": "EW007",
+      "source": {
+        "all_frozen_duplicate_paths": [
+          "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/emacs-gap.html"
+        ],
+        "current_read_verified_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/emacs-gap.html",
+        "other_aliases_current_read_verified": false,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/emacs-gap.html",
+        "read_sha256": "fdcebcccd6262020b379692bdc6a5020c1018b891d0a132480979caa98faf691",
+        "sha256": "fdcebcccd6262020b379692bdc6a5020c1018b891d0a132480979caa98faf691",
+        "size_bytes": 3021
+      },
+      "transform": "Selected fragment UTF-8 text, or JSON string decode; HTML UTF-8 data/entity extraction excluding script/style/noscript; remove all Unicode whitespace on BOTH sides for exact comparison. No semantic inference."
+    }
+  ],
+  "schema": "er10.exact-render-mappings.v1"
+}

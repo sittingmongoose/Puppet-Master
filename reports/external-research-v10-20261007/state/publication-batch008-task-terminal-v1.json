@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch008-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch008-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch008-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch008-v1\",\"status\":\"completed\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch008-v1:ordinal:1\",\"latestTerminalStatus\":\"completed\",\"latestTerminalSummary\":\"BATCH008 staged before deadline; root received exact paths, hashes, and counts.\\n\\n542 files / 48,183,951 bytes; 3,725 manifest entries. Canonical byte validation passed. Six path aliases and relocated replay differences are disclosed in the [handoff](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch008/root-handoff.json).\\n\\nHeld fragments remain unpublished. No Git writes or cleanup performed.\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch008-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:ed56342f-ce85-4f6a-ad9c-0a56042453db\",\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6.1-sol\",\"summary\":\"BATCH008 staged before deadline; root received exact paths, hashes, and counts.\\n\\n542 files / 48,183,951 bytes; 3,725 manifest entries. Canonical byte validation passed. Six path aliases and relocated replay differences are disclosed in the [handoff](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch008/root-handoff.json).\\n\\nHeld fragments remain unpublished. No Git writes or cleanup performed.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch008-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:ed56342f-ce85-4f6a-ad9c-0a56042453db\",\"waitTimedOut\":false}"
+    }
+  ],
+  "structuredContent": {
+    "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch008-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch008-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch008-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch008-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch008-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "BATCH008 staged before deadline; root received exact paths, hashes, and counts.\n\n542 files / 48,183,951 bytes; 3,725 manifest entries. Canonical byte validation passed. Six path aliases and relocated replay differences are disclosed in the [handoff](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch008/root-handoff.json).\n\nHeld fragments remain unpublished. No Git writes or cleanup performed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch008-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:ed56342f-ce85-4f6a-ad9c-0a56042453db",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": "BATCH008 staged before deadline; root received exact paths, hashes, and counts.\n\n542 files / 48,183,951 bytes; 3,725 manifest entries. Canonical byte validation passed. Six path aliases and relocated replay differences are disclosed in the [handoff](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch008/root-handoff.json).\n\nHeld fragments remain unpublished. No Git writes or cleanup performed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch008-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:ed56342f-ce85-4f6a-ad9c-0a56042453db",
+    "waitTimedOut": false
+  },
+  "isError": false
+}

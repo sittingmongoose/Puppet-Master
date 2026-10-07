@@ -1,0 +1,72 @@
+{
+  "observed_at": "2026-10-07T22:16:04.911527+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_99e81f51-17a6-4ead-8285-58a7285b8365/state.json",
+  "actual_state": {
+    "objective": "Complete D-M16-A/control/fresh_bundle_join_final-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "complete",
+    "rounds": 4,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "[Inputs in: read admission-timing.json + INPUT_MAP.json, inventory only the listed predecessor reports/source indices/source bytes]",
+        "acceptance": "`J=/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3; python3 -m json.tool $J/admission-timing.json && python3 -m json.tool $J/INPUT_MAP.json`; produce an allowed-artifacts list in a scratch note and confirm no forbidden path (sibling answer, control/treatment counterpart, old v1/v2 science, evaluator facts, campaign history) was opened",
+        "status": "done"
+      },
+      {
+        "id": "t2",
+        "title": "[Sources in: capture public primary docs/code for both topics (tile acquisition/refresh; stale display/retention) into $J/sources with index.json]",
+        "acceptance": "every index.json entry carries URL/version/capture/hash/locator/limits (`python3 -c \"import json,sys; [assert_ok(k) for k in json.load(open('$J/sources/index.json'))]\"` or `jq` key check) and each byte file's `sha256sum` matches its recorded hash; only listed predecessor source bindings reused, claims independently checked",
+        "status": "done"
+      },
+      {
+        "id": "t3",
+        "title": "[Science out: write $J/final.md joining both topic comparisons \u2014 separate acquisition vs refresh disposition, separate stale-display vs retention disposition, shared identity/freshness/reuse-invalidation dependencies, \u22648 distinct material findings, topic-specific uncertainties and negative leads preserved, discriminating checks, proposed-vs-executed validation, accepted/amended/rejected/unresolved dispositions, all six obligations]",
+        "acceptance": "`wc -w $J/final.md` is \u22721100 soft; findings count \u22648; a grep pass over final.md finds each of the 6 obligation deliverables and both topic dispositions; no sibling-arm answer or invented claim",
+        "status": "done"
+      },
+      {
+        "id": "t4",
+        "title": "[Close out: write $J/timings.json (actual source ops/capture/first useful saved finding/output/known usage; null for unknown input/cache/generated/billing) and reach the real Goal terminal without amending terminal outputs]",
+        "acceptance": "`python3 -m json.tool $J/timings.json` parses with required fields; `ls $J/final.md $J/sources/index.json $J/timings.json` all exist; final.md/index.json hashes taken before terminal match after terminal (no post-terminal edits); work stopped by the 2026-10-07T22:41:56Z hard deadline",
+        "status": "done"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791410352922,
+    "updatedAt": 1791411327633,
+    "endedReason": "all tickets done"
+  },
+  "source_sha256": "b22d37bf88a2a8a1f8073951e62a7e8d2acf155d649fa6d49a3d7bd31e3dacbf",
+  "separate_actual_config_binding": {
+    "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3",
+    "case_id": "D-M16-A",
+    "arm": "control",
+    "stage": "fresh_bundle_join_final-v3",
+    "target": {
+      "providerInstanceId": "zcode",
+      "driverKind": "acpRegistry",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": {
+        "thought": "max",
+        "mode": "yolo"
+      }
+    },
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "limitation": "Installed driver only; no vendor goal/ACP mapping inference. Earlier failed active export retained."
+}

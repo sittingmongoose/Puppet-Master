@@ -1,0 +1,144 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T22:16:20.893447+00:00",
+  "case_id": "D-M16-A",
+  "arm": "control",
+  "stage": "fresh_bundle_join_final",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/INPUT_MAP.json",
+      "sha256": "4b0d23210ee6a2ff479275e1c0312ba69a3a902f5d55670373c78f74c07c6de8",
+      "bytes": 2606
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/admission-timing.json",
+      "sha256": "ea1ef7bab6d885e389849dff24653d7314283c766644448d153f65d72eaffb6c",
+      "bytes": 472
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/assignment.md",
+      "sha256": "70ee98747cf388ad58d887e5878e3e0badc3c7de8373bc57dcbec140c3c48970",
+      "bytes": 4067
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/dispatch-receipt.json",
+      "sha256": "bc56ffa9691f77bf426b574e05f7a47a517cb3ff7b414eb96c5fe84fb28d2c07",
+      "bytes": 2326
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/dispatch-registration-wrapper-error.json",
+      "sha256": "0432450ca00c3538b7717affb3987cb0534f75bbda257d7bc9b3e0014b9ddb40",
+      "bytes": 3087
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/dispatch-request.json",
+      "sha256": "16136fe2d8689e6c3b6f388fb163624c05023898f2b47071e010ff5381f1e46d",
+      "bytes": 685
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/dispatch.json",
+      "sha256": "2817369b3e6f385de0036df8a2343a274b3f4a2517c09a4ebf13887f5788e198",
+      "bytes": 1516
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+      "sha256": "979e950faf96c22654f19974be20336aebc1c8a2018b0a131a4491c4ab5359e4",
+      "bytes": 10784
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/integration-state-active.json",
+      "sha256": "e1e34b7bbdcd07a9816d950799f20b3d0f98b5409f0469e47f06e5d51d695b4d",
+      "bytes": 6945
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/integration-state-terminal.json",
+      "sha256": "6038504ee9f94f12d2759eaa1142e1e9eb08f69a965432bc64798caca9c30946",
+      "bytes": 6500
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/passive-active-capture-cost.json",
+      "sha256": "135ee6aa4769fc8e47cffdddda7e9e8ac0a10a14f0a0e2e8653f7be28c1f7a40",
+      "bytes": 1342
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/passive-terminal-capture-cost.json",
+      "sha256": "1241eae3bacd3c33dcb1524cc1f586f76d64a953dc905af32a02d0e54487e4dc",
+      "bytes": 1305
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/passive-terminal.json",
+      "sha256": "5617bfbd03a63efee5f7c15659813f4886d045bf4b120d0155075752db467c59",
+      "bytes": 19976
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "bytes": 63037
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+      "sha256": "256258b1bfa42e958e011ec09b14df1bb6636b0ac3a039d97e93c3cf996ef6fa",
+      "bytes": 9281
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "bytes": 1970
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html",
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "bytes": 57884
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "bytes": 9248
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-slippy-tilenames.html",
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "bytes": 333283
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html",
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "bytes": 24578
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/task-terminal.json",
+      "sha256": "dd2b57d70f764307b99e94a3d822179f77939fe39a91660ebbdf5d951de9c421",
+      "bytes": 4436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/timings.json",
+      "sha256": "c531784661cd07b0d5aa42bf3f91411f9265e5ac10a2c2faf6d40effe32b1878",
+      "bytes": 2820
+    }
+  ]
+}

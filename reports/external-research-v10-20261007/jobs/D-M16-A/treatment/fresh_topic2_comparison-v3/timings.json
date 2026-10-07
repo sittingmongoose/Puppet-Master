@@ -1,0 +1,56 @@
+{
+  "stage": "fresh_topic2_comparison-v3",
+  "case_id": "D-M16-A",
+  "common_T0": "2026-10-07T21:21:56.716615+00:00",
+  "prospective_admitted_at": "2026-10-07T21:52:44.019575+00:00",
+  "effective_deadline": "2026-10-07T22:12:44.019575+00:00",
+  "deadline_rule": "min(prospective admission + 20min, frozen latest 22:21:56.716615Z, common 22:41:56.716615Z); dispatch-request.json recorded no requestedAt, so no earlier T3 request governs; no_reset",
+  "ingestion_done": "2026-10-07T21:56:13Z",
+  "source_ops": {
+    "fetch_commands": 7,
+    "fetch_start": "2026-10-07T21:58:24Z",
+    "fetch_end": "2026-10-07T21:58:25Z",
+    "bytes_captured": 687201,
+    "independent_verification_greps": 3,
+    "verification_runs": ["2026-10-07T21:58:40Z locators", "2026-10-07T21:59:20Z createTile/mark_up_to_date", "2026-10-07T22:01:14Z invalidation/conditional/purgeCache"]
+  },
+  "capture": {
+    "rfc5861-swr-sie.txt": "2026-10-07T21:58:24Z",
+    "rfc9111-http-caching.txt": "2026-10-07T21:58:24Z",
+    "rfc9110-http-semantics.txt": "2026-10-07T21:58:25Z",
+    "libshumate-file-cache-1.7.0.c": "2026-10-07T21:58:25Z",
+    "osmdroid-sqltilewriter-6.1.20.java": "2026-10-07T21:58:25Z",
+    "mbtiles-1.3-spec.md": "2026-10-07T21:58:25Z",
+    "leaflet-offline-TileLayerOffline.ts": "2026-10-07T21:58:25Z"
+  },
+  "first_useful_saved_finding": "2026-10-07T21:59:51Z",
+  "first_useful_saved_finding_note": "sources/index.json written with sha256-frozen bytes and independently verified line locators (first evidence-backed saved artifact of this stage)",
+  "draft_done": "2026-10-07T22:02:42Z",
+  "output": {
+    "report_md": "report.md",
+    "sources_index": "sources/index.json",
+    "written_at_utc": "2026-10-07T22:05:30Z"
+  },
+  "known_usage": {
+    "curl_fetches": 7,
+    "sources_captured": 7,
+    "index_entries": 7,
+    "material_findings": 8,
+    "predecessor_reports_read": 1,
+    "predecessor_source_files_opened": 1,
+    "codes_executed": 0,
+    "tile_servers_probed": 0
+  },
+  "unknown_input": null,
+  "cache": null,
+  "generated": null,
+  "billing": null,
+  "native_counters": {
+    "note": "distinct counters, this stage only",
+    "t3_goal_loop_tickets_completed": 4,
+    "t3_verification_rounds_passed": 3,
+    "files_written_scratch": 2,
+    "files_written_output": 2,
+    "write_tool_calls": 5
+  }
+}

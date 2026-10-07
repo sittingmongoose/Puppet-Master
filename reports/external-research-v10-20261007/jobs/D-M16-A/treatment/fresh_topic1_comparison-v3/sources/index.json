@@ -1,0 +1,56 @@
+{
+ "schema": "pm.er10.stage-source-index.v1",
+ "case_id": "D-M16-A",
+ "stage": "fresh_topic1_comparison-v3",
+ "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+ "captured_at_utc": "2026-10-07T21:45:40Z",
+ "selection_rule": "topic-1 additions beyond the shared candidate inventory (predecessor sourcebytes, read as inputs not recaptured): public primary docs/code for acquisition/refresh under intermittent links, chosen during work; no sibling/counterpart/v1v2/evaluator sources; no downloaded code executed; one bounded single-URL header capture",
+ "entries": [
+  {
+   "id": "osmdroid-maptiledownloader-6.1.20",
+   "file": "osmdroid-maptiledownloader-6.1.20.java",
+   "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/MapTileDownloader.java",
+   "version": "tag osmdroid-parent-6.1.20",
+   "capture": "2026-10-07T21:45:04Z",
+   "bytes": 7901,
+   "hash": "sha256:6b8f7c5d7a7dc1d01c00e878667bbe69613fc117f7828b3d9a73d77099a57d07",
+   "locator": "line 49 default TileDownloader delegate, 149 TileLoader class, 154 downloadTile(pMapTileIndex, redirectCount, targetUrl), 165 delegates to TileDownloader.downloadTile, 172 loadTile, 197 call with redirectCount=0, 224 setTileDownloader",
+   "limits": "Apache-2.0 per repo (not re-verified); single file, full class captured; read-only, not executed",
+   "topic_binding": [
+    "topic1"
+   ],
+   "mechanism_lead": "Per-tile download path is redirect-aware (redirectCount, CantContinueException) but contains no retry/backoff keywords: failure handling stays per-tile and viewer/provider-owned \u2014 independently checked for topic 1 (extends predecessor NetworkAvailabliltyCheck negative lead to the downloader itself)"
+  },
+  {
+   "id": "curl-manpage",
+   "file": "curl-manpage.html",
+   "url": "https://curl.se/docs/manpage.html",
+   "version": "curl project man page (curl.se, live page as captured 2026-10-07; documents behavior current as of curl 8.x)",
+   "capture": "2026-10-07T21:45:05Z",
+   "bytes": 465220,
+   "hash": "sha256:0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+   "locator": "line 2764 --retry exponential backoff: first wait 1s then double each retry to a 10-minute fixed cap, --retry-delay disables it; line 2765 Retry-After header compliance (server can override delay) and --retry-max-time total bound; lines 389-392 option index; line 1884 --retry-max-time resets per transfer",
+   "limits": "Dynamic web page (project site), may change; capture frozen by hash; no version header exists; HTML whole-page capture; read-only",
+   "topic_binding": [
+    "topic1"
+   ],
+   "mechanism_lead": "Public primary doc for viewer-owned retry policy under intermittent links: standard transient-error retry = exponential backoff capped at 10 min, server Retry-After honored, total retry time bounded \u2014 the backoff shape osmdroid's captured code lacks"
+  },
+  {
+   "id": "osm-tile-headers-20261007",
+   "file": "osm-tile-headers-20261007.txt",
+   "url": "https://tile.openstreetmap.org/0/0/0.png",
+   "version": "live HTTP response headers from canonical OSM tile endpoint, as returned 2026-10-07T21:45:12Z",
+   "capture": "2026-10-07T21:45:12Z",
+   "bytes": 794,
+   "hash": "sha256:e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2",
+   "locator": "line 3 cache-control: max-age=526616, stale-while-revalidate=604800, stale-if-error=604800; line 4 etag \"56a14ed652b78cb85f3bfb98d883ebce\"; line 6 expires; line 12 accept-ranges: bytes; line 15 age: 11504; lines 16-18 varnish CDN x-cache HIT",
+   "limits": "SINGLE bounded request, one URL, no bulk; policy-compliant UA sent; headers are dynamic (CDN node, max-age, age vary per node/time) so capture is evidence for this source class at capture time only, frozen by hash; response body discarded, nothing executed",
+   "topic_binding": [
+    "topic1",
+    "shared"
+   ],
+   "mechanism_lead": "Directly tests predecessor topic-1 uncertainty 'per-source validator/max-age emission unverified': the canonical OSM source DOES emit ETag + max-age + RFC 5861 stale-while-revalidate/stale-if-error directives, and advertises accept-ranges: bytes (byte-range support exists server-side even though no captured client uses it)"
+  }
+ ]
+}

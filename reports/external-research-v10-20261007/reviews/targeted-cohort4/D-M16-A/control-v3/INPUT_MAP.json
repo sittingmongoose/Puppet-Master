@@ -1,0 +1,304 @@
+{
+  "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/brief.md",
+  "original_source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/sources.json",
+  "required_sources": [
+    {
+      "file": "rfc9111.txt",
+      "title": "HTTP Caching (RFC 9111)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version": "RFC 9111, Standards Track, June 2022 (R. Fielding/M. Nottingham/J. Reschke, Eds.)",
+      "locator": "body lines: 581 \u00a74.2 Freshness; 784 \u00a74.2.4 Serving Stale Responses; 801 \u00a74.3 Validation; 1081 \u00a75.2 Cache-Control (5.2.1.2 max-stale request dir; 5.2.2.1 max-age response dir); 520 max-age=0 revalidation",
+      "limits": "General HTTP cache semantics; no tile/map specifics; stale-while-revalidate and stale-if-error are ABSENT from this text (verified by grep) \u2014 they remain RFC 5861 extensions; no storage-size/eviction quota guidance.",
+      "capture": "2026-10-07T21:27:34Z",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9111.txt"
+    },
+    {
+      "file": "rfc5861.txt",
+      "title": "HTTP Cache-Control Extensions for Stale Content (RFC 5861)",
+      "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+      "version": "RFC 5861, Informational, April 2011 (M. Nottingham, Yahoo! Inc.)",
+      "locator": "TOC lines 67-70; \u00a73 stale-while-revalidate (+3.1 example), \u00a74 stale-if-error (+4.1 example)",
+      "limits": "Informational; defines the two extension directives only; window sizes are server-chosen values with no recommended bounds; no acquisition/resume semantics.",
+      "capture": "2026-10-07T21:27:34Z",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc5861.txt"
+    },
+    {
+      "file": "rfc9110.txt",
+      "title": "HTTP Semantics (RFC 9110)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110, Standards Track, June 2022",
+      "locator": "body lines: 3570 \u00a78.8.3 ETag; 4799 \u00a710.2.3 Retry-After; 5872 \u00a713.1.2 If-None-Match; 5942 \u00a713.1.3 If-Modified-Since; 6467 \u00a714.2 Range; 7755 \u00a715.5.17 416 Range Not Satisfiable",
+      "limits": "Semantics only: validators, conditional GET, byte ranges/partial content, Retry-After (single date/delay value); defines no backoff algorithm, no cache policy (see 9111), no retention bounds.",
+      "capture": "2026-10-07T21:27:34Z",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9110.txt"
+    },
+    {
+      "file": "osmf-tile-policy.html",
+      "title": "OSMF Tile Usage Policy",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "version": "Live OMF operations page 'Tile Usage Policy', undated HTML, retrieved as stored",
+      "locator": "sections: Quick summary; 2 Attribution; 3.1 Identification; 3.2 Caching; 3.3 Protocols; 4 Prohibited: bulk downloading ('scraping') and offline use; 5 Caching proxies; one explicit 'If-Modified-Since' mention (grep count 1)",
+      "limits": "Service usage policy for the osm.org tile endpoint, not a client design spec; requires valid HTTP caching per its Caching section; sets download-bulk limits, not client-side display-staleness or store-retention rules; page carries no revision/date metadata.",
+      "capture": "2026-10-07T21:27:35Z",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/osmf-tile-policy.html"
+    },
+    {
+      "file": "osm-wiki-tile-disk-usage.html",
+      "title": "OpenStreetMap Wiki: Servers/Tile Rendering (incl. 'Tile disk usage')",
+      "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+      "version": "MediaWiki page, wgCurRevisionId 3082592 at capture; 'Tile disk usage' resolves (redirect) into Servers/Tile Rendering",
+      "locator": "'Tile disk usage' section link in page body; mod_tile expiry parameters 'expiry: false' and 'expiry: 86400' (86400 s = 1 day) as rendered config examples",
+      "limits": "Community wiki, not normative; disk/expiry discussion is illustrative config, not a policy; no client acquisition or display-staleness guidance.",
+      "capture": "2026-10-07T21:27:35Z",
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/osm-wiki-tile-disk-usage.html"
+    },
+    {
+      "file": "aws-sdk-retry-behavior.html",
+      "title": "AWS SDKs and Tools Reference Guide: Retry behavior",
+      "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+      "version": "Live 'latest' SDK reference page, retrieved as stored",
+      "locator": "grep counts at capture: 'retry mode' x6, 'retry quota' x17, 'token bucket' x5 \u2014 Standard mode (exponential backoff with jitter) and Adaptive mode; retry-quota token bucket (e.g., 500-token capacity style) guards against repeated failures",
+      "limits": "Vendor SDK behavior doc; concrete backoff/quota engineering precedent, not an HTTP standard; no map/tile specifics; page version not dated in HTML.",
+      "capture": "2026-10-07T21:27:34Z",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/aws-sdk-retry-behavior.html"
+    },
+    {
+      "file": "rfc9111-http-caching.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version": "RFC 9111 (June 2022), IETF HTTP semantics: caching",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 84,477 bytes",
+      "locator": "Sec 4 (constructing responses / freshness model: Age, fresh vs stale); Sec 5.2 (Cache-Control: max-age, must-revalidate, no-cache, no-store, max-stale); Sec 5.5 (revalidation)",
+      "limits": "Generic HTTP cache semantics, not tile- or map-specific; specifies cache behavior, not viewer display or retention policy; does NOT define stale-while-revalidate/stale-if-error (see rfc5861-stale.txt)",
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc9111-http-caching.txt"
+    },
+    {
+      "file": "rfc5861-stale.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+      "version": "RFC 5861 (May 2010), Informational",
+      "capture": "2026-10-07T21:47:34Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 10,359 bytes",
+      "locator": "Sec 3 (stale-while-revalidate Cache-Control extension: serve stale while async revalidation); Sec 4 (stale-if-error)",
+      "limits": "Informational status; not honored by all caches/tile clients; defines cache-side stale serving, not an offline viewer's retention or identity scheme",
+      "bytes": 10359,
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc5861-stale.txt"
+    },
+    {
+      "file": "osmf-tile-policy.html",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "version": "OSMF Operations tile policy page; Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 18,563 bytes",
+      "locator": "Policy body sections mentioning caching/updates of the standard osm.org tile layer (6 'cache' matches; server-side caching and bulk-use limits)",
+      "limits": "Acceptable-use policy for OSMF tile servers (single provider), not a client design spec; HTML includes site chrome; server cache/freshness statements here are policy context, not an API contract",
+      "bytes": 18563,
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/osmf-tile-policy.html"
+    },
+    {
+      "file": "osm-wiki-slippy-tilenames.html",
+      "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+      "version": "OSM community wiki page; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 333,283 bytes",
+      "locator": "z/x/y tile coordinate scheme, zoom-level resolution table, 'Tile Servers' section (identity scheme for raster tiles)",
+      "limits": "Community-maintained wiki, content can change without notice; covers tile identity/numbering only, not freshness, staleness display, or retention; 333 KB HTML includes MediaWiki chrome/scripts",
+      "bytes": 333283,
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/osm-wiki-slippy-tilenames.html"
+    },
+    {
+      "file": "mapbox-raster-tiles-api.html",
+      "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+      "version": "Mapbox vendor docs, undated page, fetched 2026-10-07",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 57,884 bytes",
+      "locator": "Caching section: 'Cache-Control headers to ... cache TTL of 12 hours and a CDN cache TTL of 5 minutes. New tileset data is cached for up to a ...' (browser vs CDN TTL distinction, ETag/conditional revalidation context)",
+      "limits": "Commercial vendor docs for Mapbox raster tiles; documents server-set cache headers, not client offline retention or stale-display policy; static HTML fetch may miss JS-rendered parts; includes site chrome",
+      "bytes": 57884,
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/mapbox-raster-tiles-api.html"
+    },
+    {
+      "file": "mod_tile-README.rst",
+      "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+      "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 9,248 bytes",
+      "locator": "README sections on tile expiry / Expires+Last-Modified headers and mod_tile/renderd caching behavior (2 'expir' matches)",
+      "limits": "Server-side (Apache module + renderd) renderer README; documents tile-serving server behavior, not client storage/retention; per-zoom expiry configuration details live in other mod_tile docs not captured here",
+      "bytes": 9248,
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/mod_tile-README.rst"
+    },
+    {
+      "file": "leaflet-offline-README.md",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+      "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+      "capture": "2026-10-07T21:44Z curl -L GET (UA pm-er10-research/1.0), HTTP 200, 1,970 bytes",
+      "locator": "README overview ('still available when you are offline') and Dependencies (idb: 'To store the tiles with promises'); API list deferred to generated docs, not captured",
+      "limits": "Very small README; proves an offline tile layer stores tiles in browser storage but specifies no stale-display, version, or retention/eviction policy; implementation internals not captured",
+      "bytes": 1970,
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/leaflet-offline-README.md"
+    },
+    {
+      "file": "rfc9111.txt",
+      "title": "HTTP Caching (RFC 9111)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version": "RFC 9111, Standards Track, June 2022",
+      "capture": "2026-10-07T21:27:34Z (topic1 arm)",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)",
+      "limits": "Generic HTTP cache semantics, not tile-specific; stale-while-revalidate/stale-if-error ABSENT (verified x0); no eviction/quota guidance.",
+      "reused_from": "topic1_independent-v3 + topic2_independent-v3 (byte-identical, sha match)",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt"
+    },
+    {
+      "file": "rfc5861.txt",
+      "title": "HTTP Cache-Control Extensions for Stale Content (RFC 5861)",
+      "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+      "version": "RFC 5861, Informational, April 2011",
+      "capture": "2026-10-07T21:27:34Z (topic1 arm)",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified",
+      "limits": "Informational; server-chosen window sizes with no recommended bounds; cache-side stale serving, not an offline viewer retention/identity scheme; no acquisition/resume semantics.",
+      "reused_from": "topic1_independent-v3 + topic2_independent-v3 (byte-identical, sha match)",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt"
+    },
+    {
+      "file": "rfc9110.txt",
+      "title": "HTTP Semantics (RFC 9110)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110, Standards Track, June 2022",
+      "capture": "2026-10-07T21:27:34Z (topic1 arm)",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416",
+      "limits": "Semantics only: validators, conditional GET, byte ranges, Retry-After (single value); no backoff algorithm, no cache policy, no retention bounds.",
+      "reused_from": "topic1_independent-v3",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt"
+    },
+    {
+      "file": "osmf-tile-policy.html",
+      "title": "OSMF Tile Usage Policy",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "version": "Live OSMF operations page, undated HTML; topic2 arm recorded Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+      "capture": "2026-10-07T21:27:35Z (topic1 arm)",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "locator": "Sections: Quick summary; 3.2 Caching; 4 Prohibited: bulk downloading/'scraping' and offline use (grep 'bulk download' x4 verified); single 'If-Modified-Since' mention (x1 verified)",
+      "limits": "Service usage policy for the osm.org endpoint, not a client design spec; constrains bulk download and requires valid HTTP caching; sets no client display-staleness or retention rules; no revision metadata in page.",
+      "reused_from": "topic1_independent-v3 + topic2_independent-v3 (byte-identical, sha match)",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html"
+    },
+    {
+      "file": "osm-wiki-tile-disk-usage.html",
+      "title": "OSM Wiki: Servers/Tile Rendering incl. Tile disk usage",
+      "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+      "version": "MediaWiki page, wgCurRevisionId 3082592 at capture",
+      "capture": "2026-10-07T21:27:35Z (topic1 arm)",
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "locator": "'Tile disk usage' section; mod_tile expiry config examples 'expiry: false' and 'expiry: 86400' (86400 x2 verified)",
+      "limits": "Community wiki, non-normative; disk/expiry discussion is illustrative server config, not client policy; no client acquisition or display-staleness guidance.",
+      "reused_from": "topic1_independent-v3",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html"
+    },
+    {
+      "file": "aws-sdk-retry-behavior.html",
+      "title": "AWS SDKs and Tools Reference: Retry behavior",
+      "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+      "version": "Live 'latest' SDK reference page, undated HTML",
+      "capture": "2026-10-07T21:27:34Z (topic1 arm)",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "locator": "Standard mode (exponential backoff + jitter) and Adaptive mode; retry-quota token bucket guards repeated failures (grep: 'retry quota' x15, 'token bucket' x5 verified case-insensitive)",
+      "limits": "Vendor SDK engineering precedent, not an HTTP standard; no map/tile specifics; page undated. Amended count vs topic1 index (17): my case-insensitive grep finds 15.",
+      "reused_from": "topic1_independent-v3",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html"
+    },
+    {
+      "file": "osm-wiki-slippy-tilenames.html",
+      "title": "OSM Wiki: Slippy map tilenames",
+      "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+      "version": "OSM community wiki; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+      "capture": "2026-10-07T21:44Z (topic2 arm)",
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "locator": "z/x/y tile coordinate scheme and zoom resolution table (grep 'z/x/y' x1 verified); Tile Servers section \u2014 the shared tile-identity scheme for both topics",
+      "limits": "Community wiki, can change without notice; identity/numbering only \u2014 no freshness, staleness display, or retention semantics; 333 KB HTML with MediaWiki chrome.",
+      "reused_from": "topic2_independent-v3",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-slippy-tilenames.html"
+    },
+    {
+      "file": "mapbox-raster-tiles-api.html",
+      "title": "Mapbox Raster Tiles API docs",
+      "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+      "version": "Mapbox vendor docs, undated page",
+      "capture": "2026-10-07T21:44Z (topic2 arm)",
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "locator": "Caching section: 'browser cache TTL of 12 hours and a CDN cache TTL of 5 minutes' (exact phrase verified by grep); ETag/conditional revalidation context",
+      "limits": "Vendor docs for a commercial provider; documents server-set cache headers, not client offline retention or stale-display policy; static fetch may miss JS-rendered parts; site chrome included.",
+      "reused_from": "topic2_independent-v3",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html"
+    },
+    {
+      "file": "mod_tile-README.rst",
+      "title": "openstreetmap/mod_tile README",
+      "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+      "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+      "capture": "2026-10-07T21:44Z (topic2 arm)",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior",
+      "limits": "Server-side renderer README; server behavior only, not client storage/retention; per-zoom expiry config lives in other mod_tile docs not captured.",
+      "reused_from": "topic2_independent-v3",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst"
+    },
+    {
+      "file": "leaflet-offline-README.md",
+      "title": "allartk/leaflet.offline README",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+      "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+      "capture": "2026-10-07T21:44Z (topic2 arm)",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)",
+      "limits": "Small README; proves an offline layer stores tiles in browser storage but specifies no stale-display, version, or retention/eviction policy; API internals not captured.",
+      "reused_from": "topic2_independent-v3",
+      "verification": "bytes reused from listed predecessor capture; sha256 recomputed independently at join stage",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md"
+    }
+  ],
+  "arm_source_indices": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+      "sha256": "2931b7baab7992a031c109476fb2bd16e9b0bcb4f10ab7381f6ecaa4a46139f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+      "sha256": "428542c513bdf0a9f34d6d6d6e2bfb7d68a99c0de3b5b012d745893e8e06685f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+      "sha256": "256258b1bfa42e958e011ec09b14df1bb6636b0ac3a039d97e93c3cf996ef6fa"
+    }
+  ],
+  "frozen_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+  "frozen_output_sha256": "979e950faf96c22654f19974be20336aebc1c8a2018b0a131a4491c4ab5359e4",
+  "obligations": [
+    "Give a separate disposition for acquisition and refresh.",
+    "Give a separate disposition for stale display and retention.",
+    "Identify shared identity/freshness dependencies and reuse invalidation.",
+    "Preserve topic-specific uncertainties instead of assuming shared evidence settles both.",
+    "Return at most eight distinct material findings across the bundle.",
+    "Deliver a bounded topic comparison and discriminating checks, counting shared discovery and synthesis."
+  ],
+  "scope_limit": "Only originalbrief, sources/captureindices, THIS exactfrozenfinal; no candidatesdrafts/timing/otherarm/history/reviews/campaign/helpers. Method/path visible blindinglimit; advisory scope not filesystemfirewall."
+}

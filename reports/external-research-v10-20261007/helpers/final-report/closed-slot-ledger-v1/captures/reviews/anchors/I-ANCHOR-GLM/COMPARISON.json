@@ -1,0 +1,578 @@
+{
+  "schema": "ER10-anchor-comparison-v1",
+  "slot_id": "I-ANCHOR-GLM",
+  "status": "DIAGNOSTIC_ASSESSMENTS_FROZEN_WITH_LIMITED_CONTROL_SOURCE_VERIFICATION",
+  "at": "2026-10-07T20:06:59.626003+00:00",
+  "pair_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/pair-freeze.json",
+    "sha256": "0b751cc3070cb4432429c78781818cd3b3c24ecb8b63d88d216290e3bab59d64"
+  },
+  "predeclared_exception": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/diagnostic-gate-exception-v2.json",
+    "sha256": "05949746b58575eef9e70f5efb985ee8f39c52a7d16c2a40d6e58a121a373c8e"
+  },
+  "original_qualified_native_gate": "NOT_PASSED",
+  "arms": {
+    "control": {
+      "recipe": "research -> fresh critic -> fresh final reviser",
+      "route_version": "v2 prospective common input/envelope; original v1 diagnosis retained",
+      "binding": {
+        "provider": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "thought": "max",
+        "mode": "yolo",
+        "dispatch": "general-role literal leading /goal short objective + assignment file"
+      },
+      "quality": {
+        "decision": "NO_FULL_POSITIVE",
+        "review_status": null,
+        "scientific_full_positive": null,
+        "assessment_mode": "FULL_DECLARED_OBLIGATION_REVIEW_WITH_EXPLICIT_UNVERIFIED_SOURCE_REMAINDER",
+        "failed_screen": false,
+        "source_correctness": {
+          "grade": "FAIL_ON_ASSESSED_MATERIAL_CLAIMS",
+          "scope": "checked consequential final claims; R1 remains unverified",
+          "reason": "M1 unsupported crash guarantee; M2 inaccurate NFS governing condition; M3 incorrect release applicability. Most core source selections and facts are correct.",
+          "defects": [
+            "M1",
+            "M2",
+            "M3"
+          ]
+        },
+        "completeness": {
+          "grade": "PARTIAL",
+          "reason": "All original obligations examined, but no completed pinned-component/regression investigation in candidate artifact; product gaps M1,M4-M6 and preservation gap M7.",
+          "not_penalized": "Proposed tests need not be executed in this research-only task."
+        },
+        "planning_usefulness": {
+          "grade": "SUBSTANTIAL_BUT_INCOMPLETE",
+          "reason": "Concrete corrections, explicit choices, source constraints and prioritized test families improve the thin plan materially; durability, consistency, trust binding, preview parity and short-query behavior remain essential open contracts."
+        },
+        "breadth": {
+          "grade": "MODERATE_TO_BROAD_TOPIC_COVERAGE_WITH_SHALLOW_INTEGRATION",
+          "bounded_supported_yield": [
+            "contained staging and atomic symlink activation as a namespace mechanism",
+            "authenticated monotonic editions as a trust principle",
+            "sanitizer hardening history and upgrade caution",
+            "indexed search with Latin diacritic and trigram constraints",
+            "WCAG 2.2 A/AA baseline and kiosk-relevant criteria",
+            "ZIM immutable-container alternative and TUF role-based alternative"
+          ],
+          "limits": "Breadth credited by distinct supported mechanisms and relevance, not eight source IDs, file existence or citation count. Direct mechanisms span all six thin-plan gaps; editor workflow, renderer compatibility and short-script query policy are shallow."
+        },
+        "grade_scope": {
+          "original_integrated_scope_assessed": true,
+          "all_source_claims_verified": false,
+          "full_positive_permitted": false,
+          "numeric_or_composite_grade": null,
+          "why_no_composite_grade": "Categorical diagnostic axes only; no full positive or invented full numerical grade from the limited original-wiki verification.",
+          "early_screen_closure": false,
+          "scope_excludes": [
+            "pair comparison/winner",
+            "cost/latency/counters",
+            "candidate lifecycle/method eligibility",
+            "executed implementation readiness",
+            "scientific rescue or follow-up candidate"
+          ]
+        },
+        "unassessed_remainder": [
+          {
+            "id": "R1",
+            "exact_unassessed_claims": [
+              "S1-zim-format.md:4 / SOURCES.md S1: wiki last edited 2026-09-12 and its exact tie to libzim 9.3.0",
+              "S1-zim-format.md:10: approximate 1 MB cluster size on the fetched wiki page",
+              "S1-zim-format.md:12 / critique.md:19: namespaces hidden since 2021 and exact wiki instruction to HTTP-URL-decode before libzim",
+              "S1-zim-format.md:13: blanket older-reader compatibility with newer files"
+            ],
+            "reason": "Original wiki returned Anubis bot challenge on web and direct GET, including action=raw. Official pinned libzim/zim-tools verify associated header, checksum, codecs, split and path behavior but do not establish these precise historical/metadata/universal claims.",
+            "evidence": [
+              "P01-zim.json",
+              "P42-zim-challenge.json"
+            ],
+            "effect": "No full positive source grade; these claims remain unverified, not declared false."
+          },
+          {
+            "id": "R2",
+            "exact_unassessed_claims": [
+              "Authenticity/completeness of the candidate\u2019s original retrieval execution beyond the supplied authored notes"
+            ],
+            "reason": "Only authorized scientific inputs were read. Candidate lifecycle/usage/terminal receipts and raw orchestration records are excluded by user.",
+            "effect": "Content was independently checked; execution provenance is not inferred or scientifically scored as proven."
+          }
+        ],
+        "blinding_limits": {
+          "visible_method_clues": [
+            "I-ANCHOR-GLM/control paths and CONTROL final/critic headings reveal arm label",
+            "Authored final explicitly names research-v2 -> critic-v2 -> reviser-v2 same-family chain, S1-S8 and F1-F8",
+            "Final/critique/dispositions boundary prose mentions Goal/native receipt filenames and integration driver; receipt files were not opened",
+            "Allowed source maps contain retrieval times and stage naming; these were used only for source identities, not candidate duration or cost"
+          ],
+          "not_read": [
+            "counterpart artifact",
+            "other arm review or partial review",
+            "other grader",
+            "parent/root/historical analysis",
+            "candidate costs or duration/counter inputs",
+            "native Goal/terminal/lifecycle receipts",
+            "accounts/provider settings"
+          ],
+          "method_eligibility": "Excluded separate coordinator axis; no route, lifecycle or quiet-terminal eligibility conclusion drawn.",
+          "nested_delegation": false,
+          "reviewer_native_goal_created": false,
+          "identity": "Runtime supplied by harness: gpt-6.1-sol xhigh; requested codex_gmail and priority binding are not independently inspectable without excluded coordinator records."
+        },
+        "original_judgment": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/judgment.json",
+          "sha256": "1354c564478c4e0e6560dacba80203abbd3094439e152f130f12f107f4cf80d1"
+        },
+        "original_review": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/REVIEW.md",
+          "sha256": "467ffe10ed6525f8bd2bd8e009e14e599f05bb4ca9029757934a2156124ee2ca"
+        },
+        "material_defect_count": 7,
+        "material_defect_ids": [
+          "M1",
+          "M2",
+          "M3",
+          "M4",
+          "M5",
+          "M6",
+          "M7"
+        ]
+      },
+      "delivery": {
+        "required_final_files_nonempty": true,
+        "final": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/final.md",
+          "sha256": "8bba175ad93bcf08890607c07c074909afa5f00bd71a22b9a350bcf6999329c5"
+        },
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/freeze.json",
+          "sha256": "b7975e918fb3e6d715edc4a0cddc74dda6b6d3fca0dbd1e14e3d1a490da89307"
+        },
+        "no_scientific_positive_inferred": true
+      },
+      "native_lifecycle": {
+        "stage_states": [
+          {
+            "stage": "research-v2",
+            "actual_installed_native_status": "complete",
+            "receipt": {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/integration-state-terminal-001.json",
+              "sha256": "8c0de19eb1693c3e9583926eb16894d3a60d9f46633a69318afa331212df1958"
+            }
+          },
+          {
+            "stage": "critic-v2",
+            "actual_installed_native_status": "paused",
+            "receipt": {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/critic-v2/integration-state-expiry-terminal-001.json",
+              "sha256": "50b04260a436ff23f830dd403de6d48dd4ba371541a0d86519585251925ae592"
+            }
+          },
+          {
+            "stage": "reviser-v2",
+            "actual_installed_native_status": "paused",
+            "receipt": {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/reviser-v2/integration-state-expiry-terminal-001.json",
+              "sha256": "02684dad8f193d81b3a557b193e27457eea15cf4ae2583da2c1eef30ca8d2fdf"
+            }
+          }
+        ],
+        "all_stages_complete_observed": false,
+        "eligibility": "HOLD",
+        "integration": "actual installed zcode-acp0.65.1 GoalLoopDriver; vendor backend session/goal target not activated/claimed",
+        "candidate_earlier_running_receipts_retained": true,
+        "T3_turn_completion_not_native_completion_proof": true
+      },
+      "time": {
+        "cold_v2_original_dispatch_to_required_T3_terminal_seconds": 2705.171,
+        "aggregate_union_admitted_stage_intervals_seconds": 2613.485,
+        "between_stage_handoff_seconds": 91.686,
+        "wholearm_start_including_setup": "2026-10-07T18:50:04.842698Z",
+        "wholearm_deadline": "2026-10-07T19:35:04.842698Z",
+        "cold_start_including_setup_to_T3_terminal_seconds": 2705.389,
+        "stages": [
+          {
+            "stage": "research-v2",
+            "runs": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-research-v2:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "zcode",
+                "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+                "requestedAt": "2026-10-07T18:50:05.061Z",
+                "startedAt": "2026-10-07T18:50:09.464Z",
+                "completedAt": "2026-10-07T19:08:03.615Z"
+              }
+            ],
+            "first_requested_epoch": 1791399005.061,
+            "last_terminal_epoch": 1791400083.615,
+            "stage_span_seconds": 1078.5539999008179,
+            "union_admitted_run_intervals_seconds": 1078.5539999008179,
+            "settled": true
+          },
+          {
+            "stage": "critic-v2",
+            "runs": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-critic-v2:ordinal:1",
+                "ordinal": 1,
+                "status": "interrupted",
+                "providerInstanceId": "zcode",
+                "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+                "requestedAt": "2026-10-07T19:09:14.159Z",
+                "startedAt": "2026-10-07T19:09:20.794Z",
+                "completedAt": "2026-10-07T19:20:08.198Z"
+              }
+            ],
+            "first_requested_epoch": 1791400154.159,
+            "last_terminal_epoch": 1791400808.198,
+            "stage_span_seconds": 654.0390000343323,
+            "union_admitted_run_intervals_seconds": 654.0390000343323,
+            "settled": true
+          },
+          {
+            "stage": "reviser-v2",
+            "runs": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-control-reviser-v2:ordinal:1",
+                "ordinal": 1,
+                "status": "interrupted",
+                "providerInstanceId": "zcode",
+                "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+                "requestedAt": "2026-10-07T19:20:29.340Z",
+                "startedAt": "2026-10-07T19:20:34.306Z",
+                "completedAt": "2026-10-07T19:35:10.232Z"
+              }
+            ],
+            "first_requested_epoch": 1791400829.34,
+            "last_terminal_epoch": 1791401710.232,
+            "stage_span_seconds": 880.8920001983643,
+            "union_admitted_run_intervals_seconds": 880.8920001983643,
+            "settled": true
+          }
+        ],
+        "aggregate_pure_active_compute_seconds": null,
+        "queue_delay_seconds": null,
+        "source_operations_seconds": null,
+        "required_resource_release_at": null,
+        "measurement_limits": "Resumed treatment researcher requested intervals overlap; union counted once within same stage, not summed. Admitted spans include queue/startup/driver checks/delivery, not pure compute. T3 original start appears later than independently observed native creation for treatmentresearcher; raw projections retained, queue semantics unknown. Source setup before treatment original dispatch unknown; exact release timing not instrumented."
+      },
+      "timing_eligibility": "HOLD_NO_WITHIN_CLOCK_COMPLETE_LIFECYCLE",
+      "evaluation": {
+        "request": "2026-10-07T19:35:58.686Z",
+        "terminal": "2026-10-07T20:06:00.059Z",
+        "T3_status": "interrupted",
+        "inclusive_admitted_seconds": 1801.373,
+        "original_allowance_seconds": 1800,
+        "overrun_seconds": 1.373,
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/freeze.json",
+          "sha256": "1052535a2ca6bec7f6fd1528468c2093a3bdc14b95e10ba81afc2d4508a4ed99"
+        },
+        "binding": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/t3-binding-observation-001.json",
+          "sha256": "4fae8ed5551c9f2bd29095d3038f579225f0fc201a70aaef5223da9892488813"
+        },
+        "terminal_receipt": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/task-terminal-tool-receipt.json",
+          "sha256": "a686bebc21d79283d3cebb3022dc468d27bf62ac98016416dc5d3ed4359c3adb"
+        },
+        "final_review_check_completion": "UNKNOWN; interrupted at original1800s deadline after saved review/judgment/source evidence. Mechanical hashes/JSON validated separately, no scientific regrade"
+      },
+      "usage": {
+        "billing": null,
+        "input": null,
+        "cached_input": null,
+        "output": null,
+        "reasoning_subset": null,
+        "source_operations": null,
+        "note": "Exposed raw counters/notes retained; no inferred billing or cumulative sample double sums"
+      }
+    },
+    "treatment": {
+      "recipe": "research -> fresh critic authoring complete final",
+      "route_version": "v2 prospective common input/envelope; original v1 diagnosis retained",
+      "binding": {
+        "provider": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "thought": "max",
+        "mode": "yolo",
+        "dispatch": "general-role literal leading /goal short objective + assignment file"
+      },
+      "quality": {
+        "decision": null,
+        "review_status": "FULL_DECLARED_SCOPE_ASSESSED_WITH_MATERIAL_DEFECTS",
+        "scientific_full_positive": false,
+        "assessment_mode": null,
+        "failed_screen": false,
+        "source_correctness": {
+          "score": 2,
+          "label": "PARTIAL_WITH_MATERIAL_CONDITION_GAPS",
+          "rationale": "Core primary claims and pinned runtime observations are largely correct. Consequential durability, freshness, trust-recovery and rendering conditions are not closed; ICU/scan rationales overgeneralize evidence. This grade measures correctness and warranted inference, not source count."
+        },
+        "completeness": {
+          "score": 2,
+          "label": "PARTIAL",
+          "rationale": "All thin-plan areas are addressed, but the fix/test/release-history requirement and required final preservation are incomplete, and important offline/untrusted/power-loss governing conditions remain unspecified."
+        },
+        "planning_usefulness": {
+          "score": 3,
+          "label": "STRONG_BUT_QUALIFIED",
+          "rationale": "Versioned staging, coherent rollback, signed manifests, tokenizer choices, remote editorial gates and useful proposed validation materially improve the thin plan. They are actionable research directions, but the final is not a complete safe operating design."
+        },
+        "breadth": {
+          "score": 3,
+          "label": "BROAD_SUPPORTED_YIELD_WITH_RETENTION_GAPS",
+          "rationale": "Useful discoveries span packaging, authenticity, updates/recovery, multilingual search, untrusted rendering, accessibility and reader maintenance. Three mechanism comparisons are materially developed; search-engine and editorial alternatives are thinner. Named optional leads and uncertainty boundaries are lost from the final."
+        },
+        "grade_scope": {
+          "kind": "full declared source/science diagnostic assessment of the frozen authorized final, supplied critique, brief, thin plan and own-arm source evidence",
+          "entire_declared_scope_assessed": true,
+          "candidate_artifacts_modified": false,
+          "candidate_discovery_credit_from_reviewer_new_work": false,
+          "implementation_certification": false,
+          "lifecycle_method_eligibility_included": false,
+          "pairwise_winner_included": false,
+          "explanation": "Every original integrated obligation and museum product requirement was assessed; none was skipped after finding defects. Full scope of assessment does not mean candidate full satisfaction. No prior grader input was read; these are independent grades, not amended historical grades."
+        },
+        "unassessed_remainder": [],
+        "blinding_limits": {
+          "prohibited_material_read": false,
+          "not_read": [
+            "counterpart answer or source review",
+            "other grader/review/partial",
+            "parent/root/historical analyses",
+            "candidate costs/timing files",
+            "candidate native counters or lifecycle/route receipts",
+            "expected winner",
+            "unlisted research draft"
+          ],
+          "visible_authored_method_clues": [
+            "Arm/stage labels and same-family critique/finalizer framing appear in allowed final/critique filenames and text.",
+            "Allowed final lines 3 and 33 expose GoalLoopDriver/native-Goal terminology, a session identifier, deadline/late-write statements, running-status observations and round information. These clues were visible without opening receipts and were excluded from all scientific scores.",
+            "Allowed final line 33 states candidate billing unknown. No candidate usage/cost/timing input was read or compared."
+          ],
+          "limits": [
+            "This is author-output and arm-labelled blinding, not perfect method blinding.",
+            "Source maps carry authored retrieval/check provenance; current independent checks corroborate behavior, not the identity of historical executions.",
+            "Current moving-source retrieval is not a byte-level reconstruction of earlier content. Tagged component files and response hashes bound what was inspected."
+          ],
+          "lifecycle_eligibility": "Excluded independent coordinator axis; frozen/quiet/terminal disposition taken as dispatch premise, not scientifically graded or re-audited.",
+          "review_carrier": "Ordinary fresh T3 review task; no reviewer native Goal, handwritten Goal receipt, delegated critic or candidate followup."
+        },
+        "original_judgment": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/judgment.json",
+          "sha256": "41c00ec50540f0eaca7f556fbb2f8a350c2d48d1fea5be4d719085494d27f442"
+        },
+        "original_review": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/REVIEW.md",
+          "sha256": "ffed2432bd228a01a0f0ee70e692fb66cef0e97cd8e064533ea45d6709d9f3f1"
+        },
+        "material_defect_count": 7,
+        "material_defect_ids": [
+          "D01",
+          "D02",
+          "D03",
+          "D04",
+          "D05",
+          "D06",
+          "D07"
+        ]
+      },
+      "delivery": {
+        "required_final_files_nonempty": true,
+        "final": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/final.md",
+          "sha256": "17b5d64dd0baf92ae7ff8d8ddecb30e0b5ea6fbb2498fe8afece7ec769386c49"
+        },
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/freeze.json",
+          "sha256": "f30cc5ddcaa86ad02cf983a3f3469b287387b3c8ac4976b6d6e434ffd5220131"
+        },
+        "no_scientific_positive_inferred": true
+      },
+      "native_lifecycle": {
+        "stage_states": [
+          {
+            "stage": "research-v2",
+            "actual_installed_native_status": "paused",
+            "receipt": {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/integration-state-expiry-terminal-001.json",
+              "sha256": "2e06535666f7f3bba693125044d71de6ed0ff8baf59dfea746e5c38f8c5fcd25"
+            }
+          },
+          {
+            "stage": "critic-finalizer-v2",
+            "actual_installed_native_status": "impossible",
+            "receipt": {
+              "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/critic-finalizer-v2/integration-state-terminal-001.json",
+              "sha256": "d02bad93d898c5796671bc007487cfd71964f5de0464a9d9f234e0b8ef65f88b"
+            }
+          }
+        ],
+        "all_stages_complete_observed": false,
+        "eligibility": "HOLD",
+        "integration": "actual installed zcode-acp0.65.1 GoalLoopDriver; vendor backend session/goal target not activated/claimed",
+        "candidate_earlier_running_receipts_retained": true,
+        "T3_turn_completion_not_native_completion_proof": true
+      },
+      "time": {
+        "cold_v2_original_dispatch_to_required_T3_terminal_seconds": 3018.137,
+        "aggregate_union_admitted_stage_intervals_seconds": 2911.187,
+        "between_stage_handoff_seconds": 106.95,
+        "wholearm_start_including_setup": "2026-10-07T18:44:18.054Z",
+        "wholearm_deadline": "2026-10-07T19:29:18.054Z",
+        "cold_start_including_setup_to_T3_terminal_seconds": 3018.137,
+        "stages": [
+          {
+            "stage": "research-v2",
+            "runs": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:3",
+                "ordinal": 3,
+                "status": "interrupted",
+                "providerInstanceId": "zcode",
+                "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+                "requestedAt": "2026-10-07T18:55:57.438Z",
+                "startedAt": "2026-10-07T19:03:49.247Z",
+                "completedAt": "2026-10-07T19:12:51.885Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:2",
+                "ordinal": 2,
+                "status": "completed",
+                "providerInstanceId": "zcode",
+                "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+                "requestedAt": "2026-10-07T18:55:57.009Z",
+                "startedAt": "2026-10-07T19:03:44.540Z",
+                "completedAt": "2026-10-07T19:03:45.415Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "zcode",
+                "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+                "requestedAt": "2026-10-07T18:44:18.054Z",
+                "startedAt": "2026-10-07T18:48:42.144Z",
+                "completedAt": "2026-10-07T19:03:41.521Z"
+              }
+            ],
+            "first_requested_epoch": 1791398658.054,
+            "last_terminal_epoch": 1791400371.885,
+            "stage_span_seconds": 1713.8310000896454,
+            "union_admitted_run_intervals_seconds": 1713.8310000896454,
+            "settled": true
+          },
+          {
+            "stage": "critic-finalizer-v2",
+            "runs": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-critic-finalizer-v2:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "zcode",
+                "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+                "requestedAt": "2026-10-07T19:14:38.835Z",
+                "startedAt": "2026-10-07T19:14:43.551Z",
+                "completedAt": "2026-10-07T19:34:36.191Z"
+              }
+            ],
+            "first_requested_epoch": 1791400478.835,
+            "last_terminal_epoch": 1791401676.191,
+            "stage_span_seconds": 1197.3559999465942,
+            "union_admitted_run_intervals_seconds": 1197.3559999465942,
+            "settled": true
+          }
+        ],
+        "aggregate_pure_active_compute_seconds": null,
+        "queue_delay_seconds": null,
+        "source_operations_seconds": null,
+        "required_resource_release_at": null,
+        "measurement_limits": "Resumed treatment researcher requested intervals overlap; union counted once within same stage, not summed. Admitted spans include queue/startup/driver checks/delivery, not pure compute. T3 original start appears later than independently observed native creation for treatmentresearcher; raw projections retained, queue semantics unknown. Source setup before treatment original dispatch unknown; exact release timing not instrumented."
+      },
+      "timing_eligibility": "HOLD_NO_WITHIN_CLOCK_COMPLETE_LIFECYCLE",
+      "evaluation": {
+        "request": "2026-10-07T19:35:59.960Z",
+        "terminal": "2026-10-07T20:04:34.858Z",
+        "T3_status": "completed",
+        "inclusive_admitted_seconds": 1714.898,
+        "original_allowance_seconds": 1800,
+        "overrun_seconds": 0,
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/freeze.json",
+          "sha256": "11cd0d1a9a1e5314471f5dfdfd24bf8fffa8c3c87ad00ee7840010304a130fb7"
+        },
+        "binding": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/t3-binding-observation-001.json",
+          "sha256": "ee8b53c54871b6291b8861b67ac3141af39128278674a364665792c9f3c548b1"
+        },
+        "terminal_receipt": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/task-terminal-tool-receipt.json",
+          "sha256": "e745838629bc05e1306fe3c0ad252bb7cb84a5df24a72811565bf70fce0faa57"
+        },
+        "final_review_check_completion": "original output validation and quiet completed T3 delivery retained"
+      },
+      "usage": {
+        "billing": null,
+        "input": null,
+        "cached_input": null,
+        "output": null,
+        "reasoning_subset": null,
+        "source_operations": null,
+        "note": "Exposed raw counters/notes retained; no inferred billing or cumulative sample double sums"
+      }
+    }
+  },
+  "timing_eligibility": "HOLD",
+  "provenance_eligibility": {
+    "status": "HOLD_METHOD_ELIGIBILITY_DIAGNOSTIC_ONLY",
+    "exposure": "UNKNOWN_BEYOND_OBSERVED_INPUT_SCOPE",
+    "review_timing": "Both review tasks fresh after both scientific final arms quiet/frozen",
+    "no_filesystem_firewall_claim": true,
+    "limits": "Authorized authored finals/source maps expose arm/method/lifecycle/deadline clues; reviewer original disclosures exclude these from science scores. Treatment candidate /tmp scratch-source-map note outside declared write directory retained, not imported. Original firstMuse broader provenance limits and GLM installed-integration/vendor-target distinction remain independent axes.",
+    "candidate_feedback": "No reviewer findings supplied to candidates"
+  },
+  "economic_observation": {
+    "descriptive_control_over_treatment_terminal_latency_ratio": 0.8963,
+    "quality_preserving_speedup_established": false,
+    "twofold_objective_established": false,
+    "affordability_established": false,
+    "reason": "Both diagnostic original assessments NO_FULL_POSITIVE/false with seven material defects each; control retains unverified R1/R2 and incomplete final review check. No matched positive quality, complete native pipeline or within-ceiling lifecycle. Treatment terminaldelivery3018.137s vs control2705.171s, ratio0.8963 descriptive only; billingunknown. No bestof/source rescue.",
+    "single_account_recommendation": "No qualified candidate recipe established; one campaignfanout pair, normaluser singleproject execution unmeasured"
+  },
+  "failure_inclusive_v1_route_diagnosis": {
+    "requested_at": "2026-10-07T18:27:49.999Z",
+    "terminal_at": "2026-10-07T18:36:16.641Z",
+    "inclusive_admitted_seconds": 506.642,
+    "credit": "failure diagnosis retained separately; prospective v2 commonrouteenvelope, no bestof or modelcredit"
+  },
+  "preserved_failures": [
+    "treatment research-v1 BLOCKER",
+    "treatment research-v2 steers/pause/sameGoalresume queues/overrun and late draft",
+    "controlcritic originalreserve expiry with missing source/timing/complete receipt",
+    "treatmentfinalizer IMPOSSIBLE due late required delivery; no coordinator expiry stop before terminal notification",
+    "controlreviser nativePAUSED at wholearmexpiry despite saved final files",
+    "controlreview1800s expiryinterruption, R1/R2 and finalchecksUNKNOWN"
+  ],
+  "raw_metrics": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/metrics-I-ANCHOR-GLM.json",
+    "sha256": "ef2e7700843911d1a69b4dca0f713d86f7558a67b6b28fa35066e32bd208dbab"
+  },
+  "candidate_timing_receipts": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/glm-candidate-t3-timing-observations.json",
+    "sha256": "9f388d6df26f1961fe2825208c86bf7647a8062ef83d093ae7148f8c4b103065"
+  },
+  "review_timing_receipts": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/glm-review-t3-timing-observations.json",
+    "sha256": "0635dda5869d0dd2b64299bcc1b35f66d5cca77a0ea74de9ede8b41e36d3564e"
+  },
+  "clock_measurements": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/glm-clock-measurements.json",
+    "sha256": "e455cef956896893f0e78f20740f3f7949270ae32991f9b619d3da6d498e6440"
+  },
+  "scientific_judgment_authorship": "Original independent Sol6.1 xhigh reviewers only; coordinator records original axes/time arithmetic, no scored scientific answer or grade rewrite"
+}

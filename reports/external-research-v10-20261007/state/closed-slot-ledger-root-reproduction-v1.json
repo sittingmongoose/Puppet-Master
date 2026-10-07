@@ -1,0 +1,155 @@
+{
+  "schema": "ER10_ROOT_CLOSED_SLOT_LEDGER_REPRODUCTION_V1",
+  "observed_at": "2026-10-07T23:06:38.662427+00:00",
+  "pass": true,
+  "replayed_checks": 36,
+  "mapping_cells": 4845,
+  "unknown_source_fields": 598,
+  "whole_adapter_and_map_replay_identical": true,
+  "original_inputs_outputs_and_validation_not_rewritten": true,
+  "all_actual_fields_hashes_verified": true,
+  "campaign_terminal": false,
+  "count_mappings_incomplete_do_not_use_unknown_as_unassessed_or_failed": true,
+  "output_identities": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/ledger.py",
+      "bytes": 79044,
+      "sha256": "fc80ccc122eb37dcfc91465755d2323b7fa0dd925dc2330c68c103369956960c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/CLOSED_SLOT_LEDGER.json",
+      "bytes": 4416988,
+      "sha256": "bc352125475e0cda85e621b521b2d9d2755796fde6c2577c98c3d11a7cf11b53"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/FIELD_MAP.json",
+      "bytes": 2054698,
+      "sha256": "7a13495a1af60293d4d09818a9ac718983aa95f66cf7aa680b266ecdf1542d2a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/INPUT_IDENTITIES.json",
+      "bytes": 216687,
+      "sha256": "8ba972e9584e24189e0bb7ced56e172c9db1cb787a40f649815a9e9d20c4538d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/validation.json",
+      "bytes": 245763,
+      "sha256": "fa4f28158930ab14c42caff12f5b7e3d5d9080567829098cdb0c3f073a2005a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/README.md",
+      "bytes": 3914,
+      "sha256": "704b80ab48604a067d894560b8daa03ccd44585055c816f3239332d0c9853671"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/REPORTING_NOTES.md",
+      "bytes": 12090,
+      "sha256": "9060a6c871915ff490bc664eea511c142ab596d585b6f65420fc6e33995bb7de"
+    }
+  ],
+  "aggregate_counts": {
+    "candidate_final_delivery_arms": {
+      "denominator": 80,
+      "known_true": 68,
+      "known_false": 2,
+      "unknown": 10
+    },
+    "delivered_assessment_arms": {
+      "denominator": 80,
+      "known_true": 46,
+      "known_false": 3,
+      "unknown": 31
+    },
+    "full_scientific_coverage_arms": {
+      "denominator": 80,
+      "known_true": 53,
+      "known_false": 5,
+      "unknown": 22
+    },
+    "full_declared_source_coverage_arms": {
+      "denominator": 80,
+      "known_true": 46,
+      "known_false": 8,
+      "unknown": 26
+    },
+    "native_qualified_arms": {
+      "denominator": 80,
+      "known_true": 8,
+      "known_false": 2,
+      "unknown": 70
+    },
+    "provenance_eligible_arms": {
+      "denominator": 80,
+      "known_true": 0,
+      "known_false": 4,
+      "unknown": 76
+    },
+    "time_eligible_arms": {
+      "denominator": 80,
+      "known_true": 22,
+      "known_false": 4,
+      "unknown": 54
+    },
+    "both_candidate_finals_slots": {
+      "denominator": 40,
+      "known_true": 33,
+      "known_false": 2,
+      "unknown": 5
+    },
+    "both_arm_full_scientific_coverage_slots": {
+      "denominator": 40,
+      "known_true": 23,
+      "known_false": 5,
+      "unknown": 12
+    },
+    "both_arm_full_declared_source_coverage_slots": {
+      "denominator": 40,
+      "known_true": 18,
+      "known_false": 7,
+      "unknown": 15
+    },
+    "both_delivered_assessments_slots": {
+      "denominator": 40,
+      "known_true": 21,
+      "known_false": 3,
+      "unknown": 16
+    },
+    "both_nativequalified_slots": {
+      "denominator": 40,
+      "known_true": 4,
+      "known_false": 2,
+      "unknown": 34
+    },
+    "both_provenance_timeeligible_slots": {
+      "denominator": 40,
+      "known_true": 0,
+      "known_false": 5,
+      "unknown": 35
+    },
+    "slots_with_any_candidate_final": {
+      "denominator": 40,
+      "known_true": 35,
+      "known_false": 0,
+      "unknown": 5
+    },
+    "paired_scientific_assessed_slots": {
+      "denominator": 40,
+      "known_true": 32,
+      "known_false": 3,
+      "unknown": 5
+    },
+    "qualified_quality_preserving_win_slots": {
+      "denominator": 40,
+      "known_true": 0,
+      "known_false": 14,
+      "unknown": 26
+    },
+    "delivered_pair_assessments_slots": {
+      "denominator": 40,
+      "known_true": 21,
+      "known_false": 3,
+      "unknown": 16
+    }
+  },
+  "scientific_review": false
+}

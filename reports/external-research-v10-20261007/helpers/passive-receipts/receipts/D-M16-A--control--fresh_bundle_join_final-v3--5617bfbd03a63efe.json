@@ -1,0 +1,439 @@
+{
+  "schema": "pm.er10.passive-receipts.v1",
+  "stage": "D-M16-A/control/fresh_bundle_join_final-v3",
+  "observed_at_utc": "2026-10-07T22:16:05.142236+00:00",
+  "thread_id": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3",
+  "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/dispatch.json",
+    "type": "stage_dispatch",
+    "version": null,
+    "record_id": null,
+    "call_id": null,
+    "time": null,
+    "sha256": "2817369b3e6f385de0036df8a2343a274b3f4a2517c09a4ebf13887f5788e198"
+  },
+  "authority_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/checkpoint.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "b1ee339af21ab8871e2a5ad36dd2d00e839fdce91597505b0ecc6252bdaa6255"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-supervisor.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "e6b0a6c8bd943dde459a45c9f4269066b4306cfe86f64833772990a65e11324e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-supervisor.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "ad6b1c10f84bce1facbfbd102a8cad531ebf42ddf880b6ccc899d0e88f5a35dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "87071226c3e1c6a8be1c6c705a83c8a149ce1da1bb9af57e9209415ecbfffce8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "bf085db8938760546aec5235c5252bd0ad4ee616bb790be3813342b6317d9565"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "7be93836914019d3fef527c2a1753f9adca5a40f388d23156feb6ff83011085f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "c30915f0d89d3a235be40bac5d6605fc44f48085674e14cc90bfa9f41544d069"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "f7085c27bc7f13f8e5930db22cad0a9a0da65d9cc05944c99ef936a842fb08f4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "34922d63bb33b71158b8411a6ce566f1e55062d30ec26f0c0254c1dbe4963dd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "0f338b983f8437822834d85802f3722bd5af8303958f6d6da9c8e1f4f4c922a4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "6d365ea7680ccdf9b30ac8db3a8906671bf6397cfa8eb163cf5e0cd23c33dd68"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "bf4509a1dcf0abbcecc114d2610f3e488124d4a015bd75bbcb0ab1c8d02d6a8d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "bfedb483e6d0a10faa6f2a7ddf22da4f56def16ad18dbffb3f0d260c75afce12"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "3d7642135b128c332dddc75f55bfa658ac5451d854b91563cf5a21457025e48e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "bb96d2c7efe44da09891f9727f982bf6d17b17ec3d436ca5cd569c382a6cb328"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "3c19a8bafbd890d0ced4739100474d1f4fc1fabdae2dcb1e44a2349971554d59"
+    }
+  ],
+  "binding": [
+    {
+      "id": "provider-thread:provider:acpRegistry:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A04eb9884-8c48-4dc5-9baf-df6c6433f168%25253Adelegate-task%25253Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3%3Aordinal%3A1",
+      "driver": "acpRegistry",
+      "providerInstanceId": "zcode",
+      "providerSessionId": "provider-session:provider-instance:zcode:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3:2d9160ca-fc24-49bc-854e-bee94cfe7824",
+      "nativeThreadRef": {
+        "driver": "acpRegistry",
+        "nativeId": "a2c1ea80-420e-4bb3-a6df-47cdcde2da2d",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T22:15:29.993Z",
+      "contextUsage": {
+        "usedTokens": 102821,
+        "maxTokens": 1000000
+      },
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:acpRegistry:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A04eb9884-8c48-4dc5-9baf-df6c6433f168%25253Adelegate-task%25253Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T22:15:29.993Z",
+        "sha256": "90fc4f30e356a4719f1f87e92802ad659ebecaadfa1da56878bb64c7348f4016"
+      },
+      "provider_session": {
+        "id": "provider-session:provider-instance:zcode:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3:2d9160ca-fc24-49bc-854e-bee94cfe7824",
+        "driver": "acpRegistry",
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "status": "ready",
+        "createdAt": "2026-10-07T21:59:05.695Z",
+        "updatedAt": "2026-10-07T21:59:05.695Z"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_99e81f51-17a6-4ead-8285-58a7285b8365/state.json",
+        "type": "glm_installed_integration_driver_state",
+        "version": "zcode-acp-0.65.1-GoalLoopDriver",
+        "record_id": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_99e81f51-17a6-4ead-8285-58a7285b8365/state.json",
+        "call_id": null,
+        "time": 1791411327633,
+        "sha256": "b22d37bf88a2a8a1f8073951e62a7e8d2acf155d649fa6d49a3d7bd31e3dacbf"
+      },
+      "tool": null,
+      "native_response": {
+        "objective_sha256": "90c1a6f27eb7b8c1ee21905133f39fbc23bec0d83032dc0b5a464b3a5c8ce72a",
+        "status": "complete",
+        "rounds": 4,
+        "tickets": [
+          {
+            "id": "t1",
+            "title_sha256": "61f8f77b72ed3c64a069d378b1bdaea99e359ca334107b2eb5692d2f72aab934",
+            "acceptance_sha256": "2c2a775dec39b6569aeb998e0d6399091e1685c6c4269ca1b18ca1b50c4bea0a",
+            "status": "done"
+          },
+          {
+            "id": "t2",
+            "title_sha256": "53e739d7b09602ac0b782069f29ef47b8e8be0a4ae9d9dd86217e69258feab7a",
+            "acceptance_sha256": "b002a26d5851b83b085c1452525c4f72d34c378e4ce02f1d575e162dd6c6e313",
+            "status": "done"
+          },
+          {
+            "id": "t3",
+            "title_sha256": "8f7a58e3139ed02d57c94413d741972dcf70479c423894e444a5ad75684668fc",
+            "acceptance_sha256": "4a096e6cc214154f6e871160c0866aefb64644133ad33659bfb474a7598eec39",
+            "status": "done"
+          },
+          {
+            "id": "t4",
+            "title_sha256": "2e8b9ef7768bf363c0972c93a0d3b6e06978e95b5ea9b414ca7f18b38d7f1687",
+            "acceptance_sha256": "1421f088c5c091fbdf1e02d391f010c1c70a54c05f13cb7f5644d9af35be9658",
+            "status": "done"
+          }
+        ],
+        "handoffFresh": false,
+        "createdAt": 1791410352922,
+        "updatedAt": 1791411327633,
+        "endedReason": "all tickets done"
+      },
+      "response_sha256": "a25598ddaaee0eada5eb2439ed559bf8f9812eb173e32797f5188570c4dbaa1a",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged",
+      "binding": {
+        "backend_session_directory": "sess_99e81f51-17a6-4ead-8285-58a7285b8365",
+        "exact_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/assignment.md",
+        "objective_sha256": "90c1a6f27eb7b8c1ee21905133f39fbc23bec0d83032dc0b5a464b3a5c8ce72a",
+        "association": "exact unique assignment objective; ACP alias/backend mapping independently unknown",
+        "t3_thread_id": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3",
+        "acp_refs": [
+          "a2c1ea80-420e-4bb3-a6df-47cdcde2da2d"
+        ]
+      }
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/integration-state-terminal.json",
+        "type": "glm_installed_integration_driver_state",
+        "version": "zcode-acp-0.65.1-GoalLoopDriver",
+        "record_id": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_99e81f51-17a6-4ead-8285-58a7285b8365/state.json",
+        "call_id": null,
+        "time": "2026-10-07T22:16:04.911527+00:00",
+        "sha256": "6038504ee9f94f12d2759eaa1142e1e9eb08f69a965432bc64798caca9c30946"
+      },
+      "tool": null,
+      "native_response": {
+        "objective_sha256": "90c1a6f27eb7b8c1ee21905133f39fbc23bec0d83032dc0b5a464b3a5c8ce72a",
+        "status": "complete",
+        "rounds": 4,
+        "tickets": [
+          {
+            "id": "t1",
+            "title_sha256": "61f8f77b72ed3c64a069d378b1bdaea99e359ca334107b2eb5692d2f72aab934",
+            "acceptance_sha256": "2c2a775dec39b6569aeb998e0d6399091e1685c6c4269ca1b18ca1b50c4bea0a",
+            "status": "done"
+          },
+          {
+            "id": "t2",
+            "title_sha256": "53e739d7b09602ac0b782069f29ef47b8e8be0a4ae9d9dd86217e69258feab7a",
+            "acceptance_sha256": "b002a26d5851b83b085c1452525c4f72d34c378e4ce02f1d575e162dd6c6e313",
+            "status": "done"
+          },
+          {
+            "id": "t3",
+            "title_sha256": "8f7a58e3139ed02d57c94413d741972dcf70479c423894e444a5ad75684668fc",
+            "acceptance_sha256": "4a096e6cc214154f6e871160c0866aefb64644133ad33659bfb474a7598eec39",
+            "status": "done"
+          },
+          {
+            "id": "t4",
+            "title_sha256": "2e8b9ef7768bf363c0972c93a0d3b6e06978e95b5ea9b414ca7f18b38d7f1687",
+            "acceptance_sha256": "1421f088c5c091fbdf1e02d391f010c1c70a54c05f13cb7f5644d9af35be9658",
+            "status": "done"
+          }
+        ],
+        "handoffFresh": false,
+        "createdAt": 1791410352922,
+        "updatedAt": 1791411327633,
+        "endedReason": "all tickets done"
+      },
+      "response_sha256": "a25598ddaaee0eada5eb2439ed559bf8f9812eb173e32797f5188570c4dbaa1a",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged",
+      "binding": {
+        "backend_session_directory": "sess_99e81f51-17a6-4ead-8285-58a7285b8365",
+        "exact_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/assignment.md",
+        "objective_sha256": "90c1a6f27eb7b8c1ee21905133f39fbc23bec0d83032dc0b5a464b3a5c8ce72a",
+        "association": "exact unique assignment objective; ACP alias/backend mapping independently unknown",
+        "t3_thread_id": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3",
+        "acp_refs": [
+          "a2c1ea80-420e-4bb3-a6df-47cdcde2da2d"
+        ]
+      }
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/integration-state-active.json",
+        "type": "glm_installed_integration_driver_state",
+        "version": "zcode-acp-0.65.1-GoalLoopDriver",
+        "record_id": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_99e81f51-17a6-4ead-8285-58a7285b8365/state.json",
+        "call_id": null,
+        "time": "2026-10-07T22:06:00.383545+00:00",
+        "sha256": "e1e34b7bbdcd07a9816d950799f20b3d0f98b5409f0469e47f06e5d51d695b4d"
+      },
+      "tool": null,
+      "native_response": {
+        "objective_sha256": "90c1a6f27eb7b8c1ee21905133f39fbc23bec0d83032dc0b5a464b3a5c8ce72a",
+        "status": "running",
+        "rounds": 1,
+        "tickets": [
+          {
+            "id": "t1",
+            "title_sha256": "61f8f77b72ed3c64a069d378b1bdaea99e359ca334107b2eb5692d2f72aab934",
+            "acceptance_sha256": "2c2a775dec39b6569aeb998e0d6399091e1685c6c4269ca1b18ca1b50c4bea0a",
+            "status": "done"
+          },
+          {
+            "id": "t2",
+            "title_sha256": "53e739d7b09602ac0b782069f29ef47b8e8be0a4ae9d9dd86217e69258feab7a",
+            "acceptance_sha256": "b002a26d5851b83b085c1452525c4f72d34c378e4ce02f1d575e162dd6c6e313",
+            "status": "pending"
+          },
+          {
+            "id": "t3",
+            "title_sha256": "8f7a58e3139ed02d57c94413d741972dcf70479c423894e444a5ad75684668fc",
+            "acceptance_sha256": "4a096e6cc214154f6e871160c0866aefb64644133ad33659bfb474a7598eec39",
+            "status": "pending"
+          },
+          {
+            "id": "t4",
+            "title_sha256": "2e8b9ef7768bf363c0972c93a0d3b6e06978e95b5ea9b414ca7f18b38d7f1687",
+            "acceptance_sha256": "1421f088c5c091fbdf1e02d391f010c1c70a54c05f13cb7f5644d9af35be9658",
+            "status": "pending"
+          }
+        ],
+        "handoffFresh": false,
+        "createdAt": 1791410352922,
+        "updatedAt": 1791410544773
+      },
+      "response_sha256": "c11773231407c080a817f32c6438282919975654dc753e3e2a9c663bb5ded053",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged",
+      "binding": {
+        "backend_session_directory": "sess_99e81f51-17a6-4ead-8285-58a7285b8365",
+        "exact_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/assignment.md",
+        "objective_sha256": "90c1a6f27eb7b8c1ee21905133f39fbc23bec0d83032dc0b5a464b3a5c8ce72a",
+        "association": "exact unique assignment objective; ACP alias/backend mapping independently unknown",
+        "t3_thread_id": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-fresh_bundle_join_final-v3",
+        "acp_refs": [
+          "a2c1ea80-420e-4bb3-a6df-47cdcde2da2d"
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Installed integration driver state is not a vendor backend target. No inferred active/terminal state from T3 completed turns. Root owns continuation repair.",
+    "No generated/cached/provider billing fields exposed by selected sources; bounded absence only. No additional quota probes.",
+    "No continuous Goal reasoning certification. Fresh native state plus binding is an observed state, never a replacement create receipt.",
+    "SQLite record hashes identify observed payloads, not immutable whole DB snapshots. Source can change immediately after observation.",
+    "File access names/hashes not harvested on this route; scope audit remains incomplete_unknown."
+  ],
+  "usage": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning_subset": null,
+    "provider_billing": null,
+    "semantics": "Unknown unless explicitly exposed. Native cumulative Goal/context counters remain in their original states; no sums or billing estimates."
+  },
+  "scope_audit": "incomplete_unknown; advisory map is not a filesystem firewall",
+  "thread_metadata": {
+    "modelSelection": {
+      "instanceId": "zcode",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": [
+        {
+          "id": "thought",
+          "value": "max"
+        },
+        {
+          "id": "mode",
+          "value": "yolo"
+        }
+      ]
+    },
+    "providerInstanceId": "zcode",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "lineage": {
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort4-v1",
+      "relationshipToParent": "subagent",
+      "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+    }
+  },
+  "parent_in_campaign_authority": true,
+  "native_timestamp_units": {
+    "*_ms": "milliseconds_since_unix_epoch",
+    "createdAt/updatedAt_in_GLM_driver": "milliseconds_since_unix_epoch",
+    "Codex_goal_createdAt/updatedAt": "seconds_since_unix_epoch",
+    "T3_source_times": "ISO-8601; native values preserved"
+  },
+  "lifecycle_observations": {
+    "states_in_source_order": [
+      "complete",
+      "complete",
+      "running"
+    ],
+    "active_get_response": false,
+    "terminal_get_response": false,
+    "meaning": "Observed source fields only; no order adjudication or inferred lifecycle transition."
+  },
+  "capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  }
+}

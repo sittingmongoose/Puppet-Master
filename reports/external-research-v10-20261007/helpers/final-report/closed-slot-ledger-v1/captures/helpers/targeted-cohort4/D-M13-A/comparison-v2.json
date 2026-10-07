@@ -1,0 +1,110 @@
+{
+  "case_id": "D-M13-A",
+  "matched_pair_version": 2,
+  "arms": {
+    "control": {
+      "actual_T3_requestedAt": "2026-10-07T19:25:46.266Z",
+      "actual_T3_terminalAt": "2026-10-07T19:30:09.225Z",
+      "request_to_terminal_seconds": 262.959,
+      "aggregate_occupied_seconds": 219.95,
+      "queue_seconds": 4.537,
+      "parent_interstage_gaps_seconds": 38.472000000000016,
+      "stages": 2,
+      "native_start_firstfinding_output_terminal_release": "Exact lifecycle receipts/artifact timestamps preserved; first finding time unknown where not exposed",
+      "source_operations": "Candidate authored timings/source manifests retained; no unexposed calls inferred",
+      "native_input_cache_generated_billing": {
+        "input": null,
+        "cached_input": null,
+        "generated": null,
+        "billing": null
+      },
+      "native_goal_counters": "Exact observed counters retained, distinct from generated/billing; repeated snapshots not summed",
+      "prospective_first_dispatch_to_terminal_seconds": 281.040446,
+      "source_grade": "FAIL"
+    },
+    "treatment": {
+      "actual_T3_requestedAt": "2026-10-07T19:30:38.930Z",
+      "actual_T3_terminalAt": "2026-10-07T19:39:26.416Z",
+      "request_to_terminal_seconds": 527.486,
+      "aggregate_occupied_seconds": 389.382,
+      "queue_seconds": 6.8309999999999995,
+      "parent_interstage_gaps_seconds": 131.273,
+      "stages": 4,
+      "native_start_firstfinding_output_terminal_release": "Exact lifecycle receipts/artifact timestamps preserved; first finding time unknown where not exposed",
+      "source_operations": "Candidate authored timings/source manifests retained; no unexposed calls inferred",
+      "native_input_cache_generated_billing": {
+        "input": null,
+        "cached_input": null,
+        "generated": null,
+        "billing": null
+      },
+      "native_goal_counters": "Exact observed counters retained, distinct from generated/billing; repeated snapshots not summed",
+      "prospective_first_dispatch_to_terminal_seconds": 543.217677,
+      "source_grade": "FAIL"
+    }
+  },
+  "reviews": {
+    "treatment": {
+      "version": "v2",
+      "grade": "FAIL",
+      "full_scope": true,
+      "assessment_extent": {
+        "label": "FULL_DECLARED_SCOPE_STATIC_PRIMARY_SOURCE_REVIEW",
+        "product_claims_checked": "Every material finding (final lines 9,11,13,15,17,19), source identity, optional/uncertainty statement and proposed-versus-executed distinction; actual implementation and assertion bodies, not citations/manifest/exits alone.",
+        "chain": "Issue -> PR merge SHA -> substantive implementation/filter/caller patch -> actual added regression assertions -> matching selected-release implementation/docs/tests, supplemented by selected-release shutil caller bytes. Later differing code is governed by released source; no invented exact follow-up release mapping.",
+        "all_six_axes_assessed": true,
+        "all_six_obligations_assessed": true,
+        "runtime_execution": "None; neither CPython nor importer test execution required/claimed for this source review.",
+        "predecessor_comparison": "Unavailable and deliberately not performed: only frozen exact final authorized.",
+        "prohibited_provenance_check": "Historical candidate sourceoperations/no-capture claims cannot be independently verified; content-level distinction assessed, not certified activity."
+      },
+      "unassessed_remainder": [],
+      "material_defects": 4,
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/review.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/freeze.json",
+      "immutable": true,
+      "lifecycle": "COMPLETED_QUIET_SETTLED",
+      "actual_T3_timing": {
+        "requestedAt": "2026-10-07T19:40:41.557Z",
+        "startedAt": "2026-10-07T19:40:45.854Z",
+        "completedAt": "2026-10-07T19:47:19.070Z",
+        "occupied_seconds": 393.216,
+        "queue_seconds": 4.297
+      }
+    },
+    "control": {
+      "version": "v2",
+      "grade": "FAIL",
+      "assessment_extent": "FULL_DECLARED_SCOPE_PRIMARY_SOURCE_REVIEW",
+      "unassessed_remainder": [],
+      "declared_defects": 6,
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/review.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/freeze.json",
+      "immutable": true,
+      "delivery_status": "LATE_OUT_OF_BOUND",
+      "deadline_compliance": "FAILED",
+      "valid_within_requested_bound": false,
+      "assessment_extent_at_deadline": "Primary-source inspections were completed before the deadline, but assessment/report writing was unfinished at expiry. Artifacts were finalized outside both the original deadline and 60-second grace; no reset.",
+      "unassessed_remainder_at_deadline": [
+        "Assessment/report finalization and required delivery were incomplete."
+      ],
+      "lifecycle": "COMPLETED_QUIET_SETTLED_OUT_OF_BOUND",
+      "actual_T3_timing": {
+        "requestedAt": "2026-10-07T19:40:30.890Z",
+        "startedAt": "2026-10-07T19:40:31.627Z",
+        "completedAt": "2026-10-07T19:57:26.101Z",
+        "occupied_seconds": 1014.474,
+        "queue_seconds": 0.737
+      }
+    }
+  },
+  "assessment": {
+    "quality_preserving_speedup_established": false,
+    "equal_quality_established": false,
+    "conclusion": "No quality-preserving win: both source reviews FAIL with differing defect identities/conditions. Control review delivered out of bound; late fullscope grade and partial deadlineextent both retained immutable. Treatment slower in observed onepair candidate latency; descriptive only."
+  },
+  "all_candidates_and_reviewers_quiet": true,
+  "candidate_all_native_complete": true,
+  "single_pair_only": true,
+  "reviews_are_advisory_maps_not_filesystem_firewall": true
+}

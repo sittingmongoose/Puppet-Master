@@ -1,0 +1,1237 @@
+{
+  "record_at": "2026-10-07T21:55:22.472387+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-04-treatment-independent-review-v2:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:42:40.024Z",
+    "startedAt": "2026-10-07T21:42:42.604Z",
+    "completedAt": "2026-10-07T21:54:33.492Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "schema_version": 1,
+    "case_id": "I-METHOD-04",
+    "review_target": "treatment/reviser-v2",
+    "source_judgment": "PASS_WITH_LIMITATIONS",
+    "rationale": "All declared scientific scope assessed; no established material false claim or required-scope omission. Unreported BagIt writer/profile limits, underspecified historical test conditions and minor dating/option wording prevent FULL_PASS.",
+    "assessment_coverage_complete": true,
+    "scope_frozen_before_judgment": "Original brief O1-O6 and original P1-P6 decisions; final owner choices and complete semantic/rendered content.",
+    "count_definition": "complete means inventory size; assessed means review completed, not that a candidate assertion was proven. Groups overlap; only obligations_total_excluding_rollups sums O1-O6 + 35 atomic plan decisions + 12 owner decisions.",
+    "counts": {
+      "six_axes": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "O1_O6": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "plan_sections": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "atomic_plan_decisions": {
+        "complete": 35,
+        "assessed": 35,
+        "unassessed": 0
+      },
+      "owner_decisions": {
+        "complete": 12,
+        "assessed": 12,
+        "unassessed": 0
+      },
+      "obligations_total_excluding_rollups": {
+        "complete": 53,
+        "assessed": 53,
+        "unassessed": 0
+      },
+      "consequential_checks": {
+        "complete": 29,
+        "assessed": 29,
+        "unassessed": 0
+      },
+      "final_records": {
+        "complete": 9,
+        "assessed": 9,
+        "unassessed": 0
+      },
+      "final_record_fields": {
+        "complete": 90,
+        "assessed": 90,
+        "unassessed": 0
+      },
+      "final_document_fields": {
+        "complete": 11,
+        "assessed": 11,
+        "unassessed": 0
+      },
+      "final_recursive_semantic_leaves": {
+        "complete": 830,
+        "assessed": 830,
+        "unassessed": 0
+      },
+      "rendered_views": {
+        "complete": 9,
+        "assessed": 9,
+        "unassessed": 0
+      },
+      "criticism_dispositions": {
+        "complete": 9,
+        "assessed": 9,
+        "unassessed": 0
+      },
+      "original_cited_sources": {
+        "complete": 16,
+        "assessed": 16,
+        "unassessed": 0
+      }
+    },
+    "material_error_count": 0,
+    "nonmaterial_error_count": 1,
+    "material_defects": [],
+    "limitations": [
+      "L1_BAGIT_PROFILE",
+      "L2_HISTORY_TEST_CONDITIONS",
+      "L3_OPTION_WORDING",
+      "L4_CASE_STUDY_DATE"
+    ],
+    "unassessed_obligations": [],
+    "unassessed_consequential_findings": [],
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Original brief and all plan/owner obligations",
+        "status": "ASSESSED_COMPLETE",
+        "result": "PASS_WITH_LIMITATIONS"
+      },
+      {
+        "axis": 2,
+        "name": "Consequential claims, definitions, versions and applicability",
+        "status": "ASSESSED_COMPLETE",
+        "result": "PASS_WITH_LIMITATIONS"
+      },
+      {
+        "axis": 3,
+        "name": "Bounded discovery, mechanisms, alternatives, negatives and opportunities",
+        "status": "ASSESSED_COMPLETE",
+        "result": "PASS"
+      },
+      {
+        "axis": 4,
+        "name": "Incorrect rejection/correction or false already-covered disposition",
+        "status": "ASSESSED_COMPLETE",
+        "result": "PASS"
+      },
+      {
+        "axis": 5,
+        "name": "Research-to-critique-to-final preservation, options and uncertainty",
+        "status": "ASSESSED_COMPLETE",
+        "result": "PASS_WITH_LIMITATIONS"
+      },
+      {
+        "axis": 6,
+        "name": "Proposed versus executed validation and witness applicability",
+        "status": "ASSESSED_COMPLETE",
+        "result": "PASS"
+      }
+    ],
+    "obligations": {
+      "O1": {
+        "status": "ASSESSED",
+        "result": "SATISFIED",
+        "assessment": "Brief-led discovery: institutional ingest analogy, FFprobe/FFmpeg, BWF MetaEdit, BagIt and PREMIS; useful negative and optional findings; no exhaustive opportunity claim."
+      },
+      "O2": {
+        "status": "ASSESSED",
+        "result": "SATISFIED_WITH_LIMITATIONS",
+        "assessment": "Immutable bagit-python code, governing definitions and callers support the authored mechanisms; unreported 0.97 writer/profile and conformance limits constrain the 1.0 reference candidate."
+      },
+      "O3": {
+        "status": "ASSESSED",
+        "result": "SATISFIED_WITH_LIMITATIONS",
+        "assessment": "Real #152 report, PR #184, merge, released tag and inspected tests establish history; exact automated regression absent and proposed test environment is underspecified."
+      },
+      "O4": {
+        "status": "ASSESSED",
+        "result": "SATISFIED",
+        "assessment": "All six sections and all 35 atomic decisions compared; already-covered claims stay within supplied P1-P6."
+      },
+      "O5": {
+        "status": "ASSESSED",
+        "result": "SATISFIED_SCIENTIFIC_CONTENT",
+        "assessment": "Admitted substantive critique independently checked and all nine final criticism dispositions assessed; family/dispatch provenance is host-only under review instructions."
+      },
+      "O6": {
+        "status": "ASSESSED",
+        "result": "SATISFIED_WITH_LIMITATIONS",
+        "assessment": "Coherent complete proposed replacement, options, rejections, validation and uncertainty; minor optional-record/digest wording ambiguity, no build or validation claim."
+      }
+    },
+    "plan": {
+      "P1": {
+        "status": "ASSESSED",
+        "result": "SATISFIED",
+        "original_plan_line": 7,
+        "final_json_pointer": "/findings/4/conditions/P1",
+        "decisions": [
+          {
+            "id": "P1.1",
+            "obligation": "Local desktop ingest of selected WAV/BWF, FLAC and MP3 from removable media",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P1.2",
+            "obligation": "Copy originals to ingest area",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P1.3",
+            "obligation": "Compute fixity",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P1.4",
+            "obligation": "Preserve filenames and relative folder structure",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P1.5",
+            "obligation": "Do not edit source media",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          }
+        ]
+      },
+      "P2": {
+        "status": "ASSESSED",
+        "result": "SATISFIED",
+        "original_plan_line": 11,
+        "final_json_pointer": "/findings/4/conditions/P2",
+        "decisions": [
+          {
+            "id": "P2.1",
+            "obligation": "Display duration",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P2.2",
+            "obligation": "Display channels",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P2.3",
+            "obligation": "Display encoding",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P2.4",
+            "obligation": "Display observed embedded metadata",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P2.5",
+            "obligation": "User-entered accession notes",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P2.6",
+            "obligation": "Waveform/listen spot inspection",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P2.7",
+            "obligation": "Keep observations separate from corrections",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          }
+        ]
+      },
+      "P3": {
+        "status": "ASSESSED",
+        "result": "SATISFIED",
+        "original_plan_line": 15,
+        "final_json_pointer": "/findings/4/conditions/P3",
+        "decisions": [
+          {
+            "id": "P3.1",
+            "obligation": "Explicit user request for listening derivative",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P3.2",
+            "obligation": "Choose settings after preview",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P3.3",
+            "obligation": "Original audio remains preservation source",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P3.4",
+            "obligation": "Visible failed/interrupted transformation disposition",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          }
+        ]
+      },
+      "P4": {
+        "status": "ASSESSED",
+        "result": "SATISFIED_WITH_LIMITATIONS",
+        "original_plan_line": 19,
+        "final_json_pointer": "/findings/4/conditions/P4",
+        "decisions": [
+          {
+            "id": "P4.1",
+            "obligation": "Package originals",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P4.2",
+            "obligation": "Derivative references",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P4.3",
+            "obligation": "Provenance",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P4.4",
+            "obligation": "Fixity records",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P4.5",
+            "obligation": "Transformation settings and tool version",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P4.6",
+            "obligation": "Reopen makes missing/changed content visible",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          }
+        ]
+      },
+      "P5": {
+        "status": "ASSESSED",
+        "result": "SATISFIED_WITH_LIMITATIONS",
+        "original_plan_line": 23,
+        "final_json_pointer": "/findings/4/conditions/P5",
+        "decisions": [
+          {
+            "id": "P5.1",
+            "obligation": "Metadata parser undecided",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P5.2",
+            "obligation": "Decoder/encoder undecided",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P5.3",
+            "obligation": "Package serializer undecided",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P5.4",
+            "obligation": "Playback component undecided",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P5.5",
+            "obligation": "Offline Windows or Linux",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P5.6",
+            "obligation": "No interview upload",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P5.7",
+            "obligation": "No embedded metadata changes for display",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          }
+        ]
+      },
+      "P6": {
+        "status": "ASSESSED",
+        "result": "SATISFIED",
+        "original_plan_line": 27,
+        "final_json_pointer": "/findings/4/conditions/P6",
+        "decisions": [
+          {
+            "id": "P6.1",
+            "obligation": "Synthetic interrupted copy validation",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P6.2",
+            "obligation": "Synthetic malformed metadata validation",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P6.3",
+            "obligation": "Synthetic unusual layout validation",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P6.4",
+            "obligation": "Synthetic conversion validation",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P6.5",
+            "obligation": "Synthetic package fixity validation",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          },
+          {
+            "id": "P6.6",
+            "obligation": "No recipe, component-version or preservation-quality validation asserted",
+            "status": "ASSESSED",
+            "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+          }
+        ]
+      }
+    },
+    "owner_decisions": [
+      {
+        "id": "D01",
+        "decision": "Derivative container/codec and lossless/lossy choice",
+        "status": "ASSESSED",
+        "result": "OPEN_COMPATIBLE"
+      },
+      {
+        "id": "D02",
+        "decision": "Target sample rate, bit depth, filters, channel and metadata maps",
+        "status": "ASSESSED",
+        "result": "OPEN_WITH_EXPLICIT_PREVIEW"
+      },
+      {
+        "id": "D03",
+        "decision": "Per-file versus batch requests",
+        "status": "ASSESSED",
+        "result": "OPEN_WITH_PER_FILE_PROPOSAL"
+      },
+      {
+        "id": "D04",
+        "decision": "Collision/unsupported path resolution and reversible mapping",
+        "status": "ASSESSED",
+        "result": "OPEN_WITH_NO_SILENT_RENAMING"
+      },
+      {
+        "id": "D05",
+        "decision": "Exact metadata whitelist and correction fields",
+        "status": "ASSESSED",
+        "result": "OPEN_WITH_READ_ONLY_ORIGINALS"
+      },
+      {
+        "id": "D06",
+        "decision": "Native versus bundled package serializer",
+        "status": "ASSESSED",
+        "result": "OPEN_WITH_SOURCE_APPLICABILITY_LIMIT"
+      },
+      {
+        "id": "D07",
+        "decision": "Formal event record and local subset versus full PREMIS",
+        "status": "ASSESSED",
+        "result": "OPEN_WITH_MANDATORY_PROVENANCE_WORDING_LIMIT"
+      },
+      {
+        "id": "D08",
+        "decision": "Playback backend and UI",
+        "status": "ASSESSED",
+        "result": "OPEN_WITH_CROSS_PLATFORM_PROTOTYPE"
+      },
+      {
+        "id": "D09",
+        "decision": "Batch review UI/export/CSV",
+        "status": "ASSESSED",
+        "result": "OPTIONAL_ANALOGY"
+      },
+      {
+        "id": "D10",
+        "decision": "BWF MetaEdit QA/export",
+        "status": "ASSESSED",
+        "result": "OPTIONAL_BWF_SPECIFIC"
+      },
+      {
+        "id": "D11",
+        "decision": "Quality thresholds and listening acceptance",
+        "status": "ASSESSED",
+        "result": "OPEN_NOT_INFERRED_FROM_PROBE"
+      },
+      {
+        "id": "D12",
+        "decision": "Institutional rights/consent/access/retention policy",
+        "status": "ASSESSED",
+        "result": "OUTSIDE_TECHNICAL_EVIDENCE_NO_AUTOMATED_DECISION"
+      }
+    ],
+    "final_records": [
+      {
+        "id": "O1_OPEN_DISCOVERY",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      },
+      {
+        "id": "O2_PINNED_CODE",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      },
+      {
+        "id": "O3_HISTORY",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      },
+      {
+        "id": "O4_P1_TO_P6_COMPARISON",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      },
+      {
+        "id": "FULL_PLAN_REPLACEMENT",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      },
+      {
+        "id": "O5_CRITIC_DISPOSITION",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      },
+      {
+        "id": "O6_CHOICES_AND_LIMITS",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      },
+      {
+        "id": "P6_ACCEPTANCE",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      },
+      {
+        "id": "EXECUTION_RECORD",
+        "status": "ASSESSED",
+        "all_authored_fields_assessed": true
+      }
+    ],
+    "consequential_checks": [
+      {
+        "id": "C01",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C02",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C03",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C04",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C05",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C06",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C07",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C08",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C09",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C10",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C11",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C12",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C13",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C14",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C15",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C16",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C17",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C18",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C19",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C20",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C21",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C22",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C23",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C24",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C25",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C26",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C27",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C28",
+        "status": "ASSESSED"
+      },
+      {
+        "id": "C29",
+        "status": "ASSESSED"
+      }
+    ],
+    "exhaustive_opportunity_recall_claimed": false,
+    "host_only_not_adjudicated": [
+      "Provider/family and dispatch identity, activation/terminal lifecycle, timing/quota/economics and billing. The original O5 family wording is recorded, not certified from self-authored metadata."
+    ],
+    "boundary_disclosure": [
+      "Only own-arm named scientific artifacts and public primary sources used for judgment.",
+      "Also read adjacent own-arm research semantic.json (byte-identical to admitted embedded input) and research preservation_check.md; the latter self-report is excluded as scientific/preservation truth. No other arm/case/parent/campaign-state/review contents read."
+    ],
+    "blinding_limits": [
+      "Paths disclose arm label.",
+      "Visible renderer/procedure/Goal metadata can reveal method differences.",
+      "Author timing/counters ignored; no counterpart outputs, scores, cost/speed targets or parent analysis used."
+    ],
+    "usage": {
+      "input_tokens": null,
+      "cache_read_tokens": null,
+      "cache_creation_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billed_amount": null,
+      "billed_currency": null
+    },
+    "completed_at_utc": "2026-10-07T21:54:05.633577+00:00"
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/coverage.json",
+      "bytes": 19344,
+      "sha256": "e88d2cca16475b5067c79d370d54ed5d1233411007020e65ef57bd97d535692b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/judgment.md",
+      "bytes": 27075,
+      "sha256": "dd05e303407c4428b6e17b536d43e5e47b15129e8dcc8b57a759e1e66b3ea129"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/source-checks.json",
+      "bytes": 135046,
+      "sha256": "8ffe8933eec14b25c04ad0bf05da86f764a1862caad491a92d2983e92d5d8592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R17-bagit-release-api.json",
+      "bytes": 4053,
+      "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R17-bagit-release-api.json.metadata.json",
+      "bytes": 2182,
+      "sha256": "14d12146f6aed10e4703c465f5ebb1339dbaea75fc305db3fc1202bbeee41acb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R18-bagit-pr184-api.json",
+      "bytes": 17852,
+      "sha256": "3f82b9c64514a1d9510033d62b83908e3cb65f449f68dae97bcb116e11c8d430"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R18-bagit-pr184-api.json.metadata.json",
+      "bytes": 2159,
+      "sha256": "ea45099589941bfda720e6b5b9e028a6600a82451ed436a96d2a84a09837e2bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R19-bagit-merge-api.json",
+      "bytes": 5811,
+      "sha256": "e73731c9156a2858fc2581a19707be23b67c0bbc2c18537618d3043a73b6cb02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R19-bagit-merge-api.json.metadata.json",
+      "bytes": 2236,
+      "sha256": "2fe6710d2ecaf984463174fc5c4b7d9a41e6e4b8000b11496351f3118e83f25f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R20-bagit-tag-api.json",
+      "bytes": 369,
+      "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R20-bagit-tag-api.json.metadata.json",
+      "bytes": 2205,
+      "sha256": "08977ff3d8b49073180d6147dd98ca7e8885810d77591560d9c0bcdef4b3e1f8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R21-bagit-issue152-comments.json",
+      "bytes": 21921,
+      "sha256": "e9058d43cde4c723f241b1c5873231cb2e3325e3df9b001b2c2023dace821a69"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R21-bagit-issue152-comments.json.metadata.json",
+      "bytes": 2135,
+      "sha256": "b85614074bf825c5ddbe3584725ff1ff18443c1bd18535e136145f6f0c54636d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R22-python311-ospath.html",
+      "bytes": 72192,
+      "sha256": "f108244767dc9ae15da8ac9ff8b91fd249a93c5837f9d33c957d3bb856d35a59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R22-python311-ospath.html.metadata.json",
+      "bytes": 1248,
+      "sha256": "ca83b1b8a118e823e00d220ea3fa7f8b344c5f073a8d2b8dd45d996f693de7fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R22-python311-ospath.txt",
+      "bytes": 17464,
+      "sha256": "a5db16c5e7087f9ff9cea9776714f5f5d955c32c342bc8de75852b85f785e7e1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R23-python311-os.html",
+      "bytes": 642880,
+      "sha256": "2e906848b058aedebe93446a471ec310610ff668d61a9ffd42cc8ebf240e9591"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R23-python311-os.html.metadata.json",
+      "bytes": 1235,
+      "sha256": "df96b19d5242d3a2c6ed933d6597a41ec9ffba6b3b7333141537d2f2ac9a204a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R23-python311-os.txt",
+      "bytes": 156655,
+      "sha256": "ca0b593b48a0d54b1c3dc29315b1c5df1c339f3bad22979e714f86524f9ceb59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R24-cpython-v3.11.17-ref.json",
+      "bytes": 335,
+      "sha256": "ffe314d60e88713c5f04976e1b6f55204caedce8e397baf4a82101da50fa2998"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R24-cpython-v3.11.17-ref.json.metadata.json",
+      "bytes": 2183,
+      "sha256": "2e771db022725856f4fe7ea83d699a10d86d61e080d5e38972f48b285646663f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R25-cpython-v3.11.17-tag.json",
+      "bytes": 2540,
+      "sha256": "0b6d008ff4f976dca4792441a1e7f242ac46953bce19ff858972cf2fc27c8288"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R25-cpython-v3.11.17-tag.json.metadata.json",
+      "bytes": 2212,
+      "sha256": "ac7e8f628e14f3fe87c2603a3476945228ce02c19d28b678d15f59a5616b1075"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R26-cpython-genericpath.py",
+      "bytes": 5246,
+      "sha256": "34497be8d2eb70df61e94cb2ee1938433145c977a56b36be37cc41a3a71d32c2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R26-cpython-genericpath.py.metadata.json",
+      "bytes": 1796,
+      "sha256": "10c08495d663315be9467056586d610d1180ed9456980ee1f080850c5a094777"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R27-cpython-posixpath.py",
+      "bytes": 17072,
+      "sha256": "aa5c97446b9d11a3b6d5a5f949a814243bbda8f2862d70bd9f18ad6961bb001c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R27-cpython-posixpath.py.metadata.json",
+      "bytes": 1792,
+      "sha256": "754405941c02514bd9cb3ea76baca9bc230cdad6c78c2652bdfa5f4d77abe15d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R28-cpython-os.py",
+      "bytes": 39530,
+      "sha256": "8a5d4ac7b87c6c5b31fcb5081f7f7c06f8403a2fdb3eb23692c48933baeb899e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R28-cpython-os.py.metadata.json",
+      "bytes": 1772,
+      "sha256": "1bb144fa8fca73a052ec04e92cd69d6b94bf900c17a8993228bd7fef5ddd5f58"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R29-bagit-release-ancestry.json",
+      "bytes": 19460,
+      "sha256": "fd4e3b47c08864a00c063a29066ca3e83e570c4ccd872d425c5c130b442c7baf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R29-bagit-release-ancestry.json.metadata.json",
+      "bytes": 2331,
+      "sha256": "c148484fc3121e5b2300d6d5e0b2e8fed77141c38b8b781550e8f27ab172eb55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S01-rfc8493.txt",
+      "bytes": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S02-loc-rfs-audio.html",
+      "bytes": 19259,
+      "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S02-loc-rfs-audio.txt",
+      "bytes": 4418,
+      "sha256": "acb5d850780fe55093bfa2771ed1ff53af141f5fca503c1d08afc88f13ab3cfd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S03-loc-bwf-v2.html",
+      "bytes": 33400,
+      "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S03-loc-bwf-v2.txt",
+      "bytes": 14234,
+      "sha256": "3b34a4298b947a1e3e3ff9016c4d89d83a35f63207ceff140bb4c1cb63375c55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S04-bagit-v1.9.0-release.html",
+      "bytes": 216336,
+      "sha256": "5da3ece07de54bebb17417cfa7ab83ebf6ff3343f154192aad9c2a9302056680"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S04-bagit-v1.9.0-release.txt",
+      "bytes": 4140,
+      "sha256": "0083ec134573ac725875ae8d20106f2f9e76349c7d031d3155108f9747a1fd20"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "bytes": 54632,
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "bytes": 49297,
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S07-issue-152.html",
+      "bytes": 271789,
+      "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S07-issue-152.txt",
+      "bytes": 3890,
+      "sha256": "c0635053c345cfa7b7d1f40500873770f095f1e359718259a1ef54416b989214"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S08-pr-184.html",
+      "bytes": 299295,
+      "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S08-pr-184.txt",
+      "bytes": 5058,
+      "sha256": "b68e98420ce5afdcf52ca55ef35ffd9a6c48097ea8f6f518ab70379cca7ef609"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "bytes": 735,
+      "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S10-premis-v3.pdf",
+      "bytes": 2176353,
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S10-premis-v3.txt",
+      "bytes": 480247,
+      "sha256": "1029138c1f86a603a399f11c361c8bb33b357071ca5ba0bbdc4b78908fb0a683"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S11-ffmpeg-8.1-cli.html",
+      "bytes": 225502,
+      "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S11-ffmpeg-8.1-cli.txt",
+      "bytes": 143386,
+      "sha256": "53a275f83114dc8722b860abc9725e8bd709c18a693867f43f68393a96ab96bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S12-ffprobe-8.1.html",
+      "bytes": 2462291,
+      "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S12-ffprobe-8.1.txt",
+      "bytes": 1250914,
+      "sha256": "f4e883494bc2174878a2e4e38bd1bd62ba5861b87ff8fad4c958b3b568925c55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S13-ffmpeg-download.html",
+      "bytes": 27484,
+      "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S13-ffmpeg-download.txt",
+      "bytes": 8761,
+      "sha256": "32060fb518cdc4fac6e1de349183f9184c0a2e3258b8d40e4b90a620d1eaa3a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S14-bwfmetaedit-product.html",
+      "bytes": 20610,
+      "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S14-bwfmetaedit-product.txt",
+      "bytes": 2795,
+      "sha256": "7a5cf3a1f47ef6af45aed5f40eeeb3a681d2451c27455fc0014bcbed4e4044b6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S15-loc-literary-audio-workflow-2022.pdf",
+      "bytes": 2280105,
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S15-loc-literary-audio-workflow-2022.txt",
+      "bytes": 70351,
+      "sha256": "752ca6cb27b5cdd7d1f26003fcbccabf3e28c7aaaafa1354f80ec0ee99b0ae40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S16-bagit-issue-157.html",
+      "bytes": 240223,
+      "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S16-bagit-issue-157.txt",
+      "bytes": 5349,
+      "sha256": "0e4b046f8405bb0e42b586481e80bd7cb5cdc8d8c3db93b8ff3ac68fe1f14d40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-brief.md",
+      "bytes": 5140,
+      "sha256": "c609c2ea956f269df5fbab3694b7a9425f72f24b65279e12aab3b5c1d727a1ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-input-manifest.json",
+      "bytes": 2379,
+      "sha256": "93610549bc1f6422444122e14a01003bd8412b0657bce7b82c789e932eb4cd50"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-plan.md",
+      "bytes": 1718,
+      "sha256": "c3da0fde53189778a3685ff4dae7f8c9cca2bd3a5d5a0f8614bc666c21a01a59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S01-rfc8493.txt",
+      "bytes": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S01-rfc8493.txt.metadata.json",
+      "bytes": 1405,
+      "sha256": "80447549ca96fae751c894cfb32a88bdb488b4c6a1731b9441283e1d7b8830ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S02-loc-rfs-audio.html",
+      "bytes": 18963,
+      "sha256": "1cb0276d5b78a3058de5d86057b053e39bd224b098c6151508e49cca4452c72b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S02-loc-rfs-audio.html.metadata.json",
+      "bytes": 959,
+      "sha256": "c0de5254b2d141e7ebeec13e6203ee49d26634c3ed636f0c09b67d44d17324c2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S02-loc-rfs-audio.txt",
+      "bytes": 4418,
+      "sha256": "acb5d850780fe55093bfa2771ed1ff53af141f5fca503c1d08afc88f13ab3cfd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S03-loc-bwf-v2.html",
+      "bytes": 33104,
+      "sha256": "8a5e1edd9648cac87ad1be943f0bc67616b40d9b64c73dc15cb00e69f190d83e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S03-loc-bwf-v2.html.metadata.json",
+      "bytes": 975,
+      "sha256": "ac96bfc2cbc8878b800576f8b4bbd0be743cf9e332e322688227a8e3927c9c1a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S03-loc-bwf-v2.txt",
+      "bytes": 14234,
+      "sha256": "3b34a4298b947a1e3e3ff9016c4d89d83a35f63207ceff140bb4c1cb63375c55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S04-bagit-v1.9.0-release.html",
+      "bytes": 216340,
+      "sha256": "1a9ebb98166f38777ec9a0d291b541094e11c70008c5a9b17fed5658a3bce705"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S04-bagit-v1.9.0-release.html.metadata.json",
+      "bytes": 5639,
+      "sha256": "c468181abbfde3995be8693f8eceaf78e9cfad775412cc3a36b1dbba06da261d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S04-bagit-v1.9.0-release.txt",
+      "bytes": 4140,
+      "sha256": "0083ec134573ac725875ae8d20106f2f9e76349c7d031d3155108f9747a1fd20"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "bytes": 54632,
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py.metadata.json",
+      "bytes": 1855,
+      "sha256": "a78d1b5ae877c5bd70611709b367367ca7a4d80eea111ddaacb69a63832c4dc0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "bytes": 49297,
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py.metadata.json",
+      "bytes": 1858,
+      "sha256": "7ea5f161736e998477d2ed53aea3e58c7f5fe30529df657e5d9bac8250e07d1d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S07-issue-152.html",
+      "bytes": 271782,
+      "sha256": "82141f68113bd9d91d745f8d7d74a071742aac5158238fb5ada245b97b1c175b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S07-issue-152.html.metadata.json",
+      "bytes": 6124,
+      "sha256": "adcabbc0e191cd6a24a419fe2105496dcb239f29e66fbff3f0773dc659308ab8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S07-issue-152.txt",
+      "bytes": 3890,
+      "sha256": "c0635053c345cfa7b7d1f40500873770f095f1e359718259a1ef54416b989214"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S08-pr-184.html",
+      "bytes": 299294,
+      "sha256": "a7fbe13ce6f2ebbc3998935cc54bfe887caae5fdbd3650d145447575b8945d63"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S08-pr-184.html.metadata.json",
+      "bytes": 5893,
+      "sha256": "7f89dd93c0a9756d87889c8a22946968ac7b9f238a1656a06df00e6d40e64139"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S08-pr-184.txt",
+      "bytes": 5058,
+      "sha256": "b68e98420ce5afdcf52ca55ef35ffd9a6c48097ea8f6f518ab70379cca7ef609"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "bytes": 735,
+      "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch.metadata.json",
+      "bytes": 5774,
+      "sha256": "e2112b013ecc7eaf781a75e982418c85b629d634fcd46ff38fcbcb750fb3584b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S10-premis-v3.pdf",
+      "bytes": 2176353,
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S10-premis-v3.pdf.metadata.json",
+      "bytes": 1111,
+      "sha256": "5074c127245c401bd5fb6f7ca48c06cc03bd12e41ae820fd54b2fe5028c6c023"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S11-ffmpeg-8.1-cli.html",
+      "bytes": 225502,
+      "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S11-ffmpeg-8.1-cli.html.metadata.json",
+      "bytes": 1031,
+      "sha256": "44a76d5ba8e21891f82e42f6d4f16f3da453af01ae49eb8d5daede58bacc0775"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S11-ffmpeg-8.1-cli.txt",
+      "bytes": 143386,
+      "sha256": "53a275f83114dc8722b860abc9725e8bd709c18a693867f43f68393a96ab96bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S12-ffprobe-8.1.html",
+      "bytes": 2462291,
+      "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S12-ffprobe-8.1.html.metadata.json",
+      "bytes": 1037,
+      "sha256": "75cde39c620b7f65c7c3ec4620eccecaea59bdb1e0f1058d6ee9ba48f477805a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S12-ffprobe-8.1.txt",
+      "bytes": 1250914,
+      "sha256": "f4e883494bc2174878a2e4e38bd1bd62ba5861b87ff8fad4c958b3b568925c55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S13-ffmpeg-download.html",
+      "bytes": 27484,
+      "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S13-ffmpeg-download.html.metadata.json",
+      "bytes": 1028,
+      "sha256": "b196f18cf3ab0d4a24edba89df599539ba85637def9cc7fe646fc9e4769b12e9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S13-ffmpeg-download.txt",
+      "bytes": 8761,
+      "sha256": "32060fb518cdc4fac6e1de349183f9184c0a2e3258b8d40e4b90a620d1eaa3a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S14-bwfmetaedit-product.html",
+      "bytes": 20610,
+      "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S14-bwfmetaedit-product.html.metadata.json",
+      "bytes": 1365,
+      "sha256": "3c22e7e8f1148e06feda7684d8c4402fd8d91b323e91ba07a07a615e1383aee7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S14-bwfmetaedit-product.txt",
+      "bytes": 2795,
+      "sha256": "7a5cf3a1f47ef6af45aed5f40eeeb3a681d2451c27455fc0014bcbed4e4044b6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S15-loc-literary-audio-workflow-2022.pdf",
+      "bytes": 2280105,
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S15-loc-literary-audio-workflow-2022.pdf.metadata.json",
+      "bytes": 1190,
+      "sha256": "3a7a9ff495d6148ce84d629c60e4c6cebbc0465ae3cf7eae156172f14b2ec581"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S16-bagit-issue-157.html",
+      "bytes": 240215,
+      "sha256": "d0c466d088735bf2b5d9d811a1819b182cfd05489939331940cc4e88b2be8491"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S16-bagit-issue-157.html.metadata.json",
+      "bytes": 6135,
+      "sha256": "32f8f67332ab4e5f6cd6c25e0489edbf4785a875f31ab547563da45fc3e4dff5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S16-bagit-issue-157.txt",
+      "bytes": 5349,
+      "sha256": "0e4b046f8405bb0e42b586481e80bd7cb5cdc8d8c3db93b8ff3ac68fe1f14d40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/rendered-field-comparison.json",
+      "bytes": 4594,
+      "sha256": "79995e44236ff04b2ba7fbe19374f37430125e4f787b0e7cbe144749a452ddd0"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-04-pair-freeze-v2.json"
+}

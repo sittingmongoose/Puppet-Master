@@ -1,0 +1,77 @@
+{
+  "observed_at": "2026-10-07T21:41:39.936943+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_69873a96-ba73-41d3-9f4f-e8286e13ab2a/state.json",
+  "actual_state": {
+    "objective": "Complete D-M16-A/treatment/fresh_topic1_comparison-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "running",
+    "rounds": 0,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "Read admission timing, brief, source manifest, and predecessor shared-discovery report plus its source index (only INPUT_MAP-listed files) and start timings.json",
+        "acceptance": "`cat admission-timing.json` deadline honored; `cat cases/D-M16-A/inputs/brief.md cases/D-M16-A/inputs/sources.json fresh_shared_discovery-v3/report.md fresh_shared_discovery-v3/sources/index.json` all read; `timings.json` exists with actual source-op and first-useful-finding timestamps",
+        "status": "pending"
+      },
+      {
+        "id": "t2",
+        "title": "Open-discover and capture public primary docs/code for topic-1 acquisition/refresh (resumable bounded policy under intermittent links) into sources/",
+        "acceptance": "`sources/index.json` lists every capture with url/version/capture-time/sha256-hash/locator/limits; `sha256sum` of each stored file matches its index entry; no sibling/control/evaluator files read",
+        "status": "pending"
+      },
+      {
+        "id": "t3",
+        "title": "Independently check source claims and synthesize report.md meeting all six obligations: separate acquisition vs refresh disposition, stale display vs retention disposition, shared identity/freshness dependencies and reuse invalidation, preserved topic-specific uncertainties, \u22648 material findings, bounded comparison with discriminating checks and accepted/amended/rejected/unresolved dispositions",
+        "acceptance": "`test -s report.md`; `wc -w report.md` \u2264 ~1100 words; grep confirms \u22648 findings and coverage of each obligation clause; claims cite independently verified sources with proposed-vs-executed validation stated",
+        "status": "pending"
+      },
+      {
+        "id": "t4",
+        "title": "Finalize timings.json (source ops, capture, first useful finding, output, known usage; nulls for unknown input/cache/generated/billing) and complete the native Goal lifecycle with outputs only at report.md, sources/, timings.json",
+        "acceptance": "`cat timings.json` has all required fields with native counters distinct; `ls` job dir shows no extra artifacts; Goal terminal confirmed; `git status`/diff of forbidden paths (repo/canon/main/WorkNodes) shows no third-party writes",
+        "status": "pending"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791409143517,
+    "updatedAt": 1791409191544
+  },
+  "source_sha256": "4465f50afcf5b3faef3d2a685baa3cb6e5618f890242280b2bd6896c1dc43160",
+  "source": {
+    "nomination": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/m16-topic1-treatment-topic2-control-native-active-root-nominations-v1.json",
+    "nomination_sha256": "ab5694032552c40e2833ad023f0a5ba151965e1854d4029e2240129429e1247f",
+    "root_observed_source_sha256": "4465f50afcf5b3faef3d2a685baa3cb6e5618f890242280b2bd6896c1dc43160"
+  },
+  "separate_actual_config_binding": {
+    "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3",
+    "case_id": "D-M16-A",
+    "arm": "treatment",
+    "stage": "fresh_topic1_comparison-v3",
+    "target": {
+      "providerInstanceId": "zcode",
+      "driverKind": "acpRegistry",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": {
+        "thought": "max",
+        "mode": "yolo"
+      }
+    },
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic1_comparison-v3",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic1_comparison-v3",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-treatment-fresh_topic1_comparison-v3:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_topic1_comparison-v3",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "limitation": "Installed GoalLoopDriver state only; vendor backend goal and ACP mapping not inferred; sessionId/goalId null as exposed.",
+  "host_lookup_seconds": 0.0004971000016666949
+}

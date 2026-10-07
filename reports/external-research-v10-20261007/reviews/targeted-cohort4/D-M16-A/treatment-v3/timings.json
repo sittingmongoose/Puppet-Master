@@ -1,0 +1,180 @@
+{
+  "schema": "independent-review-actual-timings.v1",
+  "case_id": "D-M16-A",
+  "arm_visible_in_path": "treatment-v3",
+  "actual_t3_requested_at": "2026-10-07T22:32:37.487000+00:00",
+  "actual_t3_started_at": "2026-10-07T22:32:38.499+00:00",
+  "first_observed_clock": "2026-10-07T22:32:47+00:00",
+  "substance_completed_at": "2026-10-07T22:44:07.583897+00:00",
+  "provided_deadline": "2026-10-07T22:52:15.281664+00:00",
+  "effective_deadline": "2026-10-07T22:52:15.281664+00:00",
+  "expired": false,
+  "elapsed_seconds_from_actual_requested_at": 690.096897,
+  "elapsed_seconds_from_first_observed_clock": 680.583897,
+  "actual_source_ops": {
+    "public_document_gets": 6,
+    "public_repository_tree_metadata_gets": 3,
+    "public_tile_endpoint_requests": 0,
+    "web_tool_primary_page_opens": 3,
+    "web_tool_network_or_cache_behavior": null,
+    "operation_records": [
+      {
+        "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+        "started_at": "2026-10-07T22:34:59.234512+00:00",
+        "completed_at": "2026-10-07T22:34:59.414079+00:00",
+        "elapsed_seconds": 0.179555,
+        "bytes": 84477,
+        "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9111-review-capture.txt"
+      },
+      {
+        "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+        "started_at": "2026-10-07T22:34:59.235979+00:00",
+        "completed_at": "2026-10-07T22:34:59.405763+00:00",
+        "elapsed_seconds": 0.169769,
+        "bytes": 502941,
+        "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9110-review-capture.txt"
+      },
+      {
+        "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+        "started_at": "2026-10-07T22:34:59.236709+00:00",
+        "completed_at": "2026-10-07T22:34:59.382478+00:00",
+        "elapsed_seconds": 0.145754,
+        "bytes": 10359,
+        "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc5861-review-capture.txt"
+      },
+      {
+        "url": "https://operations.osmfoundation.org/policies/tiles/",
+        "started_at": "2026-10-07T22:34:59.237787+00:00",
+        "completed_at": "2026-10-07T22:34:59.629732+00:00",
+        "elapsed_seconds": 0.391935,
+        "bytes": 18563,
+        "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/osm-policy-review-capture.html"
+      },
+      {
+        "url": "https://curl.se/docs/manpage.html",
+        "started_at": "2026-10-07T22:34:59.239044+00:00",
+        "completed_at": "2026-10-07T22:34:59.461298+00:00",
+        "elapsed_seconds": 0.222228,
+        "bytes": 465220,
+        "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/curl-manpage-review-capture.html"
+      },
+      {
+        "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/v3.2.1?recursive=1",
+        "started_at": "2026-10-07T22:35:43.012457+00:00",
+        "completed_at": "2026-10-07T22:35:43.233254+00:00",
+        "elapsed_seconds": 0.220792,
+        "bytes": 18842,
+        "sha256": "ad08322790f477df18adb98ba6eeaf002f3097e646b6a3d85fa5b406081d47a0",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/leaflet-tag-tree-review.json"
+      },
+      {
+        "url": "https://api.github.com/repos/osmdroid/osmdroid/git/trees/osmdroid-parent-6.1.20?recursive=1",
+        "started_at": "2026-10-07T22:35:43.014067+00:00",
+        "completed_at": "2026-10-07T22:35:43.284898+00:00",
+        "elapsed_seconds": 0.270819,
+        "bytes": 476365,
+        "sha256": "3032540c1d3cac8edf8990ad2fe73afdc368c376f14a0c4fe4a6ae0b60654e5b",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/osmdroid-tag-tree-review.json"
+      },
+      {
+        "url": "https://gitlab.gnome.org/api/v4/projects/GNOME%2Flibshumate/repository/tree?ref=1.7.0&path=shumate&per_page=100",
+        "started_at": "2026-10-07T22:35:43.014909+00:00",
+        "completed_at": "2026-10-07T22:35:43.205142+00:00",
+        "elapsed_seconds": 0.19022,
+        "bytes": 13055,
+        "sha256": "4149af24eb28918a143bf14c263b83b435794ef06e79443c88e3be6ce46bf774",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/libshumate-tag-tree-review.json"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+        "started_at": "2026-10-07T22:36:20.564109+00:00",
+        "completed_at": "2026-10-07T22:36:20.691534+00:00",
+        "elapsed_seconds": 0.127405,
+        "bytes": 15807,
+        "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+        "status": 200,
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/mbtiles-1.3-review-capture.md"
+      }
+    ],
+    "local_source_checks": {
+      "map_entries_hashed_and_primary_semantics_assessed": 27,
+      "unique_primary_byte_identities_assessed": 16,
+      "source_indices_hashed_and_read": 4,
+      "brief_and_manifest_read": 2,
+      "candidate_frozen_outputs_read": 1,
+      "full_mapped_code_negative_search_files": 7,
+      "public_tag_blob_matches": 7,
+      "captured_leaflet_tree_blob_matches": 3,
+      "exact_total_local_read_or_hash_invocations": null,
+      "reason_total_unknown": "Read and hash passes were repeated; persisted integrity metadata gives checked entries, not an invented complete low-level operation counter."
+    }
+  },
+  "actual_checks": {
+    "consequential_scientific_process_claim_groups": 58,
+    "six_axis_dispositions": 6,
+    "obligation_coverage": 6,
+    "material_defect_identities": 6,
+    "proposed_product_checks_executed": 0,
+    "project_tests_executed": 0,
+    "artifact_validation": {
+      "checked_at": "2026-10-07T22:44:07.583897+00:00",
+      "candidate_sha256_after_review": "621792100eb67a49b91bcbcad3dda405487862811a7081d4b4a98c4f536bad67",
+      "axes": 6,
+      "obligations": 6,
+      "claim_check_groups": 58,
+      "material_defects": 6,
+      "mapped_source_entries": 27,
+      "unique_primary_byte_identities": 16,
+      "all_reference_ids_valid": true,
+      "all_evidence_hashes_match": true,
+      "public_gets_succeeded": 9,
+      "downloaded_project_code_or_tests_executed": false,
+      "artifact_validation_elapsed_seconds": 0.027325
+    },
+    "candidate_hash_before_and_after_match": true
+  },
+  "reviewer_operation_corrections": {
+    "invalid_t3_run_metadata_calls": 2,
+    "corrected_t3_run_metadata_calls": 1,
+    "local_metadata_script_errors": 1,
+    "local_metadata_error_detail": "Captured-tree lookup used a prefixed local filename; rerun with upstream basename and all three Leaflet blobs matched. No candidate source was modified."
+  },
+  "input_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "billing": null,
+  "native_counters": {
+    "available": false,
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "output_tokens": null,
+    "billing": null,
+    "source": "No native usage/billing counters were exposed to this reviewer; separate from source operations and wall elapsed."
+  },
+  "scope": {
+    "no_candidate_timings_read": true,
+    "no_cost_winner_speed_judgment": true,
+    "children_spawned": 0,
+    "pending_children": 0,
+    "native_goals_created": 0
+  },
+  "delivery": {
+    "mechanism": "native T3 delegated-task final result",
+    "substance_ready_before_deadline": true,
+    "final_delivery_timestamp": null,
+    "note": "Timestamp unavailable before returning the native final message; final result carries artifact paths/status."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-10-07T22:27:59.935058+00:00",
+  "actual_clock_read": "2026-10-07T22:27:45Z",
+  "deadline": "2026-10-07T22:28:23.543415Z",
+  "early_coordinator_reconciliation_label_seconds": 38.543415,
+  "scientific_worker_steer_sent_by_root": false,
+  "root_nested_cancel": false,
+  "guard_required": "WAIT before actual elapsed deadline; message prospective only",
+  "correction": "Sent immediately to existing supervisor, not candidate; no allowance reset or science instruction"
+}

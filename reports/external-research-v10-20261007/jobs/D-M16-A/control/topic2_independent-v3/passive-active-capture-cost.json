@@ -1,0 +1,33 @@
+{
+  "event": "active",
+  "stage": "D-M16-A/control/topic2_independent-v3",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M16-A/control/topic2_independent-v3"
+  ],
+  "start": "2026-10-07T21:54:30.848846+00:00",
+  "end": "2026-10-07T21:54:31.091718+00:00",
+  "elapsed_seconds": 0.2428802300019015,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T21:54:30.949023+00:00",
+    "entries": [
+      {
+        "stage": "D-M16-A/control/topic2_independent-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M16-A--control--topic2_independent-v3--af6353dc3a1c3806.json",
+        "sha256": "af6353dc3a1c380641fe635bbf23cbb24c1098d8d8ca5deb113ddac592c0cfc9",
+        "bytes": 16806,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

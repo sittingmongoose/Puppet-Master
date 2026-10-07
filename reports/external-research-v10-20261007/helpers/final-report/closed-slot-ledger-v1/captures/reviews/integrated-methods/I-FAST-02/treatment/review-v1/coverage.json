@@ -1,0 +1,240 @@
+{
+  "schema_version": "1.0",
+  "source_judgment": "FAIL",
+  "entire_declared_scientific_scope_assessed": true,
+  "full_pass": false,
+  "counts": {
+    "six_axes": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "O1_O6": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "plan_sections": {
+      "total": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "frozen_plan_decisions": {
+      "total": 36,
+      "complete": 36,
+      "assessed": 36,
+      "unassessed": 0
+    },
+    "scope_constraints": {
+      "total": 5,
+      "complete": 5,
+      "assessed": 5,
+      "unassessed": 0
+    },
+    "authored_product_questions": {
+      "total": 8,
+      "complete": 8,
+      "assessed": 8,
+      "unassessed": 0
+    },
+    "external_owner_documents_or_decisions": {
+      "total": 0,
+      "complete": 0,
+      "assessed": 0,
+      "unassessed": 0
+    },
+    "consequential_finding_groups": {
+      "total": 27,
+      "complete": 27,
+      "assessed": 27,
+      "unassessed": 0,
+      "without_material_defect": 25,
+      "with_material_defect": 2,
+      "distinct_material_error_count": 1
+    },
+    "criticism_dispositions": {
+      "total": 7,
+      "complete": 7,
+      "assessed": 7,
+      "unassessed": 0
+    },
+    "preservation_groups": {
+      "total": 61,
+      "complete": 61,
+      "assessed": 61,
+      "unassessed": 0
+    },
+    "P6_validation_categories": {
+      "total": 8,
+      "complete": 8,
+      "assessed": 8,
+      "unassessed": 0
+    }
+  },
+  "material_error_count": 1,
+  "material_error_ids": [
+    "D1"
+  ],
+  "axes": [
+    {
+      "axis": 1,
+      "coverage": "ASSESSED",
+      "judgment": "FAIL"
+    },
+    {
+      "axis": 2,
+      "coverage": "ASSESSED",
+      "judgment": "FAIL"
+    },
+    {
+      "axis": 3,
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "axis": 4,
+      "coverage": "ASSESSED",
+      "judgment": "FAIL"
+    },
+    {
+      "axis": 5,
+      "coverage": "ASSESSED",
+      "judgment": "FAIL"
+    },
+    {
+      "axis": 6,
+      "coverage": "ASSESSED",
+      "judgment": "PASS"
+    }
+  ],
+  "obligations": {
+    "O1": "ASSESSED_PASS_WITH_LIMITATIONS",
+    "O2": "ASSESSED_PASS",
+    "O3": "ASSESSED_FAIL",
+    "O4": "ASSESSED_PASS",
+    "O5": "ASSESSED_WITH_MATERIAL_DEFECT",
+    "O6": "ASSESSED_PASS"
+  },
+  "plan_sections": {
+    "P1": "ASSESSED_PASS",
+    "P2": "ASSESSED_PASS",
+    "P3": "ASSESSED_PASS",
+    "P4": "ASSESSED_PASS",
+    "P5": "ASSESSED_PASS",
+    "P6": "ASSESSED_PASS"
+  },
+  "frozen_plan_decisions": {
+    "P1.1": "ASSESSED_PASS",
+    "P1.2": "ASSESSED_PASS",
+    "P1.3": "ASSESSED_PASS",
+    "P1.4": "ASSESSED_PASS",
+    "P1.5": "ASSESSED_PASS",
+    "P1.6": "ASSESSED_PASS",
+    "P2.1": "ASSESSED_PASS",
+    "P2.2": "ASSESSED_PASS",
+    "P2.3": "ASSESSED_PASS",
+    "P2.4": "ASSESSED_PASS",
+    "P2.5": "ASSESSED_PASS",
+    "P3.1": "ASSESSED_PASS",
+    "P3.2": "ASSESSED_PASS",
+    "P3.3": "ASSESSED_PASS",
+    "P3.4": "ASSESSED_PASS",
+    "P3.5": "ASSESSED_PASS",
+    "P3.6": "ASSESSED_PASS",
+    "P3.7": "ASSESSED_PASS",
+    "P4.1": "ASSESSED_PASS",
+    "P4.2": "ASSESSED_PASS",
+    "P4.3": "ASSESSED_PASS",
+    "P4.4": "ASSESSED_PASS",
+    "P4.5": "ASSESSED_PASS",
+    "P4.6": "ASSESSED_PASS",
+    "P5.1": "ASSESSED_PASS",
+    "P5.2": "ASSESSED_PASS",
+    "P5.3": "ASSESSED_PASS",
+    "P5.4": "ASSESSED_PASS",
+    "P5.5": "ASSESSED_PASS",
+    "P5.6": "ASSESSED_PASS",
+    "P6.1": "ASSESSED_PASS",
+    "P6.2": "ASSESSED_PASS",
+    "P6.3": "ASSESSED_PASS",
+    "P6.4": "ASSESSED_PASS",
+    "P6.5": "ASSESSED_PASS",
+    "P6.6": "ASSESSED_PASS"
+  },
+  "scope_constraints": {
+    "B1": "ASSESSED_PASS",
+    "B2": "ASSESSED_PASS",
+    "B3": "ASSESSED_PASS",
+    "B4": "ASSESSED_PASS",
+    "B5": "ASSESSED_PASS"
+  },
+  "authored_product_questions": {
+    "Q1": "ASSESSED_APPROPRIATELY_OPEN",
+    "Q2": "ASSESSED_APPROPRIATELY_OPEN",
+    "Q3": "ASSESSED_APPROPRIATELY_OPEN",
+    "Q4": "ASSESSED_APPROPRIATELY_OPEN",
+    "Q5": "ASSESSED_APPROPRIATELY_OPEN",
+    "Q6": "ASSESSED_APPROPRIATELY_OPEN",
+    "Q7": "ASSESSED_APPROPRIATELY_OPEN",
+    "Q8": "ASSESSED_APPROPRIATELY_OPEN"
+  },
+  "external_owner_decisions": [],
+  "consequential_findings": {
+    "F01": "ASSESSED_SUPPORTED",
+    "F02": "ASSESSED_SUPPORTED_WITH_CONDITIONS",
+    "F03": "ASSESSED_SUPPORTED",
+    "F04": "ASSESSED_SUPPORTED",
+    "F05": "ASSESSED_SUPPORTED",
+    "F06": "ASSESSED_SUPPORTED_AS_DESIGN_INFERENCE",
+    "F07": "ASSESSED_SUPPORTED_AS_DESIGN_INFERENCE",
+    "F08": "ASSESSED_SUPPORTED",
+    "F09": "ASSESSED_SUPPORTED",
+    "F10": "ASSESSED_SUPPORTED",
+    "F11": "ASSESSED_SUPPORTED",
+    "F12": "ASSESSED_SUPPORTED",
+    "F13": "ASSESSED_SUPPORTED_WITH_LIMITS",
+    "F14": "ASSESSED_SUPPORTED",
+    "F15": "ASSESSED_SUPPORTED",
+    "F16": "ASSESSED_SUPPORTED",
+    "F17": "ASSESSED_SUPPORTED",
+    "F18": "ASSESSED_SUPPORTED_WITH_CONDITIONS",
+    "F19": "ASSESSED_SUPPORTED",
+    "F20": "ASSESSED_SUPPORTED_WITH_IMPLEMENTATION_LIMITS",
+    "F21": "ASSESSED_MATERIAL_ERROR_D1",
+    "F22": "ASSESSED_SUPPORTED",
+    "F23": "ASSESSED_MATERIAL_ERROR_D1",
+    "F24": "ASSESSED_SUPPORTED",
+    "F25": "ASSESSED_SUPPORTED_WITH_LIMITS",
+    "F26": "ASSESSED_SUPPORTED_AS_PROPOSED_DESIGN",
+    "F27": "ASSESSED_SUPPORTED"
+  },
+  "criticism_dispositions": {
+    "C1": "ASSESSED_PASS",
+    "C2": "ASSESSED_PASS",
+    "C3": "ASSESSED_PASS",
+    "C4": "ASSESSED_PASS",
+    "C5": "ASSESSED_FAIL_D1",
+    "C6": "ASSESSED_PASS_WITH_LIMITS",
+    "C7": "ASSESSED_PASS"
+  },
+  "unassessed_obligations": [],
+  "unassessed_consequential_findings": [],
+  "limits": [
+    "No exhaustive opportunity recall",
+    "Product questions are unresolved candidate decisions, fully assessed as such, not executed feasibility/comparability claims",
+    "Critic identity/family, lifecycle, discovery timing and independence cannot be independently established from admitted authored material and are excluded from scientific grade",
+    "No application or upstream tests executed"
+  ],
+  "evidence_map": "source-checks.json",
+  "usage": {
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null,
+    "billing": null,
+    "cost": null
+  },
+  "assessment_completed_utc": "2026-10-07T21:33:09.945379+00:00"
+}

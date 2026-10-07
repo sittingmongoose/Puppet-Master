@@ -1,0 +1,195 @@
+{
+  "checked_at": "2026-10-07T22:34:59.753050+00:00",
+  "scope": "Exact frozen joined source bytes; lexical counts do not establish semantics",
+  "checks": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+      "term": "max-stale",
+      "case_insensitive_occurrences": 10,
+      "case_sensitive_occurrences": 10,
+      "case_insensitive_matching_lines": 9
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+      "term": "stale-while-revalidate",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+      "term": "stale-if-error",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+      "term": "stale-while-revalidate",
+      "case_insensitive_occurrences": 10,
+      "case_sensitive_occurrences": 10,
+      "case_insensitive_matching_lines": 9
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+      "term": "stale-if-error",
+      "case_insensitive_occurrences": 10,
+      "case_sensitive_occurrences": 10,
+      "case_insensitive_matching_lines": 9
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+      "term": "ETag",
+      "case_insensitive_occurrences": 36,
+      "case_sensitive_occurrences": 31,
+      "case_insensitive_matching_lines": 35
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+      "term": "Retry-After",
+      "case_insensitive_occurrences": 17,
+      "case_sensitive_occurrences": 17,
+      "case_insensitive_matching_lines": 17
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html",
+      "term": "If-Modified-Since",
+      "case_insensitive_occurrences": 1,
+      "case_sensitive_occurrences": 1,
+      "case_insensitive_matching_lines": 1
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html",
+      "term": "bulk download",
+      "case_insensitive_occurrences": 4,
+      "case_sensitive_occurrences": 2,
+      "case_insensitive_matching_lines": 4
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html",
+      "term": "at least 7 days",
+      "case_insensitive_occurrences": 1,
+      "case_sensitive_occurrences": 1,
+      "case_insensitive_matching_lines": 1
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html",
+      "term": "offline",
+      "case_insensitive_occurrences": 9,
+      "case_sensitive_occurrences": 8,
+      "case_insensitive_matching_lines": 6
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html",
+      "term": "86400",
+      "case_insensitive_occurrences": 2,
+      "case_sensitive_occurrences": 2,
+      "case_insensitive_matching_lines": 2
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html",
+      "term": "expiry",
+      "case_insensitive_occurrences": 2,
+      "case_sensitive_occurrences": 2,
+      "case_insensitive_matching_lines": 2
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html",
+      "term": "mod_tile",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html",
+      "term": "retry quota",
+      "case_insensitive_occurrences": 17,
+      "case_sensitive_occurrences": 13,
+      "case_insensitive_matching_lines": 15
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html",
+      "term": "token bucket",
+      "case_insensitive_occurrences": 5,
+      "case_sensitive_occurrences": 5,
+      "case_insensitive_matching_lines": 5
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-slippy-tilenames.html",
+      "term": "z/x/y",
+      "case_insensitive_occurrences": 1,
+      "case_sensitive_occurrences": 1,
+      "case_insensitive_matching_lines": 1
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html",
+      "term": "browser cache TTL of 12 hours and a CDN cache TTL of 5 minutes",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html",
+      "term": "device cache TTL of 12 hours and a CDN cache TTL of 5 minutes",
+      "case_insensitive_occurrences": 1,
+      "case_sensitive_occurrences": 1,
+      "case_insensitive_matching_lines": 1
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html",
+      "term": "ETag",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html",
+      "term": "conditional",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+      "term": "expir",
+      "case_insensitive_occurrences": 3,
+      "case_sensitive_occurrences": 3,
+      "case_insensitive_matching_lines": 2
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+      "term": "Expires",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+      "term": "Last-Modified",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+      "term": "86400",
+      "case_insensitive_occurrences": 0,
+      "case_sensitive_occurrences": 0,
+      "case_insensitive_matching_lines": 0
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+      "term": "offline",
+      "case_insensitive_occurrences": 11,
+      "case_sensitive_occurrences": 11,
+      "case_insensitive_matching_lines": 8
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+      "term": "idb",
+      "case_insensitive_occurrences": 3,
+      "case_sensitive_occurrences": 3,
+      "case_insensitive_matching_lines": 2
+    }
+  ]
+}

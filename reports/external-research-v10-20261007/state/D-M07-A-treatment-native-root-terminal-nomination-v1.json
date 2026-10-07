@@ -1,0 +1,58 @@
+{
+  "schema": "ER10_EXACT_OWNED_GLM_INSTALLED_TERMINAL_NOMINATION_V1",
+  "recorded_at": "2026-10-07T23:05:29.002082+00:00",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+  "assignment_sha256": "0fa51dd432e1f8a7695ce7505a18660e4215fb11fba03e6cc00a554e9c64ea73",
+  "matching_objectives": 1,
+  "rows": [
+    {
+      "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_02e7a2ad-3bd7-4590-a9bd-2f4eb0e5a3d8/state.json",
+      "sha256": "69fb176b66dd6e90b76b2be132a5a32cb294756bd3cc0f1656d3a55ba643f81b",
+      "state": {
+        "objective": "Execute ER10 D-M07-A v3 critical-first-protected-breadth-final. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/assignment.md.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+        "status": "complete",
+        "rounds": 5,
+        "tickets": [
+          {
+            "id": "t1",
+            "title": "[Read scope and verify source integrity]",
+            "acceptance": "Read brief.md, sources.json, boundary.json and fresh-untrusted-seed-v3/draft.md only; sha256sum the three captured sources and compare to the hashes in INPUT_MAP.json \u2014 all three match",
+            "status": "done"
+          },
+          {
+            "id": "t2",
+            "title": "[Critical dependency check FIRST]",
+            "acceptance": "Identify assumptions in draft.md that could invalidate the selected recommendation and verify each against sqlwal.html, sqlpragma.html and wal.c (3.51.3); record check, URL/version/hash cited, and accepted/amended/rejected/unresolved verdict per assumption in working notes",
+            "status": "done"
+          },
+          {
+            "id": "t3",
+            "title": "[Protected lower-risk and breadth reserve SECOND]",
+            "acceptance": "Run the explicitly reserved lower-risk check and a breadth sweep of remaining leads without deleting any lead (no top-k drop); record proposed vs actually-executed checks, capture/hash/limitations for any additional primary checks",
+            "status": "done"
+          },
+          {
+            "id": "t4",
+            "title": "[Write final.md with full obligation coverage]",
+            "acceptance": "Write treatment/critical-first-protected-breadth-final-v3/final.md covering all six obligations, eight material findings, governing conditions, optional leads and uncertainties; soft ~1100 words, executed-vs-proposed distinction preserved \u2014 verify with wc -w final.md and a grep pass for the eight findings and accepted/amended/rejected/unresolved labels",
+            "status": "done"
+          },
+          {
+            "id": "t5",
+            "title": "[Final delivery check]",
+            "acceptance": "Confirm final.md path exists at the required output path, no forbidden files touched outside source policy, timings/output bytes recorded; ls -l final.md and report concise path/status",
+            "status": "done"
+          }
+        ],
+        "handoffFresh": false,
+        "createdAt": 1791413261764,
+        "updatedAt": 1791414249231,
+        "endedReason": "all tickets done"
+      }
+    }
+  ],
+  "native_terminal_observed": true,
+  "lookup_elapsed_seconds": 0.001652355000260286,
+  "original_activation_capture_HOLD_unchanged": true,
+  "vendor_backend_Goal_or_ACP_mapping_inferred": false
+}

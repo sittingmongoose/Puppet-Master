@@ -1,0 +1,66 @@
+{
+ "schema": "er10.source-index.v1",
+ "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+ "entries": [
+  {
+   "file": "rfc9111.txt",
+   "title": "HTTP Caching (RFC 9111)",
+   "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+   "version": "RFC 9111, Standards Track, June 2022 (R. Fielding/M. Nottingham/J. Reschke, Eds.)",
+   "locator": "body lines: 581 \u00a74.2 Freshness; 784 \u00a74.2.4 Serving Stale Responses; 801 \u00a74.3 Validation; 1081 \u00a75.2 Cache-Control (5.2.1.2 max-stale request dir; 5.2.2.1 max-age response dir); 520 max-age=0 revalidation",
+   "limits": "General HTTP cache semantics; no tile/map specifics; stale-while-revalidate and stale-if-error are ABSENT from this text (verified by grep) \u2014 they remain RFC 5861 extensions; no storage-size/eviction quota guidance.",
+   "capture": "2026-10-07T21:27:34Z",
+   "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+  },
+  {
+   "file": "rfc5861.txt",
+   "title": "HTTP Cache-Control Extensions for Stale Content (RFC 5861)",
+   "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+   "version": "RFC 5861, Informational, April 2011 (M. Nottingham, Yahoo! Inc.)",
+   "locator": "TOC lines 67-70; \u00a73 stale-while-revalidate (+3.1 example), \u00a74 stale-if-error (+4.1 example)",
+   "limits": "Informational; defines the two extension directives only; window sizes are server-chosen values with no recommended bounds; no acquisition/resume semantics.",
+   "capture": "2026-10-07T21:27:34Z",
+   "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e"
+  },
+  {
+   "file": "rfc9110.txt",
+   "title": "HTTP Semantics (RFC 9110)",
+   "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+   "version": "RFC 9110, Standards Track, June 2022",
+   "locator": "body lines: 3570 \u00a78.8.3 ETag; 4799 \u00a710.2.3 Retry-After; 5872 \u00a713.1.2 If-None-Match; 5942 \u00a713.1.3 If-Modified-Since; 6467 \u00a714.2 Range; 7755 \u00a715.5.17 416 Range Not Satisfiable",
+   "limits": "Semantics only: validators, conditional GET, byte ranges/partial content, Retry-After (single date/delay value); defines no backoff algorithm, no cache policy (see 9111), no retention bounds.",
+   "capture": "2026-10-07T21:27:34Z",
+   "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+  },
+  {
+   "file": "osmf-tile-policy.html",
+   "title": "OSMF Tile Usage Policy",
+   "url": "https://operations.osmfoundation.org/policies/tiles/",
+   "version": "Live OMF operations page 'Tile Usage Policy', undated HTML, retrieved as stored",
+   "locator": "sections: Quick summary; 2 Attribution; 3.1 Identification; 3.2 Caching; 3.3 Protocols; 4 Prohibited: bulk downloading ('scraping') and offline use; 5 Caching proxies; one explicit 'If-Modified-Since' mention (grep count 1)",
+   "limits": "Service usage policy for the osm.org tile endpoint, not a client design spec; requires valid HTTP caching per its Caching section; sets download-bulk limits, not client-side display-staleness or store-retention rules; page carries no revision/date metadata.",
+   "capture": "2026-10-07T21:27:35Z",
+   "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2"
+  },
+  {
+   "file": "osm-wiki-tile-disk-usage.html",
+   "title": "OpenStreetMap Wiki: Servers/Tile Rendering (incl. 'Tile disk usage')",
+   "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+   "version": "MediaWiki page, wgCurRevisionId 3082592 at capture; 'Tile disk usage' resolves (redirect) into Servers/Tile Rendering",
+   "locator": "'Tile disk usage' section link in page body; mod_tile expiry parameters 'expiry: false' and 'expiry: 86400' (86400 s = 1 day) as rendered config examples",
+   "limits": "Community wiki, not normative; disk/expiry discussion is illustrative config, not a policy; no client acquisition or display-staleness guidance.",
+   "capture": "2026-10-07T21:27:35Z",
+   "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f"
+  },
+  {
+   "file": "aws-sdk-retry-behavior.html",
+   "title": "AWS SDKs and Tools Reference Guide: Retry behavior",
+   "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+   "version": "Live 'latest' SDK reference page, retrieved as stored",
+   "locator": "grep counts at capture: 'retry mode' x6, 'retry quota' x17, 'token bucket' x5 \u2014 Standard mode (exponential backoff with jitter) and Adaptive mode; retry-quota token bucket (e.g., 500-token capacity style) guards against repeated failures",
+   "limits": "Vendor SDK behavior doc; concrete backoff/quota engineering precedent, not an HTTP standard; no map/tile specifics; page version not dated in HTML.",
+   "capture": "2026-10-07T21:27:34Z",
+   "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb"
+  }
+ ]
+}

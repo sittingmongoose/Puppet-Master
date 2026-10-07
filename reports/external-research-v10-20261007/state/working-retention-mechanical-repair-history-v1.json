@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-07T22:55:33.324885+00:00",
+  "original_job_config": "helpers/retention-working-scope-v2/config.json",
+  "failures": [
+    {
+      "error": "BATCH001..003 manifests use files rather than entries",
+      "repair": "Only B4..8 entries and their pinned earlier references used; originals unchanged"
+    },
+    {
+      "error": "Published closed metadata exceeded650-record working bound; initial pass asserted at651",
+      "repair": "Stop opening records at650; later rows explicit unresolved/skipped; no increased bound or clock reset"
+    }
+  ],
+  "no_scientific_result_or_grade_changes": true,
+  "no_cleanup_or_archive": true
+}

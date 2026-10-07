@@ -1,0 +1,109 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T21:52:30.697078+00:00",
+  "case_id": "D-M16-A",
+  "arm": "treatment",
+  "stage": "fresh_topic1_comparison",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/INPUT_MAP.json",
+      "sha256": "2b9a38e886c026ba012e992715cb21d18e6a543d48c56513d8761178a114c466",
+      "bytes": 2200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/admission-timing.json",
+      "sha256": "519df82c4b7a4aa9b38b50c1a2c4b1b7300c73a903dc17d333883f5c845ad9ca",
+      "bytes": 523
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/assignment.md",
+      "sha256": "3603e4a252e0284e9dbe103148464c2e474485472ee6f4761c1f69725e94048a",
+      "bytes": 4084
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/dispatch-receipt.json",
+      "sha256": "3f0f2c584f52db48f7475c2dce3714149cb9428fc3c23fc8d4685417ba21cfaf",
+      "bytes": 1103
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/dispatch-request.json",
+      "sha256": "270ac12b7d843efd933530e813c0be4e264655e395dcaa9808a9d6bb0fe2f137",
+      "bytes": 693
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/dispatch.json",
+      "sha256": "63d01378bd168b7f9b0919047f775b62c253751fb615b570da20aac49c0d2cf1",
+      "bytes": 1528
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/integration-state-active.json",
+      "sha256": "0a63e833eae5c9879fbb1d622fbb09cfe0497a6ce0bfdde3ac1a9fc62eb28de9",
+      "bytes": 6647
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/integration-state-terminal.json",
+      "sha256": "32733be8e736f5983b895dffcc8fb0188c8866817f01fac31bc9ad9c7e9e5e82",
+      "bytes": 6201
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/passive-active-capture-cost.json",
+      "sha256": "24cb89b49d810a9890f06b00e23c19ce1c7f4defbc7027362f9ad65913767a1c",
+      "bytes": 1311
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/passive-active.json",
+      "sha256": "22d9c38234a1993900b37c61fa56c3c99499d3c9c2095e8f7c6fb1a8a0e366fd",
+      "bytes": 16909
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/passive-terminal-capture-cost.json",
+      "sha256": "b0b5efbecd6fa681d28f273ea2b1bcad4f4116f7bda53cd12239ad6aa3e25380",
+      "bytes": 1314
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/passive-terminal.json",
+      "sha256": "bb66dd0005814b1ab45a2360283563560abfd4125ec7fcd2ded196a6954fc789",
+      "bytes": 20010
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/report.md",
+      "sha256": "9611e009fd85e76e9dfe7a1271d82f3a06d49df9bbb3f0c7fd2406f05e574843",
+      "bytes": 8516
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/curl-manpage.html",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "bytes": 465220
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/index.json",
+      "sha256": "a2ab6afd1c77df1ef0d87369fd42921ff08271ff65749b6df1936e19f02a4972",
+      "bytes": 4262
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osm-tile-headers-20261007.txt",
+      "sha256": "e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2",
+      "bytes": 794
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osmdroid-maptiledownloader-6.1.20.java",
+      "sha256": "6b8f7c5d7a7dc1d01c00e878667bbe69613fc117f7828b3d9a73d77099a57d07",
+      "bytes": 7901
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/task-terminal.json",
+      "sha256": "103ae7a21d120d3ad9bcfd5c2281eb94c58d3fed63da8c42b7294ec1d9725bfa",
+      "bytes": 4464
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/timings.json",
+      "sha256": "e5018a5079f657b6a4f64bff034cea229c69ffd43376fe120edb90778446264a",
+      "bytes": 4333
+    }
+  ]
+}

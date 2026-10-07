@@ -1,0 +1,3962 @@
+{
+  "schema_version": "standalone-scientific-six-axis-v1",
+  "case": "I-METHOD-02",
+  "source_judgment": "FAIL",
+  "review_scope": "Full declared scientific scope assessed; assessed does not mean satisfied or independently proven. No exhaustive opportunity recall.",
+  "counting_rules": "One flat cross-linked inventory. Original plan atomization has 50 separately identifiable clauses (7/10/10/7/8/8 for P1\u2013P6); 16 explicit cross-cutting conditions; six O obligations. Axes overlap intentionally. Claim/critique/discovery counts refer only to the declared enumerated inventory, not all imaginable claims/opportunities. Unknown evidence is assessed as unknown, not marked unassessed.",
+  "axes": {
+    "1": "Required brief obligations, original plan decisions and conditions",
+    "2": "Consequential claims and applicability conditions",
+    "3": "Bounded useful discoveries, mechanisms, alternatives and opportunities",
+    "4": "Incorrect rejection/correction and criticism/planning dispositions",
+    "5": "Preservation of original scope, choices, constraints, uncertainty and predecessor content",
+    "6": "Proposed versus actually executed validation"
+  },
+  "rows": [
+    {
+      "id": "O1",
+      "kind": "original_obligation",
+      "axes": [
+        1
+      ],
+      "requirement_or_claim": "Brief-led discovery beyond plan entries",
+      "origin_reference": "brief.md compact obligation map and complete research obligation",
+      "final_reference": "final O1\u2013O6",
+      "assessment": "assessed",
+      "disposition": "limited",
+      "reason": "Standards, products, an analogy, and a conditional component warning are present. Discovery chronology is reported, not independently authenticated. Mirador source narrowing is erroneous (M1); Content State sharing remains a useful omitted optional mechanism.",
+      "evidence": [
+        "C01",
+        "C29",
+        "D01",
+        "D02"
+      ],
+      "finding_id": "M1"
+    },
+    {
+      "id": "O2",
+      "kind": "original_obligation",
+      "axes": [
+        1
+      ],
+      "requirement_or_claim": "Pinned actual component code with governing definitions/callers",
+      "origin_reference": "brief.md compact obligation map and complete research obligation",
+      "final_reference": "final O1\u2013O6",
+      "assessment": "assessed",
+      "disposition": "satisfied_with_limitations",
+      "reason": "Fresh immutable-commit source, Viewer caller, Overlay definition, Viewport conversion warnings, and independently added TiledImage methods inspected. Source bytes/version independently corroborated; fresh annotated-tag API verification was blocked.",
+      "evidence": [
+        "C10",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "O3",
+      "kind": "original_obligation",
+      "axes": [
+        1
+      ],
+      "requirement_or_claim": "Pertinent issue/fix/regression/release or justified equivalent history",
+      "origin_reference": "brief.md compact obligation map and complete research obligation",
+      "final_reference": "final O1\u2013O6",
+      "assessment": "assessed",
+      "disposition": "satisfied_with_limitations",
+      "reason": "Issue 1614, PR 2546, manual demo reproduction/review and shipped 5.0.0 release are pertinent. Original brief does not mandate an automated regression test or a proven introducing version. No desk regression test was executed.",
+      "evidence": [
+        "C20",
+        "C21",
+        "C22",
+        "C23",
+        "C24",
+        "C25"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "O4",
+      "kind": "original_obligation",
+      "axes": [
+        1
+      ],
+      "requirement_or_claim": "Complete comparison of all in-scope decisions and subconditions",
+      "origin_reference": "brief.md compact obligation map and complete research obligation",
+      "final_reference": "final O1\u2013O6",
+      "assessment": "assessed",
+      "disposition": "partial",
+      "reason": "All 50 original atomic clauses were compared. Canvas normalization for local and standalone Image API inputs is omitted despite retaining those inputs, and Mirador advertised features are incorrectly narrowed.",
+      "evidence": [
+        "M1",
+        "M2"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "O5",
+      "kind": "original_obligation",
+      "axes": [
+        1
+      ],
+      "requirement_or_claim": "Substantive independent flash-family criticism and retained dispositions",
+      "origin_reference": "brief.md compact obligation map and complete research obligation",
+      "final_reference": "final O1\u2013O6",
+      "assessment": "assessed",
+      "disposition": "scientific_dispositions_assessed_provenance_unknown",
+      "reason": "Full admitted critique is substantive and final contains an explicit criticism register. One supported criticism is wrongly narrowed (M1). Model family and operational independence are not authenticated by admitted files; no external campaign facts were accessed.",
+      "evidence": [
+        "K06",
+        "K45",
+        "M1"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "O6",
+      "kind": "original_obligation",
+      "axes": [
+        1
+      ],
+      "requirement_or_claim": "Complete proposed replacement artifact with alternatives, validation, decisions and uncertainty",
+      "origin_reference": "brief.md compact obligation map and complete research obligation",
+      "final_reference": "final O1\u2013O6",
+      "assessment": "assessed",
+      "disposition": "partial",
+      "reason": "Six replacement sections and seven proposed witness groups are present. M2 leaves original local/direct-service inputs without a complete persistent identity/target mapping contract. No implementation or acceptance success is credited.",
+      "evidence": [
+        "M2",
+        "V01",
+        "V07"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "P1.01",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "local image uploads",
+      "origin_reference": "plan.md P1 complete paragraph",
+      "final_reference": "final O4 P1; O6 P1",
+      "assessment": "assessed",
+      "disposition": "partial",
+      "reason": "Local IDs/hash recorded, but mandatory Canvas URI/frame and Canvas-target export are not defined for a local upload.",
+      "evidence": [
+        "C40"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "P1.02",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "user-supplied IIIF Presentation links",
+      "origin_reference": "plan.md P1 complete paragraph",
+      "final_reference": "final O4 P1; O6 P1",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Versioned bounded Manifest adapter, Canvas/service identity and visible failures.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P1.03",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "user-supplied IIIF Image Service links",
+      "origin_reference": "plan.md P1 complete paragraph",
+      "final_reference": "final O4 P1; O6 P1",
+      "assessment": "assessed",
+      "disposition": "partial",
+      "reason": "Direct service loading retained, but an Image API info response supplies no Presentation Canvas; generated Canvas/target normalization is absent.",
+      "evidence": [
+        "C40"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "P1.04",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "one session up to fifty museum objects",
+      "origin_reference": "plan.md P1 complete paragraph",
+      "final_reference": "final O4 P1; O6 P1",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "P1 explicitly retains 50; P6 low-bandwidth witness retains session size.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P1.05",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "multiple image views per object",
+      "origin_reference": "plan.md P1 complete paragraph",
+      "final_reference": "final O4 P1; O6 P1",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Manifest Canvases and two selected panes; standalone/local grouping needs M2 normalization.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P1.06",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "every source retains original identifier",
+      "origin_reference": "plan.md P1 complete paragraph",
+      "final_reference": "final O4 P1; O6 P1",
+      "assessment": "assessed",
+      "disposition": "retained_with_gap",
+      "reason": "Provider IDs/URIs retained; local and service-only durable Canvas-target identity remains unspecified.",
+      "evidence": [
+        "C40"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "P1.07",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "every source retains rights statement",
+      "origin_reference": "plan.md P1 complete paragraph",
+      "final_reference": "final O4 P1; O6 P1",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Rights observations and requiredStatement remain attached to correct view/object.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P2.01",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "zoom",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Pinned OSD candidate supplies image zoom; validation proposed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P2.02",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "pan",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Pinned OSD candidate supplies image pan; validation proposed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P2.03",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "compare two views",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Two independent panes with one selected image per pane.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P2.04",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "rectangular region notes",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Canvas geometry, FragmentSelector and numeric keyboard entry proposed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P2.05",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "polygonal region notes",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "App-owned SVG layer and keyboard vertices proposed; editing not supplied by OSD.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P2.06",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "a note records view identity",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained_with_gap",
+      "reason": "Canvas/view IDs required, but original local/direct source paths lack their normalization.",
+      "evidence": [
+        "C40"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "P2.07",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "a note records region coordinates",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained_with_gap",
+      "reason": "Canonical Canvas frame correct for Presentation sources; no local/direct source frame construction.",
+      "evidence": [
+        "C40"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "P2.08",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "author-entered note text",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Annotation note text and keyboard editing remain explicit.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P2.09",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "review status",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Stored in app records with status editing and revisions.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P2.10",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "MVP does not run visual recognition",
+      "origin_reference": "plan.md P2 complete paragraph",
+      "final_reference": "final O4 P2; O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Explicitly excluded in P2.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.01",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "portable review package",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Versioned review ZIP plus review.json.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.02",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "package contains object references",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Object IDs, source observations and Manifest references.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.03",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "package contains view references",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained_with_gap",
+      "reason": "View and Canvas/service references provided for Presentation; M2 affects other originals.",
+      "evidence": [
+        "C40"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "P3.04",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "package contains annotations",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Annotation records, geometry, review state and lineage exported.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.05",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "selected locally owned thumbnails",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained_and_conditioned",
+      "reason": "Optional allowlist requires institution-owned/cleared local assets.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.06",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "partner pixels not bundled by default",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained_and_strengthened",
+      "reason": "Never bundle partner bytes/crops/screenshots, consistent with no republication authority.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.07",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "reopen explains unavailable sources",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Visible unavailable state and preserved notes.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.08",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "reopen explains changed sources",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained_with_honest_limit",
+      "reason": "Uses IDs/dimensions/provider versions, distinguishes not detected from proven unchanged.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.09",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "reopen explains denied sources",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Visible access-denied state, auth option explicit.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P3.10",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "reopen leaves annotations intact",
+      "origin_reference": "plan.md P3 complete paragraph",
+      "final_reference": "final O4 P3; O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Notes kept attached to original sources on failure.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P4.01",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "small institutional service",
+      "origin_reference": "plan.md P4 complete paragraph",
+      "final_reference": "final O4 P4; O6 P4",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Institutional package/annotation/revision records; deployment sizing not claimed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P4.02",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "service stores packages",
+      "origin_reference": "plan.md P4 complete paragraph",
+      "final_reference": "final O4 P4; O6 P4",
+      "assessment": "assessed",
+      "disposition": "retained_at_record_level",
+      "reason": "Package metadata and revision records specified; exact ZIP retention/reconstruction and local thumbnail persistence remain implementation details.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P4.03",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "service stores annotation revisions",
+      "origin_reference": "plan.md P4 complete paragraph",
+      "final_reference": "final O4 P4; O6 P4",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Per-change revisions with parent IDs and attribution.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P4.04",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "curators work independently",
+      "origin_reference": "plan.md P4 complete paragraph",
+      "final_reference": "final O4 P4; O6 P4",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Independent descendant revisions and conflict import.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P4.05",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "exchange package for review",
+      "origin_reference": "plan.md P4 complete paragraph",
+      "final_reference": "final O4 P4; O6 P4",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "ZIP export/reopen/import and explicit review-state revisions.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P4.06",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "live simultaneous editing deferred",
+      "origin_reference": "plan.md P4 complete paragraph",
+      "final_reference": "final O4 P4; O6 P4",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "No live co-edit explicit.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P4.07",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "conflicting imported revisions surfaced",
+      "origin_reference": "plan.md P4 complete paragraph",
+      "final_reference": "final O4 P4; O6 P4",
+      "assessment": "assessed",
+      "disposition": "retained_and_specified",
+      "reason": "Both histories, field/geometry diff and explicit curator resolution.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P5.01",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "image viewer undecided",
+      "origin_reference": "plan.md P5 complete paragraph",
+      "final_reference": "final O4 P5; O6 P5",
+      "assessment": "assessed",
+      "disposition": "provisional_choice",
+      "reason": "OSD full-commit candidate; Mirador serious alternative and UV narrower. M1 misstates evidence for alternative.",
+      "evidence": [
+        "C29"
+      ],
+      "finding_id": "M1"
+    },
+    {
+      "id": "P5.02",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "manifest parser undecided",
+      "origin_reference": "plan.md P5 complete paragraph",
+      "final_reference": "final O4 P5; O6 P5",
+      "assessment": "assessed",
+      "disposition": "proposed_choice_with_gate",
+      "reason": "App-owned versioned subset; representative fixtures and v2.1.1 release choice open.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P5.03",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "annotation serialization undecided",
+      "origin_reference": "plan.md P5 complete paragraph",
+      "final_reference": "final O4 P5; O6 P5",
+      "assessment": "assessed",
+      "disposition": "proposed_choice_with_gate",
+      "reason": "W3C-compatible targets plus named app extensions and versioned ZIP.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P5.04",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "keyboard inspection MVP concern",
+      "origin_reference": "plan.md P5 complete paragraph",
+      "final_reference": "final O4 P5; O6 P5",
+      "assessment": "assessed",
+      "disposition": "retained_and_extended",
+      "reason": "Keyboard view choice, numeric rectangles, polygon vertices and export.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P5.05",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "usable focus order MVP concern",
+      "origin_reference": "plan.md P5 complete paragraph",
+      "final_reference": "final O4 P5; O6 P5",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Visible focus, names and keyboard acceptance proposed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P5.06",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "readable rights information MVP concern",
+      "origin_reference": "plan.md P5 complete paragraph",
+      "final_reference": "final O4 P5; O6 P5",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "requiredStatement discoverable; rights metadata distinct from permission.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P5.07",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "low-bandwidth behavior MVP concern",
+      "origin_reference": "plan.md P5 complete paragraph",
+      "final_reference": "final O4 P5; O6 P5",
+      "assessment": "assessed",
+      "disposition": "retained_with_gate",
+      "reason": "Only selected views full resolution; browser/network/latency target open.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P5.08",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "coordinate interpretation explicit",
+      "origin_reference": "plan.md P5 complete paragraph",
+      "final_reference": "final O4 P5; O6 P5",
+      "assessment": "assessed",
+      "disposition": "partial",
+      "reason": "Canvas-versus-image-versus-viewport separation correct, but local/direct input normalization missing. Pointer event flip/current-state contract should be named.",
+      "evidence": [
+        "C40"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "P6.01",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "validate multi-view objects",
+      "origin_reference": "plan.md P6 complete paragraph",
+      "final_reference": "final O4 P6; O6 P6",
+      "assessment": "assessed",
+      "disposition": "proposed_retained",
+      "reason": "Front/back/detail manifests and stable view IDs.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P6.02",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "validate source replacement",
+      "origin_reference": "plan.md P6 complete paragraph",
+      "final_reference": "final O4 P6; O6 P6",
+      "assessment": "assessed",
+      "disposition": "proposed_retained",
+      "reason": "Changed ID/dimensions, same URI/dimensions and stable Canvas/replaced image.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P6.03",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "validate package reopen",
+      "origin_reference": "plan.md P6 complete paragraph",
+      "final_reference": "final O4 P6; O6 P6",
+      "assessment": "assessed",
+      "disposition": "proposed_retained",
+      "reason": "Save/export/reopen with source/rights/notes/lineage checks.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P6.04",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "validate region geometry",
+      "origin_reference": "plan.md P6 complete paragraph",
+      "final_reference": "final O4 P6; O6 P6",
+      "assessment": "assessed",
+      "disposition": "proposed_retained",
+      "reason": "Known Canvas points, mapping round trip and resize/zoom/pan/rotate/flip.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P6.05",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "validate missing images",
+      "origin_reference": "plan.md P6 complete paragraph",
+      "final_reference": "final O4 P6; O6 P6",
+      "assessment": "assessed",
+      "disposition": "proposed_retained",
+      "reason": "Unavailable/CORS/missing service and denied source cases.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P6.06",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "validate rights-dependent export",
+      "origin_reference": "plan.md P6 complete paragraph",
+      "final_reference": "final O4 P6; O6 P6",
+      "assessment": "assessed",
+      "disposition": "proposed_retained",
+      "reason": "Inspect ZIP for partner-byte exclusion and allowed local thumbnail/export policy.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P6.07",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "original plan has no pinned component",
+      "origin_reference": "plan.md P6 complete paragraph",
+      "final_reference": "final O4 P6; O6 P6",
+      "assessment": "assessed",
+      "disposition": "acknowledged_and_replaced",
+      "reason": "Final introduces provisional full commit; no inference of a pre-existing pin.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "P6.08",
+      "kind": "original_plan_clause",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "original plan has no executed interoperability test",
+      "origin_reference": "plan.md P6 complete paragraph",
+      "final_reference": "final O4 P6; O6 P6",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Final explicitly says no application/interoperability test ran.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q01",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "browser curator desk and review exchange, not full collection management",
+      "origin_reference": "Brief frozen scope and first paragraph",
+      "final_reference": "final entire replacement",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Browser/review scope retained; no CMS, recognition or live editing expansion.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q02",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "50 objects per session, each may have several views",
+      "origin_reference": "P1",
+      "final_reference": "O6 P1/P6.7",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Capacity is a proposed witness, not a measured result.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q03",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "source identifier and rights retained per source",
+      "origin_reference": "P1",
+      "final_reference": "O6 P1/P3",
+      "assessment": "assessed",
+      "disposition": "retained_with_gap",
+      "reason": "Per-source rights preserved; synthetic identity path absent for local/direct inputs (M2).",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q04",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "comparison selects two views",
+      "origin_reference": "P2",
+      "final_reference": "O6 P2/P5",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Two panes, not all views eagerly loaded.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q05",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "rectangles and polygons both remain MVP note shapes",
+      "origin_reference": "P2",
+      "final_reference": "O6 P2/P6.2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Both authoring modes and keyboard paths proposed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q06",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "view identity, geometry, author text and status travel with a note",
+      "origin_reference": "P2",
+      "final_reference": "O6 P2/P3",
+      "assessment": "assessed",
+      "disposition": "retained_with_gap",
+      "reason": "Fields retained; M2 affects target identity for source types without Canvas.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q07",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "no visual recognition in MVP",
+      "origin_reference": "P2",
+      "final_reference": "O6 P2",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Negative constraint explicit.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q08",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "thumbnail selection restricted to locally owned assets",
+      "origin_reference": "P3",
+      "final_reference": "O6 P3/P6.5",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Owned/cleared allowlist and optional local export.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q09",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "museum has no authority to republish partner images",
+      "origin_reference": "brief paragraph 1; P3",
+      "final_reference": "O6 P1/P3/P4",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "No partner bundle/proxy persistence; policy strengthened consistently.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q10",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "source failures include unavailable, changed and denied",
+      "origin_reference": "P3",
+      "final_reference": "O6 P3/P6.4",
+      "assessment": "assessed",
+      "disposition": "retained_with_uncertainty",
+      "reason": "Retains all three; change detection limited by actual signals.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q11",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "failed source reopen preserves existing annotations",
+      "origin_reference": "P3",
+      "final_reference": "O6 P3",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Does not delete note or silently substitute view.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q12",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "institutional storage, independent review, live co-edit deferred",
+      "origin_reference": "P4",
+      "final_reference": "O6 P4",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Branch/diff proposal, no co-edit scope shift.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q13",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "conflicts specifically include imported divergent revisions",
+      "origin_reference": "P4",
+      "final_reference": "O6 P4/P6.6",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Both descendants preserved; explicit resolution.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q14",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "keyboard, focus, rights readability and bandwidth are MVP concerns",
+      "origin_reference": "P5",
+      "final_reference": "O6 P2/P5/P6.7",
+      "assessment": "assessed",
+      "disposition": "retained",
+      "reason": "Concrete proposals; no usability/performance proof claimed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "Q15",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "explicit coordinate interpretation applies to every original source type",
+      "origin_reference": "P1 plus P5",
+      "final_reference": "O6 P1/P2",
+      "assessment": "assessed",
+      "disposition": "partial",
+      "reason": "Presentation mapping addressed; local/direct normalization omitted (M2).",
+      "evidence": [],
+      "finding_id": "M2"
+    },
+    {
+      "id": "Q16",
+      "kind": "original_condition",
+      "axes": [
+        1,
+        5
+      ],
+      "requirement_or_claim": "no supplied component pin or executed interoperability result",
+      "origin_reference": "P6",
+      "final_reference": "O2/O6 P6",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Provisional pin replaces indecision; no test result fabricated.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "C01",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Manifest/Canvas identifies object views rather than pane order",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Presentation 3 \u00a7\u00a72,5.2,5.3; stable identifier is a model, not a content-integrity guarantee.",
+      "evidence": [
+        "iiif-presentation3"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C02",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Canvas dimensions need not equal image pixels",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Presentation 3 height/width are unitless; cookbook 0004 demonstrates 3x image dimensions.",
+      "evidence": [
+        "iiif-presentation3",
+        "iiif-canvas-size-recipe"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C03",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Rendered content must be scaled into Canvas space; painting placement matters",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_with_conditions",
+      "reason": "Presentation 3 \u00a75.3 requires scaling; offset/selector/multiple bodies need an interpreted supported mapping. Cookbook 0004 also requires consistent aspect ratio.",
+      "evidence": [
+        "iiif-presentation3",
+        "iiif-canvas-size-recipe"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C04",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Presentation 2.1.1 uses separate legacy shapes",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "2.1.1 has @id/@type, sequences/images/otherContent and Open Annotation; 3.0 has items/AnnotationPage. Legacy attribution/license also need adapter mapping.",
+      "evidence": [
+        "iiif-presentation2.1.1",
+        "iiif-presentation3"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C05",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "First-release Presentation 2.1.1 support is inventory-dependent product choice",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "product_choice",
+      "reason": "No guaranteed parser coverage claimed; choice is retained rather than scientifically compelled.",
+      "evidence": [
+        "iiif-presentation2.1.1"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C06",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "SpecificResource provides source plus selector",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "W3C Recommendation 2017-02-23 \u00a74.1 supports identifying selected source regions; app JSON-LD context/extensions still need implementation fixtures.",
+      "evidence": [
+        "web-annotation-model"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C07",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Rectangle FragmentSelector uses xywh and conformsTo",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_with_conditions",
+      "reason": "W3C \u00a74.2.1 and Media Fragments \u00a74.2.2. Integers/pixel or percent semantics need serializer precision/clamping; Canvas uses IIIF coordinate convention, not raw source-image dimensions.",
+      "evidence": [
+        "web-annotation-model",
+        "media-frags",
+        "iiif-presentation3"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C08",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "SvgSelector polygons use the selected source dimensions",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_with_conditions",
+      "reason": "W3C \u00a74.2.7 requires well-formed SVG and shape dimensions relative to source; Canvas-targeted shape must use its own frame. No app serialization witness exists.",
+      "evidence": [
+        "web-annotation-model"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C09",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Image API specifies region and size requests",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Image API 3.0 \u00a7\u00a74.1\u20134.2; service profiles constrain actually supported requests.",
+      "evidence": [
+        "iiif-image3"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C10",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Pinned OSD recognizes Image API contexts 1\u20133",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "IIIFTileSource.supports/configure at full commit; this is conditional info-document recognition, not universal feature compatibility.",
+      "evidence": [
+        "osd-v6.1.1-iiiftilesource"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C11",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "OSD IIIF tile source does not parse Presentation Manifests",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "supports/configure consume service information; Canvas selection and Manifest navigation are separate app responsibilities.",
+      "evidence": [
+        "osd-v6.1.1-iiiftilesource"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C12",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Viewer.addOverlay takes viewport-relative locations",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Viewer.addOverlay docs/caller lines 2600\u20132654 and Overlay constructor/draw path; not Web Annotation geometry.",
+      "evidence": [
+        "osd-v6.1.1-viewer",
+        "osd-v6.1.1-overlay"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C13",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "OSD HTML overlays handle rotation/flip/content direction",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_with_conditions",
+      "reason": "Overlay.drawHTML/_getOverlayPositionAndSize and config option handle HTML overlays; SVG app layer must implement its own mapping.",
+      "evidence": [
+        "osd-v6.1.1-overlay",
+        "osd-v6.1.1-openseadragon",
+        "osd-v6.1.1-viewer"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C14",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Viewport conversions warn about multiple images",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Viewport.viewportToImageCoordinates and imageToViewportCoordinates direct callers to per-TiledImage methods; one pane/image is defensible, not required by OSD.",
+      "evidence": [
+        "osd-v6.1.1-viewport"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C15",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "TiledImage conversions suffice only with a defined pointer-event/current-state contract",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_with_additional_condition",
+      "reason": "TiledImage.viewportToImageCoordinates defaults current=false; raw viewer-element methods do not themselves mirror viewport flip. Viewer.onCanvasClick mirrors x before publishing canvas-click. Avoid missing or double flip depending on event source. Final proposes flip tests but omits this caller choice.",
+      "evidence": [
+        "osd-v6.1.1-tiledimage",
+        "osd-v6.1.1-viewer",
+        "osd-v6.1.1-viewport"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C16",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "OSD v6.1.1 maps to commit 201d47833e3f10e9fa55159cd4203630521926b8",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "corroborated_fresh_with_tag_metadata_limit",
+      "reason": "Supplied annotated-tag chain verified by frozen hashes. Fresh release page links selected commit; tagged and full-SHA IIIF bytes match and pinned package.json says 6.1.1. Fresh GitHub tag API blocked 403.",
+      "evidence": [
+        "osd-tag-ref",
+        "osd-tag-object",
+        "osd-release611-html",
+        "osd-tagged-iiif",
+        "osd-selected-package",
+        "osd-v6.1.1-iiiftilesource"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C17",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Selected release was published 2026-09-09",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Frozen release published_at and fresh HTML time metadata agree. Current release page marks v6.1.1 Latest.",
+      "evidence": [
+        "osd-release-v6.1.1",
+        "osd-release611-html"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C18",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "v6.1.1 fixes an empty IIIF sizes array failure",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Release note #2963 plus constructor guards this.sizes && this.sizes.length > 0 at lines 137/168. Acceptance fixture proposed, not executed.",
+      "evidence": [
+        "osd-release611-html",
+        "osd-v6.1.1-iiiftilesource",
+        "osd-selected-changelog"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C19",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Tag unsigned and release not immutable",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_frozen_current_unknown",
+      "reason": "Admitted API payload verification.reason=unsigned and immutable=false. Fresh API denied; do not claim newly verified signature state. Pin full code SHA still valid.",
+      "evidence": [
+        "osd-tag-object",
+        "osd-release-v6.1.1"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C20",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "OSD #1614 reports unflipped/oppositely moving overlay",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Frozen issue and fresh issue HTML describe specific flipped-view overlay defect; issue closed July 2024.",
+      "evidence": [
+        "osd-issue-1614",
+        "osd-issue-html"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C21",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Issue reproduced on OSD 3.0.0 in Dec 2021",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_as_report",
+      "reason": "Frozen comment 2021-12-28 says still present on 3.0.0. This is reporter evidence, not assessor execution or earliest affected release.",
+      "evidence": [
+        "osd-issue-1614-comments",
+        "osd-issue-html"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C22",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "PR #2546 merged 2024-07-16 correcting flip positioning",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Fresh PR discussion and frozen merge SHA 819d4cb20c2abd08c7622b9358ccafde8bc2e673; changed code and selected release code inspected.",
+      "evidence": [
+        "osd-pr-2546",
+        "osd-pr-html",
+        "osd-pr2546-overlay"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C23",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Historical changed demo is not an automated regression test",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_but_strict_partial_requirement_unwarranted",
+      "reason": "Changed files include test/demo/overlay.html. PR maintainer reports manual reproduction, additional correction and four registered overlays. Brief does not require automation or a demonstrated introducing release.",
+      "evidence": [
+        "osd-pr-2546-files",
+        "osd-pr2546-demo",
+        "osd-pr-html"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C24",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Fix shipped in 5.0.0 and relevant behavior persists in 6.1.1",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Fresh 5.0.0 release explicitly lists #2546; selected full-SHA overlay contains flip positioning and content-direction handling. No application validation inferred.",
+      "evidence": [
+        "osd-release500-html",
+        "osd-v6.1.1-overlay",
+        "osd-selected-changelog"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C25",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "PR body says Fixes #2450; direct #1614 reference not in body",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_with_context",
+      "reason": "Body qualification correct. Supplied #1614 comment explicitly links #2546; fresh PR timeline links #1614 and records closure. Stronger implication that chain lacks association would be wrong, but final confines its statement to body.",
+      "evidence": [
+        "osd-pr-2546",
+        "osd-issue-1614-comments",
+        "osd-pr-html"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C26",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "rights informative, requiredStatement must be discoverable",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Presentation 3 \u00a73.1 rendering rules; initially hidden statement requires obvious reveal. v2 attribution/license differ and require normalization.",
+      "evidence": [
+        "iiif-presentation3",
+        "iiif-rights-recipe",
+        "iiif-presentation2.1.1"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C27",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "rights metadata does not automatically give museum republication authority",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_as_scope_constraint",
+      "reason": "Original brief explicitly denies authority. Standard identifies informative assertion; policy choice is conservatively consistent. No legal opinion or provider permission test claimed.",
+      "evidence": [
+        "iiif-presentation3",
+        "iiif-rights-recipe"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C28",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Auth Flow 2.0 guides provider access without defining actual authentication",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Auth 2.0 introduction explicitly places authentication process outside specification; provider/session/CORS conditions persist. Authentication advertising elsewhere does not prove Auth 2.0.",
+      "evidence": [
+        "iiif-auth2"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C29",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Admitted Mirador homepage does not establish advertised v2/v3 support or authentication",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "incorrect_source_disposition",
+      "reason": "Identical frozen/fresh hash has IIIF API Support listing v2/v3 Image and Presentation plus Authentication. Critic accurately described advertised features. This does not prove exact implementation, Auth 2.0, provider fit or package compatibility.",
+      "evidence": [
+        "mirador-home",
+        "mirador-release4",
+        "mirador-annotation-status"
+      ],
+      "finding_id": "M1"
+    },
+    {
+      "id": "C30",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Mirador serious alternative but package/revision/rights fit unresolved",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_with_conditions",
+      "reason": "Project advertises comparison, plugin annotation and workspace export/import. 4.0 announcement distinguishes core annotations/plugin compatibility and future Auth 2.0 work. Workflow validation remains needed.",
+      "evidence": [
+        "mirador-home",
+        "mirador-annotation-status"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C31",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "UV homepage supports viewing, OSD zoom, embedding and IIIF Auth",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_bounded",
+      "reason": "Supplied and fresh pages support these features. Homepage does not certify polygon authoring, two-pane review, package persistence or Auth 2.0 version.",
+      "evidence": [
+        "universalviewer-home"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C32",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Tropy is an inspection analogy, not full browser/shared-review selection",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported",
+      "reason": "Docs explain desktop photo organization, selections/notes and personal-computer scope; useful mechanism retained rather than global rejection.",
+      "evidence": [
+        "tropy-basics",
+        "tropy-selections"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C33",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Annotorious #599 is a narrow reported production-bundler regression",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_as_report_with_conditions",
+      "reason": "Frozen/fresh issue says 3.7.13 onward, 3.7.19 broken, 3.7.4 working, Next 16 Webpack production, React 19, OSD 5.0.1. Reporter root-cause theory not independently proven; no inference for OSD 6.1.1.",
+      "evidence": [
+        "annotorious-regression-599",
+        "annotorious-issue-html"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C34",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Same URI and dimensions cannot prove unchanged pixels",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_logical_limit",
+      "reason": "Two different byte contents can share URI/dimensions; no remote hash/version signal available by plan policy. Export/reopen labels uncertainty honestly.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "C35",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Stable Canvas can preserve geometry through image resolution replacement",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_with_conditions",
+      "reason": "Cookbook 0004 supports preserved framing/scaling and requires consistent aspect ratio. Different composition/crop/content requires mapping/content review; stable ID alone cannot preserve semantic region.",
+      "evidence": [
+        "iiif-canvas-size-recipe",
+        "iiif-presentation3"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C36",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Never bundle/proxy/persist partner pixels is proposed policy",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "consistent_product_choice",
+      "reason": "No-republication user constraint preserved. Direct browser retrieval still transfers tiles; prohibition is on republishing/server persistence, not literal no network download.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "C37",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Revision parents, visible divergent imports and explicit resolution",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_product_design",
+      "reason": "Meets P4; no implementation correctness or identity authenticity guaranteed until institutional choices and tests. Alternatives not forced by a component.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "C38",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Numeric rectangles and keyboard polygon vertices meet intended accessibility path",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "proposed_not_validated",
+      "reason": "Appropriate concrete MVP proposal; curator usability and accessible interaction not executed.",
+      "evidence": [
+        "osd-v6.1.1-viewer"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C39",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Two full-resolution views and lazy loading solve low-bandwidth requirements",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "proposal_without_performance_guarantee",
+      "reason": "Reduces eager loading but bandwidth/latency need defined network/browser/payload measurements; final makes no speed guarantee.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "C40",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Every input can use required Canvas URI and Canvas-target notes without additional normalization",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "incomplete_contract",
+      "reason": "Local upload/direct Image API input lacks provider Canvas/Manifest. Final gives local ID/hash but no synthetic Canvas URI/frame/lifecycle. Original P1 includes both paths; Image API does not create Presentation Canvas.",
+      "evidence": [
+        "iiif-image3",
+        "iiif-presentation3",
+        "iiif-simple-local-canvas"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "C41",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Discovery preceded plan comparison",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "reported_unverified",
+      "reason": "Research artifact contains internally mixed chronology wording; source captures/maps report process, do not authenticate event order. Final correctly marks it reported.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "C42",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "Recogito had insufficient admitted primary evidence for product disposition",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "accurate_for_frozen_record_optional_lead_now_supported",
+      "reason": "No predecessor primary Recogito capture is declared. Own author/project primary examples now support a historical IIIF/annotation analogy, not current package/production fit.",
+      "evidence": [
+        "recogito-readme",
+        "recogito-iiif-example"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "C43",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "No application build/test/interoperability run was executed",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "consistent_authored_evidence_not_independently_runtime_audited",
+      "reason": "All admitted artifacts say none; maps list retrieval/hash checks only. No app execution credited. No outside runtime logs admitted.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "C44",
+      "kind": "consequential_claim",
+      "axes": [
+        2
+      ],
+      "requirement_or_claim": "App owns SVG geometry/editor/parser/package/revisions",
+      "origin_reference": "final O1\u2013O6 scientific assertions",
+      "final_reference": "final O1/O2/O3/O5; O6 P1\u2013P6",
+      "assessment": "assessed",
+      "disposition": "supported_architectural_boundary",
+      "reason": "Pinned OSD code defines image/overlay infrastructure, not museum annotation editor and exchange workflow. The plan correctly requires app witnesses.",
+      "evidence": [
+        "osd-v6.1.1-overlay",
+        "osd-v6.1.1-iiiftilesource"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D01",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Content State API 1.0 comparison handoff",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "optional_useful_omission",
+      "reason": "Exact admitted multiple-Canvas recipe is primarily a Content State sharing/workspace recipe. Final reduces it to view identity; compatible viewers can open selected Canvases/regions via content-state target/partOf. Does not replace annotation ZIP, revisions or guarantee side-by-side UI.",
+      "evidence": [
+        "iiif-multicanvas-recipe",
+        "iiif-content-state"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D02",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Mirador workspace state export/import",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "optional_useful_omission",
+      "reason": "Admitted homepage advertises state import/export for reuse; useful reopen/comparison mechanism, not proof annotation store or review ZIP matches. API support advertisements incorrectly narrowed (M1).",
+      "evidence": [
+        "mirador-home"
+      ],
+      "finding_id": "M1"
+    },
+    {
+      "id": "D03",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Annotorious rectangle/polygon editor plus W3C adapter",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "retained_but_underinvestigated",
+      "reason": "Correct public docs now captured demonstrate built-in rectangle/polygon tools, OSD integration and W3CImageFormat. Adapter source parameter alone does not transform image pixels into Canvas coordinates. Version and bundler gates retained; no global rejection.",
+      "evidence": [
+        "annotorious-start",
+        "annotorious-osd-api",
+        "annotorious-data-model",
+        "annotorious-issue-html"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D04",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Mirador 4 annotation-plugin ecology",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "retained_alternative_with_useful_version_condition",
+      "reason": "4.0 announcement notes annotation-plugin rewrites and compatible forks/MAE, while Auth Flow 2.0 was upcoming. Select exact plugin/release before compatibility claim.",
+      "evidence": [
+        "mirador-annotation-status",
+        "mirador-release4"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D05",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "UV viewing/access option",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "retained_bounded",
+      "reason": "Primary homepage supports manifest viewing/OSD zoom/auth/deep links; no polygon/package/revision claim or rejection.",
+      "evidence": [
+        "universalviewer-home"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D06",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Tropy selections and notes",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "retained_analogy_negative_full_fit",
+      "reason": "Primary desktop workflow can inform region/notes interaction, but not evidence of browser/shared-package solution.",
+      "evidence": [
+        "tropy-basics",
+        "tropy-selections"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D07",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Recogito historical IIIF/W3C analogy",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "uncertain_optional_lead",
+      "reason": "Original unadjudicated disposition justified for admitted captures. Own project/author 2019 example supports remote IIIF annotations with bounding-box Web Annotation export. README lists old Java/SBT/ES stack; current secure maintained deployment/geometry/package fit unverified.",
+      "evidence": [
+        "recogito-readme",
+        "recogito-iiif-example"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D08",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Synthesize owned Canvas descriptions for standalone/local inputs",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "necessary_scope_mechanism_omitted",
+      "reason": "A concrete way to preserve original inputs under the selected coordinate architecture; alternatives include distinct source targets with explicit normalization. It is a required missing design decision, not an optional expansion or assessor rewrite.",
+      "evidence": [
+        "iiif-simple-local-canvas",
+        "iiif-presentation3",
+        "iiif-image3"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "D09",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Pointer event provenance, flip compensation and current geometry",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "useful_implementation_condition_omitted",
+      "reason": "Pinned code shows raw TiledImage conversion and Viewer canvas-click compensation differ. Explicitly choose event path and current=true to avoid mirror or animation mismatch; final already proposes flip/rotation witnesses.",
+      "evidence": [
+        "osd-v6.1.1-tiledimage",
+        "osd-v6.1.1-viewer",
+        "osd-v6.1.1-viewport"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D10",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "OSD overlay DOM evolution after #2546",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "useful_history_limit",
+      "reason": "#2576 reports React portal removal problems after 5.0 innerHTML wrapping. Selected 6.1.1 uses separate wrapper element; no fresh fix/release chain for #2576 established, so no universal React compatibility claim. App SVG separation already avoids relying on legacy HTML mutation.",
+      "evidence": [
+        "osd-2576-html",
+        "osd-pr2546-overlay",
+        "osd-v6.1.1-overlay"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D11",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Provider thumbnails without redistribution",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "already_conditioned_not_required_expansion",
+      "reason": "Presentation thumbnail references/preview mechanisms could improve low-bandwidth display without ZIP pixels, conditional on rights/CORS/provider availability. Final selected views/lazy loading already addresses bandwidth, no need to force caching or republishing.",
+      "evidence": [
+        "iiif-presentation3"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "D12",
+      "kind": "bounded_discovery",
+      "axes": [
+        3
+      ],
+      "requirement_or_claim": "Image replacement preserving Canvas framing",
+      "origin_reference": "original O1; own bounded primary discovery",
+      "final_reference": "final O1/O5; O6 P1/P3/P5/P6",
+      "assessment": "assessed",
+      "disposition": "already_covered_with_condition",
+      "reason": "Final P6 tests scaling/stable-Canvas replacement. Recipe requires compatible aspect ratio/framing; does not guarantee annotation semantics after arbitrary changed content.",
+      "evidence": [
+        "iiif-canvas-size-recipe"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K01",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Preserve Manifest/Canvas identity",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final retains stable URIs and explicitly excludes pane/index identity.",
+      "evidence": [
+        "C01"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K02",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Preserve W3C selectors and Image API boundary",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final keeps selectors, separates Presentation parser from OSD service handling.",
+      "evidence": [
+        "C06",
+        "C07",
+        "C08",
+        "C11"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K03",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Preserve rights and requiredStatement distinction",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final O5 and replacement P1/P3 carry rendering and permission distinction.",
+      "evidence": [
+        "C26",
+        "C27"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K04",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Preserve multiple-Canvas lead",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_but_mechanism_reduced",
+      "reason": "View selection retained; optional Content State sharing function of recipe omitted.",
+      "evidence": [
+        "D01"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K05",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Mirador remains serious full-viewer alternative",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "P5 comparison gates retained; no forced product selection.",
+      "evidence": [
+        "C30"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K06",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Mirador homepage advertises v2/v3 Image/Presentation and authentication",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "incorrectly_narrowed",
+      "reason": "Critic stated advertised features, supported by exact frozen capture. Final O5 row 7 falsely says capture does not establish these features; advertisement and verified workflow should be separated.",
+      "evidence": [
+        "C29",
+        "M1"
+      ],
+      "finding_id": "M1"
+    },
+    {
+      "id": "K07",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Test Mirador annotation persistence/package/revision fit",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final keeps same witnesses and unresolved fit; correct qualification.",
+      "evidence": [
+        "C30",
+        "D04"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K08",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Add UV as bounded viewing/access lead",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final O1/O5/P5 keeps narrower feature bounds, no polygon/package proof.",
+      "evidence": [
+        "C31",
+        "D05"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K09",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Tropy only analogy, reject full browser/shared-review fit",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final keeps selections/notes while not selecting desktop workflow.",
+      "evidence": [
+        "C32",
+        "D06"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K10",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Annotorious #599 conditional, not global rejection or OSD6 proof",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Exact reported environment/version pair retained; production pin checks proposed.",
+      "evidence": [
+        "C33",
+        "D03"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K11",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Recogito unadjudicated without admitted evidence",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final does not claim rejected; reviewer has optional historical primary evidence separately.",
+      "evidence": [
+        "C42",
+        "D07"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K12",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Discovery chronology is reported, not independently proven",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final explicitly qualifies ordering claim.",
+      "evidence": [
+        "C41"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K13",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Tag-chain pin with unsigned/nonimmutable provenance limit",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final retains full SHA and does not conflate helper label with authentication.",
+      "evidence": [
+        "C16",
+        "C19"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K14",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Add empty-sizes fixture named in v6.1.1 notes",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final P6.3 names fixture; not reported executed.",
+      "evidence": [
+        "C18"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K15",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "OSD Image API support does not certify Manifest parser",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Separate versioned adapter explicit.",
+      "evidence": [
+        "C11"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K16",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "HTML addOverlay location is not serialized region geometry",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Separate persisted Canvas geometry and app SVG layer.",
+      "evidence": [
+        "C12",
+        "C13"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K17",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "App owns polygon drawing/editor and workflow",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final P2/P5 app responsibility explicit.",
+      "evidence": [
+        "C44"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K18",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Use image-specific TiledImage rather than inaccurate multi-image Viewport conversion",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved_with_caller_limit",
+      "reason": "Source method boundary correct; final must still define pointer event and flip/current-state contract.",
+      "evidence": [
+        "C14",
+        "C15"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K19",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Test app SVG through resize/crop/rotation/flip/source replacement",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final P6.2 includes relevant mapping witnesses.",
+      "evidence": [
+        "V02"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K20",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "O3 demo is not automated regression test",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved_strict_requirement_not_in_brief",
+      "reason": "Correct negative factual statement retained. Reviewer does not adopt added requirement that only automated evidence satisfies original O3.",
+      "evidence": [
+        "C23"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K21",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "O3 has no proven defect-introducing release",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "No earliest-introducing-version claim fabricated. This is a historical limit, not automatic O3 failure.",
+      "evidence": [
+        "C21",
+        "C23"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K22",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Issue links PR; body says Fixes #2450, not #1614",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved_with_qualification",
+      "reason": "Final limits no-direct-reference statement to PR body. Exact issue comment and fresh timeline support association, despite body wording.",
+      "evidence": [
+        "C25"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K23",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Separate Presentation2.1.1 legacy input from W3C output",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Versioned adapters and normalized output explicit; v2 rights alias mapping remains a fixture detail.",
+      "evidence": [
+        "C04",
+        "C06"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K24",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Canvas is canonical frame and dimensions unitless",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved_with_original_input_gap",
+      "reason": "Material coordinate correction retained, but not extended coherently to original local/direct inputs.",
+      "evidence": [
+        "C02",
+        "C40",
+        "M2"
+      ],
+      "finding_id": "M2"
+    },
+    {
+      "id": "K25",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Image-to-Canvas mapping explicit/versioned/persisted or reproducible",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final P2 stores inputs/version and flags ambiguous sources.",
+      "evidence": [
+        "C03"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K26",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Multiple/offset/ambiguous painting bodies unsupported rather than guessed",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Supported subset and explicit unsupported state preserved, with fixtures/product choice.",
+      "evidence": [
+        "C03",
+        "V01"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K27",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "FragmentSelector conformsTo Media Fragments",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final P2 and O5 expressly add conformsTo.",
+      "evidence": [
+        "C07"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K28",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "SvgSelector dimensions aligned to Canvas/source",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final says same declared Canvas frame; exact well-formed serializer still proposed.",
+      "evidence": [
+        "C08"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K29",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "No partner bytes/crops/screenshots; decide text/metadata/URI export policy",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final strengthened negative package rule and institutional export decision.",
+      "evidence": [
+        "C27",
+        "C36"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K30",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Same URI/dimensions insufficient for unchanged pixels",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final explicitly says not detected, not proven unchanged.",
+      "evidence": [
+        "C34"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K31",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Stable Canvas mapping can survive resolution change",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved_with_condition",
+      "reason": "Final includes witness; recipe aspect-ratio/framing requirement deserves explicit acceptance fixture.",
+      "evidence": [
+        "C35",
+        "D12"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K32",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Conflicts retain both histories and explicit curator outcome",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final P4/P6.6 satisfies required surfaced divergence.",
+      "evidence": [
+        "C37"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K33",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Identity and imported ancestry must be chosen before implementation",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final P4 choice includes institutional login versus entered label and ancestry rules.",
+      "evidence": [
+        "C37"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K34",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Keyboard numeric rectangles/polygon vertices need curator validation",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final retains both proposals and keyboard witness, no usability result.",
+      "evidence": [
+        "C38",
+        "V07"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K35",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "All original acceptance witnesses plus parser/geometry/source/rights additions",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved",
+      "reason": "Final seven proposed groups cover original P6 and additional cases.",
+      "evidence": [
+        "V01",
+        "V02",
+        "V03",
+        "V04",
+        "V05",
+        "V06",
+        "V07"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K36",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "First release Presentation2.1.1 choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision",
+      "reason": "Final product-decision list and P1 retain inventory-based gate.",
+      "evidence": [
+        "C05"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K37",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Supported Manifest/body/selector structures choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision",
+      "reason": "Final subset and unsupported structures explicit.",
+      "evidence": [
+        "V01"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K38",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "IIIF Authorization Flow2.0 choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision",
+      "reason": "Final restricted-provider option/denied state explicit.",
+      "evidence": [
+        "C28"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K39",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Mirador versus OSD+adapter choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision_with_evidence_error",
+      "reason": "Choice remains open; M1 narrows supporting feature evidence inaccurately.",
+      "evidence": [
+        "C29",
+        "C30"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K40",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Curator identity choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision",
+      "reason": "Login versus entered attribution retained.",
+      "evidence": [
+        "C37"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K41",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Local upload retention policy choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision",
+      "reason": "Owned/cleared institutional retention remains explicit gate.",
+      "evidence": [
+        "C36"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K42",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Thumbnail allowlist choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision",
+      "reason": "Optional institution-owned/cleared local thumbnails retained.",
+      "evidence": [
+        "V05"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K43",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Annotation text/metadata/URI export choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision",
+      "reason": "Institutional policy retained; not converted into automatic image-rights prohibition.",
+      "evidence": [
+        "V05"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K44",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Browser/network/latency acceptance choice",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_open_decision",
+      "reason": "Final keeps curator-agreed measurable targets and no speed claim.",
+      "evidence": [
+        "C39"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "K45",
+      "kind": "criticism_disposition",
+      "axes": [
+        4
+      ],
+      "requirement_or_claim": "Helper commit label alone cannot authenticate code",
+      "origin_reference": "full critic-v2 artifact O1\u2013O6 (including O5 register)",
+      "final_reference": "final O5 register and O6 replacement",
+      "assessment": "assessed",
+      "disposition": "accepted_preserved_hypothetical_guard",
+      "reason": "Research already warned about this; criticism is a guard, not proof predecessor made that error. Final retains the boundary.",
+      "evidence": [
+        "C16"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S01",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research stable object/view source identifiers",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Canvas/provider/desk IDs retained; local/direct normalization gap remains M2.",
+      "evidence": [
+        "C01",
+        "C40"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S02",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research two-pane OSD candidate and single-image simplification",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Now provisional rather than unconditional selection, preserving alternative choice.",
+      "evidence": [
+        "C14"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S03",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research ambiguous image/Canvas coordinate wording",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "corrected_supported",
+      "reason": "Canonical Canvas plus explicit image mapping improves ambiguity; source evidence valid.",
+      "evidence": [
+        "C02",
+        "C03"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S04",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research rectangle and polygon exchange mechanisms",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved_and_specified",
+      "reason": "W3C sources/selectors, conformsTo, SVG frame retained.",
+      "evidence": [
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S05",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research OSD full SHA and release identity",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved_with_provenance_limit",
+      "reason": "Full immutable code pin carried; unsigned release provenance honestly bounded.",
+      "evidence": [
+        "C16",
+        "C19"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S06",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research OSD overlay defect/fix/demo/shipped history",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved_and_qualified",
+      "reason": "Chain retained; no app proof or introducing-version fabrication.",
+      "evidence": [
+        "C20",
+        "C22",
+        "C23",
+        "C24"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S07",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research Manifest adapter product boundary",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved_and_specified",
+      "reason": "Separate versioned legacy/current adapters and subset fixtures retained.",
+      "evidence": [
+        "C04",
+        "C11"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S08",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research Mirador API support and serious alternative",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "partially_preserved_incorrect_narrowing",
+      "reason": "Alternative retained but advertised API/auth claims incorrectly stripped/narrowed.",
+      "evidence": [
+        "C29",
+        "M1"
+      ],
+      "finding_id": "M1"
+    },
+    {
+      "id": "S09",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research Annotorious warning and conditional opportunity",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "No universal rejection, reported 3.7.4 workaround not adopted as verified pin.",
+      "evidence": [
+        "C33"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S10",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research Tropy negative full-fit finding with useful analogy",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Selection/note analogy survives narrower product scope.",
+      "evidence": [
+        "C32"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S11",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research rights/requiredStatement/access distinctions",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "No rights-as-permission conflation.",
+      "evidence": [
+        "C26",
+        "C27",
+        "C28"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S12",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research no-partner-byte package policy and local thumbnails",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Package negative constraints and local-owned allowlist carried.",
+      "evidence": [
+        "C36"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S13",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research source-change uncertainty",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Same URI/dimensions explicitly not proof of pixel identity.",
+      "evidence": [
+        "C34"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S14",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research independent revision conflict semantics",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Both histories, parent lineage and explicit resolution carried.",
+      "evidence": [
+        "C37"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S15",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research keyboard and lazy-loading MVP additions",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Numeric rectangle, polygon vertices, accessible status and two-view load retained.",
+      "evidence": [
+        "C38",
+        "C39"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S16",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Research seven acceptance proposal groups and no executed app checks",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved_and_extended",
+      "reason": "Original witnesses remain, enriched with parser/mapping/empty-sizes/auth/rights cases.",
+      "evidence": [
+        "V01",
+        "V02",
+        "V03",
+        "V04",
+        "V05",
+        "V06",
+        "V07",
+        "C43"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S17",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Critic UV addition and Recogito uncertainty",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "UV bounded accepted, Recogito unadjudicated in final.",
+      "evidence": [
+        "C31",
+        "C42"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S18",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Critic v2.1.1 first-release and Manifest-subset conditions",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Decisions remain gates rather than component guarantees.",
+      "evidence": [
+        "K36",
+        "K37"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S19",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Critic institution identity/local-retention/thumbnail/export-policy decisions",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Final open-decision list retains all four categories and ancestry.",
+      "evidence": [
+        "K40",
+        "K41",
+        "K42",
+        "K43"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "S20",
+      "kind": "predecessor_preservation",
+      "axes": [
+        5
+      ],
+      "requirement_or_claim": "Critic provenance/chronology/parser/provider/workflow uncertainty",
+      "origin_reference": "full research-v2 and critic-v2 admitted artifacts/source maps",
+      "final_reference": "final O1\u2013O6 and uncertainty list",
+      "assessment": "assessed",
+      "disposition": "preserved",
+      "reason": "Final no signed provenance, no guaranteed source identity/change detection or product fit; no independent chronology claim.",
+      "evidence": [
+        "C16",
+        "C19",
+        "C28",
+        "C30",
+        "C41"
+      ],
+      "finding_id": null
+    },
+    {
+      "id": "V01",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Manifest/version/identity fixtures",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final P6.1",
+      "assessment": "assessed",
+      "disposition": "proposed_not_executed",
+      "reason": "Final P6.1 adds v2.1.1/3.0, multi-view, missing service, alternate/multiple/offset/unsupported data. Neither parser nor interchange validated.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V02",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Canvas mapping and region geometry round trips",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final P6.2",
+      "assessment": "assessed",
+      "disposition": "proposed_not_executed",
+      "reason": "Final P6.2 uses local/Image API2/3 and dimension/offset/crop/multiple cases plus resize/zoom/pan/rotation/flip; coordinate truth not experimentally confirmed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V03",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "OSD empty sizes and automated overlay/SVG regression",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final P6.3",
+      "assessment": "assessed",
+      "disposition": "proposed_not_executed",
+      "reason": "Final P6.3 correctly proposes new automated witness; historical manual demo is separate upstream evidence.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V04",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Unavailable/CORS/unauthorized/source replacement states",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final P6.4",
+      "assessment": "assessed",
+      "disposition": "proposed_not_executed",
+      "reason": "Final P6.4 includes ID/dimension/content-replacement uncertainty; Auth Flow conditional.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V05",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "ZIP rights/local thumbnails/excluded partner bytes/export policy",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final P6.5",
+      "assessment": "assessed",
+      "disposition": "proposed_not_executed",
+      "reason": "Final P6.5 proposes inspection/reopen; no ZIP generated or inspected by scientific candidates or assessor.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V06",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Divergent imported revisions and explicit resolution",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final P6.6",
+      "assessment": "assessed",
+      "disposition": "proposed_not_executed",
+      "reason": "Final P6.6 proposes two descendants, author/geometry/field diffs and prior history preservation.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V07",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Keyboard-only workflow and 50-object low bandwidth",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final P6.7",
+      "assessment": "assessed",
+      "disposition": "proposed_not_executed",
+      "reason": "Final P6.7 preserves focus/region/status/export and profile/threshold decision; no usability/performance claim credited.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V08",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Application build or component unit-test execution",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final no-execution statements; own review records",
+      "assessment": "assessed",
+      "disposition": "none_reported_none_credited",
+      "reason": "All admitted artifacts expressly deny an application build/test suite run. Static source inspection is not a build or runtime test.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V09",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Executed interoperability testing",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final no-execution statements; own review records",
+      "assessment": "assessed",
+      "disposition": "none_reported_none_credited",
+      "reason": "Original P6 and all authored scientific stages report no interoperability run; round trips remain proposals.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V10",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Candidate source retrieval/read-back/hash checks",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final no-execution statements; own review records",
+      "assessment": "assessed",
+      "disposition": "authored_operations_supported_but_not_runtime_audited",
+      "reason": "Maps/bytes consistent with claims; actual receipt/runtime files outside admitted input list were not inspected. Hash consistency does not prove application interoperability.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V11",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Assessor frozen input/source integrity",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final no-execution statements; own review records",
+      "assessment": "assessed",
+      "disposition": "executed_static_review_check",
+      "reason": "Eight authored input hashes and all 96 source capture references (104 comparisons) matched. No candidate source changed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V12",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Assessor fresh public-source capture and static code inspection",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final no-execution statements; own review records",
+      "assessment": "assessed",
+      "disposition": "executed_static_review_check",
+      "reason": "56 direct public capture attempts: 43 successes/13 GitHub API403 failures; HTML/raw-source fallbacks used. No downloaded code executed.",
+      "evidence": [],
+      "finding_id": null
+    },
+    {
+      "id": "V13",
+      "kind": "validation",
+      "axes": [
+        6
+      ],
+      "requirement_or_claim": "Assessor review output schema/count/hash checks",
+      "origin_reference": "original P6; research/critic/reviser validation/operations statements",
+      "final_reference": "final no-execution statements; own review records",
+      "assessment": "assessed",
+      "disposition": "executed_review_output_check",
+      "reason": "Unique row IDs, counts, coverage status, evidence ID resolution and JSON parsing verified before delivery; these validate review bookkeeping only.",
+      "evidence": [],
+      "finding_id": null
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "M1",
+      "title": "Incorrect narrowing of captured Mirador advertised support",
+      "affected": [
+        "O1",
+        "O4",
+        "O5",
+        "P5.01"
+      ],
+      "status": "material_evidence_disposition_error",
+      "final_artifact_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/artifact.md",
+      "final_artifact_sha256": "1579a45fd43fc94e35d9b3f992b59196a7b8c3cbfe46d9356c829f9625abab4d",
+      "final_line": 71,
+      "primary_evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-mirador-home.html",
+          "sha256": "28a20773929b30919340587946e4741fcadb61e93b50e1c4f7a1aef823735dbe",
+          "url": "https://projectmirador.org/",
+          "applicability": "Same SHA256 as admitted source; advertised features, not proof of workflow/implementation."
+        }
+      ],
+      "materiality": "Changes a supported critic disposition and evidence-based alternative comparison; do not infer lack of advertisement from lack of executed compatibility tests."
+    },
+    {
+      "id": "M2",
+      "title": "Canvas-only identity contract lacks local/direct-service normalization",
+      "affected": [
+        "O4",
+        "O6",
+        "P1.01",
+        "P1.03",
+        "P2.06",
+        "P2.07",
+        "P5.08"
+      ],
+      "status": "material_original_scope_completeness_gap",
+      "final_artifact_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/treatment/reviser-v2/artifact.md",
+      "final_artifact_sha256": "1579a45fd43fc94e35d9b3f992b59196a7b8c3cbfe46d9356c829f9625abab4d",
+      "final_lines": {
+        "required_all_view_canvas": 88,
+        "canvas_target": 100,
+        "local_ids": 88,
+        "sources_preserved": 84
+      },
+      "primary_evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-image3.html",
+          "sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+          "url": "https://iiif.io/api/image/3.0/",
+          "applicability": "Image-service info.json provides image identity/size, not a Presentation Manifest/Canvas."
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/sources/fresh-iiif-presentation3.html",
+          "sha256": "3e4cad9a0ff652e0905c4bd15a27c8d68e208dd34c1d55102870419e5ca5f77e",
+          "url": "https://iiif.io/api/presentation/3.0/",
+          "applicability": "Canvas frame and HTTP(S) identity are separate Presentation resources."
+        }
+      ],
+      "materiality": "Required original source types are retained verbally but cannot satisfy the new mandatory persistent Canvas fields/targets without an unspecified normalization/identity policy. This is a plan-completeness gap, not an observed runtime failure."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "text": "Flash-family identity and operational independence are unknown from admitted scientific files; no outside orchestration/history read."
+    },
+    {
+      "id": "L2",
+      "text": "Fresh GitHub annotated-tag API requests denied 403; frozen chain, fresh release linked commit, tagged/full-SHA equal bytes and pinned package version corroborate source/version."
+    },
+    {
+      "id": "L3",
+      "text": "Chronology, candidate operation execution, queue/setup and budget compliance cannot be authenticated from admitted authored reports alone."
+    },
+    {
+      "id": "L4",
+      "text": "No app build, usability, browser, performance, interoperability or own code execution; seven witness groups unexecuted."
+    },
+    {
+      "id": "L5",
+      "text": "Optional discovery bounded to twelve recorded mechanisms/leads; no exhaustive recall or universe of opportunity claims."
+    },
+    {
+      "id": "L6",
+      "text": "Caller-specific flip/current-position handling, aspect-ratio/framing preservation, integer selector precision and legacy rights alias mapping require explicit implementation fixtures; existing broad geometry/parser proposals are not results."
+    }
+  ],
+  "unassessed_ids": [],
+  "counts": {
+    "inventory_unique_rows": 206,
+    "original_obligations": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "dispositions": {
+        "limited": 1,
+        "satisfied_with_limitations": 2,
+        "partial": 2,
+        "scientific_dispositions_assessed_provenance_unknown": 1
+      }
+    },
+    "original_plan_decisions": {
+      "complete": 50,
+      "assessed": 50,
+      "unassessed": 0,
+      "dispositions": {
+        "partial": 3,
+        "retained": 25,
+        "retained_with_gap": 4,
+        "retained_and_conditioned": 1,
+        "retained_and_strengthened": 1,
+        "retained_with_honest_limit": 1,
+        "retained_at_record_level": 1,
+        "retained_and_specified": 1,
+        "provisional_choice": 1,
+        "proposed_choice_with_gate": 2,
+        "retained_and_extended": 1,
+        "retained_with_gate": 1,
+        "proposed_retained": 6,
+        "acknowledged_and_replaced": 1,
+        "preserved": 1
+      }
+    },
+    "original_conditions": {
+      "complete": 16,
+      "assessed": 16,
+      "unassessed": 0,
+      "dispositions": {
+        "retained": 11,
+        "retained_with_gap": 2,
+        "retained_with_uncertainty": 1,
+        "partial": 1,
+        "preserved": 1
+      }
+    },
+    "consequential_claims": {
+      "complete": 44,
+      "assessed": 44,
+      "unassessed": 0,
+      "dispositions": {
+        "supported": 17,
+        "supported_with_conditions": 6,
+        "product_choice": 1,
+        "supported_with_additional_condition": 1,
+        "corroborated_fresh_with_tag_metadata_limit": 1,
+        "supported_frozen_current_unknown": 1,
+        "supported_as_report": 1,
+        "supported_but_strict_partial_requirement_unwarranted": 1,
+        "supported_with_context": 1,
+        "supported_as_scope_constraint": 1,
+        "incorrect_source_disposition": 1,
+        "supported_bounded": 1,
+        "supported_as_report_with_conditions": 1,
+        "supported_logical_limit": 1,
+        "consistent_product_choice": 1,
+        "supported_product_design": 1,
+        "proposed_not_validated": 1,
+        "proposal_without_performance_guarantee": 1,
+        "incomplete_contract": 1,
+        "reported_unverified": 1,
+        "accurate_for_frozen_record_optional_lead_now_supported": 1,
+        "consistent_authored_evidence_not_independently_runtime_audited": 1,
+        "supported_architectural_boundary": 1
+      }
+    },
+    "criticism_correction_dispositions": {
+      "complete": 45,
+      "assessed": 45,
+      "unassessed": 0,
+      "dispositions": {
+        "accepted_preserved": 28,
+        "accepted_but_mechanism_reduced": 1,
+        "incorrectly_narrowed": 1,
+        "accepted_preserved_with_caller_limit": 1,
+        "accepted_preserved_strict_requirement_not_in_brief": 1,
+        "accepted_preserved_with_qualification": 1,
+        "accepted_preserved_with_original_input_gap": 1,
+        "accepted_preserved_with_condition": 1,
+        "accepted_open_decision": 8,
+        "accepted_open_decision_with_evidence_error": 1,
+        "accepted_preserved_hypothetical_guard": 1
+      }
+    },
+    "predecessor_preservation": {
+      "complete": 20,
+      "assessed": 20,
+      "unassessed": 0,
+      "dispositions": {
+        "preserved": 13,
+        "corrected_supported": 1,
+        "preserved_and_specified": 2,
+        "preserved_with_provenance_limit": 1,
+        "preserved_and_qualified": 1,
+        "partially_preserved_incorrect_narrowing": 1,
+        "preserved_and_extended": 1
+      }
+    },
+    "all_preservation": {
+      "complete": 86,
+      "assessed": 86,
+      "unassessed": 0,
+      "dispositions": {
+        "partial": 4,
+        "retained": 36,
+        "retained_with_gap": 6,
+        "retained_and_conditioned": 1,
+        "retained_and_strengthened": 1,
+        "retained_with_honest_limit": 1,
+        "retained_at_record_level": 1,
+        "retained_and_specified": 1,
+        "provisional_choice": 1,
+        "proposed_choice_with_gate": 2,
+        "retained_and_extended": 1,
+        "retained_with_gate": 1,
+        "proposed_retained": 6,
+        "acknowledged_and_replaced": 1,
+        "preserved": 15,
+        "retained_with_uncertainty": 1,
+        "corrected_supported": 1,
+        "preserved_and_specified": 2,
+        "preserved_with_provenance_limit": 1,
+        "preserved_and_qualified": 1,
+        "partially_preserved_incorrect_narrowing": 1,
+        "preserved_and_extended": 1
+      }
+    },
+    "bounded_discovery": {
+      "complete": 12,
+      "assessed": 12,
+      "unassessed": 0,
+      "dispositions": {
+        "optional_useful_omission": 2,
+        "retained_but_underinvestigated": 1,
+        "retained_alternative_with_useful_version_condition": 1,
+        "retained_bounded": 1,
+        "retained_analogy_negative_full_fit": 1,
+        "uncertain_optional_lead": 1,
+        "necessary_scope_mechanism_omitted": 1,
+        "useful_implementation_condition_omitted": 1,
+        "useful_history_limit": 1,
+        "already_conditioned_not_required_expansion": 1,
+        "already_covered_with_condition": 1
+      }
+    },
+    "validation": {
+      "complete": 13,
+      "assessed": 13,
+      "unassessed": 0,
+      "dispositions": {
+        "proposed_not_executed": 7,
+        "none_reported_none_credited": 2,
+        "authored_operations_supported_but_not_runtime_audited": 1,
+        "executed_static_review_check": 2,
+        "executed_review_output_check": 1
+      }
+    },
+    "six_axes": {
+      "1": {
+        "complete": 72,
+        "assessed": 72,
+        "unassessed": 0,
+        "dispositions": {
+          "limited": 1,
+          "satisfied_with_limitations": 2,
+          "partial": 6,
+          "scientific_dispositions_assessed_provenance_unknown": 1,
+          "retained": 36,
+          "retained_with_gap": 6,
+          "retained_and_conditioned": 1,
+          "retained_and_strengthened": 1,
+          "retained_with_honest_limit": 1,
+          "retained_at_record_level": 1,
+          "retained_and_specified": 1,
+          "provisional_choice": 1,
+          "proposed_choice_with_gate": 2,
+          "retained_and_extended": 1,
+          "retained_with_gate": 1,
+          "proposed_retained": 6,
+          "acknowledged_and_replaced": 1,
+          "preserved": 2,
+          "retained_with_uncertainty": 1
+        }
+      },
+      "2": {
+        "complete": 44,
+        "assessed": 44,
+        "unassessed": 0,
+        "dispositions": {
+          "supported": 17,
+          "supported_with_conditions": 6,
+          "product_choice": 1,
+          "supported_with_additional_condition": 1,
+          "corroborated_fresh_with_tag_metadata_limit": 1,
+          "supported_frozen_current_unknown": 1,
+          "supported_as_report": 1,
+          "supported_but_strict_partial_requirement_unwarranted": 1,
+          "supported_with_context": 1,
+          "supported_as_scope_constraint": 1,
+          "incorrect_source_disposition": 1,
+          "supported_bounded": 1,
+          "supported_as_report_with_conditions": 1,
+          "supported_logical_limit": 1,
+          "consistent_product_choice": 1,
+          "supported_product_design": 1,
+          "proposed_not_validated": 1,
+          "proposal_without_performance_guarantee": 1,
+          "incomplete_contract": 1,
+          "reported_unverified": 1,
+          "accurate_for_frozen_record_optional_lead_now_supported": 1,
+          "consistent_authored_evidence_not_independently_runtime_audited": 1,
+          "supported_architectural_boundary": 1
+        }
+      },
+      "3": {
+        "complete": 12,
+        "assessed": 12,
+        "unassessed": 0,
+        "dispositions": {
+          "optional_useful_omission": 2,
+          "retained_but_underinvestigated": 1,
+          "retained_alternative_with_useful_version_condition": 1,
+          "retained_bounded": 1,
+          "retained_analogy_negative_full_fit": 1,
+          "uncertain_optional_lead": 1,
+          "necessary_scope_mechanism_omitted": 1,
+          "useful_implementation_condition_omitted": 1,
+          "useful_history_limit": 1,
+          "already_conditioned_not_required_expansion": 1,
+          "already_covered_with_condition": 1
+        }
+      },
+      "4": {
+        "complete": 45,
+        "assessed": 45,
+        "unassessed": 0,
+        "dispositions": {
+          "accepted_preserved": 28,
+          "accepted_but_mechanism_reduced": 1,
+          "incorrectly_narrowed": 1,
+          "accepted_preserved_with_caller_limit": 1,
+          "accepted_preserved_strict_requirement_not_in_brief": 1,
+          "accepted_preserved_with_qualification": 1,
+          "accepted_preserved_with_original_input_gap": 1,
+          "accepted_preserved_with_condition": 1,
+          "accepted_open_decision": 8,
+          "accepted_open_decision_with_evidence_error": 1,
+          "accepted_preserved_hypothetical_guard": 1
+        }
+      },
+      "5": {
+        "complete": 86,
+        "assessed": 86,
+        "unassessed": 0,
+        "dispositions": {
+          "partial": 4,
+          "retained": 36,
+          "retained_with_gap": 6,
+          "retained_and_conditioned": 1,
+          "retained_and_strengthened": 1,
+          "retained_with_honest_limit": 1,
+          "retained_at_record_level": 1,
+          "retained_and_specified": 1,
+          "provisional_choice": 1,
+          "proposed_choice_with_gate": 2,
+          "retained_and_extended": 1,
+          "retained_with_gate": 1,
+          "proposed_retained": 6,
+          "acknowledged_and_replaced": 1,
+          "preserved": 15,
+          "retained_with_uncertainty": 1,
+          "corrected_supported": 1,
+          "preserved_and_specified": 2,
+          "preserved_with_provenance_limit": 1,
+          "preserved_and_qualified": 1,
+          "partially_preserved_incorrect_narrowing": 1,
+          "preserved_and_extended": 1
+        }
+      },
+      "6": {
+        "complete": 13,
+        "assessed": 13,
+        "unassessed": 0,
+        "dispositions": {
+          "proposed_not_executed": 7,
+          "none_reported_none_credited": 2,
+          "authored_operations_supported_but_not_runtime_audited": 1,
+          "executed_static_review_check": 2,
+          "executed_review_output_check": 1
+        }
+      }
+    },
+    "original_obligation_compliance": {
+      "fully_satisfied_without_limits": 0,
+      "satisfied_with_limitations": 2,
+      "materially_partial_or_limited": 3,
+      "critic_family_provenance_unknown": 1,
+      "note": "O2/O3 supported with limits; O1/O4/O6 have material evidence/completeness limits; O5 substantive review present but family provenance unknown and M1 criticism disposition affected. Counts describe requirement disposition, distinct from inventory completeness."
+    }
+  },
+  "assessment_completed_at_utc": "2026-10-07T21:28:12.142791+00:00"
+}

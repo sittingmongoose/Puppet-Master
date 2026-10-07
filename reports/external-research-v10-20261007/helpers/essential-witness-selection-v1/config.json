@@ -1,0 +1,18 @@
+{
+  "started_at": "2026-10-07T22:30:07.217605+00:00",
+  "deadline": "2026-10-07T23:00:07.217605+00:00",
+  "writing_reserve_seconds": 300,
+  "target": {
+    "driverKind": "codex",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  },
+  "own_scope": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/essential-witness-selection-v1",
+  "maximum_private_archives": 1,
+  "private_archive_created": false,
+  "source_snapshot": "helpers/retention-plan-v1/retention-plan.json"
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "pm.er10.topic2-source-index.v1",
+ "case_id": "D-M16-A",
+ "stage": "fresh_topic2_comparison-v3",
+ "mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+ "captured_at_utc": "2026-10-07T21:58:25Z",
+ "selection_rule": "public primary docs/code for stale-tile display/retention, chosen during work from shared candidate inventory leads; freshly captured bytes; nothing executed; no sibling/corpus contamination",
+ "entries": [
+  {
+   "id": "rfc5861-swr-sie",
+   "file": "rfc5861-swr-sie.txt",
+   "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+   "version": "RFC 5861 (May 2010), informational, stable",
+   "captured_at": "2026-10-07T21:58:24Z",
+   "bytes": 10359,
+   "locator": "S3 stale-while-revalidate heading line 104 (serve stale, refresh in background within window); S4 stale-if-error line 159 (offline fallback)",
+   "limits": "IETF full text; informational status - window bounds not normative; read-only capture, not executed",
+   "topic_binding": [
+    "topic2",
+    "topic1-optional"
+   ],
+   "sha256": "sha256:1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e"
+  },
+  {
+   "id": "rfc9111-http-caching",
+   "file": "rfc9111-http-caching.txt",
+   "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+   "version": "RFC 9111 (June 2022), stable, obsoletes RFC 7234",
+   "captured_at": "2026-10-07T21:58:24Z",
+   "bytes": 84477,
+   "locator": "S4.2.1 freshness lifetime line 652; S4.2.4 serving stale line 784 (MUST NOT generate stale response lines 790/795, explicit exception for a disconnected cache); S5.2.2.1 max-age line 1208",
+   "limits": "IETF full text; stable spec; read-only capture, not executed",
+   "topic_binding": [
+    "shared",
+    "topic2"
+   ],
+   "sha256": "sha256:aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+  },
+  {
+   "id": "rfc9110-http-semantics",
+   "file": "rfc9110-http-semantics.txt",
+   "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+   "version": "RFC 9110 (June 2022), stable",
+   "captured_at": "2026-10-07T21:58:25Z",
+   "bytes": 502941,
+   "locator": "S8.8 validator fields line 3362; S8.8.2 Last-Modified line 3480; S8.8.3 ETag line 3570 (validators enable conditional freshness checks behind stale display)",
+   "limits": "IETF full text (~503KB); stable spec; read-only capture, not executed",
+   "topic_binding": [
+    "shared"
+   ],
+   "sha256": "sha256:21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+  },
+  {
+   "id": "libshumate-file-cache-1.7.0",
+   "file": "libshumate-file-cache-1.7.0.c",
+   "url": "https://gitlab.gnome.org/GNOME/libshumate/-/raw/1.7.0/shumate/shumate-file-cache.c",
+   "version": "libshumate tag 1.7.0",
+   "captured_at": "2026-10-07T21:58:25Z",
+   "bytes": 32823,
+   "locator": "size_limit default 100000000 line 356; new_full(size_limit,...) line 378; set_size_limit line 448; mark_up_to_date line 543 (stored freshness update); purge_cache_async line 728 (self-invocation line 1071)",
+   "limits": "LGPL-2.1+ per file header (not re-verified in capture); single file; read-only capture, not executed",
+   "topic_binding": [
+    "topic2"
+   ],
+   "sha256": "sha256:da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea"
+  },
+  {
+   "id": "osmdroid-sqltilewriter-6.1.20",
+   "file": "osmdroid-sqltilewriter-6.1.20.java",
+   "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/SqlTileWriter.java",
+   "version": "osmdroid tag osmdroid-parent-6.1.20",
+   "captured_at": "2026-10-07T21:58:25Z",
+   "bytes": 38315,
+   "locator": "COLUMN_EXPIRES line 53; cleanOnStartup=true line 56; runCleanupOperation line 102; saveFile(source,index,stream,expirationTime) line 128; expiry persisted line 151",
+   "limits": "Apache-2.0 per repo (not re-verified in capture); single file; read-only capture, not executed",
+   "topic_binding": [
+    "topic2",
+    "topic1"
+   ],
+   "sha256": "sha256:c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6"
+  },
+  {
+   "id": "mbtiles-1.3-spec",
+   "file": "mbtiles-1.3-spec.md",
+   "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+   "version": "MBTiles spec 1.3 (master branch as captured)",
+   "captured_at": "2026-10-07T21:58:25Z",
+   "bytes": 15807,
+   "locator": "S Tiles CREATE TABLE tiles(zoom_level,tile_column,tile_row,tile_data) line 109 - no freshness or retention columns",
+   "limits": "spec text; master branch may move; capture frozen by hash; read-only",
+   "topic_binding": [
+    "shared",
+    "topic2"
+   ],
+   "sha256": "sha256:e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d"
+  },
+  {
+   "id": "leaflet-offline-TileLayerOffline",
+   "file": "leaflet-offline-TileLayerOffline.ts",
+   "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileLayerOffline.ts",
+   "version": "leaflet.offline tag v3.2.1",
+   "captured_at": "2026-10-07T21:58:25Z",
+   "bytes": 2479,
+   "locator": "createTile line 20; getTileImageSource(storageKey, networkUrl) line 37 resolves stored-first with no age/staleness check; _getStorageKey line 51 (key = resolved tile URL)",
+   "limits": "license per repo (not re-verified); single file; read-only capture, not executed",
+   "topic_binding": [
+    "topic2"
+   ],
+   "sha256": "sha256:55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b"
+  }
+ ]
+}

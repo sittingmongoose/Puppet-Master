@@ -1,0 +1,158 @@
+{
+  "schema": "ER10-independent-review-freeze-v3",
+  "at": "2026-10-07T22:44:41.336808+00:00",
+  "native_goal": "NOT_REQUIRED_REVIEW_CARRIER_V2",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "overall_grade": "DIAGNOSTIC_FAIL",
+  "assessment_extent": {
+    "material_scientific_claim_groups_checked": 58,
+    "mapped_source_entries_integrity_checked": 27,
+    "distinct_frozen_primary_byte_identities": 16,
+    "mapped_indices_checked": 4,
+    "all_six_obligations_assessed": true,
+    "scientific_semantic_extent": "All stated material recommendations/facts/conditions, positive/negative/optional leads, uncertainty categories, six proposed checks, identity and source version assertions in this exact final were evaluated. Relevant governing primary sections and caller/callee paths were read; irrelevant RFC/package content is not claimed comprehensively audited.",
+    "extent_class": "FULL_FROZEN_MATERIAL_SCIENCE_CHECK_WITH_UNASSESSED_HISTORICAL_PROVENANCE",
+    "full_source_pass": false,
+    "m14_semantic_projection_preservation_applicability": "NOT_APPLICABLE: this is D-M16-A and the map contains no M14 authored semantic/projection/preservation set.",
+    "unassessed_remainder": [
+      {
+        "item": "Candidate historical 10-file, 28-locator, 5-capture operation counts, actual read scope, no-code/no-tests historical assertions, body-discard claim",
+        "status": "UNASSESSED",
+        "reason": "No admissible activity/command logs; candidate reports and indices are inventory claims, not proof. Unmapped spotcheck, predecessor artifacts, timings and history are explicitly excluded."
+      },
+      {
+        "item": "Actual original tile request method/headers/User-Agent, exact denial cause, client dependence and content of discarded response bodies",
+        "status": "UNASSESSED",
+        "reason": "The two held header snapshots have no request metadata or bodies. They prove recorded header classes only; this review made no new tile request."
+      },
+      {
+        "item": "End-to-end runtime behavior of uncaptured downloader delegates, queue persistence, deployed viewer UI/storage and future provider survey",
+        "status": "UNASSESSED_OUTSIDE_FROZEN_EVIDENCE",
+        "reason": "Only bounded source inference is possible; proposed checks were not executed and no implementation was supplied."
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+      "sha256": "bf71fc8f3c57148cdfc9b304233e01ea54f5ad5bbca846c810e24b4d92dc8ce6",
+      "bytes": 33726
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/dispatch-receipt.json",
+      "sha256": "64fd561a346d031c7d83d68b7abd7059e225182ec8bf6dd333feb1dd979fbb09",
+      "bytes": 1042
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/dispatch-request.json",
+      "sha256": "ea198063f0c6b59661ce85d262dc650eaea8e5a9291210d7a4e691b215bb34d3",
+      "bytes": 4184
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/dispatch.json",
+      "sha256": "7f29e34bc866b6ff526413b87f2ad6e867dd5b7bcd65e713dceda5f7ddb6886f",
+      "bytes": 1447
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/prospective-timing.json",
+      "sha256": "ef7d9156e5f798756599591f1b701c9b6429b149046b80e0c7e2881fea7d86c8",
+      "bytes": 156
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+      "sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+      "bytes": 112627
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.md",
+      "sha256": "06154be903814060566fd22054e790ffb5f8fd7bffe0360a46b52b2c5ed9a630",
+      "bytes": 66491
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/curl-manpage-review-capture.html",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "bytes": 465220
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/input-integrity.json",
+      "sha256": "a2ea1004aa46abb244a368913bfaae42df529251db8e813b4cd8d43bd5071d44",
+      "bytes": 18740
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/leaflet-captured-tree-check.json",
+      "sha256": "3985f52c0616147e1efde98208e6fad1edfd5c6cc87b9c46f4e0939c66a53dbd",
+      "bytes": 868
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/leaflet-tag-tree-review.json",
+      "sha256": "ad08322790f477df18adb98ba6eeaf002f3097e646b6a3d85fa5b406081d47a0",
+      "bytes": 18842
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/libshumate-tag-tree-review.json",
+      "sha256": "4149af24eb28918a143bf14c263b83b435794ef06e79443c88e3be6ce46bf774",
+      "bytes": 13055
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/mbtiles-1.3-review-capture.md",
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "bytes": 15807
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/mbtiles-provenance-check.json",
+      "sha256": "9fab2f1363ae6fc953adf80d0f32057bbc3b5c55b807d3246c8ac0ffcaac82bd",
+      "bytes": 933
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/osm-policy-review-capture.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/osmdroid-tag-tree-review.json",
+      "sha256": "3032540c1d3cac8edf8990ad2fe73afdc368c376f14a0c4fe4a6ae0b60654e5b",
+      "bytes": 476365
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+      "sha256": "c574e30d48c69dd80f989e0002dfc536fe78fbbecf0aac00ff895f25795c2299",
+      "bytes": 11006
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-validation.json",
+      "sha256": "f25a6dd73a66f0362569b8ac24e70532d902ba0dd00a21c45120124d53329a81",
+      "bytes": 522
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc5861-review-capture.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9110-review-capture.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9111-review-capture.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/version-provenance-checks.json",
+      "sha256": "b7fb6be29649f920ac0233393f43406c2493719a8f64634d6739e6551b192d94",
+      "bytes": 10909
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/task-terminal.json",
+      "sha256": "79609781b7f7bfa625a8955c9e83738cec3587076a969224ef287e07c4c25f06",
+      "bytes": 6544
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+      "sha256": "b4c205b8eb42e0e0c48a125d21e7bb341d57cd01ef0eb41fa3f115114b9aa8b1",
+      "bytes": 8582
+    }
+  ]
+}

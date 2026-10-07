@@ -1,0 +1,1550 @@
+{
+  "schema": "pm.independent-full-primary-source-review.v1",
+  "case_id": "D-M13-A",
+  "review_kind": "First independent full declared-scope primary-source review",
+  "policy": "ordinary fresh T3 reviewer-carrier-v2, as instructed; reviewer not scored candidate",
+  "created_at_utc": "2026-10-07T19:46:37.433728+00:00",
+  "overall_grade": "FAIL",
+  "source_pass": false,
+  "full_scope_primary_source_checking": true,
+  "overall_reason": "Release/merge chain and main explicit-data recommendation are supported, but class-level filter assignment is incorrect, the absolute-path regression conclusion is overgeneralized, the combined proposed fixture can mask absolute behavior, and ignored-error continuation is not carried into fail-closed policy. This is a full-scope FAIL, not a localized DIAGNOSTIC_FAIL.",
+  "frozen_output": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/finalize-v2/final.md",
+    "expected_sha256": "50c07c0b421faad8c844d7cdb4cf1b808f0903e5b13fc67758bb81f2f1e7222a",
+    "observed_sha256": "50c07c0b421faad8c844d7cdb4cf1b808f0903e5b13fc67758bb81f2f1e7222a",
+    "checked_before_assessment": true,
+    "original_bytes_modified": false
+  },
+  "scope": {
+    "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/INPUT_MAP.json",
+    "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/brief.md",
+    "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources.json",
+    "required_sources": [
+      {
+        "source_id": "pep706",
+        "url": "https://peps.python.org/pep-0706/",
+        "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+        "kind": "public primary raw bytes"
+      },
+      {
+        "source_id": "tarissue",
+        "url": "https://api.github.com/repos/python/cpython/issues/102950",
+        "version_or_capture": "CPython issue 102950 captured 2026-10-07",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarissue.json",
+        "kind": "public primary raw bytes"
+      },
+      {
+        "source_id": "tarpr",
+        "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+        "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarpr.json",
+        "kind": "public primary raw bytes"
+      },
+      {
+        "source_id": "tarold",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+        "version_or_capture": "CPython 3.12.3",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+        "kind": "public primary raw bytes"
+      },
+      {
+        "source_id": "tardocold",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+        "version_or_capture": "CPython 3.12.3",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+        "kind": "public primary raw bytes"
+      },
+      {
+        "source_id": "taroldtest",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+        "version_or_capture": "CPython 3.12.3",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+        "kind": "public primary raw bytes"
+      },
+      {
+        "source_id": "tarfix",
+        "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+        "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches",
+        "capture_date_utc": "2026-10-07",
+        "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+        "kind": "public primary raw bytes"
+      }
+    ],
+    "supplementary_primary_sources": [
+      {
+        "source_id": "shutil-3.12.3.py",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+        "version": "CPython v3.12.3 tag",
+        "captured_at_utc": "2026-10-07T19:42:08.745546+00:00",
+        "started_at_utc": "2026-10-07T19:42:08.579503+00:00",
+        "duration_seconds": 0.16602875500029768,
+        "http_status": 200,
+        "resolved_url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+        "bytes": 58120,
+        "sha256": "819e518cb7a539d09b2526138015541b34d2646afb9c2f6ae4ffd476d6a0fcf4",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.py",
+        "limitations": "Direct upstream primary file pinned to release tag; static inspection only, no downloaded code executed; independent supplementary reviewer capture, not candidate capture."
+      },
+      {
+        "source_id": "shutil-3.12.3.rst",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+        "version": "CPython v3.12.3 tag",
+        "captured_at_utc": "2026-10-07T19:42:08.858801+00:00",
+        "started_at_utc": "2026-10-07T19:42:08.746288+00:00",
+        "duration_seconds": 0.11253331700027047,
+        "http_status": 200,
+        "resolved_url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+        "bytes": 34464,
+        "sha256": "51c991b2a28b8cc00de14b6cb71dcfbe64c78f28a8a24b5af7b43e0eb74bff67",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.rst",
+        "limitations": "Direct upstream primary file pinned to release tag; static inspection only, no downloaded code executed; independent supplementary reviewer capture, not candidate capture."
+      }
+    ],
+    "authorized_reads": "Mapped original brief, manifest, seven primary byte files, THIS hash-verified frozen final; two additional public release-pinned primary shutil captures; own reviewer run metadata only for timing. No candidate predecessors read.",
+    "excluded": "Other arm, drafts, candidate timing/history, other cases, helpers, campaign records, parent analysis, other reviews, candidate feedback/rescue/regrading/best-of, repo/canon/WorkNodes/account/global configuration writes.",
+    "no_delegation": true,
+    "no_native_goal": true,
+    "no_third_party_writes": true
+  },
+  "blinding_limits": {
+    "method_or_arm_visible": true,
+    "visible_information": "Input/output paths and frozen final explicitly expose treatment, stage labels and reported predecessor names. The ordinary T3 metadata identifies this reviewer task.",
+    "costs_winner_speed_target_other_grades_supplied": false,
+    "advisory_map_not_filesystem_firewall": true,
+    "enforcement": "Procedural scope restriction by exact file reads and bounded public primary URLs; filesystem technically permits wider access. Tool catalog metadata was inspected for own-run timing access; no other thread timeline was read. Own thread query returned zero timeline items.",
+    "independence": "No prior findings/unresolved objections supplied or consulted; no feedback/rescue/regrading/best-of or children."
+  },
+  "assessment_extent": {
+    "label": "FULL_DECLARED_SCOPE_STATIC_PRIMARY_SOURCE_REVIEW",
+    "product_claims_checked": "Every material finding (final lines 9,11,13,15,17,19), source identity, optional/uncertainty statement and proposed-versus-executed distinction; actual implementation and assertion bodies, not citations/manifest/exits alone.",
+    "chain": "Issue -> PR merge SHA -> substantive implementation/filter/caller patch -> actual added regression assertions -> matching selected-release implementation/docs/tests, supplemented by selected-release shutil caller bytes. Later differing code is governed by released source; no invented exact follow-up release mapping.",
+    "all_six_axes_assessed": true,
+    "all_six_obligations_assessed": true,
+    "runtime_execution": "None; neither CPython nor importer test execution required/claimed for this source review.",
+    "predecessor_comparison": "Unavailable and deliberately not performed: only frozen exact final authorized.",
+    "prohibited_provenance_check": "Historical candidate sourceoperations/no-capture claims cannot be independently verified; content-level distinction assessed, not certified activity."
+  },
+  "unassessed_remainder": [],
+  "outside_scope_or_unverifiable": [
+    "Predecessor preservation comparison",
+    "Actual candidate historical read/search/execution records",
+    "All other tarfile vulnerabilities, backports and subsequent linked follow-up implementations",
+    "Current 3.14 runtime and every format/custom registered unpacker",
+    "Runtime importer correctness absent importer implementation; proposed additional regression not run"
+  ],
+  "six_axis_dispositions": [
+    {
+      "axis": 1,
+      "name": "Every required obligation",
+      "disposition": "FAIL",
+      "reason": "All six obligations assessed; release boundary and broad residual caveats pass, but implementation-condition/policy/regression accuracy has material defects.",
+      "obligation_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims and all governing release/default/type/path/caller conditions",
+      "disposition": "FAIL",
+      "reason": "Claim-level primary checking covers chronology, merge implementation, selected release, dispatch, defaults, class/instance binding, post-strip path semantics, link roots, mode/type guards, error thresholds and continuation. D01/D02 are contradicted; D04 is an acknowledged dependency with a missing consequential outcome/policy precondition.",
+      "claim_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21",
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D04"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Bounded useful discovery, including negative/optional yield",
+      "disposition": "PASS",
+      "reason": "Useful real implementation and regression discovery within seven-source lead; optional linked PRs/backport are correctly labelled unpursued and source-identifiable. No unjustified claim of disproved follow-ups. Two reviewer-only release-pinned shutil captures close the caller release check; no broader audit needed.",
+      "claim_ids": [
+        "C04",
+        "C13",
+        "C14",
+        "C24",
+        "C25"
+      ],
+      "defect_ids": []
+    },
+    {
+      "axis": 4,
+      "name": "Wrong rejection/correction or unjustified universal abstention",
+      "disposition": "FAIL",
+      "reason": "No universal abstention: explicit data is an appropriate supported choice. However POSIX absolute paths are wrongly generalized as rejected, and the class-level correction is invalid without staticmethod.",
+      "claim_ids": [
+        "C10",
+        "C15",
+        "C18",
+        "C22"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Preservation, traceability, uncertainties and optional content within final",
+      "disposition": "PASS_WITH_LIMITATIONS",
+      "reason": "Seven frozen source identities match; numbered code/test anchors checked; explicit uncertainties and open optional leads retained; no predecessor comparison possible under authorized scope. Concrete residual cleanup/resource/race detail could improve the existing non-universal safety paragraph.",
+      "claim_ids": [
+        "C21",
+        "C24",
+        "C25",
+        "C26",
+        "C27"
+      ],
+      "defect_ids": [],
+      "advisory_ids": [
+        "A01"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus actually executed checks",
+      "disposition": "PASS_WITH_LIMITATIONS",
+      "reason": "Final clearly labels additional regression proposed/not executed and describes read-only stage checks; it does not claim runtime test success. Actual candidate historical operations/predecessor reads cannot be certified from final and are explicitly excluded. Reviewer actually executed only local reading/hashing/JSON parsing and public primary HTTPS retrieval, not downloaded project code or tests.",
+      "claim_ids": [
+        "C20",
+        "C23",
+        "C27"
+      ],
+      "defect_ids": []
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "id": 1,
+      "obligation": "Separate issue, PR merge, and chosen-release availability.",
+      "disposition": "PASS",
+      "coverage": "Issue creation/closure, main merge and SHA, substantive implementation/regression patch, and selected 3.12.3 availability independently checked. No backport inference.",
+      "claim_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C25"
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": 2,
+      "obligation": "Trace one consequential extraction-filter branch and its callers.",
+      "disposition": "FAIL",
+      "coverage": "Real data branch and both direct callers plus merge and released shutil callers traced. Default/type/path/link/mode/error conditions checked. Class binding and ignored-error continuation are incompletely carried into the final recommendation.",
+      "claim_ids": [
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13"
+      ],
+      "defect_ids": [
+        "D01",
+        "D04"
+      ]
+    },
+    {
+      "id": 3,
+      "obligation": "Find relevant regression coverage and state what it demonstrates.",
+      "disposition": "FAIL",
+      "coverage": "All named test bodies and test harness independently read; corresponding initial-merge tests checked. Discovery is relevant, but absolute-path interpretation is overgeneralized and class configuration qualification is dropped. No test execution inferred.",
+      "claim_ids": [
+        "C14",
+        "C15",
+        "C16"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "id": 4,
+      "obligation": "Explain an applicable change to importer policy.",
+      "disposition": "FAIL",
+      "coverage": "Explicit data for direct extraction and built-in tar handlers is supported. Class-level alternative is incorrect; fail-closed errorlevel precondition is not made operational.",
+      "claim_ids": [
+        "C17",
+        "C18",
+        "C19",
+        "C20"
+      ],
+      "defect_ids": [
+        "D01",
+        "D04"
+      ]
+    },
+    {
+      "id": 5,
+      "obligation": "Preserve residual limitations and avoid universal safety claims.",
+      "disposition": "PASS_WITH_LIMITATIONS",
+      "coverage": "No universal safety/CVE/backport/later-release guarantee. Malicious content, custom filters, relative strength, errorlevel and version scope preserved. Additional concrete residuals are advisory; predecessor comparison prohibited and unavailable.",
+      "claim_ids": [
+        "C21",
+        "C24",
+        "C25",
+        "C26"
+      ],
+      "defect_ids": [],
+      "advisory_ids": [
+        "A01"
+      ]
+    },
+    {
+      "id": 6,
+      "obligation": "Propose a bounded additional regression and stop when the decision is supported.",
+      "disposition": "FAIL",
+      "coverage": "Small importer regression is explicitly proposed and core traversal comparison is useful. Mixed fixture can mask absolute behavior; full presented class alternative and path expectations are not yet supported. Bounded stop/no vulnerability expansion is appropriate.",
+      "claim_ids": [
+        "C22",
+        "C23"
+      ],
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03"
+      ]
+    }
+  ],
+  "consequential_claim_checking": [
+    {
+      "claim_id": "C01",
+      "final_locator": "final.md:9",
+      "claim": "Issue identity, creation, closure, and PEP implementation lead",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "Issue 102950 title matches; created_at=2023-03-23T14:17:07Z; state=closed; closed_at=2023-05-30T15:47:43Z. Body tracks PEP 706 implementation and links PR 102953.",
+      "governing_conditions": "Issue closure is issue tracking state, not a release marker or merge timestamp.",
+      "primary_evidence": [
+        {
+          "source_id": "tarissue",
+          "exact_primary_locator": "JSON pointers /number, /title, /created_at, /state, /closed_at, /body",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarissue.json",
+          "url": "https://api.github.com/repos/python/cpython/issues/102950",
+          "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+          "version_or_capture": "CPython issue 102950 captured 2026-10-07"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C02",
+      "final_locator": "final.md:9",
+      "claim": "PR main-branch merge event and merge SHA",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "PR 102953 title/body link issue 102950; created_at=2023-03-23T14:21:11Z; /base/ref=main; /merged=true; /merged_at=2023-04-24T08:58:06Z; /merge_commit_sha=af530469954e8ad49f1e071ef31c844b9bfda414. Commit /sha and /commit/message match.",
+      "governing_conditions": "Merge to main does not by itself establish backport or chosen-release inclusion. The issue closed more than a month after this merge.",
+      "primary_evidence": [
+        {
+          "source_id": "tarpr",
+          "exact_primary_locator": "JSON pointers /number, /title, /body, /created_at, /base/ref, /merged, /merged_at, /merge_commit_sha",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarpr.json",
+          "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+          "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+          "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "JSON pointers /sha, /commit/message",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C03",
+      "final_locator": "final.md:9",
+      "claim": "Merge changed exactly eight named files",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "The /files array has eight entries, exactly the seven named documentation/library/test paths and Misc/NEWS.d/next/Library/2023-03-23-15-24-38.gh-issue-102953.YR4KaK.rst.",
+      "governing_conditions": "File membership alone is not implementation evidence; the substantive patches were also inspected in C04 and C15/C16.",
+      "primary_evidence": [
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "JSON pointers /files/0/filename through /files/7/filename",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C04",
+      "final_locator": "final.md:9",
+      "claim": "Issue-to-implementation-to-regression chain is real, not merely a merged-PR citation",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "Merge adds _get_filtered_attrs, data_filter, named filter mapping, _get_filter_function, per-member filtering, shutil passthrough, and actual TestExtractionFilters regressions. The added test_absolute has a POSIX normalization branch, and the class-default test uses staticmethod. PEP reference implementation names PR 102953.",
+      "governing_conditions": "Released implementation governs runtime; merge helper link handling is not identical to the later selected-release helper. In particular released symlink targets are resolved relative to the link directory, while the merge patch joined linkname directly to dest_path. No unchanged-code or complete subsequent-fix-history claim is inferred.",
+      "primary_evidence": [
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/4/patch: +def _get_filtered_attrs (splitlines 72-127), +def data_filter (137-141), +def _get_filter_function (277-298), +def _get_extract_tarinfo (377-398); /files/6/patch: +class TestExtractionFilters (570 onward), +def test_absolute (654-678), +def test_change_default_filter_on_class (961-971); /files/3/patch: _unpack_tarfile and unpack_archive changes",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 662-665, #reference-implementation",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        },
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 755-837 and 2217-2357",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C05",
+      "final_locator": "final.md:9",
+      "claim": "Explicit extraction filters are available in CPython 3.12.3",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "v3.12.3 tarfile.py defines fully_trusted_filter, tar_filter, data_filter, _NAMED_FILTERS and filter parameters on both extractall and extract. Released docs mark filter added in 3.12.",
+      "governing_conditions": "This is selected-release file presence and behavior. It does not establish the first patch release containing every follow-up or any older-version backport.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 818-837, 2240-2241, 2285-2286",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 512-513, 516-525, 584-586, 940-945",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C06",
+      "final_locator": "final.md:9",
+      "claim": "3.12.3 default is fully_trusted with warning; future 3.14 text is contextual",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "_get_filter_function(None) consults self.extraction_filter; only when it is also None does it emit DeprecationWarning and return fully_trusted_filter. Docs and frozen PEP describe the intended data default from 3.14.",
+      "governing_conditions": "Both argument and attribute must be None. An explicitly configured attribute overrides the fallback. Emitting DeprecationWarning does not ensure it is visibly displayed. The final correctly does not certify current 3.14 runtime behavior.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 1639, 2217-2234",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 584-603, 980-987",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 404-427, #defaults-and-their-configuration",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C07",
+      "final_locator": "final.md:11",
+      "claim": "Argument names/callables and extraction_filter strings resolve as stated",
+      "disposition": "SUPPORTED_WITH_CLASS_CONDITION_GAP",
+      "checked_source_fact": "Explicit callable is returned unchanged; explicit recognized string resolves through _NAMED_FILTERS; unknown string raises ValueError. Attribute strings raise TypeError. The attribute is obtained through self, so a plain function assigned on the class binds self; class configuration requires staticmethod or a self-aware method.",
+      "governing_conditions": "Argument filter and class/instance extraction_filter are different APIs. A per-instance plain two-argument function works; a class-level plain two-argument function does not. Unsupported non-callable argument types are not all guaranteed ValueError (e.g. unhashable values fail dictionary lookup with TypeError).",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 2217-2238, 833-837",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 592-611",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3946-3985",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "high for the explicit class-level policy alternative"
+    },
+    {
+      "claim_id": "C08",
+      "final_locator": "final.md:11",
+      "claim": "Both extract and extractall apply the resolved filter before disk extraction",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "extractall loops members through _get_extract_tarinfo before _extract_one; extract does the same for a single member. A string member is first resolved by getmember. None return is skipped; hard links receive a copied TarInfo with _link_target before disk extraction.",
+      "governing_conditions": "Only a custom callable can return None in this named-filter family: built-in data_filter either returns TarInfo or raises. Disk extraction occurs afterward and is not atomic. set_attrs/numeric_owner govern subsequent metadata application, not whether the filter runs.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 2240-2338, 827-831",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 338-349 and 401-402, #filters",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C09",
+      "final_locator": "final.md:11",
+      "claim": "Fatal, nonfatal, and skip branches are adequately summarized for fail-closed importing",
+      "disposition": "SUPPORTED_BUT_INCOMPLETE",
+      "checked_source_fact": "FilterError and OSError invoke _handle_fatal_error; errors raise if errorlevel>0. ExtractError invokes _handle_nonfatal_error and raises only if errorlevel>1. When a filter raises and its error is ignored, assignment to filtered tarinfo never completes, so the original unfiltered member remains and is returned/extracted. The released regression explicitly expects the file to exist after a raising FilterError filter at errorlevel=0.",
+      "governing_conditions": "Default errorlevel=1, but it can be overridden per instance. Catching FilterError alone cannot fail closed when the extraction layer suppresses it at errorlevel<=0. At errorlevel=1, ExtractError can also continue with the member. A returned None is a distinct skip condition. Released code/tests take precedence over PEP/docs text saying ignored refusal skips the member.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 1625-1627, 1694-1697, 2304-2357",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 4040-4110, especially 4055-4064, 4074-4081, 4091-4098",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 563-582 and 1076-1080",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 435-441, #filtererror",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        }
+      ],
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "medium: governing continuation behavior omitted despite a correctly stated positive fatal-error threshold"
+    },
+    {
+      "claim_id": "C10",
+      "final_locator": "final.md:11",
+      "claim": "data path handling and claimed absolute/outside-path rejection",
+      "disposition": "OVERGENERALIZED_IN_REGRESSION_SUMMARY",
+      "checked_source_fact": "Helper resolves dest_path with realpath, strips leading slash and os.sep, tests isabs on the stripped name, and compares realpath(join(dest_path,name)) against dest_path using commonpath. POSIX /evil.txt is rewritten to evil.txt and accepted inside dest unless a further path condition fails. A Windows drive-absolute name may remain absolute after stripping and raise AbsolutePathError. ../evil.txt resolves outside and raises OutsideDestinationError under ordinary destination conditions.",
+      "governing_conditions": "Original absolute filename alone does not imply rejection. Governing host path semantics, post-strip absoluteness, current symlink resolution, and destination containment matter. The helper does not guarantee freedom from concurrent filesystem changes.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 755-770",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 1020-1035, 1113-1115",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3491-3514",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [
+        "D02"
+      ],
+      "materiality": "medium: changes the documented expected result for a proposed regression input"
+    },
+    {
+      "claim_id": "C11",
+      "final_locator": "final.md:11",
+      "claim": "data sanitizes modes and ownership and rejects special types",
+      "disposition": "SUPPORTED_WITH_EXPLICIT_SOURCE_CONDITIONS",
+      "checked_source_fact": "For non-None mode, common mask is 0o755. data handling regular files/hard links clears execute bits if owner lacks execute and ensures owner read/write; directories/symlinks get mode=None; other types raise SpecialFileError. For data, uid/gid/uname/gname become None when present. Ownership setters use -1 for None IDs and skip name lookup when names absent; chmod returns for mode=None.",
+      "governing_conditions": "Special-type refusal in this selected code is inside the mode-is-not-None guard; a caller-supplied TarInfo with mode=None differs from an ordinary archive-parsed member. The final wording clears special files should be read as rejection, not successful extraction of a sanitized device. for_data=False (tar) does not add data-only restrictions. No content, size, duplicate-file, or resource-limit verification follows from these metadata rules.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 771-801, 821-831, 2530-2571",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3806-3906",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 1032-1068",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C12",
+      "final_locator": "final.md:11",
+      "claim": "data rejects absolute and out-of-destination links",
+      "disposition": "SUPPORTED_WITH_EXPLICIT_SOURCE_CONDITIONS",
+      "checked_source_fact": "For hard links and symlinks, os.path.isabs(linkname) raises AbsoluteLinkError. Relative symlink targets join dest_path, dirname(stripped member name), and linkname; hard-link targets join dest_path and linkname. realpath/commonpath decides LinkOutsideDestinationError.",
+      "governing_conditions": "Link type and host path interpretation govern the root used for relative linknames. AbsoluteLinkError concerns link targets, not the POSIX member-name normalization in C10. Contained relative links are allowed. The selected-release code, not the older merge helper, governs. Platform fallback after link creation failure is separate from filter-time refusal.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 802-815, 1585-1591, 2505-2528",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3654-3699, 3756-3778",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 1042-1049",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C13",
+      "final_locator": "final.md:11",
+      "claim": "shutil forwards extraction filters into TarFile callers",
+      "disposition": "SUPPORTED_WITH_DISPATCH_CONDITIONS",
+      "checked_source_fact": "Merge patch changes _unpack_tarfile to accept filter and forwards to extractall; unpack_archive accepts filter and passes non-None values. Supplementary selected-release shutil.py confirms _unpack_tarfile calls tarobj.extractall(extract_dir,filter=filter); registry-based unpack_archive conditionally builds filter kwargs and dispatches by specified format or filename extension.",
+      "governing_conditions": "Built-in tar/tar-compression handlers use this route; compressed handlers require matching compression modules. filter=None is not forwarded as a keyword by unpack_archive, but _unpack_tarfile defaults to None. ZIP handler does not accept filter. Custom registered unpackers can differ or replace built-in names. Recommendation for tar archives is appropriately bounded, but callers must actually select a tar handler, not assume archive content sniffing.",
+      "primary_evidence": [
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/3/patch: _unpack_tarfile hunk and unpack_archive filter_kwargs/dispatch hunks",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        },
+        {
+          "source_id": "shutil-3.12.3.py",
+          "exact_primary_locator": "lines 1271-1274, 1301-1390",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+          "sha256": "819e518cb7a539d09b2526138015541b34d2646afb9c2f6ae4ffd476d6a0fcf4",
+          "version_or_capture": "CPython v3.12.3 tag"
+        },
+        {
+          "source_id": "shutil-3.12.3.rst",
+          "exact_primary_locator": "lines 682-702, 719-733, 750-760",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+          "sha256": "51c991b2a28b8cc00de14b6cb71dcfbe64c78f28a8a24b5af7b43e0eb74bff67",
+          "version_or_capture": "CPython v3.12.3 tag"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/5/patch splitlines 51-82: tar filter coverage and ZIP TypeError assertion",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C14",
+      "final_locator": "final.md:13",
+      "claim": "All named TestExtractionFilters methods exist at the cited released locations",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "Class at 3404; test_absolute 3491; absolute_symlink 3655; absolute_hardlink 3684; fully_trusted_filter 3908; tar_filter 3915; data_filter 3925; default_filter_warns 3937; instance/class/subclass configuration 3946/3957/3969; to_string 3981; custom_filter 3987; bad_filter_name 4004; stateful_filter 4010.",
+      "governing_conditions": "Existence is not sufficient to establish the final claimed behavior. Assertion bodies and harness were independently read, including the additional nearby errorlevel regression. Not every released test was introduced in the initial merge (absolute_hardlink is present in release but not in the captured merge patch).",
+      "primary_evidence": [
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3404-3482, 3491-3514, 3655-3699, 3908-4038",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/6/patch; search for test_absolute_hardlink returned no occurrence",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C15",
+      "final_locator": "final.md:13",
+      "claim": "Regression coverage demonstrates named filters reject absolute/outside paths",
+      "disposition": "PARTLY_FALSE",
+      "checked_source_fact": "test_absolute explicitly permits leading-slash POSIX absolute members after normalization for tar and data; on platforms whose absolute paths lack leading slash it expects AbsolutePathError. fully_trusted test establishes identity and its absolute test writes outside dest. Absolute-link tests expect data AbsoluteLinkError; tar either fails on a later outside member or follows platform-specific link fallback. Traversal tests expect OutsideDestinationError for tar/data.",
+      "governing_conditions": "Cannot summarize all named filters as rejecting all absolute paths. Differentiate fully_trusted versus tar/data, member names versus linknames, POSIX normalization versus Windows-style post-strip absolute paths, and link support/WASI skips. Tests are static source evidence, not newly executed results.",
+      "primary_evidence": [
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3391-3401, 3491-3514, 3654-3699, 3701-3754, 3908-3913",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/6/patch splitlines 654-678 and 759-786",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "defect_ids": [
+        "D02"
+      ],
+      "materiality": "medium"
+    },
+    {
+      "claim_id": "C16",
+      "final_locator": "final.md:13",
+      "claim": "Default warning, bad names, configured callables, custom/stateful behavior and metadata tests demonstrate the stated limited features",
+      "disposition": "SUPPORTED_WITH_CLASS_QUALIFICATION",
+      "checked_source_fact": "default warning test extracts foo while checking Python 3.14 DeprecationWarning; instance configuration assigns a two-argument function; class configuration uses staticmethod; subclass provides a self-aware method; string attribute raises TypeError. custom filter moves one member, returns None for another, preserves a third. Stateful filter calls data_filter, catches FilterError into None and counts two accepted duplicate good members; bad filter string raises ValueError. Mode tests compare final metadata for each filter.",
+      "governing_conditions": "These are deliberately limited tests, not safety proof. test_tar_filter only checks fixture member name/type identity; test_data_filter tolerates FilterError and checks surviving name/type identity. test_stateful_filter comment says it demonstrates third-party use, not a tarfile implementation guarantee. Mode assertions depend on working chmod and non-Windows platform; some link tests skip WASI.",
+      "primary_evidence": [
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3391-3401, 3443-3454, 3806-3873, 3908-4038",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/6/patch splitlines 912-1043",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "high only for the downstream class assignment; general test discovery is useful and correct"
+    },
+    {
+      "claim_id": "C17",
+      "final_locator": "final.md:15",
+      "claim": "Explicit data filter on direct extraction and built-in tar unpacking is an applicable amendment",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "Released API accepts filter=data on extract/extractall; released shutil tar handler forwards it. Released docs recommend explicit data for dangerous tar extraction features.",
+      "governing_conditions": "Applies to tar paths/handlers with data-compatible requirements. It intentionally changes metadata/link/special-file compatibility. Does not replace importer content validation. Explicit argument bypasses extraction_filter class binding; every relevant direct extraction call must use the policy.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 2217-2302, 833-837",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 490-504, 976-978, 1142-1149",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "shutil-3.12.3.py",
+          "exact_primary_locator": "lines 1301-1313, 1344-1390",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+          "sha256": "819e518cb7a539d09b2526138015541b34d2646afb9c2f6ae4ffd476d6a0fcf4",
+          "version_or_capture": "CPython v3.12.3 tag"
+        },
+        {
+          "source_id": "shutil-3.12.3.rst",
+          "exact_primary_locator": "lines 696-700",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+          "sha256": "51c991b2a28b8cc00de14b6cb71dcfbe64c78f28a8a24b5af7b43e0eb74bff67",
+          "version_or_capture": "CPython v3.12.3 tag"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C18",
+      "final_locator": "final.md:15",
+      "claim": "Alternative TarFile.extraction_filter = tarfile.data_filter works on importer-owned class/instance",
+      "disposition": "FALSE_FOR_CLASS_SUPPORTED_FOR_INSTANCE",
+      "checked_source_fact": "Released docs explicitly require staticmethod for a class-level function to prevent self injection; released regression uses staticmethod(strict_filter). self.extraction_filter returns a bound method for a plain class function, then _get_extract_tarinfo calls it with tarinfo,path, supplying three arguments to the two-argument data_filter. A resulting TypeError is not handled as FilterError. Instance attribute assignment avoids descriptor binding.",
+      "governing_conditions": "Class default requires staticmethod(tarfile.data_filter), or a correctly self-aware method on an importer-owned subclass; instance default may be assigned plain tarfile.data_filter. Explicit filter=data is also valid. The final exact snippet is a class assignment, even though prose conflates class/instance.",
+      "primary_evidence": [
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 605-611 and 1148-1149",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3946-3979",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 827-831, 2219, 2313-2317",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 423-427, #defaults-and-their-configuration",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/6/patch splitlines 961-983",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "materiality": "high: executable policy alternative fails before successful extraction and escapes the recommended FilterError handler"
+    },
+    {
+      "claim_id": "C19",
+      "final_locator": "final.md:15",
+      "claim": "Catch FilterError and abort without fully_trusted fallback implements fail-closed policy",
+      "disposition": "SUPPORTED_UNDER_STATED_POSITIVE_ERRORLEVEL_BUT_INCOMPLETE_AS_POLICY",
+      "checked_source_fact": "All listed filter error types subclass FilterError, so catching base FilterError at default errorlevel=1 catches those rejections. Default 3.12.3 fallback without explicit policy is fully_trusted. At errorlevel=0 a raised filter error is suppressed and the original member can still reach disk extraction. Aborting at a later member leaves prior extracted files.",
+      "governing_conditions": "The final does state errorlevel>0 in line 11 and dependence in line 17; it is not silent about that dependency. It does not bind the importer policy to errorlevel>=1 or state the unfiltered continuation consequence. Aborting is not rollback, and no application-specific transaction/cleanup was supplied. No importer source was supplied or inspected.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 723-753, 1625-1627, 2304-2357, 2260-2270",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 4055-4064, 4074-4081",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 581-582, 1003-1006",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [
+        "D04"
+      ],
+      "materiality": "medium conditional completeness gap; default positive-errorlevel recommendation itself is valid"
+    },
+    {
+      "claim_id": "C20",
+      "final_locator": "final.md:15",
+      "claim": "Review/lint can require an explicit filter on extraction",
+      "disposition": "SUPPORTED_AS_PROPOSAL_NOT_IMPLEMENTED",
+      "checked_source_fact": "The proposed rule targets direct extraction APIs with explicit filter support. The output offers no lint implementation, importer code modification, or actual enforcement result.",
+      "governing_conditions": "If an importer chooses a configured attribute alternative it must reconcile that choice with the proposed no-call-without-filter lint rule. This is a small policy recommendation, not an executed application plan.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 2240-2241, 2285-2286",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 490-494",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C21",
+      "final_locator": "final.md:17",
+      "claim": "data is risk-reducing, tar is less restrictive, and universal safety is not established",
+      "disposition": "SUPPORTED_WITH_RESIDUAL_DETAIL_LIMIT",
+      "checked_source_fact": "Released tar_filter sets for_data=False, so data-only link-target, ownership and type constraints do not apply. PEP/released docs explicitly warn that data does not make untrusted extraction generally safe; pre-defined filters do not prevent denial-of-service, duplicate overwrite, or live destination manipulation; cleanup of partially extracted archives remains the caller responsibility. Custom filters can bypass data restrictions or skip refusals as the stateful test demonstrates.",
+      "governing_conditions": "Final preserves malicious content, custom filters, errorlevel dependence, version limitation and no universal safety claim. It omits concrete partial-output/resource/live-filesystem limitations. This is an advisory precision gap, not a false claim of transactionality or a demand to audit all tarfile vulnerabilities.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 755-831, 2260-2270",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 1003-1006, 1086-1115",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 486-518, #hints-for-further-verification",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 4010-4038",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [
+        "A01"
+      ],
+      "materiality": "advisory; broad residual-limitation obligation substantially preserved"
+    },
+    {
+      "claim_id": "C22",
+      "final_locator": "final.md:19",
+      "claim": "One combined traversal-plus-absolute archive is a useful bounded additional regression",
+      "disposition": "USEFUL_TRAVERSAL_CORE_BUT_INSUFFICIENT_ABSOLUTE_COVERAGE",
+      "checked_source_fact": "At default errorlevel=1, a first ../evil.txt member rejects with OutsideDestinationError before later members. If an absolute POSIX member is reached first, it is stripped and can be extracted inside dest. Therefore one archive with an either-error assertion does not independently test the absolute member behavior. The fully_trusted control is consistent with identity behavior and existing test_absolute outside-destination result for a controlled fixture.",
+      "governing_conditions": "The proposed test is not guaranteed to fail: it can pass correctly on the traversal member while never assessing the absolute member. No specific absolute member path, host semantics, ordering assertion, isolated outer test directory, or partial-output assertion is supplied. fully_trusted is intentionally an adverse comparison in a proposed test, not an importer production fallback. The core regression and bounded scope are useful.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 755-770, 818-819, 2260-2270, 2347-2357",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3406-3427, 3491-3514",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 1003-1006",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [
+        "D03",
+        "D02"
+      ],
+      "materiality": "medium: proposed regression can mask the governing absolute-path branch and does not justify its generalized rejection summary"
+    },
+    {
+      "claim_id": "C23",
+      "final_locator": "final.md:19",
+      "claim": "The additional regression was proposed, not executed; decision is supported and stops",
+      "disposition": "PROPOSAL_EXECUTION_DISTINCTION_SUPPORTED_STOP_JUSTIFICATION_PARTIAL",
+      "checked_source_fact": "Frozen final explicitly labels PROPOSED, not executed in line 19 and repeats this in line 23. Existing primary implementation/tests support explicit data at default positive errorlevel. They contradict the class assignment and blanket absolute-rejection summary.",
+      "governing_conditions": "A bounded stop without auditing every vulnerability is appropriate. No further primary corpus is needed to identify D01-D04, but the statement that the complete presented policy/expectations are already supported is too strong. No runtime validation was claimed or independently conducted.",
+      "primary_evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 2217-2357",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3491-3514, 3957-3967, 4040-4110",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 605-611",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "materiality": "material only to the complete policy/coverage claim; main explicit data decision remains justified"
+    },
+    {
+      "claim_id": "C24",
+      "final_locator": "final.md:25",
+      "claim": "Linked follow-ups and unofficial backport are acknowledged but not investigated",
+      "disposition": "SUPPORTED_AS_OPEN_LEADS",
+      "checked_source_fact": "Issue /body lists gh-103832, gh-104128, gh-104327, gh-104382, gh-104548, gh-104583 and unofficial encukou/cpython pull/26, matching final.",
+      "governing_conditions": "These are unpursued leads, not disproved fixes or verified backports. No claim about their implementation/release correctness is made. Following all of them is unnecessary to establish selected-release data support from frozen release bytes.",
+      "primary_evidence": [
+        {
+          "source_id": "tarissue",
+          "exact_primary_locator": "JSON pointer /body, Linked PRs and Unofficial backport sections",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarissue.json",
+          "url": "https://api.github.com/repos/python/cpython/issues/102950",
+          "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+          "version_or_capture": "CPython issue 102950 captured 2026-10-07"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C25",
+      "final_locator": "final.md:24",
+      "claim": "Backport/release-note mapping beyond v3.12.3 and current later-version behavior are uncertain",
+      "disposition": "JUSTIFIED_UNCERTAINTY",
+      "checked_source_fact": "Selected released files establish presence/semantics in v3.12.3, while merge metadata establishes a main-branch event. Neither certifies every backport or a current 3.14 binary. Released docs/PEP supply future-default wording only.",
+      "governing_conditions": "Do not convert this uncertainty into missing chosen-release availability: presence in the selected release is affirmatively proved. No new negative fact about other branches is inferred.",
+      "primary_evidence": [
+        {
+          "source_id": "tarpr",
+          "exact_primary_locator": "JSON pointers /base/ref, /merged_at, /merge_commit_sha",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarpr.json",
+          "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+          "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+          "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source"
+        },
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 818-837, 2217-2238, 2240-2241, 2285-2286",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 602-603, 1118-1124",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C26",
+      "final_locator": "final.md:30",
+      "claim": "Frozen primary source identities and line-level traceability are preserved",
+      "disposition": "SUPPORTED",
+      "checked_source_fact": "All seven source paths/IDs/URLs/versions/hash identities map exactly to the manifest; all seven computed SHA-256 hashes match. Numbered implementation/test anchors exist and primary content was checked independently, not accepted because of citations. Source hashes in final match the mapped primary bytes.",
+      "governing_conditions": "Ellipsis source paths/URLs require resolving through the map/manifest; they are not independent proof. Predecessor references identify claimed source lineage but their contents were deliberately not read. No preservation comparison with predecessors is available.",
+      "primary_evidence": [
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "whole-file SHA-256 identity; specific claim locators in C01-C25",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        },
+        {
+          "source_id": "tarissue",
+          "exact_primary_locator": "whole-file SHA-256 identity; specific claim locators in C01-C25",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarissue.json",
+          "url": "https://api.github.com/repos/python/cpython/issues/102950",
+          "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+          "version_or_capture": "CPython issue 102950 captured 2026-10-07"
+        },
+        {
+          "source_id": "tarpr",
+          "exact_primary_locator": "whole-file SHA-256 identity; specific claim locators in C01-C25",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarpr.json",
+          "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+          "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+          "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source"
+        },
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "whole-file SHA-256 identity; specific claim locators in C01-C25",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "whole-file SHA-256 identity; specific claim locators in C01-C25",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "whole-file SHA-256 identity; specific claim locators in C01-C25",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "whole-file SHA-256 identity; specific claim locators in C01-C25",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "defect_ids": [],
+      "materiality": "none"
+    },
+    {
+      "claim_id": "C27",
+      "final_locator": "final.md:5,23,37-38",
+      "claim": "Candidate stage scope, claimed read-only operations and predecessor reads; no additional candidate captures/execution/delegation",
+      "disposition": "ACTUAL_OPERATIONS_NOT_INDEPENDENTLY_VERIFIABLE_UNDER_SCOPE",
+      "checked_source_fact": "Frozen final reports these activities and explicitly distinguishes its proposed regression. Authorized inputs contain no independent candidate operation log. Reviewer did not inspect candidate history or predecessor outputs. Reviewer supplementary captures are separate from candidate captures.",
+      "governing_conditions": "Content-level distinction between proposed and executed checks can be assessed; actual historical candidate actions, predecessor preservation, and claims of no additional captures cannot be certified from final bytes alone. No allegation of hidden execution or fabricated activity follows.",
+      "primary_evidence": [],
+      "defect_ids": [],
+      "materiality": "scope limitation; not counted as evidence of execution or a material product defect"
+    }
+  ],
+  "defects": [
+    {
+      "defect_id": "D01",
+      "identity": "Unwrapped class-level extraction_filter function",
+      "severity": "high",
+      "material": true,
+      "final_locators": [
+        "final.md:15",
+        "final.md:13 (class-callable qualification)"
+      ],
+      "evidence": [
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 605-611 and 1148-1149",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3946-3979",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 827-831, 2219, 2313-2317",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 423-427, #defaults-and-their-configuration",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/6/patch splitlines 961-983",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "finding": "The exact alternative TarFile.extraction_filter = tarfile.data_filter omits staticmethod for class assignment. It binds self and leads to an uncaught TypeError when called with tarinfo,path. The per-instance alternative and explicit filter=data route are valid.",
+      "minimal_correction": "Distinguish instance assignment from an importer-owned class default; the latter requires staticmethod(tarfile.data_filter), or a correctly self-aware subclass method.",
+      "consequence": "A recommended policy alternative cannot perform successful extraction as stated and is not handled by the proposed FilterError catch.",
+      "not_claimed": "No claim that the correct explicit filter=data recommendation is unavailable or that instance assignment needs staticmethod."
+    },
+    {
+      "defect_id": "D02",
+      "identity": "Overgeneralized absolute-path rejection/test conclusion",
+      "severity": "medium",
+      "material": true,
+      "final_locators": [
+        "final.md:13",
+        "final.md:19"
+      ],
+      "evidence": [
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3391-3401, 3491-3514, 3654-3699, 3701-3754, 3908-3913",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tarfix",
+          "exact_primary_locator": "/files/6/patch splitlines 654-678 and 759-786",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+          "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+          "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+          "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches"
+        }
+      ],
+      "finding": "test_absolute expects successful normalized extraction for leading-slash POSIX member paths. Refusal concerns post-strip absolute paths, escaping resolved destinations, or forbidden link targets. fully_trusted also does not reject paths. The final summary drops these distinctions.",
+      "minimal_correction": "Qualify the rejection summary by filter, member/link type, host semantics, stripping and containment; preserve successful POSIX normalization as the expected result.",
+      "consequence": "Incorrect regression interpretation can cause rejection of compliant behavior or a wrongly designed importer assertion.",
+      "not_claimed": "The combined proposed archive necessarily fails, or data accepts traversal outside dest at default positive errorlevel."
+    },
+    {
+      "defect_id": "D03",
+      "identity": "Combined proposed fixture can mask the absolute-path branch",
+      "severity": "medium",
+      "material": true,
+      "final_locators": [
+        "final.md:19"
+      ],
+      "evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 755-770, 818-819, 2260-2270, 2347-2357",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 3406-3427, 3491-3514",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 1003-1006",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "finding": "A traversal member can abort extractall before the absolute member is processed. An either-error assertion in a single combined archive provides traversal evidence but does not verify absolute normalization/refusal independently.",
+      "minimal_correction": "Keep a bounded parameterized regression with independently reached traversal and platform-appropriate absolute-member subcases; assert the expected contained normalization or post-strip refusal rather than either-error across a mixed archive.",
+      "consequence": "The proposed test can pass without covering one of its advertised path conditions.",
+      "not_claimed": "The useful ../evil.txt test is invalid, or a full tarfile vulnerability suite is required."
+    },
+    {
+      "defect_id": "D04",
+      "identity": "Ignored filter-error continuation not carried into fail-closed policy",
+      "severity": "medium",
+      "material": true,
+      "final_locators": [
+        "final.md:11",
+        "final.md:15",
+        "final.md:17"
+      ],
+      "evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 1625-1627, 1694-1697, 2304-2357",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 4040-4110, especially 4055-4064, 4074-4081, 4091-4098",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 563-582 and 1076-1080",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 435-441, #filtererror",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        }
+      ],
+      "finding": "The final correctly states raise if errorlevel>0 and acknowledges dependency. It stops at else debug and never states that a suppressed filter error leaves the original TarInfo in place and can extract it. The amendment does not constrain errorlevel to a positive value. The selected release test and code explicitly show continuation with the member.",
+      "minimal_correction": "State that the fail-closed policy requires errorlevel>=1 and that errorlevel<=0 can continue with the unfiltered member; distinguish ExtractError handling (>1) from None skips.",
+      "consequence": "The policy is supported at the ordinary default but is incomplete for configured caller conditions it mentions. A catch cannot handle an exception suppressed inside tarfile.",
+      "not_claimed": "The final omits all errorlevel discussion, or default errorlevel=1 is unsafe merely because another setting exists."
+    }
+  ],
+  "advisory_findings": [
+    {
+      "advisory_id": "A01",
+      "material": false,
+      "identity": "Residual-limitations paragraph could retain concrete non-atomic/resource/race limitations",
+      "final_locator": "final.md:17",
+      "evidence": [
+        {
+          "source_id": "tarold",
+          "exact_primary_locator": "lines 755-831, 2260-2270",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+          "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "tardocold",
+          "exact_primary_locator": "lines 1003-1006, 1086-1115",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+          "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+          "version_or_capture": "CPython 3.12.3"
+        },
+        {
+          "source_id": "pep706",
+          "exact_primary_locator": "raw HTML lines 486-518, #hints-for-further-verification",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+          "url": "https://peps.python.org/pep-0706/",
+          "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+          "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior"
+        },
+        {
+          "source_id": "taroldtest",
+          "exact_primary_locator": "lines 4010-4038",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+          "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+          "version_or_capture": "CPython 3.12.3"
+        }
+      ],
+      "finding": "The final explicitly avoids universal safety and preserves malicious content/custom filters/errorlevel/version caveats. It does not retain partial-extraction cleanup, denial-of-service or live-directory manipulation details. Those are useful concrete caveats from the supplied sources. No rollback or general-safety guarantee is asserted, so this is advisory rather than an additional decisive false claim."
+    }
+  ],
+  "actual_reviewer_checks": {
+    "frozen_hash_and_seven_source_hashes": "Executed and matched; brief/manifest/selected final read; exact primary JSON fields, implementation branches, caller dispatch and regression assertions statically inspected.",
+    "supplementary_checks": "Official CPython v3.12.3 Lib/shutil.py and Doc/library/shutil.rst retrieved, hash-pinned, numbered and read. URL/version/hash/locator/limits saved under sources.",
+    "candidate_execution": "Only candidate own words visible; no independent historical attestation.",
+    "runtime_tests": "Not executed; proposed additional regression remains proposed.",
+    "timing_record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/timings.json",
+    "usage": "Unavailable; unknowninput/input/cache/generated/billing are null in timings.json; own native run metadata distinct."
+  },
+  "pending_children": 0,
+  "candidate_bytes_and_grades_immutable": true,
+  "no_cost_or_winning_arm_judgment": true
+}

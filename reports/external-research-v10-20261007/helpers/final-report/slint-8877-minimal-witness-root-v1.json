@@ -1,0 +1,89 @@
+{
+  "schema": "ER10_ROOT_MINIMAL_PUBLIC_SOURCE_WITNESS_V1",
+  "recorded_at": "2026-10-07T22:28:25.470757+00:00",
+  "root_decision": "APPROVED_BRIEF_ATTRIBUTED_FACTUAL_WITNESS_ONLY",
+  "source_attribution": {
+    "title": "Slint public issue #8877 reported configuration",
+    "url": "https://github.com/slint-ui/slint/issues/8877",
+    "capture_url": "https://api.github.com/repos/slint-ui/slint/issues/8877",
+    "captured_created_at": "2025-07-09T04:30:58Z",
+    "source_sha256": "5fe95914f9b2267e7173def36c41d47fd7c6c202a5a3cec17b8f0b4369cdb19e",
+    "source_bytes": 7232,
+    "local_source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-issue-8877.json"
+  },
+  "frozen_original_assertion": {
+    "original_fields": {
+      "claim": "Slint #8877 is a configuration-specific performance report, not benchmark or shipped fix",
+      "judgment": "Final reproduces the reported approximately 130,172 x3 size accurately and makes no performance threshold or fix/release claim.",
+      "result": "SUPPORTED",
+      "version_or_condition": "report Slint 1.12, Rust, Windows 11 23H2, wint/skia; opened 2025-07-09"
+    },
+    "pointer": "/checks/14",
+    "published_path": "reports/external-research-v10-20261007/reviews/integrated-methods/I-METHOD-05/control/review-v1/source-checks.json",
+    "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/source-checks.json",
+    "sha256": "678a3e04cb03d5a1f41ee40158013a53decbcf791b7b0e1b24457ee166bb8ac9"
+  },
+  "fragments": [
+    {
+      "byte_range_half_open": [
+        2977,
+        3048
+      ],
+      "bytes": 71,
+      "decoded_text_note": "Raw JSON escape bytes remain exact; these are fragments within the issue body string, not standalone JSON.",
+      "exact_utf8_raw_json_slice": "approximately 130,172 characters (specifically 130,172 × 3 in my case)",
+      "original_json_pointer": "/body",
+      "sha256": "ca3c6ac1c011bc6a266300bacf1b4c9e32cea55871adb1206c82419d6c55aefe"
+    },
+    {
+      "byte_range_half_open": [
+        5543,
+        5562
+      ],
+      "bytes": 19,
+      "decoded_text_note": "Raw JSON escape bytes remain exact; these are fragments within the issue body string, not standalone JSON.",
+      "exact_utf8_raw_json_slice": "Slint Version: 1.12",
+      "original_json_pointer": "/body",
+      "sha256": "ec0dd418fd3a6c50f6a29c0937cf147909107fe7ecde7451dbf7a6677a02866f"
+    },
+    {
+      "byte_range_half_open": [
+        5566,
+        5594
+      ],
+      "bytes": 28,
+      "decoded_text_note": "Raw JSON escape bytes remain exact; these are fragments within the issue body string, not standalone JSON.",
+      "exact_utf8_raw_json_slice": "Platform/OS: Windows 11 23H2",
+      "original_json_pointer": "/body",
+      "sha256": "41b31758b5bfd4eaf819bff9dd1aa265a9580ac053d4af2afbee4a17ed103b65"
+    },
+    {
+      "byte_range_half_open": [
+        5598,
+        5624
+      ],
+      "bytes": 26,
+      "exact_utf8_raw_json_slice": "Programming Language: Rust",
+      "sha256": "981c8737412d469d5020d57ba556474ed15518edd8164b2b129db6f7b5722f50",
+      "original_json_pointer": "/body"
+    },
+    {
+      "byte_range_half_open": [
+        5628,
+        5655
+      ],
+      "bytes": 27,
+      "exact_utf8_raw_json_slice": "Backend/Renderer: wint/skia",
+      "sha256": "110801e2bd8ac00e1d3e4329418a222fbf96ce5144f9e855c0ce0d2ed4e77ed3",
+      "original_json_pointer": "/body"
+    }
+  ],
+  "verbatim_words_total": 22,
+  "fragment_bytes_total": 171,
+  "sufficiency_scope": "Exact reported numeric text size, Slint version, Windows version, Rust and backend spelling only. No benchmark, shipped fix, threshold or execution evidence. Original reported wint spelling retained, no correction to winit. Full code/reproduction/attachments/body/history excluded.",
+  "publication_basis": "Brief attributed factual excerpt under the response quotation limit; no source-license assignment or full-body republication claim. User already authorized campaign publication.",
+  "old_plan_status_preserved": "HOLD_PUBLICATION_PERMISSION_AND_SCIENTIFIC_SUFFICIENCY_REVIEW",
+  "private_archive_created": false,
+  "cleanup_executed": false,
+  "reconstruction": "Verify fragment SHAs and exact byte ranges in retained original before deletion; public witness supports only stated fragments, not reconstruction of full API wrapper or arbitrary issue history."
+}

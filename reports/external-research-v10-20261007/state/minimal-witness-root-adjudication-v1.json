@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-07T22:55:48.254946+00:00",
+  "selected_helper_validation": "state/essential-witness-selection-root-validation-v1.json",
+  "47_partial_source_objects": {
+    "unique_fragments": 220,
+    "bytes": 29630,
+    "status": "PRIVATE_MINIMAL_FRAGMENT_PROPOSAL_ACCEPTED_PENDING_FINAL_ARCHIVE_VERIFICATION"
+  },
+  "CISA_original_pdf_hold": {
+    "new_alternative": "helpers/retention-root-witnesses-v1/CISA_TRANSFORM_WITNESS.json",
+    "bytes": 1887,
+    "full_pdf_reconstruction_after_cleanup": false,
+    "old_hold_unchanged": true
+  },
+  "Slint_HTML_original_hold": {
+    "new_alternative": "helpers/retention-root-witnesses-v1/slint-HTML-exact-component-range-proposal.json",
+    "bytes": 265,
+    "variant_kept_separate_from_API": true,
+    "old_hold_unchanged": true
+  },
+  "three_additional_CPython_components": "HOLD pending exact immutable alternative validation; no deletion authorized",
+  "private_archive_created": false,
+  "no_raw_source_deletion_yet": true,
+  "scientific_grades_unchanged": true,
+  "maximum_final_private_archives": 1,
+  "frozen_selection_scope": "B4..B6; later completed scopes require exact final supplementation"
+}

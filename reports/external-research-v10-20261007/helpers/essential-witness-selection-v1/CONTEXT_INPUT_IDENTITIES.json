@@ -1,0 +1,48 @@
+{
+  "schema": "er10.selector-context-identities.v1",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/essential-witness-selection-v1/config.json",
+      "size_bytes": 599,
+      "sha256": "86a857b1bb39d522c1e48f0673db77728511687efa2d53f57ccef6dac7c59237",
+      "purpose": "own config; first task-file read"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/essential-witness-selection-v1/task.txt",
+      "size_bytes": 3572,
+      "sha256": "cddef18d1f0a49bf855deadaa20911cc0855439dcd8aed37cd6ff798eb2a060d",
+      "purpose": "own exact brief"
+    },
+    {
+      "path": "/home/sittingmongoose/.codex/AGENTS.md",
+      "size_bytes": 4706,
+      "sha256": "71b6b684ffdd7440573b1b8296ac9730eab8d485fa27961f8f9149ecb51188d7",
+      "purpose": "global instructions; T3 mailbox/extra-worker sections skipped"
+    },
+    {
+      "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+      "size_bytes": 20280,
+      "sha256": "d827d8ff1e53bd4c49d3f6814c9937aabe8aea0580f2c31d3b3ee089244c01b8",
+      "purpose": "actual cwd instructions; task-specific no-Git/no-repo-write restrictions prevail"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/packet/ER10_T3_EXECUTE_HANDOFF.md",
+      "size_bytes": 52036,
+      "sha256": "4c7ab3438c32b8fef5682f9cb718998792a233dda1b5a51fc9061778083e4787",
+      "purpose": "packet sections11-12; lines306-335"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/resolve_public_evidence.py",
+      "size_bytes": 3320,
+      "sha256": "2dde5b614dd4d83cbb32541a97b62bcaa7e8ffa9cbf1e5627e4296219ed32784",
+      "purpose": "read-only collision-aware resolver reference; not invoked against repository"
+    }
+  ],
+  "scoped_instruction_files_checked_absent": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/AGENTS.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/AGENTS.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/essential-witness-selection-v1/AGENTS.md"
+  ],
+  "instruction_only_cwd_reads": true,
+  "repo_mutations": false
+}

@@ -1,0 +1,154 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T21:38:20.417710+00:00",
+  "case_id": "D-M16-A",
+  "arm": "treatment",
+  "stage": "fresh_shared_discovery",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/INPUT_MAP.json",
+      "sha256": "a85495c02927548ddb8f262f35d0c20d1d2932847dfe8858b6fb675bdf1cae31",
+      "bytes": 1746
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/admission-timing.json",
+      "sha256": "7e1c35f74c572b21627c8651151b7404b4e3c616ba3ccdc6723a09050ccd2260",
+      "bytes": 270
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/assignment.md",
+      "sha256": "c71d694278814def25127aeb5ae495eff93926232abe2f8adef3b48e7d02d051",
+      "bytes": 4081
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/dispatch-receipt.json",
+      "sha256": "a44ecfc32632baa5b8aa0898450328f842d26f53d3c29f6587377b0e640228c2",
+      "bytes": 1099
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/dispatch-request.json",
+      "sha256": "3ab5d0dd2933687a6af781ec3a8eb81a860a55b9716b561b887edc8865e33b11",
+      "bytes": 689
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/dispatch.json",
+      "sha256": "339cdbc04d54fe8e840773badf71b7e7128f330412affe8021dfd5adc98045ad",
+      "bytes": 1522
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/integration-state-active.json",
+      "sha256": "188b84ac4f70bb17e136e9a55ea783646dc38d9544abb5b99a323f164aef31a7",
+      "bytes": 5953
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/integration-state-terminal.json",
+      "sha256": "b38dd55eab80eef9d2b0ed64120e84930c10715c75451d42655206b5bed687a4",
+      "bytes": 4584
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/passive-active-capture-cost.json",
+      "sha256": "45e89ba11d3e919a98adcefb10590db4f260019b5206c0d5a5e24e41a99d1885",
+      "bytes": 1308
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/passive-active.json",
+      "sha256": "14aa67d0e9d5379c57e93c0a1ac49200591b58264380a1cef25546048b437e4d",
+      "bytes": 16890
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/passive-terminal-capture-cost.json",
+      "sha256": "eb50f1384209927df76e51f69a3ec6e49509234b179fed63b4d49aa73461c6e7",
+      "bytes": 1309
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/passive-terminal.json",
+      "sha256": "fb29f1a686105bb52e83c3b2e9a85288852bd78901657be525b6b556871ada27",
+      "bytes": 19991
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/report.md",
+      "sha256": "13ca35ae8f8287b899d5a5366c9399e10220f11e8341d8530dc83eff54cced64",
+      "bytes": 7874
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/index.json",
+      "sha256": "941a2b92014494aecb42ce3d6c7bf1ea9c5bb664c4ff1e73d3e614f91807b5ad",
+      "bytes": 11852
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-ControlSaveTiles.ts",
+      "sha256": "3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c",
+      "bytes": 6625
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileLayerOffline.ts",
+      "sha256": "55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b",
+      "bytes": 2479
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileManager.ts",
+      "sha256": "ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23",
+      "bytes": 5819
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-tree.json",
+      "sha256": "5e50cae7edf2743fc0dbd47906bd6c160aafc5583b12f2dc196a6fd48b3e325d",
+      "bytes": 23309
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/libshumate-file-cache-1.7.0.c",
+      "sha256": "da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea",
+      "bytes": 32823
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/mbtiles-1.3-spec.md",
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "bytes": 15807
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osm-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-networkavailabilitycheck-6.1.20.java",
+      "sha256": "3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06",
+      "bytes": 2846
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-sqltilewriter-6.1.20.java",
+      "sha256": "c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6",
+      "bytes": 38315
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc5861-swr-sie.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9110-http-semantics.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9111-http-caching.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/task-terminal.json",
+      "sha256": "ee5bf14f0bae2cf01c80fc511ca3bf72e71703d11d8a17558b480c9fe9a1c757",
+      "bytes": 2151
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/timings.json",
+      "sha256": "ba18d71d4495711ea93886c499c88f022bdcf7bd5d6b3f9abae7812c06c3d445",
+      "bytes": 2517
+    }
+  ]
+}

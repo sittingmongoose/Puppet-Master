@@ -1,0 +1,51 @@
+{
+ "schema": "pm.er10.timings.v1",
+ "job": "D-M16-A/control/fresh_bundle_join_final-v3",
+ "clock": {
+  "common_T0": "2026-10-07T21:21:56.716615+00:00",
+  "prospective_admitted_at": "2026-10-07T21:58:57.729105+00:00",
+  "stage_deadline": "2026-10-07T22:18:57.729105+00:00",
+  "hard_common_deadline": "2026-10-07T22:41:56.716615+00:00",
+  "finished_utc": "2026-10-07T22:14:30Z",
+  "deadline_respected": true,
+  "resets_or_extensions": "none"
+ },
+ "source_ops": {
+  "new_network_captures": 0,
+  "reused_predecessor_captures": 14,
+  "unique_documents": 10,
+  "sha256_recomputations": 14,
+  "sha256_mismatches": 0,
+  "claim_spot_checks": "2026-10-07T22:04:30Z-22:06:00Z grep verification of load-bearing claims in reused bytes (max-stale x9; SWR absent from RFC 9111 x0; SWR/SIE x9 each; Mapbox 12h/5min phrase; mod_tile expir x2, expiry:false + expiry:86400; OSMF If-Modified-Since x1, bulk x4, at-least-7-days; slippy z/x/y; AWS retry-quota x15/token-bucket x5; leaflet offline/idb)",
+  "amendments_vs_predecessor_index": 1,
+  "amendment_detail": "AWS 'retry quota' case-insensitive grep count 15 vs topic1 index's 17",
+  "bytes_copied_into_sources_utc": "2026-10-07T22:04:14Z",
+  "index_json_written_utc": "2026-10-07T22:04:56Z",
+  "index_verification_utc": "2026-10-07T22:07:30Z (keys + re-hash all 10 entries)"
+ },
+ "capture": {
+  "mode": "reuse_only",
+  "note": "No new network capture in the join window; all bytes reused from the two listed predecessor captures (topic1 2026-10-07T21:27:34-35Z, topic2 2026-10-07T21:44-21:47:34Z per predecessor indexes) with independent hash recomputation. Open-discovery allowance unused."
+ },
+ "first_useful_saved_finding": "2026-10-07T22:04:56Z (sources/index.json durably saved with per-entry URL/version/capture/sha256/locator/limits and spot-check results; final.md first authored 2026-10-07T22:08Z, compression passes complete 2026-10-07T22:11:54Z)",
+ "output": {
+  "final_md_completed_utc": "2026-10-07T22:11:54.143831Z",
+  "final_md_sha256": "979e950faf96c22654f19974be20336aebc1c8a2018b0a131a4491c4ab5359e4",
+  "sources_index_json_sha256": "256258b1bfa42e958e011ec09b14df1bb6636b0ac3a039d97e93c3cf996ef6fa",
+  "terminal_amendment_policy": "final.md and sources/index.json are terminal scientific outputs; hashes recorded here pre-terminal and not to be amended"
+ },
+ "known_usage": {
+  "ticket_rounds": 4,
+  "verification_rounds": 3,
+  "shell_tool_calls": "approx. 20 across tickets (inputs in, source verification, authoring, close-out)",
+  "worker_model": "builtin:zai-coding-plan GLM-5.3-Flash via T3 Code acpRegistry"
+ },
+ "input_tokens": null,
+ "cache_usage": null,
+ "generated_tokens": null,
+ "billing": null,
+ "native_counters": {
+  "note": "distinct from shell-derived counts; native Goal counters not exposed to this worker",
+  "goal_internal_counters": null
+ }
+}

@@ -1,0 +1,33 @@
+{
+  "event": "terminal",
+  "stage": "D-M16-A/treatment/fresh_shared_discovery-v3",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M16-A/treatment/fresh_shared_discovery-v3"
+  ],
+  "start": "2026-10-07T21:38:06.878709+00:00",
+  "end": "2026-10-07T21:38:07.112727+00:00",
+  "elapsed_seconds": 0.2340210600013961,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T21:38:06.981921+00:00",
+    "entries": [
+      {
+        "stage": "D-M16-A/treatment/fresh_shared_discovery-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_shared_discovery-v3--fb29f1a686105bb5.json",
+        "sha256": "fb29f1a686105bb52e83c3b2e9a85288852bd78901657be525b6b556871ada27",
+        "bytes": 19991,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "root_actual_utc": "2026-10-07T22:27:45Z",
+  "deadline": "2026-10-07T22:28:23.543415+00:00",
+  "annotation": "Root prior message prospective; no current expiry finding or permission for early stop. Exact owned task/native running observed before deadline. No steer/cancel.",
+  "actual_task_status": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"zcode\",\"model\":\"builtin:zai-coding-plan\\\\GLM-5.3-Flash\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3:ordinal:1",
+      "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+      "status": "running",
+      "workState": "working",
+      "hasPendingChildRuns": false,
+      "latestTerminalRunId": null,
+      "latestTerminalStatus": null,
+      "latestTerminalSummary": null,
+      "latestTerminalResultContextTransferId": null,
+      "providerInstanceId": "zcode",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "summary": null,
+      "resultContextTransferId": null,
+      "waitTimedOut": false
+    },
+    "isError": false
+  },
+  "clock_guard": {
+    "chunk_id": "55b780",
+    "wall_time_seconds": 0.000033205,
+    "exit_code": 0,
+    "original_token_count": 148,
+    "output": "{\n  \"schema\": \"ER10-readonly-clock-guard-v1\",\n  \"observed_at\": \"2026-10-07T22:28:12.722952+00:00\",\n  \"original_deadline\": \"2026-10-07T22:28:23.543415+00:00\",\n  \"seconds_remaining\": 10.820463,\n  \"deadline_elapsed\": false,\n  \"prior_notice_at\": null,\n  \"prior_notice_was_early\": null,\n  \"actual_notice_grace_end\": null,\n  \"grace_elapsed\": null,\n  \"policy\": \"passive_cancel\",\n  \"decision\": \"NO_EXPIRY_ACTION\",\n  \"limitation\": \"Only a timing predicate; actual owned task/native state and artifact checks are required before any action. It neither authorizes new work nor extends a deadline.\"\n}\n"
+  }
+}

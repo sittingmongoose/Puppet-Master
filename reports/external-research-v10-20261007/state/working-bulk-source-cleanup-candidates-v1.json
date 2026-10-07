@@ -1,0 +1,116 @@
+{
+  "schema": "ER10-working-bulk-source-cleanup-candidates-v1",
+  "at": "2026-10-07T22:56:48.769951+00:00",
+  "scope": "Closed published B4..8 metadata with650record limit; not final fullcampaign permission map",
+  "metadata_plan_sha256": "73ef45948bedf27fcf140d9dc23c76ecee106fec5f7e0dd8cba2ed5abd8d5ee6",
+  "items": [
+    {
+      "sha256": "1a4cf3228e3ecafa4f05538a909756fa173c2b6fb17b974bad9e11e9a46d90ff",
+      "unique_bytes": 363515,
+      "owned_paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-core-3.9.4.tgz",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-core-3.9.4.tgz"
+      ],
+      "urls": [
+        "https://registry.npmjs.org/@annotorious/annotorious/-/annotorious-3.9.4.tgz"
+      ],
+      "classification": "RECONSTRUCTIBLE_BULK_FETCH_CANDIDATE_ONLY",
+      "exact_assertion_reference_count_in_working_metadata": 0,
+      "archive_necessity_demonstrated": false,
+      "retain_authored_sources_and_operation_cost_records": true,
+      "no_deletion_authorized_by_this_plan": true,
+      "full_original_capture_replay_not_claimed": true
+    },
+    {
+      "sha256": "74169a03e28c814ea21c39c3493e3430a93a096f745dc5bc4c4a51114855e0f6",
+      "unique_bytes": 1793815,
+      "owned_paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/critic-v2/sources/annotorious-openseadragon-3.9.4.tgz",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4.tgz"
+      ],
+      "urls": [
+        "https://registry.npmjs.org/@annotorious/openseadragon/-/openseadragon-3.9.4.tgz"
+      ],
+      "classification": "RECONSTRUCTIBLE_BULK_FETCH_CANDIDATE_ONLY",
+      "exact_assertion_reference_count_in_working_metadata": 0,
+      "archive_necessity_demonstrated": false,
+      "retain_authored_sources_and_operation_cost_records": true,
+      "no_deletion_authorized_by_this_plan": true,
+      "full_original_capture_replay_not_claimed": true
+    },
+    {
+      "sha256": "7a937b40d051e2344c64f402953a91639129d88ee438b26c54bae6dc3fe28f26",
+      "unique_bytes": 2734022,
+      "owned_paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-02/control/research-v2/sources/annotorious-openseadragon-3.9.4.es.js.map"
+      ],
+      "urls": [
+        "https://unpkg.com/@annotorious/openseadragon@3.9.4/dist/annotorious-openseadragon.es.js.map"
+      ],
+      "classification": "RECONSTRUCTIBLE_BULK_FETCH_CANDIDATE_ONLY",
+      "exact_assertion_reference_count_in_working_metadata": 0,
+      "archive_necessity_demonstrated": false,
+      "retain_authored_sources_and_operation_cost_records": true,
+      "no_deletion_authorized_by_this_plan": true,
+      "full_original_capture_replay_not_claimed": true
+    },
+    {
+      "sha256": "a2fc837e141aaac6e0c7ebbba15bf7eeda396c9705875c78ccf0cb115abebf4f",
+      "unique_bytes": 12175,
+      "owned_paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-replication-9.0.0.tgz",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB26.tgz"
+      ],
+      "urls": [
+        "https://registry.npmjs.org/pouchdb-replication/-/pouchdb-replication-9.0.0.tgz"
+      ],
+      "classification": "RECONSTRUCTIBLE_BULK_FETCH_CANDIDATE_ONLY",
+      "exact_assertion_reference_count_in_working_metadata": 0,
+      "archive_necessity_demonstrated": false,
+      "retain_authored_sources_and_operation_cost_records": true,
+      "no_deletion_authorized_by_this_plan": true,
+      "full_original_capture_replay_not_claimed": true
+    },
+    {
+      "sha256": "b0bb7efa61f60366afe7ca2fc874f638448ae744592246ce2bfe8b3cb0a7dbfc",
+      "unique_bytes": 1667747,
+      "owned_paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1/sources/pouchdb-v9.0.0-source.tar.gz",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/control/source-review-v1/sources/R-PDB15.tgz"
+      ],
+      "urls": [
+        "https://codeload.github.com/apache/pouchdb/legacy.tar.gz/refs/tags/9.0.0"
+      ],
+      "classification": "RECONSTRUCTIBLE_BULK_FETCH_CANDIDATE_ONLY",
+      "exact_assertion_reference_count_in_working_metadata": 0,
+      "archive_necessity_demonstrated": false,
+      "retain_authored_sources_and_operation_cost_records": true,
+      "no_deletion_authorized_by_this_plan": true,
+      "full_original_capture_replay_not_claimed": true
+    },
+    {
+      "sha256": "d28930c98db128fcce6005ae827eb3ad80fd50689ec10f9dc61f07c15f94081b",
+      "unique_bytes": 13171,
+      "owned_paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1/sources/oal21.zip",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1/sources/openastronomylog-OAL21.zip",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-02/treatment/source-review-v1/sources/oal21.zip"
+      ],
+      "urls": [
+        "https://raw.githubusercontent.com/openastronomylog/openastronomylog/59cc9dd4ecbd7569d90f86b0313e0430578f18fb/OAL21.zip"
+      ],
+      "classification": "RECONSTRUCTIBLE_BULK_FETCH_CANDIDATE_ONLY",
+      "exact_assertion_reference_count_in_working_metadata": 0,
+      "archive_necessity_demonstrated": false,
+      "retain_authored_sources_and_operation_cost_records": true,
+      "no_deletion_authorized_by_this_plan": true,
+      "full_original_capture_replay_not_claimed": true
+    }
+  ],
+  "objects": 6,
+  "unique_bytes": 6584445,
+  "source_paths": 12,
+  "path_bytes": 10448039,
+  "cleanup_executed": false,
+  "exact_source_replay_limits_must_be_reported": true
+}

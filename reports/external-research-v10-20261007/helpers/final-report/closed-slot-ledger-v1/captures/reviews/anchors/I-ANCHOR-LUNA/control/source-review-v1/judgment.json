@@ -1,0 +1,1326 @@
+{
+  "review_id": "I-ANCHOR-LUNA/control/source-review-v1",
+  "review_type": "INDEPENDENT_FULL_DECLARED_SOURCE_REVIEW",
+  "status": "FULL_REVIEW_WITH_MATERIAL_COMPLETENESS_DEFECT",
+  "full_positive": false,
+  "failed_screen": false,
+  "grade_scope": {
+    "scope": "Frozen own-arm final and dispositions against every integrated brief obligation, frozen plan, supplied required critique and consequential primary-source claims.",
+    "entire_declared_source_scope_assessed": true,
+    "candidate_revised_during_review": false,
+    "reviewer_rescue_or_extra_candidate_critic": false,
+    "excluded": "Implementation/deployment certification, execution of proposed or upstream tests, forensic verification of excluded native action receipts, costs, winner/arm comparison, exhaustive whole-project code/security/license audit. Independent verification of the original draft's pre-existing coverage assertion or same-family provider lineage."
+  },
+  "source_correctness": {
+    "grade": "LARGELY_SUPPORTED_WITH_QUALIFICATIONS",
+    "assessment": "Core factual mechanisms, pin identities and Pouch regression/fix path check out. Couch secondary finding lacks available source history (MD01); minor precision/provenance issues m01–m04 are retained. No unsupported exactly-once, automatic-safe-merge, private-row-read, browser-durability or immediate-erasure guarantee is credited."
+  },
+  "completeness": {
+    "grade": "INCOMPLETE_MATERIAL_SOURCE_HISTORY",
+    "assessment": "All original obligations were reviewed and appear in the artifact, but #5422's available fix/test/release/pinned-code evidence is absent from its disposition. Topic presence is not full source completion. O04/O09/O16 are partial."
+  },
+  "planning_usefulness": {
+    "grade": "USEFUL_WITH_MATERIAL_CAVEAT",
+    "assessment": "Conditional device gate, event/receipt/history architecture, privacy/erasure controls, alternative dispositions, eleven product questions and eight observable test groups are useful. #5422 requires a corrected source-history assessment to interpret transport/storage benchmarks; no rewritten candidate is supplied."
+  },
+  "breadth": {
+    "grade": "BROAD_FOR_BOUNDED_PLANNING_TASK",
+    "assessment": "Revision replication, custom relational append/outbox, CRDT and field-form workflow are materially distinct. Coverage spans offline lifecycle, conflict semantics, delivery order/identity, attribution/review, photos, privacy, erasure/retention and restoration. Alternatives are shallower than pinned Pouch implementation, which is acceptable for this brief. Overlapping citations are not counted as discoveries."
+  },
+  "covered_obligations": [
+    {
+      "id": "O01",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "O02",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "O03",
+      "status": "SUPPORTED_WITH_QUALIFICATION"
+    },
+    {
+      "id": "O04",
+      "status": "PARTIALLY_SUPPORTED"
+    },
+    {
+      "id": "O05",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "O06",
+      "status": "SUPPORTED_AS_PROPOSAL"
+    },
+    {
+      "id": "O07",
+      "status": "SUPPORTED_AS_PROPOSAL"
+    },
+    {
+      "id": "O08",
+      "status": "SUPPORTED_AS_PROPOSAL"
+    },
+    {
+      "id": "O09",
+      "status": "PARTIALLY_SUPPORTED"
+    },
+    {
+      "id": "O10",
+      "status": "SUPPORTED_AS_PROPOSAL"
+    },
+    {
+      "id": "O11",
+      "status": "SUPPORTED_WITH_QUALIFICATION"
+    },
+    {
+      "id": "O12",
+      "status": "SUPPORTED_AS_PROPOSAL"
+    },
+    {
+      "id": "O13",
+      "status": "SUPPORTED"
+    },
+    {
+      "id": "O14",
+      "status": "SUPPORTED_AS_PROPOSAL"
+    },
+    {
+      "id": "O15",
+      "status": "SUPPORTED_WITH_QUALIFICATION"
+    },
+    {
+      "id": "O16",
+      "status": "PARTIALLY_SUPPORTED"
+    },
+    {
+      "id": "O17",
+      "status": "SUPPORTED_WITH_QUALIFICATION"
+    },
+    {
+      "id": "O18",
+      "status": "SUPPORTED_FOR_ARTIFACT"
+    },
+    {
+      "id": "O19",
+      "status": "SUPPORTED_FOR_DECLARED_SCOPE"
+    }
+  ],
+  "per_obligation_evidence_assessment": [
+    {
+      "id": "O01",
+      "original_obligation": "Choose and inspect genuine primary public sources from the user brief",
+      "status": "SUPPORTED",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "7–20, 47–75"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R20",
+        "R21",
+        "R22",
+        "R23",
+        "R24",
+        "R25"
+      ],
+      "assessment": "Official project documentation, immutable project source, issue/PR records and regression source are genuine primary material. Selection connects offline transport, field capture, concurrency, permissions, storage and replay to the stated crew/supervisor problem. Independently fetched and read substantive source content; file existence and citation volume were not used as proof.",
+      "governing_conditions_and_limits": "Current guides are retrieval-pinned, not version-certified. Repeated S/C/F identities are overlapping evidence, not independent breadth."
+    },
+    {
+      "id": "O02",
+      "original_obligation": "Compare at least two substantially different mechanisms and explain important alternatives",
+      "status": "SUPPORTED",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "7–11, 20, 47–54"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R01",
+        "R02",
+        "R20",
+        "R21",
+        "R22",
+        "R23",
+        "R24",
+        "R25",
+        "R31"
+      ],
+      "assessment": "Revision-tree replication, a custom SQLite/PostgreSQL append API, and CRDT merging are substantially different mechanisms; ODK contributes a separate field workflow analogue. The final explains capability, limitation and disposition for each.",
+      "governing_conditions_and_limits": "Only Pouch/Couch implementation behavior is deeply pinned. Alternatives are planning comparisons, not deployed or certified stacks."
+    },
+    {
+      "id": "O03",
+      "original_obligation": "Investigate actual component/code behavior at a pinned version",
+      "status": "SUPPORTED_WITH_QUALIFICATION",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "7, 19, 69–73"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R07",
+        "R08",
+        "R12",
+        "R13",
+        "R16",
+        "R17",
+        "R18",
+        "R42"
+      ],
+      "assessment": "Pouch 9.0.0 tag resolves to the asserted commit. The exact indexeddb plugin defines revHasAttachment at raw 3922–3928 and guards the digest/revision reference at 4116–4118. The inspected fix diff changes precisely that path. Couch 3.5.2 tag/commit identity is also correct.",
+      "governing_conditions_and_limits": "The inspected distribution is an indexeddb adapter plugin requiring PouchDB; the general guide shows default adapter name idb. Gate the actual loaded adapter/build. This guard is not universal IndexedDB or whole-pair certification."
+    },
+    {
+      "id": "O04",
+      "original_obligation": "Trace a pertinent issue, fix and regression test through release applicability or justify equivalent implementation history",
+      "status": "PARTIALLY_SUPPORTED",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "19, 67–75, 96–97"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R16",
+        "R19",
+        "R26",
+        "R34",
+        "R35",
+        "R37",
+        "R40",
+        "R41",
+        "R43"
+      ],
+      "assessment": "The required Pouch #8456 → #8460 → separate test/fix commits → exact 9.0.0 guard trail is real and well bounded. The raw test locator 3899–3967 is correct; 8.0.0 body does not list #8460. However, the consequential second attachment finding, Couch #5422, omits linked fixes/tests and available pinned release applicability (MD01).",
+      "governing_conditions_and_limits": "No regression was executed. Pouch test fixture is text, not a photo. Couch source inclusion does not prove target runtime/workload success."
+    },
+    {
+      "id": "O05",
+      "original_obligation": "Cover conflict handling without inventing guarantees",
+      "status": "SUPPORTED",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "9, 15–17, 26–30, 37, 53, 94"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R02",
+        "R22"
+      ],
+      "assessment": "Couch retains divergent leaves while ordinary reads/views select a winner; all-leaf retrieval and explicit application resolution are necessary. Automerge exposes same-property alternatives and deterministic convergence does not settle water-utility status. Proposed event IDs, causal links and attributed review distinguish domain conflicts from revision conflicts.",
+      "governing_conditions_and_limits": "Same-node stale-revision writes can return 409; replicated branches can coexist. Appending a review event alone does not mechanically prune Couch leaves; the proposal does not claim otherwise."
+    },
+    {
+      "id": "O06",
+      "original_obligation": "Cover duplicate and reordered delivery without inventing guarantees",
+      "status": "SUPPORTED_AS_PROPOSAL",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "26–29, 34–36, 95"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R01",
+        "R21",
+        "R24",
+        "R25"
+      ],
+      "assessment": "Persisted operation identity, canonical hashes, same-ID mismatch quarantine, concurrent retry/worker-crash recovery, and child-before-parent pending state are explicit proposed rules. Transport checkpoint/retry is separated from application receipt and no exactly-once guarantee is claimed. PostgreSQL unique constraints/transactions can support a custom implementation.",
+      "governing_conditions_and_limits": "Canonicalization, receipt uniqueness and reconciliation remain application contracts to implement and validate. Arrival sequence is not cross-device causality; UPSERT alone must not overwrite mismatched content."
+    },
+    {
+      "id": "O07",
+      "original_obligation": "Cover retention and deletion without inventing guarantees",
+      "status": "SUPPORTED_AS_PROPOSAL",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "17, 41–45, 85, 97, 99"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R01",
+        "R02",
+        "R05",
+        "R06",
+        "R21"
+      ],
+      "assessment": "Compaction is not archival history or secure erasure; backup/disconnected replicas and retained revisions are acknowledged. Separate photo records, authenticated deletion events, deny-reupload records, backup expiry/holds and stale-device tests address both physical copies and resurrection.",
+      "governing_conditions_and_limits": "Tombstones do not prove byte erasure. Filtered deletion can retain fields/attachments; future implementation must prove its actual mechanism. No guarantee of immediate disconnected revocation or erasure is given."
+    },
+    {
+      "id": "O08",
+      "original_obligation": "Cover access control without inventing guarantees",
+      "status": "SUPPORTED_AS_PROPOSAL",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "18, 35–36, 44, 83–84, 98"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R03",
+        "R04"
+      ],
+      "assessment": "Database membership grants broad ordinary-document access; update validation can reject writes with user/security context but is not row-read filtering. Separate scope databases/private receipt storage, identity binding and replicated-write context tests match those limits.",
+      "governing_conditions_and_limits": "Write validation and a gateway are proposed controls, not installed security. Source membership statement needs raw 525–530, not F02’s 589–592 excerpt. Origin, signing, encryption, staff handoff and disconnected revocation remain gates."
+    },
+    {
+      "id": "O09",
+      "original_obligation": "Cover attachment behavior without inventing guarantees",
+      "status": "PARTIALLY_SUPPORTED",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "19, 26–28, 41–43, 71–75, 86, 95–97"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R19",
+        "R26",
+        "R34",
+        "R35",
+        "R37",
+        "R40",
+        "R41"
+      ],
+      "assessment": "Stable photo IDs/manifests, server byte hashes, whole-file-versus-resumable-upload choice, revision-bound attachment operations and Range-read limitation are correctly treated. The Pouch bug path is bounded. The Couch amplification lead is incompletely investigated/dispositioned (MD01).",
+      "governing_conditions_and_limits": "Range reads do not establish resumable uploads. Source-level fixes already present in 3.5.2 do not eliminate the need for photo workload, compaction or upgrade tests."
+    },
+    {
+      "id": "O10",
+      "original_obligation": "Provide observable tests",
+      "status": "SUPPORTED_AS_PROPOSAL",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "91–100"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R02",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R20",
+        "R21",
+        "R24",
+        "R25"
+      ],
+      "assessment": "All eight test groups have concrete stimuli and observable assertions: storage/restart; concurrent status/history; duplicate/reorder/worker faults; exact-pair regression; amplification/deletion; identity/permissions; history/erasure; operations/restore. Assertions target meaningful outcomes rather than citation or artifact counts.",
+      "governing_conditions_and_limits": "No executable tests or measured results are supplied or required by this planning assignment. Device/storage matrix, byte hashing, lifecycle and domain rules must be concretized before implementation validation."
+    },
+    {
+      "id": "O11",
+      "original_obligation": "Compare all relevant discoveries against frozen plan choices",
+      "status": "SUPPORTED_WITH_QUALIFICATION",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "9–11, 15–20, 56–65"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R20",
+        "R21",
+        "R22",
+        "R23",
+        "R24"
+      ],
+      "assessment": "The six-row crosswalk covers mutable records, timestamp arbitration, portable photo identity, retry transport, supervisor/CSV view and all unspecified controls. Discoveries map to changes or optional leads.",
+      "governing_conditions_and_limits": "The frozen plan says each inspection is mutable; it does not specify one inspection per asset (m01). Couch #5422’s available fix history is not compared/dispositioned (MD01)."
+    },
+    {
+      "id": "O12",
+      "original_obligation": "Address several offline days and unreliable mobile links",
+      "status": "SUPPORTED_AS_PROPOSAL",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "7, 11, 26, 34, 43, 79–80, 93, 95"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R01",
+        "R20",
+        "R21",
+        "R23"
+      ],
+      "assessment": "Conditional installable web app and native SQLite alternative, durable local draft/identity, foreground retry, storage workload formula and prolonged-offline/restart gate address the problem.",
+      "governing_conditions_and_limits": "Browser eviction/background lifecycle and quota are not guaranteed. Supported devices and numerical workload are appropriately open product inputs."
+    },
+    {
+      "id": "O13",
+      "original_obligation": "Investigate useful analogous systems beyond direct competitors",
+      "status": "SUPPORTED",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "20, 53–54"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R22",
+        "R23",
+        "R28"
+      ],
+      "assessment": "ODK supplies draft/finalized/sent workflow states and supervisor capture patterns; Automerge supplies independent-edit convergence with exposed same-property alternatives. They are framed as optional opportunities with distinct limits.",
+      "governing_conditions_and_limits": "The ODK form-state guide alone is not proof of shared-asset collaborative editing; Central can be self-hosted, with infrastructure/maintenance costs. No obligation to implement either optional lead."
+    },
+    {
+      "id": "O14",
+      "original_obligation": "Provide supervisor web review and reliable attribution/conflict history",
+      "status": "SUPPORTED_AS_PROPOSAL",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "9, 15–18, 26, 30, 34–37, 44–45, 64, 89, 94, 98–100"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R02",
+        "R03",
+        "R04",
+        "R23"
+      ],
+      "assessment": "Projection plus retained attributed events/resolutions, explicit pending conflicts, receipt states and a supervisor API address review/history. Client author/time is explicitly untrusted absent authenticated origin.",
+      "governing_conditions_and_limits": "This is a proposed view/API, not a built UI. Permission-enforced history is distinct from tamper evidence against server administrators; the latter is an open choice."
+    },
+    {
+      "id": "O15",
+      "original_obligation": "Use affordable public components and avoid permanent third-party SaaS dependency",
+      "status": "SUPPORTED_WITH_QUALIFICATION",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "7, 11, 45, 51–54, 87–88"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R01",
+        "R20",
+        "R24",
+        "R28",
+        "R32",
+        "R33"
+      ],
+      "assessment": "Public components and utility-controlled server, worker, API and backups avoid a required permanent SaaS. Pouch/Couch license identities and official Central self-hosting documentation support availability. Operations and infrastructure costs are acknowledged.",
+      "governing_conditions_and_limits": "Affordability is a bounded architecture choice, not a priced procurement claim. No workload, actual quote or operational staffing budget is provided or asserted."
+    },
+    {
+      "id": "O16",
+      "original_obligation": "Preserve supported corrections, product choices, covered dispositions, optional leads and justified uncertainties",
+      "status": "PARTIALLY_SUPPORTED",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "7–20, 41–45, 47–89"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R20",
+        "R21",
+        "R22",
+        "R23",
+        "R24",
+        "R26",
+        "R34",
+        "R37",
+        "R40",
+        "R43"
+      ],
+      "assessment": "No user stack choice is silently made. All eleven product questions and optional ODK/Automerge opportunities survive; main corrections and prior coverage survive. Pair/device/auth/erasure/retention/resume uncertainty is justified.",
+      "governing_conditions_and_limits": "Couch #5422’s implementation/release uncertainty is overstated by omission of available primary history (MD01); residual runtime/workload uncertainty remains justified."
+    },
+    {
+      "id": "O17",
+      "original_obligation": "Provide a complete proposed-change artifact after same-family criticism and preserve required critique",
+      "status": "SUPPORTED_WITH_QUALIFICATION",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "3–104"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R07",
+        "R08",
+        "R14",
+        "R20",
+        "R21"
+      ],
+      "assessment": "Every one of the eight actionable critique items and six coverage dispositions is present in final/dispositions. The reviser correctly rejects the erroneous raw-test anchor and adopts the release-note correction; the criticism is a predecessor requirement, not an optional list.",
+      "governing_conditions_and_limits": "The supplied criticism itself missed the Couch fix history; adopting it does not cure MD01. No separate hidden critic or new candidate revision was created."
+    },
+    {
+      "id": "O18",
+      "original_obligation": "Distinguish proposed checks from executed checks",
+      "status": "SUPPORTED_FOR_ARTIFACT",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "3, 71, 73, 91–104"
+        }
+      ],
+      "primary_evidence_ids": [
+        "R08",
+        "R13",
+        "R35",
+        "R41"
+      ],
+      "assessment": "Final labels every validation as proposed, the upstream regression as inspected only, and source fetching/hashing as the sole declared execution. No runtime result is presented as evidence.",
+      "governing_conditions_and_limits": "Candidate native receipts/action logs were not in the allowed input map. This assesses the artifact’s claims and evidence distinction, not an independent forensic proof of every negative action declaration."
+    },
+    {
+      "id": "O19",
+      "original_obligation": "Remain a planning research proposal; no canon edits, purchases or unrelated services",
+      "status": "SUPPORTED_FOR_DECLARED_SCOPE",
+      "artifact_locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "3, 77–104"
+        }
+      ],
+      "primary_evidence_ids": [],
+      "assessment": "The artifact is an integrated decision aid with a conditional recommendation, owner choices and validation gates. This review wrote only the authorized review directory and executed no downloaded component/source.",
+      "governing_conditions_and_limits": "Actual hidden candidate action history was outside the permitted source review; no conclusion is inferred from excluded native counters or receipts."
+    }
+  ],
+  "material_defects": [
+    {
+      "id": "MD01",
+      "category": "source_investigation_and_disposition_completeness",
+      "severity": "material",
+      "status": "OPEN_IN_FROZEN_FINAL",
+      "exact_claim": "CouchDB issue #5422 is closed and reports target growth from about 1 MB to 2 MB after a small revision with a 1 MB attachment on CouchDB 3.4.2. It does not establish whether 3.5.2 is affected or fixed. Benchmark the pinned server; do not infer either result.",
+      "locations": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "lines": "19, 43, 75, 97"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/critique-dispositions.md",
+          "lines": "14, 22"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/README.md",
+          "lines": "S15 row"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md",
+          "lines": "C08 row"
+        }
+      ],
+      "primary_counterevidence": [
+        {
+          "source_id": "R26",
+          "url": "https://github.com/apache/couchdb/issues/5422#issuecomment-2641805547",
+          "range": "comment body",
+          "finding": "Maintainer identifies compaction sizing fix #5347 and expected 3.4.3 release."
+        },
+        {
+          "source_id": "R26",
+          "url": "https://github.com/apache/couchdb/issues/5422#issuecomment-2667491504",
+          "range": "comment body",
+          "finding": "Maintainer identifies missing atts_since propagation and points to #5437."
+        },
+        {
+          "source_id": "R26",
+          "url": "https://github.com/apache/couchdb/issues/5422#issuecomment-2675161303",
+          "range": "comment body",
+          "finding": "Closes #5422 after #5437 merged to main, expected in 3.4.3."
+        },
+        {
+          "source_id": "R34",
+          "url": "https://github.com/apache/couchdb/pull/5437",
+          "range": "body; merge metadata",
+          "finding": "Fix passes atts_since to fabric for open_revs GET; merged 2025-02-21, merge f1799d6d0c8baeea612dd17e430038495476a143."
+        },
+        {
+          "source_id": "R35",
+          "url": "https://api.github.com/repos/apache/couchdb/pulls/5437/files",
+          "range": "chttpd_db.erl patch; chttpd_db_doc_get_tests.erl t_mp_atts_since; attachments_multipart_test.exs patch",
+          "finding": "Fix plus EUnit coverage and changed Elixir assertions demonstrate known attachments become stubs rather than repeated bodies."
+        },
+        {
+          "source_id": "R37",
+          "url": "https://github.com/apache/couchdb/blob/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/whatsnew/3.4.rst#L23-L38",
+          "range": "raw 23–38",
+          "finding": "3.4.3 notes explicitly list #5347 and #5437."
+        },
+        {
+          "source_id": "R40",
+          "url": "https://github.com/apache/couchdb/blob/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/chttpd/src/chttpd_db.erl#L980-L1030",
+          "range": "raw 980–1030",
+          "finding": "Pinned 3.5.2 propagates atts_since in Options2 to open_revs and output."
+        },
+        {
+          "source_id": "R41",
+          "url": "https://github.com/apache/couchdb/blob/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/chttpd/test/eunit/chttpd_db_doc_get_tests.erl#L442-L464",
+          "range": "raw 442–464",
+          "finding": "Pinned test asserts known atta is stub, new attb follows and only attb bytes are returned."
+        },
+        {
+          "source_id": "R43",
+          "url": "https://github.com/apache/couchdb/compare/f1799d6d0c8baeea612dd17e430038495476a143...5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+          "range": "status/base_commit/merge_base_commit",
+          "finding": "Pinned 3.5.2 is ahead with behind_by 0; merge base equals #5437 merge commit."
+        }
+      ],
+      "impact": "Leaves a consequential declared-source discovery as a generic unresolved storage risk, omits its transport mechanism and regression/release applicability, and weakens the proposed benchmark interpretation. O04, O09 and O16 are partial; breadth and the useful Pouch history remain creditable.",
+      "qualification": "The original 3.4.2 reproducer alone does not prove runtime behavior on 3.5.2. Presence of the fix/tests in 3.5.2 is source evidence, not a passed target workload or universal attachment guarantee. The defect is the omitted available history, not the decision to propose a benchmark."
+    }
+  ],
+  "minor_findings": [
+    {
+      "id": "m01",
+      "exact_claim": "The frozen plan's single mutable inspection per asset",
+      "location": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+        "lines": "9; also 60"
+      },
+      "counterevidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/plan.md",
+        "lines": "3"
+      },
+      "assessment": "The plan defines an inspection as a mutable record carrying asset ID; it does not state one inspection per asset. Timestamp overwrite/history concerns still follow. This is an overread of baseline cardinality, not a failure of the event/history correction."
+    },
+    {
+      "id": "m02",
+      "exact_claim": "attaches a photo to only one branch",
+      "location": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+        "lines": "71"
+      },
+      "primary_counterevidence": {
+        "id": "R08",
+        "url": "https://github.com/apache/pouchdb/blob/705b17bd761e06f3cb823616ce974dc2a863aff6/tests/integration/test.attachments.js#L3919-L3924",
+        "range": "raw 3919–3924"
+      },
+      "assessment": "Fixture is attachment.txt with text/plain base64 text. Generic attachment-reference behavior is relevant to photos, but the upstream regression is not itself a binary-photo test. Final already requires project adapter/photo tests."
+    },
+    {
+      "id": "m03",
+      "exact_claim": "F02 security excerpt is cited for database-wide member access",
+      "location": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+        "lines": "18"
+      },
+      "primary_counterevidence": {
+        "id": "R03",
+        "url": "https://github.com/apache/couchdb/blob/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/intro/security.rst#L525-L530",
+        "range": "raw 525–530"
+      },
+      "assessment": "Supplied F02 captures raw 589–592 (admin-role example/link), not membership rule. S05 and independent raw 525–530 substantiate the final claim. An excerpt hash is not substantive corroboration."
+    },
+    {
+      "id": "m04",
+      "exact_claim": "PouchDB 9.0.0 with IndexedDB; its browser default is IndexedDB",
+      "location": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+        "lines": "7, 73, 93"
+      },
+      "primary_counterevidence": {
+        "ids": [
+          "R20",
+          "R42"
+        ],
+        "ranges": [
+          "extracted adapter guide 20–47",
+          "raw plugin footer 5223–5235"
+        ]
+      },
+      "assessment": "Database technology description is true; default idb and indexeddb plugin identity should be explicit at the existing build gate. The reviewed fixed plugin must not be assumed to be every default adapter. This is an implementation-choice qualification, not a fabricated source guarantee."
+    }
+  ],
+  "unassessed_remainder": [],
+  "unassessed_remainder_explanation": "No declared source-review obligation remains unassessed. Proposed runtime/product validation and excluded native-action forensics remain outside grade scope, not passed by source review.",
+  "primary_sources_checked": [
+    {
+      "id": "R01",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/replication/intro.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/replication/intro.rst",
+      "retrieval_start": "2026-10-07T19:17:18.717736+00:00",
+      "retrieval_end": "2026-10-07T19:17:18.844704+00:00",
+      "http_status": 200,
+      "response_sha256": "c81877aaccc47db716167f61aca712f1694558bf6b46aecd988aa46d55a1d412",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R01.txt",
+      "evidence_sha256": "764cc81dd8611da0e1796be7421e933b32d4d85403863863dc23e1305f5c0fdb",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 19–27, 66–140"
+    },
+    {
+      "id": "R02",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/replication/conflicts.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/replication/conflicts.rst",
+      "retrieval_start": "2026-10-07T19:17:18.718842+00:00",
+      "retrieval_end": "2026-10-07T19:17:18.847171+00:00",
+      "http_status": 200,
+      "response_sha256": "46bc10a9ccd9ad1f4314f333e993dc96bcf869768470756bd72a9d355e053cae",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R02.txt",
+      "evidence_sha256": "38285109c8836356d5d1cdbad983716f2c067a6f39b542044fb288a4f2b360e3",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 19–256 (conflicts, winner, revision bodies, all-leaf reads); adjacent comparison 570–670 inspected"
+    },
+    {
+      "id": "R03",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/intro/security.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/intro/security.rst",
+      "retrieval_start": "2026-10-07T19:17:18.719932+00:00",
+      "retrieval_end": "2026-10-07T19:17:18.824991+00:00",
+      "http_status": 200,
+      "response_sha256": "59b6fe67b84d9022b1a667e2d920726dc89a25c948331f9dc2df71f0b83ac18d",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R03.txt",
+      "evidence_sha256": "eb225572321964e91be011cf6dd4ea0ce31ee653cec673820106422f66631b5e",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 514–592"
+    },
+    {
+      "id": "R04",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/ddocs/ddocs.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/ddocs/ddocs.rst",
+      "retrieval_start": "2026-10-07T19:17:18.721279+00:00",
+      "retrieval_end": "2026-10-07T19:17:18.856686+00:00",
+      "http_status": 200,
+      "response_sha256": "1830d25f8ea2d24b9246fbf29e6083863572d6d08a7593b10ba381d6ebb53b8a",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R04.txt",
+      "evidence_sha256": "46edcfa16dee371409fca706831fedd99683a8118da4c8a0a7be1623392ba964",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 28–74, 619–708, 731–845"
+    },
+    {
+      "id": "R05",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/api/document/attachments.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/api/document/attachments.rst",
+      "retrieval_start": "2026-10-07T19:17:18.722413+00:00",
+      "retrieval_end": "2026-10-07T19:17:18.853330+00:00",
+      "http_status": 200,
+      "response_sha256": "59e95e0d42d6740d3f18ba3727bb1b1e2c954e4c0047098fe46a264c337a0d49",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R05.txt",
+      "evidence_sha256": "c38865c719ac8fe228d1b434e13b61de0544c494359744428498ca04e365f26a",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 19–151, 190–222, 260–319"
+    },
+    {
+      "id": "R06",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/maintenance/compaction.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/maintenance/compaction.rst",
+      "retrieval_start": "2026-10-07T19:17:18.723616+00:00",
+      "retrieval_end": "2026-10-07T19:17:18.855095+00:00",
+      "http_status": 200,
+      "response_sha256": "662b4cdcead33569b2281ad4cee5a45ad29071a16803dc17ce81a26e745c069e",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R06.txt",
+      "evidence_sha256": "f11bf19d946daeb8c9158989466e1965683603c0179776f5d8cc02f8d409b265",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 19–121, 126–166"
+    },
+    {
+      "id": "R07",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/dist/pouchdb.indexeddb.js",
+      "final_url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/dist/pouchdb.indexeddb.js",
+      "retrieval_start": "2026-10-07T19:17:18.725380+00:00",
+      "retrieval_end": "2026-10-07T19:17:18.866555+00:00",
+      "http_status": 200,
+      "response_sha256": "41d5fad6ba0d96922d8794aec0869cd59323b0772a2b1f9009f772afec7b80b9",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R07.txt",
+      "evidence_sha256": "1d7c7fe5e02ded5c69bac7a5819e1aea5bf7418c5065a92893e9a1a69ccb6c98",
+      "version_or_identity": "commit b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "assessed_range": "raw 3830–3950, 4050–4140"
+    },
+    {
+      "id": "R08",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/705b17bd761e06f3cb823616ce974dc2a863aff6/tests/integration/test.attachments.js",
+      "final_url": "https://raw.githubusercontent.com/apache/pouchdb/705b17bd761e06f3cb823616ce974dc2a863aff6/tests/integration/test.attachments.js",
+      "retrieval_start": "2026-10-07T19:17:18.726451+00:00",
+      "retrieval_end": "2026-10-07T19:17:18.859030+00:00",
+      "http_status": 200,
+      "response_sha256": "696848045d5622891179d4e04d8fd56f3263f4ebfa5141d59434e10834c164fe",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R08.txt",
+      "evidence_sha256": "a50b64bedda2d191474b7bd0b67cc4ad28b1e8910ff022371639e048a5518719",
+      "version_or_identity": "commit 705b17bd761e06f3cb823616ce974dc2a863aff6",
+      "assessed_range": "raw 3710–3810 and 3870–3990"
+    },
+    {
+      "id": "R09",
+      "url": "https://api.github.com/repos/apache/pouchdb/issues/8456",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/issues/8456",
+      "retrieval_start": "2026-10-07T19:17:18.827783+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.043647+00:00",
+      "http_status": 200,
+      "response_sha256": "c5cfe7d877dafc4a24a3567807deb6572616e0d5769fc7f69f5c131f8a72d3d9",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R09.txt",
+      "evidence_sha256": "2108359cac2b71d2aa734802154f31737adc7f02d20502005bc397559ea5ac51",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "selected issue body and state/dates"
+    },
+    {
+      "id": "R10",
+      "url": "https://api.github.com/repos/apache/pouchdb/pulls/8460",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/pulls/8460",
+      "retrieval_start": "2026-10-07T19:17:18.846144+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.082635+00:00",
+      "http_status": 200,
+      "response_sha256": "06ba5075b4974e66e26aea2298327a64576c2a380d22f70f0d22d08b4423fb9c",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R10.txt",
+      "evidence_sha256": "5f2a52760c62a0a3daaddb540ee6e4c0116e2426a1bb1cb724d809911685d8de",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "selected PR body, merge, head/base"
+    },
+    {
+      "id": "R11",
+      "url": "https://api.github.com/repos/apache/pouchdb/pulls/8460/commits",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/pulls/8460/commits",
+      "retrieval_start": "2026-10-07T19:17:18.851738+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.218441+00:00",
+      "http_status": 200,
+      "response_sha256": "b9d00430ec58eb5b61d752e39d777fe8d293030d7cccec1cc4d3089629abd167",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R11.txt",
+      "evidence_sha256": "8cde68d4d675695361900b3ec19c18849f774958e603bd417627c90a5ce817da",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "two commit identities, messages and ancestry"
+    },
+    {
+      "id": "R12",
+      "url": "https://api.github.com/repos/apache/pouchdb/commits/1a30d0525f7b778ac3a4c58d1bf0d03628533999",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/commits/1a30d0525f7b778ac3a4c58d1bf0d03628533999",
+      "retrieval_start": "2026-10-07T19:17:18.857006+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.047289+00:00",
+      "http_status": 200,
+      "response_sha256": "b4828ac0c2eb2d15accfb214c1245b0deba24a47cfb87a5eb7a84ddd4181cbfd",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R12.txt",
+      "evidence_sha256": "7d71b1c1d80b1389677bed196b486514ddeca5fb49c4ba888d5168b960f7ac09",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "fix commit/file patch"
+    },
+    {
+      "id": "R13",
+      "url": "https://api.github.com/repos/apache/pouchdb/commits/705b17bd761e06f3cb823616ce974dc2a863aff6",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/commits/705b17bd761e06f3cb823616ce974dc2a863aff6",
+      "retrieval_start": "2026-10-07T19:17:18.860742+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.057397+00:00",
+      "http_status": 200,
+      "response_sha256": "3a5e8d82d2ddf28171d516d24d72934c988d85bffbb2e4b072d82a4ca4da6302",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R13.txt",
+      "evidence_sha256": "0c063195dd96e57f3883886c59e8c2904a48eef5b0a75536cc8e70e066a15c5e",
+      "version_or_identity": "commit 705b17bd761e06f3cb823616ce974dc2a863aff6",
+      "assessed_range": "test commit/file patch"
+    },
+    {
+      "id": "R14",
+      "url": "https://api.github.com/repos/apache/pouchdb/releases/tags/8.0.0",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/releases/tags/8.0.0",
+      "retrieval_start": "2026-10-07T19:17:18.861442+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.114484+00:00",
+      "http_status": 200,
+      "response_sha256": "94e0488a406f0f21b94f8816508ab564b5684aeeb212f5d575262af43ea3798d",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R14.txt",
+      "evidence_sha256": "ced45c0d6cfd5815b27de60e3d8f50059aaa2118f4fcce708498f864fc8b7a97",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "release identity/date and body, including absence of #8460"
+    },
+    {
+      "id": "R15",
+      "url": "https://api.github.com/repos/apache/pouchdb/releases/tags/9.0.0",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/releases/tags/9.0.0",
+      "retrieval_start": "2026-10-07T19:17:18.862061+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.061619+00:00",
+      "http_status": 200,
+      "response_sha256": "6450658af61340461e22ddb300d034757c6b654c7e4acb0cdc54b461bfc52a19",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R15.txt",
+      "evidence_sha256": "5ef71962c25debf154021f3d9b64d15d38e4d42c85161866d605f4efd7ce96bf",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "release identity/date and body highlights/relevant adapter changes"
+    },
+    {
+      "id": "R16",
+      "url": "https://api.github.com/repos/apache/pouchdb/git/ref/tags/9.0.0",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/git/ref/tags/9.0.0",
+      "retrieval_start": "2026-10-07T19:17:18.872101+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.011383+00:00",
+      "http_status": 200,
+      "response_sha256": "301128a24ad587274ef64072dc20aab8e24c84f90f6822f72d46962417da8143",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R16.txt",
+      "evidence_sha256": "94f01967c91143e474effa6138ff9e5db6864a47cb139e544501424523ff6270",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "tag object"
+    },
+    {
+      "id": "R17",
+      "url": "https://api.github.com/repos/apache/couchdb/git/ref/tags/3.5.2",
+      "final_url": "https://api.github.com/repos/apache/couchdb/git/ref/tags/3.5.2",
+      "retrieval_start": "2026-10-07T19:17:19.012097+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.188674+00:00",
+      "http_status": 200,
+      "response_sha256": "d5f98aeeeb8318b4738bb850d7678b4a9d4376c8184b43cdff04392dcf1bfd04",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R17.txt",
+      "evidence_sha256": "a85490bd3bd815774b95954fbfa2f560c9d8844f17a050b64ecb76ed5bb65a45",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "tag object"
+    },
+    {
+      "id": "R18",
+      "url": "https://api.github.com/repos/apache/couchdb/git/tags/8a992056a7e1e1c487ccf7a6248c6ab2c05f517a",
+      "final_url": "https://api.github.com/repos/apache/couchdb/git/tags/8a992056a7e1e1c487ccf7a6248c6ab2c05f517a",
+      "retrieval_start": "2026-10-07T19:17:19.044785+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.223346+00:00",
+      "http_status": 200,
+      "response_sha256": "c8207687c9e3113de3e5b172c74ba98bd7b3fe45e9baee9eea909fc67b906c25",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R18.txt",
+      "evidence_sha256": "e04c12f8991906e51716596f87729798608fe0bc668c66d024e6e1f252d3fd5e",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "tag dereference/identity/date"
+    },
+    {
+      "id": "R19",
+      "url": "https://api.github.com/repos/apache/couchdb/issues/5422",
+      "final_url": "https://api.github.com/repos/apache/couchdb/issues/5422",
+      "retrieval_start": "2026-10-07T19:17:19.048008+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.259187+00:00",
+      "http_status": 200,
+      "response_sha256": "8e2fcfdf65267d3f686b5429a28cdfc76be1932e8de8786b63e8f1fc65fd662d",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R19.txt",
+      "evidence_sha256": "4ee2d719e0beacfecb801897b026f39d4a51f7b745cc3bee3a9e0fe696e1b5eb",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "issue body/state/dates and original reproduction/environment"
+    },
+    {
+      "id": "R20",
+      "url": "https://pouchdb.com/adapters.html",
+      "final_url": "https://pouchdb.com/adapters.html",
+      "retrieval_start": "2026-10-07T19:17:19.058372+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.234982+00:00",
+      "http_status": 200,
+      "response_sha256": "f9d0412f01a9c88da79ed42fc891ef6ec440eea56a2e77647a669264180f1bf1",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R20.txt",
+      "evidence_sha256": "7ea1e5d4298cd184f628fb5cd87b742ac86112b1a97ac70fa726a9c270f913f8",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "text 20–47, 99–116"
+    },
+    {
+      "id": "R21",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "final_url": "https://pouchdb.com/guides/replication.html",
+      "retrieval_start": "2026-10-07T19:17:19.064195+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.251626+00:00",
+      "http_status": 200,
+      "response_sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R21.txt",
+      "evidence_sha256": "1e5f7222c0099b90dc068c362f774af276b00719ed42225fb268da341aff815e",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "text 26–120"
+    },
+    {
+      "id": "R22",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "final_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "retrieval_start": "2026-10-07T19:17:19.083176+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.288314+00:00",
+      "http_status": 200,
+      "response_sha256": "29f685d69d6506f758b2fcdd8c2915491e353af5ed2af90cc9fe309c5e35cef8",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R22.txt",
+      "evidence_sha256": "cb7316ca26ff8a0c310edf1b1e64d32fe8548f86154a8ea05d847f5889507203",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "text 57–98"
+    },
+    {
+      "id": "R23",
+      "url": "https://docs.getodk.org/guide-end-of-form/",
+      "final_url": "https://docs.getodk.org/guide-end-of-form/",
+      "retrieval_start": "2026-10-07T19:17:31.797405+00:00",
+      "retrieval_end": "2026-10-07T19:17:32.017566+00:00",
+      "http_status": 200,
+      "response_sha256": "a9827050ee7a1cac7cc52c43f3ada7134101f0b86a81e1e98b333c8438e64fac",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R23.txt",
+      "evidence_sha256": "7915da3d0e7ba0c2a77394e2ff64a87c3d17356405bdb284075515d18a298a98",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "text 119–146 and workflow review context"
+    },
+    {
+      "id": "R24",
+      "url": "https://www.postgresql.org/docs/18/sql-insert.html",
+      "final_url": "https://www.postgresql.org/docs/18/sql-insert.html",
+      "retrieval_start": "2026-10-07T19:17:19.189028+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.548550+00:00",
+      "http_status": 200,
+      "response_sha256": "0684801db086ef1e9eefea6b72c84d9290e5dc5ba3b6254bfc62b4dc0b92a234",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R24.txt",
+      "evidence_sha256": "ad72654bb9d2076fa4dea7883a6ef1118e5a72c66211c93b297d07abfe37fd81",
+      "version_or_identity": "PostgreSQL 18 documentation",
+      "assessed_range": "text 99–102, 139–168 and conflict examples"
+    },
+    {
+      "id": "R25",
+      "url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+      "final_url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+      "retrieval_start": "2026-10-07T19:17:19.219407+00:00",
+      "retrieval_end": "2026-10-07T19:17:19.485777+00:00",
+      "http_status": 200,
+      "response_sha256": "04c3e48925553a5d7ea447493fb9ea4b7769d3fbb4a1a3d3befcb67e1b7780ee",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R25.txt",
+      "evidence_sha256": "868df49745f07b5de0c63fd137c663e313315bf07add134818cbeaba1d3d6070",
+      "version_or_identity": "PostgreSQL 18 documentation",
+      "assessed_range": "text 72–98"
+    },
+    {
+      "id": "R26",
+      "url": "https://api.github.com/repos/apache/couchdb/issues/5422/comments",
+      "final_url": "https://api.github.com/repos/apache/couchdb/issues/5422/comments",
+      "retrieval_start": "2026-10-07T19:18:19.044844+00:00",
+      "retrieval_end": "2026-10-07T19:18:19.272452+00:00",
+      "http_status": 200,
+      "response_sha256": "f4ff94ae6d216f8ba11e24ff76eddc6aff3ee27e963d3b24f3c1f676cb6b65d7",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R26.txt",
+      "evidence_sha256": "ed63cda803a88ba7929c2e69ef673637a04e7d1df51de07d11fe065cb5f6d0c5",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "all six issue comment bodies/IDs/URLs"
+    },
+    {
+      "id": "R27",
+      "url": "https://api.github.com/repos/apache/pouchdb/issues/8456/comments",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/issues/8456/comments",
+      "retrieval_start": "2026-10-07T19:18:19.047066+00:00",
+      "retrieval_end": "2026-10-07T19:18:19.283530+00:00",
+      "http_status": 200,
+      "response_sha256": "8b07342ef28bcc7a1a5e587ddd73372e0fdc281be6c6774708a79be13c65a902",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R27.txt",
+      "evidence_sha256": "b74f0fc137cd5d5d662b9c3ac6a5b912d3b950da2642263156559fb7ebb01c2e",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "sole closure comment"
+    },
+    {
+      "id": "R28",
+      "url": "https://docs.getodk.org/central-install/",
+      "final_url": "https://docs.getodk.org/central-install/",
+      "retrieval_start": "2026-10-07T19:18:19.048358+00:00",
+      "retrieval_end": "2026-10-07T19:18:19.202883+00:00",
+      "http_status": 200,
+      "response_sha256": "905d53b5de3c1e159d20d121a318d6ff62d13a054060b007405f0e16006f8965",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R28.txt",
+      "evidence_sha256": "f5482db5982e400472e04563c26c0f68adeb4b0b3e8db989609fc0390948b37e",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "text 119–146"
+    },
+    {
+      "id": "R31",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "final_url": "https://www.sqlite.org/atomiccommit.html",
+      "retrieval_start": "2026-10-07T19:18:19.051133+00:00",
+      "retrieval_end": "2026-10-07T19:18:19.233047+00:00",
+      "http_status": 200,
+      "response_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R31.txt",
+      "evidence_sha256": "6671137958f33c3573b47b50de7298e8b84e0a06bc1fb9b9ee68c1e4af9d6427",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "text 70–96, 127–171; no durability certification"
+    },
+    {
+      "id": "R32",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/LICENSE",
+      "final_url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/LICENSE",
+      "retrieval_start": "2026-10-07T19:18:19.052477+00:00",
+      "retrieval_end": "2026-10-07T19:18:19.228291+00:00",
+      "http_status": 200,
+      "response_sha256": "bf41d90b4fb789f6eac84eafedafe33695311236732f4efe8e3ebf9f4521c719",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R32.txt",
+      "evidence_sha256": "83dd34359d68041dcf3fbb80b0b3bf99231e6bea7485cabc823ec6419e23376f",
+      "version_or_identity": "commit b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "assessed_range": "raw 1–35 license identity only"
+    },
+    {
+      "id": "R33",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/LICENSE",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/LICENSE",
+      "retrieval_start": "2026-10-07T19:18:19.054153+00:00",
+      "retrieval_end": "2026-10-07T19:18:19.261411+00:00",
+      "http_status": 200,
+      "response_sha256": "72dfae157734ac942e07679666c7aaf225340b2daa6cea456d08a955321411f7",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R33.txt",
+      "evidence_sha256": "36f48731a2f6f836a473ff31d0e9cbcd96d55c7549f5807a65e3b67671bc3074",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 1–35 license identity only; third-party notices not assessed"
+    },
+    {
+      "id": "R34",
+      "url": "https://api.github.com/repos/apache/couchdb/pulls/5437",
+      "final_url": "https://api.github.com/repos/apache/couchdb/pulls/5437",
+      "retrieval_start": "2026-10-07T19:18:51.703353+00:00",
+      "retrieval_end": "2026-10-07T19:18:51.960576+00:00",
+      "http_status": 200,
+      "response_sha256": "72d7f64c0f7f6e772d76bee007cdb5cb5a21d19090bc278765d01095154af132",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R34.txt",
+      "evidence_sha256": "fce23524900c540e2b95feee6fb0331561b8278be55a1d0c6975c923fa6ec8dc",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "PR body, merge metadata"
+    },
+    {
+      "id": "R35",
+      "url": "https://api.github.com/repos/apache/couchdb/pulls/5437/files",
+      "final_url": "https://api.github.com/repos/apache/couchdb/pulls/5437/files",
+      "retrieval_start": "2026-10-07T19:18:51.705068+00:00",
+      "retrieval_end": "2026-10-07T19:18:52.107526+00:00",
+      "http_status": 200,
+      "response_sha256": "13027bc22a1f50ecbf06d5e9512ccf7d7372a0175fb3d4be3eccd1b8f09d6482",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R35.txt",
+      "evidence_sha256": "61b0b651f701e27dddab0211f7ebef47225880b817ff0a7b4457419ee63c941c",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "all changed-file patches, with focus on atts_since, t_mp_atts_since and Elixir assertions"
+    },
+    {
+      "id": "R36",
+      "url": "https://api.github.com/repos/apache/couchdb/pulls/5347",
+      "final_url": "https://api.github.com/repos/apache/couchdb/pulls/5347",
+      "retrieval_start": "2026-10-07T19:18:51.705879+00:00",
+      "retrieval_end": "2026-10-07T19:18:51.980457+00:00",
+      "http_status": 200,
+      "response_sha256": "d29b1002eee204a9c8604fb1b2ba9513f8d507fc8885dd8a659d73f66e17e8c9",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R36.txt",
+      "evidence_sha256": "20b72abfe4e498ad7b6c9bad267f5c5e5cec9fc644ffb6f2a1641c200f4c18c8",
+      "version_or_identity": "current official page/API record, retrieval-pinned",
+      "assessed_range": "PR body/merge metadata; adjacent compaction lead, not independently runtime-proven"
+    },
+    {
+      "id": "R37",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/whatsnew/3.4.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/whatsnew/3.4.rst",
+      "retrieval_start": "2026-10-07T19:18:51.707166+00:00",
+      "retrieval_end": "2026-10-07T19:18:51.880113+00:00",
+      "http_status": 200,
+      "response_sha256": "aa5f8396c9be0beef85a9fbeac4d782d702cd8933be31ae4c5166fb3377af22e",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R37.txt",
+      "evidence_sha256": "65c7001b29e909a8dcbc300108ec2c7a07726153b860e430f6a586ff31709b63",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 23–38 release applicability"
+    },
+    {
+      "id": "R40",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/chttpd/src/chttpd_db.erl",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/chttpd/src/chttpd_db.erl",
+      "retrieval_start": "2026-10-07T19:19:19.093427+00:00",
+      "retrieval_end": "2026-10-07T19:19:19.278975+00:00",
+      "http_status": 200,
+      "response_sha256": "742f5e80e6355feafd22909c92bd7d468978ac1a66e2b34ee0200e3f1bf63824",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R40.txt",
+      "evidence_sha256": "eb9057f3bf2f8e65facc8396f3ee77ce53f0d3c6d4c047a536be5ee7a6bbcd98",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 980–1030"
+    },
+    {
+      "id": "R41",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/chttpd/test/eunit/chttpd_db_doc_get_tests.erl",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/chttpd/test/eunit/chttpd_db_doc_get_tests.erl",
+      "retrieval_start": "2026-10-07T19:19:19.095408+00:00",
+      "retrieval_end": "2026-10-07T19:19:19.238734+00:00",
+      "http_status": 200,
+      "response_sha256": "d9581f661de436407afbe36212ffd9f3549887206444a86b9e94a7d3ae06420e",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R41.txt",
+      "evidence_sha256": "f3e267c6bf58e6d1720c68d39127d0cd3cf65c7e49d9e0009355cc6990879768",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "raw 400–464; test setup 468–495 inspected"
+    },
+    {
+      "id": "R42",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/dist/pouchdb.indexeddb.js",
+      "final_url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/dist/pouchdb.indexeddb.js",
+      "retrieval_start": "2026-10-07T19:19:19.096724+00:00",
+      "retrieval_end": "2026-10-07T19:19:19.187324+00:00",
+      "http_status": 200,
+      "response_sha256": "41d5fad6ba0d96922d8794aec0869cd59323b0772a2b1f9009f772afec7b80b9",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R42.txt",
+      "evidence_sha256": "b8f4572198c8d8d0a427a09d162cb4d455b30bef6d0942751eadec40572c2005",
+      "version_or_identity": "commit b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+      "assessed_range": "raw 5142–5237 plugin registration/prerequisite"
+    },
+    {
+      "id": "R43",
+      "url": "https://api.github.com/repos/apache/couchdb/compare/f1799d6d0c8baeea612dd17e430038495476a143...5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "final_url": "https://api.github.com/repos/apache/couchdb/compare/f1799d6d0c8baeea612dd17e430038495476a143...5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "retrieval_start": "2026-10-07T19:19:19.097899+00:00",
+      "retrieval_end": "2026-10-07T19:19:21.048856+00:00",
+      "http_status": 200,
+      "response_sha256": "360c46165f671379ca1f84c5f2df6df8d9a73e19476090cc3f40d28f292b5d03",
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R43.txt",
+      "evidence_sha256": "df64e42b15f77d8c3bcb681b0b71073ed13f6e0ad077c3ace60cebf81b44cf65",
+      "version_or_identity": "commit 5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+      "assessed_range": "compare status/count/base/merge-base identity"
+    }
+  ],
+  "critique_preservation": [
+    {
+      "id": "K01",
+      "item": "Conditional stack/device-storage gate",
+      "status": "PRESERVED",
+      "final_lines": "7, 11, 79–80, 93",
+      "disposition_lines": "9"
+    },
+    {
+      "id": "K02",
+      "item": "Operation-level idempotency/hash/server recomputation/worker crash",
+      "status": "PRESERVED",
+      "final_lines": "26–28, 35, 95",
+      "disposition_lines": "10"
+    },
+    {
+      "id": "K03",
+      "item": "Arrival versus causality and reordered child",
+      "status": "PRESERVED",
+      "final_lines": "29–30, 94–95",
+      "disposition_lines": "11"
+    },
+    {
+      "id": "K04",
+      "item": "Photo redaction model/tombstone/backups/stale retry",
+      "status": "PRESERVED",
+      "final_lines": "41–42, 85–86, 97, 99",
+      "disposition_lines": "12"
+    },
+    {
+      "id": "K05",
+      "item": "Receipt privacy/member scope/authenticated validation context",
+      "status": "PRESERVED",
+      "final_lines": "18, 35–36, 44, 98",
+      "disposition_lines": "13"
+    },
+    {
+      "id": "K06",
+      "item": "Issue/fix/test/release corrections",
+      "status": "PRESERVED_WITH_JUSTIFIED_REJECTION_AND_REMAINING_DEFECT",
+      "final_lines": "69–75, 96–97",
+      "disposition_lines": "14"
+    },
+    {
+      "id": "K07",
+      "item": "Distinct mechanism scopes and optional leads",
+      "status": "PRESERVED",
+      "final_lines": "11, 20, 47–54",
+      "disposition_lines": "15"
+    },
+    {
+      "id": "K08",
+      "item": "Proposed/executed boundary and eight validation groups",
+      "status": "PRESERVED",
+      "final_lines": "3, 71, 91–104",
+      "disposition_lines": "16"
+    }
+  ],
+  "prior_findings_preserved": [
+    {
+      "location": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/critique.md",
+        "lines": "5, 7"
+      },
+      "original": "Sound conditional proposal; no implementation/test run claimed.",
+      "review_disposition": "Preserved as the supplied critic's verdict, not adopted as this review's full-positive grade."
+    },
+    {
+      "location": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/critique.md",
+        "lines": "21"
+      },
+      "original": "C06 says raw anchor should be 3729–3795.",
+      "review_disposition": "Incorrect for the immutable raw file: 3899–3967 confirmed with the original whole-file hash. Final's rejection is justified."
+    },
+    {
+      "location": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/README.md",
+        "lines": "S12 row"
+      },
+      "original": "Release notes list #8460.",
+      "review_disposition": "Original failure preserved in lineage; final corrects it. Independent 8.0.0 API release body contains no 8460."
+    },
+    {
+      "location": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md",
+        "lines": "C08 row"
+      },
+      "original": "No branches or PR linked for #5422.",
+      "review_disposition": "Sidebar-only observation cannot stand in for full discussion. Maintainer comments explicitly link #5347/#5437; material omission MD01 remains in final."
+    }
+  ],
+  "bounded_discovery_yield": {
+    "grade": "SUBSTANTIAL_SUPPORTED_YIELD_WITH_ONE_MATERIAL_MISS",
+    "supported_families": [
+      "Revision transport versus application audit/receipt",
+      "Hidden conflict leaves and explicit domain resolution",
+      "Compaction versus archival history/erasure",
+      "Database confidentiality scope versus validation/write rules",
+      "Browser lifecycle/storage versus native SQLite gate",
+      "Stable event/photo identity, canonicalization and idempotent outcome proposals",
+      "Pouch attachment-reference regression and exact release artifact",
+      "ODK draft/finalized/sent workflow analogue",
+      "Automerge convergence versus semantic choice",
+      "Custom relational transactions/uniqueness versus application outbox"
+    ],
+    "incompletely_supported_family": "Couch #5422 amplification was found, but its available fix/test/release history was missed. Source count is not a yield grade."
+  },
+  "blinding_limits": {
+    "authorized_inputs": "Only INPUTS.md, its named brief/plan/final/critique/dispositions/source maps, allowed own-arm source evidence, applicable instruction files, independent primary public material and this review's own outputs were read.",
+    "visible_method_clues": [
+      "Path includes I-ANCHOR-LUNA and control; authored titles carry I-ANCHOR-LUNA.",
+      "Final, critique and dispositions explicitly reveal research-v1 → critic-v1 → reviser-v1 and required same-family criticism.",
+      "S/C/F source-ID lineage, correction/rejection language and the browser-versus-raw locator dispute reveal a multi-phase research/revision method.",
+      "Supplied maps reveal read-only source fetching/hashing and browser primary-source inspection methods."
+    ],
+    "not_read": [
+      "Counterpart arm answer or sources",
+      "Any other arm review, grader or partial review",
+      "Candidate costs/timings or native counters",
+      "Expected winner",
+      "Parent/root/historical analysis",
+      "Candidate native terminal receipts outside authorized map"
+    ],
+    "limits": "Arm-label/method blinding is imperfect because authorized authored inputs reveal those clues. No provider identity, performance ranking or winner was inferred from them. Source retrieval dates are evidence provenance, not candidate allowance/cost data. Original researcher draft coverage and native same-family provenance are attributed assertions outside the authorized read map.",
+    "requested_reviewer_configuration": {
+      "provider": "codex_gmail",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    },
+    "observed_runtime": "T3 Code through Codex; model gpt-6.1-sol, xhigh, per injected runtime information. Provider account alias and service-tier receipt were not independently inspected. No configuration/account changes or delegation."
+  },
+  "execution_boundary": {
+    "reviewer_executed": "Read-only input/instruction inspection, public HTTP GET/text extraction, hashes, metadata comparison and output JSON/file validation only.",
+    "reviewer_not_executed": "No component installers, downloaded source/host code, upstream or proposed application tests, account/provider changes, canon/main/WorkNode edits or delegation.",
+    "candidate_status_assessment": "Artifact consistently labels validation as proposed. Excluded native receipts/counters were not read; do not interpret this as a forensic action audit."
+  }
+}

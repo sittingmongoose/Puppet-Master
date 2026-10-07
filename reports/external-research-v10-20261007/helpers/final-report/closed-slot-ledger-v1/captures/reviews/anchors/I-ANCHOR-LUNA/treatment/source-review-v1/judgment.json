@@ -1,0 +1,679 @@
+{
+  "review_id": "I-ANCHOR-LUNA-treatment-source-review-v1",
+  "review_kind": "independent_full_declared_source_review",
+  "status": "PASS_WITH_LIMITATIONS",
+  "failed_screen": false,
+  "grade_scope": {
+    "extent": "FULL_DECLARED_SCOPE",
+    "all_original_integrated_brief_obligations_assessed": true,
+    "all_consequential_frozen_final_source_claims_and_conditions_assessed": true,
+    "full_positive_basis": "All 18 mapped obligations were substantively assessed using the governing brief/frozen plan, final, supplied critique and independent primary inspection. Limits describe planning and evidence applicability; this is not an executed implementation grade.",
+    "artifacts_graded": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md"
+    ],
+    "excluded": [
+      "Counterpart or comparative ranking",
+      "Cost, speed and native accounting",
+      "Provider/service configuration compliance beyond supplied runtime statement",
+      "Executed product reliability/security/performance",
+      "Literal predecessor draft reconstruction",
+      "Unbounded survey of every sync component or source repository"
+    ]
+  },
+  "source_correctness": {
+    "assessment": "SUPPORTED_WITH_NONMATERIAL_QUALIFICATIONS",
+    "material_source_errors_found": false,
+    "basis": "The consequential component, standards, workflow, issue/code/test/release and license claims match independent primary evidence within their declared conditions. N01–N03 preserve wording/metadata limitations. Custom sync properties are assessed as proposed contracts rather than existing component guarantees."
+  },
+  "completeness": {
+    "assessment": "COMPLETE_FOR_DECLARED_PLANNING_SCOPE",
+    "basis": "Every original integrated brief obligation and every supplied substantive critique disposition has been assessed. None was screened out or replaced by a smaller surrogate."
+  },
+  "planning_usefulness": {
+    "assessment": "HIGH_CONDITIONAL",
+    "basis": "The final supplies a coherent tentative architecture, domain decisions, explicit delivery/media/auth/retention semantics, a supervisor review model and observable acceptance gates. Production lock, operation costs and compatibility remain open. The commit-level compaction finding could be translated into a more explicit maintenance/load gate."
+  },
+  "breadth": {
+    "assessment": "STRONG_BOUNDED",
+    "basis": "Three materially different sync approaches plus the frozen LWW comparator, one field-data workflow analogue, and the 12 supported discovery clusters below cover the integrated problem. Code-level depth is concentrated in PouchDB compaction; Automerge and native adapter evidence is API/README-level. This is not an exhaustive market or native-stack evaluation."
+  },
+  "covered_obligations": [
+    "O01",
+    "O02",
+    "O03",
+    "O04",
+    "O05",
+    "O06",
+    "O07",
+    "O08",
+    "O09",
+    "O10",
+    "O11",
+    "O12",
+    "O13",
+    "O14",
+    "O15",
+    "O16",
+    "O17",
+    "O18"
+  ],
+  "per_obligation_evidence_assessment": [
+    {
+      "obligation_id": "O01",
+      "obligation": "Choose genuine primary public sources from the user problem",
+      "assessment": "COVERED",
+      "evidence_assessment": "Official component docs, upstream history, standards and ODK workflow material address offline field work, media, concurrency, authorization and review; no source quality inference from counts or hashes.",
+      "artifact_locations": "final.md:7–9,42,55,73–103,110–122",
+      "primary_or_governing_evidence": "S01–S21"
+    },
+    {
+      "obligation_id": "O02",
+      "obligation": "Compare at least two materially different mechanisms and important alternatives",
+      "assessment": "COVERED",
+      "evidence_assessment": "Revision-tree replication, operation-based CRDT documents and application event/outbox processing are separately explained, including why deterministic displayed winners do not supply domain resolution. Timestamp LWW remains the frozen comparator.",
+      "artifact_locations": "final.md:107–114",
+      "primary_or_governing_evidence": "S04,S05,S13,S14; brief and plan"
+    },
+    {
+      "obligation_id": "O03",
+      "obligation": "Investigate analogous systems beyond direct competitors",
+      "assessment": "COVERED",
+      "evidence_assessment": "ODK contributes submission states, review/activity history and missing-media presentation, explicitly as a workflow analogy. It is not credited as a multiwriter asset engine.",
+      "artifact_locations": "final.md:103",
+      "primary_or_governing_evidence": "S15,S16"
+    },
+    {
+      "obligation_id": "O04",
+      "obligation": "Inspect actual component/code behavior at a pinned version",
+      "assessment": "COVERED_WITH_LIMITS",
+      "evidence_assessment": "Read the entire changed PouchDB _compact method and the complete added regression test at the immutable commit; independently inspected release-built code too. The adapter README is commit-pinned guidance, not an executed native build. Other living/unpinned references are honestly labeled.",
+      "artifact_locations": "final.md:118–122",
+      "primary_or_governing_evidence": "S10,P01,P04,P05,P11; S12,P08,P09"
+    },
+    {
+      "obligation_id": "O05",
+      "obligation": "Trace pertinent issue, fix, regression test and release applicability",
+      "assessment": "COVERED_WITH_LIMITS",
+      "evidence_assessment": "Issue #8525, sequence-filter change and remote-skipping regression match the final. Release notes list the exact fix; compare API reports the fix as merge base with zero behind commits; the release build contains since: opts.last_seq || 0. The test neither measures reported latency/409 frequency nor exercises the mobile stack.",
+      "artifact_locations": "final.md:118–120",
+      "primary_or_governing_evidence": "S09,S10,S11,P02,P03,P11"
+    },
+    {
+      "obligation_id": "O06",
+      "obligation": "Cover conflict handling",
+      "assessment": "COVERED",
+      "evidence_assessment": "Separate visit evidence from shared current-state fields; keep concurrent alternatives; make resolution a named event with expected heads and stale-screen rejection. Independent-field merge remains a product rule. These are proposed semantics, not library guarantees.",
+      "artifact_locations": "final.md:15–36,155–156",
+      "primary_or_governing_evidence": "S04,S13; proposed domain contract"
+    },
+    {
+      "obligation_id": "O07",
+      "obligation": "Cover duplicate delivery, retries and lost responses",
+      "assessment": "COVERED",
+      "evidence_assessment": "Stable identity/bytes, tenant unique key, mismatch rejection, stable receipt and replay-safe projections are explicit. PUT and SQL UPSERT are building blocks only; atomic hash comparison and side effects remain implementation duties.",
+      "artifact_locations": "final.md:44–55,63–65,158",
+      "primary_or_governing_evidence": "S01,S02,S03,S05; proposed contract"
+    },
+    {
+      "obligation_id": "O08",
+      "obligation": "Cover reordered delivery, pending transitions and recovery cursors",
+      "assessment": "COVERED",
+      "evidence_assessment": "Missing parents remain pending outside projection; durable state-change feed prevents stranding a cursor. Page/cursor local atomicity, scope binding, expiry, resnapshot and server-restore recovery are specified as design requirements and gates.",
+      "artifact_locations": "final.md:59–65,159–160,164,166",
+      "primary_or_governing_evidence": "S01,S05,S17; critique §2"
+    },
+    {
+      "obligation_id": "O09",
+      "obligation": "Cover retention, deletion and disconnected/restored clients",
+      "assessment": "COVERED",
+      "evidence_assessment": "Tombstones, physical purge, age horizon and separately governed device/media/export/backup retention are distinguished. External CouchDB purge does not propagate, unlike internal purge replication. No immediate offline erasure promise is made.",
+      "artifact_locations": "final.md:36,81–85,145,163,167",
+      "primary_or_governing_evidence": "S08; critique §4"
+    },
+    {
+      "obligation_id": "O10",
+      "obligation": "Cover access control, identity and attribution",
+      "assessment": "COVERED",
+      "evidence_assessment": "Server object/action checks cover event feeds, cursors, media, resolution and exports; roles may combine attributes/relationships. Actor claim, device and authenticated submitter stay distinct. Native OAuth advice and offline revocation/storage uncertainty are correctly bounded.",
+      "artifact_locations": "final.md:24,61,77,89–95,143–146,164,167",
+      "primary_or_governing_evidence": "S07,S17,S21"
+    },
+    {
+      "obligation_id": "O11",
+      "obligation": "Cover attachment behavior and relevant integration conditions",
+      "assessment": "COVERED_WITH_LIMITS",
+      "evidence_assessment": "Metadata receipt is distinct from verified bytes; stable IDs, size/digest, UI state, independent access and purge are covered. Whole-file retry versus chunks and bytea versus other storage remain measured choices. Range docs support downloads only; Metro caveat is documented guidance, not reproduced compatibility.",
+      "artifact_locations": "final.md:69–77,147,162",
+      "primary_or_governing_evidence": "S06,S12,S16,S20"
+    },
+    {
+      "obligation_id": "O12",
+      "obligation": "Provide useful observable validation proposals",
+      "assessment": "COVERED",
+      "evidence_assessment": "All 13 gates were assessed: concurrency, stale resolution, clocks, duplicate/altered retry, pending transitions, cursor crash/expiry, days offline/local failure, media, deletion age, permissions, history/CSV parity, restore/load and records/storage policy. Triggers and expected observable outcomes are clear. Compaction-specific performance deserves a more explicit optional follow-up.",
+      "artifact_locations": "final.md:155–169",
+      "primary_or_governing_evidence": "S01–S17,S20,S21; critique dispositions"
+    },
+    {
+      "obligation_id": "O13",
+      "obligation": "Compare relevant discoveries to frozen plan choices",
+      "assessment": "COVERED_WITH_MINOR_WORDING_LIMIT",
+      "evidence_assessment": "The seven correction rows cover mutable records, timestamp winner, POST/retry identity, path-only photos, latest-only review/export and undefined conflict/delete/auth/audit. Keeping SQLite is justified conditionally. The plan does not explicitly prescribe one record per asset, so that cardinality is a proposed clarification rather than a proven baseline defect.",
+      "artifact_locations": "final.md:7,109,128–134",
+      "primary_or_governing_evidence": "brief.md; plan.md; S01–S21"
+    },
+    {
+      "obligation_id": "O14",
+      "obligation": "Support corrections and preserve product/operating choices",
+      "assessment": "COVERED",
+      "evidence_assessment": "The leading relational path is conditional on attributable history and utility operations; custom sync/operations costs are disclosed. Field semantics, catalog ownership, correction lifecycle, offline identity, audit level, retention, platform, media, scale and hosting stay open. No unmeasured cost/reliability advantage is asserted.",
+      "artifact_locations": "final.md:7–9,112,138–149",
+      "primary_or_governing_evidence": "S18,S19; planning inferences from brief"
+    },
+    {
+      "obligation_id": "O15",
+      "obligation": "Preserve useful optional opportunities and justified uncertainties",
+      "assessment": "COVERED",
+      "evidence_assessment": "Packaged replication, a bounded CRDT spike, ODK workflow ideas, separate GPS observations, chunking, database/object media storage and optional signing remain conditional. Rolling docs, adapter/native compatibility and storage protections are identified uncertainties.",
+      "artifact_locations": "final.md:7,26,73–77,93–95,110–122,140–149",
+      "primary_or_governing_evidence": "S04–S16,S20,S21"
+    },
+    {
+      "obligation_id": "O16",
+      "obligation": "Provide a complete source-grounded final after supplied criticism and retain dispositions",
+      "assessment": "COVERED",
+      "evidence_assessment": "Every substantive supplied critique disposition was compared with final text: stale resolution, pending/state-change feed, committed-order cursor, authorization scope changes, canonical bytes/digest limits, tombstone age, local storage/identity limits, preserved mechanisms and open choices. All are retained. Literal draft preservation cannot be reconstructed from the permitted final/critique alone and is outside this input scope.",
+      "artifact_locations": "final.md:15–173; critique.md detailed findings §§1–9",
+      "primary_or_governing_evidence": "Authorized supplied critique; final source map; independently checked public sources"
+    },
+    {
+      "obligation_id": "O17",
+      "obligation": "Distinguish proposed checks from executed checks",
+      "assessment": "COVERED",
+      "evidence_assessment": "The final repeatedly labels prototype checks unexecuted and separates public source/code inspection from installed/mobile/application behavior. The review executed retrieval and document/JSON checks only; it ran no component or application test.",
+      "artifact_locations": "final.md:3,77,118–122,151–169,173",
+      "primary_or_governing_evidence": "Authorized final and critique; static source inspection"
+    },
+    {
+      "obligation_id": "O18",
+      "obligation": "Address integrated field-inspection problem with affordable public components and controlled scope",
+      "assessment": "COVERED",
+      "evidence_assessment": "Days-offline edits, concurrent annotation, photos/GPS, unreliable reconnect, attributable history and supervisor web/CSV review all receive concrete planning treatment. Core license claims are supported; utility-owned hosting is conditional and does not claim free operations or require permanent SaaS. No canon or implementation edits are proposed as executed.",
+      "artifact_locations": "final.md:7–103,138–173",
+      "primary_or_governing_evidence": "brief.md; plan.md; S18,S19"
+    }
+  ],
+  "bounded_supported_discovery_yield": {
+    "classification": "12 qualitative discovery clusters, without weighting citation counts or reviewer-only follow-up findings",
+    "clusters": [
+      {
+        "id": "D01",
+        "discovery": "SQLite atomic local state/outbox boundary and busy handling",
+        "frozen_plan_comparison": "Keep SQLite; replace ad hoc changed-row tracking with explicit save state.",
+        "sources": "S01",
+        "support_limit": "Source-supported primitive plus proposed contract"
+      },
+      {
+        "id": "D02",
+        "discovery": "Stable PUT identity and atomic SQL upsert are limited retry building blocks",
+        "frozen_plan_comparison": "Replace retry-only POST with identity, receipts and effect deduplication.",
+        "sources": "S02,S03",
+        "support_limit": "Bounded design inference; no exactly-once claim"
+      },
+      {
+        "id": "D03",
+        "discovery": "Revision-tree winner can conceal preserved competing leaves",
+        "frozen_plan_comparison": "Replace latest-only view with explicit conflict surfacing/resolution.",
+        "sources": "S04",
+        "support_limit": "Directly supported"
+      },
+      {
+        "id": "D04",
+        "discovery": "Checkpoint/recovery and unstable-network handling are explicit protocol concerns",
+        "frozen_plan_comparison": "Specify durable cursor and pending transitions; do not invent automatic recovery.",
+        "sources": "S05",
+        "support_limit": "Protocol guidance plus proposed API contract"
+      },
+      {
+        "id": "D05",
+        "discovery": "Automerge same-property conflicts remain visible behind a deterministic value; Rust transport assumes ordered reliable stream",
+        "frozen_plan_comparison": "Retain CRDT as a conditional spike, preserving domain/transport gates.",
+        "sources": "S13,S14",
+        "support_limit": "API-supported; Rust reference unpinned"
+      },
+      {
+        "id": "D06",
+        "discovery": "Real compaction cutoff regression and release inclusion",
+        "frozen_plan_comparison": "Expose maintenance risk of packaged local sync alternative, with upstream test limits.",
+        "sources": "S09,S10,S11",
+        "support_limit": "Pinned code/test/release evidence, unexecuted"
+      },
+      {
+        "id": "D07",
+        "discovery": "Community native adapter documents a binary attachment/Metro caveat",
+        "frozen_plan_comparison": "Make adapter selection conditional on real native attachment builds.",
+        "sources": "S12",
+        "support_limit": "Pinned authored integration guidance, unexecuted"
+      },
+      {
+        "id": "D08",
+        "discovery": "CouchDB membership has database-wide document read scope",
+        "frozen_plan_comparison": "Define object/action authorization and scope-bound feed access.",
+        "sources": "S07,S17,S21",
+        "support_limit": "Primary security guidance plus product policy"
+      },
+      {
+        "id": "D09",
+        "discovery": "Ordinary tombstone deletion differs from external purge propagation",
+        "frozen_plan_comparison": "Replace undesigned deletes with horizon, purge and recovery policy.",
+        "sources": "S08",
+        "support_limit": "Directly supported distinction; custom API semantics proposed"
+      },
+      {
+        "id": "D10",
+        "discovery": "ODK separates submission states, media warnings, review and activity history",
+        "frozen_plan_comparison": "Extend latest-row review/CSV with workflow and incomplete-media state.",
+        "sources": "S15,S16",
+        "support_limit": "Workflow analogy only"
+      },
+      {
+        "id": "D11",
+        "discovery": "Binary storage type is possible but media-scale suitability is unmeasured",
+        "frozen_plan_comparison": "Replace paths with verified byte lifecycle and measured storage choice.",
+        "sources": "S06,S20",
+        "support_limit": "Supported capability; performance uncertain"
+      },
+      {
+        "id": "D12",
+        "discovery": "No required SQLite/PostgreSQL core software-use fee does not eliminate service costs",
+        "frozen_plan_comparison": "Keep affordable public components and make utility operations an explicit choice.",
+        "sources": "S18,S19",
+        "support_limit": "License support; total cost unknown"
+      }
+    ]
+  },
+  "material_defects": [],
+  "nonmaterial_findings": [
+    {
+      "id": "N01",
+      "severity": "nonmaterial_baseline_wording",
+      "exact_claim": "One mutable inspection record per asset/inspection",
+      "location": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md:128",
+      "counterevidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/plan.md",
+        "locator": "entire one-paragraph plan",
+        "finding": "The plan says to represent an inspection as a mutable record; it does not explicitly require a single inspection per asset or forbid distinct visit records."
+      },
+      "impact": "The per-visit/catalog distinction is useful proposed domain modeling, but this table slightly overstates what the baseline establishes. It does not invalidate rejecting timestamp-only conflict resolution."
+    },
+    {
+      "id": "N02",
+      "severity": "nonmaterial_version_precision",
+      "exact_claim": "the adapter’s pinned v4.0.0 guidance at commit e269c4300926c16662560ccc1eb68be4f6bfc76b",
+      "location": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md:120",
+      "counterevidence": {
+        "url": "https://raw.githubusercontent.com/craftzdog/pouchdb-adapter-react-native-sqlite/e269c4300926c16662560ccc1eb68be4f6bfc76b/package.json",
+        "locator": "line 3; sources/P09-identity.json",
+        "finding": "The pinned package is 4.4.2. Its README says changes apply as of 4.0.0, which is a migration threshold rather than the commit package version."
+      },
+      "impact": "The immutable commit identifies the guidance adequately and the final does not lock production to 4.0.0. Clarify the distinction before naming an exact prototype dependency."
+    },
+    {
+      "id": "N03",
+      "severity": "nonmaterial_evidence_condition",
+      "exact_claim": "Finalized forms are ready to be sent and can't be edited",
+      "location": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/research-v1/sources/S15.md:11",
+      "counterevidence": {
+        "url": "https://docs.getodk.org/guide-end-of-form/",
+        "locator": "Finalized and Sent; independent normalized lines 136 and 143; sources/S15.md",
+        "finding": "The live primary text has an explicit exception when editing is enabled in the form definition."
+      },
+      "impact": "The predecessor bounded excerpt omits that condition. The frozen final only relies on separated states and keeps post-submit correction as an open product choice, so no material final guarantee rests on universal immutability."
+    }
+  ],
+  "followup_limitations": [
+    {
+      "location": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md:118,155–167",
+      "finding": "Compaction issue history is pertinent and correctly bounded, but the 13 gates do not name the checkpoint regression/foreground-write maintenance workload expressly; representative load coverage is broader. This limits specificity, not source correctness."
+    },
+    {
+      "location": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md:110",
+      "finding": "The same CouchDB conflict documentation explains loss of non-leaf bodies on compaction and lack of replicated peer provenance. If that alternative is chosen, full audit needs explicit domain history; the final makes no contrary revision-history guarantee."
+    },
+    {
+      "location": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md:77,162",
+      "finding": "The pinned adapter README also describes Hermes design-doc function serialization and an optional SQLCipher key setting. These are reviewer-visible follow-up leads, not additional candidate discoveries or proof of installed encryption. General native/Hermes validation and storage uncertainty remain in the final."
+    }
+  ],
+  "critique_preservation": {
+    "assessment": "All supplied substantive dispositions retained in final",
+    "dispositions": [
+      {
+        "critic_section": "1",
+        "final_locations": "15–36;155–156"
+      },
+      {
+        "critic_section": "2",
+        "final_locations": "42–65;158–160;164"
+      },
+      {
+        "critic_section": "3",
+        "final_locations": "69–77;162"
+      },
+      {
+        "critic_section": "4",
+        "final_locations": "81–85;145;163;167"
+      },
+      {
+        "critic_section": "5",
+        "final_locations": "89–95;143–146;164;167"
+      },
+      {
+        "critic_section": "6",
+        "final_locations": "99–103;165"
+      },
+      {
+        "critic_section": "7",
+        "final_locations": "107–114"
+      },
+      {
+        "critic_section": "8",
+        "final_locations": "118–122"
+      },
+      {
+        "critic_section": "9",
+        "final_locations": "128–149;155–167"
+      }
+    ],
+    "literal_predecessor_diff": "Not assessed: predecessor draft outside permitted inputs; no claim of literal preservation."
+  },
+  "preserved_original_assessments": {
+    "supplied_critic_overall": "Supports the central bounded prototype choice and says the draft covers governing obligations; final retains conditional alternatives and uncertainty.",
+    "supplied_critic_identified_gaps": [
+      "Stale resolution",
+      "Pending-parent/state-change pull feed",
+      "Committed cursor semantics and authorization scope changes",
+      "Tombstone/offline age horizon",
+      "Object-level policy and offline identity/storage limits"
+    ],
+    "handling": "These original findings are retained as findings with final dispositions, not erased or converted into prior failures passing an implementation test. No original numerical grade or executed product pass/fail was supplied."
+  },
+  "unassessed_remainder": [],
+  "primary_sources_checked": [
+    {
+      "id": "S01",
+      "primary_url": "https://www.sqlite.org/lang_transaction.html",
+      "version_identity": "SQLite living transaction documentation; no engine/binding pin",
+      "assessed_locator": "§2.1–2.2; normalized lines 67–110, 130–135",
+      "retrieval_id": "S01",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S01.md",
+      "evidence_sha256": "69e9d463429bd2fcbfab91d70feb007ef8573bf546de66d77e60e3d6045d0af0",
+      "assessment": "Concurrent readers, one writer and failed upgrade are supported; device durability is not established."
+    },
+    {
+      "id": "S02",
+      "primary_url": "https://www.postgresql.org/docs/17/sql-insert.html",
+      "version_identity": "PostgreSQL 17 manual; no patch pin",
+      "assessed_locator": "ON CONFLICT clause; normalized lines 133–157",
+      "retrieval_id": "S02",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S02.md",
+      "evidence_sha256": "97469b0d6011c20ca238edf3894902011c31513507c16e29a1ba626def65a97a",
+      "assessment": "The atomic outcome is conditional on no independent error; application hash checks and effect deduplication remain necessary."
+    },
+    {
+      "id": "S03",
+      "primary_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version_identity": "RFC 9110, June 2022",
+      "assessed_locator": "§9.2.2 and §9.3.4; normalized lines 3243–3268, 3419–3430",
+      "retrieval_id": "S03",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S03.md",
+      "evidence_sha256": "ccc67c9e3b1248fe346fa65010b07b2657414a83dcd37d74db611b607c8b1241",
+      "assessment": "Idempotence concerns intended effect; identical responses and exactly-once effects do not follow."
+    },
+    {
+      "id": "S04",
+      "primary_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_identity": "CouchDB 3.5 documentation family; rolling stable alias",
+      "assessed_locator": "§2.3.1, .3, .4, .6, .7; winner, leaves, compaction and history",
+      "retrieval_id": "S04",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S04.md",
+      "evidence_sha256": "d1f7924a32e12c177d6eb22eb3130ea3375ad8d2693edd756e25064a9697c46e",
+      "assessment": "Default winner and conflict-leaf retrieval are supported. Non-leaf bodies can disappear on compaction; revision trees alone are not full audit history."
+    },
+    {
+      "id": "S05",
+      "primary_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "version_identity": "CouchDB 3.5 documentation family, protocol version 3; rolling",
+      "assessed_locator": "§2.4.2 checkpoint/change/document/attachment transfer; §2.4.3 robustness; normalized lines 534–579, 1154–1156, 1408–1415",
+      "retrieval_id": "S05",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S05.md",
+      "evidence_sha256": "1d43f6fb22694fabc2cbc65f2265177656c615747daf0f98f8085ccc1464d6a6",
+      "assessment": "Checkpoints and retry guidance support comparison; protocol SHOULD language is not a guarantee for the proposed API."
+    },
+    {
+      "id": "S06",
+      "primary_url": "https://docs.couchdb.org/en/stable/api/document/attachments.html",
+      "version_identity": "CouchDB 3.5 documentation family; rolling",
+      "assessed_locator": "§1.4.2.1 HTTP Range Requests; normalized lines 251–284",
+      "retrieval_id": "S06",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S06.md",
+      "evidence_sha256": "0461d9a5f0d633ae12003976d464fe2d09891307d3faba44eddbdfedc3f0129a",
+      "assessment": "The documented byte ranges support downloads, without establishing resumable uploads."
+    },
+    {
+      "id": "S07",
+      "primary_url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "version_identity": "CouchDB 3.5 documentation family; rolling",
+      "assessed_locator": "/{db}/_security members/admins; normalized lines 77–105",
+      "retrieval_id": "S07",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S07.md",
+      "evidence_sha256": "cc129c7059dc4bb8ef3183c5801f257f54c437121896e450896152b0e0f2d39a",
+      "assessment": "Database membership is broad; object-level crew read isolation does not follow from membership."
+    },
+    {
+      "id": "S08",
+      "primary_url": "https://docs.couchdb.org/en/stable/api/database/misc.html",
+      "version_identity": "CouchDB 3.5 documentation family; rolling",
+      "assessed_locator": "/{db}/_purge ordinary deletion and §§1.3.20.1–.2; normalized lines 78–88, 166–177",
+      "retrieval_id": "S08",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S08.md",
+      "evidence_sha256": "15c7e112349bf5ed1fa93f40167c28e2cb493a901b0e8b17e1c4a7e046b9b4a2",
+      "assessment": "Normal deletion is replicated; purge replicates internally between database replicas but not to external databases."
+    },
+    {
+      "id": "S09",
+      "primary_url": "https://github.com/apache/pouchdb/issues/8525",
+      "version_identity": "GitHub issue #8525, opened 2022-06-22; currently closed",
+      "assessed_locator": "Issue description; web lines 160–180",
+      "retrieval_id": "S09",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S09.md",
+      "evidence_sha256": "aed954d0ac012ffd2e0e2a92d7fb7f347040dbb8763b01613f3d4415bf23da07",
+      "assessment": "The reporter observed compaction delay and 409 writes; neither general rates nor a fix for every 409 are established."
+    },
+    {
+      "id": "S10",
+      "primary_url": "https://raw.githubusercontent.com/apache/pouchdb/34cb69117931d4b520ee8d7a6208eb0f33da8ec7/packages/node_modules/pouchdb-core/src/adapter.js",
+      "version_identity": "PouchDB commit 34cb69117931d4b520ee8d7a6208eb0f33da8ec7",
+      "assessed_locator": "adapter.js lines 917–965; commit diff; paired test P05 lines 510–525",
+      "retrieval_id": "P04",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S10.md",
+      "evidence_sha256": "c20f7fdfd7484f0bf0a5c56978e62bd8c961473ca4d5cbef56a1e0880432ea90",
+      "assessment": "The changed since filter scopes compaction work. The paired test simulates a checkpoint and checks an old revision; remote targets are skipped."
+    },
+    {
+      "id": "S11",
+      "primary_url": "https://github.com/apache/pouchdb/releases/tag/9.0.0",
+      "version_identity": "PouchDB 9.0.0; tag resolves to b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1; published 2024-06-21T16:10:33Z",
+      "assessed_locator": "Release bugfix #8525; public API release body line 86; compare API and built code P11 lines 2393–2441",
+      "retrieval_id": "S11",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S11.md",
+      "evidence_sha256": "b08d9d5dfb68cdf8f6cebbcf8065d56cb5e85c0e6147b23c537b5bc71ded128d",
+      "assessment": "Release notes, ancestry and built output establish inclusion; this does not establish mobile-stack compatibility."
+    },
+    {
+      "id": "S12",
+      "primary_url": "https://raw.githubusercontent.com/craftzdog/pouchdb-adapter-react-native-sqlite/e269c4300926c16662560ccc1eb68be4f6bfc76b/README.md",
+      "version_identity": "Adapter README at e269c4300926c16662560ccc1eb68be4f6bfc76b; package.json at this commit reports 4.4.2; README refers to changes as of 4.0.0",
+      "assessed_locator": "README lines 6–7, 54–85, 119–166; package.json line 3",
+      "retrieval_id": "P08",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S12.md",
+      "evidence_sha256": "4d7714d7e6f29d6c72b5970fab8b0988ee903f03559fe459b4ea0bf90272930f",
+      "assessment": "The Metro attachment caveat is authored guidance, not a reproduced result. Hermes view-function guidance is another conditional lead."
+    },
+    {
+      "id": "S13",
+      "primary_url": "https://automerge.org/automerge/api-docs/js/functions/getConflicts.html",
+      "version_identity": "Official JavaScript API page identifies @automerge/automerge v3.5.0; live URL",
+      "assessed_locator": "getConflicts opening and example; normalized lines 6–14, 26–45",
+      "retrieval_id": "S13",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S13.md",
+      "evidence_sha256": "f1591379bc79cd3dde02d6e048908ab004d9828e104534186eb45c0758d5d71e",
+      "assessment": "Concurrent property assignments expose alternatives behind a deterministic displayed value; domain resolution still needs policy."
+    },
+    {
+      "id": "S14",
+      "primary_url": "https://automerge.org/automerge/automerge/sync/index.html",
+      "version_identity": "Official generated Rust sync module; exact crate version not displayed",
+      "assessed_locator": "Sync Protocol opening; normalized lines 10–27",
+      "retrieval_id": "S14",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S14.md",
+      "evidence_sha256": "434d3dd3f401b2205678a18004b594be09be76e7aa78df638baf9bcf3db272c5",
+      "assessment": "Reliable ordered stream is a stated transport assumption; it is not evidence of a JavaScript deployment failure."
+    },
+    {
+      "id": "S15",
+      "primary_url": "https://docs.getodk.org/guide-end-of-form/",
+      "version_identity": "Live ODK Collect workflow documentation; note about pre-2024.1; explicit configurable edit exception",
+      "assessed_locator": "Form states in Collect: Draft, Finalized, Sent; normalized lines 126–145",
+      "retrieval_id": "S15a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S15.md",
+      "evidence_sha256": "4cc09a1b049e72c49a57a3ed5b702b9112dc0fba9ca7721b7e77eab389fa6009",
+      "assessment": "State separation is supported. Finalized and sent forms may be editable when explicitly enabled; the final does not claim universal immutability."
+    },
+    {
+      "id": "S16",
+      "primary_url": "https://docs.getodk.org/central-submissions/",
+      "version_identity": "Live ODK Central documentation; review introduced in 1.2 and diff display noted in 1.3",
+      "assessed_locator": "Accessing Submissions, Submission Review States, Viewing Submission Details; normalized lines 154–159, 218–249",
+      "retrieval_id": "S16a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S16.md",
+      "evidence_sha256": "c3eb84e075a1ebc625584e66bf62e8546cfa1f3f94193fdc1b4f499bdf57b982",
+      "assessment": "Missing-media warnings, review states and activity history support the workflow analogy; review labels alone do not enforce export filtering."
+    },
+    {
+      "id": "S17",
+      "primary_url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "version_identity": "Live official OWASP Authorization Cheat Sheet; no release pin",
+      "assessed_locator": "Least privilege, deny by default, every-request checks, ABAC/ReBAC, object/static resources, server-side; normalized lines 185–250",
+      "retrieval_id": "S17",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S17.md",
+      "evidence_sha256": "52248cd228b87b67c088b01c1bef566c19f38fad4fdb9a6df839abafa8680859",
+      "assessment": "The final correctly applies the guidance to each protected operation; no component provides the utility permission policy automatically."
+    },
+    {
+      "id": "S18",
+      "primary_url": "https://www.sqlite.org/copyright.html",
+      "version_identity": "SQLite official public-domain page; last updated 2026-01-12",
+      "assessed_locator": "SQLite Is Public Domain and Warranty of Title; normalized lines 20–43, 61–83",
+      "retrieval_id": "S18",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S18.md",
+      "evidence_sha256": "f57d52b72f1636fc6a5aa87b0b0622c0c105c565ec142bb20b671638cafe2dfb",
+      "assessment": "Core use has no required software licence fee; bindings, operations and jurisdictional proof remain separate."
+    },
+    {
+      "id": "S19",
+      "primary_url": "https://www.postgresql.org/about/licence/",
+      "version_identity": "Official PostgreSQL license, live page",
+      "assessed_locator": "License grant; normalized lines 29–48",
+      "retrieval_id": "S19",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S19.md",
+      "evidence_sha256": "f72e30126dc2976fb84606b20f9ed7eed203271de84873bffc7797a762b4efc8",
+      "assessment": "The grant permits use without fee subject to its notices; it does not zero operations cost."
+    },
+    {
+      "id": "S20",
+      "primary_url": "https://www.postgresql.org/docs/17/datatype-binary.html",
+      "version_identity": "PostgreSQL 17 manual; no patch selection",
+      "assessed_locator": "§8.4 Binary Data Types; normalized lines 75–85",
+      "retrieval_id": "S20",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S20.md",
+      "evidence_sha256": "14b9e8256fdab47b93621679e83593be9eeee55eb92ba7ebd4e9c9a95368c2bb",
+      "assessment": "bytea supports binary strings. Photo-scale performance, backup and restore are not shown by type documentation."
+    },
+    {
+      "id": "S21",
+      "primary_url": "https://datatracker.ietf.org/doc/html/rfc8252",
+      "version_identity": "RFC 8252 / BCP 212, October 2017",
+      "assessed_locator": "§6, §8.1, §8.5; normalized lines 321–338, 465–478, 539–554",
+      "retrieval_id": "S21",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S21.md",
+      "evidence_sha256": "c14a26a330b4eeb9ce107580dd0845e38673f0c683093d75d34123cf45c8d732",
+      "assessment": "External user-agent and PKCE requirements for public native clients are supported; no offline authorization lifetime follows."
+    }
+  ],
+  "additional_primary_checks": [
+    {
+      "retrieval_id": "P01",
+      "purpose": "Exact commit and file patches"
+    },
+    {
+      "retrieval_id": "P02",
+      "purpose": "Release identity/date and matching changelog"
+    },
+    {
+      "retrieval_id": "P03",
+      "purpose": "Fix-to-release ancestry"
+    },
+    {
+      "retrieval_id": "P04",
+      "purpose": "Entire changed pinned compaction method"
+    },
+    {
+      "retrieval_id": "P05",
+      "purpose": "Entire added pinned regression and adapter scope"
+    },
+    {
+      "retrieval_id": "P08",
+      "purpose": "Raw pinned adapter README and conditions"
+    },
+    {
+      "retrieval_id": "P09",
+      "purpose": "Exact pinned package version and dependency metadata"
+    },
+    {
+      "retrieval_id": "P10",
+      "purpose": "Release distribution tree identity"
+    },
+    {
+      "retrieval_id": "P11",
+      "purpose": "Release-built compaction implementation"
+    }
+  ],
+  "blinding_limits": [
+    "The exact source-review INPUTS map, brief, frozen plan, own-arm final, supplied critique and authorized source maps/notes were read. No counterpart answer, other arm review, grader, root analysis, candidate costs, native counters or terminal receipts were opened.",
+    "The initial instruction-discovery command was overbroad: it enumerated AGENTS.md filenames under PM-Experiments and exposed unrelated historical experiment directory names. No file at those unrelated paths was opened, and those names were not used in the judgment. This is a filename-metadata deviation from strict input isolation, not evidence of scientific comparison.",
+    "Treatment and I-ANCHOR-LUNA labels are visible in the supplied paths. Authored output reveals research-v1/critic-finalizer-v1 staging, same-family criticism, and Goal/native-activation wording in its source notes. Public-source retrieval windows/methods are visible; candidate execution time/cost was not inferred from them.",
+    "The critique is an authorized prior opinion and was read, so this is independent primary verification with supplied criticism, not blindness to the critic. Its positive disposition was not accepted as evidence of source correctness.",
+    "The predecessor draft is mentioned in SOURCES.md but is not an allowed review input; it was not opened. Preservation is assessed against the supplied critique dispositions and final, not a reconstructed draft diff.",
+    "The requested runtime is codex_gmail / gpt-6.1-sol / xhigh / priority. The harness attests model and reasoning effort; provider identity, service tier and billing were not inspected or changed. Billing is unknown."
+  ],
+  "proposed_vs_executed": {
+    "candidate_product_checks": "All 13 are proposed; no executed implementation result is asserted or credited.",
+    "review_actions_executed": [
+      "Read authorized documents and source notes",
+      "Independently retrieved and inspected public documentation and pinned code/test/release metadata",
+      "Compared all critique dispositions and brief obligations with final",
+      "Verified local note identities separately from scientific correctness",
+      "Validated review JSON and evidence identities"
+    ],
+    "not_executed": [
+      "Any installer or downloaded host code",
+      "Native mobile builds",
+      "PouchDB regression suite",
+      "Application sync/authorization/media/performance tests"
+    ]
+  },
+  "billing": "unknown"
+}

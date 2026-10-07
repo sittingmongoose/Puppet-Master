@@ -1,0 +1,105 @@
+{
+  "schema": "ER10-independent-review-freeze-v3",
+  "frozen_at": "2026-10-07T21:05:29.311688+00:00",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "native_goal": "NOT_REQUIRED_REVIEW_CARRIER_V2",
+  "science_immutable": true,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/INPUT_MAP.json",
+      "sha256": "39c8cf618211f1c22a9126d4da6d3bd3b08b2ae9bca6a1a397f146e1679ae62c",
+      "bytes": 4235
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/completion-notice-task-observation.json",
+      "sha256": "f6dc68178c8bab1a339ae7b930605c650e4e0d4fce09f77b343555118fd3b4e4",
+      "bytes": 1034
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/dispatch-receipt.json",
+      "sha256": "f6dc68178c8bab1a339ae7b930605c650e4e0d4fce09f77b343555118fd3b4e4",
+      "bytes": 1034
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/dispatch-request.json",
+      "sha256": "d9f24314d5f8e7dd6ffb07c2dc557e36445b2074bede942bf311d241e7c0e932",
+      "bytes": 4115
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/native_counters.json",
+      "sha256": "fc0b907070aa94ebcb21fd7566dcebd79e72acfa776e9e6addc90af215f55e4d",
+      "bytes": 882
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/prospective-timing.json",
+      "sha256": "0f06e7b2d9cfdf1005e92bcb6faf3b109dfeb556f6d18e29a846f3e4c370764a",
+      "bytes": 156
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/review.json",
+      "sha256": "b4200f6f9574cc896a18d531607ee09eaa8c96223f55ae9ed01cf16e83626e9c",
+      "bytes": 75812
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/review.md",
+      "sha256": "fd401b84047c7dd1e4f13434091e5222e0c3816887e630f41af25f757c3b2013",
+      "bytes": 39654
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/additional-primary-index.json",
+      "sha256": "5f0665e47d2d468a21acc9240553a2b1771261a20e48c1f27a00de09165f08a1",
+      "bytes": 5851
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-gdal_translate.rst",
+      "sha256": "5c582ce394add555bee6593f5accef12a8b3dbe412eecff80081e1cd7cae8707",
+      "bytes": 18022
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-raster_data_model.rst",
+      "sha256": "8fc2bb5fa1f23d1e1c25f5b2175b1d878d3bd973004c352dca98a8c8304db92e",
+      "bytes": 19304
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-rasterio-api-documentation.json",
+      "sha256": "bfb6c35af94a607a2c3a20150e4f3e19a92497f3e5befeeb2df5703e44c50bf3",
+      "bytes": 3623
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-rfc15.rst",
+      "sha256": "4c326c13b339f243d78eabaf8d2bca12e10f07b28947a669e3984c98f7d042f4",
+      "bytes": 7646
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/gdal-3.9.0-rfc51.rst",
+      "sha256": "6769c39a8bc5ac2c7dac90e29ac0f3cd1f5ccc2fcfebc4f8fe479db8f49c0905",
+      "bytes": 10835
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/primary-identity-checks.json",
+      "sha256": "201c5d9e5cb2176c146279dbdbb6a867a8e16d73d42222b8e652bdaacf54d815",
+      "bytes": 7120
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/proj-9.4.0-geodesic.rst",
+      "sha256": "bc448262ca3b2bbc172d4bb574a0485c639cafa8da596711361a8a906c54d71f",
+      "bytes": 7738
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/sources/proj-9.4.0-laea.rst",
+      "sha256": "c61df73c56e561cd6f58f141b01a722f1eb3b8861b5feacabf36d12bbbc92a28",
+      "bytes": 1923
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/task-terminal.json",
+      "sha256": "5f70f8be79902ce133f4f9f421b39053faea02cb60dee380419b915251650e58",
+      "bytes": 3059
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M14-A/control-v3/timings.json",
+      "sha256": "e6298654087491d90ec6d65460fc94d14ce71c7f3c743d29a9a271047b2df898",
+      "bytes": 16610
+    }
+  ]
+}

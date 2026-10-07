@@ -1,0 +1,48 @@
+{
+  "schema": "ER10-publication-batch008-GitHub-verified-v1",
+  "at": "2026-10-07T22:48:44.309501+00:00",
+  "commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53",
+  "ref": {
+    "ref": "refs/heads/t3/research/er10-research-efficiency-campaign",
+    "node_id": "REF_kwDOQ3DhHdoAOHJlZnMvaGVhZHMvdDMvcmVzZWFyY2gvZXIxMC1yZXNlYXJjaC1lZmZpY2llbmN5LWNhbXBhaWdu",
+    "url": "https://api.github.com/repos/sittingmongoose/Puppet-Master/git/refs/heads/t3/research/er10-research-efficiency-campaign",
+    "object": {
+      "sha": "a7aa5d72e881aa5747f9904c5d482845b2abcf53",
+      "type": "commit",
+      "url": "https://api.github.com/repos/sittingmongoose/Puppet-Master/git/commits/a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    }
+  },
+  "commit_verified": true,
+  "all_542_new_blobs_remote_git_identity_and_size_verified": true,
+  "remote_campaign_tree_sha": "480cefc9ef4d2eb66f2000b25bb48fc935f6043c",
+  "remote_tree_truncated": false,
+  "critical_exact_files": [
+    {
+      "path": "reports/external-research-v10-20261007/INDEX_BATCH008.md",
+      "sha256": "c7348badf882d2eaaafc6a4893dad196244d3d1c2060bc3c97fedff472c0f98a",
+      "bytes": 7548
+    },
+    {
+      "path": "reports/external-research-v10-20261007/BATCH008_MANIFEST.json",
+      "sha256": "dd9e20d0694230cad3aeb67ab1df5e7769a3fbaae3b0b627a6feebf82b14fb1b",
+      "bytes": 3870119
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "sha256": "0e9973d6e4369585a84c3dd004bad94a70bc83d9fc8037a393792d3bb41a408c",
+      "bytes": 3590
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/integrated-execution/fast03-pair-disposition-v1.json",
+      "sha256": "f195550a5642ef8e1bbd019d96844b1beb0ee83e422dc8f2d09b4f67c231316e",
+      "bytes": 6611
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/integrated-execution/method04-pair-disposition-v2.json",
+      "sha256": "b61c85e40e0457b616ec0139ec2ddfc73b0a93758c32747ae85f16fe0db9242c",
+      "bytes": 7474
+    }
+  ],
+  "canonical_path_aliases_resolved": 6,
+  "no_main_or_canon_changes": true
+}

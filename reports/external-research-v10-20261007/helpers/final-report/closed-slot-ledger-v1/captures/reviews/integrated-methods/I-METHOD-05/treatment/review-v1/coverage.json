@@ -1,0 +1,498 @@
+{
+  "schema": "independent-six-axis-coverage-v1",
+  "source_judgment": "FAIL",
+  "assessment_complete": true,
+  "count_definition": "complete counts completed assessments, not candidate satisfaction. assessed + unassessed = declared. Domains overlap and must not be added as distinct obligations.",
+  "axes": [
+    {
+      "axis": 1,
+      "assessment": "assessed",
+      "outcome": "fail",
+      "scope": "O1-O6, all ten copied scope inputs and 65 owner-decision/boundary atoms",
+      "findings": [
+        "D01",
+        "D02",
+        "D03"
+      ]
+    },
+    {
+      "axis": 2,
+      "assessment": "assessed",
+      "outcome": "upstream_claims_supported; three plan-interpretation defects",
+      "scope": "23 consequential checks; immutable source, governing contexts, versions and conditions"
+    },
+    {
+      "axis": 3,
+      "assessment": "assessed",
+      "outcome": "satisfied_bounded",
+      "scope": "Useful working-copy/recovery, outside-write, watcher, save, text-buffer, UI, negative and alternative findings; no exhaustive opportunity-recall assertion"
+    },
+    {
+      "axis": 4,
+      "assessment": "assessed",
+      "outcome": "fail",
+      "scope": "Reject/retain/optional/uncertain dispositions; D01 is false unresolved treatment; D02-D03 weaken supposedly retained rules"
+    },
+    {
+      "axis": 5,
+      "assessment": "assessed",
+      "outcome": "mostly_preserved_with_material_condition_loss",
+      "scope": "Whole draft, full critique, final and captured evidence; 17 preservation families",
+      "findings": [
+        "D01",
+        "D02",
+        "D03"
+      ]
+    },
+    {
+      "axis": 6,
+      "assessment": "assessed",
+      "outcome": "honest_execution_separation; acceptance proposals inherit contract gaps",
+      "scope": "All eight validation groups, inspected upstream FakeFs witness and version applicability"
+    }
+  ],
+  "obligations": {
+    "O1": {
+      "assessment": "assessed",
+      "outcome": "satisfied_semantically",
+      "basis": "Brief-led bounded discoveries, options and negative leads beyond a plan defect checklist; chronological/procedural identity not inferred from source maps."
+    },
+    "O2": {
+      "assessment": "assessed",
+      "outcome": "satisfied",
+      "basis": "Pinned Ropey code, definitions, builder callers and feature/index context independently checked."
+    },
+    "O3": {
+      "assessment": "assessed",
+      "outcome": "satisfied",
+      "basis": "Zed issue/fix, governing code, FakeFs regression and released commit source verified; no first-fixed-version or local test inference."
+    },
+    "O4": {
+      "assessment": "assessed",
+      "outcome": "unsatisfied",
+      "basis": "All scope compared; D01-D03 compromise three frozen qualifications despite retain labels."
+    },
+    "O5": {
+      "assessment": "assessed",
+      "outcome": "satisfied_semantically",
+      "basis": "Full substantive critique and all dispositions assessed. Flash-family/actor authenticity is a host field, not inferred from scientific text."
+    },
+    "O6": {
+      "assessment": "assessed",
+      "outcome": "unsatisfied",
+      "basis": "Coherent full sections/options/validation delivered, but replacement fidelity has material errors D01-D03."
+    }
+  },
+  "plan_scope_units": {
+    "F-008": "assessed_retained",
+    "F-018": "assessed_retained",
+    "F-020": "assessed_retained",
+    "F-026": "assessed_retained",
+    "F-027": "assessed_retained",
+    "F-028": "assessed_with_material_defect_D03",
+    "F-082": "assessed_with_material_defects_D01_D02",
+    "definitions_and_transactions": "assessed_retained_with_incorporation",
+    "editing_and_save_context": "assessed_retained_with_incorporation",
+    "text_and_size_context": "assessed_with_material_defect_D03"
+  },
+  "owner_decisions": {
+    "B01": {
+      "decision": "Rust + Slint product boundary; no removed Iced app",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "B02": {
+      "decision": "Read-only proposal, no canon/WorkNodes/runtime/readiness authority",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A01": {
+      "decision": "One buffer/path; edits remain in memory until Save",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A02": {
+      "decision": "Per-group tab identity, active tab/group lists, shared global model",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A03": {
+      "decision": "Dirty compares memory with last-saved content, not current disk",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A04": {
+      "decision": "Preset definition remains language/framework run/debug configuration",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A05": {
+      "decision": "redb remains selected durable settings/session/project/editor store",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A06": {
+      "decision": "seglog remains canonical append-only ledger; editor analytics events optional",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A07": {
+      "decision": "FileSafe remains agent patch/apply/verify guards, adjacent owner",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A08": {
+      "decision": "Every named mutation source enters typed transaction before state changes",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A09": {
+      "decision": "Read-only/write-lock/active recovery replay constrain user and preview mutation",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A10": {
+      "decision": "Agent/FileSafe/LSP paths record operation class and do not merge user undo",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A11": {
+      "decision": "Restore/recovery confirmation/context, applied-version authority and undo explanation",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A12": {
+      "decision": "One dirty/saved version/save-retry authority across panes and mutation flows",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A13": {
+      "decision": "Typing/paste/delete, preview patches, LSP/FileSafe, restore, disk resolution, agent stream source classes",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A14": {
+      "decision": "No new restore/dirty branches or bypass; quit/later recovery; legacy unsaved-content alias",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A15": {
+      "decision": "Undo/restore/git histories remain distinct; runtime safe points are not restore points",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A16": {
+      "decision": "In-place single-buffer preview/LSP group eligibility; multi-file/rename/hunk/repo/conflict broader flow",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A17": {
+      "decision": "Assistant one-file undo group; multi-file receipt and one undo/file; no global Ctrl+Z",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A18": {
+      "decision": "Stage/unstage/discard are git; conflict choices edit result until resolve/stage",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A19": {
+      "decision": "Tree/targets, previews and diff share source authority; SSH changes capabilities, not buffer model",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A20": {
+      "decision": "Accessibility/IME/selection/caret/clipboard/drift/paste/wrapper/input acceptance",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A21": {
+      "decision": "Normal/truncated/load-full/too-large/binary/decode/disk-read-only/degraded effective modes",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A22": {
+      "decision": "Named adjacent owner contracts/owner hints are dependencies; absence not a whole-project defect",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A23": {
+      "decision": "Orthogonal dirty/conflict/read-only/degraded/change/write-lock/stale/error/recovery facts",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A24": {
+      "decision": "Explicit Save and visible success feedback; no auto-save",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A25": {
+      "decision": "Failure retains buffer/dirty/prior saved state; disk/permission/path/read-only/remote reason and Retry/Save As",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A26": {
+      "decision": "Per-tab dirty indicator plus other stable shell location under crowded strip",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A27": {
+      "decision": "Chat/tree/quick-open OpenFile callers converge on common open path",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A28": {
+      "decision": "Backend recovery/history refresh via BufferReverted events",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A29": {
+      "decision": "Disk Revert distinct from chat-owned cmd.chat.revert; editor never fabricates restore",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A30": {
+      "decision": "Omitted target_message_id selects latest mutating assistant turn; full-turn multi-file restore and refresh",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A31": {
+      "decision": "Restore to/History fetch backend restore points; editor/document pane use same pipeline and create none",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A32": {
+      "decision": "Required MVP recovery for local and remote-backed buffers",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A33": {
+      "decision": "Remote recovery is local unsaved memory; exact banner, never remote write receipt",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A34": {
+      "decision": "Reconnect or destination revalidation before remote Save/flush success",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A35": {
+      "decision": "Remote editing MVP does not imply remote terminal/run-debug availability",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A36": {
+      "decision": "Exact Work offline (cached files only); validated cached snapshot; old label compatibility only",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A37": {
+      "decision": "No cache means disabled/no-cached-files state; no full-project offline implication",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A38": {
+      "decision": "Connected/reconnecting/unavailable/pending/read-only states; retain buffers; block unconfirmed round-trips unless queued",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A39": {
+      "decision": "Disconnected listings/search/diff/git/shell/LSP/write unavailable or pending, never fake-live",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A40": {
+      "decision": "Dirty disk-Revert confirmation Discard/Cancel; reload clears dirty",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A41": {
+      "decision": "Save before overwrite and editor/window/tab focus checks; not every keystroke",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A42": {
+      "decision": "Single combined dirty+changed prompt Reload/Overwrite/Cancel and Show diff; no two dialogs",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A43": {
+      "decision": "Per-buffer undo/redo; Ctrl+Z/Ctrl+Shift+Z or Ctrl+Y; no cross-file undo",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A44": {
+      "decision": "Copy/Cut/Paste keyboard/context menu/system clipboard; optional paste normalization",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A45": {
+      "decision": "Code wrap off by default, optional toggle; monospace/theme or editor font settings",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A46": {
+      "decision": "UTF-8 editable; invalid decode read-only with reason until external repair/revert",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A47": {
+      "decision": "Preserve CRLF/LF/CR; explicit Save only; no auto-save",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A48": {
+      "decision": "Binary read-only with clear reason; no hex view MVP",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A49": {
+      "decision": "OS/Git read-only indicator/reason, block Save, allow Save As; no metadata bypass",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A50": {
+      "decision": "Configurable 10,000-line default, settings editor labels/ranges and redb persistence",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A51": {
+      "decision": "Above line threshold truncated read-only by default; explicit full load subject to active cap",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A52": {
+      "decision": "Active 5 MB hard cap is an absolute single-buffer load cap, not editable-only",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "defect": "D03"
+    },
+    "A53": {
+      "decision": "Above cap File too large to edit, View read-only (truncated), Open in system editor",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A54": {
+      "decision": "Read-only virtualized editing not MVP unless needed; no threshold changes from library capacity",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A55": {
+      "decision": "Insertion/replacement inherit nearest surviving existing boundary per new newline",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "defect": "D01"
+    },
+    "A56": {
+      "decision": "Surviving CRLF/LF/CR boundaries outside edit remain exact bytes",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A57": {
+      "decision": "No-op Save preserves entire ending sequence; local edit Save changes no surviving outside boundary",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A58": {
+      "decision": "Paste normalization OFF preserves pasted endings",
+      "assessment": "assessed",
+      "status": "material_defect",
+      "defect": "D02"
+    },
+    "A59": {
+      "decision": "Paste normalization ON follows nearest policy for new normalized boundaries and never surrounding buffer",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A60": {
+      "decision": "F-082 changes no shared undo, explicit Save, failed-save dirty state, encoding or FileSafe authority",
+      "assessment": "assessed",
+      "status": "retained"
+    },
+    "A61": {
+      "decision": "F-082 dependencies/owner hints retained; no runtime/event/storage/activation/readiness proof",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A62": {
+      "decision": "All seven accepted units owner/classification/risk/dependency/metadata stay frozen; no conversion or compilation claim",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    },
+    "A63": {
+      "decision": "Source lineage, exact tokens/negatives/compatibility and static validation references stay available; no gate commands executed",
+      "assessment": "assessed",
+      "status": "retained_by_incorporation"
+    }
+  },
+  "counts": {
+    "axes": {
+      "declared": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "O1_O6": {
+      "declared": 6,
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0,
+      "satisfied": 4,
+      "unsatisfied": 2
+    },
+    "plan_scope_units": {
+      "declared": 10,
+      "complete": 10,
+      "assessed": 10,
+      "unassessed": 0
+    },
+    "owner_decisions": {
+      "declared": 65,
+      "complete": 65,
+      "assessed": 65,
+      "unassessed": 0,
+      "retained_or_incorporated": 62,
+      "materially_defective": 3
+    },
+    "consequential_checks": {
+      "declared": 23,
+      "complete": 23,
+      "assessed": 23,
+      "unassessed": 0,
+      "supported_or_appropriately_limited": 20,
+      "materially_defective": 3
+    },
+    "preservation_families": {
+      "declared": 17,
+      "complete": 17,
+      "assessed": 17,
+      "unassessed": 0
+    },
+    "validation_groups": {
+      "declared": 8,
+      "complete": 8,
+      "assessed": 8,
+      "unassessed": 0
+    }
+  },
+  "material_error_count": 3,
+  "material_error_ids": [
+    "D01",
+    "D02",
+    "D03"
+  ],
+  "unassessed_obligations": [],
+  "unknown_usage": null,
+  "unknown_billing": null,
+  "family_actor_authentication": null,
+  "opportunity_recall_exhaustive": false,
+  "blinding_limits": [
+    "Admitted paths visibly identify the arm.",
+    "Artifact/component/procedure structure can reveal method.",
+    "Source maps expose lifecycle, timing, counters and quota/accounting assertions; ignored for scientific judgment.",
+    "No other-arm output/grade, comparative winner/cost/speed target, parent analysis or evaluator answers were read."
+  ],
+  "source_checks": "source-checks.json",
+  "judgment": "judgment.md",
+  "owner_decision_locators": "source-checks.json:owner_decision_checks"
+}

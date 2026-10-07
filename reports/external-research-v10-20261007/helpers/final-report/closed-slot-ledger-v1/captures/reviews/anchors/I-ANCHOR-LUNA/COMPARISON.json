@@ -1,0 +1,439 @@
+{
+  "schema": "ER10-anchor-comparison-v1",
+  "slot_id": "I-ANCHOR-LUNA",
+  "status": "BOTH_ARMS_FULL_DECLARED_SCOPE_ASSESSED",
+  "at": "2026-10-07T19:25:39.736942+00:00",
+  "pair_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/pair-freeze.json",
+    "sha256": "3634c1c48bd2b62549289bca5df11d6cfcb8a0f77ea672f9a679f09b6b2a9b9d"
+  },
+  "arms": {
+    "control": {
+      "recipe": "research -> fresh critic -> fresh final reviser",
+      "binding": {
+        "provider": "codex_gmail",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      },
+      "quality": {
+        "status": "FULL_REVIEW_WITH_MATERIAL_COMPLETENESS_DEFECT",
+        "source_correctness": {
+          "grade": "LARGELY_SUPPORTED_WITH_QUALIFICATIONS",
+          "assessment": "Core factual mechanisms, pin identities and Pouch regression/fix path check out. Couch secondary finding lacks available source history (MD01); minor precision/provenance issues m01\u2013m04 are retained. No unsupported exactly-once, automatic-safe-merge, private-row-read, browser-durability or immediate-erasure guarantee is credited."
+        },
+        "completeness": {
+          "grade": "INCOMPLETE_MATERIAL_SOURCE_HISTORY",
+          "assessment": "All original obligations were reviewed and appear in the artifact, but #5422's available fix/test/release/pinned-code evidence is absent from its disposition. Topic presence is not full source completion. O04/O09/O16 are partial."
+        },
+        "planning_usefulness": {
+          "grade": "USEFUL_WITH_MATERIAL_CAVEAT",
+          "assessment": "Conditional device gate, event/receipt/history architecture, privacy/erasure controls, alternative dispositions, eleven product questions and eight observable test groups are useful. #5422 requires a corrected source-history assessment to interpret transport/storage benchmarks; no rewritten candidate is supplied."
+        },
+        "breadth": {
+          "grade": "BROAD_FOR_BOUNDED_PLANNING_TASK",
+          "assessment": "Revision replication, custom relational append/outbox, CRDT and field-form workflow are materially distinct. Coverage spans offline lifecycle, conflict semantics, delivery order/identity, attribution/review, photos, privacy, erasure/retention and restoration. Alternatives are shallower than pinned Pouch implementation, which is acceptable for this brief. Overlapping citations are not counted as discoveries."
+        },
+        "grade_scope": {
+          "scope": "Frozen own-arm final and dispositions against every integrated brief obligation, frozen plan, supplied required critique and consequential primary-source claims.",
+          "entire_declared_source_scope_assessed": true,
+          "candidate_revised_during_review": false,
+          "reviewer_rescue_or_extra_candidate_critic": false,
+          "excluded": "Implementation/deployment certification, execution of proposed or upstream tests, forensic verification of excluded native action receipts, costs, winner/arm comparison, exhaustive whole-project code/security/license audit. Independent verification of the original draft's pre-existing coverage assertion or same-family provider lineage."
+        },
+        "unassessed_remainder": [],
+        "blinding_limits": {
+          "authorized_inputs": "Only INPUTS.md, its named brief/plan/final/critique/dispositions/source maps, allowed own-arm source evidence, applicable instruction files, independent primary public material and this review's own outputs were read.",
+          "visible_method_clues": [
+            "Path includes I-ANCHOR-LUNA and control; authored titles carry I-ANCHOR-LUNA.",
+            "Final, critique and dispositions explicitly reveal research-v1 \u2192 critic-v1 \u2192 reviser-v1 and required same-family criticism.",
+            "S/C/F source-ID lineage, correction/rejection language and the browser-versus-raw locator dispute reveal a multi-phase research/revision method.",
+            "Supplied maps reveal read-only source fetching/hashing and browser primary-source inspection methods."
+          ],
+          "not_read": [
+            "Counterpart arm answer or sources",
+            "Any other arm review, grader or partial review",
+            "Candidate costs/timings or native counters",
+            "Expected winner",
+            "Parent/root/historical analysis",
+            "Candidate native terminal receipts outside authorized map"
+          ],
+          "limits": "Arm-label/method blinding is imperfect because authorized authored inputs reveal those clues. No provider identity, performance ranking or winner was inferred from them. Source retrieval dates are evidence provenance, not candidate allowance/cost data. Original researcher draft coverage and native same-family provenance are attributed assertions outside the authorized read map.",
+          "requested_reviewer_configuration": {
+            "provider": "codex_gmail",
+            "model": "gpt-6.1-sol",
+            "reasoningEffort": "xhigh",
+            "serviceTier": "priority"
+          },
+          "observed_runtime": "T3 Code through Codex; model gpt-6.1-sol, xhigh, per injected runtime information. Provider account alias and service-tier receipt were not independently inspected. No configuration/account changes or delegation."
+        },
+        "material_defect_count": 1,
+        "material_defects": [
+          {
+            "id": "MD01",
+            "category": "source_investigation_and_disposition_completeness",
+            "severity": "material",
+            "status": "OPEN_IN_FROZEN_FINAL",
+            "exact_claim": "CouchDB issue #5422 is closed and reports target growth from about 1 MB to 2 MB after a small revision with a 1 MB attachment on CouchDB 3.4.2. It does not establish whether 3.5.2 is affected or fixed. Benchmark the pinned server; do not infer either result.",
+            "locations": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+                "lines": "19, 43, 75, 97"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/critique-dispositions.md",
+                "lines": "14, 22"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/README.md",
+                "lines": "S15 row"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md",
+                "lines": "C08 row"
+              }
+            ],
+            "primary_counterevidence": [
+              {
+                "source_id": "R26",
+                "url": "https://github.com/apache/couchdb/issues/5422#issuecomment-2641805547",
+                "range": "comment body",
+                "finding": "Maintainer identifies compaction sizing fix #5347 and expected 3.4.3 release."
+              },
+              {
+                "source_id": "R26",
+                "url": "https://github.com/apache/couchdb/issues/5422#issuecomment-2667491504",
+                "range": "comment body",
+                "finding": "Maintainer identifies missing atts_since propagation and points to #5437."
+              },
+              {
+                "source_id": "R26",
+                "url": "https://github.com/apache/couchdb/issues/5422#issuecomment-2675161303",
+                "range": "comment body",
+                "finding": "Closes #5422 after #5437 merged to main, expected in 3.4.3."
+              },
+              {
+                "source_id": "R34",
+                "url": "https://github.com/apache/couchdb/pull/5437",
+                "range": "body; merge metadata",
+                "finding": "Fix passes atts_since to fabric for open_revs GET; merged 2025-02-21, merge f1799d6d0c8baeea612dd17e430038495476a143."
+              },
+              {
+                "source_id": "R35",
+                "url": "https://api.github.com/repos/apache/couchdb/pulls/5437/files",
+                "range": "chttpd_db.erl patch; chttpd_db_doc_get_tests.erl t_mp_atts_since; attachments_multipart_test.exs patch",
+                "finding": "Fix plus EUnit coverage and changed Elixir assertions demonstrate known attachments become stubs rather than repeated bodies."
+              },
+              {
+                "source_id": "R37",
+                "url": "https://github.com/apache/couchdb/blob/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/whatsnew/3.4.rst#L23-L38",
+                "range": "raw 23\u201338",
+                "finding": "3.4.3 notes explicitly list #5347 and #5437."
+              },
+              {
+                "source_id": "R40",
+                "url": "https://github.com/apache/couchdb/blob/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/chttpd/src/chttpd_db.erl#L980-L1030",
+                "range": "raw 980\u20131030",
+                "finding": "Pinned 3.5.2 propagates atts_since in Options2 to open_revs and output."
+              },
+              {
+                "source_id": "R41",
+                "url": "https://github.com/apache/couchdb/blob/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/chttpd/test/eunit/chttpd_db_doc_get_tests.erl#L442-L464",
+                "range": "raw 442\u2013464",
+                "finding": "Pinned test asserts known atta is stub, new attb follows and only attb bytes are returned."
+              },
+              {
+                "source_id": "R43",
+                "url": "https://github.com/apache/couchdb/compare/f1799d6d0c8baeea612dd17e430038495476a143...5b4d92103e5088d0e23794ddb9c09a6b683f985d",
+                "range": "status/base_commit/merge_base_commit",
+                "finding": "Pinned 3.5.2 is ahead with behind_by 0; merge base equals #5437 merge commit."
+              }
+            ],
+            "impact": "Leaves a consequential declared-source discovery as a generic unresolved storage risk, omits its transport mechanism and regression/release applicability, and weakens the proposed benchmark interpretation. O04, O09 and O16 are partial; breadth and the useful Pouch history remain creditable.",
+            "qualification": "The original 3.4.2 reproducer alone does not prove runtime behavior on 3.5.2. Presence of the fix/tests in 3.5.2 is source evidence, not a passed target workload or universal attachment guarantee. The defect is the omitted available history, not the decision to propose a benchmark."
+          }
+        ],
+        "original_judgment": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/judgment.json",
+          "sha256": "bbde5421a17afefe2ab193cd5d4f73de6e94acb58662cca44518e6805f8426da"
+        },
+        "original_review": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/REVIEW.md",
+          "sha256": "3519f8832be614e3cd774b5d6ba1e9c317932c28398084868eba2be043bdba38"
+        }
+      },
+      "delivery": {
+        "final": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md",
+          "sha256": "419a2d6e04d55280d2e48fa82b79638be966a976214d2584d1542724e5957a32"
+        },
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/freeze.json",
+          "sha256": "5b6fbdff8f008719239f08c00020dd2af0996aaaa5e8e058d71b59047e4c07ee"
+        },
+        "required_final_artifacts_nonempty": true
+      },
+      "native_lifecycle": {
+        "actual_complete_observed": true,
+        "terminal": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/native_terminal_receipt.json",
+          "sha256": "a43fda9c11ea7d7c125e53f9742d5ce6e5d55ce2e7faf621dc5249f36526b0bb"
+        },
+        "T3_turn_completion_not_used_as_native_proof": true,
+        "note": "control T3 task interrupted only after actual native completion; not treated as native failure"
+      },
+      "time": {
+        "original_dispatch": "2026-10-07T18:26:52.563Z",
+        "cold_dispatch_to_required_T3_terminal_delivery_seconds": 2838.931,
+        "aggregate_inclusive_admitted_stage_seconds": 2717.459,
+        "between_stage_handoff_seconds": 121.472,
+        "candidate_intervals": [
+          {
+            "stage": "research",
+            "requested_at": "2026-10-07T18:26:52.563Z",
+            "T3_started_at": "2026-10-07T18:26:53.171Z",
+            "T3_turn_terminal_at": "2026-10-07T18:43:58.666Z",
+            "T3_status": "completed",
+            "inclusive_admitted_seconds": 1026.103,
+            "requested_to_started_seconds": 0.608,
+            "settled": true
+          },
+          {
+            "stage": "critic",
+            "requested_at": "2026-10-07T18:45:23.840Z",
+            "T3_started_at": "2026-10-07T18:45:24.359Z",
+            "T3_turn_terminal_at": "2026-10-07T18:57:22.797Z",
+            "T3_status": "completed",
+            "inclusive_admitted_seconds": 718.957,
+            "requested_to_started_seconds": 0.519,
+            "settled": true
+          },
+          {
+            "stage": "reviser",
+            "requested_at": "2026-10-07T18:57:59.095Z",
+            "T3_started_at": "2026-10-07T18:57:59.932Z",
+            "T3_turn_terminal_at": "2026-10-07T19:14:11.494Z",
+            "T3_status": "interrupted",
+            "inclusive_admitted_seconds": 972.399,
+            "requested_to_started_seconds": 0.837,
+            "settled": true
+          }
+        ],
+        "wholearm_ceiling_seconds": 2700,
+        "within_ceiling_at_T3_terminal_delivery": false,
+        "final_ready_overrun_seconds": 10.437,
+        "native_terminal_overrun_seconds": 104.437,
+        "eligibility": "HOLD_CONTROL_OVERRUN",
+        "aggregate_active_occupancy_seconds": null,
+        "queue_delay_seconds": null,
+        "queue_note": "Raw T3 requested/start intervals recorded; semantic queue vs startup split unknown",
+        "source_setup_before_original_dispatch_seconds": null,
+        "source_operations_seconds": null,
+        "resource_release_at": null,
+        "resource_note": "No pending descendants and settled observed; exact release timing not instrumented"
+      },
+      "evaluation": {
+        "requested_at": "2026-10-07T19:16:25.602Z",
+        "terminal_at": "2026-10-07T19:24:48.352Z",
+        "inclusive_admitted_seconds": 502.75,
+        "binding": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/t3-binding-observation-001.json",
+          "sha256": "f6857918f33f349680d4ba89aec78ec4fbbb282c51c5a591d72a6f654981528e"
+        },
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/freeze.json",
+          "sha256": "6d14e0c30408052ba7c1dd7caa4003bdeab8cc21abf065c495e1a12224f82286"
+        }
+      },
+      "usage": {
+        "billing": null,
+        "input": null,
+        "cached_input": null,
+        "output": null,
+        "reasoning_subset": null,
+        "source_operations": null,
+        "native_samples": "Raw distinct cumulative native samples retained in metrics; not summed or treated as billing"
+      }
+    },
+    "treatment": {
+      "recipe": "research -> fresh critic authoring full final",
+      "binding": {
+        "provider": "codex_gmail",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      },
+      "quality": {
+        "status": "PASS_WITH_LIMITATIONS",
+        "source_correctness": {
+          "assessment": "SUPPORTED_WITH_NONMATERIAL_QUALIFICATIONS",
+          "material_source_errors_found": false,
+          "basis": "The consequential component, standards, workflow, issue/code/test/release and license claims match independent primary evidence within their declared conditions. N01\u2013N03 preserve wording/metadata limitations. Custom sync properties are assessed as proposed contracts rather than existing component guarantees."
+        },
+        "completeness": {
+          "assessment": "COMPLETE_FOR_DECLARED_PLANNING_SCOPE",
+          "basis": "Every original integrated brief obligation and every supplied substantive critique disposition has been assessed. None was screened out or replaced by a smaller surrogate."
+        },
+        "planning_usefulness": {
+          "assessment": "HIGH_CONDITIONAL",
+          "basis": "The final supplies a coherent tentative architecture, domain decisions, explicit delivery/media/auth/retention semantics, a supervisor review model and observable acceptance gates. Production lock, operation costs and compatibility remain open. The commit-level compaction finding could be translated into a more explicit maintenance/load gate."
+        },
+        "breadth": {
+          "assessment": "STRONG_BOUNDED",
+          "basis": "Three materially different sync approaches plus the frozen LWW comparator, one field-data workflow analogue, and the 12 supported discovery clusters below cover the integrated problem. Code-level depth is concentrated in PouchDB compaction; Automerge and native adapter evidence is API/README-level. This is not an exhaustive market or native-stack evaluation."
+        },
+        "grade_scope": {
+          "extent": "FULL_DECLARED_SCOPE",
+          "all_original_integrated_brief_obligations_assessed": true,
+          "all_consequential_frozen_final_source_claims_and_conditions_assessed": true,
+          "full_positive_basis": "All 18 mapped obligations were substantively assessed using the governing brief/frozen plan, final, supplied critique and independent primary inspection. Limits describe planning and evidence applicability; this is not an executed implementation grade.",
+          "artifacts_graded": [
+            "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md",
+            "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md",
+            "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md"
+          ],
+          "excluded": [
+            "Counterpart or comparative ranking",
+            "Cost, speed and native accounting",
+            "Provider/service configuration compliance beyond supplied runtime statement",
+            "Executed product reliability/security/performance",
+            "Literal predecessor draft reconstruction",
+            "Unbounded survey of every sync component or source repository"
+          ]
+        },
+        "unassessed_remainder": [],
+        "blinding_limits": [
+          "The exact source-review INPUTS map, brief, frozen plan, own-arm final, supplied critique and authorized source maps/notes were read. No counterpart answer, other arm review, grader, root analysis, candidate costs, native counters or terminal receipts were opened.",
+          "The initial instruction-discovery command was overbroad: it enumerated AGENTS.md filenames under PM-Experiments and exposed unrelated historical experiment directory names. No file at those unrelated paths was opened, and those names were not used in the judgment. This is a filename-metadata deviation from strict input isolation, not evidence of scientific comparison.",
+          "Treatment and I-ANCHOR-LUNA labels are visible in the supplied paths. Authored output reveals research-v1/critic-finalizer-v1 staging, same-family criticism, and Goal/native-activation wording in its source notes. Public-source retrieval windows/methods are visible; candidate execution time/cost was not inferred from them.",
+          "The critique is an authorized prior opinion and was read, so this is independent primary verification with supplied criticism, not blindness to the critic. Its positive disposition was not accepted as evidence of source correctness.",
+          "The predecessor draft is mentioned in SOURCES.md but is not an allowed review input; it was not opened. Preservation is assessed against the supplied critique dispositions and final, not a reconstructed draft diff.",
+          "The requested runtime is codex_gmail / gpt-6.1-sol / xhigh / priority. The harness attests model and reasoning effort; provider identity, service tier and billing were not inspected or changed. Billing is unknown."
+        ],
+        "material_defect_count": 0,
+        "material_defects": [],
+        "original_judgment": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/judgment.json",
+          "sha256": "754b408761171f8f831bd7b6a27761cc10d3b9fe677830bba04c883912e20b7a"
+        },
+        "original_review": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/REVIEW.md",
+          "sha256": "95a2cab9b85d748a7f3c96e7bbb90f83429909fa4ebcfb6e373a0cdcf5cdf520"
+        }
+      },
+      "delivery": {
+        "final": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md",
+          "sha256": "1d8420a0752e0b2bda7d8b3eeca666ecf23e801b829c03e2dc7f8d1b0880f3a8"
+        },
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/freeze.json",
+          "sha256": "f713b5b4b8ef187768a025cc55f17c2b05ef3960c412b75b13a46a5cae748223"
+        },
+        "required_final_artifacts_nonempty": true
+      },
+      "native_lifecycle": {
+        "actual_complete_observed": true,
+        "terminal": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_terminal_receipt.json",
+          "sha256": "e06bbeae9f54a1a8ac9bcb688bbcf597e2e6bfc3c8b4a50e1529bec0433012a8"
+        },
+        "T3_turn_completion_not_used_as_native_proof": true,
+        "note": "original first-save failure and idempotent complete note preserved, no fabricated create receipt"
+      },
+      "time": {
+        "original_dispatch": "2026-10-07T18:26:21.980Z",
+        "cold_dispatch_to_required_T3_terminal_delivery_seconds": 2149.107,
+        "aggregate_inclusive_admitted_stage_seconds": 1932.65,
+        "between_stage_handoff_seconds": 216.457,
+        "candidate_intervals": [
+          {
+            "stage": "research",
+            "requested_at": "2026-10-07T18:26:21.980Z",
+            "T3_started_at": "2026-10-07T18:26:22.338Z",
+            "T3_turn_terminal_at": "2026-10-07T18:44:24.457Z",
+            "T3_status": "completed",
+            "inclusive_admitted_seconds": 1082.477,
+            "requested_to_started_seconds": 0.358,
+            "settled": true
+          },
+          {
+            "stage": "critic-finalizer",
+            "requested_at": "2026-10-07T18:48:00.914Z",
+            "T3_started_at": "2026-10-07T18:48:01.445Z",
+            "T3_turn_terminal_at": "2026-10-07T19:02:11.087Z",
+            "T3_status": "completed",
+            "inclusive_admitted_seconds": 850.173,
+            "requested_to_started_seconds": 0.531,
+            "settled": true
+          }
+        ],
+        "wholearm_ceiling_seconds": 2700,
+        "within_ceiling_at_T3_terminal_delivery": true,
+        "final_ready_overrun_seconds": 0,
+        "native_terminal_overrun_seconds": 0,
+        "eligibility": "WITHIN_ORIGINAL_CLOCK",
+        "aggregate_active_occupancy_seconds": null,
+        "queue_delay_seconds": null,
+        "queue_note": "Raw T3 requested/start intervals recorded; semantic queue vs startup split unknown",
+        "source_setup_before_original_dispatch_seconds": null,
+        "source_operations_seconds": null,
+        "resource_release_at": null,
+        "resource_note": "No pending descendants and settled observed; exact release timing not instrumented"
+      },
+      "evaluation": {
+        "requested_at": "2026-10-07T19:16:26.254Z",
+        "terminal_at": "2026-10-07T19:24:01.609Z",
+        "inclusive_admitted_seconds": 455.355,
+        "binding": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/t3-binding-observation-001.json",
+          "sha256": "24ae098c11509d2cf569e3663a3dcf1856e6847968ecac0dea8af2ea1854a824"
+        },
+        "freeze": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/freeze.json",
+          "sha256": "ce2b966365ae95c248c974b3d98cfaa721bba8b872d04d2a199b55ea452ea428"
+        }
+      },
+      "usage": {
+        "billing": null,
+        "input": null,
+        "cached_input": null,
+        "output": null,
+        "reasoning_subset": null,
+        "source_operations": null,
+        "native_samples": "Raw distinct cumulative native samples retained in metrics; not summed or treated as billing"
+      }
+    }
+  },
+  "timing_eligibility": "HOLD_CONTROL_OVERRUN",
+  "provenance_eligibility": {
+    "status": "DISCLOSED_LIMITS",
+    "exposure": "UNKNOWN_BEYOND_OBSERVED_INPUT_SCOPE",
+    "review_timing": "Both fresh full reviews dispatched only after exact final/native frozen and candidate tasks quiet",
+    "limitations": "Authorized authored inputs reveal method/arm clues. Treatment reviewer enumerated unrelated historical AGENTS filenames, no contents opened/used, original disclosure preserved. Control researcher own metadata hash-read narrow exception retained. Paths do not prove filesystem firewall.",
+    "candidate_feedback": "No reviewer findings supplied to candidates"
+  },
+  "economic_observation": {
+    "descriptive_control_over_treatment_terminal_latency_ratio": 1.321,
+    "quality_preserving_speedup_established": false,
+    "twofold_objective_established": false,
+    "affordability_established": false,
+    "reason": "Original treatment reviewer PASS_WITH_LIMITATIONS, control full review has material completeness defect; not matched passing quality. Control original budget exceeded. Ratio descriptive only; billing unknown; no best-of or scientific rescue.",
+    "single_account_recommendation": "No qualified comparative recipe established; one overlapping campaign pair, normal-user single-project execution not independently measured"
+  },
+  "measurement_receipts": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/luna-t3-timing-observations.json",
+    "sha256": "787b4899c6364c10dc9b2500c2b250694180d2ef5d021740d53dbb826bc20ddb"
+  },
+  "raw_metrics": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/anchor-supervisor/metrics-I-ANCHOR-LUNA.json",
+    "sha256": "2be23e21482559134eec1c6ad3a8cfdaab44a88219849312ef9851ed5f255e65"
+  },
+  "retained_failures": [
+    "original treatment researcher failed initial receipt save/idempotent terminal note",
+    "control critic reserve overrun",
+    "control reviser final-ready/native-terminal/delivery overrun and intentional expiry stop",
+    "treatment reviewer AGENTS filename metadata deviation"
+  ],
+  "scientific_judgment_authorship": "Original independent Sol6.1 xhigh reviewers only; coordinator copies axes and time arithmetic, no authored scientific grade"
+}

@@ -1,0 +1,167 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-METHOD-05",
+  "record_at": "2026-10-07T21:06:22.549570+00:00",
+  "status": "pair_assessed_terminal_both_SourceFAIL",
+  "all_candidate_tasks_quiet": true,
+  "all_review_tasks_quiet": true,
+  "both_exact_full_finals_nativecomplete_frozen": true,
+  "paired_candidate_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-05-pair-freeze-v1.json",
+  "arms": {
+    "control": {
+      "source_judgment": "FAIL",
+      "material_error_count": 4,
+      "counts": {
+        "axes": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "brief_obligations": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0,
+          "satisfied_scientific_content": 3,
+          "not_fully_satisfied": 3
+        },
+        "plan_owner_records": {
+          "complete": 10,
+          "assessed": 10,
+          "unassessed": 0,
+          "satisfied": 1,
+          "satisfied_with_limitations": 1,
+          "not_fully_satisfied": 8
+        },
+        "grouped_owner_decisions": {
+          "complete": 43,
+          "assessed": 43,
+          "unassessed": 0
+        },
+        "critic_dispositions": {
+          "complete": 15,
+          "assessed": 15,
+          "unassessed": 0,
+          "visibly_addressed": 15
+        },
+        "consequential_source_checks": {
+          "complete": 22,
+          "assessed": 22,
+          "unassessed": 0
+        },
+        "primary_required_scope": {
+          "complete": 16,
+          "assessed": 16,
+          "unassessed": 0
+        },
+        "material_error_count": 4,
+        "material_contract_or_preservation_defects": 3,
+        "material_required_history_gap": 1,
+        "confirmed_false_public_component_behavior_claims": 0,
+        "nonmaterial_limitation_count": 3
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T20:46:44.287Z",
+      "review_startedAt": "2026-10-07T20:46:44.833Z",
+      "review_completedAt": "2026-10-07T21:05:49.461Z",
+      "review_delivery_frozenAt": "2026-10-07T21:06:02.955479+00:00",
+      "review_dispatch_to_delivery_seconds": 1145.174,
+      "delivery_in_review_deadline": true,
+      "source_correct_usable_delivery": null,
+      "source_correct_usable_latency": null,
+      "usage_billing_unknown": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      },
+      "full_scope_assessed": true,
+      "unassessed": 0
+    },
+    "treatment": {
+      "source_judgment": "FAIL",
+      "material_error_count": 3,
+      "counts": {
+        "axes": {
+          "declared": 6,
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "O1_O6": {
+          "declared": 6,
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0,
+          "satisfied": 4,
+          "unsatisfied": 2
+        },
+        "plan_scope_units": {
+          "declared": 10,
+          "complete": 10,
+          "assessed": 10,
+          "unassessed": 0
+        },
+        "owner_decisions": {
+          "declared": 65,
+          "complete": 65,
+          "assessed": 65,
+          "unassessed": 0,
+          "retained_or_incorporated": 62,
+          "materially_defective": 3
+        },
+        "consequential_checks": {
+          "declared": 23,
+          "complete": 23,
+          "assessed": 23,
+          "unassessed": 0,
+          "supported_or_appropriately_limited": 20,
+          "materially_defective": 3
+        },
+        "preservation_families": {
+          "declared": 17,
+          "complete": 17,
+          "assessed": 17,
+          "unassessed": 0
+        },
+        "validation_groups": {
+          "declared": 8,
+          "complete": 8,
+          "assessed": 8,
+          "unassessed": 0
+        }
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T20:46:56.631Z",
+      "review_startedAt": "2026-10-07T20:46:57.311Z",
+      "review_completedAt": "2026-10-07T21:01:27.488Z",
+      "review_delivery_frozenAt": "2026-10-07T21:01:59.580685+00:00",
+      "review_dispatch_to_delivery_seconds": 870.857,
+      "delivery_in_review_deadline": true,
+      "source_correct_usable_delivery": null,
+      "source_correct_usable_latency": null,
+      "usage_billing_unknown": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      },
+      "full_scope_assessed": true,
+      "unassessed": 0
+    }
+  },
+  "economic_annotation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-05-terminal-economics-v1.json",
+  "lifecycle_and_timing_limits": [
+    "Control topicB T3 interrupted/late after real expiry with actualnativecomplete/fullscientificcarrier; originalfailedcloseout/cost retained.",
+    "Treatment topic and critic delivery overruns and terminal races retained; whole45 unchanged; exact nestedoccupied costs recorded.",
+    "Nativeaggregate counters perstage remain distinct and unsummed; rawAPI/createdAt absent under declared passivecarrier; billing/input/cache/generated/reasoning unknown."
+  ],
+  "selection_basis": "DIAGNOSTIC_UNQUALIFIED; both SourceFAIL, no source-correct speed/quality win",
+  "all_original_costs_and_failures_retained": true,
+  "no_bestof_regrade_or_Sol_rescue": true,
+  "exhaustive_opportunity_recall_claimed": false,
+  "reviewer_scope_grouping_limit": "Reviewers independently grouped owner decisions43control/65treatment; not comparable atomic count populations; no winner from materialcounts."
+}

@@ -1,0 +1,175 @@
+{
+  "schema": "ER10-cohort3-ordinary-review-freeze-v3",
+  "case": "D-M08-A",
+  "version": "v3",
+  "reviewer": "J2",
+  "arm": "treatment",
+  "verdict": "FullSourceFAIL",
+  "coverage": "FULL_DECLARED_SCOPE",
+  "unassessed": [],
+  "dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-A-v3-review-J2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-A-v3-review-J2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-v3-review-J2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-A-v3-review-J2",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "actual_t3_thread_binding": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M08-A-v3-review-J2",
+    "link": "[ER10 COHORT3 M08A v3 independent J2](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-v3-review-J2)",
+    "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "title": "ER10 COHORT3 M08A v3 independent J2",
+    "createdBy": "agent",
+    "creationSource": "mcp",
+    "status": "completed",
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-v3-review-J2:ordinal:1",
+    "activeRunId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "linkedPullRequest": null,
+    "titleRegeneration": null,
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+    "relationshipToParent": "subagent",
+    "runCount": 1,
+    "itemCount": 25,
+    "pendingRequestCount": 0,
+    "archived": false,
+    "settled": false,
+    "settledAt": null,
+    "snoozed": false,
+    "snoozedUntil": null,
+    "createdAt": "2026-10-07T20:48:37.334Z",
+    "updatedAt": "2026-10-07T20:53:57.895Z"
+  },
+  "actual_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M08-A-v3-review-J2:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T20:48:37.336Z",
+    "startedAt": "2026-10-07T20:48:38.472Z",
+    "completedAt": "2026-10-07T20:53:57.895Z"
+  },
+  "quiet": true,
+  "settled": true,
+  "settle_annotation": "Actual organize settle returned sequence456528; terminal thread snapshot precedes settle.",
+  "native_goal_required": false,
+  "dispatch_to_delivery_seconds": 320.559,
+  "queue_startup_seconds": 1.136,
+  "artifacts": {
+    "judgment.md": {
+      "sha256": "51a58ee64e4c592885e7126aa92114258ec4afa8546462162b8e9a21ae5cc2f2",
+      "bytes": 18179
+    },
+    "checks.json": {
+      "sha256": "32af91c6af4dfcdfd4db5a51975defcf5a92df6d540ccc805f4e4c10ade05e30",
+      "bytes": 8699
+    },
+    "INPUT_MAP.json": {
+      "sha256": "07ecba001ac69ecfac6311e7f49ba6911cd3d27b6185e016e03c5d649dd00f23",
+      "bytes": 3683
+    },
+    "assignment.md": {
+      "sha256": "9d28cf75e781ba71e7edc30fbbc0f978b87607e1e0a022751ca431e7d75d7a12",
+      "bytes": 3076
+    },
+    "dispatch.json": {
+      "sha256": "807df09f7876f0e92e3d88dee02c0cf98312e8cab47cdd7bc3340cc672697f5f",
+      "bytes": 986
+    },
+    "quiet_task_receipt.json": {
+      "sha256": "5f2f29fef3b0aa93ebddcd668230720aa0b567179d5978e901a292519c042193",
+      "bytes": 6048
+    },
+    "t3_terminal_receipt.json": {
+      "sha256": "75d3fb7ec8ee78b590a79771b4107a5dc88f47778f9271061a9cc4a1960a83af",
+      "bytes": 6499
+    }
+  },
+  "billing": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "review_source_ops": [
+    {
+      "source_id": "httpsem",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "effective_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "http_status": 200,
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "matches_frozen": true,
+      "content_type": "text/plain;charset=utf-8",
+      "content_encoding": null,
+      "last_modified": null,
+      "version": "RFC 9110 June 2022",
+      "started_utc": "2026-10-07T20:50:05.460772+00:00",
+      "completed_utc": "2026-10-07T20:50:05.723780+00:00",
+      "storage": "memory only; no downloaded code executed"
+    },
+    {
+      "source_id": "httpcache",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "effective_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "http_status": 200,
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "matches_frozen": true,
+      "content_type": "text/plain;charset=utf-8",
+      "content_encoding": null,
+      "last_modified": null,
+      "version": "RFC 9111 June 2022",
+      "started_utc": "2026-10-07T20:50:05.463235+00:00",
+      "completed_utc": "2026-10-07T20:50:05.619898+00:00",
+      "storage": "memory only; no downloaded code executed"
+    }
+  ],
+  "output_volume": {
+    "known_review_tool_stdout_utf16_code_units": 203775,
+    "includes": "Recorded pre-write shell stdout; excludes initial map cat, web-tool formatting, metadata discovery and orchestration wrappers",
+    "known_primary_bytes_fetched": 587418,
+    "model_generated_tokens": null,
+    "judgment_bytes": 18179,
+    "checks_bytes": 8699
+  },
+  "material_defects": [
+    {
+      "id": "M1",
+      "identity": "coded-byte coordinate/storage-count condition lost from original draft",
+      "candidate_locators": [
+        "draft.md:15",
+        "critique.md:21",
+        "amendment.md:13",
+        "change_dependency_check.md:5",
+        "change_dependency_check.md:17",
+        "final.md:7",
+        "final.md:9",
+        "final.md:13"
+      ],
+      "source_locators": [
+        "RFC9110 section 8.4 lines 3069-3075",
+        "RFC9110 section 14.1.2 lines 6386-6400"
+      ],
+      "type": "material omission/ambiguity; no observed implementation corruption"
+    }
+  ],
+  "blinding_limit": "Declared method-specific paths and embedded run/check records reveal the review method; no sibling/other-arm/lineage/evaluator history read.",
+  "frozen_at": "2026-10-07T20:56:03.625843+00:00"
+}

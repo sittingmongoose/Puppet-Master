@@ -1,0 +1,2918 @@
+{
+  "schema": "ER10-batch009-source-identity-only-v1",
+  "fixed_cutoff": "2026-10-07T23:07:08.817044+00:00",
+  "raw_source_bodies_published": false,
+  "identities": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/aws-sdk-retry-behavior.html",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "bytes": 63037,
+      "mtime_ns": 1791410654169351728,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/5",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+          "version": "Live 'latest' SDK reference page, undated HTML",
+          "locator": "Standard mode (exponential backoff + jitter) and Adaptive mode; retry-quota token bucket guards repeated failures (grep: 'retry quota' x15, 'token bucket' x5 verified case-insensitive)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/18",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+          "version": "Live 'latest' SDK reference page, undated HTML",
+          "locator": "Standard mode (exponential backoff + jitter) and Adaptive mode; retry-quota token bucket guards repeated failures (grep: 'retry quota' x15, 'token bucket' x5 verified case-insensitive)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/5",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/5/candidate_metadata",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+          "version": "Live 'latest' SDK reference page, undated HTML",
+          "locator": "Standard mode (exponential backoff + jitter) and Adaptive mode; retry-quota token bucket guards repeated failures (grep: 'retry quota' x15, 'token bucket' x5 verified case-insensitive)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/5",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/5/candidate_metadata",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+          "version": "Live 'latest' SDK reference page, undated HTML",
+          "locator": "Standard mode (exponential backoff + jitter) and Adaptive mode; retry-quota token bucket guards repeated failures (grep: 'retry quota' x15, 'token bucket' x5 verified case-insensitive)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "bytes": 1970,
+      "mtime_ns": 1791410654170193567,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/9",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+          "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+          "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/22",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+          "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+          "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/9",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/9/candidate_metadata",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+          "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+          "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/9",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/9/candidate_metadata",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+          "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+          "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mapbox-raster-tiles-api.html",
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "bytes": 57884,
+      "mtime_ns": 1791410654169985559,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/7",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+          "version": "Mapbox vendor docs, undated page",
+          "locator": "Caching section: 'browser cache TTL of 12 hours and a CDN cache TTL of 5 minutes' (exact phrase verified by grep); ETag/conditional revalidation context"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/20",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+          "version": "Mapbox vendor docs, undated page",
+          "locator": "Caching section: 'browser cache TTL of 12 hours and a CDN cache TTL of 5 minutes' (exact phrase verified by grep); ETag/conditional revalidation context"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/7",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/7/candidate_metadata",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+          "version": "Mapbox vendor docs, undated page",
+          "locator": "Caching section: 'browser cache TTL of 12 hours and a CDN cache TTL of 5 minutes' (exact phrase verified by grep); ETag/conditional revalidation context"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/7",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/7/candidate_metadata",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+          "version": "Mapbox vendor docs, undated page",
+          "locator": "Caching section: 'browser cache TTL of 12 hours and a CDN cache TTL of 5 minutes' (exact phrase verified by grep); ETag/conditional revalidation context"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "bytes": 9248,
+      "mtime_ns": 1791410654170120404,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/8",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+          "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+          "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/21",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+          "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+          "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/8",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/8/candidate_metadata",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+          "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+          "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/8",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/8/candidate_metadata",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+          "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+          "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-slippy-tilenames.html",
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "bytes": 333283,
+      "mtime_ns": 1791410654169497099,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/6",
+          "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+          "version": "OSM community wiki; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+          "locator": "z/x/y tile coordinate scheme and zoom resolution table (grep 'z/x/y' x1 verified); Tile Servers section — the shared tile-identity scheme for both topics"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/19",
+          "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+          "version": "OSM community wiki; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+          "locator": "z/x/y tile coordinate scheme and zoom resolution table (grep 'z/x/y' x1 verified); Tile Servers section — the shared tile-identity scheme for both topics"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/6",
+          "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/6/candidate_metadata",
+          "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+          "version": "OSM community wiki; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+          "locator": "z/x/y tile coordinate scheme and zoom resolution table (grep 'z/x/y' x1 verified); Tile Servers section — the shared tile-identity scheme for both topics"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/6",
+          "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/6/candidate_metadata",
+          "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+          "version": "OSM community wiki; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+          "locator": "z/x/y tile coordinate scheme and zoom resolution table (grep 'z/x/y' x1 verified); Tile Servers section — the shared tile-identity scheme for both topics"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osm-wiki-tile-disk-usage.html",
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "bytes": 24578,
+      "mtime_ns": 1791410654169166913,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/4",
+          "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+          "version": "MediaWiki page, wgCurRevisionId 3082592 at capture",
+          "locator": "'Tile disk usage' section; mod_tile expiry config examples 'expiry: false' and 'expiry: 86400' (86400 x2 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/17",
+          "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+          "version": "MediaWiki page, wgCurRevisionId 3082592 at capture",
+          "locator": "'Tile disk usage' section; mod_tile expiry config examples 'expiry: false' and 'expiry: 86400' (86400 x2 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/4",
+          "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/4/candidate_metadata",
+          "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+          "version": "MediaWiki page, wgCurRevisionId 3082592 at capture",
+          "locator": "'Tile disk usage' section; mod_tile expiry config examples 'expiry: false' and 'expiry: 86400' (86400 x2 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/4",
+          "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/4/candidate_metadata",
+          "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+          "version": "MediaWiki page, wgCurRevisionId 3082592 at capture",
+          "locator": "'Tile disk usage' section; mod_tile expiry config examples 'expiry: false' and 'expiry: 86400' (86400 x2 verified)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/osmf-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "mtime_ns": 1791410654169080435,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/3",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "Live OSMF operations page, undated HTML; topic2 arm recorded Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+          "locator": "Sections: Quick summary; 3.2 Caching; 4 Prohibited: bulk downloading/'scraping' and offline use (grep 'bulk download' x4 verified); single 'If-Modified-Since' mention (x1 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/16",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "Live OSMF operations page, undated HTML; topic2 arm recorded Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+          "locator": "Sections: Quick summary; 3.2 Caching; 4 Prohibited: bulk downloading/'scraping' and offline use (grep 'bulk download' x4 verified); single 'If-Modified-Since' mention (x1 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/3",
+          "url": "https://operations.osmfoundation.org/policies/tiles/"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/3/candidate_metadata",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "Live OSMF operations page, undated HTML; topic2 arm recorded Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+          "locator": "Sections: Quick summary; 3.2 Caching; 4 Prohibited: bulk downloading/'scraping' and offline use (grep 'bulk download' x4 verified); single 'If-Modified-Since' mention (x1 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/3",
+          "url": "https://operations.osmfoundation.org/policies/tiles/"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/3/candidate_metadata",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "Live OSMF operations page, undated HTML; topic2 arm recorded Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+          "locator": "Sections: Quick summary; 3.2 Caching; 4 Prohibited: bulk downloading/'scraping' and offline use (grep 'bulk download' x4 verified); single 'If-Modified-Since' mention (x1 verified)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "mtime_ns": 1791410654168356141,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, Informational, April 2011",
+          "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/14",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, Informational, April 2011",
+          "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/1/candidate_metadata",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, Informational, April 2011",
+          "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/1/candidate_metadata",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, Informational, April 2011",
+          "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "mtime_ns": 1791410654168463935,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/2",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110, Standards Track, June 2022",
+          "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/15",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110, Standards Track, June 2022",
+          "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/2",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/2/candidate_metadata",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110, Standards Track, June 2022",
+          "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/2",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/2/candidate_metadata",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110, Standards Track, June 2022",
+          "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "mtime_ns": 1791410654168098035,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+          "pointer": "/entries/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, Standards Track, June 2022",
+          "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/13",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, Standards Track, June 2022",
+          "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/0/candidate_metadata",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, Standards Track, June 2022",
+          "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+          "pointer": "/source_registry/0/candidate_metadata",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, Standards Track, June 2022",
+          "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/aws-sdk-retry-behavior.html",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "bytes": 63037,
+      "mtime_ns": 1791408454867373073,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+          "pointer": "/entries/5",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+          "version": "Live 'latest' SDK reference page, retrieved as stored",
+          "locator": "grep counts at capture: 'retry mode' x6, 'retry quota' x17, 'token bucket' x5 — Standard mode (exponential backoff with jitter) and Adaptive mode; retry-quota token bucket (e.g., 500-token capacity style) guards against repeated failures"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/5",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+          "version": "Live 'latest' SDK reference page, retrieved as stored",
+          "locator": "grep counts at capture: 'retry mode' x6, 'retry quota' x17, 'token bucket' x5 — Standard mode (exponential backoff with jitter) and Adaptive mode; retry-quota token bucket (e.g., 500-token capacity style) guards against repeated failures"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/osm-wiki-tile-disk-usage.html",
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "bytes": 24578,
+      "mtime_ns": 1791408455207374949,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+          "pointer": "/entries/4",
+          "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+          "version": "MediaWiki page, wgCurRevisionId 3082592 at capture; 'Tile disk usage' resolves (redirect) into Servers/Tile Rendering",
+          "locator": "'Tile disk usage' section link in page body; mod_tile expiry parameters 'expiry: false' and 'expiry: 86400' (86400 s = 1 day) as rendered config examples"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/4",
+          "url": "https://wiki.openstreetmap.org/wiki/Tile_disk_usage",
+          "version": "MediaWiki page, wgCurRevisionId 3082592 at capture; 'Tile disk usage' resolves (redirect) into Servers/Tile Rendering",
+          "locator": "'Tile disk usage' section link in page body; mod_tile expiry parameters 'expiry: false' and 'expiry: 86400' (86400 s = 1 day) as rendered config examples"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/osmf-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "mtime_ns": 1791408455069374188,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+          "pointer": "/entries/3",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "Live OMF operations page 'Tile Usage Policy', undated HTML, retrieved as stored",
+          "locator": "sections: Quick summary; 2 Attribution; 3.1 Identification; 3.2 Caching; 3.3 Protocols; 4 Prohibited: bulk downloading ('scraping') and offline use; 5 Caching proxies; one explicit 'If-Modified-Since' mention (grep count 1)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/3",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "Live OMF operations page 'Tile Usage Policy', undated HTML, retrieved as stored",
+          "locator": "sections: Quick summary; 2 Attribution; 3.1 Identification; 3.2 Caching; 3.3 Protocols; 4 Prohibited: bulk downloading ('scraping') and offline use; 5 Caching proxies; one explicit 'If-Modified-Since' mention (grep count 1)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc5861.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "mtime_ns": 1791408454853664987,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+          "pointer": "/entries/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, Informational, April 2011 (M. Nottingham, Yahoo! Inc.)",
+          "locator": "TOC lines 67-70; §3 stale-while-revalidate (+3.1 example), §4 stale-if-error (+4.1 example)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, Informational, April 2011 (M. Nottingham, Yahoo! Inc.)",
+          "locator": "TOC lines 67-70; §3 stale-while-revalidate (+3.1 example), §4 stale-if-error (+4.1 example)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "mtime_ns": 1791408454877373128,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+          "pointer": "/entries/2",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110, Standards Track, June 2022",
+          "locator": "body lines: 3570 §8.8.3 ETag; 4799 §10.2.3 Retry-After; 5872 §13.1.2 If-None-Match; 5942 §13.1.3 If-Modified-Since; 6467 §14.2 Range; 7755 §15.5.17 416 Range Not Satisfiable"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/2",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110, Standards Track, June 2022",
+          "locator": "body lines: 3570 §8.8.3 ETag; 4799 §10.2.3 Retry-After; 5872 §13.1.2 If-None-Match; 5942 §13.1.3 If-Modified-Since; 6467 §14.2 Range; 7755 §15.5.17 416 Range Not Satisfiable"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "mtime_ns": 1791408454865709498,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+          "pointer": "/entries/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, Standards Track, June 2022 (R. Fielding/M. Nottingham/J. Reschke, Eds.)",
+          "locator": "body lines: 581 §4.2 Freshness; 784 §4.2.4 Serving Stale Responses; 801 §4.3 Validation; 1081 §5.2 Cache-Control (5.2.1.2 max-stale request dir; 5.2.2.1 max-age response dir); 520 max-age=0 revalidation"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, Standards Track, June 2022 (R. Fielding/M. Nottingham/J. Reschke, Eds.)",
+          "locator": "body lines: 581 §4.2 Freshness; 784 §4.2.4 Serving Stale Responses; 801 §4.3 Validation; 1081 §5.2 Cache-Control (5.2.1.2 max-stale request dir; 5.2.2.1 max-age response dir); 520 max-age=0 revalidation"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/leaflet-offline-README.md",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "bytes": 1970,
+      "mtime_ns": 1791409444514511196,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+          "pointer": "/entries/6",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+          "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+          "locator": "README overview ('still available when you are offline') and Dependencies (idb: 'To store the tiles with promises'); API list deferred to generated docs, not captured"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/12",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+          "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+          "locator": "README overview ('still available when you are offline') and Dependencies (idb: 'To store the tiles with promises'); API list deferred to generated docs, not captured"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/mapbox-raster-tiles-api.html",
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "bytes": 57884,
+      "mtime_ns": 1791409487171770741,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+          "pointer": "/entries/4",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+          "version": "Mapbox vendor docs, undated page, fetched 2026-10-07",
+          "locator": "Caching section: 'Cache-Control headers to ... cache TTL of 12 hours and a CDN cache TTL of 5 minutes. New tileset data is cached for up to a ...' (browser vs CDN TTL distinction, ETag/conditional revalidation context)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/10",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+          "version": "Mapbox vendor docs, undated page, fetched 2026-10-07",
+          "locator": "Caching section: 'Cache-Control headers to ... cache TTL of 12 hours and a CDN cache TTL of 5 minutes. New tileset data is cached for up to a ...' (browser vs CDN TTL distinction, ETag/conditional revalidation context)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/mod_tile-README.rst",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "bytes": 9248,
+      "mtime_ns": 1791409565410913592,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+          "pointer": "/entries/5",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+          "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+          "locator": "README sections on tile expiry / Expires+Last-Modified headers and mod_tile/renderd caching behavior (2 'expir' matches)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/11",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+          "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+          "locator": "README sections on tile expiry / Expires+Last-Modified headers and mod_tile/renderd caching behavior (2 'expir' matches)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/osm-wiki-slippy-tilenames.html",
+      "sha256": "75a05819179e38833393d3f4860b6b74ec18d94132977552c3f5b8c94c87c0bd",
+      "bytes": 333283,
+      "mtime_ns": 1791409445966667509,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+          "pointer": "/entries/3",
+          "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+          "version": "OSM community wiki page; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+          "locator": "z/x/y tile coordinate scheme, zoom-level resolution table, 'Tile Servers' section (identity scheme for raster tiles)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/9",
+          "url": "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames",
+          "version": "OSM community wiki page; Last-Modified Fri, 02 Oct 2026 05:42:02 GMT",
+          "locator": "z/x/y tile coordinate scheme, zoom-level resolution table, 'Tile Servers' section (identity scheme for raster tiles)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/osmf-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "mtime_ns": 1791409443678506109,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+          "pointer": "/entries/2",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "OSMF Operations tile policy page; Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+          "locator": "Policy body sections mentioning caching/updates of the standard osm.org tile layer (6 'cache' matches; server-side caching and bulk-use limits)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/8",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "OSMF Operations tile policy page; Last-Modified Tue, 15 Sep 2026 09:14:30 GMT",
+          "locator": "Policy body sections mentioning caching/updates of the standard osm.org tile layer (6 'cache' matches; server-side caching and bulk-use limits)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc5861-stale.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "mtime_ns": 1791409654466862414,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+          "pointer": "/entries/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861 (May 2010), Informational",
+          "locator": "Sec 3 (stale-while-revalidate Cache-Control extension: serve stale while async revalidation); Sec 4 (stale-if-error)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/7",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861 (May 2010), Informational",
+          "locator": "Sec 3 (stale-while-revalidate Cache-Control extension: serve stale while async revalidation); Sec 4 (stale-if-error)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc9111-http-caching.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "mtime_ns": 1791409443099502587,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+          "pointer": "/entries/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111 (June 2022), IETF HTTP semantics: caching",
+          "locator": "Sec 4 (constructing responses / freshness model: Age, fresh vs stale); Sec 5.2 (Cache-Control: max-age, must-revalidate, no-cache, no-store, max-stale); Sec 5.5 (revalidation)"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/6",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111 (June 2022), IETF HTTP semantics: caching",
+          "locator": "Sec 4 (constructing responses / freshness model: Age, fresh vs stale); Sec 5.2 (Cache-Control: max-age, must-revalidate, no-cache, no-store, max-stale); Sec 5.5 (revalidation)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/leaflet-offline-ControlSaveTiles-v3.2.1.ts",
+      "sha256": "3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c",
+      "bytes": 6625,
+      "mtime_ns": 1791411376086479881,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/25",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/ControlSaveTiles.ts",
+          "version": "leaflet.offline tag v3.2.1",
+          "locator": "line 139 _saveTiles(); line 190 this.options.bounds || this._map.getBounds() (computed viewport list); lines 15/17 imports saveTile/hasTile"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/leaflet-offline-TileManager-v3.2.1.ts",
+      "sha256": "ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23",
+      "bytes": 5819,
+      "mtime_ns": 1791411376091877989,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/26",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileManager.ts",
+          "version": "leaflet.offline tag v3.2.1",
+          "locator": "line 84 downloadTile(tileUrl); line 97 saveTile(...); line 206 hasTile(key); line 220 const shouldUseUrl = !(await hasTile(key)) — skip-existing on hit"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osm-tile-headers-probe2-20261007.txt",
+      "sha256": "45e1dfafe270826209cf19de207c64817a4b9a0cccbf6a286240015d98e714c7",
+      "bytes": 544,
+      "mtime_ns": 1791411339383762229,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/22",
+          "url": "https://tile.openstreetmap.org/0/0/0.png",
+          "version": "live HTTP response headers from canonical OSM tile endpoint, as returned 2026-10-07T22:15:39Z",
+          "locator": "line 8 x-blocked: Access denied (policy pointer https://operations.osmfoundation.org/policies/tiles/); line 4 cache-control: no-cache; line 3 retry-after: 0; line 9 accept-ranges: bytes; lines 13-14 varnish HIT"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osmdroid-networkavailabliltycheck-6.1.20.java",
+      "sha256": "3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06",
+      "bytes": 2846,
+      "mtime_ns": 1791411376078993618,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/24",
+          "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/NetworkAvailabliltyCheck.java",
+          "version": "tag osmdroid-parent-6.1.20",
+          "locator": "line 16 class implements INetworkAvailabliltyCheck; line 33 getNetworkAvailable(); lines 51/62 wifi/cellular variants; whole-file negative check: no retry/backoff/sleep keywords"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osmf-tile-policy-20261007.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "mtime_ns": 1791411376374994599,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/23",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "OSMF tile usage policy page, current as captured 2026-10-07T22:16Z",
+          "locator": "line 75 'Bulk download (\"scrape\") tiles or offer prefetch features' (prohibited); line 51 heavy/inappropriate use may be blocked; lines 66/117 valid identifying User-Agent required; line 79 UA masquerading prohibited"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-ControlSaveTiles.ts",
+      "sha256": "3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c",
+      "bytes": 6625,
+      "mtime_ns": 1791408504103676175,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/10",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/ControlSaveTiles.ts",
+          "version": "tag v3.2.1",
+          "locator": "lines 95 getStorageSize, 114/139 _saveTiles, 151 _saveTile call, 230 _saveTile"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileLayerOffline.ts",
+      "sha256": "55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b",
+      "bytes": 2479,
+      "mtime_ns": 1791408503756397101,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/9",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileLayerOffline.ts",
+          "version": "tag v3.2.1",
+          "locator": "lines 17 class, 20 createTile(coords,done), 37 getTileUrl, 61 getTileUrls(bounds,zoom)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileManager.ts",
+      "sha256": "ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23",
+      "bytes": 5819,
+      "mtime_ns": 1791408503462470102,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/8",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileManager.ts",
+          "version": "tag v3.2.1",
+          "locator": "lines 29 openTilesDataBase, 57 getStorageLength, 69 getStorageInfo, 84 downloadTile, 97 saveTile, 192 removeTile, 206 hasTile, 215 truncate"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-tree.json",
+      "sha256": "5e50cae7edf2743fc0dbd47906bd6c160aafc5583b12f2dc196a6fd48b3e325d",
+      "bytes": 23309,
+      "mtime_ns": 1791408493809579739,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "origin": "excluded upstream metadata identities only",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/5271bfe4b4f6e946623fd7f71b6057368f010316",
+          "sha": "5271bfe4b4f6e946623fd7f71b6057368f010316"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/11",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/v3.2.1?recursive=1",
+          "version": "GitHub git/trees API for tag v3.2.1, as captured",
+          "locator": "src/ entries list used to pick the three .ts files above"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/libshumate-file-cache-1.7.0.c",
+      "sha256": "da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea",
+      "bytes": 32823,
+      "mtime_ns": 1791408480923511930,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/6",
+          "url": "https://gitlab.gnome.org/GNOME/libshumate/-/raw/1.7.0/shumate/shumate-file-cache.c",
+          "version": "tag 1.7.0",
+          "locator": "lines 378 new_full(size_limit,cache_dir,cache_key), 455 set_size_limit, 543 mark_up_to_date, 728 purge_cache_async, 803 get_tile_async, 957 store_tile_async"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/mbtiles-1.3-spec.md",
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "bytes": 15807,
+      "mtime_ns": 1791408493611195135,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/7",
+          "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+          "version": "MBTiles spec 1.3 (master branch as captured)",
+          "locator": "S Tiles schema (lines 99-115): tiles(map_zoom_level,map_column,map_row,tile_data); S Metadata (48-59)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osm-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "mtime_ns": 1791408480371509025,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/3",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "OSMF Operations tile policy web page, undated, as captured 2026-10-07",
+          "locator": "clauses: bulk downloading ('scraping') and offline use discouraged; 'cache each tile' recommendation; 'cache headers by default'; link 'Conditional Requests' (MediaWiki API conditional requests); HTTP 409 responses; block/require-app-contact sections"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-networkavailabilitycheck-6.1.20.java",
+      "sha256": "3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06",
+      "bytes": 2846,
+      "mtime_ns": 1791408480755511046,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/5",
+          "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/NetworkAvailabliltyCheck.java",
+          "version": "tag osmdroid-parent-6.1.20",
+          "locator": "line 16 class, 33 getNetworkAvailable, 51 getWiFiNetworkAvailable, 62 getCellularDataNetworkAvailable, 74 getRouteToPathExists"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-sqltilewriter-6.1.20.java",
+      "sha256": "c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6",
+      "bytes": 38315,
+      "mtime_ns": 1791408480567510056,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/4",
+          "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/SqlTileWriter.java",
+          "version": "tag osmdroid-parent-6.1.20",
+          "locator": "line 53 COLUMN_EXPIRES, 56 cleanOnStartup=true, 66 setCleanupOnStart, 102 runCleanupOperation, 128 saveFile(stream, expirationTime), 213/233 purgeCache, 480 getFirstExpiry, 538 getExpirationTimestamp"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc5861-swr-sie.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "mtime_ns": 1791408572867924825,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/2",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861 (May 2010), informational, stable",
+          "locator": "S3 stale-while-revalidate (S3.1 example, line 131); S4 stale-if-error"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9110-http-semantics.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "mtime_ns": 1791408479973506930,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110 (June 2022), stable",
+          "locator": "lines 3362/3480/3570 = S8.8 validators, S8.8.2 Last-Modified, S8.8.3 ETag; S13 conditional requests (If-None-Match S13.1.2, If-Modified-Since S13.1.3, If-Range S13.1.5); line 6308 = S14.1 range units (S14 Range Requests)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9111-http-caching.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "mtime_ns": 1791408479763505825,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111 (June 2022), stable",
+          "locator": "lines 282/581/652/719/784/801/1017 = S3 storing, S4.2 freshness, S4.2.1 freshness lifetime, S4.2.3 Age, S4.2.4 serving stale, S4.3 validation, S4.4 invalidation; S5.2.2.1 max-age (line 1208)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/curl-manpage.html",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "bytes": 465220,
+      "mtime_ns": 1791409512105929161,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/13",
+          "url": "https://curl.se/docs/manpage.html",
+          "version": "curl project man page (curl.se, live page as captured 2026-10-07; documents behavior current as of curl 8.x)",
+          "locator": "line 2764 --retry exponential backoff: first wait 1s then double each retry to a 10-minute fixed cap, --retry-delay disables it; line 2765 Retry-After header compliance (server can override delay) and --retry-max-time total bound; lines 389-392 option index; line 1884 --retry-max-time resets per transfer"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osm-tile-headers-20261007.txt",
+      "sha256": "e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2",
+      "bytes": 794,
+      "mtime_ns": 1791409512195929751,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/14",
+          "url": "https://tile.openstreetmap.org/0/0/0.png",
+          "version": "live HTTP response headers from canonical OSM tile endpoint, as returned 2026-10-07T21:45:12Z",
+          "locator": "line 3 cache-control: max-age=526616, stale-while-revalidate=604800, stale-if-error=604800; line 4 etag \"56a14ed652b78cb85f3bfb98d883ebce\"; line 6 expires; line 12 accept-ranges: bytes; line 15 age: 11504; lines 16-18 varnish CDN x-cache HIT"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osmdroid-maptiledownloader-6.1.20.java",
+      "sha256": "6b8f7c5d7a7dc1d01c00e878667bbe69613fc117f7828b3d9a73d77099a57d07",
+      "bytes": 7901,
+      "mtime_ns": 1791409511256923595,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/12",
+          "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/MapTileDownloader.java",
+          "version": "tag osmdroid-parent-6.1.20",
+          "locator": "line 49 default TileDownloader delegate, 149 TileLoader class, 154 downloadTile(pMapTileIndex, redirectCount, targetUrl), 165 delegates to TileDownloader.downloadTile, 172 loadTile, 197 call with redirectCount=0, 224 setTileDownloader"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/leaflet-offline-TileLayerOffline.ts",
+      "sha256": "55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b",
+      "bytes": 2479,
+      "mtime_ns": 1791410305986613834,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/21",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileLayerOffline.ts",
+          "version": "leaflet.offline tag v3.2.1",
+          "captured_at": "2026-10-07T21:58:25Z",
+          "locator": "createTile line 20; getTileImageSource(storageKey, networkUrl) line 37 resolves stored-first with no age/staleness check; _getStorageKey line 51 (key = resolved tile URL)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/libshumate-file-cache-1.7.0.c",
+      "sha256": "da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea",
+      "bytes": 32823,
+      "mtime_ns": 1791410305525631711,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/18",
+          "url": "https://gitlab.gnome.org/GNOME/libshumate/-/raw/1.7.0/shumate/shumate-file-cache.c",
+          "version": "libshumate tag 1.7.0",
+          "captured_at": "2026-10-07T21:58:25Z",
+          "locator": "size_limit default 100000000 line 356; new_full(size_limit,...) line 378; set_size_limit line 448; mark_up_to_date line 543 (stored freshness update); purge_cache_async line 728 (self-invocation line 1071)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/mbtiles-1.3-spec.md",
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "bytes": 15807,
+      "mtime_ns": 1791410305850633701,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/20",
+          "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+          "version": "MBTiles spec 1.3 (master branch as captured)",
+          "captured_at": "2026-10-07T21:58:25Z",
+          "locator": "S Tiles CREATE TABLE tiles(zoom_level,tile_column,tile_row,tile_data) line 109 - no freshness or retention columns"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/osmdroid-sqltilewriter-6.1.20.java",
+      "sha256": "c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6",
+      "bytes": 38315,
+      "mtime_ns": 1791410305698632770,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/19",
+          "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/SqlTileWriter.java",
+          "version": "osmdroid tag osmdroid-parent-6.1.20",
+          "captured_at": "2026-10-07T21:58:25Z",
+          "locator": "COLUMN_EXPIRES line 53; cleanOnStartup=true line 56; runCleanupOperation line 102; saveFile(source,index,stream,expirationTime) line 128; expiry persisted line 151"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc5861-swr-sie.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "mtime_ns": 1791410304973504271,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/15",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861 (May 2010), informational, stable",
+          "captured_at": "2026-10-07T21:58:24Z",
+          "locator": "S3 stale-while-revalidate heading line 104 (serve stale, refresh in background within window); S4 stale-if-error line 159 (offline fallback)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9110-http-semantics.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "mtime_ns": 1791410305330630518,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/17",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110 (June 2022), stable",
+          "captured_at": "2026-10-07T21:58:25Z",
+          "locator": "S8.8 validator fields line 3362; S8.8.2 Last-Modified line 3480; S8.8.3 ETag line 3570 (validators enable conditional freshness checks behind stale display)"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9111-http-caching.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "mtime_ns": 1791410305133629312,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+          "pointer": "/required_sources/16",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111 (June 2022), stable, obsoletes RFC 7234",
+          "captured_at": "2026-10-07T21:58:24Z",
+          "locator": "S4.2.1 freshness lifetime line 652; S4.2.4 serving stale line 784 (MUST NOT generate stale response lines 790/795, explicit exception for a disconnected cache); S5.2.2.1 max-age line 1208"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/aws-public-confirm.html",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "bytes": 63037,
+      "mtime_ns": 1791413027601841802,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/38",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+          "version": "Live latest page; 2026 opt-in retry behavior",
+          "locator": "Opt-in notice; Standard/Adaptive; Retry quota; server-directed timing"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/12",
+          "url": "https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html",
+          "version": "Live latest page; 2026 opt-in retry behavior",
+          "locator": "Opt-in notice; Standard/Adaptive; Retry quota; server-directed timing"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/aws-sdk-retry-behavior.html.review-text.txt",
+      "sha256": "41e764e6aad63133d80fe905b0b21720153ad106644637d20cb3c3585f3817d3",
+      "bytes": 19776,
+      "mtime_ns": 1791412383924460908,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "locator_limit": "No mechanically extracted direct locator in this finite tranche; consult the exact original authored source maps/indexes. Replay provenance/version may remain incomplete; no source URL invented."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-README.md.review-text.txt",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "bytes": 1970,
+      "mtime_ns": 1791412384040874820,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "same_bytes_locator_references": [
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+            "pointer": "/entries/9",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+            "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+            "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/22",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+            "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+            "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/9",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/9/candidate_metadata",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+            "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+            "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/9",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/leaflet-offline-README.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/9/candidate_metadata",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+            "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+            "locator": "Overview ('still available when you are offline', grep 'offline' x8 verified); Dependencies: idb tile storage ('idb' x2 verified)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/leaflet-offline-README.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+            "pointer": "/entries/6",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+            "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+            "locator": "README overview ('still available when you are offline') and Dependencies (idb: 'To store the tiles with promises'); API list deferred to generated docs, not captured"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/leaflet-offline-README.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/12",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/main/README.md",
+            "version": "allartk/leaflet.offline @ main commit 842d8935f964 (committer date 2026-08-09T17:33:51Z)",
+            "locator": "README overview ('still available when you are offline') and Dependencies (idb: 'To store the tiles with promises'); API list deferred to generated docs, not captured"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-pinned-readme.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+            "pointer": "/29",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/842d8935f964/README.md"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-pinned-readme.md",
+          "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+            "pointer": "/3",
+            "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/842d8935f964/README.md",
+            "version": "842d8935f9640e5e7889301324857e756437dd90",
+            "locator": "README lines 7–14 and 55–61"
+          }
+        }
+      ],
+      "locator_limit": "Original capture has no extracted direct locator; references above describe another explicitly authored capture with the exact same SHA, not proof of this capture provenance. A hash is not reconstruction."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-commit.json",
+      "sha256": "0250de63007f2d33674be54dc1661aa2433c6ba6f27480e766f8fbac859cbfc4",
+      "bytes": 3516,
+      "mtime_ns": 1791412483483885463,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "origin": "excluded upstream metadata identities only",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/git/commits/842d8935f9640e5e7889301324857e756437dd90",
+          "html_url": "https://github.com/allartk/leaflet.offline/commit/842d8935f9640e5e7889301324857e756437dd90",
+          "sha": "842d8935f9640e5e7889301324857e756437dd90"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/27",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/commits/842d8935f964"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/33",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/git/commits/842d8935f9640e5e7889301324857e756437dd90"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/7",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/git/commits/842d8935f9640e5e7889301324857e756437dd90",
+          "version": "842d8935f9640e5e7889301324857e756437dd90",
+          "locator": "JSON $.sha and $.committer.date"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/leaflet-offline-pinned-readme.md",
+      "sha256": "225486ed9ad84242f5a6f1c3ac3cfb3d2ec0870e3f490a1c0a42cbe38140e90a",
+      "bytes": 1970,
+      "mtime_ns": 1791412434334520691,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/29",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/842d8935f964/README.md"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/3",
+          "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/842d8935f964/README.md",
+          "version": "842d8935f9640e5e7889301324857e756437dd90",
+          "locator": "README lines 7–14 and 55–61"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mapbox-current-raster.html",
+      "sha256": "e8a9cc388e4c49546d031c5330cd5aa0b054965e114469f191b2f3185dfe4fad",
+      "bytes": 57884,
+      "mtime_ns": 1791412434249595852,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/31",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/5",
+          "url": "https://docs.mapbox.com/api/maps/raster-tiles/",
+          "version": "Undated Raster Tiles API page captured during review",
+          "locator": "Restrictions and limits / max-age=43200,s-maxage=300; identical to S08"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mapbox-raster-tiles-api.html.review-text.txt",
+      "sha256": "dd5be1be45fd26897a0014fb8ce066363583891d6fceb229832392262b886a2c",
+      "bytes": 5935,
+      "mtime_ns": 1791412384039461546,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "locator_limit": "No mechanically extracted direct locator in this finite tranche; consult the exact original authored source maps/indexes. Replay provenance/version may remain incomplete; no source URL invented."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod-tile-commit.json",
+      "sha256": "78bbb686b9fd28555294c093cc745c7960e1b68fd8c3ed50819ede7ce61f4064",
+      "bytes": 2150,
+      "mtime_ns": 1791412483301339007,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "origin": "excluded upstream metadata identities only",
+          "url": "https://api.github.com/repos/openstreetmap/mod_tile/git/commits/962775a7d4234fc31d31b54239385ecc72ab19df",
+          "html_url": "https://github.com/openstreetmap/mod_tile/commit/962775a7d4234fc31d31b54239385ecc72ab19df",
+          "sha": "962775a7d4234fc31d31b54239385ecc72ab19df"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/26",
+          "url": "https://api.github.com/repos/openstreetmap/mod_tile/commits/962775a7d423"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/32",
+          "url": "https://api.github.com/repos/openstreetmap/mod_tile/git/commits/962775a7d4234fc31d31b54239385ecc72ab19df"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/6",
+          "url": "https://api.github.com/repos/openstreetmap/mod_tile/git/commits/962775a7d4234fc31d31b54239385ecc72ab19df",
+          "version": "962775a7d4234fc31d31b54239385ecc72ab19df",
+          "locator": "JSON $.sha and $.committer.date"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod-tile-pinned-readme.rst",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "bytes": 9248,
+      "mtime_ns": 1791412434333420650,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/28",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/962775a7d423/README.rst"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/2",
+          "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/962775a7d423/README.rst",
+          "version": "962775a7d4234fc31d31b54239385ecc72ab19df",
+          "locator": "README lines 182–232"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod_tile-README.rst.review-text.txt",
+      "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+      "bytes": 9248,
+      "mtime_ns": 1791412384040682199,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "same_bytes_locator_references": [
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+            "pointer": "/entries/8",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+            "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+            "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/21",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+            "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+            "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/8",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/8/candidate_metadata",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+            "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+            "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/8",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/mod_tile-README.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/8/candidate_metadata",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+            "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+            "locator": "Tile expiry / Expires+Last-Modified header sections ('expir' x2 verified); mod_tile/renderd serving behavior"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/mod_tile-README.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+            "pointer": "/entries/5",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+            "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+            "locator": "README sections on tile expiry / Expires+Last-Modified headers and mod_tile/renderd caching behavior (2 'expir' matches)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/mod_tile-README.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/11",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/master/README.rst",
+            "version": "openstreetmap/mod_tile @ master commit 962775a7d423 (committer date 2026-08-21T17:23:55Z)",
+            "locator": "README sections on tile expiry / Expires+Last-Modified headers and mod_tile/renderd caching behavior (2 'expir' matches)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod-tile-pinned-readme.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+            "pointer": "/28",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/962775a7d423/README.rst"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/mod-tile-pinned-readme.rst",
+          "sha256": "c89f49b890461e747bbcdeece94b91f56823ba9a5d627466f17a8ea450e514e8",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+            "pointer": "/2",
+            "url": "https://raw.githubusercontent.com/openstreetmap/mod_tile/962775a7d423/README.rst",
+            "version": "962775a7d4234fc31d31b54239385ecc72ab19df",
+            "locator": "README lines 182–232"
+          }
+        }
+      ],
+      "locator_limit": "Original capture has no extracted direct locator; references above describe another explicitly authored capture with the exact same SHA, not proof of this capture provenance. A hash is not reconstruction."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osm-wiki-slippy-tilenames.html.review-text.txt",
+      "sha256": "557f5e23685ee3e23ce832f5809b83792954647aa89a15351c4d1764feec281d",
+      "bytes": 40567,
+      "mtime_ns": 1791412384032679346,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "locator_limit": "No mechanically extracted direct locator in this finite tranche; consult the exact original authored source maps/indexes. Replay provenance/version may remain incomplete; no source URL invented."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osm-wiki-tile-disk-usage.html.review-text.txt",
+      "sha256": "6ac95cac66b135528a7ae880d110b600ffe2e49c9a68fa79a94e56e5de5c4a82",
+      "bytes": 2781,
+      "mtime_ns": 1791412383914493048,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "locator_limit": "No mechanically extracted direct locator in this finite tranche; consult the exact original authored source maps/indexes. Replay provenance/version may remain incomplete; no source URL invented."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osmf-public-confirm.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "mtime_ns": 1791413027844786320,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/37",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "Live undated policy; review retrieval edition",
+          "locator": "§§3.2,4,9"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/11",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "Live undated policy; review retrieval edition",
+          "locator": "§§3.2,4,9"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/osmf-tile-policy.html.review-text.txt",
+      "sha256": "08a5747702a55cc76106ce8b01d1160f32a257ddbdfe8310c05dcd900443a3c7",
+      "bytes": 9768,
+      "mtime_ns": 1791412383908728630,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "locator_limit": "No mechanically extracted direct locator in this finite tranche; consult the exact original authored source maps/indexes. Replay provenance/version may remain incomplete; no source URL invented."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc5861-public-confirm.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "mtime_ns": 1791413027602919308,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/36",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, Informational, May 2010",
+          "locator": "§§3–4 and header"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/10",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, Informational, May 2010",
+          "locator": "§§3–4 and header"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc5861.txt.review-text.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "mtime_ns": 1791412383896973051,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "same_bytes_locator_references": [
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+            "pointer": "/entries/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, Informational, April 2011",
+            "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/14",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, Informational, April 2011",
+            "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/1/candidate_metadata",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, Informational, April 2011",
+            "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc5861.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/1/candidate_metadata",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, Informational, April 2011",
+            "locator": "Sec 3 stale-while-revalidate (+3.1 example); Sec 4 stale-if-error (+4.1 example); each directive x9 verified"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc5861.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+            "pointer": "/entries/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, Informational, April 2011 (M. Nottingham, Yahoo! Inc.)",
+            "locator": "TOC lines 67-70; §3 stale-while-revalidate (+3.1 example), §4 stale-if-error (+4.1 example)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc5861.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, Informational, April 2011 (M. Nottingham, Yahoo! Inc.)",
+            "locator": "TOC lines 67-70; §3 stale-while-revalidate (+3.1 example), §4 stale-if-error (+4.1 example)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc5861-stale.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+            "pointer": "/entries/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861 (May 2010), Informational",
+            "locator": "Sec 3 (stale-while-revalidate Cache-Control extension: serve stale while async revalidation); Sec 4 (stale-if-error)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc5861-stale.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/7",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861 (May 2010), Informational",
+            "locator": "Sec 3 (stale-while-revalidate Cache-Control extension: serve stale while async revalidation); Sec 4 (stale-if-error)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc5861-swr-sie.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/2",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861 (May 2010), informational, stable",
+            "locator": "S3 stale-while-revalidate (S3.1 example, line 131); S4 stale-if-error"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc5861-swr-sie.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/15",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861 (May 2010), informational, stable",
+            "captured_at": "2026-10-07T21:58:24Z",
+            "locator": "S3 stale-while-revalidate heading line 104 (serve stale, refresh in background within window); S4 stale-if-error line 159 (offline fallback)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc5861-public-confirm.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+            "pointer": "/36",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, Informational, May 2010",
+            "locator": "§§3–4 and header"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc5861-public-confirm.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+            "pointer": "/10",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, Informational, May 2010",
+            "locator": "§§3–4 and header"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc5861-review-capture.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+            "pointer": "/operations/2",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "final_url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+            "version": "RFC 5861, May 2010, Informational; RFC-2119 keyword semantics retained"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc5861-review-capture.txt",
+          "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+            "pointer": "/actual_source_ops/operation_records/2",
+            "url": "https://www.rfc-editor.org/rfc/rfc5861.txt"
+          }
+        }
+      ],
+      "locator_limit": "Original capture has no extracted direct locator; references above describe another explicitly authored capture with the exact same SHA, not proof of this capture provenance. A hash is not reconstruction."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc6585.txt",
+      "sha256": "f6d55d1b491cd515c35827cf9181753b23b2a68c4df14e56d83dc445b3876e58",
+      "bytes": 17164,
+      "mtime_ns": 1791412537558089862,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/34",
+          "url": "https://www.rfc-editor.org/rfc/rfc6585.txt",
+          "version": "RFC 6585, Standards Track, April 2012",
+          "locator": "Section 4: 429 Too Many Requests"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/8",
+          "url": "https://www.rfc-editor.org/rfc/rfc6585.txt",
+          "version": "RFC 6585, Standards Track, April 2012",
+          "locator": "Section 4: 429 Too Many Requests"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9110.txt.review-text.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "mtime_ns": 1791412383898460764,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "same_bytes_locator_references": [
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+            "pointer": "/entries/2",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110, Standards Track, June 2022",
+            "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/15",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110, Standards Track, June 2022",
+            "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/2",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/2/candidate_metadata",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110, Standards Track, June 2022",
+            "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/2",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9110.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/2/candidate_metadata",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110, Standards Track, June 2022",
+            "locator": "Sec 8.8.3 ETag (x30 verified); 10.2.3 Retry-After (x17); 13.1.2 If-None-Match; 13.1.3 If-Modified-Since; 14.2 Range; 15.5.17 416"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9110.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+            "pointer": "/entries/2",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110, Standards Track, June 2022",
+            "locator": "body lines: 3570 §8.8.3 ETag; 4799 §10.2.3 Retry-After; 5872 §13.1.2 If-None-Match; 5942 §13.1.3 If-Modified-Since; 6467 §14.2 Range; 7755 §15.5.17 416 Range Not Satisfiable"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9110.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/2",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110, Standards Track, June 2022",
+            "locator": "body lines: 3570 §8.8.3 ETag; 4799 §10.2.3 Retry-After; 5872 §13.1.2 If-None-Match; 5942 §13.1.3 If-Modified-Since; 6467 §14.2 Range; 7755 §15.5.17 416 Range Not Satisfiable"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9110-http-semantics.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110 (June 2022), stable",
+            "locator": "lines 3362/3480/3570 = S8.8 validators, S8.8.2 Last-Modified, S8.8.3 ETag; S13 conditional requests (If-None-Match S13.1.2, If-Modified-Since S13.1.3, If-Range S13.1.5); line 6308 = S14.1 range units (S14 Range Requests)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9110-http-semantics.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/17",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110 (June 2022), stable",
+            "captured_at": "2026-10-07T21:58:25Z",
+            "locator": "S8.8 validator fields line 3362; S8.8.2 Last-Modified line 3480; S8.8.3 ETag line 3570 (validators enable conditional freshness checks behind stale display)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9110-review-capture.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+            "pointer": "/operations/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "final_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version": "RFC 9110, June 2022, Standards Track"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9110-review-capture.txt",
+          "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+            "pointer": "/actual_source_ops/operation_records/1",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt"
+          }
+        }
+      ],
+      "locator_limit": "Original capture has no extracted direct locator; references above describe another explicitly authored capture with the exact same SHA, not proof of this capture provenance. A hash is not reconstruction."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9111-public-confirm.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "mtime_ns": 1791413027581536310,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/35",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, Standards Track, June 2022",
+          "locator": "§§3–6"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/9",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, Standards Track, June 2022",
+          "locator": "§§3–6"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9111.txt.review-text.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "mtime_ns": 1791412383895922296,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "same_bytes_locator_references": [
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+            "pointer": "/entries/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, Standards Track, June 2022",
+            "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/13",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, Standards Track, June 2022",
+            "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/0/candidate_metadata",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, Standards Track, June 2022",
+            "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/rfc9111.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+            "pointer": "/source_registry/0/candidate_metadata",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, Standards Track, June 2022",
+            "locator": "Sec 4.2 freshness; 4.2.4 serving stale; 4.3 validation; 5.2 Cache-Control incl. 5.2.1.2 max-stale (grep max-stale x9 verified)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9111.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+            "pointer": "/entries/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, Standards Track, June 2022 (R. Fielding/M. Nottingham/J. Reschke, Eds.)",
+            "locator": "body lines: 581 §4.2 Freshness; 784 §4.2.4 Serving Stale Responses; 801 §4.3 Validation; 1081 §5.2 Cache-Control (5.2.1.2 max-stale request dir; 5.2.2.1 max-age response dir); 520 max-age=0 revalidation"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9111.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, Standards Track, June 2022 (R. Fielding/M. Nottingham/J. Reschke, Eds.)",
+            "locator": "body lines: 581 §4.2 Freshness; 784 §4.2.4 Serving Stale Responses; 801 §4.3 Validation; 1081 §5.2 Cache-Control (5.2.1.2 max-stale request dir; 5.2.2.1 max-age response dir); 520 max-age=0 revalidation"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc9111-http-caching.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+            "pointer": "/entries/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111 (June 2022), IETF HTTP semantics: caching",
+            "locator": "Sec 4 (constructing responses / freshness model: Age, fresh vs stale); Sec 5.2 (Cache-Control: max-age, must-revalidate, no-cache, no-store, max-stale); Sec 5.5 (revalidation)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/rfc9111-http-caching.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/6",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111 (June 2022), IETF HTTP semantics: caching",
+            "locator": "Sec 4 (constructing responses / freshness model: Age, fresh vs stale); Sec 5.2 (Cache-Control: max-age, must-revalidate, no-cache, no-store, max-stale); Sec 5.5 (revalidation)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9111-http-caching.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111 (June 2022), stable",
+            "locator": "lines 282/581/652/719/784/801/1017 = S3 storing, S4.2 freshness, S4.2.1 freshness lifetime, S4.2.3 Age, S4.2.4 serving stale, S4.3 validation, S4.4 invalidation; S5.2.2.1 max-age (line 1208)"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9111-http-caching.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+            "pointer": "/required_sources/16",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111 (June 2022), stable, obsoletes RFC 7234",
+            "captured_at": "2026-10-07T21:58:24Z",
+            "locator": "S4.2.1 freshness lifetime line 652; S4.2.4 serving stale line 784 (MUST NOT generate stale response lines 790/795, explicit exception for a disconnected cache); S5.2.2.1 max-age line 1208"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9111-public-confirm.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+            "pointer": "/35",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, Standards Track, June 2022",
+            "locator": "§§3–6"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/rfc9111-public-confirm.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+            "pointer": "/9",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, Standards Track, June 2022",
+            "locator": "§§3–6"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9111-review-capture.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+            "pointer": "/operations/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "final_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version": "RFC 9111, June 2022, Standards Track, obsoletes RFC 7234"
+          }
+        },
+        {
+          "raw_identity_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9111-review-capture.txt",
+          "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+          "source_locator_record": {
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+            "pointer": "/actual_source_ops/operation_records/0",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt"
+          }
+        }
+      ],
+      "locator_limit": "Original capture has no extracted direct locator; references above describe another explicitly authored capture with the exact same SHA, not proof of this capture provenance. A hash is not reconstruction."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/web-primary-open-result.json",
+      "sha256": "449257cd3982b978929a789c00458061fdbcb0db12a912df9c2ca550e1da5733",
+      "bytes": 32906,
+      "mtime_ns": 1791413028014478573,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [],
+      "locator_limit": "No mechanically extracted direct locator in this finite tranche; consult the exact original authored source maps/indexes. Replay provenance/version may remain incomplete; no source URL invented."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/wiki-rendering-revision.html",
+      "sha256": "20d2e48260c5618ce2f6c714d43b5ad10c9391c7d287c0b0e79519f25e3130ee",
+      "bytes": 17160,
+      "mtime_ns": 1791412434659472491,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+          "pointer": "/30",
+          "url": "https://wiki.openstreetmap.org/w/index.php?title=Servers/Tile_Rendering&oldid=3082592"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+          "pointer": "/4",
+          "url": "https://wiki.openstreetmap.org/w/index.php?title=Servers/Tile_Rendering&oldid=3082592",
+          "version": "Requested Servers/Tile_Rendering revision 3082592",
+          "locator": "HTTP403 result only"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/curl-manpage-review-capture.html",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "bytes": 465220,
+      "mtime_ns": 1791412499453166959,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+          "pointer": "/operations/4",
+          "url": "https://curl.se/docs/manpage.html",
+          "final_url": "https://curl.se/docs/manpage.html",
+          "version": "curl 8.23.0 explicitly declared by held and matched page"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/4",
+          "url": "https://curl.se/docs/manpage.html"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/leaflet-tag-tree-review.json",
+      "sha256": "ad08322790f477df18adb98ba6eeaf002f3097e646b6a3d85fa5b406081d47a0",
+      "bytes": 18842,
+      "mtime_ns": 1791412543231430532,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "origin": "excluded upstream metadata identities only",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/5271bfe4b4f6e946623fd7f71b6057368f010316",
+          "sha": "5271bfe4b4f6e946623fd7f71b6057368f010316"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/version-provenance-checks.json",
+          "pointer": "/0",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/v3.2.1?recursive=1",
+          "final_url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/v3.2.1?recursive=1",
+          "version": "leaflet.offline tag v3.2.1"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/5",
+          "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/v3.2.1?recursive=1"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/libshumate-tag-tree-review.json",
+      "sha256": "4149af24eb28918a143bf14c263b83b435794ef06e79443c88e3be6ce46bf774",
+      "bytes": 13055,
+      "mtime_ns": 1791412543204858358,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/version-provenance-checks.json",
+          "pointer": "/2",
+          "url": "https://gitlab.gnome.org/api/v4/projects/GNOME%2Flibshumate/repository/tree?ref=1.7.0&path=shumate&per_page=100",
+          "final_url": "https://gitlab.gnome.org/api/v4/projects/GNOME%2Flibshumate/repository/tree?ref=1.7.0&path=shumate&per_page=100",
+          "version": "libshumate tag 1.7.0"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/7",
+          "url": "https://gitlab.gnome.org/api/v4/projects/GNOME%2Flibshumate/repository/tree?ref=1.7.0&path=shumate&per_page=100"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/mbtiles-1.3-review-capture.md",
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "bytes": 15807,
+      "mtime_ns": 1791412580690988542,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/mbtiles-provenance-check.json",
+          "pointer": "",
+          "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+          "version": "MBTiles 1.3 document on moving master, title independently read",
+          "final_url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/8",
+          "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/osm-policy-review-capture.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "mtime_ns": 1791412499629443534,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+          "pointer": "/operations/3",
+          "url": "https://operations.osmfoundation.org/policies/tiles/",
+          "final_url": "https://operations.osmfoundation.org/policies/tiles/",
+          "version": "OSMF standard-raster tile usage policy, live undated page, captured by reviewer"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/3",
+          "url": "https://operations.osmfoundation.org/policies/tiles/"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/osmdroid-tag-tree-review.json",
+      "sha256": "3032540c1d3cac8edf8990ad2fe73afdc368c376f14a0c4fe4a6ae0b60654e5b",
+      "bytes": 476365,
+      "mtime_ns": 1791412543280430763,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "origin": "excluded upstream metadata identities only",
+          "url": "https://api.github.com/repos/osmdroid/osmdroid/git/trees/1fe84bdc8f58c0f06c9ac3e806a8109822f93c13",
+          "sha": "1fe84bdc8f58c0f06c9ac3e806a8109822f93c13"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/version-provenance-checks.json",
+          "pointer": "/1",
+          "url": "https://api.github.com/repos/osmdroid/osmdroid/git/trees/osmdroid-parent-6.1.20?recursive=1",
+          "final_url": "https://api.github.com/repos/osmdroid/osmdroid/git/trees/osmdroid-parent-6.1.20?recursive=1",
+          "version": "osmdroid tag osmdroid-parent-6.1.20"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/6",
+          "url": "https://api.github.com/repos/osmdroid/osmdroid/git/trees/osmdroid-parent-6.1.20?recursive=1"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc5861-review-capture.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359,
+      "mtime_ns": 1791412499382126850,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+          "pointer": "/operations/2",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "final_url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+          "version": "RFC 5861, May 2010, Informational; RFC-2119 keyword semantics retained"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/2",
+          "url": "https://www.rfc-editor.org/rfc/rfc5861.txt"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9110-review-capture.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "mtime_ns": 1791412499400358216,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+          "pointer": "/operations/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "final_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+          "version": "RFC 9110, June 2022, Standards Track"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/1",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.txt"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/rfc9111-review-capture.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "mtime_ns": 1791412499412671003,
+      "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+          "pointer": "/operations/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "final_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+          "version": "RFC 9111, June 2022, Standards Track, obsoletes RFC 7234"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+          "pointer": "/actual_source_ops/operation_records/0",
+          "url": "https://www.rfc-editor.org/rfc/rfc9111.txt"
+        }
+      ]
+    }
+  ],
+  "raw_GitHub_tree_identity_only": {
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/publication-batch008-remote-tree-v1.json",
+    "sha256": "9fff63f1cc243bfefa3ece7a832b9822fec950757b8d62af5c0c4c9d18b50c7e",
+    "bytes": 2034721,
+    "publication": "IDENTITY_ONLY_NOT_DUPLICATED",
+    "qualified_remote_verification_receipt": "state/publication-batch008.json"
+  },
+  "prior_identity_records": [
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH004_VERIFICATION.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH004_VERIFICATION.json",
+      "sha256": "d14831d3e99e1572181ae2891882589692d6c4033dcaf5605ddf71294da79614",
+      "bytes": 1308273,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH004_ABSENCES_AND_DEFERRALS.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH004_ABSENCES_AND_DEFERRALS.json",
+      "sha256": "d004159356eb08a9f566ce1252731ba689a334e26e519d648838e6332ebddd29",
+      "bytes": 108129,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH004_RAW_SOURCE_IDENTITIES.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH004_RAW_SOURCE_IDENTITIES.json",
+      "sha256": "8fedf804df06d5eca4293685d0701792b006adad158f64404aa50b2637537696",
+      "bytes": 204959,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH005_VERIFICATION.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH005_VERIFICATION.json",
+      "sha256": "93a98162a0f48802521decadcfa986661f82b18c47473c2b0feddd5465b1a0ba",
+      "bytes": 1639681,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH005_ABSENCES_AND_DEFERRALS.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH005_ABSENCES_AND_DEFERRALS.json",
+      "sha256": "b8cc134d146839ccb6e2425c58ce377448638417a82c00c86329e3269cca1208",
+      "bytes": 4180,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH005_RAW_SOURCE_IDENTITIES.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH005_RAW_SOURCE_IDENTITIES.json",
+      "sha256": "1cc60b02adbdf6eaecc15b2162e8b193cbe3c0d263413e7776ab43b84f1d49ab",
+      "bytes": 150385,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH006_VERIFICATION.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH006_VERIFICATION.json",
+      "sha256": "3ac44a62a91375f9ed4bd27993ff76032595ee95b1ae283d3fb4280af7daa514",
+      "bytes": 4664598,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH006_ABSENCES_AND_DEFERRALS.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH006_ABSENCES_AND_DEFERRALS.json",
+      "sha256": "8bc0b3cb3fc35e5e29bee99bfae78e7d4a11480a5d0cfe08ade03d40cd2a1b5d",
+      "bytes": 54975,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH006_RAW_SOURCE_IDENTITIES.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH006_RAW_SOURCE_IDENTITIES.json",
+      "sha256": "bded471e799c2a283f7027e6018bd3334a6bc4926370eb5835a76d5237c696db",
+      "bytes": 1919982,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH007_VERIFICATION.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH007_VERIFICATION.json",
+      "sha256": "efd5d06e54c96d5ad18ab11ef3e9197e96e0902e15c7fc4ec158baf2fae174f8",
+      "bytes": 5229256,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH007_ABSENCES_AND_DEFERRALS.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH007_ABSENCES_AND_DEFERRALS.json",
+      "sha256": "6310090057c03a23de6b325ba5c7b2ab73026ee8344466b44569efabcc0d66ef",
+      "bytes": 4993,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH007_RAW_SOURCE_IDENTITIES.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH007_RAW_SOURCE_IDENTITIES.json",
+      "sha256": "81622e2c5cb0a27b1733963e60d193774471d8f53e926488d821f3ad0ac9ce95",
+      "bytes": 3439745,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH008_VERIFICATION.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH008_VERIFICATION.json",
+      "sha256": "26832db3bb29e60f8beaa95de6a044fc8ba6d268062451032c4f93975863ee76",
+      "bytes": 14127314,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH008_ABSENCES_AND_DEFERRALS.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH008_ABSENCES_AND_DEFERRALS.json",
+      "sha256": "2d3061a35109ab6b1d095a66245cc6e7805f15dcbd1957563c89a773fe7be580",
+      "bytes": 84414,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH008_RAW_SOURCE_IDENTITIES.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH008_RAW_SOURCE_IDENTITIES.json",
+      "sha256": "983d89f6aaff5c99da72f3a37cbc36e29cfe49a9ee0c6f203c7908a006351fd8",
+      "bytes": 5723551,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    },
+    {
+      "original_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007/BATCH008_HELD_WITNESS_METADATA.json",
+      "target_path": "reports/external-research-v10-20261007/BATCH008_HELD_WITNESS_METADATA.json",
+      "sha256": "8525740e47d4f8c59474c7a7854172a634577e24543bc3a4a9ebbb5c450c2433",
+      "bytes": 6909,
+      "reference_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53"
+    }
+  ],
+  "approved_public_quote_exception": "helpers/final-report/slint-8877-minimal-witness-root-v1.json ONLY; 22 attributed words/171 UTF8 bytes",
+  "CISA_and_Slint_HTML_private_fragments_excluded": true,
+  "archive_created": false,
+  "raw_source_cleanup_executed": false,
+  "limitations": "SHA/byte/range/tool identities do not reconstruct absent source bodies. Precise original authored source maps/checks retain locators and source/replay limits. No sources refetched and no scientific checks repaired."
+}

@@ -1,0 +1,150 @@
+{
+  "schema": "ER10-batch009-finite-tranche-v1",
+  "fixed_cutoff": "2026-10-07T23:07:08.817044+00:00",
+  "campaign_complete": false,
+  "cohort4_original_aggregate": {
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/COMPARISONS.json",
+    "original_sha256": "387c096e199aa7b40e8d19cd346d22d9f33458eb5118741d01648ae78d325766",
+    "original_bytes": 49609,
+    "target_path": "reports/external-research-v10-20261007/batch009-frozen-originals/helpers/targeted-cohort4/COMPARISONS.json",
+    "target_sha256": "387c096e199aa7b40e8d19cd346d22d9f33458eb5118741d01648ae78d325766",
+    "target_bytes": 49609,
+    "source_kind": "AUTHORED_RESULT_PROTOCOL_OR_RECEIPT",
+    "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+    "disposition": "NEW_EXACT_COPY",
+    "reference_commit": null,
+    "prior_manifest": null,
+    "original_symlink_target": null,
+    "selection_mtime_ns": 1791413175670100457,
+    "selection_mtime_utc": "2026-10-07T22:46:15.670100+00:00",
+    "json_parse_status": "PARSEABLE",
+    "protocol_only": false
+  },
+  "M16_exact_original_comparison": {
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M16-A/comparison-v3.json",
+    "original_sha256": "e1f938e52cae8c1b7a6e6b80269b47c0dd7ea00a6bad11bc3798a4b758780702",
+    "original_bytes": 66828,
+    "target_path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/comparison-v3.json",
+    "target_sha256": "e1f938e52cae8c1b7a6e6b80269b47c0dd7ea00a6bad11bc3798a4b758780702",
+    "target_bytes": 66828,
+    "source_kind": "AUTHORED_RESULT_PROTOCOL_OR_RECEIPT",
+    "why": "explicit CLOSED final M16 all seven candidate stages, original independent reviews and complete six-case Cohort4 history; no regrade",
+    "disposition": "NEW_EXACT_COPY",
+    "reference_commit": null,
+    "prior_manifest": null,
+    "original_symlink_target": null,
+    "selection_mtime_ns": 1791413157448460502,
+    "selection_mtime_utc": "2026-10-07T22:45:57.448461+00:00",
+    "json_parse_status": "PARSEABLE",
+    "protocol_only": false
+  },
+  "cohort4_six_case_original_versions": [
+    {
+      "case_id": "D-M11-A",
+      "original": {
+        "status": "ASSESSED_NO_QUALITY_PRESERVING_WIN",
+        "review_status": "BOTH_SCIENCE_FROZEN_TREATMENT_LIFECYCLE_INCOMPLETE",
+        "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M11-A/comparison-v1.json",
+        "disposition": null,
+        "economics": null
+      }
+    },
+    {
+      "case_id": "D-M12-A",
+      "original": {
+        "status": "ASSESSED_NO_QUALITY_PRESERVING_WIN",
+        "review_status": "BOTH_FULL_SCOPE_FAIL_COMPLETED_QUIET",
+        "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/comparison-v3.json",
+        "disposition": null,
+        "economics": null
+      }
+    },
+    {
+      "case_id": "D-M13-A",
+      "original": {
+        "status": "ASSESSED_NO_QUALITY_PRESERVING_WIN",
+        "review_status": "BOTH_SCIENCE_FROZEN_CONTROL_REVIEW_OUT_OF_BOUND",
+        "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M13-A/comparison-v2.json",
+        "disposition": null,
+        "economics": null
+      }
+    },
+    {
+      "case_id": "D-M14-A",
+      "original": {
+        "status": "ASSESSED_NO_QUALITY_PRESERVING_WIN",
+        "review_status": "BOTH_FULL_SCOPE_FAIL_COMPLETED_QUIET",
+        "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/comparison-v3.json",
+        "disposition": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/paired-v2-disposition.json",
+        "economics": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json"
+      }
+    },
+    {
+      "case_id": "D-M15-A",
+      "original": {
+        "status": "ASSESSED_NO_QUALITY_PRESERVING_WIN",
+        "review_status": "BOTH_FULL_SCOPE_FAIL_COMPLETED_QUIET",
+        "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M15-A/comparison-v3.json",
+        "disposition": null,
+        "economics": null
+      }
+    },
+    {
+      "case_id": "D-M16-A",
+      "original": {
+        "status": "ASSESSED_NO_QUALITY_PRESERVING_WIN",
+        "review_status": "CONTROL_FULL_SCOPE_FAIL_TREATMENT_DIAGNOSTIC_FAIL_PROVENANCE_REMAINDER",
+        "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M16-A/comparison-v3.json",
+        "disposition": "NO_QUALITY_PRESERVING_WIN_DEMONSTRATED",
+        "economics": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M16-A/comparison-v3.json"
+      }
+    }
+  ],
+  "required_count_and_claim_boundaries": {
+    "same_logical_slots": 40,
+    "same_logical_arms": 80,
+    "Cohort4_complete_dispositions": 6,
+    "M16_candidate_stage_count": 7,
+    "M16_original_control_grade": "FAIL",
+    "M16_original_treatment_grade": "DIAGNOSTIC_FAIL",
+    "M16_original_material_defects_each_arm": 6,
+    "M16_treatment_final_stage_overrun_seconds": 133.343585,
+    "M16_full_SourcePASS": false,
+    "quality_preserving_win": false,
+    "native_goal_times_distinct_from_T3_times": true,
+    "adapter_snapshot_closed_slots": 35,
+    "adapter_snapshot_held_live_slots": 5,
+    "adapter_declared_candidate_finals": 68,
+    "adapter_missing_finals": 2,
+    "adapter_unopened_finals": 10,
+    "adapter_paired_scientific_dispositions": 32,
+    "adapter_root_checks": 36,
+    "adapter_root_cells": 4845,
+    "adapter_root_unknown_fields": 598,
+    "adapter_incomplete_not_campaign_final_counts": true,
+    "unknown_coverage_delivery_not_failed_or_unassessed": true,
+    "confirmation_dispositions": 4,
+    "confirmation_delivered_paired_assessments": 3,
+    "confirmation_both_full_pairs": 1,
+    "confirmation_qualified_wins": 0,
+    "C01_original0_newNULL_distinct": true,
+    "C02_O1_remainder_C03_nativeBLOCKED_comparativeHOLD_unchanged": true,
+    "integrated_attempt_dispositions": 11,
+    "integrated_full_paired_science_pairs": 7,
+    "integrated_full_paired_science_arms": 14,
+    "integrated_standalone_science_arms": 2,
+    "integrated_original_METHOD_FAST_logical_slots": 9,
+    "standalone_diagnostic_paired_credit": 0,
+    "M07A_native_completed_original_ACTIVE_missing_HOLD_science_UNASSESSED": true,
+    "private_archive_created": false,
+    "source_cache_cleanup_executed": false,
+    "only_executed_duplicate_staging_cleanup": {
+      "at": "2026-10-07T22:49:24.349660+00:00",
+      "publication_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53",
+      "publication_batch008_verified": true,
+      "batch008_duplicate_bytes_removed": 48183951,
+      "all_B2_to_B8_verified_duplicate_staging_bytes_removed": 108898663,
+      "original_science_unchanged": true
+    }
+  }
+}

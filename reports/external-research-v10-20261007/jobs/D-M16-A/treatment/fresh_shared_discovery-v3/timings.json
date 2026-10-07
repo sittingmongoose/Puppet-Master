@@ -1,0 +1,54 @@
+{
+  "schema": "pm.er10.stage-timings.v1",
+  "case_id": "D-M16-A",
+  "stage": "treatment/fresh_shared_discovery-v3",
+  "common_T0_utc": "2026-10-07T21:21:56.716615+00:00",
+  "prospective_admission_utc": "2026-10-07T21:22:08.542239+00:00",
+  "stage_latest_absolute_deadline_utc": "2026-10-07T21:41:56.716615+00:00",
+  "common_pair_deadline_utc": "2026-10-07T22:41:56.716615+00:00",
+  "recorded_at_utc": "2026-10-07T21:35:47Z",
+  "actual_source_ops": {
+    "input_ingest_start_utc": "2026-10-07T21:22:20Z",
+    "input_ingest_done_utc": "2026-10-07T21:24:55Z",
+    "first_network_fetch_start_utc": "2026-10-07T21:27:59Z",
+    "last_network_fetch_end_utc": "2026-10-07T21:29:32Z",
+    "fetch_count": 11,
+    "retries_or_404s": 1,
+    "index_built_verified_utc": "2026-10-07T21:31:15Z",
+    "report_authored_utc": "2026-10-07T21:34:17Z"
+  },
+  "capture": {
+    "first_capture_utc": "2026-10-07T21:27:59Z",
+    "last_capture_utc": "2026-10-07T21:29:32Z",
+    "files_captured": 12,
+    "method": "curl raw bytes; no code executed, no tile-server probes"
+  },
+  "first_useful_saved_finding_utc": "2026-10-07T21:31:15Z",
+  "first_useful_saved_finding_note": "index.json first saved with per-entry mechanism leads and positive/negative/optional discovery leads (skip-existing resume vs byte-range; OSMF bulk prohibition; unbounded-stale display risk).",
+  "output": {
+    "report_md_utc": "2026-10-07T21:34:17Z",
+    "sources_index_json_utc": "2026-10-07T21:31:15Z",
+    "timings_json_utc": "2026-10-07T21:35:47Z",
+    "final": true,
+    "post_terminal_amendments": "none planned or permitted; scientific outputs frozen as of the timestamps above",
+    "host_written_files_present": ["integration-state-active.json", "passive-active-capture-cost.json", "passive-active.json", "dispatch.json", "dispatch-receipt.json", "dispatch-request.json"]
+  },
+  "known_usage": {
+    "input_tokens": null,
+    "cache_read_tokens": null,
+    "cache_write_tokens": null,
+    "generated_tokens": null,
+    "billing": null,
+    "note": "input/cache/generated/billing unknown to the worker; host-recorded only"
+  },
+  "native_counters_distinct": {
+    "native_goals": 1,
+    "goal_note": "one fresh installed native Goal pre-created by dispatch; no second Goal, no Goal tools touched",
+    "worker_rounds": 4,
+    "verification_passes": 3,
+    "network_fetch_ops": 11,
+    "sources_captured": 12,
+    "material_findings": 8
+  },
+  "scope_notes_scratch": "/tmp/fsd3-scope-notes.md (worker scratch, outside deliverable, removed at finalization)"
+}

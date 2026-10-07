@@ -1,0 +1,124 @@
+{
+  "schema": "ER10-owned-stage-freeze-v3",
+  "frozen_at": "2026-10-07T21:39:29.881541+00:00",
+  "case_id": "D-M16-A",
+  "arm": "control",
+  "stage": "topic1_independent",
+  "version": "v3",
+  "native_disposition": "complete",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "science_assessment": "UNASSESSED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/INPUT_MAP.json",
+      "sha256": "f1baba355be0ac8dfd2b23401eb3d59f99621002b7bdfa493530a0afa76dedd5",
+      "bytes": 1728
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/admission-timing.json",
+      "sha256": "58f32cff6ab709a415f6cf28d793a3658727c6f62ba8c5a4b5a1c1994e333c98",
+      "bytes": 270
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/assignment.md",
+      "sha256": "abd88143aa5ce827e72e3540f438e3263de7915dc8d05681f6e530f8252f22cd",
+      "bytes": 3958
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/dispatch-receipt.json",
+      "sha256": "49a4a874c006095aad002cc34772bc82f88a3e1cc4a51233594c5533c14ce50d",
+      "bytes": 1075
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/dispatch-request.json",
+      "sha256": "35eb5bb961e3ca92f720fd3c8de5645e3e04e7fe929c697c16b0483bea426800",
+      "bytes": 665
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/dispatch.json",
+      "sha256": "47ea769d33c630c8894f6dd8d4d48116a3fc3b28b55253c78e7a89797504d6ac",
+      "bytes": 1486
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/integration-state-active.json",
+      "sha256": "1fe128b62cbb7e02c37d2f6ebb4bca41176770a002add31b03b7376320a0c430",
+      "bytes": 6661
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/integration-state-terminal.json",
+      "sha256": "f2fab2ff719e8115c713be75e5d0e2f675db02d47e0a75b0891ce3045e9985b7",
+      "bytes": 5313
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/passive-active-capture-cost.json",
+      "sha256": "bcfb84978089184a70cbc46be2aec42151180edbb8283505a35b0b2f0a0f8dba",
+      "bytes": 1284
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/passive-active.json",
+      "sha256": "3a45dd2763229cfdb30a8303421e7ea1f1bf4aef7d283bbfa8a751dbfdd811eb",
+      "bytes": 17368
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/passive-terminal-capture-cost.json",
+      "sha256": "fe12763f300da1e56dda83f0b7595484f006c27fab540a586fda6f3de02953f6",
+      "bytes": 1285
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/passive-terminal.json",
+      "sha256": "d38c2f9ad3f21b2417d50a66f0a2e1db2febb335603946d598d3f67f1a4f4a6d",
+      "bytes": 20723
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/report.md",
+      "sha256": "ae67b0e85ea7ef7a0775046fc8cf724642940e52f71ba00392ae9d3c4571d230",
+      "bytes": 8058
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/aws-sdk-retry-behavior.html",
+      "sha256": "9f5a207310f50d7335e1a528ab197126a908df26f01a7a9b18ef3b6f4ac89beb",
+      "bytes": 63037
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+      "sha256": "2931b7baab7992a031c109476fb2bd16e9b0bcb4f10ab7381f6ecaa4a46139f5",
+      "bytes": 4791
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/osm-wiki-tile-disk-usage.html",
+      "sha256": "783efe16dbed27f3c637ea5e81fa3a997c74d82275066219df1b28a82376af9f",
+      "bytes": 24578
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/osmf-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc5861.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "bytes": 10359
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/task-terminal.json",
+      "sha256": "9a43d547a2ec6d1facc12e1bc0ca9c38252cba5120df6b048532002a75a640d9",
+      "bytes": 2109
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/timings.json",
+      "sha256": "e8b17c8fcc82ecdf5fdadd683521b8a688ab6803f847e6c4720dd738a19b5a63",
+      "bytes": 2099
+    }
+  ]
+}

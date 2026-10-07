@@ -1,0 +1,96 @@
+{
+  "schema": "pm.er10.stage-timings.v1",
+  "stage": "fresh_bundle_join_final-v3",
+  "case_id": "D-M16-A",
+  "common_T0": "2026-10-07T21:21:56.716615+00:00",
+  "latest_absolute_deadline": "2026-10-07T22:41:56.716615+00:00",
+  "admission": {
+    "prospective_admitted_at": "2026-10-07T22:08:23.543415+00:00",
+    "stage_deadline": "2026-10-07T22:28:23.543415+00:00",
+    "source": "admission-timing.json (host-written per frozen rule)",
+    "note": "goal-loop rounds ran past the 22:28:23 stage allowance into the 22:41:56 common hard deadline; counter-part waiting/handoff costs included in round latency, no reset applied or claimed"
+  },
+  "source_ops": [
+    {
+      "op": "ingest allowed inputs (brief, manifest, 2 predecessor reports, 2 source indices, admission-timing)",
+      "completed": "2026-10-07T22:12:51Z",
+      "evidence": "ingest-notes.md mtime 22:12:51.995937Z"
+    },
+    {
+      "op": "hash+size verification of 10 predecessor source bytes",
+      "completed": "2026-10-07T22:12:51Z",
+      "evidence": "same round as ingest-notes.md; all 10 OK"
+    },
+    {
+      "op": "28 locator spot-checks against predecessor-frozen bytes",
+      "completed": "2026-10-07T22:20:24Z",
+      "evidence": "spotcheck.md mtime 22:20:24.056011Z"
+    }
+  ],
+  "captures": [
+    {
+      "file": "sources/osm-tile-headers-probe2-20261007.txt",
+      "at": "2026-10-07T22:15:39.383762Z",
+      "kind": "single-URL header re-probe, body discarded"
+    },
+    {
+      "file": "sources/osmdroid-networkavailabliltycheck-6.1.20.java",
+      "at": "2026-10-07T22:16:16.078993Z",
+      "kind": "primary code fetch"
+    },
+    {
+      "file": "sources/leaflet-offline-TileManager-v3.2.1.ts",
+      "at": "2026-10-07T22:16:16.091877Z",
+      "kind": "primary code fetch"
+    },
+    {
+      "file": "sources/leaflet-offline-ControlSaveTiles-v3.2.1.ts",
+      "at": "2026-10-07T22:16:16.086479Z",
+      "kind": "primary code fetch"
+    },
+    {
+      "file": "sources/osmf-tile-policy-20261007.html",
+      "at": "2026-10-07T22:16:16.374994Z",
+      "kind": "primary policy page fetch"
+    },
+    {
+      "file": "sources/index.json + sources/index_hashes.txt",
+      "at": "2026-10-07T22:19:52.985866Z",
+      "kind": "index + hash manifest written; sha256sum -c all OK"
+    }
+  ],
+  "first_useful_saved_finding": {
+    "at": "2026-10-07T22:20:24.056011Z",
+    "finding": "Predecessor claim 'MapTileDownloader contains no retry/backoff' refuted by its own frozen bytes: UrlBackoff import (L14), field (L47), shouldWait/next gates (L194/199) \u2014 saved in spotcheck.md and amended into final.md Finding 2"
+  },
+  "output": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/final.md",
+    "first_authored": "2026-10-07T22:23:12Z",
+    "finished": "2026-10-07T22:26:45.599716Z",
+    "sha256": "621792100eb67a49b91bcbcad3dda405487862811a7081d4b4a98c4f536bad67",
+    "first_authored_note": "acceptance-checked at 1238 words before trim",
+    "finished_note": "final trim pass; 1119 words, 8 findings, all obligation strings present"
+  },
+  "known_usage": "no downstream consumption observed; deliverable delivered only to the assignment's declared output path for evaluation",
+  "unknown": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "billing": null
+  },
+  "native_counters": {
+    "note": "host/dispatch counters recorded verbatim and distinct from worker-measured timestamps above; snapshot as read 2026-10-07T22:28:18Z",
+    "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+    "child_thread_id": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+    "child_run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3:ordinal:1",
+    "child_node_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+    "provider_instance": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "receipt_status_at_read": "running / workState working (host snapshot; terminal confirmation owned by dispatch loop, no worker steering)"
+  },
+  "goal_terminal": {
+    "worker_side": "complete \u2014 final.md, sources/, index.json, index_hashes.txt, spotcheck.md, ingest-notes.md delivered; no further writes to scientific outputs after this timings record",
+    "freeze_check": "sha256 of final.md recomputed after this record is written and compared to output.sha256 (no amendment after terminal)",
+    "harness_side": "actual Goal terminal is declared by the dispatch loop on receipt of this stage's final report; per assignment, no second Goal, no receipt/ticket engineering, no routine worker steers"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "observed_at": "2026-10-07T21:26:41.890947+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_07ffeb21-feca-4c13-be88-fddcae047d1c/state.json",
+  "actual_state": {
+    "objective": "Complete D-M16-A/control/topic1_independent-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "running",
+    "rounds": 1,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "Ingest allowed inputs and timing gates",
+        "acceptance": "Read /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/INPUT_MAP.json and admission-timing.json, then ONLY the original brief/manifest plus predecessor reports/indices/source bytes it lists (no sibling answer, counterpart, v1/v2, evaluator, campaign or shared-inventory files); verify `ls <job>/INPUT_MAP.json <job>/admission-timing.json` and that every path opened appears among INPUT_MAP.json's listings",
+        "status": "done"
+      },
+      {
+        "id": "t2",
+        "title": "Capture primary sources for both topics",
+        "acceptance": "Fetch public primary docs/code \u2014 acquisition/refresh (RFC 9111 caching, ETag/If-Modified-Since conditional GET, Range/resumable download, Retry-After/backoff under intermittent links, OSM tile usage policy) and stale display/retention (max-age/stale-while-revalidate/stale-if-error, revalidation, retention bounds) \u2014 saving raw bytes under <job>/sources/ with index.json entries carrying url/version/capture/sha256/locator/limits; verify with a python3 one-liner that every index entry has all six fields and each recomputed sha256 matches its stored file",
+        "status": "pending"
+      },
+      {
+        "id": "t3",
+        "title": "Synthesize dispositions, shared dependencies, uncertainties",
+        "acceptance": "Draft separate dispositions for (a) acquisition vs refresh and (b) stale display vs retention, identify shared tile identity/freshness dependencies and reuse-invalidation mechanisms, preserve topic-specific unknowns rather than letting shared evidence settle both, cap at 8 distinct material findings with discriminating checks; verify the draft has all four disposition sections, a shared-dependencies section, and <=8 findings",
+        "status": "pending"
+      },
+      {
+        "id": "t4",
+        "title": "Author final report.md",
+        "acceptance": "Write <job>/report.md as the bounded topic comparison covering all 6 obligations, accepted/amended/rejected/unresolved dispositions, proposed vs actually-executed validation, retained conditions/uncertainties/negative results/optional leads, soft <=1100 words; verify `wc -w <job>/report.md` and `grep -c` per obligation/disposition heading",
+        "status": "pending"
+      },
+      {
+        "id": "t5",
+        "title": "Deliver timings.json and terminal state",
+        "acceptance": "Write <job>/timings.json with actual source ops/capture/first-useful-saved-finding/output/known-usage timestamps (null for unknown inputs/cache/generated/billing, native counters distinct), touch nothing after terminal outputs, at deadline save/deliver existing work only; verify `cat <job>/timings.json` has required keys and `ls <job>/report.md <job>/sources/index.json`, then end on actual Goal terminal",
+        "status": "pending"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791408160429,
+    "updatedAt": 1791408360587
+  },
+  "source_sha256": "8b8cb9559ce11aea5df74af2879ef31c9c6b62ab9d30f741ef55dc677f9caf03",
+  "source": {
+    "kind": "unique exact owned root nomination and current exact state read",
+    "nomination": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/m16-native-active-root-nominations-v1.json",
+    "nomination_sha256": "dd587f941815ba6be39b81148acd29cb29ec46d2cf2e8cf3c3d1c210c4b5e930",
+    "root_observed_source_sha256": "a7e6bc07c3a2be535c7118dfb4b6e718301aba176b10cf8d844e6b9ce00c58ef"
+  },
+  "separate_actual_config_binding": {
+    "target": {
+      "providerInstanceId": "zcode",
+      "driverKind": "acpRegistry",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": {
+        "thought": "max",
+        "mode": "yolo"
+      }
+    },
+    "dispatch": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/dispatch.json",
+    "dispatch_sha256": "47ea769d33c630c8894f6dd8d4d48116a3fc3b28b55253c78e7a89797504d6ac",
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-topic1_independent-v3",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-topic1_independent-v3",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-control-topic1_independent-v3:ordinal:1"
+  },
+  "limitation": "Installed driver proof only; null native Goal/session IDs remain unknown. No vendor backend or ACP mapping inferred."
+}

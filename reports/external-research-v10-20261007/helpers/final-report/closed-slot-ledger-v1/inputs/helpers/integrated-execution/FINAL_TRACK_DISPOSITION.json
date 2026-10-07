@@ -1,0 +1,69 @@
+{
+  "schema": "er10.integrated-final-coverage-v1",
+  "record_at": "2026-10-07T22:16:33.521716+00:00",
+  "scope": "Sole integrated owner, six original METHODS plus two final authorized retests and three locked FAST cases; root heldouts untouched",
+  "owned_tasks": {
+    "complete_terminal_dispositions": 79,
+    "quiet_without_pending_children": 79,
+    "active": 0,
+    "raw_actual_status_audit": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/final-owned-task-quiet-audit-v1.json"
+  },
+  "original_method_attempts": {
+    "terminal_dispositions": 6,
+    "full_final_native_pair_gates": 4,
+    "full_source_assessed_pairs": 4,
+    "full_source_assessed_arms": 8,
+    "infrastructure_HOLD_pairs_with_both_final_scope_unassessed": 2
+  },
+  "last_authorized_retests": {
+    "METHOD02v2": "paired_HOLD/control_final_UNASSESSED; separate full treatment diagnostic FAIL2",
+    "METHOD04v2": "both_fullscope_PASS_WITH_LIMITATIONS/0material_each",
+    "paired_full_source_assessed_pairs": 1,
+    "paired_full_source_assessed_arms": 2
+  },
+  "locked_speed_cases": {
+    "terminal_pair_dispositions": 3,
+    "full_final_native_pair_gates": 2,
+    "full_source_assessed_pairs": 2,
+    "full_source_assessed_arms": 4,
+    "paired_infrastructure_HOLD": 1,
+    "FAST01": "originalpairedHOLD/controlUNASSESSED; separate full treatment diagnostic PASS_WITH_LIMITATIONS",
+    "FAST02": "controlFAIL2/treatmentFAIL1",
+    "FAST03": "controlPASS_WITH_LIMITATIONS0material/treatmentFAIL2"
+  },
+  "separate_root_authorized_standalone_diagnostics": {
+    "full_scope_assessed_arms": 2,
+    "FAST01treatment": "PASS_WITH_LIMITATIONS0material",
+    "METHOD02v2treatment": "FAIL2material",
+    "matched_comparison_credit": false
+  },
+  "total_evaluation_coverage": {
+    "paired_full_science_assessed_pairs": 7,
+    "paired_full_science_assessed_arms": 14,
+    "separate_full_science_assessed_standalone_arms": 2,
+    "paired_infrastructure_HOLD_attempts": 4,
+    "complete_owned_pair_attempt_dispositions": 11,
+    "no_exhaustive_opportunity_recall": true
+  },
+  "source_quality_preserving_speed_win_established": false,
+  "economic_limits": "Per-stage actual native aggregate counters unsummed; distinct input/cache/generated/reasoning/billing remain unknown null when not exposed. Failed original attempts retained; renderer454.372s known prep lowerbound and unknowncold/amortized wall/billing retained. No missing-output wins or regrades.",
+  "method_complete": true,
+  "speed_complete": true,
+  "integrated_complete": true,
+  "status_correction_annotations": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-01-control-independent-review-v1",
+      "previous_local_status": "running",
+      "actual_terminal_status": "completed",
+      "annotation": "Final actual status audit correction; immutable original freezes/grades unchanged."
+    },
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%3Adelegate-task%3Aer10-I-METHOD-01-treatment-independent-review-v1",
+      "previous_local_status": "running",
+      "actual_terminal_status": "completed",
+      "annotation": "Final actual status audit correction; immutable original freezes/grades unchanged."
+    }
+  ],
+  "FAST03_disposition": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/fast03-pair-disposition-v1.json",
+  "COMPARISONS": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/COMPARISONS.json"
+}

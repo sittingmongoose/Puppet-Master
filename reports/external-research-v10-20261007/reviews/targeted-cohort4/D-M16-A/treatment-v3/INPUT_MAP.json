@@ -1,0 +1,494 @@
+{
+  "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/brief.md",
+  "original_source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/sources.json",
+  "required_sources": [
+    {
+      "id": "rfc9111-http-caching",
+      "file": "rfc9111-http-caching.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version": "RFC 9111 (June 2022), stable",
+      "capture": "2026-10-07T21:27:59Z",
+      "bytes": 84477,
+      "hash": "sha256:aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "locator": "lines 282/581/652/719/784/801/1017 = S3 storing, S4.2 freshness, S4.2.1 freshness lifetime, S4.2.3 Age, S4.2.4 serving stale, S4.3 validation, S4.4 invalidation; S5.2.2.1 max-age (line 1208)",
+      "limits": "IETF full text; stable spec; obsoletes RFC 7234; read-only capture, not executed",
+      "topic_binding": [
+        "shared"
+      ],
+      "mechanism_lead": "Core freshness/validation/invalidation model both topics reuse: explicit max-age or heuristic freshness, conditional revalidation, invalidation on recognized unsafe methods",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9111-http-caching.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+    },
+    {
+      "id": "rfc9110-http-semantics",
+      "file": "rfc9110-http-semantics.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110 (June 2022), stable",
+      "capture": "2026-10-07T21:27:59Z",
+      "bytes": 502941,
+      "hash": "sha256:21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "locator": "lines 3362/3480/3570 = S8.8 validators, S8.8.2 Last-Modified, S8.8.3 ETag; S13 conditional requests (If-None-Match S13.1.2, If-Modified-Since S13.1.3, If-Range S13.1.5); line 6308 = S14.1 range units (S14 Range Requests)",
+      "limits": "IETF full text (~503KB); stable spec; read-only capture",
+      "topic_binding": [
+        "shared",
+        "topic1"
+      ],
+      "mechanism_lead": "Shared identity = URL+validators (ETag/Last-Modified) enable cheap refresh checks; S14 byte-range machinery exists but no captured tile client uses it for tiles",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc9110-http-semantics.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+    },
+    {
+      "id": "rfc5861-swr-sie",
+      "file": "rfc5861-swr-sie.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+      "version": "RFC 5861 (May 2010), informational, stable",
+      "capture": "2026-10-07T21:29:32Z",
+      "bytes": 10359,
+      "hash": "sha256:1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "locator": "S3 stale-while-revalidate (S3.1 example, line 131); S4 stale-if-error",
+      "limits": "IETF full text; informational status (cache-hit window bounds not normatively required); read-only capture",
+      "topic_binding": [
+        "topic2",
+        "topic1-optional"
+      ],
+      "mechanism_lead": "Serve stale while background revalidation (topic2 display), stale-if-error as offline fallback (topic1 intermittent links)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/rfc5861-swr-sie.txt",
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e"
+    },
+    {
+      "id": "osm-tile-policy",
+      "file": "osm-tile-policy.html",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "version": "OSMF Operations tile policy web page, undated, as captured 2026-10-07",
+      "capture": "2026-10-07T21:28:00Z",
+      "bytes": 18563,
+      "hash": "sha256:43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "locator": "clauses: bulk downloading ('scraping') and offline use discouraged; 'cache each tile' recommendation; 'cache headers by default'; link 'Conditional Requests' (MediaWiki API conditional requests); HTTP 409 responses; block/require-app-contact sections",
+      "limits": "Dynamic web page, may change any time; capture frozen by hash; no version header exists",
+      "topic_binding": [
+        "topic1",
+        "shared"
+      ],
+      "mechanism_lead": "Negative lead: bulk acquisition/mirroring prohibited \u2014 acquisition must be bounded per-view; refresh expected via conditional requests honoring cache headers",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osm-tile-policy.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2"
+    },
+    {
+      "id": "osmdroid-sqltilewriter-6.1.20",
+      "file": "osmdroid-sqltilewriter-6.1.20.java",
+      "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/SqlTileWriter.java",
+      "version": "tag osmdroid-parent-6.1.20",
+      "capture": "2026-10-07T21:28:00Z",
+      "bytes": 38315,
+      "hash": "sha256:c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6",
+      "locator": "line 53 COLUMN_EXPIRES, 56 cleanOnStartup=true, 66 setCleanupOnStart, 102 runCleanupOperation, 128 saveFile(stream, expirationTime), 213/233 purgeCache, 480 getFirstExpiry, 538 getExpirationTimestamp",
+      "limits": "Apache-2.0 per repo (not re-verified in capture); single file, full class captured",
+      "topic_binding": [
+        "topic2",
+        "topic1"
+      ],
+      "mechanism_lead": "Retention: per-tile expires timestamp + startup/purge cleanup by expiry (topic2); saveFile keyed by tilesource+index skip/overwrite (topic1 resume primitive)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-sqltilewriter-6.1.20.java",
+      "sha256": "c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6"
+    },
+    {
+      "id": "osmdroid-networkavailabilitycheck-6.1.20",
+      "file": "osmdroid-networkavailabilitycheck-6.1.20.java",
+      "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/NetworkAvailabliltyCheck.java",
+      "version": "tag osmdroid-parent-6.1.20",
+      "capture": "2026-10-07T21:28:00Z",
+      "bytes": 2846,
+      "hash": "sha256:3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06",
+      "locator": "line 16 class, 33 getNetworkAvailable, 51 getWiFiNetworkAvailable, 62 getCellularDataNetworkAvailable, 74 getRouteToPathExists",
+      "limits": "Apache-2.0 per repo; single file; filename typo 'Availablilty' is upstream",
+      "topic_binding": [
+        "topic1"
+      ],
+      "mechanism_lead": "Intermittent-link gating: provider checks connectivity before issuing tile downloads; no backoff/hysteresis in this file (uncertainty)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/osmdroid-networkavailabilitycheck-6.1.20.java",
+      "sha256": "3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06"
+    },
+    {
+      "id": "libshumate-file-cache-1.7.0",
+      "file": "libshumate-file-cache-1.7.0.c",
+      "url": "https://gitlab.gnome.org/GNOME/libshumate/-/raw/1.7.0/shumate/shumate-file-cache.c",
+      "version": "tag 1.7.0",
+      "capture": "2026-10-07T21:28:00Z",
+      "bytes": 32823,
+      "hash": "sha256:da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea",
+      "locator": "lines 378 new_full(size_limit,cache_dir,cache_key), 455 set_size_limit, 543 mark_up_to_date, 728 purge_cache_async, 803 get_tile_async, 957 store_tile_async",
+      "limits": "LGPL-2.1+ per file header; single file, full class captured",
+      "topic_binding": [
+        "topic2",
+        "topic1-optional"
+      ],
+      "mechanism_lead": "Retention: size_limit-capped cache with async purge (evict by rank/age) \u2014 bounded retention policy; mark_up_to_date refreshes stored freshness",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/libshumate-file-cache-1.7.0.c",
+      "sha256": "da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea"
+    },
+    {
+      "id": "mbtiles-1.3-spec",
+      "file": "mbtiles-1.3-spec.md",
+      "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+      "version": "MBTiles spec 1.3 (master branch as captured)",
+      "capture": "2026-10-07T21:28:13Z",
+      "bytes": 15807,
+      "hash": "sha256:e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "locator": "S Tiles schema (lines 99-115): tiles(map_zoom_level,map_column,map_row,tile_data); S Metadata (48-59)",
+      "limits": "spec text; master branch may move; capture frozen by hash",
+      "topic_binding": [
+        "shared"
+      ],
+      "mechanism_lead": "Shared tile identity = (z,x,y) (+tilesource); flat-key store; no built-in freshness/retention fields in 1.3 (uncertainty: freshness must be added out-of-band)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/mbtiles-1.3-spec.md",
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d"
+    },
+    {
+      "id": "leaflet-offline-TileManager",
+      "file": "leaflet-offline-TileManager.ts",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileManager.ts",
+      "version": "tag v3.2.1",
+      "capture": "2026-10-07T21:28:23Z",
+      "bytes": 5819,
+      "hash": "sha256:ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23",
+      "locator": "lines 29 openTilesDataBase, 57 getStorageLength, 69 getStorageInfo, 84 downloadTile, 97 saveTile, 192 removeTile, 206 hasTile, 215 truncate",
+      "limits": "license per repo (not re-verified); single file; IndexedDB storage assumed",
+      "topic_binding": [
+        "topic1"
+      ],
+      "mechanism_lead": "Resumable acquisition: downloadTile returns Blob per tile; saveTile persists keyed by URL; hasTile lets a restarted session skip already-stored tiles (resume by skip-existing, no byte-range)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileManager.ts",
+      "sha256": "ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23"
+    },
+    {
+      "id": "leaflet-offline-TileLayerOffline",
+      "file": "leaflet-offline-TileLayerOffline.ts",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileLayerOffline.ts",
+      "version": "tag v3.2.1",
+      "capture": "2026-10-07T21:28:23Z",
+      "bytes": 2479,
+      "hash": "sha256:55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b",
+      "locator": "lines 17 class, 20 createTile(coords,done), 37 getTileUrl, 61 getTileUrls(bounds,zoom)",
+      "limits": "license per repo; single file",
+      "topic_binding": [
+        "topic2",
+        "topic1"
+      ],
+      "mechanism_lead": "Display side: createTile serves stored tile if present else online \u2014 stored-first display, no staleness age-check in this file (uncertainty: no refresh trigger on display)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-TileLayerOffline.ts",
+      "sha256": "55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b"
+    },
+    {
+      "id": "leaflet-offline-ControlSaveTiles",
+      "file": "leaflet-offline-ControlSaveTiles.ts",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/ControlSaveTiles.ts",
+      "version": "tag v3.2.1",
+      "capture": "2026-10-07T21:28:24Z",
+      "bytes": 6625,
+      "hash": "sha256:3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c",
+      "locator": "lines 95 getStorageSize, 114/139 _saveTiles, 151 _saveTile call, 230 _saveTile",
+      "limits": "license per repo; single file",
+      "topic_binding": [
+        "topic1"
+      ],
+      "mechanism_lead": "Bounded acquisition driver: computes tile list for viewport/zooms then per-tile _saveTile loop; retriable per tile; no global queue persistence across reloads (uncertainty)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-ControlSaveTiles.ts",
+      "sha256": "3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c"
+    },
+    {
+      "id": "leaflet-offline-tree",
+      "file": "leaflet-offline-tree.json",
+      "url": "https://api.github.com/repos/allartk/leaflet.offline/git/trees/v3.2.1?recursive=1",
+      "version": "GitHub git/trees API for tag v3.2.1, as captured",
+      "capture": "2026-10-07T21:28:13Z",
+      "bytes": 23309,
+      "hash": "sha256:5e50cae7edf2743fc0dbd47906bd6c160aafc5583b12f2dc196a6fd48b3e325d",
+      "locator": "src/ entries list used to pick the three .ts files above",
+      "limits": "API JSON provenance record for the v3.2.1 file set; rate-limited endpoint; capture frozen by hash",
+      "topic_binding": [
+        "provenance"
+      ],
+      "mechanism_lead": "Provenance only: pins which upstream files exist at the captured tag",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/leaflet-offline-tree.json",
+      "sha256": "5e50cae7edf2743fc0dbd47906bd6c160aafc5583b12f2dc196a6fd48b3e325d"
+    },
+    {
+      "id": "osmdroid-maptiledownloader-6.1.20",
+      "file": "osmdroid-maptiledownloader-6.1.20.java",
+      "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/MapTileDownloader.java",
+      "version": "tag osmdroid-parent-6.1.20",
+      "capture": "2026-10-07T21:45:04Z",
+      "bytes": 7901,
+      "hash": "sha256:6b8f7c5d7a7dc1d01c00e878667bbe69613fc117f7828b3d9a73d77099a57d07",
+      "locator": "line 49 default TileDownloader delegate, 149 TileLoader class, 154 downloadTile(pMapTileIndex, redirectCount, targetUrl), 165 delegates to TileDownloader.downloadTile, 172 loadTile, 197 call with redirectCount=0, 224 setTileDownloader",
+      "limits": "Apache-2.0 per repo (not re-verified); single file, full class captured; read-only, not executed",
+      "topic_binding": [
+        "topic1"
+      ],
+      "mechanism_lead": "Per-tile download path is redirect-aware (redirectCount, CantContinueException) but contains no retry/backoff keywords: failure handling stays per-tile and viewer/provider-owned \u2014 independently checked for topic 1 (extends predecessor NetworkAvailabliltyCheck negative lead to the downloader itself)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osmdroid-maptiledownloader-6.1.20.java",
+      "sha256": "6b8f7c5d7a7dc1d01c00e878667bbe69613fc117f7828b3d9a73d77099a57d07"
+    },
+    {
+      "id": "curl-manpage",
+      "file": "curl-manpage.html",
+      "url": "https://curl.se/docs/manpage.html",
+      "version": "curl project man page (curl.se, live page as captured 2026-10-07; documents behavior current as of curl 8.x)",
+      "capture": "2026-10-07T21:45:05Z",
+      "bytes": 465220,
+      "hash": "sha256:0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "locator": "line 2764 --retry exponential backoff: first wait 1s then double each retry to a 10-minute fixed cap, --retry-delay disables it; line 2765 Retry-After header compliance (server can override delay) and --retry-max-time total bound; lines 389-392 option index; line 1884 --retry-max-time resets per transfer",
+      "limits": "Dynamic web page (project site), may change; capture frozen by hash; no version header exists; HTML whole-page capture; read-only",
+      "topic_binding": [
+        "topic1"
+      ],
+      "mechanism_lead": "Public primary doc for viewer-owned retry policy under intermittent links: standard transient-error retry = exponential backoff capped at 10 min, server Retry-After honored, total retry time bounded \u2014 the backoff shape osmdroid's captured code lacks",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/curl-manpage.html",
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d"
+    },
+    {
+      "id": "osm-tile-headers-20261007",
+      "file": "osm-tile-headers-20261007.txt",
+      "url": "https://tile.openstreetmap.org/0/0/0.png",
+      "version": "live HTTP response headers from canonical OSM tile endpoint, as returned 2026-10-07T21:45:12Z",
+      "capture": "2026-10-07T21:45:12Z",
+      "bytes": 794,
+      "hash": "sha256:e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2",
+      "locator": "line 3 cache-control: max-age=526616, stale-while-revalidate=604800, stale-if-error=604800; line 4 etag \"56a14ed652b78cb85f3bfb98d883ebce\"; line 6 expires; line 12 accept-ranges: bytes; line 15 age: 11504; lines 16-18 varnish CDN x-cache HIT",
+      "limits": "SINGLE bounded request, one URL, no bulk; policy-compliant UA sent; headers are dynamic (CDN node, max-age, age vary per node/time) so capture is evidence for this source class at capture time only, frozen by hash; response body discarded, nothing executed",
+      "topic_binding": [
+        "topic1",
+        "shared"
+      ],
+      "mechanism_lead": "Directly tests predecessor topic-1 uncertainty 'per-source validator/max-age emission unverified': the canonical OSM source DOES emit ETag + max-age + RFC 5861 stale-while-revalidate/stale-if-error directives, and advertises accept-ranges: bytes (byte-range support exists server-side even though no captured client uses it)",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/osm-tile-headers-20261007.txt",
+      "sha256": "e4c9329a58234b1959e87b6149acd3b4de717eb6f8df632e405313df01b52bf2"
+    },
+    {
+      "id": "rfc5861-swr-sie",
+      "file": "rfc5861-swr-sie.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc5861.txt",
+      "version": "RFC 5861 (May 2010), informational, stable",
+      "captured_at": "2026-10-07T21:58:24Z",
+      "bytes": 10359,
+      "locator": "S3 stale-while-revalidate heading line 104 (serve stale, refresh in background within window); S4 stale-if-error line 159 (offline fallback)",
+      "limits": "IETF full text; informational status - window bounds not normative; read-only capture, not executed",
+      "topic_binding": [
+        "topic2",
+        "topic1-optional"
+      ],
+      "sha256": "1193f1c8710af162e1b9fb4250d79bc6dd26497df4caeeaaa8bcb2fefdd2529e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc5861-swr-sie.txt"
+    },
+    {
+      "id": "rfc9111-http-caching",
+      "file": "rfc9111-http-caching.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version": "RFC 9111 (June 2022), stable, obsoletes RFC 7234",
+      "captured_at": "2026-10-07T21:58:24Z",
+      "bytes": 84477,
+      "locator": "S4.2.1 freshness lifetime line 652; S4.2.4 serving stale line 784 (MUST NOT generate stale response lines 790/795, explicit exception for a disconnected cache); S5.2.2.1 max-age line 1208",
+      "limits": "IETF full text; stable spec; read-only capture, not executed",
+      "topic_binding": [
+        "shared",
+        "topic2"
+      ],
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9111-http-caching.txt"
+    },
+    {
+      "id": "rfc9110-http-semantics",
+      "file": "rfc9110-http-semantics.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110 (June 2022), stable",
+      "captured_at": "2026-10-07T21:58:25Z",
+      "bytes": 502941,
+      "locator": "S8.8 validator fields line 3362; S8.8.2 Last-Modified line 3480; S8.8.3 ETag line 3570 (validators enable conditional freshness checks behind stale display)",
+      "limits": "IETF full text (~503KB); stable spec; read-only capture, not executed",
+      "topic_binding": [
+        "shared"
+      ],
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/rfc9110-http-semantics.txt"
+    },
+    {
+      "id": "libshumate-file-cache-1.7.0",
+      "file": "libshumate-file-cache-1.7.0.c",
+      "url": "https://gitlab.gnome.org/GNOME/libshumate/-/raw/1.7.0/shumate/shumate-file-cache.c",
+      "version": "libshumate tag 1.7.0",
+      "captured_at": "2026-10-07T21:58:25Z",
+      "bytes": 32823,
+      "locator": "size_limit default 100000000 line 356; new_full(size_limit,...) line 378; set_size_limit line 448; mark_up_to_date line 543 (stored freshness update); purge_cache_async line 728 (self-invocation line 1071)",
+      "limits": "LGPL-2.1+ per file header (not re-verified in capture); single file; read-only capture, not executed",
+      "topic_binding": [
+        "topic2"
+      ],
+      "sha256": "da1a4771500ec81d78b7b2cdfe38646d2ff57762d1f203e5f29ff785915039ea",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/libshumate-file-cache-1.7.0.c"
+    },
+    {
+      "id": "osmdroid-sqltilewriter-6.1.20",
+      "file": "osmdroid-sqltilewriter-6.1.20.java",
+      "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/SqlTileWriter.java",
+      "version": "osmdroid tag osmdroid-parent-6.1.20",
+      "captured_at": "2026-10-07T21:58:25Z",
+      "bytes": 38315,
+      "locator": "COLUMN_EXPIRES line 53; cleanOnStartup=true line 56; runCleanupOperation line 102; saveFile(source,index,stream,expirationTime) line 128; expiry persisted line 151",
+      "limits": "Apache-2.0 per repo (not re-verified in capture); single file; read-only capture, not executed",
+      "topic_binding": [
+        "topic2",
+        "topic1"
+      ],
+      "sha256": "c1b92a4f629542792dd24811cc0c16e6da7cc31bf9fb8fea9ecc5c58007699c6",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/osmdroid-sqltilewriter-6.1.20.java"
+    },
+    {
+      "id": "mbtiles-1.3-spec",
+      "file": "mbtiles-1.3-spec.md",
+      "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+      "version": "MBTiles spec 1.3 (master branch as captured)",
+      "captured_at": "2026-10-07T21:58:25Z",
+      "bytes": 15807,
+      "locator": "S Tiles CREATE TABLE tiles(zoom_level,tile_column,tile_row,tile_data) line 109 - no freshness or retention columns",
+      "limits": "spec text; master branch may move; capture frozen by hash; read-only",
+      "topic_binding": [
+        "shared",
+        "topic2"
+      ],
+      "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/mbtiles-1.3-spec.md"
+    },
+    {
+      "id": "leaflet-offline-TileLayerOffline",
+      "file": "leaflet-offline-TileLayerOffline.ts",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileLayerOffline.ts",
+      "version": "leaflet.offline tag v3.2.1",
+      "captured_at": "2026-10-07T21:58:25Z",
+      "bytes": 2479,
+      "locator": "createTile line 20; getTileImageSource(storageKey, networkUrl) line 37 resolves stored-first with no age/staleness check; _getStorageKey line 51 (key = resolved tile URL)",
+      "limits": "license per repo (not re-verified); single file; read-only capture, not executed",
+      "topic_binding": [
+        "topic2"
+      ],
+      "sha256": "55ec6317ff2ec4ef2197b2d1eefed9e0bff05fc9d0ce047dacf5978e179d8b3b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/leaflet-offline-TileLayerOffline.ts"
+    },
+    {
+      "id": "osm-tile-headers-probe2-20261007",
+      "file": "osm-tile-headers-probe2-20261007.txt",
+      "url": "https://tile.openstreetmap.org/0/0/0.png",
+      "version": "live HTTP response headers from canonical OSM tile endpoint, as returned 2026-10-07T22:15:39Z",
+      "capture": "2026-10-07T22:15:39Z",
+      "locator": "line 8 x-blocked: Access denied (policy pointer https://operations.osmfoundation.org/policies/tiles/); line 4 cache-control: no-cache; line 3 retry-after: 0; line 9 accept-ranges: bytes; lines 13-14 varnish HIT",
+      "limits": "SINGLE bounded request, body discarded, nothing executed; response differs from predecessor OSMH capture (21:45Z: etag+max-age+stale-while-revalidate) \u2014 this probe returned an access-denied/no-cache variant, evidencing per-request/per-client header variation under the endpoint's policy gating",
+      "topic_binding": [
+        "topic1",
+        "topic2",
+        "shared"
+      ],
+      "mechanism_lead": "Independent re-check of the amended claim 'per-source header variation': variation is real and can go all the way to validators/max-age being withheld behind access gating \u2014 the header-absent fallback (time-based re-download) must be the designed default path",
+      "hash": "sha256:45e1dfafe270826209cf19de207c64817a4b9a0cccbf6a286240015d98e714c7",
+      "bytes": 544,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osm-tile-headers-probe2-20261007.txt",
+      "sha256": "45e1dfafe270826209cf19de207c64817a4b9a0cccbf6a286240015d98e714c7"
+    },
+    {
+      "id": "osmf-tile-policy-20261007",
+      "file": "osmf-tile-policy-20261007.html",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "version": "OSMF tile usage policy page, current as captured 2026-10-07T22:16Z",
+      "capture": "2026-10-07T22:16:00Z",
+      "locator": "line 75 'Bulk download (\"scrape\") tiles or offer prefetch features' (prohibited); line 51 heavy/inappropriate use may be blocked; lines 66/117 valid identifying User-Agent required; line 79 UA masquerading prohibited",
+      "limits": "project web page, may change; frozen by hash; read-only; converts predecessor inherited citation [OSMP] into independently held bytes",
+      "topic_binding": [
+        "topic1"
+      ],
+      "mechanism_lead": "Confirms the bulk-acquisition prohibition and adds the enforcement fact that blocking happens in practice (see probe2) \u2014 the viewer's acquisition bounds are policy-required, not optional",
+      "hash": "sha256:43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2",
+      "bytes": 18563,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osmf-tile-policy-20261007.html",
+      "sha256": "43eb4ea02cb38e1e1cc7df34f39d5e8b32202d2302f46935600c19c7f85d5ef2"
+    },
+    {
+      "id": "osmdroid-networkavailabliltycheck-6.1.20",
+      "file": "osmdroid-networkavailabliltycheck-6.1.20.java",
+      "url": "https://raw.githubusercontent.com/osmdroid/osmdroid/osmdroid-parent-6.1.20/osmdroid-android/src/main/java/org/osmdroid/tileprovider/modules/NetworkAvailabliltyCheck.java",
+      "version": "tag osmdroid-parent-6.1.20",
+      "capture": "2026-10-07T22:16:00Z",
+      "locator": "line 16 class implements INetworkAvailabliltyCheck; line 33 getNetworkAvailable(); lines 51/62 wifi/cellular variants; whole-file negative check: no retry/backoff/sleep keywords",
+      "limits": "Apache-2.0 per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citation [OSN:33] into independently held bytes",
+      "topic_binding": [
+        "topic1"
+      ],
+      "mechanism_lead": "Connectivity gating in osmdroid is pure state polling with no backoff \u2014 confirms the [OSN] half of the predecessor negative lead (the [MTD] half is REFUTED, see spotcheck.md)",
+      "hash": "sha256:3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06",
+      "bytes": 2846,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/osmdroid-networkavailabliltycheck-6.1.20.java",
+      "sha256": "3a1e67db9a0230ebe4e123dd031e5eaf89c41917465a9b3d5ea1c611f280ff06"
+    },
+    {
+      "id": "leaflet-offline-ControlSaveTiles-v3.2.1",
+      "file": "leaflet-offline-ControlSaveTiles-v3.2.1.ts",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/ControlSaveTiles.ts",
+      "version": "leaflet.offline tag v3.2.1",
+      "capture": "2026-10-07T22:16:00Z",
+      "locator": "line 139 _saveTiles(); line 190 this.options.bounds || this._map.getBounds() (computed viewport list); lines 15/17 imports saveTile/hasTile",
+      "limits": "license per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citation [LO-CS:139] into independently held bytes",
+      "topic_binding": [
+        "topic1"
+      ],
+      "mechanism_lead": "Viewport/session-bounded tile-list computation confirmed at the exact cited line \u2014 the compliant bounded-acquisition pattern OSMF policy implies",
+      "hash": "sha256:3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c",
+      "bytes": 6625,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/leaflet-offline-ControlSaveTiles-v3.2.1.ts",
+      "sha256": "3ff2ec26433c5156d4362c03b1b69a2c7c2b2007a7dd067edbb046510eab911c"
+    },
+    {
+      "id": "leaflet-offline-TileManager-v3.2.1",
+      "file": "leaflet-offline-TileManager-v3.2.1.ts",
+      "url": "https://raw.githubusercontent.com/allartk/leaflet.offline/v3.2.1/src/TileManager.ts",
+      "version": "leaflet.offline tag v3.2.1",
+      "capture": "2026-10-07T22:16:00Z",
+      "locator": "line 84 downloadTile(tileUrl); line 97 saveTile(...); line 206 hasTile(key); line 220 const shouldUseUrl = !(await hasTile(key)) \u2014 skip-existing on hit",
+      "limits": "license per repo (not re-verified); single file; read-only, not executed; converts predecessor inherited citations [LO-TM:84,97,206] into independently held bytes",
+      "topic_binding": [
+        "topic1",
+        "topic2"
+      ],
+      "mechanism_lead": "Per-tile download\u2192save keyed by resolved URL with hasTile skip confirmed at the exact cited lines \u2014 the resume unit is the tile, not the byte range",
+      "hash": "sha256:ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23",
+      "bytes": 5819,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/leaflet-offline-TileManager-v3.2.1.ts",
+      "sha256": "ef245aa489eba8be7786e4770b7661bac689f63dbfb307000afa9334b5043b23"
+    }
+  ],
+  "arm_source_indices": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/index.json",
+      "sha256": "941a2b92014494aecb42ce3d6c7bf1ea9c5bb664c4ff1e73d3e614f91807b5ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/index.json",
+      "sha256": "a2ab6afd1c77df1ef0d87369fd42921ff08271ff65749b6df1936e19f02a4972"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/index.json",
+      "sha256": "f9573c86dd5facb3985efdec9d720234e29c644973c0d08ae121cddc87131ff2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/index.json",
+      "sha256": "09bd12f8975a2ab3ec3bfcb745bdb1efa72db06c2f3f9d9646b78bd8b5af2aaa"
+    }
+  ],
+  "frozen_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/final.md",
+  "frozen_output_sha256": "621792100eb67a49b91bcbcad3dda405487862811a7081d4b4a98c4f536bad67",
+  "obligations": [
+    "Give a separate disposition for acquisition and refresh.",
+    "Give a separate disposition for stale display and retention.",
+    "Identify shared identity/freshness dependencies and reuse invalidation.",
+    "Preserve topic-specific uncertainties instead of assuming shared evidence settles both.",
+    "Return at most eight distinct material findings across the bundle.",
+    "Deliver a bounded topic comparison and discriminating checks, counting shared discovery and synthesis."
+  ],
+  "scope_limit": "Only originalbrief, sources/captureindices, THIS exactfrozenfinal; no candidatesdrafts/timing/otherarm/history/reviews/campaign/helpers. Method/path visible blindinglimit; advisory scope not filesystemfirewall."
+}

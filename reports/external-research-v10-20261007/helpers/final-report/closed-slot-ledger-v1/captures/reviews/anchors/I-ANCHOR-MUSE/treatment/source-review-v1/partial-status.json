@@ -1,0 +1,1159 @@
+{
+  "status": "PARTIAL_STOPPED_FOR_PROTOCOL_REPAIR",
+  "stopped_on_explicit_user_instruction": true,
+  "reason": "User states counterpart candidate work is still scored and requires deferral of independent review until both arms' final artifacts and native terminal receipts are frozen.",
+  "review_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1",
+  "review_artifact": "PARTIAL.md",
+  "grade_issued": false,
+  "source_correctness": null,
+  "planning_usefulness": null,
+  "breadth": null,
+  "completeness": null,
+  "grade_scope": "Partial observations only; no completed full-scope review, no failed-screen grade, no final scientific result.",
+  "requested_target": {
+    "provider": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "runtime_information_limits": "Developer runtime identifies gpt-6.1-sol/xhigh. No provider changes made and no native receipts or provider/billing records inspected to verify provider/tier.",
+  "input_read_scope": {
+    "read_in_full": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-MUSE/brief.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-MUSE/plan.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/critique.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/sources/SOURCES.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/research-v1/sources/SOURCES.md"
+    ],
+    "allowed_supplied_evidence_read": [
+      "critic-finalizer-v1/sources/bagit-v190-validate-excerpt.txt"
+    ],
+    "instructions_read": [
+      "Injected user/global T3 and project instructions",
+      "Current workspace AGENTS.md",
+      "Required Plans/00-plans-index.md opening 110 lines (not a review source; no application to frozen sandbox)"
+    ],
+    "instructions_search": "Explicit known ancestor AGENTS paths and ~/.codex/AGENTS.md checked; no further ancestor instructions returned."
+  },
+  "assessed_scope": [
+    {
+      "id": "OBS-BAGIT-VALIDATOR",
+      "candidate_locations": [
+        "final \u00a73",
+        "final \u00a74",
+        "critique K1\u2013K3"
+      ],
+      "source_files": [
+        "bagit-v190.py.txt",
+        "bagit-v190-immutable.py.txt",
+        "bagit-v181.py.txt",
+        "bagit-v181-immutable.py.txt"
+      ],
+      "locators": [
+        "v1.9.0 bagit.py L128\u2013131: default algorithms and 512 KiB block size",
+        "L586\u2013604: validate entrypoint",
+        "L758\u2013776: validate_fetch accepts file scheme without netloc, URL syntax check only",
+        "L778\u2013837: unconditional oxum check, fast return, absent-oxum return, mismatch exception",
+        "L839\u2013908: completeness and per-algorithm mismatch checks",
+        "L1111\u20131148 and L1374\u20131402: hashes updated from one read stream",
+        "L1453\u20131477 and L1544\u20131577: CLI help, flag guards, dispatch/reporting"
+      ],
+      "observed": "The shown v1.9.0 code has the oxum-first structure described in the candidate. With matching oxum, non-fast validation continues to completeness and hashes; a failing oxum aborts before those steps. This is not evidence that every non-fast validation skips hashes. Tag raw content matched the independently fetched immutable commit content. v1.8.1 validator structure and block-size declaration were also inspected.",
+      "limits": "No code or tests executed. No complete standards-conformance or wrapper assessment finished."
+    },
+    {
+      "id": "OBS-BAGIT-ISSUE-PR-RELEASE",
+      "candidate_locations": [
+        "final \u00a74",
+        "critique K2"
+      ],
+      "source_files": [
+        "bagit-issue137.json",
+        "bagit-issue177.json",
+        "bagit-pr174.json",
+        "bagit-pr174.patch",
+        "bagit-pr174-comments.json",
+        "bagit-issue137-comments.json",
+        "bagit-issue177-comments.json",
+        "bagit-release-v190.json"
+      ],
+      "locators": [
+        "issue bodies/state/date fields",
+        "PR state/merged_at/closed_at/body",
+        "patch hunk at _validate_contents",
+        "PR comments issuecomment-2272257346, -2359230342, -2359532360, -2359595126",
+        "release tag_name/published_at/body"
+      ],
+      "observed": "At this review's fetch, #137 and #177 are open; #174 is closed and unmerged. Its patch moves the oxum call inside the fast branch and changes only bagit.py. v1.9.0 was published 2025-06-13 and release notes do not list #174. The independently read PR discussion says the full-mode oxum check is intentional, objects to removing it, and distinguishes better diagnostics from dropping the check; the author closes the PR on that basis.",
+      "limits": "The consequences for final \u00a74's 'S05 semantics ... acceptable alternative' and the proposed wrapper's final validity status were identified for further assessment, not graded. No merged upstream fix or verified regression execution was established."
+    },
+    {
+      "id": "OBS-BAGIT-TESTS",
+      "candidate_locations": [
+        "final T1\u2013T4",
+        "critique K11"
+      ],
+      "source_files": [
+        "bagit-tests-v190.py.txt"
+      ],
+      "locators": [
+        "test.py L100\u2013144: flipped bit, fast, completeness, oxum absence",
+        "L190\u2013240: detailed checksum/completeness errors, explicit removal of bag-info to force full check"
+      ],
+      "observed": "The pinned upstream test file contains a same-size flipped-bit case where full validation raises while fast/completeness-only pass, and detailed completeness coverage that removes bag-info containing oxum. These are observed test definitions, not test results. The candidate supplies its own proposed T1\u2013T4 but does not name these upstream tests.",
+      "limits": "No full test-suite audit or final adjudication of the issue/fix/regression-history obligation was completed."
+    },
+    {
+      "id": "OBS-BAGIT-FORMAT-VERSION",
+      "candidate_locations": [
+        "final M1/P1",
+        "final \u00a711 first source condition"
+      ],
+      "source_files": [
+        "bagit-v190-immutable.py.txt",
+        "rfc8493.txt"
+      ],
+      "locators": [
+        "bagit.py L141\u2013143, L242\u2013245: make_bag signature and hardcoded BagIt-Version 0.97",
+        "L345\u2013358: reader's accepted version range",
+        "RFC8493 \u00a72.2.2 L545\u2013554; \u00a72.4 L735\u2013741; \u00a73 L743\u2013765"
+      ],
+      "observed": "The pinned implementation's make_bag writes BagIt-Version 0.97, while the final's source conditions specify BagIt 1.0. The reader accepts 1.x. RFC8493 defines oxum as an optimization, requires checksum verification before proclaiming validity, specifies the actual payload byte/file totals when oxum is present, and defines complete/valid bags.",
+      "limits": "No determination of whether the proposed packaging path supplies a separate 1.0 writer or version-conversion step; no conformance verdict."
+    },
+    {
+      "id": "OBS-FETCH-CONDITIONS",
+      "candidate_locations": [
+        "final O1"
+      ],
+      "source_files": [
+        "rfc8493.txt",
+        "bagit-v190.py.txt"
+      ],
+      "locators": [
+        "RFC8493 \u00a72.2.3 L625\u2013665",
+        "bagit.py L758\u2013776"
+      ],
+      "observed": "RFC8493 fetch.txt permits transfer with holes to be filled before meaningful completeness checking; fetched payload files must be in every payload manifest. The pinned component's validate_fetch validates minimally formed URLs; the inspected function does not download payload bytes.",
+      "limits": "The optional 'defers storage cost' wording and its compatibility with mandatory ingest validation were not finally assessed."
+    },
+    {
+      "id": "OBS-SQLITE",
+      "candidate_locations": [
+        "final F3/F5/F9",
+        "final M5/M6",
+        "final P3/P6",
+        "final R2\u2013R4",
+        "critique K4 R-a/R-b"
+      ],
+      "source_files": [
+        "sqlite-atomiccommit.html",
+        "sqlite-atomiccommit.txt",
+        "sqlite-wal.html",
+        "sqlite-wal.txt",
+        "sqlite-backup.html",
+        "sqlite-backup.txt",
+        "sqlite-vacuum.html",
+        "sqlite-vacuum.txt"
+      ],
+      "locators": [
+        "Atomic Commit introduction and table of contents, rollback-journal commit sequence and crash sections",
+        "WAL opening restrictions/network-filesystem and sidecar snippets; \u00a711 WAL-reset bug",
+        "Backup \u00a71 and \u00a73.1, extracted L30\u201370 and L265\u2013289",
+        "VACUUM \u00a72.1 and \u00a73, extracted L66\u2013125"
+      ],
+      "observed": "The official documentation supports incremental Backup API reads, writer concurrency between steps, WAL sidecar preservation, and the network-filesystem limitation. Backup documentation also describes restart/progress conditions. The VACUUM page distinguishes ordinary VACUUM from VACUUM INTO: INTO leaves the source unchanged and is expressly excluded from the write-operation statement. This matters to critique K4 R-a's rationale; the final prefers Backup API but does not repeat that write-lock sentence. The WAL page also lists a version-specific WAL-reset corruption fix and conditions.",
+      "limits": "No SQLite runtime pin, backup-set consistency assessment, transaction/file atomicity assessment, or final consequence judgment. Atomic Commit is explicitly about rollback mode, not arbitrary payload-file transactions. The newly fetched pragma/rsync documents were not comprehensively read."
+    },
+    {
+      "id": "OBS-OMEKA",
+      "candidate_locations": [
+        "final M7/P7",
+        "final \u00a76 Omeka bullet",
+        "critique K4/K6"
+      ],
+      "source_files": [
+        "omeka-access-page.html",
+        "omeka-access-page.txt",
+        "omeka-access-readme34747.txt",
+        "omeka-access-tag34747.json",
+        "omeka-access-media-check.php.txt",
+        "omeka-access-file-controller.php.txt",
+        "omeka-access-matrix-test.php.txt"
+      ],
+      "locators": [
+        "3.4.47 tag commit 96810900986ce5278cef79c2b9bfcda31d4e59ed",
+        "README L123\u2013168, L277\u2013305, L389\u2013402, L535\u2013580",
+        "media-check PHP L115\u2013200",
+        "file-controller and matrix-test text matches only"
+      ],
+      "observed": "The module page and pinned README distinguish public/private record visibility, file level, and embargo, including strictest access inheritance and configurable embargo cascade. Default static file protection requires routing configuration, with small thumbnails additional paths. The read plugin segment separately handles forbidden/embargo and shows defaults/privileged exceptions. File-controller authorization matches and a matrix test were located, but those files were not read in full.",
+      "limits": "This is an analogy check, not a security audit or proof of all serving surfaces. No complete candidate-rights-condition assessment."
+    },
+    {
+      "id": "OBS-ARCHIVEMATICA",
+      "candidate_locations": [
+        "final F4/M4/M8/P5",
+        "final \u00a76 Archivematica bullet"
+      ],
+      "source_files": [
+        "archivematica-113-quickstart.html",
+        "archivematica-113-quickstart.txt",
+        "archivematica-113-metadata.html"
+      ],
+      "locators": [
+        "Quick-Start documentation title Archivematica 1.13.2",
+        "Quick-Start extracted L100\u2013245; later matched AIP/DIP/METS excerpts",
+        "METS page matched generic structure/PREMIS event-rights-agent snippets"
+      ],
+      "observed": "The tutorial documents SIP to AIP/DIP normalization roles and explicitly shows an already-preservation-format case where no conversion occurs. It describes storing the AIP before the DIP and reviewing original/preservation copies and process metadata. A more specific AIP-structure page was fetched but not read before interruption.",
+      "limits": "No full BagIt-AIP attribution or normalization-choice assessment, and no complete comparison of all role/provenance conditions."
+    },
+    {
+      "id": "OBS-NDSA",
+      "candidate_locations": [
+        "final F2/F8",
+        "final P4/P9",
+        "final \u00a76 NDSA bullet",
+        "final U2"
+      ],
+      "source_files": [
+        "ndsa-levels.html",
+        "ndsa-levels.txt",
+        "ndsa-matrix-v21.png"
+      ],
+      "locators": [
+        "landing page March 2026 v2.1 statement and matrix link",
+        "v2.1 matrix image, five functional rows and four level columns"
+      ],
+      "observed": "The landing page identifies v2.1 and provides its matrix directly as an image. The image was viewed: its rows are Storage, Integrity, Control, Metadata, Content; storage cells distinguish two copies at Level 1, three/another geography at Level 2, and different threat/storage type at Level 3. The full image was visually available, including ingest integrity, virus checks, metadata/integrity information backups, logging, and format/content properties.",
+      "limits": "No cell-by-cell mapping of the candidate to a level or final judgment about the hedged Level 2\u20133 claim. No OSF guide/PDF read."
+    },
+    {
+      "id": "OBS-LOC-FORMATS",
+      "candidate_locations": [
+        "final M8/P8",
+        "final F7",
+        "critique K4 F7"
+      ],
+      "source_files": [
+        "loc-rfs-audio.html",
+        "loc-rfs-audio.txt",
+        "loc-rfs-stillimg.html",
+        "loc-rfs-stillimg.txt",
+        "loc-rfs-text.html",
+        "loc-rfs-text.txt"
+      ],
+      "locators": [
+        "Audio media-independent section, extracted L46\u201381",
+        "Still Images digital photographs, extracted L60\u2013103; other graphics through L160",
+        "Textual Works PDF/UA, PDF/A and PDF preference matches only"
+      ],
+      "observed": "Audio favors Broadcast WAVE metadata, native resolution, uncompressed/lossless over lossy choices. Digital still-image preferences include original/master-format fidelity, color/resolution properties and multiple named image formats. Candidate S13/S14 point to audio/still-image pages, not the separate textual-work page. Independent textual-page matches contain PDF/A, but that page was not read comprehensively.",
+      "limits": "No completed source-support adjudication of mandatory normalization, scanned-document formats, PDF/A attribution, or converter selection."
+    },
+    {
+      "id": "OBS-ALTERNATIVE-SNIPPETS",
+      "candidate_locations": [
+        "integrated mechanism/alternative breadth obligation",
+        "final M1/M2/M3/M6/O3"
+      ],
+      "source_files": [
+        "ocfl-spec-v11.html",
+        "ocfl-spec-v11.txt",
+        "restic-repository-checks.html",
+        "restic-repository-checks.txt",
+        "sqlite-rsync.html",
+        "sqlite-rsync.txt"
+      ],
+      "locators": [
+        "OCFL \u00a73.4 extracted L239\u2013275 and version/immutability matches",
+        "restic Checking integrity and consistency matches, extracted around L298\u2013392",
+        "sqlite3_rsync applicability/version/WAL matches"
+      ],
+      "observed": "Bounded independent primary search located versioned content-addressed OCFL storage and restic backup integrity mechanisms. OCFL digest addressing/dedup/fixity text was read; restic matches distinguish default repository checks from read-data and subsets. SQLite's backup page also identifies sqlite3_rsync, and its applicability matches were examined.",
+      "limits": "No full alternatives assessment, affordability comparison, candidate breadth grade, or rewritten recommendation. PREMIS landing and other fetched-but-unread documents remain unassessed."
+    }
+  ],
+  "unassessed_remainder": [
+    "Finish an independent per-obligation assessment of every domain requirement: affordable digitization stations/volunteer operation, photos/audio/scanned documents, immutable original bytes and derivatives, safe dedup, rights/restricted access, silent-corruption detection, interrupted-ingest recovery, failed-storage recovery, and internal/public separation.",
+    "Finish genuine primary-source selection/appropriateness and bounded discovery-yield assessment; independently fetched/located sources do not by themselves complete this obligation.",
+    "Finish materially different mechanism/useful alternative comparisons, including actual adoption tradeoffs and affordability. The partial includes source snippets, not a breadth grade.",
+    "Finish all consequential pinned-component conditions, especially BagIt 1.0 versus make_bag's 0.97 output, any wrapper validity/reporting semantics, actual intended generator path, and full file/tag conformance.",
+    "Finish issue/fix/regression-test/release applicability assessment using observed PR rejection discussion and pinned test definitions; no final judgment or executed regression evidence exists.",
+    "Finish source-specific comparison of every relevant finding against all frozen plan clauses and final F1\u2013F10, M1\u2013M8, P1\u2013P10, R1\u2013R8, O1\u2013O4, U1\u2013U4, T1\u2013T4, V1\u2013V7, \u00a76 analogies, and \u00a711 source conditions. These groups were read as candidate text but not all independently adjudicated.",
+    "Finish supported-correction/product-choice/already-covered/optional/uncertainty/validation-proposal dispositions; partial observations do not establish final planning usefulness.",
+    "Finish file-plus-row crash/durability/journal ordering, combined DB/payload backup consistency, replica repair and restore assertions, and proposed versus guaranteed recovery claims. rename/fsync/pragma evidence was fetched but not read.",
+    "Finish normalization/formats/provenance applicability, NDSA matrix-to-plan mapping, complete rights/serve-time conditions, and workload/sampling/retention/resource implications.",
+    "Finish supplied-critique preservation check across K1\u2013K13, including nuances and limits; the critique and final were read, but no complete delta/disposition map or preservation verdict was authored.",
+    "Finish executed-versus-proposed/status assessment: the text distinguishes observations/proposals, but no complete claimed-execution audit or historical verification was performed. Native terminal receipts must not be inferred from page/code reads.",
+    "After both arms and native terminal receipts are frozen, the separately authorized fresh full-review task must supply REVIEW.md/judgment.json and any scientific result; this partial has no grade."
+  ],
+  "primary_sources_checked": [
+    {
+      "observation_id": "OBS-BAGIT-VALIDATOR",
+      "files": [
+        "bagit-v190.py.txt",
+        "bagit-v190-immutable.py.txt",
+        "bagit-v181.py.txt",
+        "bagit-v181-immutable.py.txt"
+      ],
+      "locators": [
+        "v1.9.0 bagit.py L128\u2013131: default algorithms and 512 KiB block size",
+        "L586\u2013604: validate entrypoint",
+        "L758\u2013776: validate_fetch accepts file scheme without netloc, URL syntax check only",
+        "L778\u2013837: unconditional oxum check, fast return, absent-oxum return, mismatch exception",
+        "L839\u2013908: completeness and per-algorithm mismatch checks",
+        "L1111\u20131148 and L1374\u20131402: hashes updated from one read stream",
+        "L1453\u20131477 and L1544\u20131577: CLI help, flag guards, dispatch/reporting"
+      ],
+      "assessment_limit": "No code or tests executed. No complete standards-conformance or wrapper assessment finished."
+    },
+    {
+      "observation_id": "OBS-BAGIT-ISSUE-PR-RELEASE",
+      "files": [
+        "bagit-issue137.json",
+        "bagit-issue177.json",
+        "bagit-pr174.json",
+        "bagit-pr174.patch",
+        "bagit-pr174-comments.json",
+        "bagit-issue137-comments.json",
+        "bagit-issue177-comments.json",
+        "bagit-release-v190.json"
+      ],
+      "locators": [
+        "issue bodies/state/date fields",
+        "PR state/merged_at/closed_at/body",
+        "patch hunk at _validate_contents",
+        "PR comments issuecomment-2272257346, -2359230342, -2359532360, -2359595126",
+        "release tag_name/published_at/body"
+      ],
+      "assessment_limit": "The consequences for final \u00a74's 'S05 semantics ... acceptable alternative' and the proposed wrapper's final validity status were identified for further assessment, not graded. No merged upstream fix or verified regression execution was established."
+    },
+    {
+      "observation_id": "OBS-BAGIT-TESTS",
+      "files": [
+        "bagit-tests-v190.py.txt"
+      ],
+      "locators": [
+        "test.py L100\u2013144: flipped bit, fast, completeness, oxum absence",
+        "L190\u2013240: detailed checksum/completeness errors, explicit removal of bag-info to force full check"
+      ],
+      "assessment_limit": "No full test-suite audit or final adjudication of the issue/fix/regression-history obligation was completed."
+    },
+    {
+      "observation_id": "OBS-BAGIT-FORMAT-VERSION",
+      "files": [
+        "bagit-v190-immutable.py.txt",
+        "rfc8493.txt"
+      ],
+      "locators": [
+        "bagit.py L141\u2013143, L242\u2013245: make_bag signature and hardcoded BagIt-Version 0.97",
+        "L345\u2013358: reader's accepted version range",
+        "RFC8493 \u00a72.2.2 L545\u2013554; \u00a72.4 L735\u2013741; \u00a73 L743\u2013765"
+      ],
+      "assessment_limit": "No determination of whether the proposed packaging path supplies a separate 1.0 writer or version-conversion step; no conformance verdict."
+    },
+    {
+      "observation_id": "OBS-FETCH-CONDITIONS",
+      "files": [
+        "rfc8493.txt",
+        "bagit-v190.py.txt"
+      ],
+      "locators": [
+        "RFC8493 \u00a72.2.3 L625\u2013665",
+        "bagit.py L758\u2013776"
+      ],
+      "assessment_limit": "The optional 'defers storage cost' wording and its compatibility with mandatory ingest validation were not finally assessed."
+    },
+    {
+      "observation_id": "OBS-SQLITE",
+      "files": [
+        "sqlite-atomiccommit.html",
+        "sqlite-atomiccommit.txt",
+        "sqlite-wal.html",
+        "sqlite-wal.txt",
+        "sqlite-backup.html",
+        "sqlite-backup.txt",
+        "sqlite-vacuum.html",
+        "sqlite-vacuum.txt"
+      ],
+      "locators": [
+        "Atomic Commit introduction and table of contents, rollback-journal commit sequence and crash sections",
+        "WAL opening restrictions/network-filesystem and sidecar snippets; \u00a711 WAL-reset bug",
+        "Backup \u00a71 and \u00a73.1, extracted L30\u201370 and L265\u2013289",
+        "VACUUM \u00a72.1 and \u00a73, extracted L66\u2013125"
+      ],
+      "assessment_limit": "No SQLite runtime pin, backup-set consistency assessment, transaction/file atomicity assessment, or final consequence judgment. Atomic Commit is explicitly about rollback mode, not arbitrary payload-file transactions. The newly fetched pragma/rsync documents were not comprehensively read."
+    },
+    {
+      "observation_id": "OBS-OMEKA",
+      "files": [
+        "omeka-access-page.html",
+        "omeka-access-page.txt",
+        "omeka-access-readme34747.txt",
+        "omeka-access-tag34747.json",
+        "omeka-access-media-check.php.txt",
+        "omeka-access-file-controller.php.txt",
+        "omeka-access-matrix-test.php.txt"
+      ],
+      "locators": [
+        "3.4.47 tag commit 96810900986ce5278cef79c2b9bfcda31d4e59ed",
+        "README L123\u2013168, L277\u2013305, L389\u2013402, L535\u2013580",
+        "media-check PHP L115\u2013200",
+        "file-controller and matrix-test text matches only"
+      ],
+      "assessment_limit": "This is an analogy check, not a security audit or proof of all serving surfaces. No complete candidate-rights-condition assessment."
+    },
+    {
+      "observation_id": "OBS-ARCHIVEMATICA",
+      "files": [
+        "archivematica-113-quickstart.html",
+        "archivematica-113-quickstart.txt",
+        "archivematica-113-metadata.html"
+      ],
+      "locators": [
+        "Quick-Start documentation title Archivematica 1.13.2",
+        "Quick-Start extracted L100\u2013245; later matched AIP/DIP/METS excerpts",
+        "METS page matched generic structure/PREMIS event-rights-agent snippets"
+      ],
+      "assessment_limit": "No full BagIt-AIP attribution or normalization-choice assessment, and no complete comparison of all role/provenance conditions."
+    },
+    {
+      "observation_id": "OBS-NDSA",
+      "files": [
+        "ndsa-levels.html",
+        "ndsa-levels.txt",
+        "ndsa-matrix-v21.png"
+      ],
+      "locators": [
+        "landing page March 2026 v2.1 statement and matrix link",
+        "v2.1 matrix image, five functional rows and four level columns"
+      ],
+      "assessment_limit": "No cell-by-cell mapping of the candidate to a level or final judgment about the hedged Level 2\u20133 claim. No OSF guide/PDF read."
+    },
+    {
+      "observation_id": "OBS-LOC-FORMATS",
+      "files": [
+        "loc-rfs-audio.html",
+        "loc-rfs-audio.txt",
+        "loc-rfs-stillimg.html",
+        "loc-rfs-stillimg.txt",
+        "loc-rfs-text.html",
+        "loc-rfs-text.txt"
+      ],
+      "locators": [
+        "Audio media-independent section, extracted L46\u201381",
+        "Still Images digital photographs, extracted L60\u2013103; other graphics through L160",
+        "Textual Works PDF/UA, PDF/A and PDF preference matches only"
+      ],
+      "assessment_limit": "No completed source-support adjudication of mandatory normalization, scanned-document formats, PDF/A attribution, or converter selection."
+    },
+    {
+      "observation_id": "OBS-ALTERNATIVE-SNIPPETS",
+      "files": [
+        "ocfl-spec-v11.html",
+        "ocfl-spec-v11.txt",
+        "restic-repository-checks.html",
+        "restic-repository-checks.txt",
+        "sqlite-rsync.html",
+        "sqlite-rsync.txt"
+      ],
+      "locators": [
+        "OCFL \u00a73.4 extracted L239\u2013275 and version/immutability matches",
+        "restic Checking integrity and consistency matches, extracted around L298\u2013392",
+        "sqlite3_rsync applicability/version/WAL matches"
+      ],
+      "assessment_limit": "No full alternatives assessment, affordability comparison, candidate breadth grade, or rewritten recommendation. PREMIS landing and other fetched-but-unread documents remain unassessed."
+    }
+  ],
+  "blinding_limits": [
+    "The final explicitly identifies treatment research-v1, critic-finalized live re-verification, predecessor S IDs and critic C IDs. Supplied source maps and critique expose method/stage clues. This prevents perfect method blinding.",
+    "The supplied maps/critique contain stage timestamps and references to receipt filenames. Only the permitted documents were read; no receipts, campaign costs/timings, cards, prior grades, parent/root/historical analyses, expected winner or other-arm answers were opened.",
+    "The protocol-repair message discloses that counterpart candidate work is still scored and pair freeze has not occurred. Source research stopped; no candidate messages or edits were made.",
+    "No expected-winner inference, comparison to counterpart performance, nested delegation or best-of selection."
+  ],
+  "execution_status": {
+    "executed": "Read-only input/instruction inspection, public HTTPS source reads/search, local conversion of downloaded HTML to text, image inspection, and writing evidence/partial outputs within the designated review directory.",
+    "not_executed": [
+      "Downloaded component code",
+      "Upstream or proposed tests",
+      "Product implementation",
+      "Installations",
+      "Account/provider changes",
+      "Canon/main/WorkNode edits",
+      "Candidate messages/edits",
+      "Delegation"
+    ],
+    "scope_limit": "No implementation/security/recovery test proof; sources are observed text/code/test definitions."
+  },
+  "existing_grades_preserved": "No REVIEW.md or judgment.json existed at the safe-boundary check; neither was created. No previous review/grade was read or altered.",
+  "timing_reference": "timings.json",
+  "billing": {
+    "reviewer_evaluation_cost": "unknown",
+    "candidate_work_cost": "unknown",
+    "distinct": true
+  },
+  "source_evidence_identity_convention": "Downloaded public pages/API state snapshots are immutable by recorded SHA-256 at local snapshot path; GitHub code additionally uses commit identity. Dynamic pages are not represented as immutable upstream revisions.",
+  "source_requests": [
+    {
+      "file": "rfc8493.txt",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt"
+    },
+    {
+      "file": "bagit-v190.py.txt",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py"
+    },
+    {
+      "file": "bagit-v181.py.txt",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.8.1/bagit.py"
+    },
+    {
+      "file": "bagit-v190-test.py.txt",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/test_bagit.py"
+    },
+    {
+      "file": "bagit-v190-ref.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0"
+    },
+    {
+      "file": "bagit-pr174.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/174"
+    },
+    {
+      "file": "bagit-issue137.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/137"
+    },
+    {
+      "file": "bagit-issue177.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177"
+    },
+    {
+      "file": "bagit-pr174.patch",
+      "url": "https://patch-diff.githubusercontent.com/raw/LibraryOfCongress/bagit-python/pull/174.patch"
+    },
+    {
+      "file": "bagit-release-v190.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0"
+    },
+    {
+      "file": "sqlite-atomiccommit.html",
+      "url": "https://www.sqlite.org/atomiccommit.html"
+    },
+    {
+      "file": "sqlite-wal.html",
+      "url": "https://www.sqlite.org/wal.html"
+    },
+    {
+      "file": "sqlite-backup.html",
+      "url": "https://www.sqlite.org/backup.html"
+    },
+    {
+      "file": "sqlite-vacuum.html",
+      "url": "https://www.sqlite.org/lang_vacuum.html"
+    },
+    {
+      "file": "archivematica-113-quickstart.html",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.13/getting-started/quick-start/quick-start/"
+    },
+    {
+      "file": "omeka-access-page.html",
+      "url": "https://omeka.org/s/modules/Access/"
+    },
+    {
+      "file": "loc-rfs-audio.html",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html"
+    },
+    {
+      "file": "loc-rfs-stillimg.html",
+      "url": "https://www.loc.gov/preservation/resources/rfs/stillimg.html"
+    },
+    {
+      "file": "loc-rfs-text.html",
+      "url": "https://www.loc.gov/preservation/resources/rfs/text.html"
+    },
+    {
+      "file": "ndsa-levels.html",
+      "url": "https://www.ndsa.org/publications/levels-of-digital-preservation/"
+    },
+    {
+      "file": "bagit-tree-v190.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/trees/v1.9.0?recursive=1"
+    },
+    {
+      "file": "ndsa-matrix-v21.png",
+      "url": "https://www.ndsa.org/images/Levels_v2-1.png"
+    },
+    {
+      "file": "bagit-tests-v190.py.txt",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py"
+    },
+    {
+      "file": "bagit-v181-ref.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.8.1"
+    },
+    {
+      "file": "bagit-pr174-comments.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/174/comments"
+    },
+    {
+      "file": "bagit-issue177-comments.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177/comments"
+    },
+    {
+      "file": "bagit-issue137-comments.json",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/137/comments"
+    },
+    {
+      "file": "ocfl-spec-v11.html",
+      "url": "https://ocfl.io/1.1/spec/"
+    },
+    {
+      "file": "restic-repository-checks.html",
+      "url": "https://restic.readthedocs.io/en/stable/045_working_with_repos.html"
+    },
+    {
+      "file": "sqlite-rsync.html",
+      "url": "https://www.sqlite.org/rsync.html"
+    },
+    {
+      "file": "omeka-access-tag34747.json",
+      "url": "https://api.github.com/repos/Daniel-KM/Omeka-S-module-Access/git/ref/tags/3.4.47"
+    },
+    {
+      "file": "omeka-access-tree34747.json",
+      "url": "https://api.github.com/repos/Daniel-KM/Omeka-S-module-Access/git/trees/3.4.47?recursive=1"
+    },
+    {
+      "file": "omeka-access-readme34747.txt",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/3.4.47/README.md"
+    },
+    {
+      "file": "omeka-access-module34747.txt",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/3.4.47/Module.php"
+    },
+    {
+      "file": "bagit-v190-immutable.py.txt",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py"
+    },
+    {
+      "file": "sqlite-pragma.html",
+      "url": "https://www.sqlite.org/pragma.html"
+    },
+    {
+      "file": "rename-manpage.html",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html"
+    },
+    {
+      "file": "fsync-manpage.html",
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html"
+    },
+    {
+      "file": "loc-premis.html",
+      "url": "https://www.loc.gov/standards/premis/"
+    },
+    {
+      "file": "archivematica-113-metadata.html",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.13/user-manual/metadata/METS/"
+    },
+    {
+      "file": "omeka-access-media-check.php.txt",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/src/Mvc/Controller/Plugin/IsAllowedMediaContent.php"
+    },
+    {
+      "file": "omeka-access-file-controller.php.txt",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/src/Controller/AccessFileController.php"
+    },
+    {
+      "file": "omeka-access-matrix-test.php.txt",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/tests/AccessTest/Service/AccessMatrixTest.php"
+    },
+    {
+      "file": "archivematica-113-aip.html",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.13/user-manual/archival-storage/aip-structure/"
+    },
+    {
+      "file": "bagit-v181-immutable.py.txt",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/22675e58c893a32107f62549974fdf6844591747/bagit.py"
+    }
+  ],
+  "source_snapshots": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-aip.html",
+      "sha256": "4524dc5f7d14c9ba275f6b20f08f7f50b3901138acaef6bc0f7a52467f5535d1",
+      "bytes": 39588,
+      "saved_at_utc": "2026-10-07T18:42:42.161740+00:00",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.13/user-manual/archival-storage/aip-structure/"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-metadata.html",
+      "sha256": "82f9c2a548557e4b180293cfd5f7d97f4ea5405e86ebaaae6a28dd99794151ae",
+      "bytes": 59705,
+      "saved_at_utc": "2026-10-07T18:42:24.701634+00:00",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.13/user-manual/metadata/METS/"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-quickstart.html",
+      "sha256": "e5d4470a4a0900fd9766f2745ada0d4b02cf2c3e91560083ab3c634f4c025069",
+      "bytes": 54145,
+      "saved_at_utc": "2026-10-07T18:40:50.929065+00:00",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.13/getting-started/quick-start/quick-start/"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-quickstart.txt",
+      "sha256": "e031049e3855dca649151ce2940d031cd3cb68d4631fa7c41ffa657458b7548f",
+      "bytes": 22249,
+      "saved_at_utc": "2026-10-07T18:41:00.596045+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/archivematica-113-quickstart.html",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.13/getting-started/quick-start/quick-start/",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-issue137-comments.json",
+      "sha256": "6880848f32998ace94ad0c28afb48da9dd6520becff021f7dcaf05951b4f1483",
+      "bytes": 2326,
+      "saved_at_utc": "2026-10-07T18:41:19.116844+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/137/comments"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-issue137.json",
+      "sha256": "50e188c4da4282ad43e186c3b810c4469dfa7c2af02734656e7c6c24d904680d",
+      "bytes": 3484,
+      "saved_at_utc": "2026-10-07T18:40:43.927783+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/137"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-issue177-comments.json",
+      "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d",
+      "bytes": 5,
+      "saved_at_utc": "2026-10-07T18:41:19.076375+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177/comments"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-issue177.json",
+      "sha256": "2b65e13f3b57c10f71543a69f357400917c126ba80a9b92f1831c97d6108acc2",
+      "bytes": 3149,
+      "saved_at_utc": "2026-10-07T18:40:43.910464+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/177"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-pr174-comments.json",
+      "sha256": "c41b629d9f31cd7152310c546fb6acff95c607617d9c7230d1ddd06d091df89c",
+      "bytes": 14331,
+      "saved_at_utc": "2026-10-07T18:41:19.113236+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/174/comments"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-pr174.json",
+      "sha256": "ef0213f3d626ff2bae53ac9eb587d3374bcf362f655e023743726b02cbef4f1e",
+      "bytes": 19242,
+      "saved_at_utc": "2026-10-07T18:40:44.106024+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/174"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-pr174.patch",
+      "sha256": "c6e220031fb6e308a1b18cc8c446fa92a8abf17251941ae17b1df5f4d353953e",
+      "bytes": 990,
+      "saved_at_utc": "2026-10-07T18:40:43.940728+00:00",
+      "url": "https://patch-diff.githubusercontent.com/raw/LibraryOfCongress/bagit-python/pull/174.patch"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-release-v190.json",
+      "sha256": "29857461eef516ec94c773da502f1be7aa98ba763d3e927219231ec8b3ccc345",
+      "bytes": 4260,
+      "saved_at_utc": "2026-10-07T18:40:43.877287+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-tests-v190.py.txt",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "bytes": 49297,
+      "saved_at_utc": "2026-10-07T18:41:19.080236+00:00",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-tree-v190.json",
+      "sha256": "7c49c3a9bd325ca738b667fe8b987dc14cb10631940232bff8621bfd15e3bd4b",
+      "bytes": 9607,
+      "saved_at_utc": "2026-10-07T18:40:50.909047+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/trees/v1.9.0?recursive=1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v181-immutable.py.txt",
+      "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57",
+      "bytes": 55013,
+      "saved_at_utc": "2026-10-07T18:42:42.076740+00:00",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/22675e58c893a32107f62549974fdf6844591747/bagit.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v181-ref.json",
+      "sha256": "643d87c5078af15fa8c83f108099e118fbac9d89839a0581692d037022de11df",
+      "bytes": 408,
+      "saved_at_utc": "2026-10-07T18:41:19.079945+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.8.1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v181.py.txt",
+      "sha256": "0e60e1b92c7a9fad4f458e7668f41a66f9f174162fed23bd5c1e0ae2dabf5e57",
+      "bytes": 55013,
+      "saved_at_utc": "2026-10-07T18:40:43.825022+00:00",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.8.1/bagit.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v190-immutable.py.txt",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "bytes": 54632,
+      "saved_at_utc": "2026-10-07T18:42:24.555634+00:00",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v190-ref.json",
+      "sha256": "8f4c097411db6e4da492abea300ca390c032d921788e32f3692549b3392d8efd",
+      "bytes": 408,
+      "saved_at_utc": "2026-10-07T18:40:43.989120+00:00",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v190.py.txt",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "bytes": 54632,
+      "saved_at_utc": "2026-10-07T18:40:43.726022+00:00",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/fsync-manpage.html",
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "bytes": 15152,
+      "saved_at_utc": "2026-10-07T18:42:25.050637+00:00",
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-premis.html",
+      "sha256": "43fcb026d365f3ef826b13d9f9a0aa119e2fbc2211f5e0a975d72b2949882f35",
+      "bytes": 11101,
+      "saved_at_utc": "2026-10-07T18:42:24.631634+00:00",
+      "url": "https://www.loc.gov/standards/premis/"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-audio.html",
+      "sha256": "b6b336284f3acf6464ab6e5116742c33e6af1bdafb7c1893576bc687e7ab5b53",
+      "bytes": 19259,
+      "saved_at_utc": "2026-10-07T18:40:50.975065+00:00",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-audio.txt",
+      "sha256": "d9b8bf8f62f131b7657b29c64caac6715589f760e83b6f0604ad157e3457e526",
+      "bytes": 4342,
+      "saved_at_utc": "2026-10-07T18:41:00.564926+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-audio.html",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-stillimg.html",
+      "sha256": "8354e61842ba4beb660c00821ff4f4a7f7621750c5bfa15040ee3ec49c8dc995",
+      "bytes": 32365,
+      "saved_at_utc": "2026-10-07T18:40:50.973066+00:00",
+      "url": "https://www.loc.gov/preservation/resources/rfs/stillimg.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-stillimg.txt",
+      "sha256": "836dcbdf26af767fe8affabfeca51798985672f3352b772e4cb4cabce3f10f50",
+      "bytes": 8159,
+      "saved_at_utc": "2026-10-07T18:41:00.588437+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-stillimg.html",
+      "url": "https://www.loc.gov/preservation/resources/rfs/stillimg.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-text.html",
+      "sha256": "b1a04b083248e18df9ec304bf25d5b0918918372560b1881067c2bfd73412d13",
+      "bytes": 31001,
+      "saved_at_utc": "2026-10-07T18:40:50.987066+00:00",
+      "url": "https://www.loc.gov/preservation/resources/rfs/text.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-text.txt",
+      "sha256": "de78d21139577ccd07030d3b01d47365ba488d0cda022619876092dd8adaa90d",
+      "bytes": 10038,
+      "saved_at_utc": "2026-10-07T18:41:00.557913+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/loc-rfs-text.html",
+      "url": "https://www.loc.gov/preservation/resources/rfs/text.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ndsa-levels.html",
+      "sha256": "d82e909d217e9a08979ec18e844855894aeaffd76c0ebf76df128a98320fc08a",
+      "bytes": 35963,
+      "saved_at_utc": "2026-10-07T18:40:50.916065+00:00",
+      "url": "https://www.ndsa.org/publications/levels-of-digital-preservation/"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ndsa-levels.txt",
+      "sha256": "32f716500839e4ee52cc895bc72824911fa298187c7f2d887a17d43c7a1e48b8",
+      "bytes": 7658,
+      "saved_at_utc": "2026-10-07T18:41:00.570627+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ndsa-levels.html",
+      "url": "https://www.ndsa.org/publications/levels-of-digital-preservation/",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ndsa-matrix-v21.png",
+      "sha256": "af3bc9e998ba4d3ab7424687d388c9f3e1bc6f6cb76b48987cc49fe977ccb37d",
+      "bytes": 143061,
+      "saved_at_utc": "2026-10-07T18:41:19.002236+00:00",
+      "url": "https://www.ndsa.org/images/Levels_v2-1.png"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ocfl-spec-v11.html",
+      "sha256": "6cd3434f46df0d2b73c776f40453715e1bf7b780e5b46945c5b1aa275cd6c112",
+      "bytes": 139510,
+      "saved_at_utc": "2026-10-07T18:41:19.597239+00:00",
+      "url": "https://ocfl.io/1.1/spec/"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ocfl-spec-v11.txt",
+      "sha256": "22c67ebf3c4b1bf8fae483d969600079367da9e812bc5cc79c4bf314a08b9515",
+      "bytes": 59757,
+      "saved_at_utc": "2026-10-07T18:42:01.179611+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/ocfl-spec-v11.html",
+      "url": "https://ocfl.io/1.1/spec/",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-file-controller.php.txt",
+      "sha256": "6c7cf708fc9aec7f268166ce0c273e1516f67223380151e4205f9db8dc31a2d0",
+      "bytes": 14795,
+      "saved_at_utc": "2026-10-07T18:42:42.044740+00:00",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/src/Controller/AccessFileController.php"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-matrix-test.php.txt",
+      "sha256": "bac02d39dc3060e5103915d168218f32354c4759d13c7166db900c50a519e8b8",
+      "bytes": 4688,
+      "saved_at_utc": "2026-10-07T18:42:42.083060+00:00",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/tests/AccessTest/Service/AccessMatrixTest.php"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-media-check.php.txt",
+      "sha256": "e06e9316a906c726ec0d26a3ec29798f92628ca41c6094f6b2a161a1d14fcf46",
+      "bytes": 20050,
+      "saved_at_utc": "2026-10-07T18:42:42.039740+00:00",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/96810900986ce5278cef79c2b9bfcda31d4e59ed/src/Mvc/Controller/Plugin/IsAllowedMediaContent.php"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-module34747.txt",
+      "sha256": "f0c534e16931559574848044cc04a20bf6e835277e43029bf793c66797b4a324",
+      "bytes": 117656,
+      "saved_at_utc": "2026-10-07T18:42:24.601634+00:00",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/3.4.47/Module.php"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-page.html",
+      "sha256": "3e97c1fc4b8d229f8409124880a2250321fe179dda8bf81fd270094217e57d41",
+      "bytes": 51281,
+      "saved_at_utc": "2026-10-07T18:40:50.819065+00:00",
+      "url": "https://omeka.org/s/modules/Access/"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-page.txt",
+      "sha256": "213558144e865ad98659d75201778d0d295d4d0ef6e08f61d2b5b50b82aa0667",
+      "bytes": 31063,
+      "saved_at_utc": "2026-10-07T18:41:00.582738+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-page.html",
+      "url": "https://omeka.org/s/modules/Access/",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-readme34747.txt",
+      "sha256": "84eae2c62a7641faf78b7a6c6ec178851498c738c742864a0cb8d93f5efc3fff",
+      "bytes": 33774,
+      "saved_at_utc": "2026-10-07T18:42:24.561634+00:00",
+      "url": "https://raw.githubusercontent.com/Daniel-KM/Omeka-S-module-Access/3.4.47/README.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-tag34747.json",
+      "sha256": "dc51223c90406006cbe5e14bd18380a6d050a73b8620c09c71512a04c0f98f49",
+      "bytes": 410,
+      "saved_at_utc": "2026-10-07T18:42:24.612909+00:00",
+      "url": "https://api.github.com/repos/Daniel-KM/Omeka-S-module-Access/git/ref/tags/3.4.47"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-tree34747.json",
+      "sha256": "6d150742687013785072cb38df1f0a9029d9be737653f62c2acc4cba66b0fc0e",
+      "bytes": 66715,
+      "saved_at_utc": "2026-10-07T18:42:24.660634+00:00",
+      "url": "https://api.github.com/repos/Daniel-KM/Omeka-S-module-Access/git/trees/3.4.47?recursive=1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/rename-manpage.html",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571,
+      "saved_at_utc": "2026-10-07T18:42:25.047637+00:00",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/restic-repository-checks.html",
+      "sha256": "d76d004ededbb3f7d5fdaa4510dd88e809d503ed8f4fd27dd5db5534c9c69880",
+      "bytes": 61215,
+      "saved_at_utc": "2026-10-07T18:41:19.015236+00:00",
+      "url": "https://restic.readthedocs.io/en/stable/045_working_with_repos.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/restic-repository-checks.txt",
+      "sha256": "33cc957236fce95c23aa974c0d72723d6b8edd8ee3d7db4ec4d6ccee36ef6fab",
+      "bytes": 25834,
+      "saved_at_utc": "2026-10-07T18:42:01.190046+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/restic-repository-checks.html",
+      "url": "https://restic.readthedocs.io/en/stable/045_working_with_repos.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "bytes": 48783,
+      "saved_at_utc": "2026-10-07T18:40:43.819022+00:00",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-atomiccommit.html",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968,
+      "saved_at_utc": "2026-10-07T18:40:50.869065+00:00",
+      "url": "https://www.sqlite.org/atomiccommit.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-atomiccommit.txt",
+      "sha256": "08e859c0d598b1e60279292432d572ba8ce63eee7ef137ee12f54cf14186be42",
+      "bytes": 61644,
+      "saved_at_utc": "2026-10-07T18:41:00.576096+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-atomiccommit.html",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-backup.html",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "bytes": 28195,
+      "saved_at_utc": "2026-10-07T18:40:50.836065+00:00",
+      "url": "https://www.sqlite.org/backup.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-backup.txt",
+      "sha256": "640eb0940beb7bd32146a416c79ee326b1ea2a32e05f134d43ea51ce50bee622",
+      "bytes": 15388,
+      "saved_at_utc": "2026-10-07T18:41:00.567645+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-backup.html",
+      "url": "https://www.sqlite.org/backup.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-pragma.html",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "bytes": 139778,
+      "saved_at_utc": "2026-10-07T18:42:24.590634+00:00",
+      "url": "https://www.sqlite.org/pragma.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-rsync.html",
+      "sha256": "30b70362b95ddb9293b98757f87a3d3d9552f0e2ee45a96578af1578e17fc73d",
+      "bytes": 13237,
+      "saved_at_utc": "2026-10-07T18:41:19.069644+00:00",
+      "url": "https://www.sqlite.org/rsync.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-rsync.txt",
+      "sha256": "83aef7a99b7961c9593032c1b838762b735ce4c9ab90d1158dd85348d8a42354",
+      "bytes": 7813,
+      "saved_at_utc": "2026-10-07T18:42:01.191957+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-rsync.html",
+      "url": "https://www.sqlite.org/rsync.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-vacuum.html",
+      "sha256": "740f02ade00626f50c7a71ded2615995362fedfc30e09aa22dbe4535b7615c54",
+      "bytes": 15215,
+      "saved_at_utc": "2026-10-07T18:40:50.849985+00:00",
+      "url": "https://www.sqlite.org/lang_vacuum.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-vacuum.txt",
+      "sha256": "34af29ebcbb8ba5a6c5d123307d942581e496f28c5febd4e29c8731e17c67995",
+      "bytes": 6443,
+      "saved_at_utc": "2026-10-07T18:41:00.549665+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-vacuum.html",
+      "url": "https://www.sqlite.org/lang_vacuum.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "saved_at_utc": "2026-10-07T18:40:50.879065+00:00",
+      "url": "https://www.sqlite.org/wal.html"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-wal.txt",
+      "sha256": "b26f7a935eaf42713229e38a40754b5c3bf67d36253e1a5b0e776596e5cd5211",
+      "bytes": 31423,
+      "saved_at_utc": "2026-10-07T18:41:00.561617+00:00",
+      "derived_from_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/sqlite-wal.html",
+      "url": "https://www.sqlite.org/wal.html",
+      "derivation": "Local HTML text extraction; no downloaded code executed."
+    }
+  ],
+  "failed_source_requests": [
+    {
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/test_bagit.py",
+      "status": "HTTP 404; no evidence file written; actual test.py subsequently fetched"
+    }
+  ],
+  "input_identities": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-MUSE/brief.md",
+      "sha256": "04cca2f7a001187ad0118b0b38e74318cd187da8ac72e058ffcb7e255ce361ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-MUSE/plan.md",
+      "sha256": "6206478dbbc3a250b13e49c209895a548022271f3e6d37ff747c990833da7485"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/final.md",
+      "sha256": "14c83b7ab228a151a03393144c967a14a472d5f4cc561c663f868a9789e18202"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/critique.md",
+      "sha256": "34fd29a5d156604b5bd94aec60d63138bb5e6185be0c3425808129a8a56bc2fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/critic-finalizer-v1/sources/SOURCES.md",
+      "sha256": "37325125ae94297d07a480659906fd7e18195f4c861d08174017ab4a70198d0b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-MUSE/treatment/research-v1/sources/SOURCES.md",
+      "sha256": "d15740b3f8238190a3a3092c18c13fd24d58774f4085ece0070b81151f89ff62"
+    }
+  ],
+  "component_identities": [
+    {
+      "component": "bagit-python v1.9.0",
+      "commit": "861ddacb339d5b92659f0187a402f501d841abbe",
+      "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v190-immutable.py.txt",
+      "tag_and_commit_content_equal": true
+    },
+    {
+      "component": "bagit-python v1.8.1",
+      "commit": "22675e58c893a32107f62549974fdf6844591747",
+      "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/bagit-v181-immutable.py.txt",
+      "comparison_limit": "Immutable content fetched; final equality/conformance assessment not completed."
+    },
+    {
+      "component": "Omeka S Access 3.4.47",
+      "commit": "96810900986ce5278cef79c2b9bfcda31d4e59ed",
+      "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/sources/omeka-access-media-check.php.txt"
+    }
+  ]
+}

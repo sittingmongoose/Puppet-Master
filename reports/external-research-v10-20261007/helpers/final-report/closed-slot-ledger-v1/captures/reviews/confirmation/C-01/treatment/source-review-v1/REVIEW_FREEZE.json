@@ -1,0 +1,1929 @@
+{
+  "schema": "pm.er10.source6-review-freeze.v1",
+  "review_kind": "ONE fresh ordinary independent FULL declared Source6 primary-source review; finite one round",
+  "reviewer_declared_binding": {
+    "provider_account": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "service_tier": "priority",
+    "named_account": "sittingmongoose@gmail.com",
+    "account_binding_independently_inspected": false
+  },
+  "frozen_at_utc": "2026-10-07T20:49:19.097344+00:00",
+  "original_scientific_grade": "FAIL",
+  "status": "FAIL",
+  "original_result_immutable": true,
+  "grade_basis": [
+    "D-SRC-01: consequential optional-viewer API claim false at exact pinned version",
+    "All declared scientific content assessed; nonmaterial caveats kept separately; no candidate feedback/repair"
+  ],
+  "full_declared_scope_assessed": true,
+  "unassessed_declared_scientific_scope": [],
+  "scope_statement": "All six declared axes, O1-O7, exact A-P1..A-P7, consequential final source claims and admitted predecessor scientific preservation assessed. Deferred unselected product implementations/real-file validation remain explicitly conditional. Excluded original execution/lifecycle telemetry is not attested.",
+  "axes": [
+    {
+      "id": "S6-1",
+      "name": "full brief obligations",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E07",
+        "E08",
+        "E09",
+        "E10"
+      ],
+      "defect_refs": [
+        "D-SRC-01"
+      ],
+      "assessment": "All O1-O7 scientific content assessed. Consequential current-state API semantics and resulting condition fail; core integrated proposal otherwise covered.",
+      "limitation_refs": []
+    },
+    {
+      "id": "S6-2",
+      "name": "consequential source claims and governing conditions",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08"
+      ],
+      "defect_refs": [
+        "D-SRC-01",
+        "N-SRC-02"
+      ],
+      "assessment": "Primary standards, version identity, code, fix/release and documented transport boundaries checked. D-SRC-01 is material; BagIt condition is a nonmaterial under-specification.",
+      "limitation_refs": []
+    },
+    {
+      "id": "S6-3",
+      "name": "useful open discovery coverage/options/analogies/components/history",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "E05",
+        "E06",
+        "E09",
+        "E10",
+        "E11"
+      ],
+      "defect_refs": [
+        "N-PRES-01"
+      ],
+      "assessment": "Substantially different service, coordinator packet and file-sync mechanisms; ordinary preview/OSD/JS9 options; Tropy analogy and OAL lead assessed. Independent user-level primary discovery also probed distributed conflicts, atomicity and provenance packaging. No mandatory source count or exhaustive component set.",
+      "limitation_refs": [
+        "L-ORIGINAL-OPERATIONS",
+        "L-HISTORY",
+        "L-PRODUCT-CHOICES"
+      ]
+    },
+    {
+      "id": "S6-4",
+      "name": "incorrect rejection/correction",
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E09"
+      ],
+      "defect_refs": [
+        "D-SRC-01"
+      ],
+      "assessment": "FITS correction, limits on issue applicability and JS9/OAL deferrals are justified. Added blanket current-state conversion correction conflicts with pinned implementation.",
+      "limitation_refs": []
+    },
+    {
+      "id": "S6-5",
+      "name": "preservation of constraints/options/source identity/admitted corrections/uncertainty into final",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "E01",
+        "E03",
+        "E05",
+        "E06",
+        "E07",
+        "E09",
+        "E10"
+      ],
+      "defect_refs": [
+        "N-PRES-01",
+        "N-PRES-02"
+      ],
+      "assessment": "Core negative constraints, unchanged originals, distinct byte/event identity, raw metadata/context, operator gate, human reconciliation/re-anchoring, policy-dependent retention and proposed-test status survive. Optional leads/conditional browser safeguard are narrowed; original 30-day approval condition retained as optional.",
+      "limitation_refs": [
+        "L-PRESERVATION"
+      ]
+    },
+    {
+      "id": "S6-6",
+      "name": "proposed versus actually performed validation",
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "E01",
+        "E04",
+        "E10"
+      ],
+      "defect_refs": [],
+      "assessment": "Candidate keeps all application checks proposed and source inspection separate. Reviewer independently repeated accessible input/source-fact checks and performed one clearly separate isolated method check. Original hidden operations not attested.",
+      "limitation_refs": [
+        "L-ORIGINAL-OPERATIONS",
+        "L-SYNTHETIC"
+      ]
+    }
+  ],
+  "obligations": {
+    "O1": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "E02",
+        "E07",
+        "E09",
+        "E10"
+      ],
+      "defect_refs": [
+        "N-PRES-01"
+      ],
+      "assessment": "Problem-level discovery content is broad/useful, independently checked through open primary discovery. Candidate states before-PLAN order; excluded execution chronology not independently attested.",
+      "limitation_refs": [
+        "L-ORIGINAL-OPERATIONS"
+      ]
+    },
+    "O2": {
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "E06",
+        "E07",
+        "E09",
+        "E10"
+      ],
+      "defect_refs": [],
+      "assessment": "At least two substantially different useful mechanisms, competing component/display options, outside-domain analogy and consequential operational trade-offs are present.",
+      "limitation_refs": []
+    },
+    "O3": {
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "E02",
+        "E03",
+        "E04",
+        "E07",
+        "E08"
+      ],
+      "defect_refs": [
+        "D-SRC-01",
+        "N-SRC-02"
+      ],
+      "assessment": "Semantics/units/versions/applicability checked; material mismatch between documented intent and actual pinned inverse-scale code.",
+      "limitation_refs": []
+    },
+    "O4": {
+      "status": "PASS_WITH_LIMITATIONS",
+      "assessed_evidence_refs": [
+        "E04",
+        "E05",
+        "E06",
+        "E11"
+      ],
+      "defect_refs": [],
+      "assessment": "Justified component implementation is pinned; narrow issue/fix/patch/release chain verified. Missing patch test addition and unexecuted reproduction are disclosed; no general issue-title applicability inference.",
+      "limitation_refs": [
+        "L-HISTORY",
+        "L-PRODUCT-CHOICES"
+      ]
+    },
+    "O5": {
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "E01",
+        "E10"
+      ],
+      "defect_refs": [],
+      "assessment": "All exact A-P1..A-P7 dispositions and what is already covered are assessed; A-P4 technical defect separately recorded.",
+      "limitation_refs": []
+    },
+    "O6": {
+      "status": "FAIL",
+      "assessed_evidence_refs": [
+        "E03",
+        "E04",
+        "E07",
+        "E08",
+        "E09",
+        "E10"
+      ],
+      "defect_refs": [
+        "D-SRC-01",
+        "N-PRES-01",
+        "N-PRES-02"
+      ],
+      "assessment": "Complete integrated recommendations, optional opportunities, uncertainties and observable proposed validation exist, but a consequential viewer governing condition is false and optional preservation is narrowed.",
+      "limitation_refs": []
+    },
+    "O7": {
+      "status": "PASS",
+      "assessed_evidence_refs": [
+        "E01",
+        "E10"
+      ],
+      "defect_refs": [],
+      "assessment": "Ingest/provenance, identity, annotations/collaboration, access, retention/deletion, errors/recovery, and offline handoff/export are assessed within bounded planning; no product implementation/canonical write.",
+      "limitation_refs": []
+    }
+  },
+  "plan_section_dispositions": [
+    {
+      "section_id": "A-P1",
+      "final_disposition": "keep; amend",
+      "final_locator": "artifact.md:70",
+      "assessment": "covered: bounded club workflow, exclusions, packet/outbox and operator gate",
+      "evidence_refs": [
+        "E10"
+      ],
+      "defect_refs": []
+    },
+    {
+      "section_id": "A-P2",
+      "final_disposition": "amend",
+      "final_locator": "artifact.md:71",
+      "assessment": "covered: existing IDs/names/metadata/derivative links preserved, raw field provenance and FITS boundaries added",
+      "evidence_refs": [
+        "E03",
+        "E10"
+      ],
+      "defect_refs": []
+    },
+    {
+      "section_id": "A-P3",
+      "final_disposition": "amend",
+      "final_locator": "artifact.md:72",
+      "assessment": "covered: originals/previews/status/retry plus proposed resumable state, byte versus observation identity, idempotency, cleanup/limits/recovery",
+      "evidence_refs": [
+        "E07",
+        "E10"
+      ],
+      "defect_refs": []
+    },
+    {
+      "section_id": "A-P4",
+      "final_disposition": "replace region-reference assumption; keep history/review",
+      "final_locator": "artifact.md:73",
+      "assessment": "covered but conditional OSD semantics fail; immutable version-bound selectors and human re-anchoring remain sound proposals",
+      "evidence_refs": [
+        "E02",
+        "E03",
+        "E04",
+        "E10"
+      ],
+      "defect_refs": [
+        "D-SRC-01"
+      ]
+    },
+    {
+      "section_id": "A-P5",
+      "final_disposition": "keep; amend",
+      "final_locator": "artifact.md:74",
+      "assessment": "covered: private/public distinction, unresolved original concurrency, proposed revision conflicts and direct-file authorization",
+      "evidence_refs": [
+        "E07",
+        "E10"
+      ],
+      "defect_refs": []
+    },
+    {
+      "section_id": "A-P6",
+      "final_disposition": "keep; strengthen",
+      "final_locator": "artifact.md:75",
+      "assessment": "covered: packet manifest/provenance/incomplete entries, withdrawal, separate live/backup/recipient retention, named operator/restore",
+      "evidence_refs": [
+        "E08",
+        "E10"
+      ],
+      "defect_refs": [
+        "N-SRC-02"
+      ]
+    },
+    {
+      "section_id": "A-P7",
+      "final_disposition": "keep; make observable",
+      "final_locator": "artifact.md:76;92-100",
+      "assessment": "covered: all original scenarios and additional observable conditions remain proposed; viewer scale-animation condition is incorrectly supported",
+      "evidence_refs": [
+        "E04",
+        "E10"
+      ],
+      "defect_refs": [
+        "D-SRC-01"
+      ]
+    }
+  ],
+  "material_defects": [
+    {
+      "id": "D-SRC-01",
+      "severity": "material",
+      "kind": "incorrect consequential API semantics / incorrect added correction",
+      "claim": "current=true uses the currently drawn TiledImage location and supplies the current-state inverse conversion while the image animates",
+      "claim_locators": [
+        "final artifact.md:38",
+        "final artifact.md:94",
+        "final A-P4 disposition at artifact.md:73"
+      ],
+      "governing_primary_source_refs": [
+        "R15",
+        "R27",
+        "R33",
+        "R39"
+      ],
+      "primary_code_locators": [
+        "src/tiledimage.js:564-595",
+        "src/tiledimage.js:599-630",
+        "src/tiledimage.js:824-830",
+        "src/tiledimage.js:1388-1408",
+        "src/tiledimage.js:1932-1943"
+      ],
+      "factual_reasoning": "The inverse method passes no current flag to _viewportToImageDelta, so it uses target scale while using current translation/rotation. Forward conversion passes the flag. Unequal scale springs are an allowed animated state and drawing uses current scale.",
+      "observable_evidence": {
+        "method": "verbatim four pinned methods in an isolated synthetic zero-rotation/translation fixture",
+        "image_dimensions": [
+          1000,
+          500
+        ],
+        "current_scale": 1,
+        "target_scale": 2,
+        "forward_input": [
+          500,
+          250
+        ],
+        "forward_output": [
+          0.5,
+          0.25
+        ],
+        "inverse_current_output": [
+          250,
+          125
+        ],
+        "equal_scale_control_output": [
+          500,
+          250
+        ],
+        "check_files": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-coordinate-check.js",
+            "sha256": "592ea4d4c78acd9c88d9aa0d998745f8135e32c562730d3039c700e5b266734b",
+            "bytes": 2914
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-coordinate-check-result.json",
+            "sha256": "8026d51c16d6dff169a98c8b5a758563a4908a3a6618e61d4e7b486604c5e172",
+            "bytes": 3505
+          }
+        ]
+      },
+      "applicability": "Conditional optional OSD path when TiledImage current and target scales differ, e.g. animated setWidth/fitBounds. Not demonstrated for ordinary previews, a fixed TiledImage with viewer-only pan/zoom, or a settled image.",
+      "consequence": "A saved version-bound selector can identify wrong intrinsic pixels despite using the recommended current flag.",
+      "governing_condition": "An established applicable mapping or explicit settled-image constraint is needed; the final already offers waiting, but its other asserted API alternative is false.",
+      "obligation_refs": [
+        "O3",
+        "O6"
+      ],
+      "axis_refs": [
+        "S6-1",
+        "S6-2",
+        "S6-4"
+      ],
+      "plan_section_refs": [
+        "A-P4",
+        "A-P7"
+      ],
+      "evidence_refs": [
+        "E04",
+        "E11"
+      ],
+      "status": "confirmed; no candidate rewriting or feedback"
+    }
+  ],
+  "nonmaterial_caveats": [
+    {
+      "id": "N-PRES-01",
+      "kind": "nonmaterial optional-discovery/source-identity loss",
+      "locators": [
+        "predecessor artifact.md:63 and Optional later work",
+        "predecessor artifact.md:43 and Viewer regression gate",
+        "final artifact.md:40,84-86,100"
+      ],
+      "evidence_refs": [
+        "E06",
+        "E09"
+      ],
+      "primary_source_refs": [
+        "R26",
+        "R41"
+      ],
+      "reason": "AstroLog identity/unevaluated roadmap lead and the reported Canvas/WebGL exploration are omitted without disposition; side-by-side and export-allowlist opportunities are compressed. Core minimum and required substantive mechanism comparison remain covered; no exhaustive catalog obligation invented."
+    },
+    {
+      "id": "N-PRES-02",
+      "kind": "nonmaterial conditional safeguard omission",
+      "locators": [
+        "predecessor artifact.md:77",
+        "final artifact.md:60,64,70,92-100"
+      ],
+      "evidence_refs": [
+        "E01",
+        "E10"
+      ],
+      "reason": "Browser cache until durable export and closure/quota/device-loss checks are omitted. A portable packet/outbox remains required and no browser-persistence component is selected. This is a later browser-outbox condition, not evidence of an implemented data-loss defect."
+    },
+    {
+      "id": "N-SRC-02",
+      "kind": "nonmaterial governing-condition under-specification",
+      "locators": [
+        "final artifact.md:54,64,99",
+        "RFC8493:5.1,5.4"
+      ],
+      "primary_source_refs": [
+        "R05"
+      ],
+      "evidence_refs": [
+        "E08"
+      ],
+      "reason": "Relative paths alone do not ensure bag containment, and fixity is not active-attack protection. Final does not claim authenticated/safe import or select an implementation; these conditions require explicit treatment if BagIt is adopted."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L-BLIND",
+      "description": "Method/stage paths and predecessor/final labels reveal stage structure. Permitted preservation text incidentally reveals procedural metadata; it was excluded from scientific grading. No counterpart, earlier independent review, grade key, target, cost, root history/analysis, or expected winner was consulted."
+    },
+    {
+      "id": "L-ORIGINAL-OPERATIONS",
+      "description": "Original search/read chronology, git command execution, negative-action assertions, lifecycle and usage were not independently instrumented; assessment uses the allowed scientific record and independently verifies governing facts. This is not a supervisor eligibility determination."
+    },
+    {
+      "id": "L-SYNTHETIC",
+      "description": "Reviewer isolated method execution demonstrates the stated inverse-scale counterexample with synthetic zero-rotation/translation springs. It is not a full constructor/rendering/browser or club-workflow reproduction."
+    },
+    {
+      "id": "L-HISTORY",
+      "description": "History review is bounded to the exact callback fix chain, pinned relevant tests/changelog and limited additional path-history/issue probes. No complete-history census, suite-wide test-absence claim or governing fix for D-SRC-01 is asserted."
+    },
+    {
+      "id": "L-PRODUCT-CHOICES",
+      "description": "Actual files/format inventory, volumes, devices, host/operator, identity policy and retention are unknown and explicitly unresolved. JS9/OAL schemas/code, database/decoder/auth/hosting implementations and exact Nextcloud deployed client/patch were not evaluated as selected dependencies; final does not establish their applicability."
+    },
+    {
+      "id": "L-PRESERVATION",
+      "description": "Core constraints/conditions/source identity and admitted FITS corrections are preserved, with N-PRES-01/02 optional/conditional losses and an incorrect added viewer correction D-SRC-01."
+    }
+  ],
+  "justified_abstentions": [
+    "No scientific truth, real-file conformance, WCS mapping, cost or deployment guarantee",
+    "No exact Nextcloud desktop/deployment behavior beyond docs",
+    "No OAL schema compatibility or JS9 code/security approval; optional unselected leads",
+    "No browser/product reproduction of new inverse-scale discrepancy or #2873/#2925"
+  ],
+  "unresolved_product_choices": [
+    "Actual accepted formats/largest files",
+    "Session time-entry conventions and HDU/header applicability",
+    "Operator/host and backup boundary",
+    "Member/role publication/correction/withdrawal/deletion/export/restore permissions",
+    "Retention/recovery/backup/tombstone bounds",
+    "Derivative-local annotation versus future validated mapping",
+    "Duplicate digest attach/skip/new-instance policy"
+  ],
+  "reviewed_input_sha256s": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/artifact.md",
+      "sha256": "1585dcb28a036a37cb7cf4969d9815fee8358bc2118f387a15a7f83bec9603d3",
+      "mapped_hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/source-map.json",
+      "sha256": "fbf25af2fa8a5946fe4d39579faf98102ad5da61d37625fca781d97cefc8c3dc",
+      "mapped_hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/preservation_check.md",
+      "sha256": "9f9ce5d6ad4d9e465b22ccc78b9dfd8b9d8ffe7ba4b807c456ab18c65470b8c9",
+      "mapped_hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/artifact.md",
+      "sha256": "aedf36331257d53f4ed5786728fdfd257529e3bc5fab9d55b17c9c32b33b9adc",
+      "mapped_hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/source-map.json",
+      "sha256": "a5718352b3fd2fdf4a19101bc9adaf0e95d024e4933d0f3ee0154fa2661a56e9",
+      "mapped_hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/preservation_check.md",
+      "sha256": "16c284685e2eeeb76356c9f36f3270bba551ea41a5faa347b960c4e868c73fb5",
+      "mapped_hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/BRIEF.md",
+      "sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f",
+      "mapped_hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/PLAN.md",
+      "sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f",
+      "mapped_hash_match": true
+    }
+  ],
+  "reviewed_candidate_capture_sha256s": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S01_annotation_model_rec.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "source_id": "S01",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S02_media_fragments_rec.html",
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "source_id": "S02",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S03_fits_standard40_page.html",
+      "sha256": "1cc2f97e7eca2f609f21a005b891bad1d2e28bd510aff91b27c4454f986fb345",
+      "source_id": "S03",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S04_fits_standard40.pdf",
+      "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "source_id": "S04",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S05_fits_wcs_page.html",
+      "sha256": "a0f55cb08b119ad22988932cbbe2e1ee51626319284b032686b47ff229930522",
+      "source_id": "S05",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S06_osd_v6.0.2_commit.json",
+      "sha256": "03e4efc094a2c6fc71963f07f98b0d20456bb5a5cfacdc96572d2bac87fbf48f",
+      "source_id": "S06",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S07_osd_v6.0.2_viewer.js",
+      "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e",
+      "source_id": "S07",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S08_osd_v6.0.2_viewport.js",
+      "sha256": "f6d284f5e0845fff040b46fb9f11c5e656071b87a689bd1bdfa1d0ae89f6d12c",
+      "source_id": "S08",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S09_osd_v6.0.2_tiledimage.js",
+      "sha256": "ea57535dd89c54712f22c95a173e2dbdb80f65ef6b614c3a2ec71cf7b3e1b903",
+      "source_id": "S09",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S10_osd_release_v6.0.1.html",
+      "sha256": "a44996bad4409879e4299bfefd50e793cce6525e8c7a0034c239408b0802a199",
+      "source_id": "S10",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S11_osd_issue_2873.html",
+      "sha256": "9d91bafb37e450edb7153522738bbf6b148737f3ef98f0fc6c61ab06fc02c87b",
+      "source_id": "S11",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S12_osd_pr_2874.html",
+      "sha256": "a92d65321378dbc6f1e9b66f2e907ce628a5c5effc8fae0b765320f00197c39e",
+      "source_id": "S12",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S13_osd_issue_2925.html",
+      "sha256": "f5617283fd6f012b4bd30bd3d250eb626c7cae03d99c759c2a9818a775af4d63",
+      "source_id": "S13",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S14_osd_coordinate_example.html",
+      "sha256": "892cc70d78927ba4a7cfd8bdbeb4618f4980dd6ac03809f7ae974ec189ce0b28",
+      "source_id": "S14",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S15_nextcloud_conflicts.rst",
+      "sha256": "5995f5c8aa1fd57ca36a2b2aca2ae11167ddb9f089953edfed97043c8eecade0",
+      "source_id": "S15",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S16_nextcloud35_versions.html",
+      "sha256": "0db9bef9d61d733f0ea4974118ee2b5e97f43cde6f6be2e23fce788164fdd93a",
+      "source_id": "S16",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S17_nextcloud35_sharing.html",
+      "sha256": "e12386f05c190c1e30668771c975adba5f720db3f2d00e73e832c2e7aa611355",
+      "source_id": "S17",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S18_nextcloud35_chunking.html",
+      "sha256": "9e2f88b69e11cefc826273057e5f1232b12a9aeb40c78dcb3c135e79e694f49d",
+      "source_id": "S18",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S19_nextcloud35_big_uploads.html",
+      "sha256": "c39b16d115713050a6d168a3abb49d9e859323d8173874d97ec2ecac85ba7f56",
+      "source_id": "S19",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S20_tropy_basics.html",
+      "sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "source_id": "S20",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S21_fits_coordinates.pdf",
+      "sha256": "d3c52331a47e12c35edbf1eb840053c76e795cb227779e65cfe13b46e36d7440",
+      "source_id": "S21",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S22_nextcloud_docs_head_commit.json",
+      "sha256": "069e6e502fb995c6481f7f00e01ed678607e8f1be139be57ea3029b43ee9bf48",
+      "source_id": "S22",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S23_osd_pr_2874.json",
+      "sha256": "58901f103ca790e1e1bf5a1d6442588f438c995c300f4e8ba05e1eb11d94d966",
+      "source_id": "S23",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/sources/S24_astrolog_official.html",
+      "sha256": "70e3c51135e1a496ac2b0ea4e4d414db1e56a65d8a6d8c90da07f6efd8ef8d65",
+      "source_id": "S24",
+      "stage": "researcher-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/web-annotation-model.html",
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "source_id": "S01",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/media-fragments.html",
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "source_id": "S02",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/fits-standard-v4.pdf",
+      "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "source_id": "S03",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/fits-wcs.html",
+      "sha256": "a0f55cb08b119ad22988932cbbe2e1ee51626319284b032686b47ff229930522",
+      "source_id": "S04",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/rfc8493.html",
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "source_id": "S05",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/openastronomylog.html",
+      "sha256": "3869cb0d30a9023e31fe6f6e8b92443b585acb1eb59976b4192e8c3fafc109c7",
+      "source_id": "S06",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/observation-manager.html",
+      "sha256": "f2239528870792ee491f43f61020beb161e27e40f14e4189157bea86a2314c04",
+      "source_id": "S07",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/tropy-docs.html",
+      "sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "source_id": "S08",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/nextcloud-conflicts.rst",
+      "sha256": "5995f5c8aa1fd57ca36a2b2aca2ae11167ddb9f089953edfed97043c8eecade0",
+      "source_id": "S09",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/nextcloud-versioning.html",
+      "sha256": "7b10fe8138e47008007c76efc9d4da361b03ce8e1db4e55fb19aefebfdbc4aa6",
+      "source_id": "S10",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/nextcloud-chunking.html",
+      "sha256": "ffb919382e19d1e07364ac79c58564bec2698af195ae716d39bde1fbd79028d6",
+      "source_id": "S11",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-v6.0.2-commit.html",
+      "sha256": "905619ab627ce83e7d65f2ecaca5db3085105bd778ed6ca0e8c7e550af59b398",
+      "source_id": "S12",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-viewer.js",
+      "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e",
+      "source_id": "S13",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-viewport.js",
+      "sha256": "f6d284f5e0845fff040b46fb9f11c5e656071b87a689bd1bdfa1d0ae89f6d12c",
+      "source_id": "S14",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-tiledimage.js",
+      "sha256": "ea57535dd89c54712f22c95a173e2dbdb80f65ef6b614c3a2ec71cf7b3e1b903",
+      "source_id": "S15",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-issue-2873.html",
+      "sha256": "e13fac94567bd22c5c1f573aa83eb27bacadee742f808721b27d69776d002f1a",
+      "source_id": "S16",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-pr-2874.html",
+      "sha256": "58b77020260b039486ec66506b1e5205c1302c9b57744e5114d114b97d7431fd",
+      "source_id": "S17",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-release-v6.0.1.html",
+      "sha256": "9ccd58c97429699bb8c3dda0807056cae4f4df634ba1f7f79bac6baf68071fbc",
+      "source_id": "S18",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-issue-2925.html",
+      "sha256": "1a091d04e707de3ce179f33812f71dc39701d08142a6ac89af3f992834ea198a",
+      "source_id": "S19",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/js9-repository.html",
+      "sha256": "9b3778c43879ff0749da9206ecaa070bd893caff935636dcda22a063657ec48e",
+      "source_id": "S20",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/osd-pr-2874.diff",
+      "sha256": "8537b7b2d8ae53f8d7df5c0dd2ae0fa19420e389f717c804c23d2e75c786850b",
+      "source_id": "S21",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/sources/nextcloud-sharing.html",
+      "sha256": "f108da2b205df5299163220cddee9a520f25b92a9661e89f768c254f7e7e8d1a",
+      "source_id": "S22",
+      "stage": "critic-v1",
+      "role": "read for integrity; scientific semantic review uses relevant mapped text plus fresh primary captures"
+    }
+  ],
+  "primary_sources_checked": [
+    {
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "version_or_release": "W3C Recommendation, 23 February 2017",
+      "commit": null,
+      "locators": [
+        "§§3.3, 4.2.1, 4.2.7, 4.3: targets, FragmentSelector, SvgSelector, body/annotation model"
+      ],
+      "id": "R01",
+      "accessed_at_utc": "2026-10-07T20:38:43.601505+00:00",
+      "final_url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/web-annotation-model.html",
+      "bytes": 284185,
+      "sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "W3C Media Fragments URI 1.0",
+      "url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "version_or_release": "W3C Recommendation, 25 September 2012",
+      "commit": null,
+      "locators": [
+        "§§4.2.2, 6.1.2, 7.1: image xywh syntax, intrinsic pixel and percentage units, top-left origin"
+      ],
+      "id": "R02",
+      "accessed_at_utc": "2026-10-07T20:38:43.603533+00:00",
+      "final_url": "https://www.w3.org/TR/2012/REC-media-frags-20120925/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/media-fragments.html",
+      "bytes": 89887,
+      "sha256": "ecbaffe292d75c6d70f31b406475dd6e678440f92be34aa468fda67fb4217d9e",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "FITS Standard v4.0",
+      "url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+      "version_or_release": "FITS Standard v4.0, language-edited 13 August 2018",
+      "commit": null,
+      "locators": [
+        "FITS v4.0 front matter (2016-07-22; language edit 2018-08-13); §4.4.2.2 p13/PDF19 DATE-OBS; §8.2 p31/PDF37 CRPIX; §§9.1.1,9.2.1 pp37-38/PDF43-44 timezone and time-scale defaults/overrides"
+      ],
+      "id": "R03",
+      "accessed_at_utc": "2026-10-07T20:38:43.605083+00:00",
+      "final_url": "https://fits.gsfc.nasa.gov/standard40/fits_standard40aa-le.pdf",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/fits-standard-v4.pdf",
+      "bytes": 1140821,
+      "sha256": "5624dca15659caf54c56127b4df9af05fd930c8f6d997fcb4bea2b1a5c1bc573",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "FITS World Coordinate System overview",
+      "url": "https://fits.gsfc.nasa.gov/fits_wcs.html",
+      "version_or_release": "Official FITS Support Office reference page captured 2026-10-07",
+      "commit": null,
+      "locators": [
+        "Primary WCS papers and distinction between approved and non-standard conventions"
+      ],
+      "id": "R04",
+      "accessed_at_utc": "2026-10-07T20:38:43.606363+00:00",
+      "final_url": "https://fits.gsfc.nasa.gov/fits_wcs.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/fits-wcs.html",
+      "bytes": 15055,
+      "sha256": "a0f55cb08b119ad22988932cbbe2e1ee51626319284b032686b47ff229930522",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "BagIt File Packaging Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "version_or_release": "IETF RFC 8493, October 2018",
+      "commit": null,
+      "locators": [
+        "RFC8493 §§1.3,2.1.3,2.4,3 fixity and completeness; §5.1 path containment; §5.4 no protection against active attacks"
+      ],
+      "id": "R05",
+      "accessed_at_utc": "2026-10-07T20:38:43.607807+00:00",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "http_status": 200,
+      "content_type": "text/html",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/rfc8493.html",
+      "bytes": 63600,
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenAstronomyLog project repository",
+      "url": "https://github.com/openastronomylog/openastronomylog",
+      "version_or_release": "Official repository page captured 2026-10-07; branch/release not pinned",
+      "commit": null,
+      "locators": [
+        "README and repository tree: XML-schema lead for observation logging; applicability to asset annotations not assumed"
+      ],
+      "id": "R06",
+      "accessed_at_utc": "2026-10-07T20:38:43.609473+00:00",
+      "final_url": "https://github.com/openastronomylog/openastronomylog",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/openastronomylog.html",
+      "bytes": 265781,
+      "sha256": "f42a0744150f418cd84dfc8d40858747ad04709e5571e989dc0862d314286f0e",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "Observation Manager official page",
+      "url": "https://observation.sourceforge.net/en/",
+      "version_or_release": "Official project page captured 2026-10-07; exact release unspecified",
+      "commit": null,
+      "locators": [
+        "OpenAstronomyLog XML export claim and project scope"
+      ],
+      "id": "R07",
+      "accessed_at_utc": "2026-10-07T20:38:43.696998+00:00",
+      "final_url": "https://observation.sourceforge.net/en/",
+      "http_status": 200,
+      "content_type": "text/html",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/observation-manager.html",
+      "bytes": 7655,
+      "sha256": "f2239528870792ee491f43f61020beb161e27e40f14e4189157bea86a2314c04",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "Tropy official documentation",
+      "url": "https://docs.tropy.org/",
+      "version_or_release": "Official documentation captured 2026-10-07; page does not state a release",
+      "commit": null,
+      "locators": [
+        "Local catalog, photos/items, metadata, tags/notes and export; analogy limits"
+      ],
+      "id": "R08",
+      "accessed_at_utc": "2026-10-07T20:38:43.739449+00:00",
+      "final_url": "https://docs.tropy.org/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/tropy-docs.html",
+      "bytes": 462352,
+      "sha256": "5c1690de9503d43114302b5195df42c8ca347608055f53138c097478faac5244",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "Nextcloud desktop conflict documentation",
+      "url": "https://raw.githubusercontent.com/nextcloud/documentation/2de94819a621e1d5876e6afde1f47203b613b96e/user_manual/desktop/conflicts.rst",
+      "version_or_release": "Documentation repository commit 2de94819a621e1d5876e6afde1f47203b613b96e",
+      "commit": "2de94819a621e1d5876e6afde1f47203b613b96e",
+      "locators": [
+        "user_manual/desktop/conflicts.rst, Overview and Example: simultaneous local/remote edit yields remote base plus local conflicted copy, requires human comparison; default conflict copy is not uploaded; exact Nextcloud client release not identified"
+      ],
+      "id": "R09",
+      "accessed_at_utc": "2026-10-07T20:38:43.741475+00:00",
+      "final_url": "https://raw.githubusercontent.com/nextcloud/documentation/2de94819a621e1d5876e6afde1f47203b613b96e/user_manual/desktop/conflicts.rst",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-conflicts.rst",
+      "bytes": 2864,
+      "sha256": "5995f5c8aa1fd57ca36a2b2aca2ae11167ddb9f089953edfed97043c8eecade0",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "Nextcloud Server 35 file versioning manual",
+      "url": "https://docs.nextcloud.com/server/35/user_manual/en/files/version_control.html",
+      "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+      "commit": null,
+      "locators": [
+        "Version control section: new restore point only after at least 2 minutes; age-based retention; max 50% currently available free space; named version excluded from automatic expiry"
+      ],
+      "id": "R10",
+      "accessed_at_utc": "2026-10-07T20:38:43.788124+00:00",
+      "final_url": "https://docs.nextcloud.com/server/35/user_manual/en/files/version_control.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-versioning.html",
+      "bytes": 19998,
+      "sha256": "7b10fe8138e47008007c76efc9d4da361b03ce8e1db4e55fb19aefebfdbc4aa6",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "Nextcloud Server 35 WebDAV chunking docs",
+      "url": "https://docs.nextcloud.com/server/35/developer_manual/client_apis/WebDAV/chunking.html",
+      "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+      "commit": null,
+      "locators": [
+        "WebDAV chunking v1/v2 sections: server assembles numbered chunks; v2 constraints and total length/quota semantics"
+      ],
+      "id": "R11",
+      "accessed_at_utc": "2026-10-07T20:38:43.827179+00:00",
+      "final_url": "https://docs.nextcloud.com/server/35/developer_manual/client_apis/WebDAV/chunking.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-chunking.html",
+      "bytes": 19374,
+      "sha256": "ffb919382e19d1e07364ac79c58564bec2698af195ae716d39bde1fbd79028d6",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon v6.0.2 commit page",
+      "url": "https://github.com/openseadragon/openseadragon/commit/7842cd92e6799d97c18227a79cb69af4f706b023",
+      "version_or_release": "OpenSeadragon v6.0.2 tag dereferences to commit 7842cd92e6799d97c18227a79cb69af4f706b023",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "locators": [
+        "Commit page identity; public git ls-remote refs/tags/v6.0.2 returned tag object ad68b05bb6f82935217fdc6794ca39eed3ce1df7 peeling to 7842cd92e6799d97c18227a79cb69af4f706b023"
+      ],
+      "id": "R12",
+      "accessed_at_utc": "2026-10-07T20:38:43.872655+00:00",
+      "final_url": "https://github.com/openseadragon/openseadragon/commit/7842cd92e6799d97c18227a79cb69af4f706b023",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-v6.0.2-commit.html",
+      "bytes": 313515,
+      "sha256": "98988cc9f660afe49c5ec3a0953851377553e9b4b111075feeb7367827007700",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon Viewer implementation v6.0.2",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewer.js",
+      "version_or_release": "OpenSeadragon v6.0.2",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "locators": [
+        "src/viewer.js lines 1947-1958: processReadyItems callback payload includes item: tiledImage after PR #2874"
+      ],
+      "id": "R13",
+      "accessed_at_utc": "2026-10-07T20:38:43.893182+00:00",
+      "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewer.js",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-viewer.js",
+      "bytes": 181325,
+      "sha256": "4e5e351dd8138359c0af13c0b1d47758c124f09249c439955a1d45473288113e",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon Viewport implementation v6.0.2",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewport.js",
+      "version_or_release": "OpenSeadragon v6.0.2",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "locators": [
+        "src/viewport.js:1338-1348 pointFromPixel current state; 1360-1394 global/per-image conversion and clipping"
+      ],
+      "id": "R14",
+      "accessed_at_utc": "2026-10-07T20:38:43.952538+00:00",
+      "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/viewport.js",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-viewport.js",
+      "bytes": 70542,
+      "sha256": "f6d284f5e0845fff040b46fb9f11c5e656071b87a689bd1bdfa1d0ae89f6d12c",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon TiledImage implementation v6.0.2",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/tiledimage.js",
+      "version_or_release": "OpenSeadragon v6.0.2",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "locators": [
+        "src/tiledimage.js:564-595 inverse conversion drops current for scale; 599-630 forward passes current; 703-705 helper loses TiledImage current; 824-830,1388-1408 animated scale; 1932-1943 current scale used to position tiles"
+      ],
+      "id": "R15",
+      "accessed_at_utc": "2026-10-07T20:38:43.986524+00:00",
+      "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/src/tiledimage.js",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tiledimage.js",
+      "bytes": 102982,
+      "sha256": "ea57535dd89c54712f22c95a173e2dbdb80f65ef6b614c3a2ec71cf7b3e1b903",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon issue #2873",
+      "url": "https://github.com/openseadragon/openseadragon/issues/2873",
+      "version_or_release": "Opened 2026-02-18; issue page state at access",
+      "commit": null,
+      "locators": [
+        "Issue body/reproduction: OpenSeadragon 6 concurrent addTiledImage callbacks could receive wrong event.item; reporter says reproducible on 6.0 and not 5.0.1"
+      ],
+      "id": "R16",
+      "accessed_at_utc": "2026-10-07T20:38:44.047398+00:00",
+      "final_url": "https://github.com/openseadragon/openseadragon/issues/2873",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-issue-2873.html",
+      "bytes": 267981,
+      "sha256": "e6af965f224be03118376abb1336cad282471e401fcac62198b8de66e88e821b",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon PR #2874",
+      "url": "https://github.com/openseadragon/openseadragon/pull/2874",
+      "version_or_release": "Merged 2026-02-20; merge commit b974dc1db594420826e7f87e0b099135ad29429d",
+      "commit": "b974dc1db594420826e7f87e0b099135ad29429d",
+      "locators": [
+        "PR2874 merge b974dc1db594420826e7f87e0b099135ad29429d; Copilot review comment requesting a regression test; not independent proof of entire test suite absence"
+      ],
+      "id": "R17",
+      "accessed_at_utc": "2026-10-07T20:38:44.065144+00:00",
+      "final_url": "https://github.com/openseadragon/openseadragon/pull/2874",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-2874.html",
+      "bytes": 400668,
+      "sha256": "69162cc1cb28ddd0553182aaad229792c63fa11bcbedc09c4c7cf9d486482299",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon v6.0.1 release notes",
+      "url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.0.1",
+      "version_or_release": "OpenSeadragon v6.0.1 release entry",
+      "commit": null,
+      "locators": [
+        "Release entry: v6.0.1 lists fix #2874 for multi-image loading"
+      ],
+      "id": "R18",
+      "accessed_at_utc": "2026-10-07T20:38:44.089536+00:00",
+      "final_url": "https://github.com/openseadragon/openseadragon/releases/tag/v6.0.1",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-release-v6.0.1.html",
+      "bytes": 197546,
+      "sha256": "6fb9720382e835e54c14d744c5e962c4c5f5b3ba3aee5740191f850b4e9b0d92",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon issue #2925",
+      "url": "https://github.com/openseadragon/openseadragon/issues/2925",
+      "version_or_release": "Opened 2026-05-15; issue state at access",
+      "commit": null,
+      "locators": [
+        "issue2925 body reporter OSD6.0.2 and slow IIIF dynamic add path; embedded timeline comments, also captured separately as R41"
+      ],
+      "id": "R19",
+      "accessed_at_utc": "2026-10-07T20:38:44.283554+00:00",
+      "final_url": "https://github.com/openseadragon/openseadragon/issues/2925",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-issue-2925.html",
+      "bytes": 259467,
+      "sha256": "654aa0394fa01854fcb7d577d2458e9f46cdfc05adabedf6efb6b5edf0c89de9",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "JS9 project repository page",
+      "url": "https://github.com/ericmandel/js9",
+      "version_or_release": "Official repository archived 2024-12-31; v3.9.0 release 2024-12-13",
+      "commit": null,
+      "locators": [
+        "README: FITS, image regions, WCS-related domain capabilities; release v3.9.0 on 2024-12-13, archive on 2024-12-31, and explicit no-maintainer warning"
+      ],
+      "id": "R20",
+      "accessed_at_utc": "2026-10-07T20:38:44.403098+00:00",
+      "final_url": "https://github.com/ericmandel/js9",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/js9-repository.html",
+      "bytes": 415096,
+      "sha256": "ecc71fcd68bac4e3cfb71162683ebfafee815911ea237a13566e3c4e4ed99f1e",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "OpenSeadragon PR #2874 patch",
+      "url": "https://github.com/openseadragon/openseadragon/pull/2874.diff",
+      "version_or_release": "PR #2874 merged as b974dc1db594420826e7f87e0b099135ad29429d",
+      "commit": "b974dc1db594420826e7f87e0b099135ad29429d",
+      "locators": [
+        "Patch contains one viewer.js callback change and no test-file changes"
+      ],
+      "id": "R21",
+      "accessed_at_utc": "2026-10-07T20:38:44.482822+00:00",
+      "final_url": "https://patch-diff.githubusercontent.com/raw/openseadragon/openseadragon/pull/2874.diff",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-2874.diff",
+      "bytes": 571,
+      "sha256": "8537b7b2d8ae53f8d7df5c0dd2ae0fa19420e389f717c804c23d2e75c786850b",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "title": "Nextcloud Server 35 file-sharing administration manual",
+      "url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/file_sharing_configuration.html",
+      "version_or_release": "Nextcloud Server 35 docs; patch release not identified",
+      "commit": null,
+      "locators": [
+        "File Drop Shares require public uploads; unauthenticated uploads are not chunked; group/share options and shared-file ownership note"
+      ],
+      "id": "R22",
+      "accessed_at_utc": "2026-10-07T20:38:44.756644+00:00",
+      "final_url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/file_sharing_configuration.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-sharing.html",
+      "bytes": 36258,
+      "sha256": "f108da2b205df5299163220cddee9a520f25b92a9661e89f768c254f7e7e8d1a",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R23",
+      "title": "CouchDB replication/conflicts",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_release": "3.5 documentation",
+      "commit": null,
+      "locators": [
+        "2.3.2 conflict avoidance; 2.3.3 revision tree; 2.3.7 history/compaction"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:44.817090+00:00",
+      "final_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/couchdb-conflicts.html",
+      "bytes": 79028,
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R24",
+      "title": "SQLite atomic commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_release": "official documentation at access",
+      "commit": null,
+      "locators": [
+        "1 rollback-mode applicability; 3 single-file commit; 9 limitations"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:44.835990+00:00",
+      "final_url": "https://www.sqlite.org/atomiccommit.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/sqlite-atomiccommit.html",
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R25",
+      "title": "RO-Crate introduction",
+      "url": "https://www.researchobject.org/ro-crate/specification/1.1/introduction.html",
+      "version_or_release": "RO-Crate 1.1",
+      "commit": null,
+      "locators": [
+        "Introduction: context and files; structured metadata"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:44.891239+00:00",
+      "final_url": "https://www.researchobject.org/ro-crate/specification/1.1/introduction.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/ro-crate-1.1.html",
+      "bytes": 23683,
+      "sha256": "9b21c7a5692f15375d6795fed3b978e4b9b1d8b71b73810079a77b4e7f55c421",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R26",
+      "title": "AstroLog official roadmap",
+      "url": "https://astro-log.app/",
+      "version_or_release": "official project page at access",
+      "commit": null,
+      "locators": [
+        "Roadmap; beta/current versus future"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:44.907703+00:00",
+      "final_url": "https://astro-log.app/",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/astrolog.html",
+      "bytes": 67242,
+      "sha256": "70e3c51135e1a496ac2b0ea4e4d414db1e56a65d8a6d8c90da07f6efd8ef8d65",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R27",
+      "title": "OpenSeadragon v6.0.2 tag identity",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.0.2",
+      "version_or_release": "v6.0.2",
+      "commit": null,
+      "locators": [
+        "object SHA tag object"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:44.915805+00:00",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/git/ref/tags/v6.0.2",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tag-ref.json",
+      "bytes": 353,
+      "sha256": "eb3c5c4439ac3be70f5bbeef274d94f362e3d76c05489c345fcdebcc71ac9b9a",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R28",
+      "title": "OpenSeadragon PR 2874 metadata",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2874",
+      "version_or_release": "PR 2874",
+      "commit": null,
+      "locators": [
+        "merge_commit_sha; merged_at; body"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:44.974272+00:00",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2874",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-api.json",
+      "bytes": 17967,
+      "sha256": "58901f103ca790e1e1bf5a1d6442588f438c995c300f4e8ba05e1eb11d94d966",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R29",
+      "title": "OpenSeadragon issue 2873 metadata",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2873",
+      "version_or_release": "issue 2873",
+      "commit": null,
+      "locators": [
+        "body and status"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:44.998752+00:00",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2873",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-issue-api.json",
+      "bytes": 6869,
+      "sha256": "ab55731382a2de74c55d2572b16fa6cf1742045a80d54452095d546d6cb72b5b",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R30",
+      "title": "OpenSeadragon PR 2874 discussion",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2874/comments",
+      "version_or_release": "PR 2874 comments",
+      "commit": null,
+      "locators": [
+        "regression-test request"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:45.054576+00:00",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2874/comments",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-comments.json",
+      "bytes": 1622,
+      "sha256": "889e2c3c2e3330b4c75e5f8d400a568accccbd1544929aeed7ad36c968e48b00",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R31",
+      "title": "OpenSeadragon release 6.0.1 metadata",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.0.1",
+      "version_or_release": "v6.0.1",
+      "commit": null,
+      "locators": [
+        "release body and target identity"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:45.100588+00:00",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/releases/tags/v6.0.1",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-release-api.json",
+      "bytes": 5131,
+      "sha256": "f0b0b4ef3b3b8b2e02d56007146d0346931c3374e6ae672d91c905a919cb1c35",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R32",
+      "title": "Nextcloud large-file upload docs",
+      "url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/big_file_upload_configuration.html",
+      "version_or_release": "Server 35 docs",
+      "commit": null,
+      "locators": [
+        "default limit; web/PHP constraints"
+      ],
+      "accessed_at_utc": "2026-10-07T20:38:45.155673+00:00",
+      "final_url": "https://docs.nextcloud.com/server/35/admin_manual/configuration_files/big_file_upload_configuration.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/nextcloud-biguploads.html",
+      "bytes": 33835,
+      "sha256": "b0377f5f25962e0f45d1020b274ba18860b5abeb1df46e0bcaedb11e6cc30f28",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R33",
+      "title": "OpenSeadragon annotated v6.0.2 tag object",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/ad68b05bb6f82935217fdc6794ca39eed3ce1df7",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/git/tags/ad68b05bb6f82935217fdc6794ca39eed3ce1df7",
+      "accessed_at_utc": "2026-10-07T20:39:05.162743+00:00",
+      "http_status": 200,
+      "version_or_release": "v6.0.2",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "locators": [
+        "object.sha; tag; tagger"
+      ],
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tag-object.json",
+      "bytes": 671,
+      "sha256": "753f4628dd2de8601bfefadedf28ea5e41807f5b84179689486ec815eddcccd4",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R34",
+      "title": "OpenSeadragon history for inverse coordinates",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/commits?path=src/tiledimage.js&per_page=100",
+      "version_or_release": "path history at access",
+      "locators": [
+        "Latest 100 commits for src/tiledimage.js, bounded message scan; not complete history or proof no fix exists"
+      ],
+      "accessed_at_utc": "2026-10-07T20:40:55.542548+00:00",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/commits?path=src/tiledimage.js&per_page=100",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tiledimage-history.json",
+      "bytes": 340419,
+      "sha256": "69f4ed94f823c855ad3807bb03d11b0a0c984c2e8cb8a10dd0ef3a8def721602",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R35",
+      "title": "OpenSeadragon code/test maintenance PR 2958",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2958",
+      "version_or_release": "PR 2958",
+      "locators": [
+        "PR2958 metadata/body: tile-source/control coverage; unrelated to inverse current-scale defect"
+      ],
+      "accessed_at_utc": "2026-10-07T20:40:55.544451+00:00",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/pulls/2958",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-2958.json",
+      "bytes": 18469,
+      "sha256": "a3b92e6c3d7b03f1266304070ec49f54d1dee7a569b50696298f4b930df62539",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R36",
+      "title": "OpenSeadragon PR 2958 patch",
+      "url": "https://github.com/openseadragon/openseadragon/pull/2958.diff",
+      "version_or_release": "PR 2958",
+      "locators": [
+        "PR2958 diff has no viewportToImageCoordinates/_viewportToImageDelta match; no applicability asserted"
+      ],
+      "accessed_at_utc": "2026-10-07T20:40:55.545846+00:00",
+      "final_url": "https://patch-diff.githubusercontent.com/raw/openseadragon/openseadragon/pull/2958.diff",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-pr-2958.diff",
+      "bytes": 37345,
+      "sha256": "272ddc8f55cd74e7336bf8281332e957387514bb4fcd15ca4f04a3d64988561e",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R37",
+      "title": "OpenSeadragon exact 6.0.2 changelog",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/changelog.txt",
+      "version_or_release": "v6.0.2 commit 7842cd92e6799d97c18227a79cb69af4f706b023",
+      "locators": [
+        "6.0.2; 6.0.1; 6.0.0 entries"
+      ],
+      "accessed_at_utc": "2026-10-07T20:40:55.547365+00:00",
+      "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/changelog.txt",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-changelog-v6.0.2.txt",
+      "bytes": 60080,
+      "sha256": "7df4a37a7460f8e28766f58705946a86459d309a47753e60923c129c1330e89e",
+      "capture_integrity_rechecked": true,
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023"
+    },
+    {
+      "id": "R38",
+      "title": "OpenSeadragon v6.0.2 repository tree",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/git/trees/7842cd92e6799d97c18227a79cb69af4f706b023?recursive=1",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/git/trees/7842cd92e6799d97c18227a79cb69af4f706b023?recursive=1",
+      "accessed_at_utc": "2026-10-07T20:41:27.575889+00:00",
+      "http_status": 200,
+      "version_or_release": "v6.0.2",
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023",
+      "locators": [
+        "Pinned repository tree, truncated=false; test/modules/tiledimage.js path discovery"
+      ],
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-tree-v6.0.2.json",
+      "bytes": 310770,
+      "sha256": "810bd5e87e15aefb4bf52652e0255cf50a76effb7d5f336be4d84774724d5dc5",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R39",
+      "title": "OpenSeadragon pinned TiledImage tests",
+      "url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/test/modules/tiledimage.js",
+      "version_or_release": "v6.0.2",
+      "locators": [
+        "test/modules/tiledimage.js:56-61 conversion checks use default/target state; 108-126 animation test checks current bounds after setWidth, not inverse conversion at unequal scales"
+      ],
+      "accessed_at_utc": "2026-10-07T20:41:51.276867+00:00",
+      "final_url": "https://raw.githubusercontent.com/openseadragon/openseadragon/7842cd92e6799d97c18227a79cb69af4f706b023/test/modules/tiledimage.js",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-test-tiledimage.js",
+      "bytes": 29169,
+      "sha256": "823f6a583b78fb34348206d1c54bf86672e71f15f3f104c6c266629c51e1fb0c",
+      "capture_integrity_rechecked": true,
+      "commit": "7842cd92e6799d97c18227a79cb69af4f706b023"
+    },
+    {
+      "id": "R40",
+      "title": "OpenSeadragon coordinate/current issue search",
+      "url": "https://api.github.com/search/issues?q=repo%3Aopenseadragon%2Fopenseadragon%20viewportToImageCoordinates%20current",
+      "version_or_release": "public issue index at access",
+      "locators": [
+        "8 issue/PR results; bodies for #1360, #2485, #2593 describe different mapping usage questions; not matched to inverse current-scale defect"
+      ],
+      "accessed_at_utc": "2026-10-07T20:41:51.279696+00:00",
+      "final_url": "https://api.github.com/search/issues?q=repo%3Aopenseadragon%2Fopenseadragon%20viewportToImageCoordinates%20current",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-current-issue-search.json",
+      "bytes": 33120,
+      "sha256": "cea27af2b0f98bf55dda380a96949a83a155563a48399cca688e7ef7ff48880d",
+      "capture_integrity_rechecked": true
+    },
+    {
+      "id": "R41",
+      "title": "OpenSeadragon issue 2925 discussion",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2925/comments",
+      "final_url": "https://api.github.com/repos/openseadragon/openseadragon/issues/2925/comments",
+      "accessed_at_utc": "2026-10-07T20:44:09.781466+00:00",
+      "http_status": 200,
+      "version_or_release": "report on v6.0.2; discussion at access",
+      "commit": null,
+      "locators": [
+        "issuecomment-4466229134 and -4466272374: reporter WebGL texture error and Canvas workaround on Mac browsers; -4480273108 asks CORS/fallback versus WebGL path question"
+      ],
+      "capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-issue-2925-comments.json",
+      "bytes": 12832,
+      "sha256": "0b9c596d55f8eb5f890d0bf5770356817392d2f35c49bd47cfdbe3d3d4aae386",
+      "capture_integrity_rechecked": true
+    }
+  ],
+  "evidence": {
+    "E01": {
+      "description": "Exact mapped scientific files and declared captures inspected for identity/integrity; predecessor/final content comparison",
+      "input_refs": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/artifact.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/source-map.json",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1/preservation_check.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/artifact.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/source-map.json",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/preservation_check.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/BRIEF.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/PLAN.md"
+      ],
+      "check_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/reviewed-input-hashes.json"
+    },
+    "E02": {
+      "description": "Dated W3C annotation and Media Fragments selectors/attribution/coordinate conventions and boundaries",
+      "primary_source_refs": [
+        "R01",
+        "R02"
+      ],
+      "final_locators": [
+        "artifact.md:30-36",
+        "A-P4"
+      ]
+    },
+    "E03": {
+      "description": "FITS v4 raw values, DATE-OBS scale/start defaults, timezone exclusion, TIMESYS contextual overrides and pixel origin",
+      "primary_source_refs": [
+        "R03",
+        "R04"
+      ],
+      "final_locators": [
+        "artifact.md:44-48",
+        "A-P2",
+        "A-P4",
+        "validation row:Representative file/time intake"
+      ]
+    },
+    "E04": {
+      "description": "Annotated OSD v6.0.2 tag and pinned APIs including inverse-scale discrepancy",
+      "primary_source_refs": [
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R27",
+        "R33",
+        "R38",
+        "R39"
+      ],
+      "review_check_refs": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-coordinate-check.js",
+          "sha256": "592ea4d4c78acd9c88d9aa0d998745f8135e32c562730d3039c700e5b266734b",
+          "bytes": 2914
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-coordinate-check-result.json",
+          "sha256": "8026d51c16d6dff169a98c8b5a758563a4908a3a6618e61d4e7b486604c5e172",
+          "bytes": 3505
+        }
+      ],
+      "final_locators": [
+        "artifact.md:38",
+        "artifact.md:94",
+        "A-P4"
+      ]
+    },
+    "E05": {
+      "description": "OSD #2873 reporter mechanism, #2874 patch/merge, 6.0.1 release and retained 6.0.2 code; patch lacks added test file",
+      "primary_source_refs": [
+        "R16",
+        "R17",
+        "R18",
+        "R21",
+        "R28",
+        "R29",
+        "R30",
+        "R31",
+        "R37"
+      ],
+      "final_locators": [
+        "artifact.md:40-42",
+        "artifact.md:106"
+      ]
+    },
+    "E06": {
+      "description": "Separate #2925 report and discussion; slow IIIF/dynamic add, WebGL texture errors, reported Canvas workaround, CORS/fallback ambiguity; no matching notebook fix established",
+      "primary_source_refs": [
+        "R19",
+        "R41"
+      ],
+      "final_locators": [
+        "artifact.md:40",
+        "artifact.md:100"
+      ],
+      "predecessor_locators": [
+        "artifact.md:43",
+        "viewer regression validation row"
+      ]
+    },
+    "E07": {
+      "description": "Nextcloud documented conflicts, sharing, registered-user chunking, expiry/quota/configuration limits and pruning; exact deployment/client unresolved",
+      "primary_source_refs": [
+        "R09",
+        "R10",
+        "R11",
+        "R22",
+        "R32"
+      ],
+      "final_locators": [
+        "artifact.md:22",
+        "artifact.md:50-52",
+        "A-P3",
+        "A-P5",
+        "A-P6"
+      ]
+    },
+    "E08": {
+      "description": "BagIt 1.0 fixity/completeness, opaque payload, own schema boundary and path/active-attack limits",
+      "primary_source_refs": [
+        "R05"
+      ],
+      "final_locators": [
+        "artifact.md:54",
+        "artifact.md:64",
+        "artifact.md:99",
+        "A-P6"
+      ]
+    },
+    "E09": {
+      "description": "Useful competing components/domain leads/outside-domain analogies; selected versus unevaluated boundaries",
+      "primary_source_refs": [
+        "R06",
+        "R07",
+        "R08",
+        "R20",
+        "R23",
+        "R24",
+        "R25",
+        "R26"
+      ],
+      "final_locators": [
+        "artifact.md:15-28",
+        "artifact.md:84-86"
+      ],
+      "predecessor_locators": [
+        "artifact.md:63",
+        "Optional later work"
+      ]
+    },
+    "E10": {
+      "description": "Complete bounded planning flow, identities/provenance, ingest, access, collaboration, retention/recovery, packet handoff and observable validation proposals",
+      "input_refs": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1/artifact.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/PLAN.md"
+      ],
+      "final_locators": [
+        "artifact.md:7-13",
+        "artifact.md:56-100",
+        "A-P1",
+        "A-P2",
+        "A-P3",
+        "A-P4",
+        "A-P5",
+        "A-P6",
+        "A-P7"
+      ]
+    },
+    "E11": {
+      "description": "Bounded additional code-history/issue probing; unrelated history was not treated as a fix",
+      "primary_source_refs": [
+        "R34",
+        "R35",
+        "R36",
+        "R38",
+        "R39",
+        "R40"
+      ],
+      "assessment": "Latest 100 returned path-history records scanned for pertinent messages; relevant issue bodies checked; PR2958 has no inverse-method change. No exhaustive history or fix-absence guarantee."
+    }
+  },
+  "reviewer_executed_check_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-coordinate-check.js",
+      "sha256": "592ea4d4c78acd9c88d9aa0d998745f8135e32c562730d3039c700e5b266734b",
+      "bytes": 2914
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/osd-coordinate-check-result.json",
+      "sha256": "8026d51c16d6dff169a98c8b5a758563a4908a3a6618e61d4e7b486604c5e172",
+      "bytes": 3505
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/reviewed-input-hashes.json",
+      "sha256": "14953d6d7adb5a3783772baab7719e979d2a5d883f569215ababaecb0d6841c4",
+      "bytes": 2518
+    }
+  ],
+  "preservation": {
+    "result": "PASS_WITH_LIMITATIONS",
+    "core_constraints_conditions_preserved": true,
+    "literal_optional_discovery_preservation_complete": false,
+    "admitted_corrections_preserved": [
+      "FITS v4 defaults with proper input/HDU boundary",
+      "FITS pixel versus web selector frame separation",
+      "No generic issue applicability guarantee",
+      "30-day window remains policy-dependent/optional"
+    ],
+    "incorrect_added_correction_refs": [
+      "D-SRC-01"
+    ],
+    "loss_refs": [
+      "N-PRES-01",
+      "N-PRES-02"
+    ],
+    "source_identity_result": "Core standards/code/issue/fix identities retained and independently verified; AstroLog optional identity omitted; solar analogy superseded by normative FITS without adopting solar transforms.",
+    "evidence_refs": [
+      "E01",
+      "E03",
+      "E05",
+      "E06",
+      "E09",
+      "E10"
+    ]
+  },
+  "proposed_vs_executed": {
+    "candidate": {
+      "reported_executed": [
+        "Mapped input hashing",
+        "Primary capture byte/hash checks",
+        "Public tag resolution",
+        "Read-only code/standard/documentation/issue/patch/release inspection"
+      ],
+      "original_operations_independently_attested": false,
+      "independently_verified_available_results": [
+        "Mapped hashes and captures",
+        "Pinned tag/commit identity",
+        "Relevant primary source facts and conditional history"
+      ],
+      "application_checks": "All proposed, expressly unexecuted",
+      "proposed_checks": [
+        "Representative file/time intake",
+        "Interrupted/repeated ingest",
+        "Region geometry",
+        "Replacement/annotation history",
+        "Concurrent edits",
+        "Draft/publication/direct retrieval/withdrawal",
+        "Deletion/backup restore",
+        "Packet export/offline reinspection",
+        "Operator/deployment gate"
+      ]
+    },
+    "reviewer": {
+      "actually_executed": [
+        "Open public-primary discovery and fresh captures",
+        "Mapped scientific/capture hashing",
+        "Pinned code and relevant standards/documentation/history inspection",
+        "Annotated tag-object resolution",
+        "FITS text and relevant page rendering/visual inspection",
+        "Predecessor/final preservation comparison",
+        "One isolated check of four verbatim pinned coordinate methods with unequal-scale fixture and equal-scale control"
+      ],
+      "isolated_check_result": {
+        "unequal_scale_current_roundtrip": "FAIL: (500,250) becomes (250,125)",
+        "equal_scale_control": "PASS: (500,250)",
+        "scope": "synthetic method-level evidence only; not application/browser rendering"
+      },
+      "not_executed": [
+        "Product build",
+        "Browser coordinate or issue reproduction",
+        "Image decoder/time/WCS conversion",
+        "Upload/retry deployment",
+        "Authentication/access probe",
+        "Concurrent member workflow",
+        "Retention/deletion job",
+        "Packet export/import",
+        "Backup restore",
+        "Whole upstream test suite"
+      ]
+    }
+  },
+  "source_operations": {
+    "scope": "Only directly observable reviewer operations and accessible capture counts; no hidden backend or candidate telemetry inferred",
+    "web_search_calls": 4,
+    "web_search_queries": 13,
+    "public_capture_operations": 41,
+    "public_capture_successes": 41,
+    "observed_candidate_capture_files": 46,
+    "unobserved_backend_or_redirect_request_count": null,
+    "candidate_source_operation_count": null
+  },
+  "usage": {
+    "input": null,
+    "cached": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "supervisor_owned_eligibility": {
+    "lifecycle": null,
+    "time": null,
+    "provenance": null,
+    "economics": null,
+    "cannot_upgrade_original_scientific_grade": true
+  },
+  "boundary_observance": {
+    "actual_rules_read": [
+      "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+      "/home/sittingmongoose/.codex/AGENTS.md"
+    ],
+    "ancestor_scoped_paths_checked": true,
+    "read_only_skill": "/home/sittingmongoose/.codex/plugins/cache/openai-primary-runtime/pdf/26.909.12148/skills/pdf/SKILL.md",
+    "reviewer_goal_created": false,
+    "delegated_helpers": false,
+    "candidate_feedback_or_rewriting": false,
+    "other_arms_or_reviews_inspected": false,
+    "host_runtime_or_root_history_inspected": false,
+    "incidental_procedural_metadata_in_permitted_preservation": "encountered; excluded from scientific judgment",
+    "writes": "Only assigned review output directory and its sources"
+  },
+  "artifacts": {
+    "report_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/REPORT.md",
+    "report_sha256": "984daea09e98010c35c65dc6998b05a618794ba7bb94344416508233b4c702e7",
+    "capture_index_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/capture-index.json",
+    "capture_index_sha256": "eab7978e0af672abdf9afe63dd62f240298b483e62b85c521c290f4b0352c072",
+    "discovery_query_log": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/treatment/source-review-v1/sources/discovery-queries.json"
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "case_id": "D-M12-A",
+  "matched_pair_version": 3,
+  "budget_minutes_per_cold_arm": 30,
+  "old_design_minutes": 15,
+  "root_prospective_budget_change": true,
+  "arms": {
+    "control": {
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M12-A-control-normal_research_final-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "requestedAt": "2026-10-07T20:08:21.851Z",
+        "startedAt": "2026-10-07T20:08:26.253Z",
+        "completedAt": "2026-10-07T20:25:23.074Z"
+      },
+      "request_to_terminal_seconds": 1021.223,
+      "occupied_seconds": 1016.821,
+      "queue_seconds": 4.402,
+      "inclusive_common_prep_to_terminal_seconds": 1107.902647,
+      "source_grade": "FAIL",
+      "actual_whole_arm_deadline": "2026-10-07T20:36:55.171353+00:00",
+      "within_candidate_deadline": true,
+      "input": null,
+      "cached_input": null,
+      "generated": null,
+      "billing": null
+    },
+    "treatment": {
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M12-A-treatment-protected_breadth_final-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "requestedAt": "2026-10-07T20:07:45.274Z",
+        "startedAt": "2026-10-07T20:07:50.884Z",
+        "completedAt": "2026-10-07T20:24:29.866Z"
+      },
+      "request_to_terminal_seconds": 1004.592,
+      "occupied_seconds": 998.982,
+      "queue_seconds": 5.61,
+      "inclusive_common_prep_to_terminal_seconds": 1054.694647,
+      "source_grade": "FAIL",
+      "actual_whole_arm_deadline": "2026-10-07T20:36:55.171353+00:00",
+      "within_candidate_deadline": true,
+      "input": null,
+      "cached_input": null,
+      "generated": null,
+      "billing": null
+    }
+  },
+  "reviews": {
+    "control": {
+      "grade": "FAIL",
+      "assessment_status": "FULL_DECLARED_SCOPE_ASSESSED_COMPLETE",
+      "assessment_extent": {
+        "declared_primary_sources": 8,
+        "declared_primary_sources_hash_checked": 8,
+        "declared_primary_sources_semantically_checked": 8,
+        "final_artifact_complete_read": true,
+        "all_numbered_findings_checked": [
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "F5",
+          "F6",
+          "F7",
+          "F8"
+        ],
+        "all_proposed_changes_checked": 4,
+        "all_proposed_validation_checks_checked": 4,
+        "bounded_public_primary_gets": 12,
+        "additional_primary_pages": 4,
+        "material_claim_scope": "Every substantive final paragraph, source fact, inference, recommendation, rejection, uncertainty and proposed oracle; surrounding release/type/default/unit/authority conditions were read where relevant. Not a claim to have read every unrelated sentence of large specifications.",
+        "m14_applicable": false,
+        "m14_reason": "D-M12-A is a bounded research module. INPUT_MAP declares no M14 authored set, semantic projections or preservation views.",
+        "unassessed_remainder": [],
+        "intrinsically_unverifiable_limits": [
+          "Actual unnamed sandbox storage/ack/conflict implementation and application test outcomes were not provided; candidate properly acknowledges this.",
+          "Historical candidate HTTP failures/capture timestamps/source-reading operations are index assertions without full frozen response/operation receipts. Their evidentiary limits are assessed, not upgraded to executed proof."
+        ],
+        "exhaustive_discovery_claimed": false,
+        "consequential_claims_checked": 46
+      },
+      "material_defects": 6,
+      "defect_identities": [
+        {
+          "id": "D01",
+          "title": "Offline persistence and restart recovery are left implicit"
+        },
+        {
+          "id": "D02",
+          "title": "UUID plus a seen-key store omits the atomic effect/key contract"
+        },
+        {
+          "id": "D03",
+          "title": "A MQTT session rule becomes a universal reconnect-only retry policy"
+        },
+        {
+          "id": "D04",
+          "title": "A failed-state transition does not bound local retained storage"
+        },
+        {
+          "id": "D05",
+          "title": "Duplicate inevitability and consumer-dedup exclusivity are overstated"
+        },
+        {
+          "id": "D06",
+          "title": "Acknowledgement stages and success/failure semantics are conflated"
+        }
+      ],
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/review.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/control-v3/freeze.json",
+      "immutable": true,
+      "lifecycle": "COMPLETED_QUIET_SETTLED",
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M12-A-control-source-review-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T20:30:38.033Z",
+        "startedAt": "2026-10-07T20:30:40.838Z",
+        "completedAt": "2026-10-07T20:45:14.972Z"
+      },
+      "deadline_expired": false
+    },
+    "treatment": {
+      "grade": "FAIL",
+      "assessment_status": "FULL_SCOPE_FAIL",
+      "assessment_extent": {
+        "disposition": "FULL_DECLARED_CLAIM_SCOPE_CHECKED",
+        "claim_checks_completed": 50,
+        "mapped_primary_sources_checked": 6,
+        "additional_primary_sources_checked": 2,
+        "source_check_definition": "Every consequential assertion, recommendation, condition, alternative, lead and proposed-check statement in all 100 lines of this frozen final was evaluated against original brief and relevant primary passages, including surrounding governing conditions. All six mapped byte bodies were verified and inspected; index identity claims were checked against source content. Full scope here means the declared bounded diagnostic science, not unrelated MQTT chapters or unspecified future technologies.",
+        "unassessed_remainder_within_declared_science_claim_set": [],
+        "unverifiable_claims_assessed_as_evidence_limits": [
+          "Historical failed SQS/CouchDB captures; discarded responses and DNS evidence are not retained.",
+          "Original capture-command execution and timestamps; frozen index is self-report, not an authenticated acquisition log."
+        ],
+        "not_executed": [
+          "Survey application or server code",
+          "Crash/power-loss injections",
+          "Network/load/battery measurements",
+          "Overflow/property tests",
+          "Any downloaded code or installer"
+        ],
+        "outside_declared_scope": [
+          "Unrelated protocol/security chapters and unchosen implementation releases",
+          "Exhaustive public mechanism discovery",
+          "Unpursued broker/checkpoint designs",
+          "M14 authored-set semantic/projection/preservation comparison: not applicable to this M12 brief/map; no such views are declared."
+        ],
+        "deadline_expired": false
+      },
+      "material_defects": 5,
+      "defect_identities": [
+        {
+          "id": "D01",
+          "title": "Unconditional rejection of end-to-end exactly-once protocols"
+        },
+        {
+          "id": "D02",
+          "title": "The replay-safe/effectively-once promise omits governing identity and deduplication conditions"
+        },
+        {
+          "id": "D03",
+          "title": "Offline capture durability is left outside the allegedly sufficient additions"
+        },
+        {
+          "id": "D04",
+          "title": "Outbox atomicity is moved to the wrong boundary and the crash oracle conflates sends with effects"
+        },
+        {
+          "id": "D05",
+          "title": "Ordering and replication options lose source conditions and semantic distinctions"
+        }
+      ],
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.json",
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M12-A/treatment-v3/freeze.json",
+      "immutable": true,
+      "lifecycle": "COMPLETED_QUIET_SETTLED",
+      "actual_T3_timing": {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M12-A-treatment-source-review-v3:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T20:30:40.204Z",
+        "startedAt": "2026-10-07T20:30:41.175Z",
+        "completedAt": "2026-10-07T20:43:27.690Z"
+      },
+      "deadline_expired": false
+    }
+  },
+  "assessment": {
+    "quality_preserving_speedup_established": false,
+    "equal_quality_established": false,
+    "conclusion": "Both independent full-scope reviews FAIL with differing material defect identities and source conditions. No quality-preserving win or equal-quality claim. Observed timing is descriptive for this single changed-budget matched pair."
+  },
+  "candidate_all_native_complete": true,
+  "all_candidates_and_reviewers_quiet": true,
+  "single_pair_only": true,
+  "billing_input_cached_generated": null
+}

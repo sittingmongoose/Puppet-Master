@@ -1,0 +1,72 @@
+{
+  "observed_at": "2026-10-07T22:30:39.194558+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_6a7d64db-41a0-4db3-8324-6c76c09b71ad/state.json",
+  "actual_state": {
+    "objective": "Complete D-M16-A/treatment/fresh_bundle_join_final-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "complete",
+    "rounds": 4,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "[Ingest only allowed inputs: brief, manifest, both predecessor topic reports + their source indices/bytes; extract per-topic claims, conditions, uncertainties, negative leads]",
+        "acceptance": "notes/checklist in job dir lists each INPUT_MAP-listed path read (`cat cases/D-M16-A/inputs/brief.md jobs/*/fresh_topic{1,2}_comparison-v3/report.md`); checklist confirms no disallowed paths (sibling answer, control arm, v1/v2) were opened",
+        "status": "done"
+      },
+      {
+        "id": "t2",
+        "title": "[Independently spot-check predecessor claims against public primary docs and capture own source bytes into sources/ with index.json]",
+        "acceptance": "every entry in sources/index.json has url/version/capture/hash/locator/limits; `cd sources && sha256sum -c index_hashes.txt` (or equivalent recompute) matches recorded hashes; captured bytes differ from blindly copied predecessor bindings where claims were amended",
+        "status": "done"
+      },
+      {
+        "id": "t3",
+        "title": "[Author final.md bundle join: separate acquisition/refresh and display/retention dispositions, shared identity/freshness dependencies + reuse invalidation, preserved topic-specific uncertainties, \u22648 material findings, topic comparison with discriminating checks]",
+        "acceptance": "`test -f final.md` at the exact output path; `wc -w final.md` \u2264 ~1100; `grep -cE '^### Finding' final.md` \u2264 8; grep hits for each of the 6 obligation headings including proposed-vs-executed validation and accepted/amended/rejected/unresolved dispositions",
+        "status": "done"
+      },
+      {
+        "id": "t4",
+        "title": "[Record timings.json with actual source-op/capture/first-useful-finding/output/known-usage timestamps and distinct native counters, confirm Goal terminal, then freeze outputs]",
+        "acceptance": "`python3 -m json.tool timings.json` passes with unknown inputs null; all timestamps within T0 21:21:56Z..22:41:56Z; `sha256sum final.md` unchanged across a post-terminal re-check (no amendment after Goal terminal)",
+        "status": "done"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791410921095,
+    "updatedAt": 1791412236285,
+    "endedReason": "all tickets done"
+  },
+  "source_sha256": "1051fb9a8d9724ebcdd8beecaede592c9c280a6261e8db09089de9f6d0550e84",
+  "separate_actual_config_binding": {
+    "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3",
+    "case_id": "D-M16-A",
+    "arm": "treatment",
+    "stage": "fresh_bundle_join_final-v3",
+    "target": {
+      "providerInstanceId": "zcode",
+      "driverKind": "acpRegistry",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": {
+        "thought": "max",
+        "mode": "yolo"
+      }
+    },
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-treatment-fresh_bundle_join_final-v3",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "limitation": "Meaningful genuine expiry snapshot; installed driver only, no native terminal inferred from T3."
+}

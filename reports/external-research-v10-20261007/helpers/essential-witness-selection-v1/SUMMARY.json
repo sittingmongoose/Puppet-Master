@@ -1,0 +1,42 @@
+{
+  "schema": "er10.selector-summary.v1",
+  "counts": {
+    "actual_selection_objects": 47,
+    "archive_candidate_count_if_root_accepts": 1,
+    "campaign_complete": false,
+    "deduplicated_proposed_fragment_count": 220,
+    "deduplicated_proposed_payload_bytes": 29630,
+    "delete_authorized_objects": 0,
+    "dispositions": {
+      "ALTERNATIVE_AUTHORED_BOUNDED_NONCLAIM": 1,
+      "ALTERNATIVE_AUTHORED_CHECK_AND_CONDITIONAL_CODE": 2,
+      "ALTERNATIVE_IMMUTABLE_COMMIT_GRAPH": 1,
+      "ALTERNATIVE_IMMUTABLE_RELEASED_CORRECTION": 1,
+      "ALTERNATIVE_SELECTED_EXTRACT": 12,
+      "ALTERNATIVE_SELECTED_RELEASED_FAILURE_WITNESSES": 1,
+      "EXCLUDED_IMMUTABLE_PRECISE_CODE_ALTERNATIVE": 9,
+      "HOLD_MAPPING_COMPONENT_UNRESOLVED": 1,
+      "HOLD_PDF_LITERAL_RANGE_DEPENDENCIES_UNRESOLVED": 1,
+      "SELECT_PRIVATE_PROPOSED": 47
+    },
+    "full_documents_selected": 0,
+    "original_eligible_objects": 76,
+    "original_eligible_unique_bytes_read": 8756827,
+    "predicate_classes": {
+      "LIVE_MUTABLE_DOC_API_HISTORY": 54,
+      "VERSIONED_RELEASE_OR_TAG": 22
+    },
+    "proposed_retained_literal_bytes": 29842,
+    "retention_verified": false,
+    "root_adjudication_pending_objects": 76,
+    "selected_objects_with_additional_assertion_components_HOLD": 3,
+    "unresolved_range_method_HOLD_objects": 2
+  },
+  "maximum_future_private_archives": 1,
+  "archive_created": false,
+  "cleanup_performed": false,
+  "original_grades_unchanged": true,
+  "new_semantic_grading": false,
+  "root_adjudication_pending": true,
+  "public_source_quotes_in_brief": 0
+}

@@ -1,0 +1,44 @@
+{
+  "observed_at": "2026-10-07T21:40:20.577083+00:00",
+  "nomination": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/m16-topic1-treatment-topic2-control-native-active-root-nominations-v1.json",
+  "nomination_sha256": "ab5694032552c40e2833ad023f0a5ba151965e1854d4029e2240129429e1247f",
+  "actual_nomination": {
+    "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/assignment.md",
+    "matching_objectives": 0,
+    "rows": [],
+    "native_active_observed": false
+  },
+  "separate_actual_config_binding": {
+    "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3",
+    "case_id": "D-M16-A",
+    "arm": "control",
+    "stage": "topic2_independent-v3",
+    "target": {
+      "providerInstanceId": "zcode",
+      "driverKind": "acpRegistry",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": {
+        "thought": "max",
+        "mode": "yolo"
+      }
+    },
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-topic2_independent-v3",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-topic2_independent-v3",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M16-A-control-topic2_independent-v3:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M16-A-control-topic2_independent-v3",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "native_activation": "NOT_OBSERVED",
+  "limitation": "Running T3 task is not native Goal proof."
+}

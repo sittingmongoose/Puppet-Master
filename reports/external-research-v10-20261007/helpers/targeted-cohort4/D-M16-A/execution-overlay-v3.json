@@ -1,0 +1,282 @@
+{
+  "case_id": "D-M16-A",
+  "version": "v3",
+  "frozen_at": "2026-10-07T21:21:56.716615+00:00",
+  "common_absolute_T0": "2026-10-07T21:21:56.716615+00:00",
+  "common_deadline": "2026-10-07T22:41:56.716615+00:00",
+  "root_binding": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-finite-prospective-admissions-v3.json",
+  "root_binding_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "root_schedule": {
+    "owner": "targeted-cohort4",
+    "family": "GLM",
+    "new_version": 3,
+    "common_stages": [],
+    "control": [
+      {
+        "assignment": "topic1-independent",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "topic2-independent",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-bundle-join-final",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "fresh-shared-discovery",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-topic1-comparison",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-topic2-comparison",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-bundle-join-final",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 80,
+    "common_absolute_pair_wall_minutes": 80,
+    "arm_overlap": true,
+    "context_override": "Preserve fresh topic comparison contexts (inventory only, no sibling answer) and original sequential topic stages. Reject proposal singleauthor50 treatment because it additionally changes acquisition context across comparisons. Botharms aggregate80; upperbound\u226490cold.",
+    "original_case_card_sha256": "7d42f944dffc38459640bbca41bd515c78ad235618b83b7b4b89d2b1ffe1f3de",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "treatment",
+      "control"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "target": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    }
+  },
+  "hashes": {
+    "case-card.json": "7d42f944dffc38459640bbca41bd515c78ad235618b83b7b4b89d2b1ffe1f3de",
+    "CASE_CARD.md": "b780a51964a4a03d01aa86cf46fbef4ed413057bc08c6e7532ad8d43e1ae5012",
+    "INPUT_MAP.json": "7c27dfb9c5e7b8e589df50ab932ae6f6e45c48f2b33ac391eb3faaca64464d3b",
+    "READY.json": "391ed1931861d972b2b14dec303dfb3eb5012341d27460c076ba63d524aa4b2a"
+  },
+  "input_hashes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/case-card.json",
+      "sha256": "7d42f944dffc38459640bbca41bd515c78ad235618b83b7b4b89d2b1ffe1f3de"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/CASE_CARD.md",
+      "sha256": "b780a51964a4a03d01aa86cf46fbef4ed413057bc08c6e7532ad8d43e1ae5012"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/INPUT_MAP.json",
+      "sha256": "7c27dfb9c5e7b8e589df50ab932ae6f6e45c48f2b33ac391eb3faaca64464d3b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/brief.md",
+      "sha256": "7d15cde85d0b0fbf171f16f4d26aa6f88607ed6c1675eadd3bccd0c2dd42fa28"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/inputs/sources.json",
+      "sha256": "1f021fdcc5f65f2d4e4c91454e2e109952804860a41bb9706d237a02923661a5"
+    }
+  ],
+  "sources": [],
+  "old_v1_v2_design_immutable": true,
+  "original_wordscope": {
+    "final_path_by_arm": {
+      "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/control/final.md",
+      "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/outputs/treatment/final.md"
+    },
+    "carrier": "Complete authored native final or exact file export to declared final path; root verifies full byte identity/readability. Native terminal status is separate.",
+    "max_material_findings": 8,
+    "soft_word_ceiling": 1100,
+    "deliverable": "One complete bounded answer/recommendation with source conditions, full obligation dispositions, justified uncertainty, retained optional leads where requested, and discriminating proposed checks. Any carried draft/critique remains a legitimate input, not source truth.",
+    "intermediate_scope": "Only method-required bounded stage outputs. Do not impose four synchronized catalogs or an integrated application plan.",
+    "preservation": "Final must distinguish accepted, amended, rejected and unresolved claims; executed witnesses and proposed tests remain distinct."
+  },
+  "original_scope": "A small offline map viewer has two related sandbox topics sharing downloaded raster tiles. Topic 1: decide a bounded resumable tile-acquisition/refresh policy under intermittent links. Topic 2: decide a bounded stale-tile display/retention policy when a newer tile version exists. Investigate public primary docs/code; discover useful mechanisms for both and preserve topic-specific unknowns. This is one two-topic diagnostic bundle.",
+  "obligations": [
+    "Give a separate disposition for acquisition and refresh.",
+    "Give a separate disposition for stale display and retention.",
+    "Identify shared identity/freshness dependencies and reuse invalidation.",
+    "Preserve topic-specific uncertainties instead of assuming shared evidence settles both.",
+    "Return at most eight distinct material findings across the bundle.",
+    "Deliver a bounded topic comparison and discriminating checks, counting shared discovery and synthesis."
+  ],
+  "arm_order": [
+    "treatment",
+    "control"
+  ],
+  "source_mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+  "carrier": "Actual bound installed native GoalLoopDriver state via passivev2; no vendorbackendgoal/ACPmappinginference",
+  "no_further_retry": true,
+  "stages": {
+    "control": [
+      {
+        "stage": "topic1_independent",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/report.md",
+        "candidate_minutes": 30,
+        "logical_phases_minutes": [],
+        "parallel_group": null,
+        "predecessors": [],
+        "latest_absolute_deadline": "2026-10-07T21:51:56.716615+00:00",
+        "request_sha256": "35eb5bb961e3ca92f720fd3c8de5645e3e04e7fe929c697c16b0483bea426800",
+        "assignment_sha256": "abd88143aa5ce827e72e3540f438e3263de7915dc8d05681f6e530f8252f22cd",
+        "map_sha256": "f1baba355be0ac8dfd2b23401eb3d59f99621002b7bdfa493530a0afa76dedd5"
+      },
+      {
+        "stage": "topic2_independent",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/report.md",
+        "candidate_minutes": 30,
+        "logical_phases_minutes": [],
+        "parallel_group": null,
+        "predecessors": [],
+        "latest_absolute_deadline": "2026-10-07T22:21:56.716615+00:00",
+        "request_sha256": "5e781b60ddd0cb93b0aea0a9f197e333fa300ca5ec4a3b24b4caaf0f6a95d7bb",
+        "assignment_sha256": "af857272637f45310820138e4fc816906ac5cdb04391c94c1d19d7eb01ab473e",
+        "map_sha256": "f6ee1afa3d77af68f28a00da9dbc1a2392a82acfb3b9f2297af7b8cec83c9566"
+      },
+      {
+        "stage": "fresh_bundle_join_final",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+        "candidate_minutes": 20,
+        "logical_phases_minutes": [],
+        "parallel_group": null,
+        "predecessors": [
+          {
+            "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/report.md",
+            "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources",
+            "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json"
+          },
+          {
+            "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/report.md",
+            "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources",
+            "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json"
+          }
+        ],
+        "latest_absolute_deadline": "2026-10-07T22:41:56.716615+00:00",
+        "request_sha256": "16136fe2d8689e6c3b6f388fb163624c05023898f2b47071e010ff5381f1e46d",
+        "assignment_sha256": "70ee98747cf388ad58d887e5878e3e0badc3c7de8373bc57dcbec140c3c48970",
+        "map_sha256": "4b0d23210ee6a2ff479275e1c0312ba69a3a902f5d55670373c78f74c07c6de8"
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "fresh_shared_discovery",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/report.md",
+        "candidate_minutes": 20,
+        "logical_phases_minutes": [],
+        "parallel_group": null,
+        "predecessors": [],
+        "latest_absolute_deadline": "2026-10-07T21:41:56.716615+00:00",
+        "request_sha256": "3ab5d0dd2933687a6af781ec3a8eb81a860a55b9716b561b887edc8865e33b11",
+        "assignment_sha256": "c71d694278814def25127aeb5ae495eff93926232abe2f8adef3b48e7d02d051",
+        "map_sha256": "a85495c02927548ddb8f262f35d0c20d1d2932847dfe8858b6fb675bdf1cae31"
+      },
+      {
+        "stage": "fresh_topic1_comparison",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/report.md",
+        "candidate_minutes": 20,
+        "logical_phases_minutes": [],
+        "parallel_group": null,
+        "predecessors": [
+          {
+            "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/report.md",
+            "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources",
+            "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/index.json"
+          }
+        ],
+        "latest_absolute_deadline": "2026-10-07T22:01:56.716615+00:00",
+        "request_sha256": "270ac12b7d843efd933530e813c0be4e264655e395dcaa9808a9d6bb0fe2f137",
+        "assignment_sha256": "3603e4a252e0284e9dbe103148464c2e474485472ee6f4761c1f69725e94048a",
+        "map_sha256": "2b9a38e886c026ba012e992715cb21d18e6a543d48c56513d8761178a114c466"
+      },
+      {
+        "stage": "fresh_topic2_comparison",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/report.md",
+        "candidate_minutes": 20,
+        "logical_phases_minutes": [],
+        "parallel_group": null,
+        "predecessors": [
+          {
+            "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/report.md",
+            "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources",
+            "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/index.json"
+          }
+        ],
+        "latest_absolute_deadline": "2026-10-07T22:21:56.716615+00:00",
+        "request_sha256": "2cfdfb2a46c0c114a3c26c87d85fd10612915b14c7c80480b701f5feac9f8891",
+        "assignment_sha256": "21d9025fe286663f4cc3ec98af2bf6a7bb195be465d593d4b1e508c4b568b308",
+        "map_sha256": "8cf9fdc7e8e21a7a1c0417237c326d0672cf739ba17deb2a2e745bffc441662d"
+      },
+      {
+        "stage": "fresh_bundle_join_final",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/final.md",
+        "candidate_minutes": 20,
+        "logical_phases_minutes": [],
+        "parallel_group": null,
+        "predecessors": [
+          {
+            "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/report.md",
+            "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources",
+            "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/index.json"
+          },
+          {
+            "report": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/report.md",
+            "source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources",
+            "source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/index.json"
+          }
+        ],
+        "latest_absolute_deadline": "2026-10-07T22:41:56.716615+00:00",
+        "request_sha256": "e736dad668c004ea84a3a2fe06bd86d4b316c483b28305000613cf18a89d479b",
+        "assignment_sha256": "dc813cdf0bda3342be9719b917c2ad676830f675f660c3a49c5f0f7faf32c8fb",
+        "map_sha256": "a7c056b4e132449e154695f02f6a4a7d8050acd1f2f0007287976ae87ba31870"
+      }
+    ]
+  },
+  "final_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/final.md"
+  }
+}

@@ -1,0 +1,2714 @@
+{
+  "schema": "independent.semantic-source-review.v1",
+  "case_id": "D-M01-B",
+  "authored_by": "Independent reviewer; user-assigned Sol 6.1 xhigh on codex_gmail (account assignment not independently verified)",
+  "authored_utc": "2026-10-07T19:26:13.382441+00:00",
+  "review_start_first_recorded_utc": "2026-10-07T19:08:50Z",
+  "review_budget_minutes": 20,
+  "brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/brief.md",
+    "sha256": "74eb0f398c720e2351ebd1b7b3ba7a1d8c33606b289d2037ca9e35d87d60b33c",
+    "expected_sha256": null,
+    "matches_declared": null,
+    "bytes": 1801,
+    "lines": 16,
+    "word_count_whitespace": 248
+  },
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/sources.json",
+    "sha256": "16e0fee3899c9be5758075670a89e7e457bbd8f4a910ae9f6b0366d355a26ea5",
+    "expected_sha256": null,
+    "matches_declared": null,
+    "bytes": 1111,
+    "lines": 26,
+    "word_count_whitespace": 53
+  },
+  "scope": "Frozen declared brief and exact X/Y final/intermediate map only, plus independent public primary-source reads. No ranking, economics, lifecycle/provenance eligibility, rescue, rewrite, delegation or worker feedback.",
+  "sources": [
+    {
+      "source_id": "rastermask",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/sources/rastermask.rst",
+      "kind": "public primary raw bytes",
+      "expected_sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "matches_declared": true,
+      "bytes": 9114,
+      "lines": 250,
+      "word_count_whitespace": 1362,
+      "reviewed_ranges": [
+        [
+          1,
+          250
+        ]
+      ],
+      "actual_review": "All mask-guide lines; selected implementation functions and their cited ranges. Whole file hashed, not a whole-module correctness audit."
+    },
+    {
+      "source_id": "rasterio",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/sources/rasterio.pyx",
+      "kind": "public primary raw bytes",
+      "expected_sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "matches_declared": true,
+      "bytes": 86415,
+      "lines": 2409,
+      "word_count_whitespace": 8964,
+      "reviewed_ranges": [
+        [
+          221,
+          288
+        ],
+        [
+          438,
+          525
+        ],
+        [
+          631,
+          741
+        ],
+        [
+          742,
+          912
+        ],
+        [
+          952,
+          977
+        ],
+        [
+          984,
+          1077
+        ],
+        [
+          1935,
+          1996
+        ]
+      ],
+      "actual_review": "All mask-guide lines; selected implementation functions and their cited ranges. Whole file hashed, not a whole-module correctness audit."
+    },
+    {
+      "source_id": "independent-gdal-rfc15",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.8.5/doc/source/development/rfc/rfc15_nodatabitmask.rst",
+      "version_or_capture": "GDAL v3.8.5 adopted RFC 15; deployed GDAL version not supplied",
+      "capture_date_utc": "2026-10-07",
+      "retrieved_utc": "2026-10-07T19:11:04.523005+00:00",
+      "kind": "independent public primary source bytes; read only, never imported/executed",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/primary-source-checks/gdal-v3.8.5-rfc15.rst",
+      "sha256": "4c326c13b339f243d78eabaf8d2bca12e10f07b28947a669e3984c98f7d042f4",
+      "expected_sha256": null,
+      "matches_declared": null,
+      "bytes": 7646,
+      "lines": 193,
+      "word_count_whitespace": 1157,
+      "reviewed_ranges": [
+        [
+          1,
+          32
+        ],
+        [
+          38,
+          125
+        ]
+      ]
+    },
+    {
+      "source_id": "independent-numpy-reduce",
+      "url": "https://raw.githubusercontent.com/numpy/numpy/v1.26.4/numpy/core/_add_newdocs.py",
+      "version_or_capture": "NumPy v1.26.4; API corroboration, deployed NumPy version not supplied",
+      "capture_date_utc": "2026-10-07",
+      "retrieved_utc": "2026-10-07T19:13:17.175830+00:00",
+      "kind": "independent public primary source bytes; read only, never imported/executed",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/primary-source-checks/numpy-v1.26.4-_add_newdocs.py",
+      "sha256": "dfd24569e0cf376390952c1fa58ebf26af5f3b9bcc2fc64c17c278653c7f9ebb",
+      "expected_sha256": null,
+      "matches_declared": null,
+      "bytes": 208972,
+      "lines": 7080,
+      "word_count_whitespace": 25329,
+      "reviewed_ranges": [
+        [
+          5260,
+          5323
+        ]
+      ]
+    },
+    {
+      "source_id": "independent-numpy-all",
+      "url": "https://raw.githubusercontent.com/numpy/numpy/v1.26.4/numpy/core/fromnumeric.py",
+      "version_or_capture": "NumPy v1.26.4; API corroboration, deployed NumPy version not supplied",
+      "capture_date_utc": "2026-10-07",
+      "retrieved_utc": "2026-10-07T19:13:17.342697+00:00",
+      "kind": "independent public primary source bytes; read only, never imported/executed",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/primary-source-checks/numpy-v1.26.4-fromnumeric.py",
+      "sha256": "60cb71381839d5531e9b7f401d716cfb8fef39bd69e3c7a2ee78d77584d127f4",
+      "expected_sha256": null,
+      "matches_declared": null,
+      "bytes": 128821,
+      "lines": 3920,
+      "word_count_whitespace": 17173,
+      "reviewed_ranges": [
+        [
+          2422,
+          2470
+        ],
+        [
+          2499,
+          2505
+        ]
+      ]
+    }
+  ],
+  "independent_public_retrieval_receipts": [
+    {
+      "source_id": "rastermask",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "retrieved_utc": "2026-10-07T19:10:19.007463+00:00",
+      "http_status": 200,
+      "bytes": 9114,
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "matches_frozen": true
+    },
+    {
+      "source_id": "rasterio",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "retrieved_utc": "2026-10-07T19:10:19.103812+00:00",
+      "http_status": 200,
+      "bytes": 86415,
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "matches_frozen": true
+    }
+  ],
+  "web_access_notes": {
+    "web_tool_opened": [
+      "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "https://gdal.org/en/stable/development/rfc/rfc15_nodatabitmask.html",
+      "https://numpy.org/doc/1.26/reference/generated/numpy.ufunc.reduce.html"
+    ],
+    "line_number_policy": "Citations verified against actual local raw bytes, one-based lines, not web-rendered line numbers. Web rendering collapses some blank lines.",
+    "mutable_page_limits": "GDAL stable RFC and NumPy manual were discovery/API checks; reproducible reasoning is pinned to saved release raw sources listed above.",
+    "failed_capture": {
+      "url": "https://numpy.org/doc/1.26/reference/generated/numpy.ufunc.reduce.html",
+      "result": "Terminal raw HTML retrieval returned HTTP 403; no capture/hash claimed. Official raw NumPy v1.26.4 sources were retrieved successfully instead."
+    }
+  },
+  "blinding_limits": [
+    "Labels X/Y were used without private mapping. X intermediate titles visibly say control; Y critique visibly says treatment. Those method/arm clues compromise complete method blinding.",
+    "X has three mapped intermediate artifacts and Y two. X final is byte-identical to intermediate-3; stage count and artifact structure are visible.",
+    "Both outputs expose predecessor/critique methods and execution self-reports; X includes inline clock-read timestamps. No timing/lifecycle files were read or method performance inferred.",
+    "The user supplied reviewer model/account labels. These are context, not corroboration of a candidate identity."
+  ],
+  "excluded_access": [
+    "IDENTITY_MAP_PRIVATE.json",
+    "case cards",
+    "supervisor state",
+    "timing/lifecycle files",
+    "other reviews",
+    "unmapped native terminal records",
+    "other cases/candidate artifacts",
+    "host credentials"
+  ],
+  "reviewer_executed_checks": [
+    "Read exact brief and manifest",
+    "Read all seven frozen candidate artifacts in full",
+    "Recomputed all seven candidate hashes and both source hashes; all declared identities match",
+    "Checked all explicitly cited numeric ranges and named source sections/functions against frozen bytes",
+    "Independently retrieved both public Rasterio URLs and matched byte hashes",
+    "Read/capture-hashed release-pinned GDAL RFC and NumPy sources for bounded source counterexamples/API corroboration",
+    "Authored review artifacts and checked JSON/coverage/hash invariants"
+  ],
+  "runtime_counterexamples": {
+    "executed": false,
+    "receipts": [],
+    "reason": "No raster execution required; source reads were sufficient. No isolated supported sandbox was used, no installed code imported, no downloaded source or installer executed, no host credentials used.",
+    "source_derived_diagnostics": [
+      {
+        "id": "SD1",
+        "kind": "source-derived, not executed",
+        "scope": "Within three-band sidecar scope",
+        "hypothesis": "An external .msk necessarily triggers direct common dataset-mask selection or cannot contain independently differing band masks.",
+        "construction": "Recognized N-band external mask with per-band flags lacking per_dataset, mixed valid bytes [0,255,255], and a zero-valued sample explicitly marked valid in another location.",
+        "prediction": "Individual masks can differ and override nodata. Three-band dataset_mask takes OR fallback, not direct read_masks(1); all-required AND rejects the mixed pixel.",
+        "evidence": [
+          {
+            "source_id": "independent-gdal-rfc15",
+            "line_start": 102,
+            "line_end": 121,
+            "note": ""
+          },
+          {
+            "source_id": "rasterio",
+            "line_start": 1061,
+            "line_end": 1076,
+            "note": ""
+          }
+        ],
+        "limits": "Normative mask shape/flags and released Python branch analysis; no actual GDAL runtime/driver fixture produced."
+      },
+      {
+        "id": "SD2",
+        "kind": "source-derived, not executed",
+        "scope": "Within nonzero-byte mask convention",
+        "hypothesis": "Reconstructing (~masked.mask * 255) always equals original mask bytes.",
+        "construction": "A recognized uint8 mask returns valid byte 1 at a pixel.",
+        "prediction": "Masked read converts 1 to True then negates to invalid-mask False; reconstruction is 255 rather than 1. Inverse boolean validity and both proposed nonzero predicates are still correct.",
+        "evidence": [
+          {
+            "source_id": "rastermask",
+            "line_start": 7,
+            "line_end": 15,
+            "note": ""
+          },
+          {
+            "source_id": "rasterio",
+            "line_start": 659,
+            "line_end": 662,
+            "note": ""
+          },
+          {
+            "source_id": "rasterio",
+            "line_start": 269,
+            "line_end": 283,
+            "note": ""
+          },
+          {
+            "source_id": "rasterio",
+            "line_start": 1988,
+            "line_end": 1996,
+            "note": ""
+          }
+        ],
+        "limits": "Conditional on returned mask byte 1; no storage round-trip executed. This diagnoses a missing canonical-byte condition, not a failure of the central nonzero policy."
+      },
+      {
+        "id": "SD3",
+        "kind": "source-derived, not executed",
+        "scope": "Optional four-band statement outside declared input",
+        "hypothesis": "Executable dataset_mask second branch tests RGBA/shadow nodata.",
+        "construction": "Inspect actual branch after per_dataset test.",
+        "prediction": "Its actual checks are count==4 and first color red, then read_masks(4); no explicit alpha or shadow-nodata test.",
+        "evidence": [
+          {
+            "source_id": "rasterio",
+            "line_start": 1061,
+            "line_end": 1065,
+            "note": ""
+          }
+        ],
+        "limits": "No four-band tile tested; no effect on declared three-band validity recommendation."
+      }
+    ]
+  },
+  "remaining_unknowns": {
+    "semantic_inputs": [
+      "Actual tile nodata values, mask bytes/flags and sidecar recognition/alignment/provenance",
+      "Upstream bit-depth/scaling history",
+      "Downstream algorithm required bands and partial-observation policy",
+      "Deployed GDAL/NumPy versions and driver/environment options"
+    ],
+    "historical_candidate_execution": [
+      "Past source-reading/hash operations and claims of nonexecution are self-reports only; mapped current artifacts are verifiable but terminal records are unmapped."
+    ],
+    "semantic_review_remainder_unassessed": [],
+    "outside_scope": [
+      "Native Goal lifecycle",
+      "Native delivery/terminal freeze eligibility",
+      "Provider/account provenance",
+      "Any winner or cost/target/other-grade inference"
+    ]
+  },
+  "candidates": [
+    {
+      "label": "X",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/X/final.md",
+          "sha256": "9c2765752bcb98f35a5e2c9ddca531ced5a064f4e97f7495dc196427aeb6e1a0",
+          "expected_sha256": "9c2765752bcb98f35a5e2c9ddca531ced5a064f4e97f7495dc196427aeb6e1a0",
+          "matches_declared": true,
+          "bytes": 6109,
+          "lines": 42,
+          "word_count_whitespace": 818
+        },
+        "intermediate-1.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/X/intermediate-1.md",
+          "sha256": "76be70f9fdbbc84b6f86f85768a3d4c7c86ba5afba4b3835b309423718020c50",
+          "expected_sha256": "76be70f9fdbbc84b6f86f85768a3d4c7c86ba5afba4b3835b309423718020c50",
+          "matches_declared": true,
+          "bytes": 5083,
+          "lines": 30,
+          "word_count_whitespace": 698
+        },
+        "intermediate-2.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/X/intermediate-2.md",
+          "sha256": "0294f5851537ea90d5a6bfe5ee425c6773bd11cec5acc2ec3f3de2bf578b0629",
+          "expected_sha256": "0294f5851537ea90d5a6bfe5ee425c6773bd11cec5acc2ec3f3de2bf578b0629",
+          "matches_declared": true,
+          "bytes": 4729,
+          "lines": 31,
+          "word_count_whitespace": 603
+        },
+        "intermediate-3.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/X/intermediate-3.md",
+          "sha256": "9c2765752bcb98f35a5e2c9ddca531ced5a064f4e97f7495dc196427aeb6e1a0",
+          "expected_sha256": "9c2765752bcb98f35a5e2c9ddca531ced5a064f4e97f7495dc196427aeb6e1a0",
+          "matches_declared": true,
+          "bytes": 6109,
+          "lines": 42,
+          "word_count_whitespace": 818
+        }
+      },
+      "artifact_coverage": "Every supplied artifact read completely. X final and intermediate-3 identity checked separately by hash; repeated semantic claims grouped. No other candidate files read.",
+      "obligation_coverage": [
+        {
+          "obligation_id": "O1",
+          "brief_line": 7,
+          "obligation": "Compare band masks with dataset-level masks",
+          "disposition": "addressed",
+          "claim_refs": [
+            "X-C02",
+            "X-C03",
+            "X-C04",
+            "X-C07"
+          ],
+          "assessment": "Covers actual three-band fallback and correctly identifies direct common-mask recognition; optional four-band condition is only guide shorthand."
+        },
+        {
+          "obligation_id": "O2",
+          "brief_line": 8,
+          "obligation": "State polarity and relationship to masked-array conventions",
+          "disposition": "addressed_with_qualification",
+          "claim_refs": [
+            "X-C08",
+            "X-C09",
+            "X-C10"
+          ],
+          "assessment": "Inverse boolean convention is correct; quoted guide byte identity lacks a noncanonical-byte qualification."
+        },
+        {
+          "obligation_id": "O3",
+          "brief_line": 9,
+          "obligation": "Address external .msk effect on nodata-derived validity",
+          "disposition": "addressed",
+          "claim_refs": [
+            "X-C11",
+            "X-C12",
+            "X-C13"
+          ],
+          "assessment": "Final common-mask claim is recognition-qualified; mask quality remains unknown."
+        },
+        {
+          "obligation_id": "O4",
+          "brief_line": 10,
+          "obligation": "Explain low-value/8-bit ambiguity for this input",
+          "disposition": "addressed",
+          "claim_refs": [
+            "X-C14",
+            "X-C15",
+            "X-C16",
+            "X-C17"
+          ],
+          "assessment": "Explicitly explains that returned nodata masks cannot recover rounded valid zeros."
+        },
+        {
+          "obligation_id": "O5",
+          "brief_line": 11,
+          "obligation": "Identify the multiband validity choice that belongs to the product",
+          "disposition": "addressed",
+          "claim_refs": [
+            "X-C01",
+            "X-C05",
+            "X-C06",
+            "X-C18"
+          ],
+          "assessment": "Conditional all-three AND and owner decision for partial-band contribution."
+        },
+        {
+          "obligation_id": "O6",
+          "brief_line": 12,
+          "obligation": "Propose discriminating fixtures and preserve tile-metadata uncertainty",
+          "disposition": "addressed",
+          "claim_refs": [
+            "X-C21",
+            "X-C24",
+            "X-C25",
+            "X-C26",
+            "X-C27"
+          ],
+          "assessment": "Three discriminating proposals and extensive tile uncertainty; none claimed executed."
+        }
+      ],
+      "coverage_census": {
+        "brief_material_obligations": 6,
+        "obligations_dispositioned": 6,
+        "material_obligations_unassessed": 0,
+        "final_delivery_obligations_dispositioned": {
+          "complete_bounded_recommendation": true,
+          "source_linked": true,
+          "conditions_and_uncertainty": true,
+          "proposed_checks_separated_from_execution": true,
+          "no_full_application_plan": true,
+          "no_execution_required": true,
+          "within_soft_1100_words": true,
+          "material_findings": 6,
+          "within_soft_eight_findings": true
+        },
+        "claim_condition_groups": 29,
+        "dispositions": {
+          "reasonable_product_recommendation": 8,
+          "supported": 15,
+          "supported_with_qualification": 4,
+          "historical_execution_unverified": 1,
+          "intermediate_overstatement": 1
+        },
+        "semantic_claim_groups_unassessed": 0,
+        "historical_execution_claim_groups_not_verified": 1,
+        "grouping_rule": "One group may cover repeated or logically connected sentences; distinct consequential conditions have explicit entries. Counts are a coverage census, not a numeric quality grade."
+      },
+      "claims": [
+        {
+          "claim_id": "X-C01",
+          "candidate_locations": [
+            "final.md:5-7",
+            "intermediate-1.md:3,15"
+          ],
+          "claim": "All-three-required validity is the nonzero intersection; np.all(..., axis=0) computes that mask.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 742,
+              "line_end": 753,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 804,
+              "line_end": 836,
+              "note": ""
+            },
+            {
+              "source_id": "independent-numpy-all",
+              "line_start": 2422,
+              "line_end": 2434,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct conditional product rule and 2D reduction over the selected band dimension; no missing-band requirement can be inferred from the brief."
+        },
+        {
+          "claim_id": "X-C02",
+          "candidate_locations": [
+            "final.md:9,13",
+            "intermediate-1.md:7"
+          ],
+          "claim": "read_masks([1,2,3]) returns a 3D per-band result.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rasterio",
+              "line_start": 742,
+              "line_end": 753,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 804,
+              "line_end": 836,
+              "note": ""
+            }
+          ],
+          "assessment": "The list selects three masks; rows and columns follow the source grid for the default read."
+        },
+        {
+          "claim_id": "X-C03",
+          "candidate_locations": [
+            "final.md:9,13",
+            "intermediate-1.md:7"
+          ],
+          "claim": "dataset_mask returns a 2D dataset-level mask.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 219,
+              "line_end": 236,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 984,
+              "line_end": 986,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct distinction from per-band masks."
+        },
+        {
+          "claim_id": "X-C04",
+          "candidate_locations": [
+            "final.md:9,13,21",
+            "intermediate-1.md:7",
+            "intermediate-2.md:7"
+          ],
+          "claim": "Without a recognized common mask, nodata-path dataset validity uses OR and can accept a pixel with only one valid band.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 236,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct for the stated three-band nodata case. The executable fallback ORs whatever read_masks returns; nodata is not itself an explicit Python branch condition."
+        },
+        {
+          "claim_id": "X-C05",
+          "candidate_locations": [
+            "final.md:9,21",
+            "intermediate-1.md:3,15"
+          ],
+          "claim": "Dataset-mask filtering is appropriate only under matching any-band or common-mask product semantics; partial-band eligibility remains a product decision.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 222,
+              "line_end": 236,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "Correctly avoids allowing Rasterio precedence to decide the land-cover algorithm requirements."
+        },
+        {
+          "claim_id": "X-C06",
+          "candidate_locations": [
+            "final.md:9,21,23",
+            "intermediate-2.md:15"
+          ],
+          "claim": "The brief does not settle whether partial observations may contribute.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "Actual absence of algorithm requirements in the complete brief, not a request for a full application plan."
+        },
+        {
+          "claim_id": "X-C07",
+          "candidate_locations": [
+            "final.md:13",
+            "intermediate-1.md:7",
+            "intermediate-2.md:7"
+          ],
+          "claim": "Dataset-mask precedence is common per-dataset mask, then a four-band alpha case, then OR, with an all-valid no-nodata fallback.",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 233,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 58,
+              "line_end": 63,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 78,
+              "line_end": 110,
+              "note": ""
+            }
+          ],
+          "assessment": "Common-mask path is correctly recognition/flag-qualified. Four-band wording summarizes the guide: the executable second branch actually tests count==4 and first color interpretation red, then reads band 4 MASK. That broader condition does not affect these three-band tiles. All-valid fallback assumes no other mask source applies."
+        },
+        {
+          "claim_id": "X-C08",
+          "candidate_locations": [
+            "final.md:9,15",
+            "intermediate-1.md:9",
+            "intermediate-2.md:9"
+          ],
+          "claim": "GDAL mask byte zero is invalid, any nonzero byte valid, commonly 255.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 7,
+              "line_end": 15,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 67,
+              "line_end": 70,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 24,
+              "line_end": 29,
+              "note": ""
+            }
+          ],
+          "assessment": "The nonzero predicate preserves valid noncanonical mask bytes."
+        },
+        {
+          "claim_id": "X-C09",
+          "candidate_locations": [
+            "final.md:15",
+            "intermediate-1.md:9",
+            "intermediate-2.md:9"
+          ],
+          "claim": "NumPy masked-array True means invalid, the inverse validity convention.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 12,
+              "line_end": 15,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 203,
+              "line_end": 216,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 631,
+              "line_end": 673,
+              "note": ""
+            }
+          ],
+          "assessment": "Implementation converts mask bytes to bool and negates that validity."
+        },
+        {
+          "claim_id": "X-C10",
+          "candidate_locations": [
+            "final.md:15",
+            "intermediate-1.md:9",
+            "intermediate-2.md:9"
+          ],
+          "claim": "Rasterio documents (~masked.mask * 255) == read_masks(band).",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 203,
+              "line_end": 216,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 659,
+              "line_end": 662,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 269,
+              "line_end": 283,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1988,
+              "line_end": 1996,
+              "note": ""
+            }
+          ],
+          "assessment": "Accurate attribution to the guide. Exact BYTE equality additionally assumes returned valid bytes are 255: bool conversion discards 1..254. For a returned valid mask byte 1, the reconstructed value is 255. Inverse boolean validity is general; the candidate does not identify this distinction. Its final proposed polarity comparison need not depend on byte equality."
+        },
+        {
+          "claim_id": "X-C11",
+          "candidate_locations": [
+            "final.md:17",
+            "intermediate-2.md:11"
+          ],
+          "claim": "A recognized external .msk used as the per-dataset mask overrides nodata-derived masks.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1062,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 78,
+              "line_end": 110,
+              "note": ""
+            }
+          ],
+          "assessment": "The final explicitly restricts the direct common-mask path. Independent per-band sidecars are also possible; read_masks-based recommendation remains applicable."
+        },
+        {
+          "claim_id": "X-C12",
+          "candidate_locations": [
+            "final.md:17",
+            "intermediate-1.md:11",
+            "intermediate-2.md:11"
+          ],
+          "claim": "Using/writing a mask does not itself change sample values or nodata metadata.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 120,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1935,
+              "line_end": 1996,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct. No candidate proposes rewriting production tiles."
+        },
+        {
+          "claim_id": "X-C13",
+          "candidate_locations": [
+            "final.md:17,23,35",
+            "intermediate-1.md:11,17",
+            "intermediate-2.md:11,23"
+          ],
+          "claim": "Filesystem presence does not establish mask recognition, alignment, authority or correctness; inspect flags, grid and provenance.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 102,
+              "line_end": 110,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1062,
+              "note": ""
+            }
+          ],
+          "assessment": "Supported recognition caveat and reasonable quality checks; actual production files are absent from the declared inputs."
+        },
+        {
+          "claim_id": "X-C14",
+          "candidate_locations": [
+            "final.md:19",
+            "intermediate-1.md:13",
+            "intermediate-2.md:13"
+          ],
+          "claim": "Zero nodata can mask zero-valued observations, including valid low values rounded to zero in 8-bit processing.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 23,
+              "line_end": 26,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 85,
+              "line_end": 92,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 141,
+              "line_end": 155,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 78,
+              "line_end": 82,
+              "note": ""
+            }
+          ],
+          "assessment": "Relevant possible ambiguity, not evidence that these particular tiles were scaled or have nodata zero."
+        },
+        {
+          "claim_id": "X-C15",
+          "candidate_locations": [
+            "final.md:19",
+            "intermediate-2.md:13"
+          ],
+          "claim": "Using a nodata-derived mask cannot recover intended valid zeros from values alone.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 85,
+              "line_end": 92,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "Sound inference: identical stored zeros can carry different upstream meanings. The final preserves this limitation."
+        },
+        {
+          "claim_id": "X-C16",
+          "candidate_locations": [
+            "final.md:19",
+            "intermediate-1.md:13"
+          ],
+          "claim": "Do not add zero-value rejection or apply sieve without product/source evidence.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 85,
+              "line_end": 92,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 164,
+              "line_end": 170,
+              "note": ""
+            },
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "Reasonable for unverified survey metadata. This does not falsely reject the guide's empirically chosen sieve example as a universally invalid method."
+        },
+        {
+          "claim_id": "X-C17",
+          "candidate_locations": [
+            "final.md:19",
+            "intermediate-2.md:13"
+          ],
+          "claim": "Trusted explicit validity or upstream correction is needed to resolve the ambiguity.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 85,
+              "line_end": 92,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 175,
+              "line_end": 183,
+              "note": ""
+            }
+          ],
+          "assessment": "Supported inference about needing external intent; not a claim that any sidecar is automatically authoritative."
+        },
+        {
+          "claim_id": "X-C18",
+          "candidate_locations": [
+            "final.md:21,35",
+            "intermediate-1.md:15",
+            "intermediate-2.md:15"
+          ],
+          "claim": "If partial observations are permitted, the product must define contribution policy and select a matching validity rule.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 11,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 222,
+              "line_end": 236,
+              "note": ""
+            }
+          ],
+          "assessment": "Appropriate product decision boundary; fixtures cannot settle domain semantics."
+        },
+        {
+          "claim_id": "X-C19",
+          "candidate_locations": [
+            "final.md:23",
+            "intermediate-1.md:17"
+          ],
+          "claim": "Reject zero-always-invalid and dataset-mask-implies-all-bands-valid.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 85,
+              "line_end": 92,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "Both rejections are correct with source counterinstances; neither rejects legitimate zero-nodata fallback behavior."
+        },
+        {
+          "claim_id": "X-C20",
+          "candidate_locations": [
+            "final.md:23",
+            "intermediate-1.md:15",
+            "intermediate-2.md:15"
+          ],
+          "claim": "Reject the predecessor's purported categorical reading that partial-band policy is disallowed by the brief.",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "The predecessor says the brief does not authorize partial policies while also explicitly allowing a separate product decision. Wording clarification is justified, but calling the predecessor categorical overstates how much was rejected; no forbidden partial policy appears in the brief."
+        },
+        {
+          "claim_id": "X-C21",
+          "candidate_locations": [
+            "final.md:23,35,42",
+            "intermediate-1.md:17",
+            "intermediate-2.md:23,30"
+          ],
+          "claim": "Per-tile nodata values, flags, sidecar content/provenance, dimensions, alpha path and product semantics remain unknown.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "These particulars are genuinely not supplied. Four-band alpha is background, not an inferred fourth survey band."
+        },
+        {
+          "claim_id": "X-C22",
+          "candidate_locations": [
+            "final.md:27",
+            "intermediate-1.md:21,27-30",
+            "intermediate-2.md:21"
+          ],
+          "claim": "Candidate reports reading brief/manifest/captures/predecessors and hashing two captures and predecessor artifacts successfully.",
+          "disposition": "historical_execution_unverified",
+          "evidence": [],
+          "assessment": "This review independently verifies current file/source hashes. It cannot prove historical candidate tool execution, supplied predecessor identities or inline clock observations; native terminal records are not in the allowed path map."
+        },
+        {
+          "claim_id": "X-C23",
+          "candidate_locations": [
+            "final.md:27,35",
+            "intermediate-1.md:21,23",
+            "intermediate-2.md:21,23"
+          ],
+          "claim": "No raster/GDAL behavior ran; fixture checks are proposed, not executed.",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 16,
+              "note": ""
+            }
+          ],
+          "assessment": "The document consistently separates proposals and evidence. Historical nonexecution is not independently established from text alone, and no execution was required by the brief."
+        },
+        {
+          "claim_id": "X-C24",
+          "candidate_locations": [
+            "final.md:31",
+            "intermediate-1.md:23",
+            "intermediate-2.md:17"
+          ],
+          "claim": "Nodata-only three-band fixture with mixed band validity discriminates OR from strict intersection.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 236,
+              "note": ""
+            }
+          ],
+          "assessment": "Valid proposal: one-valid/two-invalid and two-valid/one-invalid both discriminate. Final changes the arrangement without losing the test."
+        },
+        {
+          "claim_id": "X-C25",
+          "candidate_locations": [
+            "final.md:32",
+            "intermediate-1.md:23",
+            "intermediate-2.md:17"
+          ],
+          "claim": "Common .msk fixture marks a zero valid and compares against identical samples/nodata without the sidecar.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1062,
+              "note": ""
+            }
+          ],
+          "assessment": "Strong proposed precedence discriminator with fixed sample values and metadata; mask must actually be recognized."
+        },
+        {
+          "claim_id": "X-C26",
+          "candidate_locations": [
+            "final.md:33",
+            "intermediate-1.md:23",
+            "intermediate-2.md:17"
+          ],
+          "claim": "Separate nodata-derived band-mask fixture tests polarity; write_mask creates a mask shared by all bands.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 97,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1961,
+              "line_end": 1996,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 659,
+              "line_end": 662,
+              "note": ""
+            }
+          ],
+          "assessment": "Final split fixtures are feasible and retain useful contrast. The specific write_mask statement is true; the predecessor never said it created independent masks."
+        },
+        {
+          "claim_id": "X-C27",
+          "candidate_locations": [
+            "final.md:35"
+          ],
+          "claim": "Inspect metadata/mask contents and obtain a product partial-band decision before interpreting actual tiles.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 102,
+              "line_end": 110,
+              "note": ""
+            }
+          ],
+          "assessment": "Useful proposed validation and product decision, not an executed approval or test."
+        },
+        {
+          "claim_id": "X-C28",
+          "candidate_locations": [
+            "final.md:39-42",
+            "intermediate-1.md:27-30",
+            "intermediate-2.md:27-30"
+          ],
+          "claim": "R1/R2 URLs, release, capture date and SHA-256 identify the frozen sources; claims are source-limited.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 1,
+              "line_end": 250,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 984,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "R1 maps exactly to rastermask; R2 maps exactly to rasterio. All source identity fields match the manifest and independently retrieved public bytes. Individual guide simplifications remain subject to implementation qualifications noted above."
+        },
+        {
+          "claim_id": "X-I01",
+          "candidate_locations": [
+            "intermediate-2.md:17",
+            "intermediate-1.md:23",
+            "final.md:33"
+          ],
+          "claim": "Critique says independently differing masks plus a valid zero in an explicit mask NEED separate fixtures because write_mask is shared.",
+          "disposition": "intermediate_overstatement",
+          "evidence": [
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 102,
+              "line_end": 121,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1961,
+              "line_end": 1965,
+              "note": ""
+            }
+          ],
+          "assessment": "A clearer nodata/common-mask split is useful, but necessity is unsupported. GDAL recognizes N-band external .msk files with per-band flags; the draft names no writer. Its generic combined fixture is not inherently impossible. No worker feedback or repair was attempted."
+        }
+      ],
+      "findings": [
+        {
+          "finding_id": "X-F1",
+          "severity": "qualification",
+          "topic": "Canonical-byte identity",
+          "claim_refs": [
+            "X-C10"
+          ],
+          "carried_into_final": true,
+          "decisive_for_core_recommendation": false,
+          "description": "The guide identity is accurately attributed, but its exact-byte form requires 0/255 masks. Inverse boolean validity and the recommended nonzero intersection remain supported."
+        },
+        {
+          "finding_id": "X-F2",
+          "severity": "review_stage_overcorrection",
+          "topic": "Combined fixture is not inherently impossible",
+          "claim_refs": [
+            "X-I01",
+            "X-C26"
+          ],
+          "carried_into_final": "Split fixture retained; final write_mask caveat true, necessity not restated.",
+          "decisive_for_core_recommendation": false,
+          "description": "Shared write_mask output does not rule out an external N-band .msk constructed through a supported band-mask route. The predecessor never selected write_mask. The critique gives a useful simplification with an unsupported necessity claim."
+        },
+        {
+          "finding_id": "X-F3",
+          "severity": "minor_attribution_overstatement",
+          "topic": "Partial-band policy rejection",
+          "claim_refs": [
+            "X-C20"
+          ],
+          "carried_into_final": true,
+          "decisive_for_core_recommendation": false,
+          "description": "The precursor already allowed an explicit partial-band product decision; describing it as categorically disallowing partial policy overstates the correction. Final condition is sound."
+        },
+        {
+          "finding_id": "X-F4",
+          "severity": "out_of_three_band_scope_precision",
+          "topic": "Four-band guide versus code condition",
+          "claim_refs": [
+            "X-C07"
+          ],
+          "carried_into_final": true,
+          "decisive_for_core_recommendation": false,
+          "description": "Actual code checks count 4 and first red, then reads band-4 mask, rather than verifying RGBA/shadow nodata. No effect on declared three-band result."
+        }
+      ],
+      "citation_audit": [
+        {
+          "artifact": "intermediate-1.md",
+          "source_alias": "R1",
+          "source_id": "rastermask",
+          "cited_ranges": [
+            [
+              7,
+              15
+            ],
+            [
+              67,
+              70
+            ],
+            [
+              85,
+              92
+            ],
+            [
+              111,
+              124
+            ],
+            [
+              141,
+              183
+            ],
+            [
+              152,
+              160
+            ],
+            [
+              203,
+              216
+            ],
+            [
+              219,
+              236
+            ],
+            [
+              222,
+              236
+            ]
+          ],
+          "result": "All exist and support neighboring text; guide identity and precedence require implementation qualifications."
+        },
+        {
+          "artifact": "intermediate-1.md",
+          "source_alias": "R2",
+          "source_id": "rasterio",
+          "cited_ranges": [
+            [
+              742,
+              753
+            ],
+            [
+              984,
+              1076
+            ],
+            [
+              1038,
+              1062
+            ],
+            [
+              1045,
+              1076
+            ]
+          ],
+          "result": "All exist. First range supports 3D masks; dataset ranges include docstring and actual OR/common-mask code."
+        },
+        {
+          "artifact": "intermediate-2.md",
+          "source_alias": "guide/R1",
+          "source_id": "rastermask",
+          "cited_ranges": [
+            [
+              67,
+              70
+            ],
+            [
+              85,
+              92
+            ],
+            [
+              97,
+              124
+            ],
+            [
+              111,
+              124
+            ],
+            [
+              203,
+              216
+            ],
+            [
+              219,
+              236
+            ]
+          ],
+          "result": "All exist. Common write_mask does not establish impossibility of a generic per-band explicit sidecar fixture."
+        },
+        {
+          "artifact": "intermediate-2.md",
+          "source_alias": "implementation/R2",
+          "source_id": "rasterio",
+          "cited_ranges": [
+            [
+              472,
+              476
+            ],
+            [
+              631,
+              662
+            ],
+            [
+              1038,
+              1076
+            ],
+            [
+              1041,
+              1076
+            ],
+            [
+              1935,
+              1996
+            ]
+          ],
+          "result": "All exist; masked-read range contains bool inversion and write_mask range includes per_dataset creation."
+        },
+        {
+          "artifact": "final.md and identical intermediate-3.md",
+          "source_alias": "R1",
+          "source_id": "rastermask",
+          "named_sections": {
+            "Nodata Masks": [
+              [
+                7,
+                15
+              ]
+            ],
+            "Dataset masks": [
+              [
+                219,
+                236
+              ]
+            ],
+            "Numpy masked arrays": [
+              [
+                185,
+                216
+              ]
+            ],
+            "Writing masks": [
+              [
+                94,
+                183
+              ]
+            ],
+            "8-bit example": [
+              [
+                85,
+                92
+              ]
+            ]
+          },
+          "result": "Named sections exist and have the described material. Final uses section/function citations rather than numeric line ranges."
+        },
+        {
+          "artifact": "final.md and identical intermediate-3.md",
+          "source_alias": "R2",
+          "source_id": "rasterio",
+          "named_functions": {
+            "dataset_mask": [
+              [
+                984,
+                1076
+              ]
+            ],
+            "masked-read implementation": [
+              [
+                631,
+                673
+              ]
+            ],
+            "write_mask": [
+              [
+                1935,
+                1996
+              ]
+            ]
+          },
+          "result": "Functions exist, actual bodies checked. No fabricated source ID or line range."
+        }
+      ],
+      "preservation": {
+        "complete_material_coverage": true,
+        "retained": [
+          "All six obligations",
+          "Conditional all-three intersection",
+          "OR versus AND distinction",
+          "Mask polarity",
+          "Sidecar-over-nodata behavior and provenance uncertainty",
+          "Low-value scaling ambiguity",
+          "Mixed-band, sidecar and polarity fixture intentions",
+          "Both source identities/hashes/version limits"
+        ],
+        "strengthened": [
+          "Explicitly says masks cannot recover valid zeros in nodata-derived masks",
+          "Recognition condition for common .msk",
+          "Product partial-band decision left unspecified rather than unauthorized"
+        ],
+        "changed_without_loss": [
+          "Mixed-validity fixture changes two valid/one invalid to one valid/two invalid; both discriminate",
+          "Generic combined fixture replaced with separate nodata-derived and common-sidecar fixtures"
+        ],
+        "unsupported_correction": [
+          "Necessity of splitting every differing-band/explicit-mask fixture",
+          "Categorical-disallowance attribution to predecessor"
+        ],
+        "omitted_nonessential": [
+          "Inline read-clock observations; not governing product content"
+        ],
+        "final_duplicate": "intermediate-3.md and final.md are byte-identical; this proves content identity only."
+      },
+      "supported_optional_yield": [
+        "Common-mask recognition condition",
+        "Explicit mask-does-not-recover-zero caveat",
+        "Fixed-values/nodata sidecar comparison",
+        "Avoidance of unevidenced zero/sieve heuristics"
+      ],
+      "false_rejection_or_correction": [
+        {
+          "status": "overcorrection",
+          "refs": [
+            "X-I01"
+          ],
+          "assessment": "Generic combined explicit per-band fixture not disproven by write_mask limitations."
+        },
+        {
+          "status": "attribution_overstatement",
+          "refs": [
+            "X-C20"
+          ],
+          "assessment": "Prior product policy was already conditional, though brief-authorization wording deserved clarification."
+        }
+      ],
+      "proposed_versus_executed": {
+        "candidate_executed_self_report": "Source/brief/predecessor reads and source-hash checks only; X additionally reports predecessor artifact hash checks.",
+        "behavior_execution_claimed": false,
+        "proposals_count": 3,
+        "proposals_assessed": "Source-based discrimination checked; no fixture actually executed by reviewer or evidenced as executed by candidate.",
+        "historical_tool_activity": "Unassessed; no native terminal record path supplied. Independent current rehash does not corroborate a past tool call."
+      },
+      "semantic_only_conclusion": {
+        "status": "complete_bounded_source_review_with_named_qualifications",
+        "core_conditional_recommendation": "supported",
+        "decisive_local_failure_of_core_recommendation": false,
+        "all_required_material_obligations_addressed": true,
+        "qualifications": [
+          "X-F1",
+          "X-F2",
+          "X-F3",
+          "X-F4"
+        ],
+        "numeric_grade": null,
+        "pass_label": null,
+        "remaining_semantic_unassessed": [],
+        "limits": "No raster behavior witness; actual tiles/product requirements not supplied. This is not a native lifecycle, delivery-eligibility or provenance verdict."
+      }
+    },
+    {
+      "label": "Y",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/Y/final.md",
+          "sha256": "b3e9dd4b36bd3b6cfa918db0813599bb17c165e08aa7ee685ece5b22eb567729",
+          "expected_sha256": "b3e9dd4b36bd3b6cfa918db0813599bb17c165e08aa7ee685ece5b22eb567729",
+          "matches_declared": true,
+          "bytes": 5200,
+          "lines": 43,
+          "word_count_whitespace": 697
+        },
+        "intermediate-1.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/Y/intermediate-1.md",
+          "sha256": "9aec1bfc002af2283c726309d6fd2b065ef4f395cb4a753ac21fac12565582d8",
+          "expected_sha256": "9aec1bfc002af2283c726309d6fd2b065ef4f395cb4a753ac21fac12565582d8",
+          "matches_declared": true,
+          "bytes": 6247,
+          "lines": 41,
+          "word_count_whitespace": 859
+        },
+        "intermediate-2.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/Y/intermediate-2.md",
+          "sha256": "88f8c2974ecea2c687f836b4d57d7021d72ca00335b75a797be0dbcaf13eb442",
+          "expected_sha256": "88f8c2974ecea2c687f836b4d57d7021d72ca00335b75a797be0dbcaf13eb442",
+          "matches_declared": true,
+          "bytes": 1801,
+          "lines": 15,
+          "word_count_whitespace": 256
+        }
+      },
+      "artifact_coverage": "Every supplied artifact read completely. X final and intermediate-3 identity checked separately by hash; repeated semantic claims grouped. No other candidate files read.",
+      "obligation_coverage": [
+        {
+          "obligation_id": "O1",
+          "brief_line": 7,
+          "obligation": "Compare band masks with dataset-level masks",
+          "disposition": "addressed_with_qualification",
+          "claim_refs": [
+            "Y-C06",
+            "Y-C07",
+            "Y-C08",
+            "Y-C09",
+            "Y-C11"
+          ],
+          "assessment": "Covers per-band versus OR behavior and masks taking precedence; direct sidecar path needs a shared-mask flag qualification."
+        },
+        {
+          "obligation_id": "O2",
+          "brief_line": 8,
+          "obligation": "State polarity and relationship to masked-array conventions",
+          "disposition": "addressed_with_qualification",
+          "claim_refs": [
+            "Y-C03",
+            "Y-C04",
+            "Y-C05",
+            "Y-C21"
+          ],
+          "assessment": "Boolean polarity is correct; generic exact-byte assertion requires 0/255 masks."
+        },
+        {
+          "obligation_id": "O3",
+          "brief_line": 9,
+          "obligation": "Address external .msk effect on nodata-derived validity",
+          "disposition": "addressed_with_qualification",
+          "claim_refs": [
+            "Y-C09",
+            "Y-C12",
+            "Y-C13",
+            "Y-C14"
+          ],
+          "assessment": "Use-conditioned heading mitigates existence wording; no authority inferred from read choice."
+        },
+        {
+          "obligation_id": "O4",
+          "brief_line": 10,
+          "obligation": "Explain low-value/8-bit ambiguity for this input",
+          "disposition": "addressed",
+          "claim_refs": [
+            "Y-C15",
+            "Y-C16"
+          ],
+          "assessment": "Explains both potential false invalidation and inability to infer all zeros valid."
+        },
+        {
+          "obligation_id": "O5",
+          "brief_line": 11,
+          "obligation": "Identify the multiband validity choice that belongs to the product",
+          "disposition": "addressed",
+          "claim_refs": [
+            "Y-C01",
+            "Y-C02",
+            "Y-C17"
+          ],
+          "assessment": "All-required-band AND conditional on algorithm band requirements, with explicit product choice."
+        },
+        {
+          "obligation_id": "O6",
+          "brief_line": 12,
+          "obligation": "Propose discriminating fixtures and preserve tile-metadata uncertainty",
+          "disposition": "addressed",
+          "claim_refs": [
+            "Y-C18",
+            "Y-C19",
+            "Y-C20",
+            "Y-C21",
+            "Y-C22"
+          ],
+          "assessment": "Four appropriate proposals, with unknown tile metadata and algorithm requirements."
+        }
+      ],
+      "coverage_census": {
+        "brief_material_obligations": 6,
+        "obligations_dispositioned": 6,
+        "material_obligations_unassessed": 0,
+        "final_delivery_obligations_dispositioned": {
+          "complete_bounded_recommendation": true,
+          "source_linked": true,
+          "conditions_and_uncertainty": true,
+          "proposed_checks_separated_from_execution": true,
+          "no_full_application_plan": true,
+          "no_execution_required": true,
+          "within_soft_1100_words": true,
+          "material_findings": 6,
+          "within_soft_eight_findings": true
+        },
+        "claim_condition_groups": 29,
+        "dispositions": {
+          "reasonable_product_recommendation": 4,
+          "supported": 16,
+          "supported_with_qualification": 6,
+          "historical_execution_unverified": 1,
+          "intermediate_overstatement": 2
+        },
+        "semantic_claim_groups_unassessed": 0,
+        "historical_execution_claim_groups_not_verified": 1,
+        "grouping_rule": "One group may cover repeated or logically connected sentences; distinct consequential conditions have explicit entries. Counts are a coverage census, not a numeric quality grade."
+      },
+      "claims": [
+        {
+          "claim_id": "Y-C01",
+          "candidate_locations": [
+            "final.md:5",
+            "intermediate-1.md:5,17"
+          ],
+          "claim": "Use nonzero AND across every band actually required; np.logical_and.reduce defaults to the band axis.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 742,
+              "line_end": 753,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 804,
+              "line_end": 836,
+              "note": ""
+            },
+            {
+              "source_id": "independent-numpy-reduce",
+              "line_start": 5260,
+              "line_end": 5288,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct 2D mask for an all-three-required product, stated conditionally."
+        },
+        {
+          "claim_id": "Y-C02",
+          "candidate_locations": [
+            "final.md:5,19",
+            "intermediate-1.md:17",
+            "intermediate-2.md:11"
+          ],
+          "claim": "This is a product policy rather than a Rasterio default; missing-band tolerance must be decided explicitly.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 11,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct separation of domain choice and library precedence."
+        },
+        {
+          "claim_id": "Y-C03",
+          "candidate_locations": [
+            "final.md:7,13",
+            "intermediate-1.md:5,11",
+            "intermediate-2.md:8"
+          ],
+          "claim": "GDAL polarity is zero invalid, nonzero valid, usually 255.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 7,
+              "line_end": 15,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 67,
+              "line_end": 70,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 24,
+              "line_end": 29,
+              "note": ""
+            }
+          ],
+          "assessment": "Predicate uses nonzero, preserving valid zeros in data when masks mark them valid."
+        },
+        {
+          "claim_id": "Y-C04",
+          "candidate_locations": [
+            "final.md:7,13",
+            "intermediate-1.md:5,11",
+            "intermediate-2.md:8"
+          ],
+          "claim": "Masked-array True is invalid and opposite to mask validity.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 12,
+              "line_end": 15,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 631,
+              "line_end": 673,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct boolean polarity."
+        },
+        {
+          "claim_id": "Y-C05",
+          "candidate_locations": [
+            "final.md:7,27",
+            "intermediate-1.md:11,25"
+          ],
+          "claim": "Do not invert read_masks when using the nonzero product predicate.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 7,
+              "line_end": 15,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 659,
+              "line_end": 662,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct inverse-convention handling."
+        },
+        {
+          "claim_id": "Y-C06",
+          "candidate_locations": [
+            "final.md:11",
+            "intermediate-1.md:9",
+            "intermediate-2.md:7"
+          ],
+          "claim": "read_masks supplies per-band masks rather than the combined dataset mask.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 46,
+              "line_end": 70,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 219,
+              "line_end": 236,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 742,
+              "line_end": 753,
+              "note": ""
+            }
+          ],
+          "assessment": "Sufficient comparison for obligation 1. Final does not spell out 3D/2D dimensions, but does describe the governing per-band versus combined distinction."
+        },
+        {
+          "claim_id": "Y-C07",
+          "candidate_locations": [
+            "final.md:11,34",
+            "intermediate-1.md:5,9,39",
+            "intermediate-2.md:7"
+          ],
+          "claim": "No higher-precedence dataset-wide mask with nodata: dataset mask OR can accept only one valid band.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 236,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct stated three-band fallback. OR operates on returned masks even if some mask sources are explicit per-band sidecars."
+        },
+        {
+          "claim_id": "Y-C08",
+          "candidate_locations": [
+            "final.md:11,19,34",
+            "intermediate-1.md:17,38-39"
+          ],
+          "claim": "Nodata-fallback OR does not satisfy a computation requiring all band values.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            },
+            {
+              "source_id": "brief",
+              "line_start": 11,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "Consequential product distinction is preserved into final."
+        },
+        {
+          "claim_id": "Y-C09",
+          "candidate_locations": [
+            "final.md:11,15",
+            "intermediate-1.md:9,13",
+            "intermediate-2.md:7,9"
+          ],
+          "claim": "Dataset-wide mask/alpha/internal-mask path takes precedence and dataset-mask precedence selects a .msk.",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 233,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 102,
+              "line_end": 110,
+              "note": ""
+            }
+          ],
+          "assessment": "True for a recognized shared per-dataset mask. Mere existence and even recognized N-band sidecars do not force this direct path: code checks band-1 per_dataset. Y's heading conditions sidecar USE, which mitigates the existence wording, but it never explicitly states the shared-mask condition for direct dataset selection."
+        },
+        {
+          "claim_id": "Y-C10",
+          "candidate_locations": [
+            "final.md:11,28",
+            "intermediate-1.md:26",
+            "intermediate-2.md:7,12"
+          ],
+          "claim": "No nodata fallback is all valid (255).",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 233,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 78,
+              "line_end": 90,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct under the explicit no-mask condition in the proposed fixture; metadata absence alone would not override an explicit mask."
+        },
+        {
+          "claim_id": "Y-C11",
+          "candidate_locations": [
+            "final.md:11",
+            "intermediate-1.md:9",
+            "intermediate-2.md:7"
+          ],
+          "claim": "The four-band shadow-nodata branch does not describe these three-band tiles.",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 3,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 230,
+              "line_end": 231,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1064,
+              "line_end": 1065,
+              "note": ""
+            }
+          ],
+          "assessment": "Three-band exclusion is correct. The branch name is guide shorthand, not the executable condition, which is count==4 plus first color red and reads band 4 mask."
+        },
+        {
+          "claim_id": "Y-C12",
+          "candidate_locations": [
+            "final.md:15,34",
+            "intermediate-1.md:13,39",
+            "intermediate-2.md:9"
+          ],
+          "claim": "A sidecar used by Rasterio supersedes nodata-derived validity.",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 78,
+              "line_end": 110,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct when the sidecar is recognized for the affected band(s). Body wording that existence suffices is broader than the supported recognition condition; heading conditional-on-use and unknown flags/coverage partially contain that claim."
+        },
+        {
+          "claim_id": "Y-C13",
+          "candidate_locations": [
+            "final.md:15,26",
+            "intermediate-1.md:13,24"
+          ],
+          "claim": "A sidecar can make zero-valued data valid and nonzero-valued data invalid.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 24,
+              "line_end": 29,
+              "note": ""
+            }
+          ],
+          "assessment": "Both directions follow explicit mask contents, not data-value tests."
+        },
+        {
+          "claim_id": "Y-C14",
+          "candidate_locations": [
+            "final.md:15,19,21,26",
+            "intermediate-1.md:17,19,24",
+            "intermediate-2.md:9,12"
+          ],
+          "claim": "Rasterio read choice does not establish sidecar trust, coverage or product authority.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 102,
+              "line_end": 110,
+              "note": ""
+            }
+          ],
+          "assessment": "Appropriate production uncertainty and matching-producer-semantics condition."
+        },
+        {
+          "claim_id": "Y-C15",
+          "candidate_locations": [
+            "final.md:17",
+            "intermediate-1.md:15",
+            "intermediate-2.md:10"
+          ],
+          "claim": "Valid low values may round to zero in scaling higher-bit data to uint8; zero nodata can then misclassify them.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 85,
+              "line_end": 92,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct possibility relevant to input; no actual scaling history is asserted."
+        },
+        {
+          "claim_id": "Y-C16",
+          "candidate_locations": [
+            "final.md:17",
+            "intermediate-1.md:15",
+            "intermediate-2.md:10"
+          ],
+          "claim": "This does not make every zero valid or allow values alone to recover intended validity.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 85,
+              "line_end": 92,
+              "note": ""
+            },
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "Sound uncertainty-preserving inference."
+        },
+        {
+          "claim_id": "Y-C17",
+          "candidate_locations": [
+            "final.md:19",
+            "intermediate-1.md:17",
+            "intermediate-2.md:11"
+          ],
+          "claim": "Use a dataset-wide mask only when its meaning matches product usability.",
+          "disposition": "reasonable_product_recommendation",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 11,
+              "line_end": 12,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 222,
+              "line_end": 236,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct conditional policy, not endorsement of any supplied sidecar."
+        },
+        {
+          "claim_id": "Y-C18",
+          "candidate_locations": [
+            "final.md:21,35,39",
+            "intermediate-1.md:19,40",
+            "intermediate-2.md:12"
+          ],
+          "claim": "Actual nodata values, flags, sidecar quality and algorithm requirements are unspecified and require inspection.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "Preserves supplied-tile uncertainty. Brief says nodata metadata and some .msk exist but supplies no raster or concrete values."
+        },
+        {
+          "claim_id": "Y-C19",
+          "candidate_locations": [
+            "final.md:25",
+            "intermediate-1.md:23"
+          ],
+          "claim": "Nodata=0 fixture includes one-band-invalid, all-invalid and all-valid cases to distinguish OR/AND.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 236,
+              "note": ""
+            }
+          ],
+          "assessment": "Final expected results are correct: OR accepts the mixed case, AND rejects it; both agree on extremes."
+        },
+        {
+          "claim_id": "Y-C20",
+          "candidate_locations": [
+            "final.md:26",
+            "intermediate-1.md:24"
+          ],
+          "claim": "Sidecar fixture flips validity relative to data-value nodata expectations.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 78,
+              "line_end": 110,
+              "note": ""
+            }
+          ],
+          "assessment": "Useful proposed test if .msk is actually recognized. Initial draft explicitly uses 255/0, providing canonical values for its related polarity check."
+        },
+        {
+          "claim_id": "Y-C21",
+          "candidate_locations": [
+            "final.md:13,27",
+            "intermediate-1.md:11,25"
+          ],
+          "claim": "Documented and proposed polarity identity reconstructs read_masks as (~masked.mask * 255).",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 203,
+              "line_end": 216,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 659,
+              "line_end": 662,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 269,
+              "line_end": 283,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1988,
+              "line_end": 1996,
+              "note": ""
+            }
+          ],
+          "assessment": "Source attribution is accurate, and equality holds for canonical 0/255 fixtures. As a generic byte equality assertion, it omits that 1..254 valid bytes become bool then reconstruct as 255. The core nonzero predicate remains correct; the proposed assertion could falsely fail an admissible noncanonical mask."
+        },
+        {
+          "claim_id": "Y-C22",
+          "candidate_locations": [
+            "final.md:28",
+            "intermediate-1.md:26",
+            "intermediate-2.md:12"
+          ],
+          "claim": "No nodata and no explicit mask fixture should yield dataset mask all 255.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 233,
+              "note": ""
+            },
+            {
+              "source_id": "independent-gdal-rfc15",
+              "line_start": 88,
+              "line_end": 90,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "Discriminating optional fallback check, already present in the first draft."
+        },
+        {
+          "claim_id": "Y-C23",
+          "candidate_locations": [
+            "final.md:32-35",
+            "intermediate-1.md:37-40"
+          ],
+          "claim": "Reject zero-always-invalid, nodata-control when .msk used, and interpreting nodata OR as all-bands-valid; leave product/tile unknowns unresolved.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 85,
+              "line_end": 92,
+              "note": ""
+            },
+            {
+              "source_id": "rastermask",
+              "line_start": 111,
+              "line_end": 124,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            },
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "Valid rejection classes with the sidecar recognition qualification already described. No supplied external draft is treated as primary truth."
+        },
+        {
+          "claim_id": "Y-C24",
+          "candidate_locations": [
+            "final.md:39",
+            "intermediate-1.md:30",
+            "intermediate-2.md:14"
+          ],
+          "claim": "Candidate reports reading allowed materials and matching source SHA-256 checks.",
+          "disposition": "historical_execution_unverified",
+          "evidence": [],
+          "assessment": "Current source identities independently match. This does not prove earlier read/hash tool calls or access provenance; terminal paths are not supplied."
+        },
+        {
+          "claim_id": "Y-C25",
+          "candidate_locations": [
+            "final.md:23,39",
+            "intermediate-1.md:21,30",
+            "intermediate-2.md:14"
+          ],
+          "claim": "No code/tile execution is claimed; all fixtures are proposals.",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 3,
+              "line_end": 16,
+              "note": ""
+            }
+          ],
+          "assessment": "Correct reporting boundary in all artifacts. Historical nonexecution is unverified, and no behavior witness is required by this brief."
+        },
+        {
+          "claim_id": "Y-C26",
+          "candidate_locations": [
+            "final.md:41-42",
+            "intermediate-1.md:32-33"
+          ],
+          "claim": "Source labels 1/2 identify correct URLs, release, date and hashes.",
+          "disposition": "supported",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 1,
+              "line_end": 250,
+              "note": ""
+            },
+            {
+              "source_id": "rasterio",
+              "line_start": 984,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "1 maps to rastermask; 2 maps to rasterio. All identity fields and cited raw-source line offsets are checked against actual bytes."
+        },
+        {
+          "claim_id": "Y-I01",
+          "candidate_locations": [
+            "intermediate-1.md:23",
+            "final.md:25"
+          ],
+          "claim": "Initial fixture calls its only-band-1-nodata case one-band-valid.",
+          "disposition": "intermediate_overstatement",
+          "evidence": [
+            {
+              "source_id": "rasterio",
+              "line_start": 1061,
+              "line_end": 1076,
+              "note": ""
+            }
+          ],
+          "assessment": "This is a description slip: its setup actually has TWO valid bands. OR/AND expected decisions are nevertheless unchanged. Final's reference to the first case avoids the incorrect count."
+        },
+        {
+          "claim_id": "Y-I02",
+          "candidate_locations": [
+            "intermediate-2.md:12",
+            "intermediate-1.md:26",
+            "final.md:28"
+          ],
+          "claim": "Critique says explicitly add/expand the no-nodata fixture.",
+          "disposition": "intermediate_overstatement",
+          "evidence": [
+            {
+              "source_id": "rastermask",
+              "line_start": 228,
+              "line_end": 233,
+              "note": ""
+            }
+          ],
+          "assessment": "The same no-nodata/no-explicit-mask assertion was already in intermediate-1. Final retains it; this is preservation, not new supported discovery. No false Rasterio rejection results."
+        },
+        {
+          "claim_id": "Y-I03",
+          "candidate_locations": [
+            "intermediate-2.md:11",
+            "intermediate-1.md:5,17",
+            "final.md:5,19"
+          ],
+          "claim": "Critique labels the all-three-required policy amended.",
+          "disposition": "supported_with_qualification",
+          "evidence": [
+            {
+              "source_id": "brief",
+              "line_start": 11,
+              "line_end": 12,
+              "note": ""
+            }
+          ],
+          "assessment": "The predecessor was already conditional and left product policy unresolved. Final clarity is sound, but this classification does not establish a substantive policy correction."
+        }
+      ],
+      "findings": [
+        {
+          "finding_id": "Y-F1",
+          "severity": "qualification",
+          "topic": "Recognized sidecar versus direct common-mask selection",
+          "claim_refs": [
+            "Y-C09",
+            "Y-C12"
+          ],
+          "carried_into_final": true,
+          "decisive_for_core_recommendation": false,
+          "description": "A recognized per-band .msk can supply individual masks without triggering direct dataset-wide selection; direct selection tests per_dataset on band 1. Sidecar-use heading and unknown flags mitigate, but do not spell out, this condition."
+        },
+        {
+          "finding_id": "Y-F2",
+          "severity": "qualification_on_proposed_assertion",
+          "topic": "Canonical-byte identity",
+          "claim_refs": [
+            "Y-C21"
+          ],
+          "carried_into_final": true,
+          "decisive_for_core_recommendation": false,
+          "description": "Exact byte identity is valid for canonical 0/255 fixtures, not every nonzero byte allowed by mask conventions. Recommended nonzero AND is sound; an unqualified equality check could falsely reject a valid noncanonical mask."
+        },
+        {
+          "finding_id": "Y-F3",
+          "severity": "intermediate_description_slip_corrected",
+          "topic": "One invalid band means two valid bands",
+          "claim_refs": [
+            "Y-I01"
+          ],
+          "carried_into_final": false,
+          "decisive_for_core_recommendation": false,
+          "description": "Initial fixture description miscounts valid bands. Setup and expected OR/AND decisions are correct, and final removes the incorrect count."
+        },
+        {
+          "finding_id": "Y-F4",
+          "severity": "discovery_credit_not_warranted",
+          "topic": "Already-present no-nodata check and conditional policy",
+          "claim_refs": [
+            "Y-I02",
+            "Y-I03"
+          ],
+          "carried_into_final": "Content preserved; novelty absent.",
+          "decisive_for_core_recommendation": false,
+          "description": "Critique expansion/amendment labels are stronger than the observed delta; no-nodata fixture and conditional product policy were already present."
+        },
+        {
+          "finding_id": "Y-F5",
+          "severity": "out_of_three_band_scope_precision",
+          "topic": "Four-band guide versus code condition",
+          "claim_refs": [
+            "Y-C11"
+          ],
+          "carried_into_final": true,
+          "decisive_for_core_recommendation": false,
+          "description": "Four-band guide shorthand differs from exact implementation; final correctly excludes that branch from the three-band conclusion."
+        }
+      ],
+      "citation_audit": [
+        {
+          "artifact": "intermediate-1.md",
+          "source_alias": "1",
+          "source_id": "rastermask",
+          "cited_ranges": [
+            [
+              7,
+              15
+            ],
+            [
+              46,
+              70
+            ],
+            [
+              67,
+              70
+            ],
+            [
+              85,
+              92
+            ],
+            [
+              111,
+              124
+            ],
+            [
+              203,
+              216
+            ],
+            [
+              219,
+              236
+            ]
+          ],
+          "result": "All exist and substantiate neighboring text, subject to recognition and identity qualifications."
+        },
+        {
+          "artifact": "intermediate-1.md",
+          "source_alias": "2",
+          "source_id": "rasterio",
+          "cited_ranges": [
+            [
+              472,
+              476
+            ],
+            [
+              631,
+              673
+            ],
+            [
+              1027,
+              1051
+            ],
+            [
+              1038,
+              1051
+            ],
+            [
+              1038,
+              1076
+            ]
+          ],
+          "result": "All exist. 1027-1051 and 1038-1051 are documentation, not executable precedence tests; 1038-1076 includes body."
+        },
+        {
+          "artifact": "intermediate-2.md",
+          "source_alias": null,
+          "source_id": null,
+          "cited_ranges": [],
+          "result": "No explicit IDs or ranges in short critique. Claims independently checked against the same corpus and source references in predecessor/final."
+        },
+        {
+          "artifact": "final.md",
+          "source_alias": "1",
+          "source_id": "rastermask",
+          "cited_ranges": [
+            [
+              7,
+              15
+            ],
+            [
+              67,
+              70
+            ],
+            [
+              85,
+              92
+            ],
+            [
+              111,
+              124
+            ],
+            [
+              203,
+              216
+            ],
+            [
+              219,
+              236
+            ]
+          ],
+          "result": "All exist and support principal claims; guide-sidecar and byte-identity statements are generalizations qualified above."
+        },
+        {
+          "artifact": "final.md",
+          "source_alias": "2",
+          "source_id": "rasterio",
+          "cited_ranges": [
+            [
+              472,
+              476
+            ],
+            [
+              1038,
+              1051
+            ],
+            [
+              1038,
+              1076
+            ]
+          ],
+          "result": "All exist. .msk line-15 citation stops in docstring; independent check of 1061-1076 establishes actual flag-dependent selection."
+        }
+      ],
+      "preservation": {
+        "complete_material_coverage": true,
+        "retained": [
+          "All six obligations",
+          "Conditional all-required-band AND",
+          "OR and common-mask precedence",
+          "Polarity and source links",
+          "8-bit ambiguity and tile-quality uncertainty",
+          "All four proposed fixtures",
+          "Source version/date/hashes"
+        ],
+        "strengthened": [
+          "Final states product-rule status directly",
+          "Final sidecar heading conditions claim on use and includes explicit trust caveat"
+        ],
+        "changed_without_loss": [
+          "One-band-valid wording removed from fixture with only band 1 nodata"
+        ],
+        "unsupported_discovery_credit": [
+          "No-nodata fixture described as an addition although already present",
+          "Conditional all-three policy described as amendment although already conditional"
+        ],
+        "material_drops": [],
+        "remaining_qualification": [
+          "Recognized/shared-mask path distinction",
+          "0/255 condition for exact-byte polarity assertion"
+        ]
+      },
+      "supported_optional_yield": [
+        "Both extremes in the mixed-validity fixture",
+        "Both zero-valid and nonzero-invalid sidecar cases",
+        "No-nodata/no-mask fallback fixture"
+      ],
+      "false_rejection_or_correction": [
+        {
+          "status": "no_false_core_rejection_found",
+          "refs": [
+            "Y-C23"
+          ]
+        },
+        {
+          "status": "novelty_overstatement",
+          "refs": [
+            "Y-I02",
+            "Y-I03"
+          ],
+          "assessment": "Critique credits additions/amendments already in draft."
+        }
+      ],
+      "proposed_versus_executed": {
+        "candidate_executed_self_report": "Source/brief/predecessor reads and source-hash checks only; X additionally reports predecessor artifact hash checks.",
+        "behavior_execution_claimed": false,
+        "proposals_count": 4,
+        "proposals_assessed": "Source-based discrimination checked; no fixture actually executed by reviewer or evidenced as executed by candidate.",
+        "historical_tool_activity": "Unassessed; no native terminal record path supplied. Independent current rehash does not corroborate a past tool call."
+      },
+      "semantic_only_conclusion": {
+        "status": "complete_bounded_source_review_with_named_qualifications",
+        "core_conditional_recommendation": "supported",
+        "decisive_local_failure_of_core_recommendation": false,
+        "all_required_material_obligations_addressed": true,
+        "qualifications": [
+          "Y-F1",
+          "Y-F2",
+          "Y-F3",
+          "Y-F4",
+          "Y-F5"
+        ],
+        "numeric_grade": null,
+        "pass_label": null,
+        "remaining_semantic_unassessed": [],
+        "limits": "No raster behavior witness; actual tiles/product requirements not supplied. This is not a native lifecycle, delivery-eligibility or provenance verdict."
+      }
+    }
+  ],
+  "overall": "Both labels independently have a source-supported conditional recommendation and coverage of all six obligations, with separately enumerated qualifications and intermediate correction issues. No PASS/FAIL aggregate grade, numeric full grade or winner is assigned. Native eligibility is left to parent."
+}

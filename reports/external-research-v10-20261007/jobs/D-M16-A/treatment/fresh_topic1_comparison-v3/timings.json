@@ -1,0 +1,63 @@
+{
+  "schema": "pm.er10.stage-timings.v1",
+  "case_id": "D-M16-A",
+  "stage": "fresh_topic1_comparison-v3",
+  "admission": {
+    "prospective_admission_at": "2026-10-07T21:38:20.445900+00:00",
+    "stage_deadline": "2026-10-07T21:58:20.445900+00:00",
+    "stage_minutes": 20,
+    "common_T0": "2026-10-07T21:21:56.716615+00:00",
+    "common_pair_deadline": "2026-10-07T22:41:56.716615+00:00",
+    "no_reset": true,
+    "rule_source": "admission-timing.json + INPUT_MAP.json (frozen deadline rule: min(actual prospective admission + stage allowance, frozen latest absolute deadline, common pair deadline))"
+  },
+  "actual_source_ops": [
+    {"at": "2026-10-07T21:38:20+00:00", "approx": true, "op": "read admission-timing.json (job dir)"},
+    {"at": "2026-10-07T21:38:20+00:00", "approx": true, "op": "read INPUT_MAP.json (job dir)"},
+    {"at": "2026-10-07T21:40:03+00:00", "approx": false, "op": "read original_brief cases/D-M16-A/inputs/brief.md"},
+    {"at": "2026-10-07T21:40:03+00:00", "approx": false, "op": "read original_source_manifest cases/D-M16-A/inputs/sources.json (sources list intentionally empty: OPEN_DISCOVERY_BRIEF_ONLY)"},
+    {"at": "2026-10-07T21:40:40+00:00", "approx": true, "op": "read predecessor report fresh_shared_discovery-v3/report.md"},
+    {"at": "2026-10-07T21:40:40+00:00", "approx": true, "op": "read predecessor source index fresh_shared_discovery-v3/sources/index.json (12 entries, 12 source-byte files)"},
+    {"at": "2026-10-07T21:41:46+00:00", "approx": false, "op": "independently sha256+size verified all 12 predecessor source bytes against index entries: 12/12 match; predecessor bindings not treated as truth"}
+  ],
+  "capture": {
+    "first_new_capture_at": "2026-10-07T21:45:04+00:00",
+    "captures": [
+      {"at": "2026-10-07T21:45:04+00:00", "file": "sources/osmdroid-maptiledownloader-6.1.20.java", "op": "curl GET raw.githubusercontent.com (osmdroid tag osmdroid-parent-6.1.20)"},
+      {"at": "2026-10-07T21:45:05+00:00", "file": "sources/curl-manpage.html", "op": "curl GET curl.se/docs/manpage.html"},
+      {"at": "2026-10-07T21:45:12+00:00", "file": "sources/osm-tile-headers-20261007.txt", "op": "single bounded HTTP header capture, tile.openstreetmap.org/0/0/0.png, policy-compliant UA, body discarded; tests predecessor validator/max-age uncertainty"}
+    ],
+    "index_verified_at": "2026-10-07T21:46:12+00:00",
+    "note": "3/3 sha256+size verified against sources/index.json; predecessor sourcebytes reused as inputs, not recaptured"
+  },
+  "first_useful_saved_finding_at": "2026-10-07T21:41:46+00:00",
+  "first_useful_saved_finding": "Predecessor shared inventory is byte-faithful (12/12 sha256+size verified) and its shared substrate (identity/freshness, per-tile skip-existing acquisition, conditional revalidation, serve-stale display, bounded retention) plus preserved topic-1 uncertainties are usable as INPUT for independent topic-1 comparison, not as answer.",
+  "output": {
+    "report_md_started_at": "2026-10-07T21:48:30+00:00",
+    "report_md_written_at": "2026-10-07T21:49:04+00:00",
+    "report_md_words": 1056,
+    "source_index_finalized_at": "2026-10-07T21:46:12+00:00",
+    "finalized_at": "2026-10-07T21:51:00+00:00",
+    "terminal_scientific_outputs": ["report.md", "sources/ + sources/index.json", "timings.json"],
+    "note": "terminal outputs complete; not amended afterward"
+  },
+  "known_usage": {
+    "network_requests": 3,
+    "network_request_detail": "2 capture GETs (raw.githubusercontent.com, curl.se) + 1 bounded single-URL header probe (tile.openstreetmap.org, body discarded)",
+    "predecessor_source_bytes_read": 12,
+    "source_files_written": 4,
+    "report_findings": 8
+  },
+  "unknown_input": null,
+  "cache": null,
+  "generated": null,
+  "billing": null,
+  "native_counters": {
+    "distinct_from_tool_counters": true,
+    "values": "native Goal lifecycle counters kept separate here; no Goal internals researched per assignment",
+    "goal_lifecycle": {
+      "goal_count": 1,
+      "note": "single prebound fresh native Goal per dispatch; this stage ends after complete scientific artifact, source index and timings; actual Goal terminal is handled by the dispatching goal loop, passively captured by host lifecycle files (integration-state-active.json, passive-active*.json are host-written, not stage outputs)"
+    }
+  }
+}

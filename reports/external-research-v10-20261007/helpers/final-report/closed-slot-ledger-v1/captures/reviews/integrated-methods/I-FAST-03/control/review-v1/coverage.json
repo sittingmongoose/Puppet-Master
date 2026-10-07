@@ -1,0 +1,609 @@
+{
+  "schema_version": 1,
+  "case_id": "I-FAST-03",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment_is_not_full_contract_or_runtime_certification": true,
+  "material_error_count": 0,
+  "nonmaterial_limitation_ids": [
+    "L1_comparison_condition_narrowed",
+    "L2_network_ban_overreading",
+    "L3_broken_tag_citation"
+  ],
+  "counts": {
+    "scientific_scope_units": {
+      "complete": 49,
+      "assessed": 49,
+      "unassessed": 0,
+      "definition": "6 original obligations + 39 atomic frozen-plan decisions + 4 brief-level product constraints; section and axis groups are not added again"
+    },
+    "original_obligations": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "plan_sections": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "plan_decisions": {
+      "complete": 39,
+      "assessed": 39,
+      "unassessed": 0
+    },
+    "brief_product_constraints": {
+      "complete": 4,
+      "assessed": 4,
+      "unassessed": 0
+    },
+    "separately_named_owner_decisions": {
+      "complete": 0,
+      "assessed": 0,
+      "unassessed": 0
+    },
+    "axes": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "consequential_checks": {
+      "complete": 22,
+      "assessed": 22,
+      "unassessed": 0
+    },
+    "critic_findings": {
+      "complete": 4,
+      "assessed": 4,
+      "unassessed": 0
+    },
+    "final_validation_proposals": {
+      "complete": 11,
+      "assessed": 11,
+      "unassessed": 0
+    },
+    "external_process_facets": {
+      "complete": 2,
+      "assessed": 0,
+      "unassessed": 2
+    },
+    "nonmaterial_limitation_groups": 3,
+    "broken_direct_citation_instances": 2
+  },
+  "axes": [
+    {
+      "axis": 1,
+      "status": "ASSESSED_WITH_LIMITATIONS",
+      "scope": "O1-O6, P1-P6, 39 decisions and four brief-level product constraints; externally unverified procedure facets separated",
+      "checks": [
+        "SC17",
+        "SC18",
+        "SC19",
+        "SC21",
+        "SC22"
+      ]
+    },
+    {
+      "axis": 2,
+      "status": "ASSESSED_WITH_LIMITATIONS",
+      "scope": "All 22 consequential checks; immutable code, governing callers, historical and release conditions; broken direct citation recorded",
+      "checks": [
+        "SC01",
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07",
+        "SC08",
+        "SC09",
+        "SC10",
+        "SC11",
+        "SC12",
+        "SC13",
+        "SC14",
+        "SC15",
+        "SC16",
+        "SC17",
+        "SC20"
+      ]
+    },
+    {
+      "axis": 3,
+      "status": "ASSESSED_SUPPORTED_BOUNDED",
+      "scope": "Products, parser/mechanisms, alternatives, negative and optional opportunities; no exhaustive opportunity-recall claim",
+      "checks": [
+        "SC01",
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07",
+        "SC15",
+        "SC16"
+      ]
+    },
+    {
+      "axis": 4,
+      "status": "ASSESSED_WITH_LIMITATIONS",
+      "scope": "All four critic corrections and retain/reject/open dispositions; network overreading is nonmaterial",
+      "checks": [
+        "SC11",
+        "SC12",
+        "SC17",
+        "SC18",
+        "SC21"
+      ]
+    },
+    {
+      "axis": 5,
+      "status": "ASSESSED_WITH_LIMITATIONS",
+      "scope": "Complete draft/critique/final preservation; four critic findings, eight draft fixture proposals, retained options and uncertainties; one narrowed comparison condition",
+      "checks": [
+        "SC18",
+        "SC19",
+        "SC21"
+      ]
+    },
+    {
+      "axis": 6,
+      "status": "ASSESSED_SUPPORTED_PROPOSALS_ONLY",
+      "scope": "All eleven final fixture proposals and actual narrower static reviewer witnesses; no runtime credit",
+      "checks": [
+        "SC10",
+        "SC14",
+        "SC22"
+      ]
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "status": "ASSESSED_SUPPORTED_BOUNDED",
+      "rationale": "Useful primary discovery beyond plan entries is present; chronological first-read/search order is not independently certified.",
+      "checks": [
+        "SC01",
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07"
+      ],
+      "full_contract_satisfaction": "NOT_ESTABLISHED: substantive assessment supported, externally unverified procedural facet retained separately"
+    },
+    {
+      "id": "O2",
+      "status": "ASSESSED_SUPPORTED",
+      "rationale": "Pinned release source, governing definitions/callers and released package correspondence checked.",
+      "checks": [
+        "SC08",
+        "SC09",
+        "SC10",
+        "SC11",
+        "SC12",
+        "SC14",
+        "SC16"
+      ]
+    },
+    {
+      "id": "O3",
+      "status": "ASSESSED_SUPPORTED_CONDITIONAL",
+      "rationale": "Pertinent optional comment history through implementation/tests/published release; open EOF fix remains unshipped in inspected source.",
+      "checks": [
+        "SC13",
+        "SC14",
+        "SC15"
+      ]
+    },
+    {
+      "id": "O4",
+      "status": "ASSESSED_SUPPORTED",
+      "rationale": "All 39 frozen-plan decisions and all six sections compared; locality characterization limitation separately recorded.",
+      "checks": [
+        "SC17",
+        "SC18"
+      ]
+    },
+    {
+      "id": "O5",
+      "status": "ASSESSED_SUPPORTED_SUBSTANCE",
+      "rationale": "Substantive independent source challenge is evidenced in admitted critique, and all four dispositions survive. Actual flash-family identity is not observable in admitted scientific records and is not credited from a role assertion.",
+      "checks": [
+        "SC11",
+        "SC12",
+        "SC18",
+        "SC21"
+      ],
+      "full_contract_satisfaction": "NOT_ESTABLISHED: substantive assessment supported, externally unverified procedural facet retained separately"
+    },
+    {
+      "id": "O6",
+      "status": "ASSESSED_WITH_LIMITATIONS",
+      "rationale": "One coherent P1-P6 replacement, alternatives, negative/retain dispositions, owner questions, validation and uncertainty; explicit comparison caveat is narrowed and one direct citation is broken.",
+      "checks": [
+        "SC17",
+        "SC19",
+        "SC20",
+        "SC21",
+        "SC22"
+      ]
+    }
+  ],
+  "plan_sections": [
+    {
+      "id": "P1",
+      "status": "ASSESSED_SUPPORTED",
+      "decision_count": 8
+    },
+    {
+      "id": "P2",
+      "status": "ASSESSED_SUPPORTED",
+      "decision_count": 6
+    },
+    {
+      "id": "P3",
+      "status": "ASSESSED_WITH_LIMITATIONS",
+      "decision_count": 6
+    },
+    {
+      "id": "P4",
+      "status": "ASSESSED_SUPPORTED",
+      "decision_count": 4
+    },
+    {
+      "id": "P5",
+      "status": "ASSESSED_SUPPORTED",
+      "decision_count": 5
+    },
+    {
+      "id": "P6",
+      "status": "ASSESSED_SUPPORTED",
+      "decision_count": 10
+    }
+  ],
+  "plan_decisions": [
+    {
+      "id": "P1.1",
+      "section": "P1",
+      "obligation": "Import CSV interval exports",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L49, L60, L64-68"
+    },
+    {
+      "id": "P1.2",
+      "section": "P1",
+      "obligation": "Three meters and one year",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L60"
+    },
+    {
+      "id": "P1.3",
+      "section": "P1",
+      "obligation": "Preview meter identity",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L64"
+    },
+    {
+      "id": "P1.4",
+      "section": "P1",
+      "obligation": "Preview interval labelling",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L64"
+    },
+    {
+      "id": "P1.5",
+      "section": "P1",
+      "obligation": "Preview timestamp convention",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L64, L80"
+    },
+    {
+      "id": "P1.6",
+      "section": "P1",
+      "obligation": "Preview units",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L64, L78"
+    },
+    {
+      "id": "P1.7",
+      "section": "P1",
+      "obligation": "Distinguish interval from cumulative readings",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L64, L78"
+    },
+    {
+      "id": "P1.8",
+      "section": "P1",
+      "obligation": "Immutable originals",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L64, L72"
+    },
+    {
+      "id": "P2.1",
+      "section": "P2",
+      "obligation": "Local store of original records",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L70-74, L92"
+    },
+    {
+      "id": "P2.2",
+      "section": "P2",
+      "obligation": "Store interpretation choices",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L72, L74"
+    },
+    {
+      "id": "P2.3",
+      "section": "P2",
+      "obligation": "Store review flags",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L72"
+    },
+    {
+      "id": "P2.4",
+      "section": "P2",
+      "obligation": "Review repeated/overlapping exports",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L74"
+    },
+    {
+      "id": "P2.5",
+      "section": "P2",
+      "obligation": "Preserve provenance",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L72-74"
+    },
+    {
+      "id": "P2.6",
+      "section": "P2",
+      "obligation": "No automatic overwrite",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L74"
+    },
+    {
+      "id": "P3.1",
+      "section": "P3",
+      "obligation": "Daily and monthly totals",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L78, L82"
+    },
+    {
+      "id": "P3.2",
+      "section": "P3",
+      "obligation": "Time-of-day profiles",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L78"
+    },
+    {
+      "id": "P3.3",
+      "section": "P3",
+      "obligation": "User-selected period comparisons",
+      "status": "ASSESSED_WITH_LIMITATIONS",
+      "final_locations": "L78-82, L86"
+    },
+    {
+      "id": "P3.4",
+      "section": "P3",
+      "obligation": "Missing intervals visible",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L78, L80, L108"
+    },
+    {
+      "id": "P3.5",
+      "section": "P3",
+      "obligation": "Excluded suspect readings visible",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L78, L80, L108"
+    },
+    {
+      "id": "P3.6",
+      "section": "P3",
+      "obligation": "No estimated value silently measured",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L78, L82, L108"
+    },
+    {
+      "id": "P4.1",
+      "section": "P4",
+      "obligation": "Competing unfamiliar-export interpretations",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L64, L86"
+    },
+    {
+      "id": "P4.2",
+      "section": "P4",
+      "obligation": "Operator events such as closures",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L86"
+    },
+    {
+      "id": "P4.3",
+      "section": "P4",
+      "obligation": "Descriptive comparisons; no causal savings",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L60, L86"
+    },
+    {
+      "id": "P4.4",
+      "section": "P4",
+      "obligation": "No tariff/billing conclusions",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L60, L86"
+    },
+    {
+      "id": "P5.1",
+      "section": "P5",
+      "obligation": "Delimited-ingestion choice initially undecided",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L53, L90"
+    },
+    {
+      "id": "P5.2",
+      "section": "P5",
+      "obligation": "Aggregation choice initially undecided",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L90-92"
+    },
+    {
+      "id": "P5.3",
+      "section": "P5",
+      "obligation": "Chart choice initially undecided",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L90-92"
+    },
+    {
+      "id": "P5.4",
+      "section": "P5",
+      "obligation": "Local normal-laptop workflow",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L23, L60, L70-74, L92"
+    },
+    {
+      "id": "P5.5",
+      "section": "P5",
+      "obligation": "Account IDs omitted unless explicit review package",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L92, L96"
+    },
+    {
+      "id": "P6.1",
+      "section": "P6",
+      "obligation": "Export period comparison",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L94-96"
+    },
+    {
+      "id": "P6.2",
+      "section": "P6",
+      "obligation": "Export input identities",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L96"
+    },
+    {
+      "id": "P6.3",
+      "section": "P6",
+      "obligation": "Export coverage",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L96"
+    },
+    {
+      "id": "P6.4",
+      "section": "P6",
+      "obligation": "Export interpretations",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L96"
+    },
+    {
+      "id": "P6.5",
+      "section": "P6",
+      "obligation": "Export uncertainty",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L96"
+    },
+    {
+      "id": "P6.6",
+      "section": "P6",
+      "obligation": "Propose reset checks",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L106"
+    },
+    {
+      "id": "P6.7",
+      "section": "P6",
+      "obligation": "Propose overlap checks",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L104"
+    },
+    {
+      "id": "P6.8",
+      "section": "P6",
+      "obligation": "Propose clock-transition checks",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L107"
+    },
+    {
+      "id": "P6.9",
+      "section": "P6",
+      "obligation": "Propose unit checks",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L105"
+    },
+    {
+      "id": "P6.10",
+      "section": "P6",
+      "obligation": "Propose aggregation reproducibility checks",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L105, L109"
+    }
+  ],
+  "brief_product_constraints": [
+    {
+      "id": "B1",
+      "obligation": "One-building community-centre dashboard",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L60"
+    },
+    {
+      "id": "B2",
+      "obligation": "Understand use patterns, trustworthy descriptive comparisons and inconsistent-export review",
+      "status": "ASSESSED_WITH_LIMITATIONS",
+      "final_locations": "L60, L64-86; SC19"
+    },
+    {
+      "id": "B3",
+      "obligation": "No equipment-purchase advice or verified savings",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L60, L86"
+    },
+    {
+      "id": "B4",
+      "obligation": "No billing certification or automated control",
+      "status": "ASSESSED_SUPPORTED",
+      "final_locations": "L60, L86"
+    }
+  ],
+  "separately_named_owner_decisions": [],
+  "owner_scope_note": "No additional owner document or named owner decision is supplied by the bounded brief/plan. The 39 frozen product decisions include the undecided component/privacy choices. No repo cross-reference was inferred. Final open product choices are assessed in judgment.md, not treated as automatically satisfied requirements.",
+  "unassessed_scientific_units": [],
+  "external_process_facets": [
+    {
+      "id": "O1.discovery_before_plan_read",
+      "status": "UNASSESSED",
+      "reason": "Authored input-order assertion does not independently establish execution chronology; host process evidence is outside the admitted review inputs."
+    },
+    {
+      "id": "O5.flash_family_identity",
+      "status": "UNASSESSED",
+      "reason": "Actual critic provider/model family is not independently established in admitted scientific records; no identity inference from path or self-description."
+    }
+  ],
+  "full_declared_contract_counts_including_external_facets": {
+    "complete": 51,
+    "assessed": 49,
+    "unassessed": 2,
+    "definition": "49 scientific units plus the two explicitly unverified procedural facets; these facets are not source-error counts or science scoring inputs"
+  },
+  "blinding_limits": [
+    "Arm appears in admitted paths.",
+    "Visible artifact/stage/procedure structure may reveal method differences.",
+    "Source maps contain author timing/counters and native-goal/provenance material; those fields were ignored for source judgment.",
+    "No other-arm artifact/grade, parent analysis, winner/cost/speed target or evaluator answer was consulted."
+  ],
+  "usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "cache_hits": null,
+    "billing_amount": null
+  },
+  "artifacts": {
+    "judgment": "judgment.md",
+    "source_checks": "source-checks.json",
+    "admitted_bytes_manifest": "sources/admitted-manifest.json",
+    "independent_bytes_manifest": "sources/independent-manifest.json"
+  },
+  "source_content_coverage_complete": true,
+  "full_declared_contract_coverage_complete": false
+}

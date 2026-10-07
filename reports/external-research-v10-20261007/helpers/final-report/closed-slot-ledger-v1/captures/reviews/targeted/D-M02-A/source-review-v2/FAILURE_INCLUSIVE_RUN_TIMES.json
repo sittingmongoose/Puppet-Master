@@ -1,0 +1,101 @@
+[
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M02-A-control-question_1-v2",
+    "arm": "control",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_1-v2",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-A-control-question_1-v2:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T19:37:16.607Z",
+        "startedAt": "2026-10-07T19:37:17.097Z",
+        "completedAt": "2026-10-07T19:42:42.721Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M02-A-control-question_2-v2",
+    "arm": "control",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-question_2-v2",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-A-control-question_2-v2:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T19:43:50.468Z",
+        "startedAt": "2026-10-07T19:43:51.488Z",
+        "completedAt": "2026-10-07T19:50:11.434Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M02-A-control-join-v2",
+    "arm": "control",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-control-join-v2",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-A-control-join-v2:ordinal:1",
+        "ordinal": 1,
+        "status": "interrupted",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T19:50:26.164Z",
+        "startedAt": "2026-10-07T19:50:26.791Z",
+        "completedAt": "2026-10-07T19:53:04.192Z"
+      }
+    ],
+    "threadStatus": "interrupted",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "candidate",
+    "id": "er10-cohort1-D-M02-A-treatment-batch-v2",
+    "arm": "treatment",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-treatment-batch-v2",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-A-treatment-batch-v2:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "requestedAt": "2026-10-07T19:53:28.992Z",
+        "startedAt": "2026-10-07T19:53:29.511Z",
+        "completedAt": "2026-10-07T20:03:10.161Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  },
+  {
+    "kind": "review",
+    "id": "er10-cohort1-D-M02-A-source-review-v2",
+    "thread": "thread:delegated-task:command%3Amcp%3A4c2871a9-da99-4f6e-9f47-e73f707f6e89%3Adelegate-task%3Aer10-cohort1-D-M02-A-source-review-v2",
+    "recentRuns": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A4c2871a9-da99-4f6e-9f47-e73f707f6e89%253Adelegate-task%253Aer10-cohort1-D-M02-A-source-review-v2:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T20:04:14.040Z",
+        "startedAt": "2026-10-07T20:04:15.621Z",
+        "completedAt": "2026-10-07T20:12:45.509Z"
+      }
+    ],
+    "threadStatus": "completed",
+    "pendingRequestCount": 0
+  }
+]

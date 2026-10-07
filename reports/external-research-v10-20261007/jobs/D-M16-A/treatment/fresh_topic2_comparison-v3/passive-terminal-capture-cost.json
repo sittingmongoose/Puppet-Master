@@ -1,0 +1,33 @@
+{
+  "event": "terminal",
+  "stage": "D-M16-A/treatment/fresh_topic2_comparison-v3",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M16-A/treatment/fresh_topic2_comparison-v3"
+  ],
+  "start": "2026-10-07T22:07:57.985960+00:00",
+  "end": "2026-10-07T22:07:58.246714+00:00",
+  "elapsed_seconds": 0.26075916400077404,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T22:07:58.061024+00:00",
+    "entries": [
+      {
+        "stage": "D-M16-A/treatment/fresh_topic2_comparison-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_topic2_comparison-v3--526934246de2234e.json",
+        "sha256": "526934246de2234ec8e9d7ac1d27246c3f77addf37ea590bf58b3dd08e431a0d",
+        "bytes": 20002,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

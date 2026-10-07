@@ -1,0 +1,1560 @@
+{
+  "record_at": "2026-10-07T21:06:02.955479+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-05-control-independent-review-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T20:46:44.287Z",
+    "startedAt": "2026-10-07T20:46:44.833Z",
+    "completedAt": "2026-10-07T21:05:49.461Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "schema": "independent-semantic-coverage.v1",
+    "case": "I-METHOD-05",
+    "source_judgment": "FAIL",
+    "assessment_scope_complete": true,
+    "scope_definition": "Original brief O1-O6 and exactly the seven named PlanUnits plus all three copied context files. P01-P43 are grouped frozen owner decisions, not added requirements or exhaustive opportunities. Assessment completion is separate from candidate satisfaction.",
+    "counts": {
+      "axes": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "brief_obligations": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0,
+        "satisfied_scientific_content": 3,
+        "not_fully_satisfied": 3
+      },
+      "plan_owner_records": {
+        "complete": 10,
+        "assessed": 10,
+        "unassessed": 0,
+        "satisfied": 1,
+        "satisfied_with_limitations": 1,
+        "not_fully_satisfied": 8
+      },
+      "grouped_owner_decisions": {
+        "complete": 43,
+        "assessed": 43,
+        "unassessed": 0
+      },
+      "critic_dispositions": {
+        "complete": 15,
+        "assessed": 15,
+        "unassessed": 0,
+        "visibly_addressed": 15
+      },
+      "consequential_source_checks": {
+        "complete": 22,
+        "assessed": 22,
+        "unassessed": 0
+      },
+      "primary_required_scope": {
+        "complete": 16,
+        "assessed": 16,
+        "unassessed": 0
+      },
+      "material_error_count": 4,
+      "material_contract_or_preservation_defects": 3,
+      "material_required_history_gap": 1,
+      "confirmed_false_public_component_behavior_claims": 0,
+      "nonmaterial_limitation_count": 3
+    },
+    "count_convention": "complete is the number of enumerated assessment items in that category; assessed means semantically reviewed, not passed. Categories overlap and must not be summed. Primary scope = 6 brief obligations + 10 frozen owner records.",
+    "axes": [
+      {
+        "id": "A1",
+        "name": "Original obligations and all frozen decisions",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "findings": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ]
+      },
+      {
+        "id": "A2",
+        "name": "Consequential claims, governing context and versions",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "findings": [
+          "D4",
+          "C01-C18"
+        ]
+      },
+      {
+        "id": "A3",
+        "name": "Bounded discovery, mechanisms, alternatives, negative/opportunity coverage",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "findings": [
+          "C05",
+          "C16",
+          "L2",
+          "L3"
+        ]
+      },
+      {
+        "id": "A4",
+        "name": "Incorrect corrections/rejections and already-covered dispositions",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "findings": [
+          "D1",
+          "D2",
+          "D3"
+        ]
+      },
+      {
+        "id": "A5",
+        "name": "Draft-to-critique-to-final preservation",
+        "assessment": "ASSESSED",
+        "result": "FAIL",
+        "findings": [
+          "D1",
+          "D2",
+          "D3",
+          "L1",
+          "L3"
+        ]
+      },
+      {
+        "id": "A6",
+        "name": "Proposed versus executed validation and witness applicability",
+        "assessment": "ASSESSED",
+        "result": "PASS_WITH_LIMITATIONS",
+        "findings": [
+          "C03",
+          "C12",
+          "C22"
+        ]
+      }
+    ],
+    "brief_obligations": [
+      {
+        "id": "O1",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "evidence": [
+          "C01",
+          "C05",
+          "C07-C18"
+        ],
+        "limit": "Useful bounded discovery; no exhaustive recall or independently verified discovery chronology."
+      },
+      {
+        "id": "O2",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "evidence": [
+          "C02",
+          "C07-C14"
+        ],
+        "limit": "Immutable implementation/definition/caller inspected. No runtime claim."
+      },
+      {
+        "id": "O3",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "evidence": [
+          "C03-C05",
+          "C12"
+        ],
+        "defects": [
+          "D4"
+        ]
+      },
+      {
+        "id": "O4",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "evidence": [
+          "P01-P43"
+        ],
+        "defects": [
+          "D1",
+          "D2",
+          "D3"
+        ]
+      },
+      {
+        "id": "O5",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED_SCIENTIFIC_CONTENT",
+        "evidence": [
+          "K01-K15"
+        ],
+        "limit": "Substantive admitted critic and dispositions checked; actual flash-family/provider/lifecycle provenance excluded from source judgment."
+      },
+      {
+        "id": "O6",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "evidence": [
+          "final sections 1-6",
+          "C22"
+        ],
+        "defects": [
+          "D1",
+          "D2",
+          "D3"
+        ]
+      }
+    ],
+    "plan_owner_records": [
+      {
+        "id": "F-008",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "defects": [
+          "D1",
+          "D2"
+        ]
+      },
+      {
+        "id": "F-018",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED",
+        "defects": []
+      },
+      {
+        "id": "F-020",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "defects": [
+          "D2"
+        ]
+      },
+      {
+        "id": "F-026",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "defects": [
+          "D1"
+        ]
+      },
+      {
+        "id": "F-027",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "defects": [
+          "D2"
+        ]
+      },
+      {
+        "id": "F-028",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "defects": [
+          "D3"
+        ]
+      },
+      {
+        "id": "F-082",
+        "assessment": "ASSESSED",
+        "result": "SATISFIED_WITH_LIMITATIONS",
+        "defects": []
+      },
+      {
+        "id": "definitions_and_transactions",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "defects": [
+          "D1",
+          "D2"
+        ]
+      },
+      {
+        "id": "editing_and_save_context",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "defects": [
+          "D2"
+        ]
+      },
+      {
+        "id": "text_and_size_context",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_SATISFIED",
+        "defects": [
+          "D1",
+          "D2",
+          "D3"
+        ]
+      }
+    ],
+    "owner_decisions": [
+      {
+        "id": "P01",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P02",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P03",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P04",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P05",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P06",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_WITH_CONFLICT",
+        "defects": [
+          "D2"
+        ]
+      },
+      {
+        "id": "P07",
+        "assessment": "ASSESSED",
+        "result": "NOT_FULLY_PRESERVED",
+        "defects": [
+          "D2"
+        ]
+      },
+      {
+        "id": "P08",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P09",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P10",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P11",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE_WITH_AMBIGUITY",
+        "defects": []
+      },
+      {
+        "id": "P12",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P13",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P14",
+        "assessment": "ASSESSED",
+        "result": "CONTRACT_CONFLICT",
+        "defects": [
+          "D1"
+        ]
+      },
+      {
+        "id": "P15",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P16",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P17",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P18",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P19",
+        "assessment": "ASSESSED",
+        "result": "CONTRACT_CONFLICT",
+        "defects": [
+          "D1",
+          "D2"
+        ]
+      },
+      {
+        "id": "P20",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P21",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P22",
+        "assessment": "ASSESSED",
+        "result": "CONTRACT_CONFLICT",
+        "defects": [
+          "D2"
+        ]
+      },
+      {
+        "id": "P23",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P24",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P25",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P26",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_WITH_SUPPORTED_ADDITION",
+        "defects": []
+      },
+      {
+        "id": "P27",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P28",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P29",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P30",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P31",
+        "assessment": "ASSESSED",
+        "result": "CONTRACT_CONFLICT",
+        "defects": [
+          "D2"
+        ]
+      },
+      {
+        "id": "P32",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P33",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P34",
+        "assessment": "ASSESSED",
+        "result": "CONTRACT_CONFLICT",
+        "defects": [
+          "D2"
+        ]
+      },
+      {
+        "id": "P35",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P36",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_WITH_AMBIGUITY",
+        "defects": []
+      },
+      {
+        "id": "P37",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P38",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P39",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P40",
+        "assessment": "ASSESSED",
+        "result": "RETAINED",
+        "defects": []
+      },
+      {
+        "id": "P41",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      },
+      {
+        "id": "P42",
+        "assessment": "ASSESSED",
+        "result": "NOT_PRESERVED",
+        "defects": [
+          "D3"
+        ]
+      },
+      {
+        "id": "P43",
+        "assessment": "ASSESSED",
+        "result": "RETAINED_BY_REFERENCE",
+        "defects": []
+      }
+    ],
+    "owner_decision_inventory": "judgment.md P01-P43",
+    "critic_dispositions": [
+      {
+        "id": "K01",
+        "name": "Zed analogy is not PM defect",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 100
+      },
+      {
+        "id": "K02",
+        "name": "mtime not universal revision",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 101
+      },
+      {
+        "id": "K03",
+        "name": "Zed shipped-release uncertainty",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 102
+      },
+      {
+        "id": "K04",
+        "name": "Prompt timing contradiction",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 103
+      },
+      {
+        "id": "K05",
+        "name": "Atomic save/adjacent owner limits",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 104
+      },
+      {
+        "id": "K06",
+        "name": "Ropey only a qualified option",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 105
+      },
+      {
+        "id": "K07",
+        "name": "Ropey qualified release/test history",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 106
+      },
+      {
+        "id": "K08",
+        "name": "Partial Rope serialization",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 107
+      },
+      {
+        "id": "K09",
+        "name": "Pinned Slint paste/undo/programmatic paths",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 108
+      },
+      {
+        "id": "K10",
+        "name": "Configuration-specific Slint lag wording",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 109
+      },
+      {
+        "id": "K11",
+        "name": "F-028 metrics, conditions, scan/performance",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 110
+      },
+      {
+        "id": "K12",
+        "name": "Cross-topic seams",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 111
+      },
+      {
+        "id": "K13",
+        "name": "Unassessed alternative set",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 112
+      },
+      {
+        "id": "K14",
+        "name": "TextEdit sole authority unsupported",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 113
+      },
+      {
+        "id": "K15",
+        "name": "Need an integrated final artifact",
+        "assessment": "ASSESSED",
+        "visible_disposition": true,
+        "final_line": 114
+      }
+    ],
+    "unassessed_required_obligations": [],
+    "candidate_optional_opportunities_not_deeply_researched": [
+      "piece table/tree",
+      "mmap",
+      "virtualization",
+      "alternate encodings",
+      "hex view",
+      "other editors",
+      "Ropey 2.0.0-beta.1"
+    ],
+    "review_limits": [
+      "No exhaustive opportunity recall. Optional unresearched approaches are not counted as unassessed required rows.",
+      "No app build/test/benchmark or downloaded-code execution; candidate historical execution logs unavailable.",
+      "No latest/current-release sweep or proof of every supported renderer/OS.",
+      "No other arms/cases/reviews/parent analysis accessed.",
+      "Visible control paths and topic/procedure structure weaken blinding; source-map timing/native Goal/counters were ignored."
+    ],
+    "blinding_limits": [
+      "Arm name visible in admitted paths.",
+      "Two-topic authored structure and procedure prose can reveal method.",
+      "Source maps contain author timing/counters/native Goal/provenance fields; ignored for source judgment."
+    ],
+    "usage": null,
+    "billing": null,
+    "quota": null,
+    "host_lifecycle_judgment": null,
+    "counterpart_or_comparative_judgment": null,
+    "recorded_utc": "2026-10-07T21:05:45.759472+00:00"
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+      "bytes": 10943,
+      "sha256": "c9c1310feccae242ef4e89145f9129d10a8dc12fddaa22b5a123eebdccbe5788"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/judgment.md",
+      "bytes": 40859,
+      "sha256": "3330e3425565f6ebc2aaecba5ed6a3c92364e06b4c716a1f29a7acf00a8d9de5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/source-checks.json",
+      "bytes": 71837,
+      "sha256": "678a3e04cb03d5a1f41ee40158013a53decbcf791b7b0e1b24457ee166bb8ac9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/critic-v1/artifact.md",
+      "bytes": 12278,
+      "sha256": "4ee82161cc9f6620ca2c3b893fb8395590424373922497ca4aeb758a6ab557f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/critic-v1/source-map.json",
+      "bytes": 11340,
+      "sha256": "b747796dc04a4411a4d4db50a31aaad266f5fdf6251981f1bf17e3cd01c6fd97"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/critic-v1/sources/first-useful-finding.md",
+      "bytes": 1392,
+      "sha256": "e354244da3c64282c369d9f1bf2885ef3eeee456b96b40c8033433eb0f17c342"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/critic-v1/sources/primary-source-evidence.md",
+      "bytes": 6523,
+      "sha256": "92bec3c6264561351abec78d4de460358d207141286b0994b5e698bd2af03281"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/research-v1/artifact.md",
+      "bytes": 31376,
+      "sha256": "5d481044e29a0891ebc32df8a4955a8c2298a16665eb38f0ebf79b4652ee7104"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/research-v1/source-map.json",
+      "bytes": 2059,
+      "sha256": "2516a92496c753d57f5f8ed14c96c440e51bb270ec2810d7e7d040720387b476"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/artifact.md",
+      "bytes": 30197,
+      "sha256": "aa54c03322cb723962a158b9a00020a5e0d5dfa9c4c581fc88a7ac2cf45da841"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/source-map.json",
+      "bytes": 11622,
+      "sha256": "ed9b028ee6095bbb40a8c5f78a9fb5f387cd3010fea8e9b4c9e7b03c7604be94"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/sources/critic-first-useful-finding.md",
+      "bytes": 1392,
+      "sha256": "e354244da3c64282c369d9f1bf2885ef3eeee456b96b40c8033433eb0f17c342"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/sources/critic-primary-source-evidence.md",
+      "bytes": 6523,
+      "sha256": "92bec3c6264561351abec78d4de460358d207141286b0994b5e698bd2af03281"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/sources/first-useful-finding.md",
+      "bytes": 1203,
+      "sha256": "ef15f936c8ed3ddbbc0863447795c749106348fcc05d58ad20570b2d4618f1e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/sources/topic-a-first-useful-finding.md",
+      "bytes": 1559,
+      "sha256": "7c009e93b209cb444df0d1401d8ed2ee3ab9fff0103ff4ec396d9a8256f532f4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/sources/topic-a-zed-buffer-undo-reload.md",
+      "bytes": 4409,
+      "sha256": "b50235c2e2dc54e4120705740fd1807427fe8d32c3517a31a9dfd0ce9d655185"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/sources/topic-b-first-finding.md",
+      "bytes": 963,
+      "sha256": "95c447904322024cdeca949de80097bfb5db438dd050caf18667e8d166423425"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-control/reviser-v1/sources/topic-b-public-evidence.md",
+      "bytes": 3316,
+      "sha256": "4ca5c029facab16de0ef1675394e42c9ec65122c957b016e278945ef86fe85b8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/admitted-input-manifest.json",
+      "bytes": 10396,
+      "sha256": "847a14a654475f306a1311e93a554b8d763ca2dc6af2f73bb502fd2d20b4028b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/delivery-manifest.json",
+      "bytes": 1172,
+      "sha256": "ad767f61345477000e000168e262eeacc46c46393dd6b6c1aebc64107298c7dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/F-008.md",
+      "bytes": 2828,
+      "sha256": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/F-018.md",
+      "bytes": 2233,
+      "sha256": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/F-020.md",
+      "bytes": 2235,
+      "sha256": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/F-026.md",
+      "bytes": 2399,
+      "sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/F-027.md",
+      "bytes": 2090,
+      "sha256": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/F-028.md",
+      "bytes": 2001,
+      "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/F-082.md",
+      "bytes": 2294,
+      "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/brief.md",
+      "bytes": 5605,
+      "sha256": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/definitions_and_transactions.md",
+      "bytes": 5313,
+      "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/editing_and_save_context.md",
+      "bytes": 4948,
+      "sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/plan.md",
+      "bytes": 2932,
+      "sha256": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/frozen-inputs/text_and_size_context.md",
+      "bytes": 3663,
+      "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/inotify.html",
+      "bytes": 44066,
+      "sha256": "79f5ab18e2fc423631cf4949ef82ca1384844353ea11a4dba42e1a77e8fdd8fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/inotify.html.meta.json",
+      "bytes": 904,
+      "sha256": "8d78f558780341ab2cc642bd2e672cdc1cf6016862772aea9a0fb99813260c07"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/inotify.html.txt",
+      "bytes": 27120,
+      "sha256": "12d75e7325357f4d0c0b4dbd9cef700c027a053466eee94dbe9db9c89d10f155"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/owner-decision-inventory.json",
+      "bytes": 14076,
+      "sha256": "705076f34e37a024d23825b5b859a0a57faa9366a724a8c8eba9f44887f377a3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/posix-open.html",
+      "bytes": 40401,
+      "sha256": "57b770918aa3e0c25186972675df8c96da119cf4b973335ed4487405e260dc3a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/posix-open.html.meta.json",
+      "bytes": 1449,
+      "sha256": "3cb82f3b4c3f5da3d80c5e47ed9fa9289f0041ab56ca0ab6ff113c031dfcae70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/posix-open.html.txt",
+      "bytes": 29994,
+      "sha256": "f2cee11af15a709e1b80811a28aafdc101e999a4bebea26a2b1df6e83bec665c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/posix-rename.html",
+      "bytes": 26407,
+      "sha256": "06671610134b0a52cdf4dcdaf382f72fef85ef51088b8a52b8679c7f03829318"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/posix-rename.html.meta.json",
+      "bytes": 1457,
+      "sha256": "ba4050bce0fa0b768ab721198d68f4ea73c29f419f53a99dc17518d101b01569"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/posix-rename.html.txt",
+      "bytes": 14459,
+      "sha256": "e5a89ad37d3f5211943e9036d211efe5cdec90345096806f4dcccc28d9023511"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-CHANGELOG.md",
+      "bytes": 15390,
+      "sha256": "cb39bd9b0d622a83d18a4ada0f384e9067a07c57023cf5058a842d35e1bbec63"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-CHANGELOG.md.meta.json",
+      "bytes": 1716,
+      "sha256": "787b6e016aed5605ebd2adf468d414d84c420aef4e5141bc8c2f876c273031c3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-Cargo.toml",
+      "bytes": 1410,
+      "sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-Cargo.toml.meta.json",
+      "bytes": 1708,
+      "sha256": "3d193f6d868016ddaa2c2fcb0ca88c808504c817afa81925771c8f462a3d2c0e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-builder.rs",
+      "bytes": 12592,
+      "sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-builder.rs.meta.json",
+      "bytes": 1727,
+      "sha256": "c931ed115baefca1a7c930bc1e183fa7f5d913dcea5abf8b465ea23b7d64800b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-crlf-tests.rs",
+      "bytes": 2552,
+      "sha256": "64dd6cc32ef5737502571896012bcceadc21be6fbc02c4d77b691d5c31b1c532"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-crlf-tests.rs.meta.json",
+      "bytes": 1720,
+      "sha256": "a0b43fca3a07b55d29c31dfd917874311e8c0292453a1e0041c40d11467ecbb0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-crlf.rs",
+      "bytes": 6199,
+      "sha256": "2705a577d31e5efecd95b81bf63339dc1c9d009085fe346685cf36703fb938cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-crlf.rs.meta.json",
+      "bytes": 1703,
+      "sha256": "c26a6ef6404e3fe413c74b24fb5787d7ff8aad00d7c7100eeb9c797773e4ad16"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-d41ee-Cargo.toml",
+      "bytes": 1410,
+      "sha256": "548904d2f6106b5c8999afa2174a561fe823d77e29d02347840dbb9d207fd5bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-d41ee-Cargo.toml.meta.json",
+      "bytes": 1787,
+      "sha256": "03669bff4ba281589be8ac81a96b20cdb42b146e76cb82b4e380eb8599e2dcb6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-from-reader-tests.rs",
+      "bytes": 1364,
+      "sha256": "cbd1d35843cec11fc43170794de9ffbf8404086a136f29632d4f7655ceadfe80"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-from-reader-tests.rs.meta.json",
+      "bytes": 1747,
+      "sha256": "2dc7266eac4350e992b34c66c16bb0d2b6c1ce801c7af596e5ed769083a6117c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-builder.rs",
+      "bytes": 12592,
+      "sha256": "a72043e453041cbc8948998f78b6c0bb8a9e0cd99bcd77153778378167b97398"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-builder.rs.meta.json",
+      "bytes": 1815,
+      "sha256": "1ec423fbe94eb3e52607b78d0359ad82e9d37709ee6683407082c54b8cc8e227"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-changelog.md",
+      "bytes": 15390,
+      "sha256": "cb39bd9b0d622a83d18a4ada0f384e9067a07c57023cf5058a842d35e1bbec63"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-changelog.md.meta.json",
+      "bytes": 1804,
+      "sha256": "3955e434ee2298a30ce7eed3e44d5c21f7f5de06125675ba864cecb62143b85c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-crlf.rs",
+      "bytes": 6199,
+      "sha256": "2705a577d31e5efecd95b81bf63339dc1c9d009085fe346685cf36703fb938cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-crlf.rs.meta.json",
+      "bytes": 1790,
+      "sha256": "0fe3ad5aa9460af89ca011f7a9a24b53e806baa3d4a4e195ee228e1c41a9acff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-lib.rs",
+      "bytes": 14151,
+      "sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-lib.rs.meta.json",
+      "bytes": 1789,
+      "sha256": "5045a0c43d6bda680672b3e2d3bc57f3a77292fdc7d1ffcb864f542b690138dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-node-children.rs",
+      "bytes": 35148,
+      "sha256": "18576a441d56f98b7bcef174824d5a4d315211699919a7becd16ec876f2f12ae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-node-children.rs.meta.json",
+      "bytes": 1838,
+      "sha256": "c84853c2d50e130c27721f545e04b0f7f8e26f83aa3e65360a470832b5aca348"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-node.rs",
+      "bytes": 42390,
+      "sha256": "a591c350ee59617fea969e9ee5e4361fb351e41126e96e1ef844054ce044bd65"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-node.rs.meta.json",
+      "bytes": 1802,
+      "sha256": "1aaf765c82bb91fa78aad29423be47b6d33a28aa13020a725f463a4e0d9a8411"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-rope.rs",
+      "bytes": 104334,
+      "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-rope.rs.meta.json",
+      "bytes": 1795,
+      "sha256": "8806d6f82a0c38689c4803ce82f8ef0d0e07d5e9c3a50110facf34049cd21fc6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-slice.rs",
+      "bytes": 103420,
+      "sha256": "c58b364583e7781b3d56f4da3a1dcad21aeb761c3f5cca78a4a9d2a0a832ce30"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-slice.rs.meta.json",
+      "bytes": 1799,
+      "sha256": "d9c4c9fda3edf8d5e3429efddd0297fe5db00724f6f7160a7c64882ef7db2374"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-tree-mod.rs",
+      "bytes": 4323,
+      "sha256": "8ce7879907edeeb571d13c6d50406c7c5775fac6ebc2af06215e119fcfe499be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-immutable-tree-mod.rs.meta.json",
+      "bytes": 1804,
+      "sha256": "68b94cd149b4eb17113d4b46fb26c18aeced225f91a9774a2640d06b1b3778ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-lib.rs",
+      "bytes": 14151,
+      "sha256": "85c0533bfc2d990e6eca7b94115a1cd501e2a366c0c3de33aead624325a59f3a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-lib.rs.meta.json",
+      "bytes": 1702,
+      "sha256": "d9e16a5be90a87dcc49f26b8ce0baa1ed9c5eba81481c02db2f73965dfbe5dcc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-proptests.rs",
+      "bytes": 54876,
+      "sha256": "be4d6a148b7f3c3f4fb9c74bb53fc468ec3f9bbbc376ba255904ef98aaee77fb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-proptests.rs.meta.json",
+      "bytes": 1740,
+      "sha256": "f12e7c8d400ae823ff3b1d3a10fb757b0e49be986fa9acf666c2ebfe561715f2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-release-v1.6.1.html",
+      "bytes": 200737,
+      "sha256": "4a22794f49721d75d5772018590cbd64b2ff122976b1d17a46b525bacd047b94"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-release-v1.6.1.html.meta.json",
+      "bytes": 5603,
+      "sha256": "df53253f9b1a098151a1e222851062ca3dddbb7e9e53bc38c7dbe562870e043f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-release-v1.6.1.html.txt",
+      "bytes": 3040,
+      "sha256": "60e337c09a61d0a3bd9c2c95888b40194124bba49d5f9fc46f8e337e5a7ff970"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-rope.rs",
+      "bytes": 104334,
+      "sha256": "273f11c4f756a6a4555b156a1a1d3b85aa0eeb2e12e056839810a731f702dbee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-rope.rs.meta.json",
+      "bytes": 1708,
+      "sha256": "55b3cc8687def5edd2d6f2a4f3eb0a23191d689cb1f1231c66014290975d6898"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-slice.rs",
+      "bytes": 103420,
+      "sha256": "c58b364583e7781b3d56f4da3a1dcad21aeb761c3f5cca78a4a9d2a0a832ce30"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-slice.rs.meta.json",
+      "bytes": 1711,
+      "sha256": "10640c562d9441f97137d360c7055819001c41fcba747a7182907d4b37a17f17"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-tag-ref.json.meta.json",
+      "bytes": 284,
+      "sha256": "c90af353a1c729c35dc03ff18fba87762f7d28ceaf0fdab6c81ccd1df6054d0f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-tree-mod.rs",
+      "bytes": 4323,
+      "sha256": "8ce7879907edeeb571d13c6d50406c7c5775fac6ebc2af06215e119fcfe499be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-tree-mod.rs.meta.json",
+      "bytes": 1720,
+      "sha256": "84cc5613341b06b60b4e8bcb9a61cf74c6efb5a80b125ab891505b1d961fb017"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-37fb91-text.rs",
+      "bytes": 78584,
+      "sha256": "5603082f0ec16f7d6c68d8f13283e6e32cdf415a922d05c9fd956dcba3277db0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-37fb91-text.rs.meta.json",
+      "bytes": 1824,
+      "sha256": "59d3db2977329b92e266597431a029f84077ed6d6fe2c3990142218fe16193ae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-8877-comments.json.meta.json",
+      "bytes": 293,
+      "sha256": "84e1bd208e7e89b27d72a000853538f0cf257854cedd0c7eb6106c8b69186cfa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-8877.html",
+      "bytes": 266113,
+      "sha256": "bd83431033ff7a82a62216515c572463557f6204d507e07b7c26117376e9432b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-8877.html.meta.json",
+      "bytes": 6064,
+      "sha256": "91e11fc5399568f74c2edc5970bcce76a12b86347fa26b0945f9780f0f4bd291"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-8877.html.txt",
+      "bytes": 6205,
+      "sha256": "9ff0e8acfdf4629bd63c0c7eee647245b4b7c7d7ee199e19edf07b11fadaf5cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-cf62c9-sharedparley.rs",
+      "bytes": 69210,
+      "sha256": "1e3c277e6c9e18090b1570846950cecc55497a3f5de16d1b517954e69dc3dc28"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-cf62c9-sharedparley.rs.meta.json",
+      "bytes": 1864,
+      "sha256": "ef0b20ded9f592f173f4b459c5fadb117b696cb91a875e9fd256b9740aee21f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-discussion-12343.html",
+      "bytes": 311486,
+      "sha256": "c86bc83fe8345c8effd22859636dcb5574bf1726d12b6b7691b8e04d77c7caad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-discussion-12343.html.meta.json",
+      "bytes": 5937,
+      "sha256": "beea19fa80754a2d2d4ab4c739acd9664d74c778f21ab4bc3f7331149db741e6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-discussion-12343.html.txt",
+      "bytes": 7401,
+      "sha256": "240a2e85676d9ff309849db9ea5dccf510d5b36d0bf0f3f610040619ab1ad588"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-immutable-base.slint",
+      "bytes": 5978,
+      "sha256": "d9fb982b5dfb72ad737f6f3806bd6b40229717c0b5db2532849620cf0d47bd26"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-immutable-base.slint.meta.json",
+      "bytes": 1882,
+      "sha256": "a36b01de763b5f8cadcb53e5a8a423ebb33195be2eedfb298c94d93346b5252e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-immutable-textedit.slint",
+      "bytes": 2960,
+      "sha256": "c1e9fac8f764de40b99072d74b6ae7f2f11a80fb8202e471d214f6e8f3921dd8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-immutable-textedit.slint.meta.json",
+      "bytes": 1884,
+      "sha256": "10c3b68c23a4395dbbbce0b5d8072ecb7ca94cd4f88f00731b0a15afab9bde0a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-issue-8877.json",
+      "bytes": 7232,
+      "sha256": "5fe95914f9b2267e7173def36c41d47fd7c6c202a5a3cec17b8f0b4369cdb19e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-issue-8877.json.meta.json",
+      "bytes": 2128,
+      "sha256": "b29eb60dd4f99fadc77a03f2759e5554cee23e876638bd251ffd5a36d0514d8a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-latest-textedit.html",
+      "bytes": 138082,
+      "sha256": "d79942b912b93fcf7902ea57f8e57ebe36d11798527bb9e773145aaeed2a3157"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-latest-textedit.html.meta.json",
+      "bytes": 1395,
+      "sha256": "32ad4b240914a9718d8fd00ced8e0bc92aced278e747890193c096e7e50c0973"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-latest-textedit.html.txt",
+      "bytes": 10474,
+      "sha256": "e3ae3a9fc7cb178451fd431a56d19e059bdc5e96926d03e71ddbad62ee85264c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-pr-12347.html",
+      "bytes": 356516,
+      "sha256": "cf4d2ce56a4596a1ccee53f883ab425be1bb085f01ecab849b5db81244f0d783"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-pr-12347.html.meta.json",
+      "bytes": 5866,
+      "sha256": "eea53d8e9790ed29d0378487a9bb8a0e9a8a33cd804c177448c32a89eaf001bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-pr-12347.html.txt",
+      "bytes": 8737,
+      "sha256": "392ba72b901920355cf6e336fe45885b43daf3d1258a810efded9f8e6043181d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-pr-12347.patch",
+      "bytes": 7144,
+      "sha256": "f9c26633ff6ccbab48ebbfe3938d3c5587421f113515bc2fc15827688865d765"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-pr-12347.patch.meta.json",
+      "bytes": 5384,
+      "sha256": "5ed1353da18be3f45c804436307bdaf164bec047a97a04bb59b58a7eb113bdb1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-release-v1.12.0.html",
+      "bytes": 204736,
+      "sha256": "9299b52fc79254f83289ceec945323048f182b6e7afcec0bd94d4a91793e9e9b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-release-v1.12.0.html.meta.json",
+      "bytes": 5597,
+      "sha256": "6b66bd8c6040d4771ed9e53c9ad41b6964f446b5049889b885a235d46954b1c3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-release-v1.12.0.html.txt",
+      "bytes": 5078,
+      "sha256": "d6b24c9a5ea49abe8789b7624e63f70602a4d583cb246ab85923c32ba54c205f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-release-v1.17.1.html",
+      "bytes": 199993,
+      "sha256": "132a131efbc8682bdff64144c00d9b85f3efbe18fef79fd771eaf42ca21711d2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-release-v1.17.1.html.meta.json",
+      "bytes": 5611,
+      "sha256": "2458d5182a4257dc99b82a16e24bf3ff5da0399e9dda6e5283eae9e22549cf3e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-release-v1.17.1.html.txt",
+      "bytes": 4994,
+      "sha256": "3d005436a860c478893bf95c5de9ebb57564f063a31b004996c4d128bc11a6a5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-tag-ref.json.meta.json",
+      "bytes": 287,
+      "sha256": "ee13b0f8f17e4e0e79e131c902d1dffe5b6f8044046fd31b162bb7d950e8c8af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-text.rs",
+      "bytes": 78584,
+      "sha256": "5603082f0ec16f7d6c68d8f13283e6e32cdf415a922d05c9fd956dcba3277db0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-text.rs.meta.json",
+      "bytes": 1743,
+      "sha256": "0d1691e86f9a63c4d4a3c8e47d38c83c70b9e4b1e27458572bf87c668cd64a9a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-textedit-base.slint",
+      "bytes": 5978,
+      "sha256": "d9fb982b5dfb72ad737f6f3806bd6b40229717c0b5db2532849620cf0d47bd26"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-textedit-base.slint.meta.json",
+      "bytes": 1816,
+      "sha256": "902b263c8e1ea17ff8f6208ff1576e8062f960961837f906981fda58d50d2d3d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-textedit.slint",
+      "bytes": 2960,
+      "sha256": "c1e9fac8f764de40b99072d74b6ae7f2f11a80fb8202e471d214f6e8f3921dd8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-textedit.slint.meta.json",
+      "bytes": 1800,
+      "sha256": "dd433f2cb26d6fb844ec2297e6f9d4f162996e47f186cffa19bd3c2b5e334aaf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-v1.17.0-sharedparley.rs",
+      "bytes": 60962,
+      "sha256": "c8e466c99d9292449d7e24208ac9949dcbdd57b8fe6a591087e83cbad29d90dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-v1.17.0-sharedparley.rs.meta.json",
+      "bytes": 1802,
+      "sha256": "00421fa1620543679ad2b59066866af50e70030900079235e723d554913d52b5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-v1.17.1-sharedparley.rs",
+      "bytes": 69210,
+      "sha256": "1e3c277e6c9e18090b1570846950cecc55497a3f5de16d1b517954e69dc3dc28"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-v1.17.1-sharedparley.rs.meta.json",
+      "bytes": 1801,
+      "sha256": "a292b0e8885df495d9e5b6562aa71644f0146ade844144995ca859b6b8816323"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-7ed4928-lsp-store.rs",
+      "bytes": 600042,
+      "sha256": "8932e9fcfbb312af99e76263ebfe9dd787ffba626f19ba1b664226808c9c68d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-7ed4928-lsp-store.rs.meta.json",
+      "bytes": 1850,
+      "sha256": "bd35b6873c233ebd804013271e1996c535cdbbf37bfb5ec5c726131f498349fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-7ed4928-project.rs",
+      "bytes": 221727,
+      "sha256": "99f62fd581dc3fd67be8d96dd20d82fdacd5199ba8da91e16d9f0ea5a504debf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-7ed4928-project.rs.meta.json",
+      "bytes": 1842,
+      "sha256": "27642b03572d665ac2f672f4d7be792963ab84cc0050143df9a3cd3a9a553bb1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-8421009-buffer.rs",
+      "bytes": 225371,
+      "sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-8421009-buffer.rs.meta.json",
+      "bytes": 1840,
+      "sha256": "08c8b7ddb3619f4663df13541bfeee742d824f1b11b58bff5fb3de8a975c5de4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-8421009-project.rs",
+      "bytes": 218658,
+      "sha256": "d6afe383b4c545c0c42158aa930959117f7c76b74f66026909b1ccd1ec15b33e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-8421009-project.rs.meta.json",
+      "bytes": 1842,
+      "sha256": "e9432568b575b0c868d87a01b21c377ac27362b049e4a24bfe9061efbfa9b29f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-8421009-tests.rs",
+      "bytes": 400358,
+      "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-8421009-tests.rs.meta.json",
+      "bytes": 1878,
+      "sha256": "50426c9f2f111b3967c8f01a19a68b4e400577a9ca83b8c1695388971efa3857"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-buffer.rs",
+      "bytes": 224892,
+      "sha256": "000c461be379974adcda33ecbfc2e464d21f05b4e4014aea6fad1a0dc86a99de"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-buffer.rs.meta.json",
+      "bytes": 1823,
+      "sha256": "c7807c4860cd54585f9d30e6df5ea33f1e8916d0e29091f6cd42360e35720a62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-issue-48697.json",
+      "bytes": 5411,
+      "sha256": "77af8fb1a3caea9eed622cd7fb866a87328a17b1f188ed60b8ab90e0446ac218"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-issue-48697.json.meta.json",
+      "bytes": 2134,
+      "sha256": "45f92cc96f60a5aa5e05fc8d5dee32de500846c13fe8ff077fb6deb9130bb7cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-51037-files.json.meta.json",
+      "bytes": 293,
+      "sha256": "804c0f8e7204aba91e87a3aae121d897ac76e2e1c79f09f8b88e04cd8eee8d88"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-51037.json",
+      "bytes": 17762,
+      "sha256": "6d15dfcb46ab8d2410fa1a6cb887f60d39391cecc25dd7431c6e84f7193ec80b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-51037.json.meta.json",
+      "bytes": 2128,
+      "sha256": "778caef2700e9ea2127725f4c067265d2b2f06e8c136e453e7d5c03d82bdc153"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-52855.html",
+      "bytes": 316981,
+      "sha256": "938e210e0416b55df31d9100efb40044bbe7a538a473a35350737beb17184583"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-52855.html.meta.json",
+      "bytes": 5863,
+      "sha256": "47aacdf493c3bbb13b257f4a85ad78ff4305a48f73a9594ea25fa9dbf7981989"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-52855.html.txt",
+      "bytes": 5982,
+      "sha256": "743b56d61f64637a0d61156ac9c3dea5fc482cd2b0f89d4509dd022a5b18830f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-52855.json.meta.json",
+      "bytes": 281,
+      "sha256": "475653853f3dcbce6a8e0f7b931735942743cf31ef000879821bd4c5fffbff6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-52855.patch",
+      "bytes": 5850,
+      "sha256": "c0c55c87f107d1d99fac993d3d94e42dcc41452fd26459008265d74457fdbfa0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-52855.patch.meta.json",
+      "bytes": 5392,
+      "sha256": "ef490df9fc41bf5520098acede6acb893d9b55b52373a9aaaaac8394081d13c2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-project-tests.rs",
+      "bytes": 400244,
+      "sha256": "e0964a72fd365bab92ab9aa66c03779f6266c2d0fcda2c6bb74ab9402d660fb8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-project-tests.rs.meta.json",
+      "bytes": 1877,
+      "sha256": "65a6212f69a8f29c0bc2e1918a9b8632da0de7c64b55534d79ca8c8c5175ab14"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-0.192.5.html",
+      "bytes": 2148794,
+      "sha256": "2e420619e6c1c05567ef6a6adf2b97af19a1b5328d9da62b0ac11da4b8d6ae68"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-0.192.5.html.meta.json",
+      "bytes": 2695,
+      "sha256": "bf17d60c5d23e15e2dbd866911ff9ea84d105d58452192ff9771b8af7f158487"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-v0.227.1.html",
+      "bytes": 220092,
+      "sha256": "cb20de3d8fd6ccd22e847825c0d2f857759e63d3338fed543959a4a392e90106"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-v0.227.1.html.meta.json",
+      "bytes": 5618,
+      "sha256": "f7c0f13a95337825d6b0123875ddd86cc1336fb0b90898bd3c05f7b4f35d6f34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-v0.227.1.html.txt",
+      "bytes": 11388,
+      "sha256": "f1ccbad2d6db091df503e206cebeddd9ad75e3e9f34e1ddbfaf6be1bdf0d4d5c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-v0.228.0.html",
+      "bytes": 217663,
+      "sha256": "47a26a19c5cde8ccfc48fdd7a2c64edf6080bdf7465a1245b91df8ef9bf626a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-v0.228.0.html.meta.json",
+      "bytes": 5613,
+      "sha256": "a9c373633bcaf8ce33f57661d5cf1e48a8f4306f78089891acf5a5ecd1c1b67e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-v0.228.0.html.txt",
+      "bytes": 10600,
+      "sha256": "5b35d4e133f21f5d89f82d736f1fb87fa7691d877c79a2097fc432fe125bd4a1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-v0.228.0.json.meta.json",
+      "bytes": 300,
+      "sha256": "11e76e56841e42cc732833c1b5cf894e28c17d2b6b732eced935de2232506b43"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-v0.228.0-buffer.rs",
+      "bytes": 225371,
+      "sha256": "1bb5e7cde64b3ad96152eb461dec58f070d399d75d39b11df15bce72630c1a0b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-v0.228.0-buffer.rs.meta.json",
+      "bytes": 1778,
+      "sha256": "eec559e10bac0ee72ef2583addb45a18bea9d34f66c18653d6d931c4d41be67d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-v0.228.0-tests.rs",
+      "bytes": 400358,
+      "sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-v0.228.0-tests.rs.meta.json",
+      "bytes": 1815,
+      "sha256": "2bc675eb97bfc6bd0970b675120d4568ef281568889e992c2408befd30d61b4c"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-05-pair-freeze-v1.json"
+}

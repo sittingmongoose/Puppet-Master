@@ -1,0 +1,57 @@
+{
+  "case_id": "D-M11-A",
+  "matched_pair_version": 1,
+  "arms": {
+    "control": {
+      "candidate_T3_request_to_final_delivery_seconds": 357.118,
+      "candidate_aggregate_occupied_seconds": 326.496,
+      "candidate_queue_seconds": 3.838,
+      "parent_handoff_gaps_seconds": 26.784000000000013,
+      "candidate_stages": 2,
+      "source_grade": "FAIL",
+      "material_defects": 4,
+      "defects_different_between_arms": true,
+      "review_occupied_seconds": 450.897,
+      "review_delivery_status": "completed",
+      "input": null,
+      "cached_input": null,
+      "generated_output": null,
+      "billing": null
+    },
+    "treatment": {
+      "candidate_T3_request_to_final_delivery_seconds": 423.407,
+      "candidate_aggregate_occupied_seconds": 350.534,
+      "candidate_queue_seconds": 10.465,
+      "parent_handoff_gaps_seconds": 62.40799999999999,
+      "candidate_stages": 3,
+      "source_grade": "FAIL",
+      "material_defects": 4,
+      "defects_different_between_arms": true,
+      "review_occupied_seconds": 825.46,
+      "review_delivery_status": "interrupted",
+      "input": null,
+      "cached_input": null,
+      "generated_output": null,
+      "billing": null
+    }
+  },
+  "assessment": {
+    "control": "Fullscope FAIL 30claimchecks4defects",
+    "treatment": "Saved fullscope FAIL25claimgroups4differentdefects; reviewer interrupted after overrun, no native terminal receipt",
+    "equal_quality_established": false,
+    "quality_preserving_speedup_established": false,
+    "conclusion": "No quality-preserving win: both arms have material source defects. Equal FAIL counts are not equal quality. Treatment candidate latency is slower in this one pair; descriptive only."
+  },
+  "source_reviews": {
+    "control": "reviews/targeted-cohort4/D-M11-A/control-v1/review.json",
+    "treatment": "reviews/targeted-cohort4/D-M11-A/treatment-v1/review.json"
+  },
+  "lifecycle": {
+    "all_candidate_stages_native_complete": true,
+    "all_candidates_and_reviewers_T3_quiet": true,
+    "treatment_reviewer_native_terminal": "UNKNOWN_MISSING",
+    "treatment_reviewer_expired": true
+  },
+  "usage_interpretation": "Native Goal cumulative counters retained in exact receipts; not generated tokens or billing; no overlapping enclosing totals summed.",
+  "single_pair_only": true
+}

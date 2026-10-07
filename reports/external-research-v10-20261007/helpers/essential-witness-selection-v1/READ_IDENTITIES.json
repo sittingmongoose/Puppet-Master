@@ -1,0 +1,884 @@
+{
+  "records": [
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/pep706.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "size_bytes": 71774
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarissue.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "size_bytes": 7009
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarold.py",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "size_bytes": 106883
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarpr.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "size_bytes": 20346
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+      "size_bytes": 49758
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+      "size_bytes": 119836
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+      "size_bytes": 163497
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/README.md",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "e087f459ae450ce3031a1dd0537f389730d95a646bebfe4156d80756f90d628d",
+      "size_bytes": 11239
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/SHA256SUMS",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "0a54a2f4b1bc7de9eb438857df35eae324b27323be177bd2f1bfc4fadba452e3",
+      "size_bytes": 977
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/archive-candidates.json",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "f7f6edd40b359ea87c6349ae76c0ab5a2ed70bb56c190b4ea6944d4b584907d4",
+      "size_bytes": 686
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/classify.py",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "1583e55be1799fb4bb95429cd3380fec0e662bee7e4810882b8426b76fee2e1e",
+      "size_bytes": 31215
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/public-witness-candidates.json",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "293cda2f105b56da3f73ee982c73f304933328594b6d2620509dc7cb4960773b",
+      "size_bytes": 5211
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/retention-plan.json",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "7ddbc149a861068ca823c04c3ce2f0ff540b63e646f33d70b2357b35dbaf8a87",
+      "size_bytes": 7541300
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/snapshot.json",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "afac19bce2f1b7ba3d39122b69ece4b381da6ce42adc5d00a512c6dcbc5ef8cb",
+      "size_bytes": 9822138
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/summary.json",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "25528778a88de92d32f1de3e0efdcb4d4ab845663bd2bb90de153495a30e9cbe",
+      "size_bytes": 2544
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/validate.py",
+      "purposes": [
+        "frozen helper input"
+      ],
+      "read_sha256": "3db5e92c6a8a76aa31b398cb182516c488bc465e0f3debaaf36a1410eed80d88",
+      "size_bytes": 3596
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/borg-check.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "f143534178cc0cb2cc906ec72d63cf37861123c13623f00e418e4bbf414c248b",
+      "size_bytes": 25422
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/cisa-stopransomware-guide.pdf",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "7f81f8f81a0accfbc51a4dd315c8b88a55f84e9dc31196a153d032ab857aac44",
+      "size_bytes": 1047655
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/kopia-consistency.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "c16c6d2f4b28097d2260a7091a0fedb3220c9c0b18a4311445b144a80933bd64",
+      "size_bytes": 32457
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/kopia-snapshot-verify-docs.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "7054a9565f9251a1e12f771ddd474335005b2b842b2633266d8343d5a18e397d",
+      "size_bytes": 25795
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/rclone-copy-docs.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "03af076595972052ffd9b4659525a0f06a66084b06e03a08ed8a2363f9acb5dc",
+      "size_bytes": 51621
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources/rclone-sync-docs.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "f1e38850205a565e7d046f192fa69883639ab48bd32d63f5d221183174ba116d",
+      "size_bytes": 53053
+    },
+    {
+      "accessed_json_pointers": [
+        "/checks/15",
+        "/checks/18",
+        "/checks/17",
+        "/checks/14",
+        "/checks/16"
+      ],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/source-checks.json",
+      "purposes": [
+        "exact frozen assertion/review metadata"
+      ],
+      "read_sha256": "f642c6ab5da65a455b86e7a0d4d661cffe02376d312cbd00c1acec44620433db",
+      "size_bytes": 123246
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/gtfs_proposal_16.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "44d913ddca02ab6ea2530fb50a6c0ff1a76c7ca446937de43115f3419edf6597",
+      "size_bytes": 18549
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/issue_2017.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "f80f9dda380e5ce7b61af90a4a895d7b16a6121d5ad15bf6b0adaf76d8fa6dd0",
+      "size_bytes": 8087
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/issue_2099.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "cd59deb79be16ebaaded5dbc2559a17b1f7beeb76598c42f3af7b0097638aefb",
+      "size_bytes": 9014
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/oba_issue_162.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "e20f7543874b30b9d992de58326b66bdabd9f5e17ac10f99df6b2ebd2f197f7c",
+      "size_bytes": 4590
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/oba_pull_160.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "c0ecee8cd8afcb9223f4cca0a6a49250189c0cbc67b701c457471a3e80a8ce2b",
+      "size_bytes": 19058
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/pull_2029.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "c487be513fd843a0733c1620a942a5f49878aa74406305ce25280652f6808512",
+      "size_bytes": 19589
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/release_v8_0_0.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "6b88299d304c977dd4dd9e7f73d4abee169b700da8e4ec2e59e7101ac5b2bd7e",
+      "size_bytes": 33726
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/release_v8_0_1.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "273820b221ef43cffae99e49b51456d97827db344f9e6c24ca925baa0ebef663",
+      "size_bytes": 21187
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_fix_commit.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "fa4c661b3f8714a9ee4785d3f7743405b4c03708ad414736468079e6aa311c91",
+      "size_bytes": 69509
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_fix_to_release.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "66faed224ffa466fa1b60165dae8e75a590a58f9f59a0c66a283847bdb83cb1f",
+      "size_bytes": 300328
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-03/control/review-v1/sources/public/validator_tag.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "403004a49e4786abd5c6f46af903d0a2f130c800d48ceb604c3c66f1f229697d",
+      "size_bytes": 363
+    },
+    {
+      "accessed_json_pointers": [
+        "/checks/15",
+        "/checks/3",
+        "/checks/11",
+        "/checks/14",
+        "/checks/21",
+        "/checks/0",
+        "/checks/16",
+        "/checks/4",
+        "/checks/6",
+        "/checks/12"
+      ],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/source-checks.json",
+      "purposes": [
+        "exact frozen assertion/review metadata"
+      ],
+      "read_sha256": "678a3e04cb03d5a1f41ee40158013a53decbcf791b7b0e1b24457ee166bb8ac9",
+      "size_bytes": 71837
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/inotify.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "79f5ab18e2fc423631cf4949ef82ca1384844353ea11a4dba42e1a77e8fdd8fd",
+      "size_bytes": 44066
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-crlf-tests.rs",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "64dd6cc32ef5737502571896012bcceadc21be6fbc02c4d77b691d5c31b1c532",
+      "size_bytes": 2552
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-from-reader-tests.rs",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "cbd1d35843cec11fc43170794de9ffbf8404086a136f29632d4f7655ceadfe80",
+      "size_bytes": 1364
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-proptests.rs",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "be4d6a148b7f3c3f4fb9c74bb53fc468ec3f9bbbc376ba255904ef98aaee77fb",
+      "size_bytes": 54876
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/ropey-release-v1.6.1.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "4a22794f49721d75d5772018590cbd64b2ff122976b1d17a46b525bacd047b94",
+      "size_bytes": 200737
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-8877.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "bd83431033ff7a82a62216515c572463557f6204d507e07b7c26117376e9432b",
+      "size_bytes": 266113
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-discussion-12343.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "c86bc83fe8345c8effd22859636dcb5574bf1726d12b6b7691b8e04d77c7caad",
+      "size_bytes": 311486
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-issue-8877.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "5fe95914f9b2267e7173def36c41d47fd7c6c202a5a3cec17b8f0b4369cdb19e",
+      "size_bytes": 7232
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-latest-textedit.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "d79942b912b93fcf7902ea57f8e57ebe36d11798527bb9e773145aaeed2a3157",
+      "size_bytes": 138082
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-pr-12347.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "cf4d2ce56a4596a1ccee53f883ab425be1bb085f01ecab849b5db81244f0d783",
+      "size_bytes": 356516
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-pr-12347.patch",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "f9c26633ff6ccbab48ebbfe3938d3c5587421f113515bc2fc15827688865d765",
+      "size_bytes": 7144
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-release-v1.17.1.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "132a131efbc8682bdff64144c00d9b85f3efbe18fef79fd771eaf42ca21711d2",
+      "size_bytes": 199993
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-v1.17.0-sharedparley.rs",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "c8e466c99d9292449d7e24208ac9949dcbdd57b8fe6a591087e83cbad29d90dc",
+      "size_bytes": 60962
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-issue-48697.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "77af8fb1a3caea9eed622cd7fb866a87328a17b1f188ed60b8ab90e0446ac218",
+      "size_bytes": 5411
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-51037.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "6d15dfcb46ab8d2410fa1a6cb887f60d39391cecc25dd7431c6e84f7193ec80b",
+      "size_bytes": 17762
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-52855.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "938e210e0416b55df31d9100efb40044bbe7a538a473a35350737beb17184583",
+      "size_bytes": 316981
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-pr-52855.patch",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "c0c55c87f107d1d99fac993d3d94e42dcc41452fd26459008265d74457fdbfa0",
+      "size_bytes": 5850
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/zed-release-v0.228.0.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "47a26a19c5cde8ccfc48fdd7a2c64edf6080bdf7465a1245b91df8ef9bf626a9",
+      "size_bytes": 217663
+    },
+    {
+      "accessed_json_pointers": [
+        "/checks/15",
+        "/checks/9",
+        "/checks/12",
+        "/checks/13",
+        "/checks/10",
+        "/checks/0",
+        "/checks/14",
+        "/checks/7",
+        "/checks/8",
+        "/checks/11"
+      ],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/source-checks.json",
+      "purposes": [
+        "exact frozen assertion/review metadata"
+      ],
+      "read_sha256": "97b445524dd3a5e1d21917fc7187c89b7ec5a7197e8419269c0e79d1b0a60fd0",
+      "size_bytes": 60911
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/crop-README.md",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "a9f7ff059682bbc70133b4298e15b1efcd8f004136a0746f7b982ee2bfbab457",
+      "size_bytes": 6506
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/emacs-gap.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "fdcebcccd6262020b379692bdc6a5020c1018b891d0a132480979caa98faf691",
+      "size_bytes": 3021
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/emacs-gap.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "13f88d6920892a141bd738326f7560f7962b3391841ed3a577a9c207acad80c4",
+      "size_bytes": 998
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/notify-8.2.0.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "1f2def8b150833b5f6238364c84d8f8c45c5819a7e5ef84e83b4a9d46df6dc0a",
+      "size_bytes": 40537
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/notify-8.2.0.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "844fbfbbcf2ed818ff44a95983c637f0eb5ba4703260196064856a8314a17a03",
+      "size_bytes": 6938
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-package-vcs.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "e4e73292acecc61baf502cf0320e44f769c274191dff82cd122d8ed676e3a5ff",
+      "size_bytes": 19921
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/ropey-package-vcs.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "43bb5cdf22c90bb393f450b899b022142e998e106346f32b7e08e0e5386ee451",
+      "size_bytes": 646
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-File-create.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "12a7ef0cbfff6ef095673182218c8957dce5061c6a84ca5ee3f4ad0d5508d455",
+      "size_bytes": 196174
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-File-create.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "9b10f560f79cbed07bd2081706ef627516ee6046a8dac8dc759974fa9082ea80",
+      "size_bytes": 40825
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-Permissions.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "9b155b401b5a20abfaa2b54d554378560417720509217408ba8d7e36277045cc",
+      "size_bytes": 44308
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-Permissions.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "b627ab2b005489ea0eb47149b70a5a928fa09ada0f1890006a5a07ab86f8ebed",
+      "size_bytes": 8043
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-String.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "a3cd9eaa72f1283dda4da4b23ed5dfd9ba53f6a43fc450a38b96a08d3c54dda6",
+      "size_bytes": 667290
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-String.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "01fd43966d3fff665c741a861fb08dc55346c8496b6d7cc7badcc5e8d9f4931e",
+      "size_bytes": 135856
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-rename.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "5c05d50ff2ade3b75bb8b05c049d35f6541bf9d412671a707c35e565e50b231d",
+      "size_bytes": 6802
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/rust-rename.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "a9ca5e9f33e94b4d2f2ba309789cbab81fbdffec1f41b3dc31bd1bdda3221b73",
+      "size_bytes": 1442
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/slint-issue-8147.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "c1f1a24e9e1b2a9261a14a99d18efb368fd1903eb15a9385159f405b7cf8a91a",
+      "size_bytes": 263402
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/slint-issue-8147.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "459c00f63ae691621fbddf2f4ff3d4ed108df98370c473ceedee792fda02659e",
+      "size_bytes": 4079
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/tempfile-3.27.0-TempPath.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "de9798a15f1b3b93b8f17bc4d7cd4b5a6a7f0b4157db966f3dd8dbe89df55aea",
+      "size_bytes": 155647
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/tempfile-3.27.0-TempPath.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "b4d504e2367e94f27345d9792f58042674ef6ca518bbcfb514c51acc6c2d45c9",
+      "size_bytes": 35500
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/vscode-working-copies.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "529ec002cbab87b9333191c27802fae42919181651f1b7c04118325247bf62ff",
+      "size_bytes": 443413
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/vscode-working-copies.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "1df74bcd179d1da7b5482d88f5a819f66090fbc3a50e819ee463427e1f50e613",
+      "size_bytes": 16438
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037-files.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "4c006c0c3f2a6847754d91cdae1597329ba6d32c72c137bbfbbfd718ae17cf94",
+      "size_bytes": 4431
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "287a037fb9c25cda22aaca79bec80d4050794fdd2c469487902bf99c0a21fe33",
+      "size_bytes": 361236
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-pr-51037.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "0b9e5f2e3883aef743b37d8442cb21fb53fa30318e5b53e04c327828de0a34be",
+      "size_bytes": 11130
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-v0.229.0.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "f162cb8667f01136a747169dc16fd6d2212ee0ed9364be8c83026f0e742f5e30",
+      "size_bytes": 232340
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/public/zed-release-v0.229.0.html.txt",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "409b04efbe55202a0ec6ba18f928ccd4a18f5c6d3d9721414c174da3b05ce744",
+      "size_bytes": 15933
+    },
+    {
+      "accessed_json_pointers": [
+        "/checks/12",
+        "/checks/13",
+        "/checks/1",
+        "/checks/9",
+        "/checks/16",
+        "/checks/10",
+        "/checks/0",
+        "/checks/11"
+      ],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/source-checks.json",
+      "purposes": [
+        "exact frozen assertion/review metadata"
+      ],
+      "read_sha256": "8cafe589e9891fbb720a46dd3ed9ae0391a68b15c3eb3923b3ba2b241ba14ab3",
+      "size_bytes": 50960
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/cisa-guide-resource.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "052c1227f5fa437bd9fbfe8975cc71fbbc10737cf23ec5b8076c2c6fbebb03c4",
+      "size_bytes": 56374
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/kopia-issue-3605.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "9f1cbe5b31361f306e7811107820ce7e483119eb137553b3a32d8f99694d815f",
+      "size_bytes": 232335
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-issue-5667.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "ac78064dbc1b795aab968082cb1d2abffb13a6549b28b920368478c27de7627b",
+      "size_bytes": 426427
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-pr-21852.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "f972143192fbe04c58e3a713fce92bc9994dc2118bc621419bf74d043a9ccf7a",
+      "size_bytes": 515017
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-tag-v0.19.1.json",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "4047384bb77373a0bd00db2bf9c8f719e696562b8a7109bb996333063d2cd7f5",
+      "size_bytes": 331
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-06/control/review-v1/sources/independent/restic-v0.19.1-release.html",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "b4a630fd588b8d3faafecc8c0349b675308f182d1ebb4d04963e94db0e3e252a",
+      "size_bytes": 217007
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/sources/shutil-v3.12.3.py",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "819e518cb7a539d09b2526138015541b34d2646afb9c2f6ae4ffd476d6a0fcf4",
+      "size_bytes": 58120
+    },
+    {
+      "accessed_json_pointers": [],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/sources/shutil-v3.12.3.rst",
+      "purposes": [
+        "eligible source identity and range resolution"
+      ],
+      "read_sha256": "51c991b2a28b8cc00de14b6cb71dcfbe64c78f28a8a24b5af7b43e0eb74bff67",
+      "size_bytes": 34464
+    },
+    {
+      "accessed_json_pointers": [
+        "/advisory_findings/0",
+        "/consequential_claim_checking/10",
+        "/consequential_claim_checking/11",
+        "/consequential_claim_checking/13",
+        "/consequential_claim_checking/14",
+        "/consequential_claim_checking/15",
+        "/consequential_claim_checking/17",
+        "/consequential_claim_checking/18",
+        "/consequential_claim_checking/20",
+        "/consequential_claim_checking/21",
+        "/consequential_claim_checking/22",
+        "/consequential_claim_checking/25",
+        "/consequential_claim_checking/6",
+        "/consequential_claim_checking/8",
+        "/consequential_claim_checking/9",
+        "/defects/0",
+        "/defects/1",
+        "/defects/2",
+        "/defects/3",
+        "/consequential_claim_checking/16",
+        "/consequential_claim_checking/19",
+        "/consequential_claim_checking/24",
+        "/consequential_claim_checking/4",
+        "/consequential_claim_checking/5",
+        "/consequential_claim_checking/12",
+        "/consequential_claim_checking/3",
+        "/consequential_claim_checking/7",
+        "/consequential_claim_checking/1",
+        "/consequential_claim_checking/2",
+        "/consequential_claim_checking/0",
+        "/consequential_claim_checking/23"
+      ],
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/review.json",
+      "purposes": [
+        "exact frozen assertion/review metadata"
+      ],
+      "read_sha256": "e301e558d9f64b9b60d0a24c0f4e70a166d80e88515de5222342d1d04f8b888e",
+      "size_bytes": 99157
+    }
+  ],
+  "schema": "er10.selector-read-identities.v1"
+}

@@ -1,0 +1,44 @@
+{
+  "observed_at": "2026-10-07T21:38:06.718921+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_027fa662-62b3-4c96-960e-c3ff3328ae07/state.json",
+  "actual_state": {
+    "objective": "Complete D-M16-A/treatment/fresh_shared_discovery-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "complete",
+    "rounds": 4,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "Ingest job inputs and constraints",
+        "acceptance": "cat /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/INPUT_MAP.json and admission-timing.json; extract T0/stage deadline (2026-10-07T21:41:56Z), allowed predecessorreports/sourceindices/sourcebytes only, and the 6 obligations + \u22648-findings/\u22641100-word bounds into working scope notes before any fetch",
+        "status": "done"
+      },
+      {
+        "id": "t2",
+        "title": "Shared source discovery for both topics",
+        "acceptance": "fetch public primary docs/code on resumable tile acquisition/refresh under intermittent links AND stale-tile display/retention policies into sources/ raw bytes; verify every entry in sources/index.json has url/version/capture/hash/locator/limits and sha256sum of each saved file matches its hash field, with topic-specific and negative/optional leads recorded, no sibling/counterpart/v1v2/evaluator sources",
+        "status": "done"
+      },
+      {
+        "id": "t3",
+        "title": "Author candidate-authored shared-discovery inventory in report.md",
+        "acceptance": "write report.md covering both topic dispositions (acquisition vs refresh; stale display vs retention), shared identity/freshness dependencies and reuse invalidation, preserved topic-specific uncertainties, \u22648 distinct material findings, all six obligations, proposed-vs-executed validation and accepted/amended/rejected/unresolved dispositions; verify with wc -w report.md (\u22641100) and a grep checklist that each obligation and both interactions are addressed",
+        "status": "done"
+      },
+      {
+        "id": "t4",
+        "title": "Record timings and finalize delivery",
+        "acceptance": "write timings.json with actual sourceops/capture/firstusefulsavedfinding/output timestamps (null for unknown inputs/cache/generated/billing, distinct native counters); verify ls of the job dir shows only report.md, sources/ (with index.json), timings.json plus pre-existing inputs, and the native Goal is terminal with no post-terminal amendments",
+        "status": "done"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791408144353,
+    "updatedAt": 1791409067477,
+    "endedReason": "all tickets done"
+  },
+  "source_sha256": "ee0d4603cfdc15fefd3cbc6ae702b134e7cab88bb2483e8e173c3b75128ff7be",
+  "source": {
+    "kind": "actual terminal notification exact previously nominated own native state"
+  },
+  "limitation": "Installed GoalLoopDriver only; no vendor backend goal/ACP association inference"
+}

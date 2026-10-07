@@ -1,0 +1,187 @@
+{
+  "schema": "er10.integrated.pair.disposition.v1",
+  "case": "I-FAST-03",
+  "record_at": "2026-10-07T22:16:33.521716+00:00",
+  "status": "pair_assessed_terminal_control_PASS_WITH_LIMITATIONS_treatment_FAIL",
+  "all_candidate_tasks_quiet": true,
+  "all_review_tasks_quiet": true,
+  "both_exact_full_finals_nativecomplete_frozen": true,
+  "paired_candidate_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json",
+  "arms": {
+    "control": {
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "material_error_count": 0,
+      "counts": {
+        "scientific_scope_units": {
+          "complete": 49,
+          "assessed": 49,
+          "unassessed": 0,
+          "definition": "6 original obligations + 39 atomic frozen-plan decisions + 4 brief-level product constraints; section and axis groups are not added again"
+        },
+        "original_obligations": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "plan_sections": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "plan_decisions": {
+          "complete": 39,
+          "assessed": 39,
+          "unassessed": 0
+        },
+        "brief_product_constraints": {
+          "complete": 4,
+          "assessed": 4,
+          "unassessed": 0
+        },
+        "separately_named_owner_decisions": {
+          "complete": 0,
+          "assessed": 0,
+          "unassessed": 0
+        },
+        "axes": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "consequential_checks": {
+          "complete": 22,
+          "assessed": 22,
+          "unassessed": 0
+        },
+        "critic_findings": {
+          "complete": 4,
+          "assessed": 4,
+          "unassessed": 0
+        },
+        "final_validation_proposals": {
+          "complete": 11,
+          "assessed": 11,
+          "unassessed": 0
+        },
+        "external_process_facets": {
+          "complete": 2,
+          "assessed": 0,
+          "unassessed": 2
+        },
+        "nonmaterial_limitation_groups": 3,
+        "broken_direct_citation_instances": 2
+      },
+      "full_contract_counts": {
+        "complete": 51,
+        "assessed": 49,
+        "unassessed": 2,
+        "definition": "49 scientific units plus the two explicitly unverified procedural facets; these facets are not source-error counts or science scoring inputs"
+      },
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T21:56:33.103Z",
+      "review_completedAt": "2026-10-07T22:10:26.793Z",
+      "review_seconds": 833.69,
+      "review_queue_seconds": 0.714,
+      "review_delivery_in_deadline": true,
+      "source_correct_usable_final_at_retrospectively": "2026-10-07T21:54:58.018Z",
+      "source_correct_usable_latency_seconds_from_cold_T0": 1903.892181,
+      "source_correct_host_release_latency_seconds_from_cold_T0": 1984.948478,
+      "source_assessment_established_at": "2026-10-07T22:10:26.793Z",
+      "distinct_usage": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      }
+    },
+    "treatment": {
+      "source_judgment": "FAIL",
+      "material_error_count": 2,
+      "counts": {
+        "required_obligations": {
+          "complete": 44,
+          "assessed": 44,
+          "unassessed": 0
+        },
+        "O1_O6": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "frozen_plan_atomic": {
+          "complete": 38,
+          "assessed": 38,
+          "unassessed": 0,
+          "met": 37,
+          "partial": 1
+        },
+        "plan_owners": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "additional_supplied_owner_decisions": {
+          "complete": 0,
+          "assessed": 0,
+          "unassessed": 0
+        },
+        "axes": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "consequential_checks": {
+          "complete": 20,
+          "assessed": 20,
+          "unassessed": 0
+        },
+        "criticism_dispositions": {
+          "complete": 6,
+          "assessed": 6,
+          "unassessed": 0
+        },
+        "preservation_comparisons": {
+          "complete": 26,
+          "assessed": 26,
+          "unassessed": 0
+        },
+        "material_error_count": 2
+      },
+      "full_contract_counts": null,
+      "exact_coverage": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/coverage.json",
+      "frozen_review": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/frozen-review.json",
+      "review_requestedAt": "2026-10-07T21:56:34.479Z",
+      "review_completedAt": "2026-10-07T22:08:30.296Z",
+      "review_seconds": 715.817,
+      "review_queue_seconds": 2.236,
+      "review_delivery_in_deadline": true,
+      "source_correct_usable_final_at_retrospectively": null,
+      "source_correct_usable_latency_seconds_from_cold_T0": null,
+      "source_correct_host_release_latency_seconds_from_cold_T0": null,
+      "source_assessment_established_at": "2026-10-07T22:08:30.296Z",
+      "distinct_usage": {
+        "input": null,
+        "cache": null,
+        "generated": null,
+        "reasoning": null,
+        "billing": null
+      }
+    }
+  },
+  "cold_T0": "2026-10-07T21:23:14.125819+00:00",
+  "locked_budgets_seconds": {
+    "control": 2700,
+    "treatment": 1350
+  },
+  "economics": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-03-terminal-economics-v1.json",
+  "source_quality_preserving_comparative_win": null,
+  "limits": [
+    "Treatment FAIL2 prevents quality-preserving speedup claim.",
+    "Control49 scientific units fully assessed; two procedural facets unassessed, full contract51/49/2, no FULL_PASS.",
+    "Different reviewer grouping/control49/treatment44 not normalized; no exhaustive opportunity recall.",
+    "Source grade separate native/time/provenance and unknown economics; aggregate counters unsummed, billing/categories unknown null."
+  ],
+  "all_original_failures_costs_retained": true
+}
