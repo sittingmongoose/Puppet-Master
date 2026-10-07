@@ -1,0 +1,241 @@
+{
+  "schema_version": "1",
+  "case_id": "I-FAST-03",
+  "stage": "control/reviser-v1",
+  "qualification": "DIAGNOSTIC_UNQUALIFIED",
+  "input_boundary": "exact own draft/critic/sourcebytes only",
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/input-map.json",
+    "sha256": "83d415bceef3e75c2772345c66c9a971e9c73a8bafb649aea27b70cb774b246c",
+    "verified": true,
+    "declared_predecessors": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/source-map.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/artifact.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/source-map.json"
+    ],
+    "declared_source_directories": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources"
+    ]
+  },
+  "deliverables": {
+    "artifact": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/artifact.md",
+      "bytes": 24464,
+      "sha256": "d23509d1f0f75b7138994faa27e2d4589d5d29648fde0adb6d83f54e8125fa8b"
+    },
+    "source_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/source-map.json"
+    },
+    "linked_evidence_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources",
+    "evidence_index": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/evidence-links.md",
+      "sha256": "dff8acf20e68a2c480a9e8e6f6716a5c4841c53e81e5f7e1389cdc86ae7241b4"
+    }
+  },
+  "predecessor_integrity": [
+    {
+      "role": "research artifact",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md",
+      "bytes": 24918,
+      "sha256": "fc85ff378a0fb31a47785251482275012c24034183d1ac9408c158899b4e932e"
+    },
+    {
+      "role": "research source map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/source-map.json",
+      "bytes": 23080,
+      "sha256": "8b0547f4838d709c0259d5e12c5a5a1b1564701dd656810dbb87a196153a2503"
+    },
+    {
+      "role": "critic artifact",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/artifact.md",
+      "bytes": 14715,
+      "sha256": "94ff3e0702e62642bde4c33b67f2818d51582db1b140ae6801efb60943508ce3"
+    },
+    {
+      "role": "critic source map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/source-map.json",
+      "sha256": "0eb986a4e2e0ac4930b584a722559c13eec47a602dff54a5d4fa32a0a461b608"
+    }
+  ],
+  "native_goal": {
+    "identity": "01a11855-e492-7ed1-9030-496d00691fc1",
+    "identity_field": "actual native get_goal().goal.threadId",
+    "initial_projection": {
+      "status": "active",
+      "tokensUsed": 0,
+      "token_budget": null,
+      "verified_after_creation": true
+    },
+    "terminal_projection": "Obtained by actual update_goal complete followed by get_goal after deliverables were persisted; surfaced directly from native tool output. Native counters remain separate from unknown/null model-specific usage."
+  },
+  "activation_notice": {
+    "parent_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "clientRequestId": "er10-I-FAST-03-control-reviser-v1-active",
+    "mode": "auto",
+    "message": "Native active: I-FAST-03/control/reviser-v1, identity 01a11855-e492-7ed1-9030-496d00691fc1.",
+    "messageId": "message:mcp:f3ec818e-54cf-4fbd-b176-5831349cbc98:thread-send:er10-I-FAST-03-control-reviser-v1-active",
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:ordinal:55",
+    "delivery": "started",
+    "status": "starting",
+    "only_interthread_message": true
+  },
+  "timing": {
+    "aggregate_occupied_ceiling_seconds": 2700,
+    "stage_deadline_utc": "2026-10-07T22:02:16.353601+00:00",
+    "whole_arm_deadline_utc": "2026-10-07T22:08:14.125819+00:00",
+    "reserve_seconds": 0,
+    "deadline_reset": false,
+    "substantive_extension": false,
+    "first_useful_finding_observed_at_utc": "2026-10-07T21:48:58Z",
+    "first_useful_finding_basis": "native clock read immediately after complete critic artifact read; bounded locator caveat was confirmed",
+    "artifact_write_checkpoint_utc": "2026-10-07T21:51:44Z",
+    "artifact_write_checkpoint_basis": "native clock read immediately before writing the complete artifact",
+    "complete_output_checkpoint_utc": "2026-10-07T21:53:44Z",
+    "complete_output_checkpoint_basis": "native clock read immediately before final source-map serialization; artifact and linked evidence had already been saved"
+  },
+  "source_operation_counts": {
+    "current_stage": {
+      "public_search_query_items": 0,
+      "web_page_open_requests": 0,
+      "direct_public_http_capture_requests": 0,
+      "unique_declared_capture_files_inspected": 4,
+      "sha256_checks_against_declared_source_map": 4,
+      "exact_capture_files_copied_to_own_sources": 4
+    },
+    "inherited_research_v1": {
+      "public_search_query_items": 19,
+      "web_page_open_requests": 17,
+      "direct_public_http_capture_requests": 43,
+      "direct_http_200_responses": 40,
+      "direct_http_failures": {
+        "403": 1,
+        "404": 2
+      },
+      "retained_capture_files": 27
+    },
+    "inherited_critic_v1": {
+      "public_search_query_items": 2,
+      "web_page_open_requests": 7,
+      "web_page_open_successfully_rendered": 6,
+      "web_page_open_unavailable": 1,
+      "direct_public_http_capture_requests": 4,
+      "direct_http_200_responses": 4,
+      "inherited_capture_files_read_and_hashed": 27
+    },
+    "counts_are_distinct": true
+  },
+  "operation_log": [
+    {
+      "clock_checkpoint_utc": "2026-10-07T21:48:29Z",
+      "operation": "read only the frozen reviser input map"
+    },
+    {
+      "clock_checkpoint_utc": "2026-10-07T21:48:58Z",
+      "operation": "complete critic artifact read; first useful reviser finding"
+    },
+    {
+      "clock_checkpoint_utc": "2026-10-07T21:49:06Z",
+      "operation": "read the two declared predecessor source maps"
+    },
+    {
+      "clock_checkpoint_utc": "2026-10-07T21:49:37Z",
+      "operation": "begin hash and claim checks on four mapped critic captures"
+    },
+    {
+      "clock_checkpoint_utc": "2026-10-07T21:51:44Z",
+      "operation": "begin persistence of complete revised artifact"
+    },
+    {
+      "clock_checkpoint_utc": "2026-10-07T21:53:44Z",
+      "operation": "begin final source-map serialization after evidence and artifact writes"
+    }
+  ],
+  "captured_evidence": {
+    "inherited_research_sources": {
+      "source_ids": "S01-S26",
+      "authoritative_source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/source-map.json",
+      "source_map_sha256": "8b0547f4838d709c0259d5e12c5a5a1b1564701dd656810dbb87a196153a2503",
+      "capture_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources",
+      "citation_resolution": "Each S identifier resolves to the exact inherited captured path, SHA-256, source version/state and locator in the authoritative research-v1 source map."
+    },
+    "critic_captures": [
+      {
+        "id": "C01",
+        "version_or_state": "GitHub issue #422 capture from 2026-10-07; critic-v1 map labels page open; mismatched-width example reports line 4 where example expects line 5.",
+        "url": "https://github.com/BurntSushi/rust-csv/issues/422",
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources/rust-csv-issue-422.html",
+        "local_evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/rust-csv-issue-422.html",
+        "bytes": 230680,
+        "sha256": "9f31bdd23ebbdc4726a349eb4b5e796537001d44a8a725601da67aa6992786a6",
+        "sha256_matches_declared_map": true,
+        "locator": "critic-v1 map: issue description rendered lines 135-177; local capture text includes the mismatched-width and expected-line example."
+      },
+      {
+        "id": "C02",
+        "version_or_state": "GitHub issue #395 capture from 2026-10-07; critic-v1 map labels page open; CRLF line-position report.",
+        "url": "https://github.com/BurntSushi/rust-csv/issues/395",
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources/rust-csv-issue-395.html",
+        "local_evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/rust-csv-issue-395.html",
+        "bytes": 304745,
+        "sha256": "9ca215b7122b8c8f9c4d2f0e1919ea949c3f1f1d9f5ebb555b1b157495eca089",
+        "sha256_matches_declared_map": true,
+        "locator": "critic-v1 map: issue description rendered lines 135-190; captured text describes Position::line behavior with CRLF."
+      },
+      {
+        "id": "C03",
+        "version_or_state": "csv 1.4.0 at immutable commit 4a3997e91d668ea1d8595bdef15625a77cf2308a.",
+        "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources/rust-csv-1.4.0-reader.txt",
+        "local_evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/rust-csv-1.4.0-reader.txt",
+        "bytes": 90075,
+        "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+        "sha256_matches_declared_map": true,
+        "locator": "lines 688-708 document strict UTF-8 for StringRecord/String, byte-oriented ByteRecord, and explicit transcoding for other encodings."
+      },
+      {
+        "id": "C04",
+        "version_or_state": "csv-core 0.1.13 within csv 1.4.0 at commit 4a3997e91d668ea1d8595bdef15625a77cf2308a.",
+        "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+        "source_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources/rust-csv-1.4.0-csv-core-reader.txt",
+        "local_evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/rust-csv-1.4.0-csv-core-reader.txt",
+        "bytes": 69459,
+        "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+        "sha256_matches_declared_map": true,
+        "locator": "critic-v1 map identifies parser line/terminator state and record handling; copied capture preserves exact source bytes."
+      }
+    ]
+  },
+  "validation_status": {
+    "application_built": false,
+    "application_tests_run": false,
+    "dependency_tests_run": false,
+    "proposed_checks_only": true,
+    "performance_or_savings_inference": false
+  },
+  "usage_observability": {
+    "reviser_input_tokens": null,
+    "reviser_cached_input_tokens": null,
+    "reviser_generated_tokens": null,
+    "reviser_reasoning_tokens": null,
+    "reviser_billing_amount": null,
+    "reviser_cache_hits": null,
+    "native_goal_aggregate_counters_are_separate": true,
+    "do_not_fabricate_usage_or_billing": true
+  },
+  "scope_boundary": {
+    "nested_delegation": false,
+    "other_arms_or_cases_accessed": false,
+    "campaign_source_reads": false,
+    "repository_or_canon_modified": false,
+    "worknodes_or_account_configuration_touched": false,
+    "third_parties_messaged": false,
+    "issues_or_pull_requests_created_or_modified": false,
+    "purchases_or_installers_or_external_runner_used": false,
+    "downloaded_code_executed": false,
+    "shell_worktrees_used": false,
+    "raw_api_encoding_or_receipt_files_created": false,
+    "only_parent_notice_was_activation_only": true
+  }
+}

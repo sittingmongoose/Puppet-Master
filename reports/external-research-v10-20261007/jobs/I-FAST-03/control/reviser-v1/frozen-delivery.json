@@ -1,0 +1,144 @@
+{
+  "record_at": "2026-10-07T21:56:19.074297+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/artifact.md": {
+      "sha256": "d23509d1f0f75b7138994faa27e2d4589d5d29648fde0adb6d83f54e8125fa8b",
+      "bytes": 24464
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/source-map.json": {
+      "sha256": "5dba95fa1d712eb13c5317cdaf65797423d71a8779b537a38d658b304a61dbb3",
+      "bytes": 12648
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/evidence-links.md": {
+      "sha256": "dff8acf20e68a2c480a9e8e6f6716a5c4841c53e81e5f7e1389cdc86ae7241b4",
+      "bytes": 1399
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/rust-csv-1.4.0-csv-core-reader.txt": {
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+      "bytes": 69459
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/rust-csv-1.4.0-reader.txt": {
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+      "bytes": 90075
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/rust-csv-issue-395.html": {
+      "sha256": "9ca215b7122b8c8f9c4d2f0e1919ea949c3f1f1d9f5ebb555b1b157495eca089",
+      "bytes": 304745
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/sources/rust-csv-issue-422.html": {
+      "sha256": "9f31bdd23ebbdc4726a349eb4b5e796537001d44a8a725601da67aa6992786a6",
+      "bytes": 230680
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-03-control-reviser-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T21:47:23.749Z",
+    "startedAt": "2026-10-07T21:47:25.145Z",
+    "completedAt": "2026-10-07T21:54:58.018Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-FAST-03/control/reviser-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-FAST-03--control--reviser-v1--e0cb0fce9e0a00d2.json",
+    "sha256": "e0cb0fce9e0a00d2e1e1880f5a9c3d2a375d0b06cc88ab4872c055ff5e383ef3",
+    "bytes": 10851,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "9675ac7030312bbe5cdacb0a9e2c034129939d85ea18fb201a0c8a43dce51569",
+      "status": "complete",
+      "tokensUsed": 155948,
+      "tokenBudget": null,
+      "timeUsedSeconds": 419
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-FAST-03-control-reviser-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a11855-e492-7ed1-9030-496d00691fc1",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T21:54:57.799Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-FAST-03-control-reviser-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T21:54:57.799Z",
+        "sha256": "9ebfc11e7c5350c780a22ce04da9c2faf824db8511524dbd217caf4a4ee7c408"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a11855-e492-7ed1-9030-496d00691fc1",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 155948,
+  "native_elapsed_seconds": 419,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "account": "sittingmongoose@gmail.com"
+    },
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-FAST-03-control-reviser-v1",
+    "record_at": "2026-10-07T21:47:16.353601+00:00",
+    "prospective_stage_deadline": "2026-10-07T22:02:16.353601+00:00",
+    "prospective_arm_deadline": "2026-10-07T22:08:14.125819+00:00",
+    "stage_allowance_seconds": 900,
+    "aggregate_ceiling_seconds": 2700,
+    "prior_nonoverlapping_occupied_seconds": 1384.756,
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_stage_config": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/prospective-config-v1.json"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

@@ -1,0 +1,409 @@
+{
+  "schema_version": "1",
+  "case_id": "I-FAST-03",
+  "stage": "control/critic-v1",
+  "qualification": "DIAGNOSTIC_UNQUALIFIED",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/input-map.json",
+  "deliverables": {
+    "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/artifact.md",
+    "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/source-map.json",
+    "captured_public_source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources",
+    "artifact_integrity": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/artifact.md",
+      "bytes": 14715,
+      "sha256": "94ff3e0702e62642bde4c33b67f2818d51582db1b140ae6801efb60943508ce3"
+    }
+  },
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/source-map.json"
+  ],
+  "input_integrity": {
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/input-map.json",
+      "bytes": 1805,
+      "sha256": "a79bb2a6df05869acea50055b444893e2e065319aafaf91742a43d1890a35f4b"
+    },
+    "brief": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/brief.md",
+      "bytes": 5149,
+      "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73"
+    },
+    "plan": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/plan.md",
+      "bytes": 1714,
+      "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a"
+    },
+    "inputs_note": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/INPUTS.md",
+      "bytes": 1917,
+      "sha256": "e25cf8e741130f4d3c5867234a2a43ddf9818688b3c25b8f8eba05a340235dac"
+    },
+    "predecessor_artifact": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md",
+      "bytes": 24918,
+      "sha256": "fc85ff378a0fb31a47785251482275012c24034183d1ac9408c158899b4e932e"
+    },
+    "predecessor_source_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/source-map.json",
+      "bytes": 23080,
+      "sha256": "8b0547f4838d709c0259d5e12c5a5a1b1564701dd656810dbb87a196153a2503"
+    },
+    "frozen_input_map_expected_hashes_verified": true
+  },
+  "research_timing": {
+    "stage_deadline_utc": "2026-10-07T21:50:36.435462+00:00",
+    "whole_arm_deadline_utc": "2026-10-07T22:08:14.125819+00:00",
+    "original_aggregate_occupied_ceiling_seconds": 2700,
+    "reserved_seconds": 900,
+    "first_useful_finding_saved_at_utc": "2026-10-07T21:42:01Z",
+    "complete_authored_output_persisted_at_utc": "2026-10-07T21:46:22Z",
+    "completion_time_basis": "native clock read immediately before final source-map serialization in the same turn; no deadline reset or extension"
+  },
+  "source_operation_counts": {
+    "public_search_query_items": 2,
+    "web_page_open_requests": 7,
+    "web_page_open_successfully_rendered": 6,
+    "web_page_open_unavailable": 1,
+    "direct_public_http_capture_requests": 4,
+    "direct_http_200_responses": 4,
+    "inherited_captured_files_read_and_sha256_hashed": 27,
+    "source_operation_item_total": 13,
+    "web_page_open_failure": [
+      {
+        "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+        "result": "web tool returned inaccessible/internal error; no source bytes retained"
+      }
+    ]
+  },
+  "operation_log": [
+    {
+      "operation": "web search",
+      "at_utc": "2026-10-07T21:41:49Z",
+      "query_items": 2,
+      "purpose": "independently check pinned reader behavior and current issue/PR history on primary rust-csv sources"
+    },
+    {
+      "operation": "web open",
+      "at_utc": "2026-10-07T21:42:01Z",
+      "urls": [
+        "https://github.com/BurntSushi/rust-csv/issues/422",
+        "https://github.com/BurntSushi/rust-csv/issues/395",
+        "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html"
+      ],
+      "result": "issues rendered; docs.rs URL inaccessible"
+    },
+    {
+      "operation": "direct public HTTP capture",
+      "window_utc": "2026-10-07T21:42:28Z/2026-10-07T21:42:34Z",
+      "urls": [
+        "https://github.com/BurntSushi/rust-csv/issues/422",
+        "https://github.com/BurntSushi/rust-csv/issues/395",
+        "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+        "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs"
+      ],
+      "result": "four 200 responses; bytes retained only under own sources/"
+    },
+    {
+      "operation": "web open",
+      "at_utc": "2026-10-07T21:44:08Z",
+      "urls": [
+        "https://github.com/BurntSushi/rust-csv/issues/46",
+        "https://github.com/BurntSushi/rust-csv/commit/a267ded9dfd595e013a074a9cd3ef1dc6cfb6373",
+        "https://github.com/BurntSushi/rust-csv/pull/396",
+        "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs"
+      ],
+      "result": "primary pages opened; issue #46 closed; pinned commit says Fixes #46; PR #396 shown open by search/page output"
+    },
+    {
+      "operation": "inherited capture integrity read",
+      "count": 27,
+      "result": "all full files named by predecessor source-map were read as bytes and host SHA-256/size recorded below; cited semantic passages checked against the artifact/source locators"
+    }
+  ],
+  "predecessor_evidence": {
+    "source_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/source-map.json",
+    "source_entries": "S01–S26",
+    "retained_capture_count": 27,
+    "captures": [
+      {
+        "source_id": "S01",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-feeds.html",
+        "bytes": 19403,
+        "sha256": "4cc228714690f7a5dd5ebce08e0d5a7226a25d2c8615c57290b5d4022666dd65"
+      },
+      {
+        "source_id": "S02",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-daily-kwh.html",
+        "bytes": 17954,
+        "sha256": "5577e66d438f3510ae0aab9897c8edd33490c92e9ae08bdb2f9839bb2c6bd713"
+      },
+      {
+        "source_id": "S03",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-home-energy.html",
+        "bytes": 13816,
+        "sha256": "15950b8be31c74d52b8bed2a01cbd7e791c3c7ea2f094291812cc9ef1cc82667"
+      },
+      {
+        "source_id": "S04",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-energy.html",
+        "bytes": 47521,
+        "sha256": "6649a5be3d07e9ce051bbd65672539e44e35eb8d4bbf3a379dff6afefa342767"
+      },
+      {
+        "source_id": "S05",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-long-term-statistics.html",
+        "bytes": 62930,
+        "sha256": "21b62044c3d65e8367567bd44d9702cafa8632f49dc366996a052a488ed0b66f"
+      },
+      {
+        "source_id": "S06",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-energy-faq.html",
+        "bytes": 60036,
+        "sha256": "d96c532bb4c89e65579520f7d685c9f888cc0b0e1bd05e060b95facc4fe1f355"
+      },
+      {
+        "source_id": "S07",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/polars-csv-guide.html",
+        "bytes": 129380,
+        "sha256": "53fe95a1dbbef084c34ed30243c1b3212f39619dbd947687df29ed589dd6eb81"
+      },
+      {
+        "source_id": "S08",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/polars-time-series-parsing.html",
+        "bytes": 150719,
+        "sha256": "4d33422283165a05d36b3b9f3543e88ee48c693000dc530fa628d528c851e5ab"
+      },
+      {
+        "source_id": "S09",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/crates-io-csv-registry.json",
+        "bytes": 104518,
+        "sha256": "b88b8f91b579e49c7395cc0fb891abb7501f9bcde2ed780545b99c2cda20c8e6"
+      },
+      {
+        "source_id": "S10",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-tag-1.4.0-ref.json",
+        "bytes": 335,
+        "sha256": "7506ebe3da27ee04731611d4b38387400d41f979adc64e65f31f0c27c23abcb2"
+      },
+      {
+        "source_id": "S10",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-tag-1.4.0-object.json",
+        "bytes": 1856,
+        "sha256": "d28d9ed5bdf796c93e32abf22b1c7b8eb1dbd7c85f1f12719fbeb4c181a288f0"
+      },
+      {
+        "source_id": "S11",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-commit-4a3997e91d668ea1d8595bdef15625a77cf2308a.json",
+        "bytes": 4853,
+        "sha256": "8641863f5b2da3ff6cf49f5362261c22face01e9b760cd140d22b3bb98d6b453"
+      },
+      {
+        "source_id": "S12",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-reader.txt",
+        "bytes": 90075,
+        "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+      },
+      {
+        "source_id": "S13",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-error.txt",
+        "bytes": 10420,
+        "sha256": "b26d087bb4c1c1c4f5bce43db850f3dc840d754d43229252a1dc68dcec0097a0"
+      },
+      {
+        "source_id": "S14",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-cargo-toml.txt",
+        "bytes": 952,
+        "sha256": "9edf0f197e736f3eeb49798b2c3fd777cef6e0c63df678967beb94c982808d9e"
+      },
+      {
+        "source_id": "S15",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-csv-core-reader.txt",
+        "bytes": 69459,
+        "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308"
+      },
+      {
+        "source_id": "S16",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-csv-core-cargo.txt",
+        "bytes": 846,
+        "sha256": "3c3ea65fd98cd5faff6e4c34c537e3869a51adc5b97f676b2388622e336d86df"
+      },
+      {
+        "source_id": "S17",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46.json",
+        "bytes": 3800,
+        "sha256": "482797f16bd1d4f737e54c051e88c9f308b4401dbc2e1570ada3fd7959ceaf25"
+      },
+      {
+        "source_id": "S18",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-timeline.json",
+        "bytes": 43544,
+        "sha256": "595d695ffa0415f26ba1fe6bf188902c6db0469570d08ed373fd0c6f8f30389f"
+      },
+      {
+        "source_id": "S19",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-fix-candidate-commit.json",
+        "bytes": 640706,
+        "sha256": "7df9004aaec8d0a052c26ff475f3edfd1b1fe5971270805959fde10d096bd97e"
+      },
+      {
+        "source_id": "S20",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-close-rewrite-commit.json",
+        "bytes": 636172,
+        "sha256": "a959c87f4a73f8ce1816e4f1436be488d9de4cf5045f71cdb87702c0cad988be"
+      },
+      {
+        "source_id": "S21",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-csv-core-reader.txt",
+        "bytes": 65889,
+        "sha256": "5daa0ac1a9d050efb01c2cf3fda17ea20b80f4141caf00ee9d3a7618bb66ca74"
+      },
+      {
+        "source_id": "S22",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-reader.txt",
+        "bytes": 81744,
+        "sha256": "790f02e7277f5dd30d967cbb1e0ec660c175c40728a4dd35ee038a25ec0328eb"
+      },
+      {
+        "source_id": "S23",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-363.json",
+        "bytes": 4166,
+        "sha256": "98ea751c1335f3c1237c54f715380a89c0736485519bc13bcdb2f926b76e2226"
+      },
+      {
+        "source_id": "S24",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-pull-396.json",
+        "bytes": 16249,
+        "sha256": "fff8778dc90c36fec9cc89562eeb706f6af7e0b15ce55a1d53f4050ae7e82f31"
+      },
+      {
+        "source_id": "S25",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/chrono-tz-timezone-impl.html",
+        "bytes": 69915,
+        "sha256": "e698fc0b76bb72c21770453e2887020c42dd4577e1345beb503b951854b755a0"
+      },
+      {
+        "source_id": "S26",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-comments.json",
+        "bytes": 10798,
+        "sha256": "62a9077eebb2959fa742437d00dd038ca7b76fd981990525ed823a2475d0e39f"
+      }
+    ]
+  },
+  "critic_sources": [
+    {
+      "id": "C01",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/422",
+      "http_status": 200,
+      "capture_window_utc": "2026-10-07T21:42:28Z/2026-10-07T21:42:34Z",
+      "capture_time_basis": "clock bracket around four direct read-only HTTP captures; per-request starts were not separately emitted",
+      "version_or_state": "page open",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources/rust-csv-issue-422.html",
+      "bytes": 230680,
+      "sha256": "9f31bdd23ebbdc4726a349eb4b5e796537001d44a8a725601da67aa6992786a6",
+      "locators": "issue #422; page open; created 2026-01-27; rendered description lines 135-177; mismatched-width row line-number example; no linked branches or pull requests shown"
+    },
+    {
+      "id": "C02",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/395",
+      "http_status": 200,
+      "capture_window_utc": "2026-10-07T21:42:28Z/2026-10-07T21:42:34Z",
+      "capture_time_basis": "clock bracket around four direct read-only HTTP captures; per-request starts were not separately emitted",
+      "version_or_state": "page open",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources/rust-csv-issue-395.html",
+      "bytes": 304745,
+      "sha256": "9ca215b7122b8c8f9c4d2f0e1919ea949c3f1f1d9f5ebb555b1b157495eca089",
+      "locators": "issue #395; page open; created 2025-04-02; rendered description lines 135-190; CRLF Position::line behavior and reproducer; linked issue #433 shown, no fix asserted"
+    },
+    {
+      "id": "C03",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "http_status": 200,
+      "capture_window_utc": "2026-10-07T21:42:28Z/2026-10-07T21:42:34Z",
+      "capture_time_basis": "clock bracket around four direct read-only HTTP captures; per-request starts were not separately emitted",
+      "version_or_state": "csv 1.4.0 at immutable commit 4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources/rust-csv-1.4.0-reader.txt",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+      "locators": "csv 1.4.0 at immutable commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; UTF-8/ByteRecord documentation lines 688-708; read_byte_record_impl lines 1614-1650; ReaderState::add_record lines 1882-1900; unequal-width tests lines 2321-2398"
+    },
+    {
+      "id": "C04",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "http_status": 200,
+      "capture_window_utc": "2026-10-07T21:42:28Z/2026-10-07T21:42:34Z",
+      "capture_time_basis": "clock bracket around four direct read-only HTTP captures; per-request starts were not separately emitted",
+      "version_or_state": "csv-core 0.1.13 within csv 1.4.0 pinned commit",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/sources/rust-csv-1.4.0-csv-core-reader.txt",
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+      "locators": "csv-core 0.1.13 within csv 1.4.0 pinned commit; parser line/terminator state and record handling; source line locators in file"
+    }
+  ],
+  "independent_source_dispositions": [
+    {
+      "source": "S01-S08",
+      "disposition": "retain discovery and analogies with their stated limits; not grounds for whole-project or building-data claims"
+    },
+    {
+      "source": "S09-S16",
+      "disposition": "retain pinned csv 1.4.0 candidate and mechanism; add open row-location and UTF-8 caveats"
+    },
+    {
+      "source": "S17-S22 and S26",
+      "disposition": "retain issue #46 implementation/regression/release chain; optional comment handling only"
+    },
+    {
+      "source": "S23-S24",
+      "disposition": "retain #363/#396 as unresolved; no shipped fix claim"
+    },
+    {
+      "source": "S25",
+      "disposition": "retain DST ambiguity example as supporting mechanism only; no chrono-tz dependency selection"
+    },
+    {
+      "source": "C01-C04",
+      "disposition": "add open position caveat and validate record identity; no fix/release history inferred"
+    }
+  ],
+  "validation_status": {
+    "application_built": false,
+    "application_tests_run": false,
+    "dependency_tests_run": false,
+    "checks_proposed_only": true,
+    "no_performance_or_savings_inference": true
+  },
+  "usage_observability": {
+    "researcher_input_tokens": null,
+    "researcher_cached_input_tokens": null,
+    "researcher_generated_tokens": null,
+    "researcher_reasoning_tokens": null,
+    "researcher_billing_amount": null,
+    "researcher_cache_hits": null,
+    "native_goal_aggregate_counters_are_separate": true,
+    "native_goal_identity": "01a1184f-cf60-7010-a3a5-da6c27e4c8d1",
+    "native_goal_initial_projection": {
+      "status": "active",
+      "verified_at_utc": "2026-10-07T21:41:06Z",
+      "token_budget": null
+    },
+    "native_goal_terminal_projection": "Surfaced directly via native get_goal after artifact and source map completion; terminal state is not duplicated here. No model-specific token or billing values inferred."
+  },
+  "activation_notice": {
+    "client_request_id": "er10-I-FAST-03-control-critic-v1-active",
+    "delivery": "started",
+    "message": "Native active: I-FAST-03/control/critic-v1, identity 01a1184f-cf60-7010-a3a5-da6c27e4c8d1",
+    "only_interthread_message": true
+  },
+  "scope_boundary": {
+    "delegation_used": false,
+    "other_arms_or_cases_accessed": false,
+    "repo_or_canon_modified": false,
+    "worknodes_or_account_config_touched": false,
+    "third_parties_contacted": false,
+    "issues_or_prs_created_or_modified": false,
+    "purchases_or_installers_or_external_runner_used": false,
+    "downloaded_code_executed": false,
+    "raw_api_encoding_or_receipt_file_created": false
+  }
+}

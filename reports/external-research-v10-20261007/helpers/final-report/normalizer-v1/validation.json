@@ -1,0 +1,343 @@
+{
+  "field_map_sha256": "233f6b2e8a3fd4c31f8aa203889c7dcead3ebc4b09f235e5132f1f1b35ee010a",
+  "passed": 23,
+  "report_sha256": "1918c04b7f0dfa984572c1c852e611675a35c4a0a5b7b24e9a1295f5c7ccf3e6",
+  "schema": "ER10_MECHANICAL_VALIDATION_WORKING_V1",
+  "status": "PASSED",
+  "tests": [
+    {
+      "evidence": {
+        "captured_at": "2026-10-07T21:56:51.788109+00:00",
+        "file": "state/logical-slot-index-v1.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/logical-slot-index-v1.json",
+        "pointer": "",
+        "sha256": "45670c83f4bbc54a8d030ae488acc87de22a946f3113ec6d6a14148745c156a9",
+        "snapshot_path": "working-input/state/logical-slot-index-v1.json"
+      },
+      "name": "exact_40_ids_order_and_80_arms",
+      "passed": true
+    },
+    {
+      "evidence": "duplicate of observed D-M01-A in observed population, not implementation-mirror fixtures",
+      "name": "duplicate_actual_slot_injection_rejected",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "slot_id": "D-M01-A",
+        "version": "v1"
+      },
+      "name": "duplicate_actual_slot_version_injection_rejected",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "observations": [
+          {
+            "mechanical_value": null,
+            "original_value": null,
+            "present": true,
+            "reference": {
+              "captured_at": "2026-10-07T21:57:53.821652+00:00",
+              "file": "reviews/confirmation/C-01/COMPARISON.json",
+              "op": "copy",
+              "original_field_present": true,
+              "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/COMPARISON.json",
+              "pointer": "/arms/control/original_scientific_grade",
+              "sha256": "8695081d2f48cd66debe0d314a492834ab74f13931849f58acdde724c4f8a16d",
+              "snapshot_path": "working-input/reviews/confirmation/C-01/COMPARISON.json"
+            }
+          }
+        ],
+        "resolution": "NULL_UNKNOWN",
+        "value": null
+      },
+      "name": "actual_missing_C01_grade_stays_NULL",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "observations": [
+          {
+            "mechanical_value": "MISSING",
+            "original_value": false,
+            "present": true,
+            "reference": {
+              "captured_at": "2026-10-07T21:57:53.821652+00:00",
+              "file": "reviews/confirmation/C-01/COMPARISON.json",
+              "op": "review_artifact_delivery",
+              "original_field_present": true,
+              "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/COMPARISON.json",
+              "pointer": "/arms/control/review_delivered",
+              "sha256": "8695081d2f48cd66debe0d314a492834ab74f13931849f58acdde724c4f8a16d",
+              "snapshot_path": "working-input/reviews/confirmation/C-01/COMPARISON.json"
+            }
+          }
+        ],
+        "resolution": "EXPLICIT_ORIGINAL",
+        "value": "MISSING"
+      },
+      "name": "actual_C01_missing_review_and_interrupted_task_separate",
+      "passed": true
+    },
+    {
+      "evidence": [
+        {
+          "captured_at": "2026-10-07T21:57:53.823481+00:00",
+          "file": "reviews/confirmation/C-04/COMPARISON.json",
+          "op": "copy",
+          "original_field_present": true,
+          "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-04/COMPARISON.json",
+          "pointer": "/arms/control/original_scientific_grade",
+          "sha256": "04529a0e7b1620f735e27763f5fdb092cc632a0fbcee5f64091c7e278beed545",
+          "snapshot_path": "working-input/reviews/confirmation/C-04/COMPARISON.json"
+        }
+      ],
+      "name": "actual_present_C04_grade_deleted_becomes_NULL_never_PASS",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "annotation": "Original 0 is preserved. Missing control review/UNASSESSED_HOLD provides no scientific defect census; NULL is unknown, never zero defects.",
+        "observations": [
+          {
+            "mechanical_value": 0,
+            "original_value": 0,
+            "present": true,
+            "reference": {
+              "captured_at": "2026-10-07T21:57:53.821652+00:00",
+              "file": "reviews/confirmation/C-01/COMPARISON.json",
+              "op": "copy",
+              "original_field_present": true,
+              "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-01/COMPARISON.json",
+              "pointer": "/arms/control/material_defect_count",
+              "sha256": "8695081d2f48cd66debe0d314a492834ab74f13931849f58acdde724c4f8a16d",
+              "snapshot_path": "working-input/reviews/confirmation/C-01/COMPARISON.json"
+            }
+          }
+        ],
+        "resolution": "NULL_UNASSESSED_ORIGINAL_ZERO_RETAINED",
+        "value": null
+      },
+      "name": "actual_unassessed_C01_original_zero_retained_normalized_NULL",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "arm_values": [
+          true,
+          false
+        ],
+        "derivation": "AND of exactly two explicit original arm booleans; original top field absent",
+        "value": false
+      },
+      "name": "actual_absent_C02_pair_scope_only_explicit_arm_AND",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "captured_at": "2026-10-07T21:57:53.822869+00:00",
+        "file": "reviews/confirmation/C-03/COMPARISON.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/COMPARISON.json",
+        "pointer": "",
+        "sha256": "2afdd5d000e169e45650ef3bf2451caaccb092e8813e31713cd034c155ee066b",
+        "snapshot_path": "working-input/reviews/confirmation/C-03/COMPARISON.json"
+      },
+      "name": "original_C03_BLOCKED_and_diagnostic_hold_not_regraded",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "captured_at": "2026-10-07T21:57:53.822869+00:00",
+        "file": "reviews/confirmation/C-03/COMPARISON.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/C-03/COMPARISON.json",
+        "pointer": "",
+        "sha256": "2afdd5d000e169e45650ef3bf2451caaccb092e8813e31713cd034c155ee066b",
+        "snapshot_path": "working-input/reviews/confirmation/C-03/COMPARISON.json"
+      },
+      "name": "actual_C03_nativeBLOCKED_separate_from_full_scientific_scope",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "captured_at": "2026-10-07T21:57:53.896808+00:00",
+        "file": "reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+        "pointer": "",
+        "sha256": "c9c1310feccae242ef4e89145f9129d10a8dc12fddaa22b5a123eebdccbe5788",
+        "snapshot_path": "working-input/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json"
+      },
+      "name": "actual_full_six_scientific_axes_do_not_close_required_history",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "category": "explicitly_unstarted_or_held_authorized_successor",
+        "versions": [
+          "v2",
+          "v3"
+        ]
+      },
+      "name": "original_vs_declared_successor_D-M06-A",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "category": "explicitly_unstarted_or_held_authorized_successor",
+        "versions": [
+          "v2",
+          "v3"
+        ]
+      },
+      "name": "original_vs_declared_successor_D-M06-B",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "category": "explicitly_unstarted_or_held_authorized_successor",
+        "versions": [
+          "v3"
+        ]
+      },
+      "name": "original_vs_declared_successor_D-M07-A",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "category": "explicitly_unstarted_or_held_authorized_successor",
+        "versions": [
+          "v3"
+        ]
+      },
+      "name": "original_vs_declared_successor_D-M07-B",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "category": "explicitly_unstarted_or_held_authorized_successor",
+        "versions": [
+          "v3"
+        ]
+      },
+      "name": "original_vs_declared_successor_D-M09-A",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "captured_at": "2026-10-07T21:56:51.778711+00:00",
+        "file": "helpers/targeted-supervisor/COMPARISONS.json",
+        "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/COMPARISONS.json",
+        "pointer": "",
+        "sha256": "8a6c438a03064073b3af875b636a2462bdde9dae5e0bd7a19ce8bb095f2ed6f9",
+        "snapshot_path": "working-input/helpers/targeted-supervisor/COMPARISONS.json"
+      },
+      "name": "cohort1_7_pair_rows_do_not_make_7_slots",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "all_required_source_claims_verified": {
+          "denominator": 80,
+          "false": 1,
+          "true": 0,
+          "unknown": 79
+        },
+        "full_declared_scientific_scope_assessed": {
+          "denominator": 80,
+          "false": 3,
+          "true": 40,
+          "unknown": 37
+        },
+        "full_declared_source_scope_assessed": {
+          "denominator": 80,
+          "false": 4,
+          "true": 6,
+          "unknown": 70
+        },
+        "native_active_observed": {
+          "denominator": 80,
+          "false": 5,
+          "true": 13,
+          "unknown": 62
+        },
+        "native_complete_observed": {
+          "denominator": 80,
+          "false": 5,
+          "true": 41,
+          "unknown": 34
+        },
+        "required_final_artifact_delivery_observed": {
+          "denominator": 80,
+          "false": 10,
+          "true": 38,
+          "unknown": 32
+        },
+        "required_process_history_verified": {
+          "denominator": 80,
+          "false": 0,
+          "true": 0,
+          "unknown": 80
+        },
+        "review_within_original_allowance": {
+          "denominator": 80,
+          "false": 2,
+          "true": 21,
+          "unknown": 57
+        },
+        "scientific_six_axis_assessment_complete": {
+          "denominator": 80,
+          "false": 0,
+          "true": 11,
+          "unknown": 69
+        },
+        "t3_task_tree_quiet": {
+          "denominator": 80,
+          "false": 0,
+          "true": 62,
+          "unknown": 18
+        }
+      },
+      "name": "separate_axes_denominators_equal80",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "both_required_final_deliveries_and_explicit_task_trees_quiet": 16,
+        "explicitly_unstarted_or_held_authorized_successor": 5,
+        "in_progress_or_unresolved_delivery_mapping": 19
+      },
+      "name": "logical_delivery_partition_sums40",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "both_full_declared_source_coverage": 1,
+        "delivered_pair_assessments": 3,
+        "frozen_original_comparisons": 4,
+        "meaning": "Frozen owner-confirmation subset, not final campaign counts",
+        "qualified_wins": 0,
+        "quiet_task_count": 28
+      },
+      "name": "actual_confirmation_4_3_1_0_and28quiet",
+      "passed": true
+    },
+    {
+      "evidence": "same immutable manifests and field map, byte-for-byte report identity",
+      "name": "deterministic_recompute_same_bytes",
+      "passed": true
+    },
+    {
+      "evidence": "corrupted reference to the actual frozen 40-slot population; old maps cannot silently cite later changed snapshot bytes",
+      "name": "actual_mapping_hash_corruption_rejected",
+      "passed": true
+    },
+    {
+      "evidence": "every original evidence fragment",
+      "name": "all_evidence_references_have_path_and_sha256",
+      "passed": true
+    }
+  ],
+  "total": 23,
+  "unresolved_is_unknown_not_test_failure": true,
+  "unresolved_mapping_count": 945
+}

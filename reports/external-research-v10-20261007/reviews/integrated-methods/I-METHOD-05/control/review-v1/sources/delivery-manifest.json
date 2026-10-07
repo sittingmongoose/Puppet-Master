@@ -1,0 +1,27 @@
+{
+  "outputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/judgment.md",
+      "bytes": 40859,
+      "sha256": "3330e3425565f6ebc2aaecba5ed6a3c92364e06b4c716a1f29a7acf00a8d9de5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+      "bytes": 10943,
+      "sha256": "c9c1310feccae242ef4e89145f9129d10a8dc12fddaa22b5a123eebdccbe5788"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/source-checks.json",
+      "bytes": 71837,
+      "sha256": "678a3e04cb03d5a1f41ee40158013a53decbcf791b7b0e1b24457ee166bb8ac9"
+    }
+  ],
+  "source_judgment": "FAIL",
+  "assessment_complete": true,
+  "required_scope_assessed": 16,
+  "required_scope_unassessed": 0,
+  "material_error_count": 4,
+  "scientific_delivery_note": "Hashes identify delivered bytes only; they are not source truth, candidate quality proof or lifecycle/identity disposition.",
+  "usage": null,
+  "billing": null
+}

@@ -1,0 +1,7 @@
+{
+  "chunk_id": "81ab21",
+  "wall_time_seconds": 0.021624593,
+  "exit_code": 0,
+  "original_token_count": 325,
+  "output": "{\n  \"schema\": \"pm.er10.passive-receipts-index.v1\",\n  \"observed_at_utc\": \"2026-10-07T19:21:31.235528+00:00\",\n  \"entries\": [\n    {\n      \"stage\": \"I-METHOD-02/treatment/research-v1\",\n      \"path\": \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-02--treatment--research-v1--bd4ffd083a5ead17.json\",\n      \"sha256\": \"bd4ffd083a5ead173a999a1620651ef2ee9371db1293e3877b66e0bed710bcfb\",\n      \"bytes\": 10882,\n      \"capture\": {\n        \"create_goal\": \"missing_actual_response\",\n        \"get_goal\": \"missing_actual_response\",\n        \"update_goal\": \"missing_actual_response\"\n      }\n    },\n    {\n      \"stage\": \"I-METHOD-02/control/research-v1\",\n      \"path\": \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-METHOD-02--control--research-v1--bf123912c28b39fe.json\",\n      \"sha256\": \"bf123912c28b39fe50240c21b31db9bbe0a952a314d2047689594e2b4e40c352\",\n      \"bytes\": 10868,\n      \"capture\": {\n        \"create_goal\": \"missing_actual_response\",\n        \"get_goal\": \"missing_actual_response\",\n        \"update_goal\": \"missing_actual_response\"\n      }\n    }\n  ],\n  \"policy\": \"Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim.\"\n}\n"
+}

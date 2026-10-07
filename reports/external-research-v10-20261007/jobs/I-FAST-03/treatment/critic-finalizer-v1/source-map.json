@@ -1,0 +1,238 @@
+{
+  "case_id": "I-FAST-03",
+  "role": "treatment/critic-finalizer-v1",
+  "classification": "DIAGNOSTIC_UNQUALIFIED",
+  "boundary": "Exact frozen map, admitted brief/plan, complete research-v1 artifact/source-map/captured bytes, and independently chosen public primary sources only.",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/critic-finalizer-v1/input-map.json",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/research-v1/source-map.json"
+  ],
+  "first_useful_independent_finding_utc": "approximately 2026-10-07T21:38Z; exact sub-minute clock was not sampled",
+  "independent_source_operations": {
+    "web_run_calls": 5,
+    "search_queries": 8,
+    "open_requests": 15,
+    "find_patterns": 11,
+    "http_capture_attempts": 4,
+    "http_capture_successes": 4,
+    "http_capture_failures": 0,
+    "reviewed_by": [
+      "official pandas GitHub code/issues/release notes",
+      "official Python 3.14 csv and zoneinfo docs",
+      "OpenEnergyMonitor docs/issues"
+    ]
+  },
+  "web_search_queries": [
+    "pandas v3.0.6 readers.py _validate_names and caller",
+    "pandas v0.19.0 _maybe_dedup_names and GH-7160",
+    "pandas issue 7160 duplicate supplied names",
+    "Emoncms graph issue 142 missing cumulative-feed days",
+    "pandas v3.0.6 release date",
+    "pandas GH-64347/66259 parallel read_csv",
+    "Python csv strict/newline documentation",
+    "Emoncms graph product/source"
+  ],
+  "full_predecessor_capture_read": "All 12 predecessor capture files were read byte-for-byte and their SHA-256 values matched the predecessor source-map. Semantic review focused on the mapped cited ranges and independently opened primary-source ranges; not every irrelevant line was interpreted.",
+  "sources": [
+    {
+      "id": "S1",
+      "path": "sources/emoncms-graphs.html",
+      "bytes": 19245,
+      "sha256": "d3573885e4c14140a22cd3600efd629ac34313959dd52cdb49aac3813a684e4e",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "OpenEnergyMonitor public documentation snapshot (accessed 2026-10-07)",
+      "reviewed_ranges": [
+        "rendered lines 8-40"
+      ]
+    },
+    {
+      "id": "S2",
+      "path": "sources/emoncms-feeds.html",
+      "bytes": 19036,
+      "sha256": "389edcb2f685a0f09b6d83c68d878fa3f205db38391ad73e75ef29695a7f1d12",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "OpenEnergyMonitor public documentation snapshot (accessed 2026-10-07)",
+      "reviewed_ranges": [
+        "rendered lines 8-47"
+      ]
+    },
+    {
+      "id": "S3",
+      "path": "sources/emoncms-graph-issue-142.html",
+      "bytes": 227776,
+      "sha256": "5205c0bdfeb959117e0070bbb8021ea31f27feaceb6f11f2a84d6fa43b669d3e",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "GitHub issue snapshot; issue #142 opened 2022-09-17; status shown closed at access",
+      "reviewed_ranges": [
+        "rendered lines 129-203"
+      ]
+    },
+    {
+      "id": "S4",
+      "path": "sources/pandas-issue-7160.html",
+      "bytes": 263026,
+      "sha256": "0283e188c392695e87e393e98f5cf76a576b2579fd5b3e3f642ccaceb71d43ab",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "GitHub issue snapshot; issue #7160 opened 2014-05-18; milestone 0.19.0",
+      "reviewed_ranges": [
+        "rendered lines 133-185; milestone lines 151-157, 212-214"
+      ]
+    },
+    {
+      "id": "S5",
+      "path": "sources/pandas-issue-66259.html",
+      "bytes": 321722,
+      "sha256": "c3224350ceee9a549bbeab1d987cfa72a3f14cbfcae2ece483f44c08090c7e96",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "GitHub issue snapshot; issue #66259 opened 2026-07-10; milestone 3.1",
+      "reviewed_ranges": [
+        "rendered lines 133-169, 208-229, 271-281"
+      ]
+    },
+    {
+      "id": "S6",
+      "path": "sources/pandas-v0.19.0-parser.py",
+      "bytes": 105482,
+      "sha256": "adbe3428a777cd0f46886124a70b26b08b359cc2a629b5916721b914aa8ce066",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "pandas release tag v0.19.0",
+      "reviewed_ranges": [
+        "lines 1161-1180 (issue-linked comment and suffixing loop)"
+      ]
+    },
+    {
+      "id": "S7",
+      "path": "sources/pandas-v0.19.0-whatsnew.html",
+      "bytes": 351822,
+      "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "pandas v0.19.0 release notes, dated 2016-10-02",
+      "reviewed_ranges": [
+        "rendered lines 508-557"
+      ]
+    },
+    {
+      "id": "S8",
+      "path": "sources/pandas-v3.0.6-readers.py",
+      "bytes": 93054,
+      "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "pandas release tag v3.0.6",
+      "reviewed_ranges": [
+        "lines 234-306; read_csv signature and documentation around lines 900-1045; low_memory docs lines 724-733"
+      ]
+    },
+    {
+      "id": "S9",
+      "path": "sources/pandas-v3.0.6-test_header.py",
+      "bytes": 20797,
+      "sha256": "f559987c79f78d28e9eb600dc93df3928aaf6ebb836e276b9a4a6fa60f1c7006",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "pandas release tag v3.0.6",
+      "reviewed_ranges": [
+        "lines 496-545; test function line 533"
+      ]
+    },
+    {
+      "id": "S10",
+      "path": "sources/pandas-v3.0.6-io-guide.rst",
+      "bytes": 217181,
+      "sha256": "abc1df34fbfeb692a0489e9012795d2ccd6a6599fdd3cf7e996e548993198bec",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "pandas release tag v3.0.6",
+      "reviewed_ranges": [
+        "lines 80-130, 205-215, 527-575"
+      ]
+    },
+    {
+      "id": "S11",
+      "path": "sources/pandas-v3.0.6-release-notes.rst",
+      "bytes": 3844,
+      "sha256": "7851b96e14e336195692f24efe5fab7f90d01934c2a80387d64c7f400e52a034",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "pandas release tag v3.0.6",
+      "reviewed_ranges": [
+        "file entire release-notes page"
+      ]
+    },
+    {
+      "id": "S12",
+      "path": "sources/python-zoneinfo.html",
+      "bytes": 64179,
+      "sha256": "288b62fda09d6695452ea4cf919b771dbf3e0fe49d73de1e4d6578b889ed8f7c",
+      "captured_at_utc": "2026-10-07T21:34:04Z",
+      "version": "Python 3.14.7 documentation snapshot",
+      "reviewed_ranges": [
+        "rendered lines 9-67 and 77"
+      ]
+    },
+    {
+      "id": "S13",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/pandas/io/parsers/readers.py",
+      "version": "pandas v3.0.6 release tag raw source; independent recapture",
+      "path": "sources/critic-pandas-v3.0.6-readers.py",
+      "reviewed_symbols": [
+        "read_csv -> _read",
+        "_validate_names",
+        "TextFileReader caller"
+      ],
+      "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b",
+      "bytes": 93054,
+      "retrieved_at_utc": "captured before 2026-10-07T21:43:51Z clock sample immediately after fetch"
+    },
+    {
+      "id": "S14",
+      "url": "https://github.com/pandas-dev/pandas/issues/66259",
+      "version": "GitHub issue page as fetched during critic-finalizer; state Closed, milestone 3.1, no linked branch/PR or closure explanation visible",
+      "path": "sources/critic-pandas-issue-66259.html",
+      "reviewed_sections": [
+        "reported >50 MB local-file conditions",
+        "low_memory=False parallel inference divergence",
+        "suggested fix and verification note",
+        "issue state and development links"
+      ],
+      "sha256": "f348706d25e0970e22300305a01c8997457c3f7cf2a45f761c335595f84de1d8",
+      "bytes": 321720,
+      "retrieved_at_utc": "captured before 2026-10-07T21:43:51Z clock sample immediately after fetch"
+    },
+    {
+      "id": "S15",
+      "url": "https://docs.python.org/3.14/library/csv.html",
+      "version": "Python 3.14 documentation snapshot; independent recapture",
+      "path": "sources/critic-python-csv.html",
+      "reviewed_sections": [
+        "reader API",
+        "newline behavior",
+        "Dialect.strict default"
+      ],
+      "sha256": "1f68f2975798efb54d1235183dd5eb15e047bfb83e6f20e3565dee546111fcbd",
+      "bytes": 99886,
+      "retrieved_at_utc": "captured before 2026-10-07T21:43:51Z clock sample immediately after fetch"
+    },
+    {
+      "id": "S16",
+      "url": "https://pandas.pydata.org/docs/whatsnew/v0.19.0.html",
+      "version": "pandas v0.19.0 release notes; independent recapture",
+      "path": "sources/critic-pandas-v0.19.0-whatsnew.html",
+      "reviewed_sections": [
+        "duplicate-name before/after reproducer and GH-7160/GH-9424 attribution"
+      ],
+      "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3",
+      "bytes": 351822,
+      "retrieved_at_utc": "captured before 2026-10-07T21:43:51Z clock sample immediately after fetch"
+    }
+  ],
+  "validation_status": "Evidence integrity and source review only. No application build, test, benchmark, sample meter import, or validation proposal was executed.",
+  "usage": {
+    "input_cache": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null,
+    "distinct_usage": "unknown/null; unavailable, not fabricated"
+  },
+  "artifact_saved_no_later_than_utc": "2026-10-07T21:43:51Z (clock sample immediately before source-map generation)",
+  "source_map_saved_no_later_than_utc": "2026-10-07T21:44:07Z (clock sample immediately after source-map write)",
+  "full_package_saved_no_later_than_utc": "2026-10-07T21:44:07Z",
+  "artifact_saved_at_utc": "artifact written before source-map generation; final package save sample is recorded after writing below"
+}

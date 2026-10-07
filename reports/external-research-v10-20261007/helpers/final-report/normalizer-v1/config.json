@@ -1,0 +1,17 @@
+{
+  "schema": "ER10_COUNT_NORMALIZER_V1",
+  "start": "2026-10-07T21:56:22.000Z",
+  "deadline": "2026-10-07T22:26:22.000Z",
+  "writing_reserve_seconds": 300,
+  "target": {
+    "driverKind": "codex",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  },
+  "writing_scope": "helpers/final-report/normalizer-v1",
+  "no_scientific_authorship": true
+}

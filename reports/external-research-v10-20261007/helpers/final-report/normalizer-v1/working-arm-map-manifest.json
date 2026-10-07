@@ -1,0 +1,242 @@
+{
+  "schema": "ER10_IMMUTABLE_WORKING_SUPPLEMENT_V1",
+  "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "files": [
+    {
+      "relative_path": "reviews/targeted/D-M01-A/source-review-v1/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/REVIEW_INPUT_MAP.json",
+      "sha256": "1127b2b2ff02bd70f736587f62c52cc21fdeb155181360908b9fae87b7d93841",
+      "bytes": 3854,
+      "snapshot_path": "working-input/reviews/targeted/D-M01-A/source-review-v1/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:11.981101+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M01-A/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "sha256": "9359d21002254f5dcdd4949bd6f99aa223f5ec45082b5ffc09408ae729c7006f",
+      "bytes": 503,
+      "snapshot_path": "working-input/reviews/targeted/D-M01-A/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "capture_at": "2026-10-07T22:05:11.982167+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M01-A/source-review-v1/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/TASK_TERMINAL.json",
+      "sha256": "eb49e4988043e7b65b3d23e3b65abf7637077e3767e61cf630f59b85623ae9c3",
+      "bytes": 5887,
+      "snapshot_path": "working-input/reviews/targeted/D-M01-A/source-review-v1/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:11.983469+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M01-B/source-review-v1/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/REVIEW_INPUT_MAP.json",
+      "sha256": "d393c5e846e800acdad517c89f2e1dd9de76422adb1a8392bccf5ae2bdcd01a5",
+      "bytes": 3342,
+      "snapshot_path": "working-input/reviews/targeted/D-M01-B/source-review-v1/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:11.984604+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M01-B/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "sha256": "a01b3abe6a82dba1658673c4c68311d5e045d032747b5e119b3f539ae08be570",
+      "bytes": 503,
+      "snapshot_path": "working-input/reviews/targeted/D-M01-B/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "capture_at": "2026-10-07T22:05:11.985521+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M01-B/source-review-v1/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/TASK_TERMINAL.json",
+      "sha256": "6deaf79eaad30ea87076d5b2fc0460c8d62e4f23ba7b4bce93f0eed35b63826e",
+      "bytes": 4965,
+      "snapshot_path": "working-input/reviews/targeted/D-M01-B/source-review-v1/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:11.986584+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW_INPUT_MAP.json",
+      "sha256": "319e2e1302c31b6ec978cf7551f0b4e327f2a0384983e233964fa28f5effb0da",
+      "bytes": 3595,
+      "snapshot_path": "working-input/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:11.987769+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M01-B/source-review-v2-paired/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/TASK_TERMINAL.json",
+      "sha256": "18e85c66cd52345c8756426f339377e816abdbfe3fec5381bbbdb22927e67a59",
+      "bytes": 6286,
+      "snapshot_path": "working-input/reviews/targeted/D-M01-B/source-review-v2-paired/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:11.989243+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-A/source-review-v2/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/REVIEW_INPUT_MAP.json",
+      "sha256": "7460e5d30efcbb10b7c891fed2fd08b9901d4e74f99cc77ecd3f61973439256d",
+      "bytes": 2752,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-A/source-review-v2/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:11.990298+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-A/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "sha256": "6804cb9c7e89a08cebb43d93bd80b8fd131915d234655a3c3412f754a888c550",
+      "bytes": 41,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-A/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "capture_at": "2026-10-07T22:05:11.991182+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-A/source-review-v2/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/TASK_TERMINAL.json",
+      "sha256": "85e4b3ab9aeb4134090d954ab2663fb6281cc13a669bc62859d36b3a9096694c",
+      "bytes": 6358,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-A/source-review-v2/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:11.992194+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-A/source-review-v3/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/REVIEW_INPUT_MAP.json",
+      "sha256": "0ad26509f4a82a33a9f9beb338d5421ddd98ce1f9dcd088d49aff2910a3b9d25",
+      "bytes": 3074,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-A/source-review-v3/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:11.993428+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-A/source-review-v3/IDENTITY_MAP_PRIVATE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/IDENTITY_MAP_PRIVATE.json",
+      "sha256": "6804cb9c7e89a08cebb43d93bd80b8fd131915d234655a3c3412f754a888c550",
+      "bytes": 41,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-A/source-review-v3/IDENTITY_MAP_PRIVATE.json",
+      "capture_at": "2026-10-07T22:05:11.994164+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-A/source-review-v3/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/TASK_TERMINAL.json",
+      "sha256": "54ee3d398e014a9cb44e61d0fc686a6dd4c336f6bd52ea11b809d318431356df",
+      "bytes": 6128,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-A/source-review-v3/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:11.994564+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-A/source-review-v3/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v3/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "sha256": "64717e132cd936603ddd3d5938d28cfae2a0e05a121c6c29e91d86dae3b77884",
+      "bytes": 3601,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-A/source-review-v3/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "capture_at": "2026-10-07T22:05:11.995710+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-B/source-review-v2/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/REVIEW_INPUT_MAP.json",
+      "sha256": "069b54328a75e3cc2dfd49cc69a868142a3cbdf14c8c287ccf0eb7de849a4ee6",
+      "bytes": 3632,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-B/source-review-v2/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:11.996820+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-B/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "sha256": "6804cb9c7e89a08cebb43d93bd80b8fd131915d234655a3c3412f754a888c550",
+      "bytes": 41,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-B/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "capture_at": "2026-10-07T22:05:11.997679+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-B/source-review-v2/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/TASK_TERMINAL.json",
+      "sha256": "fa05155a9ccd4536dc6876945206125c0fa1b2f233567a88bc83af6c1bb17c74",
+      "bytes": 6248,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-B/source-review-v2/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:11.998762+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "sha256": "cdb79be0493165d1446b9233f44b192ea83e39f29d3cbb58ba78c854718ae944",
+      "bytes": 3601,
+      "snapshot_path": "working-input/reviews/targeted/D-M02-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "capture_at": "2026-10-07T22:05:11.999752+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-A/source-review-v2-X/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW_INPUT_MAP.json",
+      "sha256": "81220716ebf08dd9ada47a3a340bafeeefe404e015404892a8b7554515ca4f97",
+      "bytes": 3159,
+      "snapshot_path": "working-input/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:12.001286+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-A/source-review-v2-X/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/TASK_TERMINAL.json",
+      "sha256": "45735492bac4f673684458a0d33b041c0c34d8c82f36bde181edcbb2bc9b42f0",
+      "bytes": 5876,
+      "snapshot_path": "working-input/reviews/targeted/D-M03-A/source-review-v2-X/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:12.002611+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW_INPUT_MAP.json",
+      "sha256": "bc4b8b6ae53e3c9a8910276f765a09bd4a06a94dc7047a45acaa2856f1338597",
+      "bytes": 3675,
+      "snapshot_path": "working-input/reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:12.003625+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-A/source-review-v2-Y/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y/TASK_TERMINAL.json",
+      "sha256": "a3ff625c82c70e2e8bfa0ddf420884f01cb3b64e1f089b7248e537131d9011e0",
+      "bytes": 6268,
+      "snapshot_path": "working-input/reviews/targeted/D-M03-A/source-review-v2-Y/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:12.004413+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-B/source-review-v2/REVIEW_INPUT_MAP.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/REVIEW_INPUT_MAP.json",
+      "sha256": "ae4de0bc1b1d1dfb9502c60151e36df9f7bc440f61c45019c5e25733d8087996",
+      "bytes": 3676,
+      "snapshot_path": "working-input/reviews/targeted/D-M03-B/source-review-v2/REVIEW_INPUT_MAP.json",
+      "capture_at": "2026-10-07T22:05:12.005383+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-B/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "sha256": "6804cb9c7e89a08cebb43d93bd80b8fd131915d234655a3c3412f754a888c550",
+      "bytes": 41,
+      "snapshot_path": "working-input/reviews/targeted/D-M03-B/source-review-v2/IDENTITY_MAP_PRIVATE.json",
+      "capture_at": "2026-10-07T22:05:12.006041+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-B/source-review-v2/TASK_TERMINAL.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/TASK_TERMINAL.json",
+      "sha256": "2b6ab86da76ee8d1d6b05de8b2c08f2adaf1cd6019559d049557991112523bf9",
+      "bytes": 6300,
+      "snapshot_path": "working-input/reviews/targeted/D-M03-B/source-review-v2/TASK_TERMINAL.json",
+      "capture_at": "2026-10-07T22:05:12.006866+00:00",
+      "capture_basis": "completed own-review mechanical arm/path/hash mapping or lifecycle/clock receipt; no candidate science opened"
+    }
+  ],
+  "observed_cutoff": "2026-10-07T22:05:12.006936+00:00",
+  "not_simultaneous": true
+}

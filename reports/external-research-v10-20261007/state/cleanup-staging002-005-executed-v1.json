@@ -1,0 +1,74 @@
+{
+  "schema": "ER10_VERIFIED_DUPLICATE_STAGING_CLEANUP_V1",
+  "started_at": "2026-10-07T21:59:09.593713+00:00",
+  "retention_commit": "0f4b6069f110be4834747cc330094dde580262bd",
+  "retention_tree_sha": "77fe7d207e6f4e4b19e16b02811420941edc0134",
+  "prepared_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/cleanup-staging002-005-prepared-retention-v2.json",
+  "prepared_sha256": "06c4201a1e80a588a36b30569195594606930b8592292b793521369f0d3e2d97",
+  "deletion_scope": "Only verified campaign publication payload copies; posted paths retained as exact directory aliases",
+  "stages": [
+    {
+      "batch": 2,
+      "removed_regular_copy_files": 701,
+      "removed_logical_bytes": 3078490,
+      "unlinked_exclusive_file_allocated_bytes": 4661248,
+      "payload_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch002/staging",
+      "posted_path_alias_target": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007",
+      "after_alias_verified_exact_files": 701,
+      "remaining_payload_owned_regular_bytes": 0,
+      "preserved_other_staging_files": []
+    },
+    {
+      "batch": 3,
+      "removed_regular_copy_files": 149,
+      "removed_logical_bytes": 2240366,
+      "unlinked_exclusive_file_allocated_bytes": 2551808,
+      "payload_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch003/staging",
+      "posted_path_alias_target": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007",
+      "after_alias_verified_exact_files": 149,
+      "remaining_payload_owned_regular_bytes": 0,
+      "preserved_other_staging_files": []
+    },
+    {
+      "batch": 4,
+      "removed_regular_copy_files": 694,
+      "removed_logical_bytes": 7654444,
+      "unlinked_exclusive_file_allocated_bytes": 9265152,
+      "payload_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch004/staging/reports/external-research-v10-20261007",
+      "posted_path_alias_target": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007",
+      "after_alias_verified_exact_files": 694,
+      "remaining_payload_owned_regular_bytes": 0,
+      "preserved_other_staging_files": []
+    },
+    {
+      "batch": 5,
+      "removed_regular_copy_files": 761,
+      "removed_logical_bytes": 7381581,
+      "unlinked_exclusive_file_allocated_bytes": 9191424,
+      "payload_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch005/staging/reports/external-research-v10-20261007",
+      "posted_path_alias_target": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007",
+      "after_alias_verified_exact_files": 761,
+      "remaining_payload_owned_regular_bytes": 0,
+      "preserved_other_staging_files": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch005/staging/curate.py",
+          "bytes": 32258,
+          "sha256": "9015ddb8f501cbd999fa6d522cad04adf19615f5509298ca8a4b3c1b1f11f13a"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch005/staging/github-reference-checks.json",
+          "bytes": 975,
+          "sha256": "0cdd99e3d4ecabe18ab4e6358cc68f9ea9c34f17cea335872633a47bd50fac39"
+        }
+      ]
+    }
+  ],
+  "host_free_bytes_before": 193893584896,
+  "host_free_bytes_after": 193921110016,
+  "host_free_delta_is_not_sole_cleanup_attribution": true,
+  "removed_logical_bytes": 20354881,
+  "removed_regular_copy_files": 2305,
+  "completed_at": "2026-10-07T21:59:10.170778+00:00",
+  "original_runtime_source_and_science_removed": false,
+  "whole_campaign_cleanup_complete": false
+}

@@ -1,0 +1,1290 @@
+{
+  "record_at": "2026-10-07T21:54:46.677777+00:00",
+  "task_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-04-control-independent-review-v2:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:42:21.355Z",
+    "startedAt": "2026-10-07T21:42:26.108Z",
+    "completedAt": "2026-10-07T21:54:25.028Z"
+  },
+  "delivery_in_review_deadline": true,
+  "native_goal_required": false,
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "reasoning": null,
+    "billing": null
+  },
+  "coverage": {
+    "schema_version": "1.0",
+    "case_id": "I-METHOD-04",
+    "review_id": "control/review-v2",
+    "source_judgment": "PASS_WITH_LIMITATIONS",
+    "full_declared_scientific_scope_assessed": true,
+    "exhaustive_opportunity_recall_claimed": false,
+    "count_meaning": "Complete is the size of this enumerated review inventory, not satisfaction or execution. Assessed means reviewed, including explicitly open owner choices. Cohorts overlap semantically; do not interpret 70 records as 68 independent product requirements.",
+    "six_axes": [
+      {
+        "id": "A1",
+        "name": "Original brief O1-O6, every plan/owner obligation",
+        "assessment": "ASSESSED",
+        "finding": "Complete inventory reviewed; honest open decisions retain no suitability credit; no material required-scope omission found."
+      },
+      {
+        "id": "A2",
+        "name": "Consequential claims, definitions, conditions and versions",
+        "assessment": "ASSESSED",
+        "finding": "26 groups checked; one nonmaterial normative paraphrase error, historical-source and witness qualifications; release/code core supported."
+      },
+      {
+        "id": "A3",
+        "name": "Bounded useful discovery, mechanisms, options and negative/opportunity coverage",
+        "assessment": "ASSESSED",
+        "finding": "Verified useful package/fixity/BWF/workflow research; audio implementation shortlist thin, normalization.csv opportunity omitted; no exhaustive recall claim."
+      },
+      {
+        "id": "A4",
+        "name": "Incorrect rejections/corrections and false already-covered dispositions",
+        "assessment": "ASSESSED",
+        "finding": "No material over-rejection or false already-covered finding; writer rejection version-scoped, BagIt/fetch policies labeled choices; support modality correction remains incomplete."
+      },
+      {
+        "id": "A5",
+        "name": "Draft-to-critique-to-final preservation",
+        "assessment": "ASSESSED",
+        "finding": "18 substantive criticism units retained; core draft findings and uncertainty retained; SHA-256/layout/preference changes explicitly traced."
+      },
+      {
+        "id": "A6",
+        "name": "Proposed versus executed validation and witness applicability",
+        "assessment": "ASSESSED",
+        "finding": "Seven synthetic groups remain proposed; upstream tests inspected, not run; source-byte identity has no app-quality implication."
+      }
+    ],
+    "O1_O6": [
+      {
+        "id": "O1",
+        "obligation": "Brief-led public-primary discovery beyond initial plan; products, analogies, components/mechanisms, useful negative and optional leads",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET_WITH_LIMITATIONS",
+        "final_lines": "9-19,119-127",
+        "source_checks": [
+          "C01",
+          "C02",
+          "C03",
+          "C04",
+          "C05",
+          "C06",
+          "C15",
+          "C16"
+        ]
+      },
+      {
+        "id": "O2",
+        "obligation": "Immutable chosen-component code with exact repository paths/symbols and governing definition/callers/version applicability",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET_WITH_LIMITATIONS",
+        "final_lines": "21-31",
+        "source_checks": [
+          "C10",
+          "C12",
+          "C13",
+          "C14",
+          "C15",
+          "C16"
+        ]
+      },
+      {
+        "id": "O3",
+        "obligation": "Pertinent issue/fix/regression/release chain and conditions, not merge-is-release inference",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "33-37",
+        "source_checks": [
+          "C17",
+          "C18",
+          "C19",
+          "C20",
+          "C21",
+          "C22"
+        ]
+      },
+      {
+        "id": "O4",
+        "obligation": "Every frozen P1-P6 decision compared; correct retain/add/option/open/reject/already-covered dispositions; no wider-project inference",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "39-50,119-127"
+      },
+      {
+        "id": "O5",
+        "obligation": "Substantive fresh-critic content visibly retained with all corrections/options/unresolved objections; family/dispatch provenance is host-only",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET_SCIENTIFIC_CONTENT",
+        "final_lines": "52-69"
+      },
+      {
+        "id": "O6",
+        "obligation": "One complete authored proposed replacement, all P1-P6 sections, rationale/evidence, options, decisions, already-covered/rejected, proposed validation and uncertainty",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET_WITH_LIMITATIONS",
+        "final_lines": "71-133",
+        "source_checks": [
+          "C23",
+          "C24",
+          "C25",
+          "C26"
+        ]
+      }
+    ],
+    "plan_decision_groups": [
+      {
+        "id": "P1",
+        "assessment": "ASSESSED",
+        "atom_count": 6
+      },
+      {
+        "id": "P2",
+        "assessment": "ASSESSED",
+        "atom_count": 5
+      },
+      {
+        "id": "P3",
+        "assessment": "ASSESSED",
+        "atom_count": 4
+      },
+      {
+        "id": "P4",
+        "assessment": "ASSESSED",
+        "atom_count": 6
+      },
+      {
+        "id": "P5",
+        "assessment": "ASSESSED",
+        "atom_count": 7
+      },
+      {
+        "id": "P6",
+        "assessment": "ASSESSED",
+        "atom_count": 6
+      }
+    ],
+    "plan_obligation_atoms": [
+      {
+        "id": "P1.a",
+        "obligation": "Local desktop application",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "75,105"
+      },
+      {
+        "id": "P1.b",
+        "obligation": "Selected WAV/BWF, FLAC and MP3 from removable drive",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "5,75"
+      },
+      {
+        "id": "P1.c",
+        "obligation": "Copy originals to local ingest area",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "75-79"
+      },
+      {
+        "id": "P1.d",
+        "obligation": "Compute fixity information",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "77-79"
+      },
+      {
+        "id": "P1.e",
+        "obligation": "Retain original filenames and relative folder structure",
+        "assessment": "ASSESSED",
+        "fulfillment": "RETAINED_WITH_EXPLICIT_PATH_POLICY",
+        "final_lines": "43,75,79,112"
+      },
+      {
+        "id": "P1.f",
+        "obligation": "Do not edit source media",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "75,85,105"
+      },
+      {
+        "id": "P2.a",
+        "obligation": "Display duration, channels and encoding",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "83"
+      },
+      {
+        "id": "P2.b",
+        "obligation": "Display embedded metadata",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "83-85"
+      },
+      {
+        "id": "P2.c",
+        "obligation": "User-entered accession notes",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "85"
+      },
+      {
+        "id": "P2.d",
+        "obligation": "Waveform/listen spot inspection",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET_AS_PROPOSAL_COMPONENT_OPEN",
+        "final_lines": "83-85"
+      },
+      {
+        "id": "P2.e",
+        "obligation": "Separate metadata observations and corrections",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "50,85"
+      },
+      {
+        "id": "P3.a",
+        "obligation": "Explicit derivative request",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "89"
+      },
+      {
+        "id": "P3.b",
+        "obligation": "User chooses output settings with intended-transformation preview",
+        "assessment": "ASSESSED",
+        "fulfillment": "RETAINED_PREVIEW_MEANING_OPEN",
+        "final_lines": "45,89"
+      },
+      {
+        "id": "P3.c",
+        "obligation": "Original remains preservation source",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "5,45,75,91,95"
+      },
+      {
+        "id": "P3.d",
+        "obligation": "Visible failed or interrupted transformation disposition",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "91,114"
+      },
+      {
+        "id": "P4.a",
+        "obligation": "Package originals",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "95"
+      },
+      {
+        "id": "P4.b",
+        "obligation": "Package derivative references",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "95"
+      },
+      {
+        "id": "P4.c",
+        "obligation": "Provenance",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "95"
+      },
+      {
+        "id": "P4.d",
+        "obligation": "Fixity records",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "95-99"
+      },
+      {
+        "id": "P4.e",
+        "obligation": "Transformation settings and tool version",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "91,95"
+      },
+      {
+        "id": "P4.f",
+        "obligation": "Reopen makes changed/missing content visible",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "99,115"
+      },
+      {
+        "id": "P5.a",
+        "obligation": "Metadata parsing component undecided; evaluate before selection",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_CHOICE_EXPLICIT_NO_SUITABILITY_CREDIT",
+        "final_lines": "47,85,105,127"
+      },
+      {
+        "id": "P5.b",
+        "obligation": "Audio decoding/encoding components undecided",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_CHOICE_EXPLICIT_NO_SUITABILITY_CREDIT",
+        "final_lines": "47,105,127"
+      },
+      {
+        "id": "P5.c",
+        "obligation": "Package serialization component undecided",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_CHOICE_WITH_RESEARCHED_FORMAT_WRITER_OPTIONS",
+        "final_lines": "97,101,105"
+      },
+      {
+        "id": "P5.d",
+        "obligation": "Playback component undecided",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_CHOICE_EXPLICIT_NO_SUITABILITY_CREDIT",
+        "final_lines": "47,85,105,127"
+      },
+      {
+        "id": "P5.e",
+        "obligation": "Offline Windows or Linux",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "105"
+      },
+      {
+        "id": "P5.f",
+        "obligation": "No interview-audio upload",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "105"
+      },
+      {
+        "id": "P5.g",
+        "obligation": "No embedded metadata changes merely for display",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "85,105"
+      },
+      {
+        "id": "P6.a",
+        "obligation": "Synthetic interrupted-copy validation proposal",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "109-111"
+      },
+      {
+        "id": "P6.b",
+        "obligation": "Synthetic malformed metadata proposal",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "109,113"
+      },
+      {
+        "id": "P6.c",
+        "obligation": "Synthetic unusual-channel-layout proposal",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "113-114"
+      },
+      {
+        "id": "P6.d",
+        "obligation": "Synthetic encoding conversion proposal",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "114"
+      },
+      {
+        "id": "P6.e",
+        "obligation": "Synthetic package fixity proposal",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "115-116"
+      },
+      {
+        "id": "P6.f",
+        "obligation": "No validated recipe/component/preservation-quality assertion",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "3,109,133"
+      }
+    ],
+    "owner_decisions": [
+      {
+        "id": "OD01",
+        "obligation": "BagIt interoperability consumer versus custom manifest",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION",
+        "final_lines": "63,97,121,127"
+      },
+      {
+        "id": "OD02",
+        "obligation": "Cross-platform source/package path and collision/mapping policy",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_WITH_REQUIRED_SAFE_BEHAVIOR",
+        "final_lines": "43,75,97,112,127"
+      },
+      {
+        "id": "OD03",
+        "obligation": "Copy digest algorithm distinct from package defaults",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION",
+        "final_lines": "58,79,97,123,127"
+      },
+      {
+        "id": "OD04",
+        "obligation": "Source stability/observation assurance",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_IMPLEMENTATION_ASSURANCE_LIMIT",
+        "final_lines": "77-79,127"
+      },
+      {
+        "id": "OD05",
+        "obligation": "Required flush/directory durability and unavailable evidence policy",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_IMPLEMENTATION_ASSURANCE_LIMIT",
+        "final_lines": "77-79,111,127"
+      },
+      {
+        "id": "OD06",
+        "obligation": "Metadata parser and format-identification coverage",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_UNRESEARCHED",
+        "final_lines": "85,105,127"
+      },
+      {
+        "id": "OD07",
+        "obligation": "Waveform mechanism",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_UNRESEARCHED",
+        "final_lines": "44,85"
+      },
+      {
+        "id": "OD08",
+        "obligation": "Audio decoder",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_UNRESEARCHED",
+        "final_lines": "105,127"
+      },
+      {
+        "id": "OD09",
+        "obligation": "Audio encoder",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_UNRESEARCHED",
+        "final_lines": "91,105,127"
+      },
+      {
+        "id": "OD10",
+        "obligation": "Playback component",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_UNRESEARCHED",
+        "final_lines": "85,105,127"
+      },
+      {
+        "id": "OD11",
+        "obligation": "Component licenses/distribution, version/build, mutation and network evidence",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_SELECTION_REQUIREMENT",
+        "final_lines": "47,105,127"
+      },
+      {
+        "id": "OD12",
+        "obligation": "Derivative listener/device compatibility target",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION",
+        "final_lines": "45,89,125,127"
+      },
+      {
+        "id": "OD13",
+        "obligation": "Derivative quality/file-size choice",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION",
+        "final_lines": "45,89,125,127"
+      },
+      {
+        "id": "OD14",
+        "obligation": "Channel handling",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION",
+        "final_lines": "45,89,91,125,127"
+      },
+      {
+        "id": "OD15",
+        "obligation": "One or multiple profile count",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION",
+        "final_lines": "45,125,127"
+      },
+      {
+        "id": "OD16",
+        "obligation": "Settings/property versus audible preview",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION",
+        "final_lines": "45,65,89,114,127"
+      },
+      {
+        "id": "OD17",
+        "obligation": "Failed partial derivative retention/removal",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION",
+        "final_lines": "45,91,127"
+      },
+      {
+        "id": "OD18",
+        "obligation": "Derivative restart/retry visibility and new attempts",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_WITH_REQUIRED_AUDITABILITY",
+        "final_lines": "91,114,127"
+      },
+      {
+        "id": "OD19",
+        "obligation": "Parallel validation versus single-process",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_UNMEASURED",
+        "final_lines": "35,62,116,127"
+      },
+      {
+        "id": "OD20",
+        "obligation": "Performance threshold for bounded 100-file batches",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_PRODUCT_DECISION_UNMEASURED",
+        "final_lines": "117"
+      },
+      {
+        "id": "OD21",
+        "obligation": "BagIt checksum compatibility profile/rationale, including required algorithm support versus output manifests",
+        "assessment": "ASSESSED",
+        "fulfillment": "CONDITIONAL_PROFILE_DECISION_WITH_SOURCE_MODALITY_LIMIT",
+        "final_lines": "17,46,58,97,115,123"
+      },
+      {
+        "id": "OD22",
+        "obligation": "Package writer selection: alternative pinned writer, own writer/conformance or custom manifest",
+        "assessment": "ASSESSED",
+        "fulfillment": "OPEN_SELECTION_WITH_RESEARCHED_REJECTIONS_AND_OPTIONS",
+        "final_lines": "27-29,97,101,122"
+      }
+    ],
+    "brief_boundaries": [
+      {
+        "id": "B01",
+        "obligation": "One archivist and at most 100 files",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "5,75,117"
+      },
+      {
+        "id": "B02",
+        "obligation": "No transcription",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "5,83"
+      },
+      {
+        "id": "B03",
+        "obligation": "No public publishing",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "5"
+      },
+      {
+        "id": "B04",
+        "obligation": "Public documentation and synthetic examples; no private interview data for research",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "5,109,131-133"
+      },
+      {
+        "id": "B05",
+        "obligation": "Technical planning, not legal advice",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "3,5"
+      },
+      {
+        "id": "B06",
+        "obligation": "No automatic rights decision",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "5,85"
+      },
+      {
+        "id": "B07",
+        "obligation": "Sandbox proposal, no canon/WorkNodes/real-infrastructure operation claimed",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET_SCIENTIFIC_ARTIFACT_SCOPE",
+        "final_lines": "1-7,71-133"
+      },
+      {
+        "id": "B08",
+        "obligation": "Do not claim application built/validated",
+        "assessment": "ASSESSED",
+        "fulfillment": "MET",
+        "final_lines": "3,109,131-133"
+      }
+    ],
+    "criticism_dispositions": [
+      {
+        "id": "K01",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "13,35-37,123",
+        "final_artifact_lines": "58,97,123"
+      },
+      {
+        "id": "K02",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "14,39-43,124",
+        "final_artifact_lines": "59,99,115"
+      },
+      {
+        "id": "K03",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "15,45-49",
+        "final_artifact_lines": "43,60,77-79"
+      },
+      {
+        "id": "K04",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "15,49,125",
+        "final_artifact_lines": "60,77-79,111"
+      },
+      {
+        "id": "K05",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "49,106",
+        "final_artifact_lines": "60,79,111,127"
+      },
+      {
+        "id": "K06",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "25,51-55,138",
+        "final_artifact_lines": "25,61,99,114"
+      },
+      {
+        "id": "K07",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "26,57-61,126",
+        "final_artifact_lines": "35,62,116"
+      },
+      {
+        "id": "K08",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "16,102,130",
+        "final_artifact_lines": "63,97,121"
+      },
+      {
+        "id": "K09",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "67,103",
+        "final_artifact_lines": "43,75,79,112"
+      },
+      {
+        "id": "K10",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "68,82,104",
+        "final_artifact_lines": "44,65,85,105,127"
+      },
+      {
+        "id": "K11",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "69,105,133",
+        "final_artifact_lines": "45,65,89,125,127"
+      },
+      {
+        "id": "K12",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "69,105,133",
+        "final_artifact_lines": "45,91,114,127"
+      },
+      {
+        "id": "K13",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "71,104,132",
+        "final_artifact_lines": "47,105,127"
+      },
+      {
+        "id": "K14",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "72,117",
+        "final_artifact_lines": "48,109-117"
+      },
+      {
+        "id": "K15",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "26,93,97,131",
+        "final_artifact_lines": "31,37,64,99,126"
+      },
+      {
+        "id": "K16",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "24,80-84,98,139",
+        "final_artifact_lines": "11-19,65,67,105"
+      },
+      {
+        "id": "K17",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "74",
+        "final_artifact_lines": "43-50,66"
+      },
+      {
+        "id": "K18",
+        "assessment": "ASSESSED",
+        "preservation": "RETAINED",
+        "critic_artifact_lines": "91-92,109,137",
+        "final_artifact_lines": "27-29,69,101,122"
+      }
+    ],
+    "validation_proposals": [
+      {
+        "id": "V1",
+        "proposal": "copy/recovery",
+        "assessment": "ASSESSED",
+        "executed": false,
+        "final_lines": "111"
+      },
+      {
+        "id": "V2",
+        "proposal": "paths",
+        "assessment": "ASSESSED",
+        "executed": false,
+        "final_lines": "112"
+      },
+      {
+        "id": "V3",
+        "proposal": "inspection",
+        "assessment": "ASSESSED",
+        "executed": false,
+        "final_lines": "113"
+      },
+      {
+        "id": "V4",
+        "proposal": "derivative",
+        "assessment": "ASSESSED",
+        "executed": false,
+        "final_lines": "114"
+      },
+      {
+        "id": "V5",
+        "proposal": "package/reopen",
+        "assessment": "ASSESSED",
+        "executed": false,
+        "final_lines": "115"
+      },
+      {
+        "id": "V6",
+        "proposal": "validator lifecycle",
+        "assessment": "ASSESSED",
+        "executed": false,
+        "final_lines": "116"
+      },
+      {
+        "id": "V7",
+        "proposal": "scope/load",
+        "assessment": "ASSESSED",
+        "executed": false,
+        "final_lines": "117"
+      }
+    ],
+    "counts": {
+      "six_axes": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "O1_O6": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "plan_groups": {
+        "complete": 6,
+        "assessed": 6,
+        "unassessed": 0
+      },
+      "plan_atoms": {
+        "complete": 34,
+        "assessed": 34,
+        "unassessed": 0
+      },
+      "owner_decisions": {
+        "complete": 22,
+        "assessed": 22,
+        "unassessed": 0
+      },
+      "brief_boundaries": {
+        "complete": 8,
+        "assessed": 8,
+        "unassessed": 0
+      },
+      "coverage_inventory": {
+        "complete": 70,
+        "assessed": 70,
+        "unassessed": 0
+      },
+      "consequential_claims": {
+        "complete": 26,
+        "assessed": 26,
+        "unassessed": 0
+      },
+      "criticism_units": {
+        "complete": 18,
+        "assessed": 18,
+        "unassessed": 0
+      },
+      "validation_groups": {
+        "complete": 7,
+        "assessed": 7,
+        "unassessed": 0
+      }
+    },
+    "unassessed_ids": [],
+    "material_error_count": 0,
+    "nonmaterial_source_error_count": 1,
+    "source_checks_file": "source-checks.json",
+    "blinding_limits": [
+      "Exact admitted paths visibly name control arm.",
+      "Visible method/procedure structure, native-Goal and timing/counter prose may reveal procedure; those fields were ignored for scientific judgment.",
+      "No counterpart artifacts, scores, cost/speed targets, evaluator answers, other cases/reviews or parent analysis inspected."
+    ],
+    "host_only_unknowns": {
+      "critic_provider_family_verified": null,
+      "dispatch_freshness_verified": null,
+      "lifecycle_receipts_verified": null,
+      "distinct_usage": null,
+      "billing": null,
+      "unknown_quota": null
+    },
+    "assessment_completed_utc": "2026-10-07T21:54:10.362045+00:00"
+  },
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/coverage.json",
+      "bytes": 18528,
+      "sha256": "d038885d01bcef967e02891308ead0516c364af3030f0010e6ceb85cf10741d6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/judgment.md",
+      "bytes": 22722,
+      "sha256": "c919c034ffc77443a5379c6306a155b2461336ac4bac0e2d587200e1fadc7f86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/source-checks.json",
+      "bytes": 153270,
+      "sha256": "6bf0317f8b7ef0149964e3730a87c4e538f2315fcad94e36a68204fb82f85016"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/additional-capture-manifest.json",
+      "bytes": 35520,
+      "sha256": "7b991e715b73057beeef1465e18421147694ed4948e143d927192b0b8e80411e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/capture-manifest.json",
+      "bytes": 78158,
+      "sha256": "7fe6370f3fa6bf03327ca7bb4f015ad581db8ac4f1b15c535e7ab402709b7ded"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/extraction-manifest.json",
+      "bytes": 9120,
+      "sha256": "09f9b6e00a7664cbcbb982b5cb7d4830d9d85dad43b0736d2f4f982a407aa7c3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/archivematica-manual-normalization.html",
+      "bytes": 47170,
+      "sha256": "6e0690bc4580428d92fe21f8c28fe6274097338b7d6663057420664f5ee128ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/archivematica-transfer-1.8.html",
+      "bytes": 68869,
+      "sha256": "ec435088d0260c7551e0104fe263ef9ac5fc88e9619d23689b5afb74a136adce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-conformance-file-uri-test.html",
+      "bytes": 305394,
+      "sha256": "d806dee2321e1c0801cc8952c80cc76e9f073538616bf547f5d20491b6c1c88f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-1.9.0-bagit.py",
+      "bytes": 54632,
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-1.9.0-test.py",
+      "bytes": 49297,
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-issue-153.html",
+      "bytes": 246363,
+      "sha256": "308aa2071ddab5118ca2d7eccdb1a21eb13002f64473454dc1a0c68ea63d8f27"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-issue-157.html",
+      "bytes": 240219,
+      "sha256": "91fdb633472267c5824f9be4b0754b1c3c85a2cb30a7271513b5e22e08f48dc3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-issue-173.html",
+      "bytes": 260077,
+      "sha256": "5dec5e83a8c6d2582233b249c6622d91795b7e180367775cd788162eda5ff97e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-pr-154.html",
+      "bytes": 302684,
+      "sha256": "deaa7f8a74cd4ebaf219ee0ddfd1908f9910c5b38a36388f9513145f14359a9e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-pr-183-files.html",
+      "bytes": 295158,
+      "sha256": "2b8971a81ac8738f7411d1880f1ff13065b6bec753d3f39ec4ee7f5abe52094d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-pr-183.html",
+      "bytes": 303263,
+      "sha256": "574dd258ab76e1ba2fb79d187527e35c27e2d5c5d84dbca67b8ed2be6b2cdb08"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bagit-python-v1.9.0-release.html",
+      "bytes": 216340,
+      "sha256": "c4bab4a81a43c4edc16769e84e8c5d2f73e977a80636de650ec31cd48b0345b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bwfmetaedit-audio-data-checksum.html",
+      "bytes": 13755,
+      "sha256": "8e48969df3de318ff3a820a5695ce0e5c9c29921c1aaf577766a01cc650aeeec"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bwfmetaedit-validation-rules.html",
+      "bytes": 17826,
+      "sha256": "896235272a7afcda7ff6b4ac7a84173496f69b96228c741a43b28b2730604e22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/bwfmetaedit-workflows.html",
+      "bytes": 14268,
+      "sha256": "6c24a1b2d597f53047c4b4774c3d5bd99d33687c198c796b916271364db69b4b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/loc-bwf-format-description.html",
+      "bytes": 37644,
+      "sha256": "e7edeab13e1f5c9e80118b5c95b479a8eb778e3bd173da12dab94ad6cae18268"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/loc-sound-format-preferences.html",
+      "bytes": 13630,
+      "sha256": "0ec84a38cc572569fe81e4030479baf293a563a00920507d442c5f1a916b6a3f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/inherited/rfc-8493.txt",
+      "bytes": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/input-integrity.json",
+      "bytes": 23872,
+      "sha256": "0a73128c7ebb431a7e563bb65fed27e8a4ce73fc60640af753e42e8002e83d5c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A01.json",
+      "bytes": 369,
+      "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A02.json",
+      "bytes": 4053,
+      "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A03.json",
+      "bytes": 17640,
+      "sha256": "c9134bddde6fa253d38aa7d461264c077cb8e624022842ee65d24f0874e10bc9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A04.json",
+      "bytes": 2462,
+      "sha256": "87417bf650db10ec885edc893c7f985910748ae216331fae2cee78db04f5bb48"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A05.json",
+      "bytes": 18147,
+      "sha256": "edda6e88a09036d46d002d71c403cc9f8810659d075cb0953aff49a1eddc8266"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A06.json",
+      "bytes": 1113,
+      "sha256": "a7c6bce3c24475bc10a86b6b4bd826841467ffae0a2eeebe4a5d3e64f31159e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A07.json",
+      "bytes": 6970,
+      "sha256": "d919c4e26d7ec7af10576269abdc62757757ea886dd58b09888e7065689fdc18"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A08.json",
+      "bytes": 5084,
+      "sha256": "0280b8d1add91afb79f9629c6828d552278d4d02c8cd645343041cca8078c9d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A09.json",
+      "bytes": 17922,
+      "sha256": "6e27db506faec2f9b532df86897fe9a7e71f0e3c7dd3d817e8961657697cc3fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A10.json",
+      "bytes": 4150,
+      "sha256": "453038ea147560cb39e7a2487e6bfdeacf338b8e74252c9d240599fac7809313"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A11.extracted.txt",
+      "bytes": 2789,
+      "sha256": "e2952adf1634c128ed02b8b8777054efab8a27d3e4bc9406cffe18c4ae5a47b9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A11.html",
+      "bytes": 20610,
+      "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A12.extracted.txt",
+      "bytes": 32963,
+      "sha256": "ef8b680010a4fd86e2fd76df22bc1979332947e420480e3e8f61a90a7c2f65e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A12.html",
+      "bytes": 62129,
+      "sha256": "75dd3d482461e4b453510ec9fc87076a95f2eb0698d211784e1eabaabc82eeb6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A13.extracted.txt",
+      "bytes": 1656,
+      "sha256": "746305b31dcf5df0f595805756496d26c70fa8ab5e0bcfe239ba1743229bacf0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A13.html",
+      "bytes": 9946,
+      "sha256": "16f857401c8f9fc06551193a0c2f8bf639717fd6085b24d8c1c9b81feffad946"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A14.json",
+      "bytes": 28571,
+      "sha256": "bd423ab731d54fe9c7909fbebc3ee52cff12e986975a69ac112e0533131ce638"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A15.json",
+      "bytes": 111448,
+      "sha256": "ee6be07e90d4b53cdb99cd5cea450d1da1d37e853f4e1d7d8d464254088c0e78"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A16.extracted.txt",
+      "bytes": 5800,
+      "sha256": "47d7e2bb8454e72998ba73be7f7a1816711818774dec5e7d935781ac54095e74"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A16.html",
+      "bytes": 15152,
+      "sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A17.extracted.txt",
+      "bytes": 4351,
+      "sha256": "29bfae359961824a417131300009a3175a5ca8c7d0bad5bcc11f84d106763bee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/A17.html",
+      "bytes": 54802,
+      "sha256": "7c8400cb0d37599a0dd54c43db3cb16c0737c8feab71227f628b434d28c80902"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/archivematica-manual-normalization.extracted.txt",
+      "bytes": 16223,
+      "sha256": "006e565c67497ba9c6befff92528cf43334f9e5a920b9d81c8af044cc1dd9315"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/archivematica-manual-normalization.html",
+      "bytes": 47170,
+      "sha256": "6e0690bc4580428d92fe21f8c28fe6274097338b7d6663057420664f5ee128ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/archivematica-transfer-1.8.extracted.txt",
+      "bytes": 26366,
+      "sha256": "e2e65b3832b7f55da8e08bacab4ce80a7871d1c3eae197a60719fa1b6aecb339"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/archivematica-transfer-1.8.html",
+      "bytes": 68869,
+      "sha256": "ec435088d0260c7551e0104fe263ef9ac5fc88e9619d23689b5afb74a136adce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-conformance-file-uri-test.extracted.txt",
+      "bytes": 5345,
+      "sha256": "aebcf2b3b9fd769c70a046e3cdd18e8ab016268da5f33b60318a0f39323501f6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-conformance-file-uri-test.html",
+      "bytes": 305389,
+      "sha256": "e2ae2a388a2972972e5c4cce83392126eb8c5847566c68a00fc576ad10ea05e6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-1.9.0-bagit.py",
+      "bytes": 54632,
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-1.9.0-test.py",
+      "bytes": 49297,
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-issue-153.extracted.txt",
+      "bytes": 3800,
+      "sha256": "aa21a6d5eb3e9f5660b411d0d6fc0c2134ce6bb45678786a8cb629a7f718cf2a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-issue-153.html",
+      "bytes": 246356,
+      "sha256": "934463684652578e72eb2bd913e0543ddb91bfdb61bca75bcdcbc0894b7342d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-issue-157.extracted.txt",
+      "bytes": 5316,
+      "sha256": "951c3d22daae9fbd9c19bd08c05e037d0b10af1519410cefcfef24a5a176a0a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-issue-157.html",
+      "bytes": 240215,
+      "sha256": "6d349c4bbff253df3377157e265276d8706dcbe16ab89e80749ea26da305fbfd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-issue-173.extracted.txt",
+      "bytes": 7056,
+      "sha256": "29ffd848e230f7e6a104c57c3c385e7bbaaaf428a44f815b97a83abcacd7c4db"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-issue-173.html",
+      "bytes": 260080,
+      "sha256": "075e8887bf5b1b3e3df1d9417fb2c0f4e99fb2636977b1c7b67231b0d2c8abc1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-pr-154.extracted.txt",
+      "bytes": 5514,
+      "sha256": "b6d016a63b06f386b0926c09496da2efa644fae94b6d6e8c630028078efde04a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-pr-154.html",
+      "bytes": 302679,
+      "sha256": "7f8e58b16e887c6c34198ee5ee3276cfbf6edac88e07a8bfdf322686f972b787"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-pr-183-files.extracted.txt",
+      "bytes": 6646,
+      "sha256": "07da638474d9fcc0bde6daa67772710e4c11d16c8f9ddf9fcc211790f003a3e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-pr-183-files.html",
+      "bytes": 295159,
+      "sha256": "64a5fd96b3fd3dc111034276c98d577d8f837176da1bb5dc71cde4c106c87bdb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-pr-183.extracted.txt",
+      "bytes": 5276,
+      "sha256": "a4865c1b3227072640021039d0e02745284549746f790c833af3133aca006dc4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-pr-183.html",
+      "bytes": 303263,
+      "sha256": "e78790e89e8b77df247f157c5e19e51637356967b78e6cdc44f42a540b7049ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-v1.9.0-release.extracted.txt",
+      "bytes": 4101,
+      "sha256": "d6ea038d39968b25f5ffac8893f91f8b7f383fc0d676361ddb1ff6897657da48"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bagit-python-v1.9.0-release.html",
+      "bytes": 216335,
+      "sha256": "49855260eba477fe14a0b58daf8e0ca0d2204216b1b3d2aafc9ca22ffe349729"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bwfmetaedit-audio-data-checksum.extracted.txt",
+      "bytes": 3325,
+      "sha256": "bab5918cc2e678569e83277b3c3d71b151fb2a91f51b9279a2015b11597cfd96"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bwfmetaedit-audio-data-checksum.html",
+      "bytes": 13755,
+      "sha256": "8e48969df3de318ff3a820a5695ce0e5c9c29921c1aaf577766a01cc650aeeec"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bwfmetaedit-validation-rules.extracted.txt",
+      "bytes": 6700,
+      "sha256": "605564e7fb465285d99ea247cad4a4b14d37ea5b4e2a37e7b1780e57da26e84b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bwfmetaedit-validation-rules.html",
+      "bytes": 17826,
+      "sha256": "896235272a7afcda7ff6b4ac7a84173496f69b96228c741a43b28b2730604e22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bwfmetaedit-workflows.extracted.txt",
+      "bytes": 3702,
+      "sha256": "4f4cd5896521cc4e21ca3000b8357f4f4432632ca6fe831630aabdd37329fc9a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/bwfmetaedit-workflows.html",
+      "bytes": 14268,
+      "sha256": "6c24a1b2d597f53047c4b4774c3d5bd99d33687c198c796b916271364db69b4b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/loc-bwf-format-description.extracted.txt",
+      "bytes": 17458,
+      "sha256": "d371da065ffcc4f7a18b2a10a3bd5f3f2df70a8ec76eb403b48d81229afffee1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/loc-bwf-format-description.html",
+      "bytes": 37348,
+      "sha256": "ddd6c3dc05bf6c1105a1979740106c5d6223c7b2321d33e7e36e63e1d7365680"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/loc-sound-format-preferences.extracted.txt",
+      "bytes": 5813,
+      "sha256": "213c567df8e834792b7451b23e1c55906e7a8de0d4fd6d7f856c5fa5a17f8e97"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/loc-sound-format-preferences.html",
+      "bytes": 13335,
+      "sha256": "1a2def674107e71eb914eaed36feca5ff906d9f79d11ba448365f7a9bf2cc23f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/public/rfc-8493.txt",
+      "bytes": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/sources/review-verification.json",
+      "bytes": 2217,
+      "sha256": "04e30b254a0e34fed3767d9e3f56093aa6199bc0d93eca4dfdb738ecb16e7a0f"
+    }
+  ],
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-04-pair-freeze-v2.json"
+}

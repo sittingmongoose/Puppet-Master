@@ -1,0 +1,361 @@
+{
+  "schema": "COHORT3-finalfinite-v3-prelaunch-freeze",
+  "case": "D-M10-A",
+  "root_schedule": {
+    "owner": "targeted-cohort3",
+    "family": "Luna",
+    "new_version": 3,
+    "common_stages": [
+      {
+        "assignment": "fresh-common-untrusted-proposal",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "control": [
+      {
+        "assignment": "proposal-first-full-check-final",
+        "native_goals": 1,
+        "minutes": 32,
+        "logical_phases": [
+          24,
+          8
+        ],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "fresh-evidence-first-answer",
+        "native_goals": 1,
+        "minutes": 12,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-proposal-release-reconcile-final",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [
+          14,
+          6
+        ],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 40,
+    "common_absolute_pair_wall_minutes": 40,
+    "arm_overlap": true,
+    "withholding": "Evidence-first worker receives only originalquestion+sources, NO proposal filepath/bytes/rootgrade. Host freezes exact evidence answer/source map/native terminal/taskquiet before releasing exact newcommonproposal to freshreconcile worker; candidate handles all science, no Solkey. Control gets sameproposal at entry.",
+    "original_case_card_sha256": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "treatment",
+      "control"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "root_schedule_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "account": "sittingmongoose@gmail.com"
+  },
+  "carrier": "prospectivepassivev2 actualstate, missingrawAPI explicit",
+  "original_science_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/case-card.json": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/INPUT_MAP.json": "df2c6c158a8ec9ad4e50a23fcfb9e7014716ccaeb72589abd505412a7ee48de7",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/SEED_INPUT_MAP.json": "6c08a1dcf73aa12c23863788f974c8ee59864087e64ad6f61330c54b81cfcfa8",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416"
+  },
+  "all_stages": [
+    {
+      "stage": "D-M10-A/common/fresh-common-untrusted-proposal-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/assignment.md",
+      "task_sha256": "fec362f8cc238951e41095e294637f48449b2a20a272725514283315c0dccab3",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/boundary.json"
+      },
+      "input_map_sha256": "4dcaf87a11d63857fae2e9c05b64b332b368f8d0f484f560215c4e46fd0d38d4",
+      "assignment": {
+        "assignment": "fresh-common-untrusted-proposal",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/draft.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/case-card.json": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/INPUT_MAP.json": "df2c6c158a8ec9ad4e50a23fcfb9e7014716ccaeb72589abd505412a7ee48de7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/SEED_INPUT_MAP.json": "6c08a1dcf73aa12c23863788f974c8ee59864087e64ad6f61330c54b81cfcfa8",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416"
+      },
+      "objective": "Execute ER10 D-M10-A v3 fresh-common-untrusted-proposal",
+      "clientRequestId": "er10-cohort3-D-M10-A-common-fresh-common-untrusted-proposal-v3"
+    },
+    {
+      "stage": "D-M10-A/control/proposal-first-full-check-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/assignment.md",
+      "task_sha256": "1977c16cf70a3574afde60e0f90111375f3b9bae06342a3e7ec184451c7acd17",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "f0185b3737fdc63aad752d91a0926c13873b1498fa4e42605dd94956e44c4e59",
+      "assignment": {
+        "assignment": "proposal-first-full-check-final",
+        "native_goals": 1,
+        "minutes": 32,
+        "logical_phases": [
+          24,
+          8
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/case-card.json": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/INPUT_MAP.json": "df2c6c158a8ec9ad4e50a23fcfb9e7014716ccaeb72589abd505412a7ee48de7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/SEED_INPUT_MAP.json": "6c08a1dcf73aa12c23863788f974c8ee59864087e64ad6f61330c54b81cfcfa8",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416"
+      },
+      "objective": "Execute ER10 D-M10-A v3 proposal-first-full-check-final",
+      "clientRequestId": "er10-cohort3-D-M10-A-control-proposal-first-full-check-final-v3"
+    },
+    {
+      "stage": "D-M10-A/treatment/fresh-evidence-first-answer-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/assignment.md",
+      "task_sha256": "31d4d4548d1206cdcea70ea7cee1fae345ecb2056e29d33c0a6e31c6f2dbe027",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/question.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/boundary.json"
+      },
+      "input_map_sha256": "4fe0564efe266e032eb61eff1197e079627a8f2e5e89cda57af915b3aec69440",
+      "assignment": {
+        "assignment": "fresh-evidence-first-answer",
+        "native_goals": 1,
+        "minutes": 12,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/evidence.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/case-card.json": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/INPUT_MAP.json": "df2c6c158a8ec9ad4e50a23fcfb9e7014716ccaeb72589abd505412a7ee48de7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/SEED_INPUT_MAP.json": "6c08a1dcf73aa12c23863788f974c8ee59864087e64ad6f61330c54b81cfcfa8",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416"
+      },
+      "objective": "Execute ER10 D-M10-A v3 fresh-evidence-first-answer",
+      "clientRequestId": "er10-cohort3-D-M10-A-treatment-fresh-evidence-first-answer-v3"
+    },
+    {
+      "stage": "D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3/assignment.md",
+      "task_sha256": "e0cb2403ca5e3f16ca68cf2c3a7d30066a173b64e4df5e5f745d02a3340a093b",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        },
+        "evidence": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/evidence.md",
+          "kind": "exact independently frozen evidence-first derivation"
+        }
+      },
+      "input_map_sha256": "83cfdfe32b7c06c6a262a92acf654407b594411bcc07e5594e2a54cbe88975bb",
+      "assignment": {
+        "assignment": "fresh-proposal-release-reconcile-final",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [
+          14,
+          6
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/case-card.json": "c068009e81c465b896329fd7dc969ed48d1623e6cdd23d38c89199140e4318e2",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/INPUT_MAP.json": "df2c6c158a8ec9ad4e50a23fcfb9e7014716ccaeb72589abd505412a7ee48de7",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/SEED_INPUT_MAP.json": "6c08a1dcf73aa12c23863788f974c8ee59864087e64ad6f61330c54b81cfcfa8",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416"
+      },
+      "objective": "Execute ER10 D-M10-A v3 fresh-proposal-release-reconcile-final",
+      "clientRequestId": "er10-cohort3-D-M10-A-treatment-fresh-proposal-release-reconcile-final-v3"
+    }
+  ],
+  "attempt_limit": 1,
+  "old_versions": "immutable; costs retained inclusive separate, no priorfailedscience inputs/no bestof",
+  "frozen_at": "2026-10-07T20:27:58.328612+00:00"
+}

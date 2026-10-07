@@ -1,0 +1,756 @@
+{
+  "source_judgment": "FAIL",
+  "assessment_complete": true,
+  "material_error_count": 2,
+  "checks": [
+    {
+      "id": "C01",
+      "title": "Emoncms graph/coverage analogy",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED",
+      "final_claim_lines": "14,67,72",
+      "judgment": "Docs support multiple feeds, distinct axes, gap/fill choice, statistics, timezone-aligned periods and CSV export. These are analogy features, not proof of batch-import suitability.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-graphs.html",
+          "sha256": "cb7543c9ccf9af932b09aae3d798ff365733e8e0e60223d6413c469d29be8996",
+          "url": "https://docs.openenergymonitor.org/emoncms/graphs.html",
+          "version": "Live OpenEnergyMonitor documentation; accessed during this review 2026-10-07",
+          "range": "75-124",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-graphs.review-text.txt",
+          "text_sha256": "d1038c96ca0b59ad3f5b9a7f3b06545bc29610d08f99827a07702ffc258cede5"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-feeds.html",
+          "sha256": "4cc228714690f7a5dd5ebce08e0d5a7226a25d2c8615c57290b5d4022666dd65",
+          "url": "https://docs.openenergymonitor.org/emoncms/feeds.html",
+          "version": "Live OpenEnergyMonitor documentation; accessed during this review 2026-10-07",
+          "range": "75-119",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-feeds.review-text.txt",
+          "text_sha256": "64a59bc066c9c13ee83d263397a6afbcd7c2da44a33a0f75fc27d13d88d5aea3"
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "title": "Emoncms architecture applicability",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_WITH_LIMITS",
+      "final_claim_lines": "14,66,69",
+      "judgment": "Feed/input/device-oriented documentation does not establish a suitable architecture for this local file-review product. Final correctly declines an architectural selection; no pinned Emoncms implementation claim is made.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-feeds.html",
+          "sha256": "4cc228714690f7a5dd5ebce08e0d5a7226a25d2c8615c57290b5d4022666dd65",
+          "url": "https://docs.openenergymonitor.org/emoncms/feeds.html",
+          "version": "Live docs",
+          "range": "75-119",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-feeds.review-text.txt",
+          "text_sha256": "64a59bc066c9c13ee83d263397a6afbcd7c2da44a33a0f75fc27d13d88d5aea3"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-graphs.html",
+          "sha256": "cb7543c9ccf9af932b09aae3d798ff365733e8e0e60223d6413c469d29be8996",
+          "url": "https://docs.openenergymonitor.org/emoncms/graphs.html",
+          "version": "Live docs",
+          "range": "75-124",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-graphs.review-text.txt",
+          "text_sha256": "d1038c96ca0b59ad3f5b9a7f3b06545bc29610d08f99827a07702ffc258cede5"
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "title": "Emoncms issue 142 caution",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_WITH_LIMITS",
+      "final_claim_lines": "14,67",
+      "judgment": "Issue reports missing daily values from a 300-second cumulative feed with many missing points. Captured issue view shows closed, no visible activity/development link. This is a reported symptom/fixture lead, not verified current defect or released fix.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/emoncms-graph-issue-142.html",
+          "sha256": "5205c0bdfeb959117e0070bbb8021ea31f27feaceb6f11f2a84d6fa43b669d3e",
+          "url": "https://github.com/emoncms/graph/issues/142",
+          "version": "GitHub issue #142 snapshot; original report 2022-09-17",
+          "range": "107-160",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/emoncms-graph-issue-142.review-text.txt",
+          "text_sha256": "2f3a579c4860b81f088f1d6faa0c70e15b19ea229abf002ab45194830157d9af"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-issue142.html",
+          "sha256": "782133da88a82c0d3c63f910c1c684eafe701b6f35c3528b55fd80314177b9ae",
+          "url": "https://github.com/emoncms/graph/issues/142",
+          "version": "Independent GitHub issue snapshot",
+          "range": "107-160",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-issue142.review-text.txt",
+          "text_sha256": "2f3a579c4860b81f088f1d6faa0c70e15b19ea229abf002ab45194830157d9af"
+        }
+      ]
+    },
+    {
+      "id": "C04",
+      "title": "GH-7160 original affected conditions",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED",
+      "final_claim_lines": "12,65,72",
+      "judgment": "Original issue reproduces wrong values for caller-supplied duplicate names on 0.13.0/0.13.1/0.14.0rc1; inferred duplicate file headers already had suffixes. Do not describe all duplicate-header use as the historical data-loss defect.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-7160.html",
+          "sha256": "0283e188c392695e87e393e98f5cf76a576b2579fd5b3e3f642ccaceb71d43ab",
+          "url": "https://github.com/pandas-dev/pandas/issues/7160",
+          "version": "Original issue #7160; captured current view",
+          "range": "124-139",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-7160.review-text.txt",
+          "text_sha256": "2767c9ae8d2a7e21133100992a6b3e34f1ab08f3e5aecfbdf0c601a68ad12292"
+        }
+      ]
+    },
+    {
+      "id": "C05",
+      "title": "Historical fix definition and governing caller",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED",
+      "final_claim_lines": "12",
+      "judgment": "v0.19.0 ParserBase._maybe_dedup_names has GH-7160/GH-9424 comment and suffix loop; CParserWrapper.read applies it before building the name-keyed dictionary. Draft class name TextFileReader is inaccurate; final avoids that class attribution.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-immutable-v0.19.0-parsers.py",
+          "sha256": "adbe3428a777cd0f46886124a70b26b08b359cc2a629b5916721b914aa8ce066",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0/pandas/io/parsers.py",
+          "version": "pandas v0.19.0, commit b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0",
+          "range": "1019;1161-1179;1368;1533-1587",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C06",
+      "title": "Claimed historical before/after release-note witness",
+      "assessment_status": "ASSESSED",
+      "source_status": "CONTRADICTED",
+      "final_claim_lines": "12,72",
+      "judgment": "Candidate S7/S16 live page identifies old feature but its New behavior block executes a modern call and raises Duplicate names ValueError, not corrected v0.19.0 data. Its cited historical successful before/after regression witness is misidentified. Original immutable note gives the old defect and a New behavior input expression; exact old regression assertion exists in reviewer-discovered test source, not candidate captures. The historical fix itself is supported; this is a defect in the required evidence chain.",
+      "defect_ids": [
+        "E01"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v0.19.0-whatsnew.html",
+          "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3",
+          "url": "https://pandas.pydata.org/docs/whatsnew/v0.19.0.html",
+          "version": "Live page titled Version 0.19.0, site rendered under pandas 3.0.6",
+          "range": "431-472",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-v0.19.0-whatsnew.review-text.txt",
+          "text_sha256": "1a3f4a25063f21a3e4d3104737a20035148942602c2507de6d228523ee65a2fd"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-pandas-v0.19.0-whatsnew.html",
+          "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3",
+          "url": "https://pandas.pydata.org/docs/whatsnew/v0.19.0.html",
+          "version": "Critic recapture of same live page",
+          "range": "431-472",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-pandas-v0.19.0-whatsnew.review-text.txt",
+          "text_sha256": "1a3f4a25063f21a3e4d3104737a20035148942602c2507de6d228523ee65a2fd"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-live-v0.19.0.html",
+          "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3",
+          "url": "https://pandas.pydata.org/docs/whatsnew/v0.19.0.html",
+          "version": "Independent live recapture",
+          "range": "431-472",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-live-v0.19.0.review-text.txt",
+          "text_sha256": "1a3f4a25063f21a3e4d3104737a20035148942602c2507de6d228523ee65a2fd"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-immutable-v0.19.0-whatsnew.txt",
+          "sha256": "451df78c406043519c516a9912acc3366e59f89fca6d1cbca66dc573f46adae5",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0/doc/source/whatsnew/v0.19.0.txt",
+          "version": "v0.19.0 commit b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0",
+          "range": "187-220",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.19.0-common-tests.py",
+          "sha256": "fcacf79ea529db9ff9d58d8a5f53a0af760d1ab0f11b08614ff486313d745e01",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0/pandas/io/tests/parser/common.py",
+          "version": "v0.19.0 commit b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0",
+          "range": "1320-1332",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.19.0-test-parsers.py",
+          "sha256": "eaf535c65808edeef7aa9a5083e9e03556b6d4d27dd37385e173b69e6898d22b",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0/pandas/io/tests/parser/test_parsers.py",
+          "version": "v0.19.0 commit b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0",
+          "range": "11;27-32;50-98",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C07",
+      "title": "Current duplicate supplied-name rejection",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED",
+      "final_claim_lines": "12,25",
+      "judgment": "v3.0.6 _validate_names rejects nonunique supplied names; _read calls it before TextFileReader. Positional mapping avoids depending on repeated caller names. This proves the narrow validation rule, not arbitrary CSV correctness. Exact read_csv definition is at 350-407 and its _read invocation at 855-872; candidate map also names a 900-1045 range that is actually read_table, a nonconsequential range-label error because the required name validator/caller range is correct.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-immutable-v3.0.6-readers.py",
+          "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/io/parsers/readers.py",
+          "version": "v3.0.6 commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range": "234-255;258-306;350-407;855-872",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C08",
+      "title": "Current tests and missing regression history",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_BUT_REQUIRED_CHAIN_INCOMPLETE",
+      "final_claim_lines": "12,72",
+      "judgment": "Captured test_mangles_multi_index refers to GH-18062 and multi-row headers, not supplied-name GH-7160. Final correctly distinguishes it. Exact GH-7160 tests exist both in v0.19.0 common.py and v3.0.6 test_mangle_dupes.py; reviewer discovery is not retroactive candidate research or execution evidence.",
+      "defect_ids": [
+        "E01"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-test_header.py",
+          "sha256": "f559987c79f78d28e9eb600dc93df3928aaf6ebb836e276b9a4a6fa60f1c7006",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/pandas/tests/io/parser/test_header.py",
+          "version": "v3.0.6 release tag",
+          "range": "496-538",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v0.19.0-common-tests.py",
+          "sha256": "fcacf79ea529db9ff9d58d8a5f53a0af760d1ab0f11b08614ff486313d745e01",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0/pandas/io/tests/parser/common.py",
+          "version": "v0.19.0 immutable commit",
+          "range": "1320-1332",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-test-mangle.py",
+          "sha256": "7947628d253aa03202b8d8535b1f7e396f25c99863475a6bb851913b39ab827f",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/tests/io/parser/test_mangle_dupes.py",
+          "version": "v3.0.6 commit 2905718b126579d2cf0fe5bae05bd75facb67d77",
+          "range": "36-54",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C09",
+      "title": "CSV raw-field/width preservation conditions",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_WITH_LIMITS",
+      "final_claim_lines": "16,23,25,53",
+      "judgment": "Python csv docs support newline handling, string rows except conversion dialects, and strict=False default. The pandas example parameters alone do not preserve all row widths/positions: blank lines default skipped and short rows are padded. Final separately requires width validation/raw evidence and parity fixtures, so this is an unresolved adapter acceptance condition, not established parser correctness or an additional material false claim.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-csv.html",
+          "sha256": "1f68f2975798efb54d1235183dd5eb15e047bfb83e6f20e3565dee546111fcbd",
+          "url": "https://docs.python.org/3.14/library/csv.html",
+          "version": "Python 3.14.8 live docs, as displayed at review access",
+          "range": "64-79;366-368",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-csv.review-text.txt",
+          "text_sha256": "0dedc9a2b3845337b36481c3fe60bddba46ef1b1765f08e99056d6d5bd7616b5"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-immutable-v3.0.6-readers.py",
+          "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/io/parsers/readers.py",
+          "version": "v3.0.6 immutable commit",
+          "range": "540-585;350-407",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-tokenizer.c",
+          "sha256": "727f0f440bba9a849251e7cb8aa5aae8ffa524bfdc7142be95bb71958b38af11",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/pandas/_libs/src/parser/tokenizer.c",
+          "version": "v3.0.6 release tag",
+          "range": "389-477;830-865",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-python-parser.py",
+          "sha256": "b9694acd858de51c619f73893909a3ddb5c886cce0948ffb2fdb85e853cda788",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/pandas/io/parsers/python_parser.py",
+          "version": "v3.0.6 release tag",
+          "range": "1181-1192",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "title": "Parallel path applicability to v3.0.6",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED",
+      "final_claim_lines": "13,45,57",
+      "judgment": "GH-66259 concerns the GH-64347 experimental main/3.1 parallel path, local files >50 MB and non-Windows, with low_memory=False bypass. v3.0.6 _read directly uses TextFileReader; CParserWrapper.read chooses normal/low-memory reads, not that branch. Negative conclusion is bounded to this path, not every engine or all multithreading.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-66259.html",
+          "sha256": "c3224350ceee9a549bbeab1d987cfa72a3f14cbfcae2ece483f44c08090c7e96",
+          "url": "https://github.com/pandas-dev/pandas/issues/66259",
+          "version": "GitHub issue snapshot",
+          "range": "124-178",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-66259.review-text.txt",
+          "text_sha256": "de46ed1165567df417c25a0f96763f8569bc7f5d3c1ca81b800e8a7fcb0f2995"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-immutable-v3.0.6-readers.py",
+          "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/pandas/io/parsers/readers.py",
+          "version": "v3.0.6 immutable commit",
+          "range": "258-306",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-v3.0.6-c-parser.py",
+          "sha256": "f50f4e08cc30c7462d2638e324ce0c842befc474cf203ef77c8e50accb209148",
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/pandas/io/parsers/c_parser_wrapper.py",
+          "version": "v3.0.6 release tag",
+          "range": "226-244",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C11",
+      "title": "Closed issue does not establish released fix",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_WITH_LIMITS",
+      "final_claim_lines": "13",
+      "judgment": "Visible issue page has no development link/closure narrative. Public timeline has linked fixes, including merged August PRs; a 2026-10-06 follow-up explicitly says this parallel path remains unreleased. Final confines its no-link assertion to issue view and infers no shipped correction. It does not fully research this extra history; GH-7160 is its chosen O3 chain.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-issue-66259.html",
+          "sha256": "d78451aa6a2ba8005459a9a9bdebb767d550a2392152a924ce5e5f20f6c20195",
+          "url": "https://github.com/pandas-dev/pandas/issues/66259",
+          "version": "Independent issue view",
+          "range": "181-214",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-issue-66259.review-text.txt",
+          "text_sha256": "e7d5a5e2051f88f6dfc4ae0865c2071453c77e38d5c3a4443455cc0965730514"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-issue66259-timeline.json",
+          "sha256": "c68935e1948d3e927b680326b85f2760b2cd528c1a55e1100bd34cd5fbbd62ff",
+          "url": "https://api.github.com/repos/pandas-dev/pandas/issues/66259/timeline?per_page=100",
+          "version": "Public timeline captured 2026-10-07",
+          "range": "JSON events 6,12-20,21 (zero-based); source.issue.pull_request.merged_at and event21 source.issue.body",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C12",
+      "title": "ZoneInfo folds and deployment data",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_WITH_METADATA_LIMIT",
+      "final_claim_lines": "15,37,59",
+      "judgment": "Docs support distinct fold offsets and tzdata fallback when system IANA data unavailable, notably Windows. Candidate map labels 3.14.7 but captured title is 3.14.8; final does not rely on a patch-specific difference. Record actual displayed version rather than map assertion.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/python-zoneinfo.html",
+          "sha256": "288b62fda09d6695452ea4cf919b771dbf3e0fe49d73de1e4d6578b889ed8f7c",
+          "url": "https://docs.python.org/3/library/zoneinfo.html",
+          "version": "Python 3.14.8 title in candidate capture, despite map 3.14.7",
+          "range": "1;44-58;81-109",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/python-zoneinfo.review-text.txt",
+          "text_sha256": "2e537a2b2c3af9f72b41e50c78a781f3552217e286ee547f6f84916a4083b614"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-zoneinfo.html",
+          "sha256": "288b62fda09d6695452ea4cf919b771dbf3e0fe49d73de1e4d6578b889ed8f7c",
+          "url": "https://docs.python.org/3.14/library/zoneinfo.html",
+          "version": "Python 3.14.8 title at independent access",
+          "range": "1;44-58;81-109",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-zoneinfo.review-text.txt",
+          "text_sha256": "2e537a2b2c3af9f72b41e50c78a781f3552217e286ee547f6f84916a4083b614"
+        }
+      ]
+    },
+    {
+      "id": "C13",
+      "title": "Nonexistent wall times need validation",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_AS_PROPOSAL",
+      "final_claim_lines": "15,37,54",
+      "judgment": "PEP 495 defines gaps/folds and says constructors do not check validity. A missing time has no successful timestamp round-trip. Final proposes a tested round-trip/offset method or equivalent; it does not claim an implemented detector. Offsetless repeated times require additional interpretation.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-pep495.html",
+          "sha256": "0f095520a6eb48183b167b071029d8acdab8f52c5fa6161ea02492f356c1f975",
+          "url": "https://peps.python.org/pep-0495/",
+          "version": "PEP 495, final normative design; live access 2026-10-07",
+          "range": "95-121;213-240;318-336",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-pep495.review-text.txt",
+          "text_sha256": "e76ce5c4b362296b3bcf0a37bc0de2555f06178b8b2b883024a3e0da424ad864"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-zoneinfo.html",
+          "sha256": "288b62fda09d6695452ea4cf919b771dbf3e0fe49d73de1e4d6578b889ed8f7c",
+          "url": "https://docs.python.org/3.14/library/zoneinfo.html",
+          "version": "Python 3.14.8 docs",
+          "range": "81-95",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-zoneinfo.review-text.txt",
+          "text_sha256": "2e537a2b2c3af9f72b41e50c78a781f3552217e286ee547f6f84916a4083b614"
+        }
+      ]
+    },
+    {
+      "id": "C14",
+      "title": "Energy, power, registers and arithmetic",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_AS_PROPOSAL",
+      "final_claim_lines": "23,35,55",
+      "judgment": "Power is energy per time; duration-weighted integration requires an average/hold model, while register differences require valid endpoints and reset review. NIST unit definition and OEM cumulative/reset examples corroborate the distinction. Exact arithmetic/rounding and reset behavior are product-owned proposals, not tested component guarantees.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/nist-joule.html",
+          "sha256": "aff88849ad349206ccbcbb3ea5491f531c12477ac538d1b4be7407f469847b6d",
+          "url": "https://www.nist.gov/glossary-term/26261",
+          "version": "NIST live unit definition",
+          "range": "114",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/nist-joule.review-text.txt",
+          "text_sha256": "f1cc45425528f3a47a6674f2cac276da0ada39a7a5ca1d4816c0ee63ceba3723"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-daily-kwh.html",
+          "sha256": "5577e66d438f3510ae0aab9897c8edd33490c92e9ae08bdb2f9839bb2c6bd713",
+          "url": "https://docs.openenergymonitor.org/emoncms/daily-kwh.html",
+          "version": "OpenEnergyMonitor live domain documentation",
+          "range": "71-109",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/emoncms-daily-kwh.review-text.txt",
+          "text_sha256": "25a49a84978385ce5315a92e1a0d815741d0f0e87c19d1e5ee74969cd4993ab9"
+        }
+      ]
+    },
+    {
+      "id": "C15",
+      "title": "Calendar coverage, DST and boundary policies",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_AS_PROPOSAL",
+      "final_claim_lines": "16,33-37,54,57",
+      "judgment": "Expected intervals require an interpretation/calendar, not only observed rows. Explicit boundary exclusions and separate fall-back instants are coherent conservative choices; fixture proposals cover key transitions. No exact coverage computation or global timezone/calendar support has been implemented or proved.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-zoneinfo.html",
+          "sha256": "288b62fda09d6695452ea4cf919b771dbf3e0fe49d73de1e4d6578b889ed8f7c",
+          "url": "https://docs.python.org/3.14/library/zoneinfo.html",
+          "version": "Python 3.14.8 docs",
+          "range": "81-95",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-zoneinfo.review-text.txt",
+          "text_sha256": "2e537a2b2c3af9f72b41e50c78a781f3552217e286ee547f6f84916a4083b614"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-pep495.html",
+          "sha256": "0f095520a6eb48183b167b071029d8acdab8f52c5fa6161ea02492f356c1f975",
+          "url": "https://peps.python.org/pep-0495/",
+          "version": "PEP 495",
+          "range": "95-121;318-336",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/python-pep495.review-text.txt",
+          "text_sha256": "e76ce5c4b362296b3bcf0a37bc0de2555f06178b8b2b883024a3e0da424ad864"
+        }
+      ]
+    },
+    {
+      "id": "C16",
+      "title": "Export obligation and uncertainty",
+      "assessment_status": "ASSESSED",
+      "source_status": "INCOMPLETE",
+      "final_claim_lines": "45,49,58,70,72",
+      "judgment": "Frozen P6 independently requires input identities, coverage, interpretations and uncertainty in period comparison export. Final default P6 list and export tests retain coverage/interpretations but do not require uncertainty; explicit uncertainty appears only in optional P5 review package. Remaining product unknowns and a non-certification disclaimer do not supply comparison-specific uncertainty. This omission was already in draft P6 and survives final claim that P6 is retained.",
+      "defect_ids": [
+        "E02"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/plan.md",
+          "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+          "url": null,
+          "version": null,
+          "range": "27",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-artifact.md",
+          "sha256": "765e77a3326abba29521cd7f7680d3572f647efdadf9068c584718919fbacfbd",
+          "url": null,
+          "version": null,
+          "range": "65;69;78",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-artifact.md",
+          "sha256": "fa1d2604746b0cacf9bc004819b88551885b7c8e149785ab0e70ee553854604c",
+          "url": null,
+          "version": null,
+          "range": "35;37;45;49;58;70;72;76",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C17",
+      "title": "Component recommendations and product boundaries",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_AS_CHOICES",
+      "final_claim_lines": "17,25,29,37,41,45,59,76",
+      "judgment": "Conditional CSV/pandas, relational/project-file storage and chart acceptance checks retain undecided product choices. Default CSV preference is engineering judgment, not measured performance superiority. One building/three meters/year/locality/privacy/no-causality/no-control/no-equipment-purchases remain intact.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/brief.md",
+          "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73",
+          "url": null,
+          "version": null,
+          "range": "5-13;32-37;45-52;65-70",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/plan.md",
+          "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+          "url": null,
+          "version": null,
+          "range": "7-27",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-artifact.md",
+          "sha256": "fa1d2604746b0cacf9bc004819b88551885b7c8e149785ab0e70ee553854604c",
+          "url": null,
+          "version": null,
+          "range": "17;21-59;76",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C18",
+      "title": "Proposed versus executed validation",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_WITH_WITNESS_DEFECT",
+      "final_claim_lines": "4,8,51-59,76",
+      "judgment": "Final explicitly labels all seven application check groups as proposals and reports no build/benchmark/check execution. Admitted package contains source captures, not an application test witness. Digest matches prove copied bytes only. Published current issue claims of 78 passing tests are reporter statements, not candidate execution or release evidence. E01 invalidates its claimed historical before/after witness, not this proposed/executed distinction.",
+      "defect_ids": [
+        "E01"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-artifact.md",
+          "sha256": "fa1d2604746b0cacf9bc004819b88551885b7c8e149785ab0e70ee553854604c",
+          "url": null,
+          "version": null,
+          "range": "4;8;12-17;51-59;76",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-artifact.md",
+          "sha256": "765e77a3326abba29521cd7f7680d3572f647efdadf9068c584718919fbacfbd",
+          "url": null,
+          "version": null,
+          "range": "4;19;71-80",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-66259.html",
+          "sha256": "c3224350ceee9a549bbeab1d987cfa72a3f14cbfcae2ece483f44c08090c7e96",
+          "url": "https://github.com/pandas-dev/pandas/issues/66259",
+          "version": "Issue author-reported local checks",
+          "range": "138;174",
+          "range_basis": "review-normalized text lines",
+          "text_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/pandas-issue-66259.review-text.txt",
+          "text_sha256": "de46ed1165567df417c25a0f96763f8569bc7f5d3c1ca81b800e8a7fcb0f2995"
+        }
+      ]
+    },
+    {
+      "id": "C19",
+      "title": "Bounded discovery, alternatives and opportunities",
+      "assessment_status": "ASSESSED",
+      "source_status": "SUPPORTED_WITH_LIMITS",
+      "final_claim_lines": "12-17,25,29,37,65-76",
+      "judgment": "The draft starts from trustworthy operational comparisons and a domain analogue, then discovers parser and clock mechanisms beyond initial plan entries. Final retains useful gaps/comparison patterns, sparse cumulative scenario, CSV alternative, upgrade caution, and optional later fill. No source-backed storage/chart candidate survey or measured packaging comparison is supplied; these remain decisions with acceptance checks, not satisfied selections. O1 does not demand exhaustive search or selection of every undecided component.",
+      "defect_ids": [],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/brief.md",
+          "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73",
+          "url": null,
+          "version": null,
+          "range": "17-37;45-52;58-63",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-artifact.md",
+          "sha256": "765e77a3326abba29521cd7f7680d3572f647efdadf9068c584718919fbacfbd",
+          "url": null,
+          "version": null,
+          "range": "17-25;37;59-65;86-92;101-104",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-artifact.md",
+          "sha256": "fa1d2604746b0cacf9bc004819b88551885b7c8e149785ab0e70ee553854604c",
+          "url": null,
+          "version": null,
+          "range": "12-17;25;29;33;37;65-76",
+          "range_basis": "physical file lines"
+        }
+      ]
+    },
+    {
+      "id": "C20",
+      "title": "Complete comparison, criticism and preservation",
+      "assessment_status": "ASSESSED",
+      "source_status": "COMPLETE_ASSESSMENT_WITH_DEFECTS",
+      "final_claim_lines": "10-76",
+      "judgment": "All P1-P6 and all six critic dispositions read against the complete draft. Most rules/options/uncertainties survive or are explicitly narrowed. Draft event authoring-date/note details are omitted without product consequence; no required author-identity rule existed. Invalid historical witness and missing default export uncertainty are carried forward. No unrelated owner cross-reference or separate critique document was assumed.",
+      "defect_ids": [
+        "E01",
+        "E02"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/brief.md",
+          "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73",
+          "url": null,
+          "version": null,
+          "range": "32-52",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/plan.md",
+          "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+          "url": null,
+          "version": null,
+          "range": "1-27",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-artifact.md",
+          "sha256": "765e77a3326abba29521cd7f7680d3572f647efdadf9068c584718919fbacfbd",
+          "url": null,
+          "version": null,
+          "range": "1-104",
+          "range_basis": "physical file lines"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-artifact.md",
+          "sha256": "fa1d2604746b0cacf9bc004819b88551885b7c8e149785ab0e70ee553854604c",
+          "url": null,
+          "version": null,
+          "range": "1-76",
+          "range_basis": "physical file lines"
+        }
+      ]
+    }
+  ],
+  "input_copies": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/brief.md",
+      "bytes": 5149,
+      "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/plan.md",
+      "bytes": 1714,
+      "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-artifact.md",
+      "bytes": 18535,
+      "sha256": "765e77a3326abba29521cd7f7680d3572f647efdadf9068c584718919fbacfbd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json",
+      "bytes": 8545,
+      "sha256": "f568efbd1220ebc7dc2b8c04a406703a815cedc9ca9b772b1efcdcff54b49f61"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-artifact.md",
+      "bytes": 16040,
+      "sha256": "fa1d2604746b0cacf9bc004819b88551885b7c8e149785ab0e70ee553854604c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json",
+      "bytes": 9880,
+      "sha256": "81730d832cf82a6ed0a8134f2706422ad4db249237040666bd1bcb300b4187b2"
+    }
+  ],
+  "admitted_capture_manifest": "sources/admitted-manifest.json",
+  "independent_capture_manifest": "sources/independent-manifest.json",
+  "version_resolution": {
+    "pandas_v0.19.0": {
+      "commit": "b97dbd01e49f54ae6fa8df382d6f6e4c771d2bc0",
+      "tag_object": "230469e5b8e612b167ae544379b660fc218c63fa"
+    },
+    "pandas_v3.0.6": {
+      "commit": "2905718b126579d2cf0fe5bae05bd75facb67d77",
+      "tag_object": "619d761f6756d39ff08cbf10746f8808977b7329"
+    },
+    "evidence": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/independent/pandas-release-refs.txt",
+      "sha256": "1da86ced61b828d8e6d2c8a7af8a6b1bced04737d85f3c375aaee7e39dd971cf",
+      "url": "https://github.com/pandas-dev/pandas.git",
+      "version": "Git remote tag and peeled commit refs; immutable code recaptures matched tagged bytes",
+      "range": "1-4",
+      "range_basis": "physical file lines"
+    }
+  },
+  "text_extraction": "HTMLParser discarded script/style content, inserted line breaks for block tags, stripped empty lines. review-text.txt files are reviewer derivatives for stable ranges; raw HTML bytes and SHA-256 are authoritative. Candidate-admitted extraction used p/div/h1-h4/li/tr/br/pre; independent additionally dt/dd.",
+  "execution_scope": "Read/digest/copy admitted bytes, public HTTP retrieval, read-only git ls-remote, static source/definition/caller/test inspection and report generation only. No downloaded code, pandas test, energy fixture, application, benchmark or infrastructure operation executed.",
+  "source_truth_rule": "Authored claims/maps/hashes/tool success were not accepted as component truth. Exact source content and governing context were checked. Reviewer-only sources diagnose candidate evidence and do not repair or supplement the candidate artifact for grading.",
+  "blinding_limits": [
+    "Visible arm names and method/stage prose; authored timing/counters ignored.",
+    "No other-arm/case/history/campaign/review/evaluator materials read."
+  ],
+  "usage": {
+    "distinct_usage": null,
+    "billing": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null
+  }
+}

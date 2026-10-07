@@ -1,0 +1,653 @@
+{
+  "schema_version": "candidate-source-map-v1",
+  "case_id": "I-METHOD-04",
+  "candidate": "treatment/reviser-v2",
+  "hash_algorithm": "SHA-256",
+  "source_boundary": "Only the exact input map's own research/critique drafts and maps, their linked same-arm captured primary source bytes, the exact dispatch bound, and the named generic M14 contract and renderer. No new web retrieval or broad discovery.",
+  "input_documents": [
+    {
+      "role": "input_map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/input-map.json",
+      "sha256": "bcfc273449e8b09bf10e371b280406b22e4aa170d090d61a2b370c0d59a66aa2"
+    },
+    {
+      "role": "dispatch_config",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/dispatch-config.json",
+      "sha256": "b71c818406e07ed8b47a139cd79e70a7ae5f3a4a4be4f9807b98d7e83d58f4eb"
+    },
+    {
+      "role": "research_draft",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/artifact.md",
+      "sha256": "6eca00c854395b38c8418fb815f66dbf7237df9d7336f02d0d2caa29a469db23"
+    },
+    {
+      "role": "research_source_map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/source-map.json",
+      "sha256": "7157817f25f8393e5704a620f93469bf4f92c1a0accc2923b1052ea6e812149b"
+    },
+    {
+      "role": "critic_draft",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/artifact.md",
+      "sha256": "ddced1f4b5538af820463b5256ee4d6a94eeb537445c4b311b1a5c5024db8a68"
+    },
+    {
+      "role": "critic_source_map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/source-map.json",
+      "sha256": "b41a1b900feb47c655c9d833befa6b4ef8416ef93488e15b753c450ae8e32e6c"
+    },
+    {
+      "role": "generic_contract",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/m14-generic-contract-v1.md",
+      "sha256": "992952c865ffe571651ef2b1241c77ec7ca62b475094315bb8f0be01eaa01fd8"
+    },
+    {
+      "role": "generic_renderer",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py",
+      "sha256": "80e925fe69e7ccc2d58297fd48ab857795545d6d94572b653bffc5803ace9ef0"
+    }
+  ],
+  "semantic_lineage": {
+    "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/artifact.md#Exact-authored-input",
+    "source_sha256": "1bc410403d7d44825e84bdf7c6829b167a5821c5aa72c04341404209b02a8b56",
+    "note": "The predecessor semantic JSON was read from its exact embedded payload in the full research artifact; the separate semantic.json path and preservation_check.md were not read."
+  },
+  "predecessor_source_maps": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/source-map.json",
+      "sha256": "7157817f25f8393e5704a620f93469bf4f92c1a0accc2923b1052ea6e812149b",
+      "source_count": 16
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/source-map.json",
+      "sha256": "b41a1b900feb47c655c9d833befa6b4ef8416ef93488e15b753c450ae8e32e6c",
+      "source_count": 16
+    }
+  ],
+  "original_capture_batches": {
+    "provenance_note": "Inherited retrieval windows and methods below describe the same-arm research captures; this reviser copied those bytes locally and made no new network request.",
+    "batches": [
+      {
+        "batch_id": "capture-batch-1",
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed.",
+        "source_ids": [
+          "SRC-RFC8493",
+          "SRC-LOC-RFS-AUDIO",
+          "SRC-LOC-BWF-V2",
+          "SRC-BAGIT-RELEASE",
+          "SRC-BAGIT-CODE",
+          "SRC-BAGIT-TESTS",
+          "SRC-ISSUE-152",
+          "SRC-PR-184",
+          "SRC-COMMIT-753679",
+          "SRC-PREMIS",
+          "SRC-FFMPEG-DOCS",
+          "SRC-FFPROBE",
+          "SRC-FFMPEG-RELEASE",
+          "SRC-BWF-METAEDIT"
+        ]
+      },
+      {
+        "batch_id": "capture-batch-2",
+        "not_before_utc": "2026-10-07T20:55:30Z",
+        "observed_complete_by_utc": "2026-10-07T21:00:25Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed.",
+        "source_ids": [
+          "SRC-LOC-ORAL-HISTORY",
+          "SRC-ISSUE-157"
+        ]
+      }
+    ]
+  },
+  "capture_copy": {
+    "source_count": 16,
+    "bytes_total": 8426094,
+    "method": "Local byte-for-byte copy from the same-arm critic-v2/sources directory; research-v2 and critic-v2 maps agreed on all source IDs, sizes, and hashes.",
+    "all_copy_size_and_sha256_checks_passed": true,
+    "new_network_retrieval": false,
+    "downloaded_code_executed": false
+  },
+  "sources": [
+    {
+      "source_id": "SRC-BAGIT-CODE",
+      "title": "bagit.py at immutable release commit",
+      "source_class": "public primary technical source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "version_or_identity": "bagit-python v1.9.0; commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 54632,
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "locator": "make_bag() lines 141–260; DEFAULT_CHECKSUMS near module constants; Bag.validate() 586–616; fetch_entries() 545–574; _load_manifests() 620–745; _path_is_dangerous() 925–941; _encode_filename()/_decode_filename() 1405–1414",
+      "notes": "Used as exact versioned implementation evidence, not executed.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+        "critic_v2": "../research-v2/sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-BAGIT-RELEASE",
+      "title": "LibraryOfCongress/bagit-python v1.9.0 release",
+      "source_class": "public primary technical source",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+      "version_or_identity": "Release tag v1.9.0; release commit 861ddacb339d5b92659f0187a402f501d841abbe; page marks latest release at capture",
+      "capture_path": "sources/S04-bagit-v1.9.0-release.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 216336,
+      "sha256": "5da3ece07de54bebb17417cfa7ab83ebf6ff3343f154192aad9c2a9302056680",
+      "locator": "v1.9.0 release notes; PR #184 entry; v1.8.0...v1.9.0 changelog",
+      "notes": "Release applicability checked against exact tagged source; the release page reports later commits on master, so master is not substituted.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S04-bagit-v1.9.0-release.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S04-bagit-v1.9.0-release.html",
+        "critic_v2": "../research-v2/sources/S04-bagit-v1.9.0-release.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-BAGIT-TESTS",
+      "title": "bagit-python tests at immutable release commit",
+      "source_class": "public primary technical source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version_or_identity": "bagit-python v1.9.0; same commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 49297,
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "locator": "test_unsafe_directory_entries_raise_error() lines 346–375; test_fetch_unsafe_payloads() lines 1067–1090",
+      "notes": "Inspected only; the suite was not run. The exact issue #152 filename is absent from this test file.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+        "critic_v2": "../research-v2/sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-BWF-METAEDIT",
+      "title": "BWF MetaEdit official product page",
+      "source_class": "public primary technical source",
+      "url": "https://mediaarea.net/BWFMetaEdit",
+      "version_or_identity": "Version 26.08.1 observed at capture",
+      "capture_path": "sources/S14-bwfmetaedit-product.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 20610,
+      "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+      "locator": "Features: BWF metadata import/edit/export/validation; MD5 applies to WAVE data chunk only",
+      "notes": "Optional BWF-specific product; not a whole-file fixity substitute.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S14-bwfmetaedit-product.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S14-bwfmetaedit-product.html",
+        "critic_v2": "../research-v2/sources/S14-bwfmetaedit-product.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-COMMIT-753679",
+      "title": "Merge commit for PR #184",
+      "source_class": "public primary technical source",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "version_or_identity": "Commit 753679c9b342660d038f65a8dc4f755ab95d679b; one file, two deletions",
+      "capture_path": "sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 735,
+      "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+      "locator": "_path_is_dangerous(self,path): removes os.path.expandvars(path) != path check",
+      "notes": "The patch adds no test; release tag v1.9.0 includes the change.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+        "critic_v2": "../research-v2/sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-FFMPEG-DOCS",
+      "title": "FFmpeg command-line documentation",
+      "source_class": "public primary technical source",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "version_or_identity": "Live upstream documentation captured 2026-10-07; not release-version-pinned",
+      "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 225502,
+      "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+      "locator": "-map_metadata and -metadata sections; metadata mapping and override behavior",
+      "notes": "Mechanism source only; verify against the packaged release build before adoption.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S11-ffmpeg-8.1-cli.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S11-ffmpeg-8.1-cli.html",
+        "critic_v2": "../research-v2/sources/S11-ffmpeg-8.1-cli.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-FFMPEG-RELEASE",
+      "title": "FFmpeg official download and release page",
+      "source_class": "public primary technical source",
+      "url": "https://ffmpeg.org/download.html",
+      "version_or_identity": "FFmpeg 9.0.2, released 2026-09-18; latest stable 9.0 branch release at capture",
+      "capture_path": "sources/S13-ffmpeg-download.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 27484,
+      "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442",
+      "locator": "Release 9.0.2; branch distinction between stable point releases and moving master",
+      "notes": "Version candidate only; no FFmpeg source code was reviewed.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S13-ffmpeg-download.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S13-ffmpeg-download.html",
+        "critic_v2": "../research-v2/sources/S13-ffmpeg-download.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-FFPROBE",
+      "title": "ffprobe documentation",
+      "source_class": "public primary technical source",
+      "url": "https://www.ffmpeg.org/ffprobe-all.html",
+      "version_or_identity": "Live upstream documentation captured 2026-10-07; not release-version-pinned",
+      "capture_path": "sources/S12-ffprobe-8.1.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 2462291,
+      "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+      "locator": "Description, selected output writers/sections, machine-readable output and metadata sections",
+      "notes": "Mechanism source only; docs and installed binary identity must be pinned together.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S12-ffprobe-8.1.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S12-ffprobe-8.1.html",
+        "critic_v2": "../research-v2/sources/S12-ffprobe-8.1.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-ISSUE-152",
+      "title": "Filename character sequence with tilde sometimes causes false error on Linux",
+      "source_class": "public primary technical source",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+      "version_or_identity": "Issue #152; opened 2021-04-23; Linux/Python reproducer",
+      "capture_path": "sources/S07-issue-152.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 271789,
+      "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+      "locator": "Issue body, reproducer filename data/blah/~$_-expect_fail.doc and os.path.expandvars behavior",
+      "notes": "A real report with a concrete regression case.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S07-issue-152.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S07-issue-152.html",
+        "critic_v2": "../research-v2/sources/S07-issue-152.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-ISSUE-157",
+      "title": "Path encoding bug",
+      "source_class": "public primary technical source",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+      "version_or_identity": "Issue #157 opened 2022-02-15; BagIt 1.0 path encoding complaint",
+      "capture_path": "sources/S16-bagit-issue-157.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:55:30Z",
+        "observed_complete_by_utc": "2026-10-07T21:00:25Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 240223,
+      "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+      "locator": "Issue report on percent-encoding CR/LF/% in manifest paths",
+      "notes": "Compared with immutable v1.9.0 _encode_filename() and test.py; no fix is present there.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S16-bagit-issue-157.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S16-bagit-issue-157.html",
+        "critic_v2": "../research-v2/sources/S16-bagit-issue-157.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-LOC-BWF-V2",
+      "title": "Broadcast WAVE Audio File Format, Version 2",
+      "source_class": "public primary technical source",
+      "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+      "version_or_identity": "FDD000357, BWF Version 2; current page observed 2026-10-07",
+      "capture_path": "sources/S03-loc-bwf-v2.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 33400,
+      "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+      "locator": "Local use, sustainability, embedded metadata and BWF MetaEdit sections",
+      "notes": "Institutional practice refers to BWF/LPCM for analog reformatting; does not require converting all received audio.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S03-loc-bwf-v2.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S03-loc-bwf-v2.html",
+        "critic_v2": "../research-v2/sources/S03-loc-bwf-v2.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "title": "Eighty years of literary audio archives at the Library of Congress",
+      "source_class": "public primary technical source",
+      "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "version_or_identity": "2022 Journal of Digital Media Management institutional case study",
+      "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:55:30Z",
+        "observed_complete_by_utc": "2026-10-07T21:00:25Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 2280105,
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+      "locator": "Documented batch ingest review CSV; scripted FFmpeg MP3 derivatives; BagIt context; long-term and access copies",
+      "notes": "First-party archival practice analogy; not a universal recipe or performance validation.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S15-loc-literary-audio-workflow-2022.pdf",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+        "critic_v2": "../research-v2/sources/S15-loc-literary-audio-workflow-2022.pdf"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-LOC-RFS-AUDIO",
+      "title": "Recommended Formats Statement — Audio Works",
+      "source_class": "public primary technical source",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "version_or_identity": "Current Library of Congress HTML edition observed 2026-10-07; annual statement",
+      "capture_path": "sources/S02-loc-rfs-audio.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 19259,
+      "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+      "locator": "IV.ii.A, media-independent audio format preferences; IV.ii.C metadata",
+      "notes": "Format preference evidence; applies to released/media-independent works, not a universal oral-history conversion recipe.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S02-loc-rfs-audio.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S02-loc-rfs-audio.html",
+        "critic_v2": "../research-v2/sources/S02-loc-rfs-audio.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-PR-184",
+      "title": "Remove expandvars call in unsafe path check",
+      "source_class": "public primary technical source",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "version_or_identity": "PR #184; merged 2025-06-13; links/closes #152",
+      "capture_path": "sources/S08-pr-184.html",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 299295,
+      "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+      "locator": "PR conversation and merged status; one commit",
+      "notes": "No issue status beyond the public PR relation is inferred.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S08-pr-184.html",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S08-pr-184.html",
+        "critic_v2": "../research-v2/sources/S08-pr-184.html"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-PREMIS",
+      "title": "PREMIS Data Dictionary for Preservation Metadata, Version 3.0",
+      "source_class": "public primary technical source",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version_or_identity": "PREMIS 3.0",
+      "capture_path": "sources/S10-premis-v3.pdf",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 2176353,
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "locator": "Event entity: §§2.1–2.7; mandatory eventIdentifier, eventType, eventDateTime; eventOutcomeInformation and linked objects/agents",
+      "notes": "Official Library of Congress specification; proposal uses a PREMIS-inspired subset, not a claim of conformance.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S10-premis-v3.pdf",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S10-premis-v3.pdf",
+        "critic_v2": "../research-v2/sources/S10-premis-v3.pdf"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    },
+    {
+      "source_id": "SRC-RFC8493",
+      "title": "The BagIt File Packaging Format (V1.0)",
+      "source_class": "public primary technical source",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version_or_identity": "RFC 8493; BagIt 1.0",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "capture_time_window_utc": {
+        "not_before_utc": "2026-10-07T20:54:49Z",
+        "observed_complete_by_utc": "2026-10-07T20:55:30Z",
+        "method": "Direct public HTTPS GET with curl -L --fail --silent --show-error; bytes stored unchanged; no downloaded code executed."
+      },
+      "size_bytes": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "locator": "§§2.1.2–2.1.3 (payload and manifests), 2.2 (tag files), 2.4 (algorithms), 3 (complete/valid), 5.1 (path safety)",
+      "notes": "Normative package specification; opaque payload, complete manifests, fixity verification and path constraints.",
+      "same_arm_predecessor_capture": "../research-v2/sources/S01-rfc8493.txt",
+      "copy_unchanged": true,
+      "predecessor_capture_paths": {
+        "research_v2": "sources/S01-rfc8493.txt",
+        "critic_v2": "../research-v2/sources/S01-rfc8493.txt"
+      },
+      "copy_provenance": "Byte-for-byte local copy from this candidate's exact critic-v2/sources capture after both same-arm source maps agreed on size and SHA-256."
+    }
+  ],
+  "finding_bindings": [
+    {
+      "finding_id": "O1_OPEN_DISCOVERY",
+      "source_ids": [
+        "SRC-LOC-ORAL-HISTORY",
+        "SRC-LOC-RFS-AUDIO",
+        "SRC-LOC-BWF-V2",
+        "SRC-FFPROBE",
+        "SRC-FFMPEG-DOCS",
+        "SRC-BWF-METAEDIT"
+      ]
+    },
+    {
+      "finding_id": "O2_PINNED_CODE",
+      "source_ids": [
+        "SRC-BAGIT-CODE",
+        "SRC-BAGIT-TESTS",
+        "SRC-RFC8493",
+        "SRC-ISSUE-157"
+      ]
+    },
+    {
+      "finding_id": "O3_HISTORY",
+      "source_ids": [
+        "SRC-ISSUE-152",
+        "SRC-PR-184",
+        "SRC-COMMIT-753679",
+        "SRC-BAGIT-RELEASE",
+        "SRC-BAGIT-CODE",
+        "SRC-BAGIT-TESTS",
+        "SRC-ISSUE-157",
+        "SRC-RFC8493"
+      ]
+    },
+    {
+      "finding_id": "O4_P1_TO_P6_COMPARISON",
+      "source_ids": [
+        "SRC-RFC8493",
+        "SRC-BAGIT-CODE",
+        "SRC-BAGIT-TESTS",
+        "SRC-LOC-RFS-AUDIO",
+        "SRC-LOC-ORAL-HISTORY",
+        "SRC-FFPROBE",
+        "SRC-FFMPEG-DOCS",
+        "SRC-PREMIS"
+      ]
+    },
+    {
+      "finding_id": "FULL_PLAN_REPLACEMENT",
+      "source_ids": [
+        "SRC-RFC8493",
+        "SRC-BAGIT-CODE",
+        "SRC-BAGIT-TESTS",
+        "SRC-ISSUE-152",
+        "SRC-PR-184",
+        "SRC-COMMIT-753679",
+        "SRC-ISSUE-157",
+        "SRC-LOC-RFS-AUDIO",
+        "SRC-LOC-BWF-V2",
+        "SRC-LOC-ORAL-HISTORY",
+        "SRC-PREMIS",
+        "SRC-FFPROBE",
+        "SRC-FFMPEG-DOCS",
+        "SRC-FFMPEG-RELEASE",
+        "SRC-BWF-METAEDIT"
+      ]
+    },
+    {
+      "finding_id": "O5_CRITIC_DISPOSITION",
+      "source_ids": [
+        "SRC-BAGIT-CODE",
+        "SRC-BAGIT-TESTS",
+        "SRC-RFC8493",
+        "SRC-PREMIS",
+        "SRC-ISSUE-157",
+        "SRC-LOC-ORAL-HISTORY"
+      ]
+    },
+    {
+      "finding_id": "O6_CHOICES_AND_LIMITS",
+      "source_ids": [
+        "SRC-PREMIS",
+        "SRC-LOC-ORAL-HISTORY",
+        "SRC-LOC-RFS-AUDIO",
+        "SRC-RFC8493"
+      ]
+    },
+    {
+      "finding_id": "P6_ACCEPTANCE",
+      "source_ids": [
+        "SRC-RFC8493",
+        "SRC-BAGIT-CODE",
+        "SRC-BAGIT-TESTS",
+        "SRC-LOC-ORAL-HISTORY"
+      ]
+    },
+    {
+      "finding_id": "EXECUTION_RECORD",
+      "source_ids": [
+        "SRC-BAGIT-CODE",
+        "SRC-BAGIT-TESTS",
+        "SRC-RFC8493",
+        "SRC-PREMIS"
+      ]
+    }
+  ],
+  "operation_lineage": {
+    "native_goal_snapshots": [
+      {
+        "stage": "research-v2 predecessor",
+        "identity": "01a11822-1e5d-79b2-9ff0-90c6ff9f601b",
+        "observed_at_utc": "2026-10-07T21:00:54Z",
+        "status": "active",
+        "tokensUsed": 175446,
+        "timeUsedSeconds": 484
+      },
+      {
+        "stage": "critic-v2 predecessor",
+        "identity": "01a11834-eaf6-74d2-8600-027282a8b60e",
+        "observed_at_utc": "2026-10-07T21:22:34Z",
+        "status": "active",
+        "tokensUsed": 223875,
+        "timeUsedSeconds": 615
+      },
+      {
+        "stage": "reviser-v2 before render",
+        "identity": "01a11842-acb8-7850-977d-953e26a980a3",
+        "observed_at_utc": "2026-10-07T21:33:44Z",
+        "status": "active",
+        "tokensUsed": 121534,
+        "timeUsedSeconds": 426
+      }
+    ],
+    "counter_policy": "These are separate, unsummed native Goal aggregate snapshots; they are not provider component usage or billable-token categories.",
+    "generic_preparation_lower_bound_seconds": 454.056,
+    "qualification_lower_bound_seconds": 0.316,
+    "qualification_wall_seconds": null,
+    "qualification_billing": null,
+    "cold_and_amortized_economics": "Retained separately; no free-time assumption."
+  },
+  "deliverables": {
+    "semantic": {
+      "path": "semantic.json",
+      "sha256": "56967ba0417074a3a0c599b6f881972ca0121b23a2fa5d65a267fbc842f27e83"
+    },
+    "complete_renderer_artifact": {
+      "path": "artifact.md",
+      "sha256": "f87735349d1462d60d633688f0a53050b5055ae7629ccc45263c48a141c73704"
+    },
+    "preservation_check": {
+      "path": "preservation_check.md",
+      "sha256": "5a01bf36a4b1f1bc962e575b6efb5712083f9743bd59aae46efe8b4c85f529f6"
+    }
+  },
+  "claim_limit": "DIAGNOSTIC_UNQUALIFIED; no product build/test, BagIt runtime, audio conversion/listening, package validation, quality, performance, deployment, or shipping claim.",
+  "completed_at_utc": "2026-10-07 21:40:51 UTC"
+}

@@ -1,0 +1,37 @@
+{
+  "observed_at": "2026-10-07T21:53:45.369372+00:00",
+  "trigger": "M16 fresh treatment Topic2 actual admission; later meaningful own native activation qualification, not timer/poll",
+  "rows": [
+    {
+      "arm": "control",
+      "stage": "topic2_independent-v3",
+      "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/assignment.md",
+      "assignment_sha256": "af857272637f45310820138e4fc816906ac5cdb04391c94c1d19d7eb01ab473e",
+      "matching_objectives": 1,
+      "lookup_seconds": 0.020126274997892324,
+      "rows": [
+        {
+          "state_path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_fd7b244f-e633-4d0c-8a24-1c70c76eea9c/state.json",
+          "state_sha256": "d5c2909f86bb4c4da3fd85e3dff3f5ecc0b7dec5e56fc62bc18f3ab20413842c",
+          "bytes": 4629,
+          "objective": "Complete D-M16-A/control/topic2_independent-v3 scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/control/topic2_independent-v3/assignment.md\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+          "status": "running",
+          "createdAt": 1791409196192,
+          "updatedAt": 1791409794278,
+          "rounds": 2,
+          "goal_id": null,
+          "session_id": null
+        }
+      ]
+    },
+    {
+      "arm": "treatment",
+      "stage": "fresh_topic2_comparison-v3",
+      "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/assignment.md",
+      "assignment_sha256": "21d9025fe286663f4cc3ec98af2bf6a7bb195be465d593d4b1e508c4b568b308",
+      "matching_objectives": 0,
+      "lookup_seconds": 0.01760589900004561,
+      "rows": []
+    }
+  ]
+}

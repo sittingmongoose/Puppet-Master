@@ -1,0 +1,243 @@
+{
+  "artifact": "artifact.md",
+  "scope": "Public source captures only; hashes intentionally omitted for host computation.",
+  "operations": {
+    "web_search_batches": 7,
+    "web_search_query_strings": 28,
+    "web_open_find_batches": 8,
+    "web_open_find_page_operations": 32,
+    "web_open_find_internal_errors": 5,
+    "public_git_ref_lookups": 5,
+    "http_capture_attempts": 26,
+    "failed_attempts": {
+      "gtfs.org HTTP 403": 1,
+      "incorrect source path HTTP 404 corrected by a later successful capture": 1
+    },
+    "source_cache_read": false,
+    "successful_http_captures": 24,
+    "retained_public_capture_files": 22,
+    "unused_successful_capture_files_deleted": 2
+  },
+  "sources": [
+    {
+      "source_id": "S1",
+      "capture": "sources/gtfs_schedule_reference.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs/spec/en/reference.md",
+      "accessed_at_utc": "2026-10-07T19:28:28Z",
+      "version_or_commit": "google/transit@3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "repository_path_or_api_resource": "gtfs/spec/en/reference.md",
+      "symbols_or_fields": "Service day; stop_times arrival_time; agency.agency_timezone; stops.stop_timezone; transfers.txt specificity and transfer_type",
+      "line_ranges_or_json_pointers": "59,82,92,196,222,669-698"
+    },
+    {
+      "source_id": "S2",
+      "capture": "sources/gtfs_rt_reference.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/reference.md",
+      "accessed_at_utc": "2026-10-07T19:28:28Z",
+      "version_or_commit": "google/transit@3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "repository_path_or_api_resource": "gtfs-realtime/spec/en/reference.md",
+      "symbols_or_fields": "FeedHeader.timestamp; TripUpdate; StopTimeUpdate.schedule_relationship; VehiclePosition.timestamp",
+      "line_ranges_or_json_pointers": "108,168-222,282"
+    },
+    {
+      "source_id": "uncited",
+      "capture": "sources/gtfs_rt_entities.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/gtfs-realtime.md",
+      "accessed_at_utc": "2026-10-07T19:28:28Z",
+      "version_or_commit": "google/transit@3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "repository_path_or_api_resource": "gtfs-realtime/spec/en/gtfs-realtime.md",
+      "symbols_or_fields": "Trip Updates; Service Alerts; Vehicle Positions",
+      "line_ranges_or_json_pointers": "1-42"
+    },
+    {
+      "source_id": "S4",
+      "capture": "sources/gtfs_rt_best_practices.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/best-practices.md",
+      "accessed_at_utc": "2026-10-07T19:28:29Z",
+      "version_or_commit": "google/transit@3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "repository_path_or_api_resource": "gtfs-realtime/spec/en/best-practices.md",
+      "symbols_or_fields": "freshness/recommended polling; timestamp use; early stop update retention",
+      "line_ranges_or_json_pointers": "23-24,39-40,64-65"
+    },
+    {
+      "source_id": "S3",
+      "capture": "sources/gtfs_rt_trip_updates.md",
+      "url": "https://raw.githubusercontent.com/google/transit/3c9e7b904b5035349622f03e11851e25c16d1d99/gtfs-realtime/spec/en/trip-updates.md",
+      "accessed_at_utc": "2026-10-07T19:34:02Z",
+      "version_or_commit": "google/transit@3c9e7b904b5035349622f03e11851e25c16d1d99",
+      "repository_path_or_api_resource": "gtfs-realtime/spec/en/trip-updates.md",
+      "symbols_or_fields": "absence of TripUpdate; early-arrival stop update dropped before scheduled time; consumer schedule fallback",
+      "line_ranges_or_json_pointers": "5-20"
+    },
+    {
+      "source_id": "S5",
+      "capture": "sources/oba_v2_7_1_readme.md",
+      "url": "https://raw.githubusercontent.com/OneBusAway/onebusaway-application-modules/095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a/README.md",
+      "accessed_at_utc": "2026-10-07T19:28:29Z",
+      "version_or_commit": "OneBusAway/onebusaway-application-modules@095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a (v2.7.1)",
+      "repository_path_or_api_resource": "README.md",
+      "symbols_or_fields": "static GTFS and realtime data source configuration; schedule/RT feed separation",
+      "line_ranges_or_json_pointers": "1-30,90-145"
+    },
+    {
+      "source_id": "S7",
+      "capture": "sources/mobility_validator_v8_0_1_readme.md",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/README.md",
+      "accessed_at_utc": "2026-10-07T19:33:46Z",
+      "version_or_commit": "MobilityData/gtfs-validator@v8.0.1 (release tag commit d74d7177f9f7c6bc7adc69508bb939362f2cf770)",
+      "repository_path_or_api_resource": "README.md",
+      "symbols_or_fields": "static GTFS validator scope; HTML and JSON reports",
+      "line_ranges_or_json_pointers": "5-10,30-44,70-80"
+    },
+    {
+      "source_id": "S8",
+      "capture": "sources/validator_v8_0_1_service_window.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+      "accessed_at_utc": "2026-10-07T19:28:29Z",
+      "version_or_commit": "MobilityData/gtfs-validator@v8.0.1, d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "repository_path_or_api_resource": "main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+      "symbols_or_fields": "ServiceWindow.get; ServiceInterval.firstActiveDate/lastActiveDate",
+      "line_ranges_or_json_pointers": "11-55"
+    },
+    {
+      "source_id": "S9",
+      "capture": "sources/validator_v8_0_1_service_interval_cache.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/main/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalCache.java",
+      "accessed_at_utc": "2026-10-07T19:28:29Z",
+      "version_or_commit": "MobilityData/gtfs-validator@v8.0.1, d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "repository_path_or_api_resource": "main/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalCache.java",
+      "symbols_or_fields": "ServiceIntervalCache; calendar.txt and calendar_dates.txt processing",
+      "line_ranges_or_json_pointers": "41-124"
+    },
+    {
+      "source_id": "S10",
+      "capture": "sources/validator_v8_0_1_service_window_test.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/main/src/test/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindowTest.java",
+      "accessed_at_utc": "2026-10-07T19:28:29Z",
+      "version_or_commit": "MobilityData/gtfs-validator@v8.0.1, d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "repository_path_or_api_resource": "main/src/test/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindowTest.java",
+      "symbols_or_fields": "ServiceWindowTest: calendar-only/date-only/both optional table cases; boundary shifts and empty windows",
+      "line_ranges_or_json_pointers": "92-125,169-190,216-306,388-436,589-599"
+    },
+    {
+      "source_id": "uncited",
+      "capture": "sources/validator_v8_0_1_service_interval.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/core/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceInterval.java",
+      "accessed_at_utc": "2026-10-07T19:31:31Z",
+      "version_or_commit": "MobilityData/gtfs-validator@v8.0.1, d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "repository_path_or_api_resource": "core/src/main/java/org/mobilitydata/gtfsvalidator/util/ServiceInterval.java",
+      "symbols_or_fields": "ServiceInterval.addInterval/addDate/removeDate/firstActiveDate/lastActiveDate",
+      "line_ranges_or_json_pointers": "1-250"
+    },
+    {
+      "source_id": "S10",
+      "capture": "sources/validator_v8_0_1_service_interval_test.java",
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/v8.0.1/core/src/test/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalTest.java",
+      "accessed_at_utc": "2026-10-07T19:31:31Z",
+      "version_or_commit": "MobilityData/gtfs-validator@v8.0.1, d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+      "repository_path_or_api_resource": "core/src/test/java/org/mobilitydata/gtfsvalidator/util/ServiceIntervalTest.java",
+      "symbols_or_fields": "add/remove dates; interval merge/split; active bounds",
+      "line_ranges_or_json_pointers": "174-324"
+    },
+    {
+      "source_id": "S11",
+      "capture": "sources/oba_issue_162.json",
+      "url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/issues/162",
+      "accessed_at_utc": "2026-10-07T19:30:55Z",
+      "version_or_commit": "GitHub issue #162 (public API snapshot)",
+      "repository_path_or_api_resource": "issues/162 JSON",
+      "symbols_or_fields": "title; body; state; timestamps; comments_url",
+      "line_ranges_or_json_pointers": "/title,/body,/state,/created_at,/updated_at"
+    },
+    {
+      "source_id": "S12",
+      "capture": "sources/oba_pull_160.json",
+      "url": "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/pulls/160",
+      "accessed_at_utc": "2026-10-07T19:30:56Z",
+      "version_or_commit": "GitHub pull request #160 (public API snapshot)",
+      "repository_path_or_api_resource": "pulls/160 JSON",
+      "symbols_or_fields": "title; body; state; merged; merge_commit_sha",
+      "line_ranges_or_json_pointers": "/title,/body,/state,/merged,/merge_commit_sha"
+    },
+    {
+      "source_id": "S13",
+      "capture": "sources/gtfs_proposal_16.json",
+      "url": "https://api.github.com/repos/google/transit/pulls/16",
+      "accessed_at_utc": "2026-10-07T19:30:56Z",
+      "version_or_commit": "google/transit pull request #16 (public API snapshot)",
+      "repository_path_or_api_resource": "pulls/16 JSON",
+      "symbols_or_fields": "title; body; state; merged; merge_commit_sha",
+      "line_ranges_or_json_pointers": "/title,/body,/state,/merged,/merge_commit_sha"
+    },
+    {
+      "source_id": "S14",
+      "capture": "sources/oba_server_validator_readme.md",
+      "url": "https://raw.githubusercontent.com/OneBusAway/onebusaway-application-modules/7e59c818574422ee30fc449b8b42adba3e6ac238/README.md",
+      "accessed_at_utc": "2026-10-07T19:33:46Z",
+      "version_or_commit": "OneBusAway/onebusaway-application-modules@7e59c818574422ee30fc449b8b42adba3e6ac238",
+      "repository_path_or_api_resource": "README.md",
+      "symbols_or_fields": "OBA Validator description; authoritative feed cross-reference; structured report",
+      "line_ranges_or_json_pointers": "1-15,45-70"
+    },
+    {
+      "source_id": "S15",
+      "capture": "sources/issue_2017.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2017",
+      "accessed_at_utc": "2026-10-07T19:30:54Z",
+      "version_or_commit": "GitHub issue #2017 (public API snapshot)",
+      "repository_path_or_api_resource": "issues/2017 JSON",
+      "symbols_or_fields": "title; body; state; timestamps",
+      "line_ranges_or_json_pointers": "/title,/body,/state,/created_at,/updated_at"
+    },
+    {
+      "source_id": "S16",
+      "capture": "sources/issue_2099.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/issues/2099",
+      "accessed_at_utc": "2026-10-07T19:30:54Z",
+      "version_or_commit": "GitHub issue #2099 (public API snapshot)",
+      "repository_path_or_api_resource": "issues/2099 JSON",
+      "symbols_or_fields": "title; body; state; timestamps",
+      "line_ranges_or_json_pointers": "/title,/body,/state,/created_at,/updated_at"
+    },
+    {
+      "source_id": "S17",
+      "capture": "sources/pull_2029.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/pulls/2029",
+      "accessed_at_utc": "2026-10-07T19:30:55Z",
+      "version_or_commit": "GitHub pull request #2029, merged as f65221e9908f5db0daa81ab8ce94168a5062151b",
+      "repository_path_or_api_resource": "pulls/2029 JSON",
+      "symbols_or_fields": "title; body; state; merged_at; merge_commit_sha",
+      "line_ranges_or_json_pointers": "/title,/body,/state,/merged_at,/merge_commit_sha"
+    },
+    {
+      "source_id": "S18",
+      "capture": "sources/release_v8_0_0.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/317379777",
+      "accessed_at_utc": "2026-10-07T19:30:55Z",
+      "version_or_commit": "MobilityData/gtfs-validator release v8.0.0",
+      "repository_path_or_api_resource": "releases/317379777 JSON",
+      "symbols_or_fields": "tag_name; published_at; body",
+      "line_ranges_or_json_pointers": "/tag_name,/published_at,/body"
+    },
+    {
+      "source_id": "S19",
+      "capture": "sources/release_v8_0_1.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/releases/321169212",
+      "accessed_at_utc": "2026-10-07T19:30:55Z",
+      "version_or_commit": "MobilityData/gtfs-validator release v8.0.1",
+      "repository_path_or_api_resource": "releases/321169212 JSON",
+      "symbols_or_fields": "tag_name; published_at; body",
+      "line_ranges_or_json_pointers": "/tag_name,/published_at,/body"
+    },
+    {
+      "source_id": "uncited",
+      "capture": "sources/validator_tree_v8_0_1.json",
+      "url": "https://api.github.com/repos/MobilityData/gtfs-validator/git/trees/20338457c2b7fbfeb034b6d0990a91e49fba746c?recursive=1",
+      "accessed_at_utc": "2026-10-07T19:31:21Z",
+      "version_or_commit": "MobilityData/gtfs-validator tree at v8.0.1; tree SHA 20338457c2b7fbfeb034b6d0990a91e49fba746c",
+      "repository_path_or_api_resource": "Git tree JSON",
+      "symbols_or_fields": "path/blob entries locating ServiceWindow and ServiceInterval source/tests",
+      "line_ranges_or_json_pointers": "/tree/*/path,/tree/*/sha"
+    }
+  ]
+}

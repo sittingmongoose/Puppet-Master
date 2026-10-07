@@ -1,0 +1,45 @@
+{
+  "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/brief.md",
+  "original_plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/plan.md",
+  "final_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/artifact.md",
+  "final_source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/source-map.json",
+  "own_outputs": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2",
+  "scope": "full original declared scope and own-arm frozen preservation predecessors; no other arm/review/parentanalysis",
+  "full_same_arm_preservation_and_semantic_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v2/artifact.md",
+      "sha256": "84b6d7fbeef471c624fd6295646d7a30d35949b619c0a14baa547b8ba1be84be",
+      "bytes": 26789
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v2/source-map.json",
+      "sha256": "820ad9da694b48ce734f8bb119907924f0df13225b917f03d997da0deb475af7",
+      "bytes": 9785
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v2/artifact.md",
+      "sha256": "a9260a6ea92741f7a5001298a76f77310b1e6a40c5e709f5d8f9c3646bb451fa",
+      "bytes": 20645
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v2/source-map.json",
+      "sha256": "592b898af1802e9e7f92dd7c85d32341641d9b12ee411648ead11730f2c6b527",
+      "bytes": 14392
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/artifact.md",
+      "sha256": "ddba25b195feb56f27482208ce4a4d756bdd87ea420b92bbc8180ab4b305f157",
+      "bytes": 35640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/source-map.json",
+      "sha256": "c972dca672b171eac4e9258ec91dfadd4f78f39517b3f581d3eb87c80c8f444c",
+      "bytes": 14424
+    }
+  ],
+  "source_directories": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/research-v2/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/critic-v2/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/sources"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "terminal": {
+    "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch007-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch007-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch007-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch007-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch007-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "BATCH007 completed before deadline; root notified. Validation passed with zero failures or unmanifested files.\n\n1,100 staged files, 22,508,896 bytes; 1,542 manifest entries, including 443 pinned references. Original grades and bytes preserved.\n\n[Manifest](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch007/staging/reports/external-research-v10-20261007/BATCH007_MANIFEST.json) SHA-256:\n`220cb249ae4956183952d24dbdbfc98471536af3a28646eecf393f28097c6cf7`\n\n[Curation report](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch007/curation-report.json) · [Validation results](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch007/validation-results.json)\n\nNo Git or repository writes. Staging retained for root’s publication and cleanup after verified retention.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch007-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:ed2775ac-7062-4cf1-aca0-7dc3083c2c82",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": "BATCH007 completed before deadline; root notified. Validation passed with zero failures or unmanifested files.\n\n1,100 staged files, 22,508,896 bytes; 1,542 manifest entries, including 443 pinned references. Original grades and bytes preserved.\n\n[Manifest](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch007/staging/reports/external-research-v10-20261007/BATCH007_MANIFEST.json) SHA-256:\n`220cb249ae4956183952d24dbdbfc98471536af3a28646eecf393f28097c6cf7`\n\n[Curation report](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch007/curation-report.json) · [Validation results](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch007/validation-results.json)\n\nNo Git or repository writes. Staging retained for root’s publication and cleanup after verified retention.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-publication-batch007-v1:target-thread:5a126dd5-9c71-4cc2-83d6-9ad1985bacad:ed2775ac-7062-4cf1-aca0-7dc3083c2c82",
+    "waitTimedOut": false
+  },
+  "root_acknowledged": true,
+  "settled": true
+}

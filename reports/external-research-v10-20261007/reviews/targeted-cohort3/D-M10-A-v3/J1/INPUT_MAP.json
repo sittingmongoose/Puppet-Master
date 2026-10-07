@@ -1,0 +1,40 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "httpcache",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "httpsem",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/final.md",
+  "predecessor_science": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/draft.md"
+  ],
+  "authored_intermediates": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/critique.md"
+  ],
+  "scientific_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/final.md": "b981141c46e6104a029c08c319afb1edbcddb68ac8ba815ced5f7dbdde1e765d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/draft.md": "1f5d5db7937498255192e0a8b679d6322807bb525a74c3ebcaa55b2ae145154a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/critique.md": "79da321e07f369298af76ebaec4883a19878621d047e6155b8fb3a3c13097bee",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "schema": "er10.integrated.speed.execution.v1",
+  "case_id": "I-FAST-03",
+  "frozen_at": "2026-10-07T20:07:51.549911+00:00",
+  "root_lock": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/locks/speed-budget-selection-v1.json",
+    "sha256": "b0de1d10efe0cc6bfc5ce2565be9cc9df601199bf00c38e1cc92814a63568233",
+    "bytes": 3333
+  },
+  "locked_recipe": {
+    "version": "ER10-LUNA-TWO-STAGE-LOCKED-V1",
+    "binding": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      },
+      "account": "sittingmongoose@gmail.com"
+    },
+    "stages": [
+      "fresh native-Goal public researcher",
+      "fresh native-Goal same-family critic independently checks governing evidence, repairs conclusions and writes complete final"
+    ],
+    "control_stages": [
+      "fresh native-Goal public researcher",
+      "fresh native-Goal same-family critic",
+      "fresh native-Goal same-family final reviser"
+    ],
+    "scientific_scope": "Full integrated user brief and frozen sandbox plan, open public primary-source discovery, useful alternatives/analogies/components/code/history, complete comparison/proposed changes, preservation/conditions/uncertainty/validation. Same scope within each pair.",
+    "tools": "Ordinary supported research tools and legitimate own-arm source predecessor bytes/citations; no semantic answer caches, evaluator facts, other-arm or other-repetition artifacts, external runners or nested candidate work.",
+    "candidate_carrier": "helpers/passive-receipts/ROOT_ADMISSION_V2.json exact passive actual native active/terminal observations, no manual receipt serialization",
+    "review_carrier": "state/review-carrier-prospective-v2.json fresh ordinary independent Sol6.1xhigh codex_gmail review after exactpairfreezes/quiet, original missing-state diagnostics held separately",
+    "qualification": "DIAGNOSTIC_UNQUALIFIED",
+    "unresolved": [
+      "Only one full positive treatment; counterpart source-history defect prevents matched passing comparison.",
+      "Original control time overrun and separate provenance limits.",
+      "Unknown generated/cached/billing usage prevents quota or affordability claim.",
+      "Prospective passive carrier differs from original manual receipt carrier and must be measured honestly."
+    ]
+  },
+  "candidate_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ],
+    "account": "sittingmongoose@gmail.com"
+  },
+  "review_binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "inputs": {
+    "INPUTS.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/INPUTS.md",
+      "sha256": "e25cf8e741130f4d3c5867234a2a43ddf9818688b3c25b8f8eba05a340235dac",
+      "bytes": 1917
+    },
+    "brief.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/brief.md",
+      "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73",
+      "bytes": 5149
+    },
+    "plan.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/plan.md",
+      "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+      "bytes": 1714
+    }
+  },
+  "prepared_identity": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/prepared.json",
+    "sha256": "47b175fb5a1532a68a52e7fd0a466a256dfc37d6fb4564e72bb3d4a33cad75a0",
+    "bytes": 1664
+  },
+  "same_pair": {
+    "inputs": true,
+    "full_scientific_scope": true,
+    "effort": true,
+    "account": true,
+    "access": true,
+    "family": true
+  },
+  "recipe": {
+    "control": "Competent fresh researcher, independent same-family critic, fresh complete final reviser",
+    "treatment": "Fresh full-scope public researcher then fresh same-family critic independently checks governing evidence, repairs conclusions and writes complete final; no scope reduction"
+  },
+  "stage_seconds": {
+    "control": {
+      "research": 1200,
+      "critic": 600,
+      "reviser": 900
+    },
+    "treatment": {
+      "research": 750,
+      "critic-finalizer": 600
+    }
+  },
+  "aggregate_occupied_work_ceiling_seconds": {
+    "control": 2700,
+    "treatment": 1350
+  },
+  "latency_boundary": "earliest actual T3 requestedAt first stage through native terminal/T3 delivery including queue/coldstartup/hostsetup/sourceoperations/retries/output/delivery; control45min treatment22.5min, no clockreset",
+  "reserve_policy": "research preserves control600critic+900final or treatment600critic-finalizer; no writing-stage admission after envelopeexhaustion",
+  "final_role": {
+    "control": "reviser",
+    "treatment": "critic-finalizer"
+  },
+  "launch_order": [
+    "control",
+    "treatment"
+  ],
+  "common_lifecycle_carrier": {
+    "version": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "prefrozen_at": "2026-10-07T20:07:51.549911+00:00",
+    "applies_to_both_arms_all_stages": true,
+    "exact_stage_versions": [
+      "I-FAST-03/control/research-v1",
+      "I-FAST-03/control/critic-v1",
+      "I-FAST-03/control/reviser-v1",
+      "I-FAST-03/treatment/research-v1",
+      "I-FAST-03/treatment/critic-finalizer-v1"
+    ],
+    "native_route": "actual Codex create_goal/get active/update complete/get terminal on same fresh Goal; <=4000char objective",
+    "activation_notice_parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "host_carrier": "one passive export per activation or terminal event; Codex actual native Goal state projection, not raw tool bodies",
+    "exporter_sha256": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8",
+    "absence_policy": "actual active/terminal state absent -> lifecycle HOLD; no fake proof",
+    "scientific_delivery": "complete artifact.md + source-map.json/captured source bytes; complete native output fallback verbatim accepted; concise path/status final after actual terminal",
+    "cost": "host export setup/invocation separate; native usage fields distinct and unknown null",
+    "scope_and_envelopes_unchanged": true,
+    "activation_notice_transport": {
+      "mode": "auto",
+      "reason": "one exact activation-only notice to known parent even if idle",
+      "frozen_at": "2026-10-07T20:07:51.549911+00:00"
+    }
+  },
+  "quality_axes": [
+    "required brief obligations",
+    "consequential claims/conditions",
+    "bounded useful discovery",
+    "incorrect rejections/corrections",
+    "preservation",
+    "proposed versus executed validation"
+  ],
+  "output_scope": "FULL original O1-O6 and all in-scope plan sections; complete proposed-change artifact, options, retained/rejected dispositions, criticism dispositions, uncertainty, validation proposed/executed",
+  "output_contract": "authored artifact.md + source-map.json with immutable captured public bytes and identity metadata; alternatively full native final answer mechanically saved verbatim, never a summary substituted for full output",
+  "expiry_policy": "one lifecycle-only save/deliver steer at real expiry, at most 60s grace, owned task_cancel if live; no substantive extension",
+  "tool_policy": {
+    "native_public_search_read": true,
+    "writable": "own role directory only",
+    "no_nested_delegation": true,
+    "no_repo_or_account_changes": true,
+    "maps_advisory_not_firewall": true,
+    "isolation_limit": "T3 freshness excludes parent history; full-access filesystem not a security firewall; no evaluator exists until both arms quiet; forbidden sibling paths explicitly excluded",
+    "execution": "no downloaded source execution/installers on host; bounded qualified sandbox only if separately admitted"
+  },
+  "selection_basis": "DIAGNOSTIC_UNQUALIFIED; no qualified comparative quality/speed/affordability win",
+  "no_semantic_cache_or_oracle_or_new_bundle": true,
+  "no_after_outcome_budget_or_recipe_tuning": true,
+  "independent_review_gate": "both exact full finals/native terminal dispositions frozen and all candidate tasks/descendantsquiet before any evaluator key; fresh ordinary Sol6.1xhigh codex_gmail priority full declaredscope, blindinglimits explicit"
+}

@@ -1,0 +1,116 @@
+{
+  "stage": "I-METHOD-06/treatment/critic-v1",
+  "native_goal_identity": "01a1180a-22e8-76f1-838d-da58e2593b1f",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/source-map.json"
+  ],
+  "timestamps": {
+    "first_useful_saved_finding_at_utc": "2026-10-07T20:32:48.761963Z",
+    "first_useful_finding": "BRS-023 applies to every mutating RestoreRun, including as_new; the proposal's final paragraph limits it to destructive/in-place operations.",
+    "complete_artifact_saved_at_utc": "2026-10-07T20:34:12.440733Z",
+    "stage_deadline_utc": "2026-10-07T20:34:33.486101Z",
+    "whole_arm_deadline_utc": "2026-10-07T20:51:45.651929Z"
+  },
+  "source_operations": {
+    "unique_admitted_local_inputs_read": 17,
+    "local_input_file_reads_including_rechecks": 22,
+    "source_capture_inventory_operations": 1,
+    "targeted_capture_review_operations": 2,
+    "new_public_web_or_http_queries": 0,
+    "source_capture_copies": 26,
+    "notes": "Reviewed exact admitted frozen copies and captured public-source bytes; no live primary query was run."
+  },
+  "native_goal_counters": {
+    "status_when_observed": "active",
+    "aggregate_goal_tokens_used": 124636,
+    "aggregate_goal_time_used_seconds": 488,
+    "remaining_tokens": null,
+    "completion_budget_report": null,
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null,
+    "counter_scope": "Actual aggregate native Goal counters only; per-category counters were not exposed; pre-completion snapshot."
+  },
+  "evidence": [
+    {
+      "id": "R08",
+      "path": "sources/restic_issue_4467.capture",
+      "supports": "original missing-source issue"
+    },
+    {
+      "id": "R09",
+      "path": "sources/restic_pr_5347_patch.capture",
+      "supports": "fix patch/regression changes"
+    },
+    {
+      "id": "R10",
+      "path": "sources/restic_release_v0190.capture",
+      "supports": "v0.19.0 release applicability"
+    },
+    {
+      "id": "R11",
+      "path": "sources/restic_v0190_backup_go.capture",
+      "supports": "error definitions and backup caller"
+    },
+    {
+      "id": "R12",
+      "path": "sources/restic_v0190_backup_integration_test.capture",
+      "supports": "mixed/all-missing test assertion limits"
+    },
+    {
+      "id": "R13",
+      "path": "sources/restic_v0190_backup_test_go.capture",
+      "supports": "collectTargets incomplete-source test"
+    },
+    {
+      "id": "R15",
+      "path": "sources/restic_v0190_checker_go.capture",
+      "supports": "tree check and filtered blob-to-pack mapping"
+    },
+    {
+      "id": "R16",
+      "path": "sources/restic_v0190_cmd_check_go.capture",
+      "supports": "full/subset read pack selection"
+    },
+    {
+      "id": "R17",
+      "path": "sources/restic_v0190_cmd_copy_go.capture",
+      "supports": "repository copy mechanism"
+    },
+    {
+      "id": "R21",
+      "path": "sources/restic_v0190_tag_ref.txt",
+      "supports": "v0.19.0 immutable tag resolution"
+    },
+    {
+      "id": "R23",
+      "path": "sources/restic_v0191_backup_go.capture",
+      "supports": "later non-ENOENT Lstat handling"
+    },
+    {
+      "id": "R25",
+      "path": "sources/restic_v0191_backup_test_go.capture",
+      "supports": "bounded #5667 regression cases"
+    },
+    {
+      "id": "R26",
+      "path": "sources/restic_v0191_tag_ref.txt",
+      "supports": "v0.19.1 immutable tag resolution"
+    },
+    {
+      "id": "Plan",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/BRS-006.md and BRS-023.md",
+      "supports": "restore prerequisite correction"
+    }
+  ],
+  "hash_policy": "No hashes computed or authored by this critic; host computes source hashes mechanically.",
+  "validation": {
+    "tests_run": false,
+    "build_run": false,
+    "backup_or_restore_run": false,
+    "canon_or_repository_changed": false
+  }
+}

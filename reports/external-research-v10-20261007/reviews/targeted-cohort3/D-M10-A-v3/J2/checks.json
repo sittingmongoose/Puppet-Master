@@ -1,0 +1,299 @@
+{
+  "review_id": "D-M10-A/J2",
+  "verdict": "FullSourceFAIL",
+  "coverage": "complete_declared_scientific_scope",
+  "axes_assessed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "brief_obligations_assessed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "final_findings_assessed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "first_observed_at_utc": "2026-10-07T21:45:45Z",
+  "artifacts_authored_at_utc": "2026-10-07T21:49:33.323009+00:00",
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M10-A-v3/J2/INPUT_MAP.json",
+    "sha256": "9ecb1f96851230d66e7c2ffd601e311557b9439e3d751f3460f12bc2ae84dcb0"
+  },
+  "files_checked": [
+    {
+      "role": "brief",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/brief.md",
+      "bytes": 1691,
+      "sha256": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+      "expected_sha256": "97ad953ae977811893a31ae4bf41dad604e7370baff504112e51b70ab1352077",
+      "match": true
+    },
+    {
+      "role": "source_manifest",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources.json",
+      "bytes": 1074,
+      "sha256": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416",
+      "expected_sha256": "aaacad9767e6929edd669b51652b993bcd1e971e55312c603d6d41f4bf1f8416",
+      "match": true
+    },
+    {
+      "role": "predecessor",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/draft.md",
+      "bytes": 5119,
+      "sha256": "1f5d5db7937498255192e0a8b679d6322807bb525a74c3ebcaa55b2ae145154a",
+      "expected_sha256": "1f5d5db7937498255192e0a8b679d6322807bb525a74c3ebcaa55b2ae145154a",
+      "match": true
+    },
+    {
+      "role": "question",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/question.md",
+      "bytes": 193,
+      "sha256": "2b56ac9ba080d7fb74160ce361f5bcbc57fe89af3219a6caa4839ee6d6e1f46d",
+      "expected_sha256": "2b56ac9ba080d7fb74160ce361f5bcbc57fe89af3219a6caa4839ee6d6e1f46d",
+      "match": true
+    },
+    {
+      "role": "evidence",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/evidence.md",
+      "bytes": 5777,
+      "sha256": "b9d74f90db1c592153b4e9d81840021691b32b108cd30903db91bcfc4ce115dc",
+      "expected_sha256": "b9d74f90db1c592153b4e9d81840021691b32b108cd30903db91bcfc4ce115dc",
+      "match": true
+    },
+    {
+      "role": "final",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3/final.md",
+      "bytes": 8308,
+      "sha256": "01d2eca7d064340409500974d7f4c7c63bccdd47818eb572ebb78c333c5f3343",
+      "expected_sha256": "01d2eca7d064340409500974d7f4c7c63bccdd47818eb572ebb78c333c5f3343",
+      "match": true
+    },
+    {
+      "role": "httpcache",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt",
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "expected_sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "match": true
+    },
+    {
+      "role": "httpsem",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "expected_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "match": true
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "httpcache",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version": "RFC 9111 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpcache.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+    },
+    {
+      "source_id": "httpsem",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version": "RFC 9110 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/inputs/sources/httpsem.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+    }
+  ],
+  "source_operations": [
+    {
+      "observed_complete_utc": "2026-10-07T21:45:45Z",
+      "op": "read_exact_input_map",
+      "tool": "exec_command/cat"
+    },
+    {
+      "at_utc": "2026-10-07T21:45:54.556697+00:00",
+      "through_utc": "2026-10-07T21:45:54.562489+00:00",
+      "op": "read_all_six_declared_nonprimary_texts_with_line_numbers_and_hash_all_eight_files",
+      "tool": "exec_command/local_Python"
+    },
+    {
+      "observed_complete_utc": "2026-10-07T21:46:02Z",
+      "op": "primary_section_reads_and_heading_scan",
+      "tool": "exec_command/nl_sed_rg",
+      "httpcache_line_ranges": [
+        [
+          160,
+          870
+        ],
+        [
+          870,
+          1585
+        ]
+      ],
+      "httpsem": "section-heading and Authorization locator scan; output reread from in-session stored results after display truncation"
+    },
+    {
+      "observed_complete_utc": "2026-10-07T21:46:16Z",
+      "op": "primary_condition_checks",
+      "tool": "exec_command/local_Python_and_nl_sed",
+      "httpsem_line_ranges": [
+        [
+          3480,
+          3725
+        ],
+        [
+          5062,
+          5082
+        ],
+        [
+          5615,
+          5734
+        ],
+        [
+          5872,
+          6022
+        ],
+        [
+          6182,
+          6289
+        ],
+        [
+          7444,
+          7479
+        ]
+      ],
+      "httpcache_line_ranges": [
+        [
+          1208,
+          1439
+        ]
+      ]
+    },
+    {
+      "observed_complete_utc": "2026-10-07T21:46:45Z",
+      "op": "verify_versions_storage_reuse_304_5xx_exception_application_scope_and_status_counterexample",
+      "tool": "exec_command/local_Python",
+      "httpcache_line_ranges": [
+        [
+          1,
+          50
+        ],
+        [
+          142,
+          162
+        ],
+        [
+          282,
+          337
+        ],
+        [
+          466,
+          524
+        ],
+        [
+          930,
+          989
+        ],
+        [
+          1536,
+          1568
+        ]
+      ],
+      "httpsem_line_ranges": [
+        [
+          1,
+          55
+        ],
+        [
+          6839,
+          6857
+        ],
+        [
+          6915,
+          6967
+        ],
+        [
+          7852,
+          7862
+        ],
+        [
+          7886,
+          7905
+        ]
+      ]
+    },
+    {
+      "at_utc": "2026-10-07T21:49:33.323009+00:00",
+      "op": "write_judgment_and_checks_and_reconfirm_all_declared_file_hashes",
+      "tool": "exec_command/local_Python"
+    },
+    {
+      "at_utc": "2026-10-07T21:49:52.676666+00:00",
+      "op": "validate_authored_outputs_JSON_parse_judgment_hash_byte_count_exactly_six_axes_coverage_and_null_usage_fields",
+      "tool": "exec_command/local_Python"
+    }
+  ],
+  "scientific_checks": {
+    "all_hashes_match": true,
+    "source_claim_condition_audit": "performed",
+    "eight_disposition_audit": "performed",
+    "intermediate_to_final_preservation": "performed",
+    "fixture_status_audit": "proposed_only",
+    "material_defect_ids": [
+      "J2-D1"
+    ],
+    "material_defect_locator": {
+      "final_line": 21,
+      "source": "RFC 9111 June 2022 section 4.3.3",
+      "source_lines": [
+        938,
+        949
+      ]
+    },
+    "counterexample": "hypothetical same-account/language eligible stale entry, client max-stale permission, content-bearing 503 during validation; not executed"
+  },
+  "application_tests_executed": 0,
+  "external_primary_fetches": 0,
+  "downloads_or_downloaded_code_execution": 0,
+  "descendants": 0,
+  "second_review_rounds": 0,
+  "access_limits": {
+    "method_blind": false,
+    "method_specific_paths_exposed": true,
+    "incidental_process_and_resource_metadata_in_approved_final": true,
+    "resource_metadata_used_in_scientific_verdict": false,
+    "restricted_history_or_other_answers_read": false,
+    "outside_declared_files_read": false,
+    "external_writes": false,
+    "lifecycle_or_budget_audit": "not performed; outside scientific assessment"
+  },
+  "output_volume": {
+    "judgment_utf8_bytes": 20838,
+    "judgment_words_whitespace_split": 2772,
+    "judgment_sha256": "96491b62a5dc47f1fdfde9c97548c6c707e93899bd59338db1aadc0a3296b50d",
+    "output_tokens": null
+  },
+  "billing": null,
+  "input_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "outputs": {
+    "judgment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M10-A-v3/J2/judgment.md",
+    "checks": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M10-A-v3/J2/checks.json"
+  },
+  "artifacts_verified_at_utc": "2026-10-07T21:49:52.676666+00:00"
+}

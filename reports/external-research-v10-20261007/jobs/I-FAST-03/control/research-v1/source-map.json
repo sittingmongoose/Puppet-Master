@@ -1,0 +1,503 @@
+{
+  "schema_version": "1",
+  "case_id": "I-FAST-03",
+  "stage": "control/research-v1",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/input-map.json",
+  "deliverables": {
+    "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md",
+    "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/source-map.json",
+    "captured_public_source_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources"
+  },
+  "research_timing": {
+    "first_useful_finding_saved_at_utc": "2026-10-07T21:25:04.224405+00:00",
+    "complete_authored_draft_persisted_at_utc": "2026-10-07T21:40:01.135356+00:00",
+    "research_stage_deadline_utc": "2026-10-07T21:43:14.125819+00:00"
+  },
+  "source_operation_counts": {
+    "public_search_query_items": 19,
+    "web_page_open_requests": 17,
+    "direct_public_http_capture_requests": 43,
+    "direct_http_200_responses": 40,
+    "direct_http_failures": 3,
+    "direct_http_failure_statuses": {
+      "404": 2,
+      "403": 1
+    },
+    "retained_captured_source_files": 27,
+    "successful_captures_removed_as_unused": 13,
+    "source_operation_item_total": 79,
+    "failed_requests": [
+      {
+        "status": 404,
+        "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/00b80bdb5425fe0fcf8b6ad3ae4fb4e41497d911/src/position.rs",
+        "reason": "path not present at pinned 1.3.1 commit; no bytes retained"
+      },
+      {
+        "status": 404,
+        "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/CHANGELOG.md",
+        "reason": "path not present at pinned 1.4.0 commit; no bytes retained"
+      },
+      {
+        "status": 403,
+        "url": "https://api.github.com/repos/BurntSushi/rust-csv/compare/6f24780f26a81336bc919e4e2b07cdcadb0c309d...4a3997e91d668ea1d8595bdef15625a77cf2308a",
+        "reason": "GitHub API rate limit; no bytes retained"
+      }
+    ]
+  },
+  "usage_observability": {
+    "researcher_input_tokens": null,
+    "researcher_cached_input_tokens": null,
+    "researcher_generated_tokens": null,
+    "researcher_reasoning_tokens": null,
+    "researcher_billing_amount": null,
+    "researcher_cache_hits": null,
+    "native_goal_aggregate_counters_are_separate": true,
+    "native_goal_identity": "01a1183f-ee9d-7d93-adb6-46bb24607d85",
+    "native_goal_aggregate_values": "Not duplicated into source counts or captured bytes; terminal native Goal state is observed separately."
+  },
+  "capture_hashes": "Omitted by researcher; host computes hashes for retained captures.",
+  "source_entries": [
+    {
+      "id": "S01",
+      "kind": "official product documentation",
+      "url": "https://docs.openenergymonitor.org/emoncms/feeds.html",
+      "access_start_utc": "2026-10-07T21:25:03.995989+00:00",
+      "http_status": 200,
+      "version": "OpenEnergyMonitor documentation build 0.0.1 (page title)",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-feeds.html",
+      "upstream_path": "emoncms/feeds.html",
+      "locators": [
+        {
+          "section": "Engines; missing values; Choose an interval; Create a feed",
+          "rendered_lines": "37-46, 49-61"
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "kind": "official product documentation",
+      "url": "https://docs.openenergymonitor.org/emoncms/daily-kwh.html",
+      "access_start_utc": "2026-10-07T21:25:04.224793+00:00",
+      "http_status": 200,
+      "version": "OpenEnergyMonitor documentation build 0.0.1 (page title)",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-daily-kwh.html",
+      "upstream_path": "emoncms/daily-kwh.html",
+      "locators": [
+        {
+          "section": "Cumulative Wh/kWh inputs; gap join; reset accumulator",
+          "rendered_lines": "23-40"
+        },
+        {
+          "section": "Daily bar graph delta and units",
+          "rendered_lines": "44-53"
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "kind": "official product documentation",
+      "url": "https://docs.openenergymonitor.org/applications/home-energy.html",
+      "access_start_utc": "2026-10-07T21:25:04.373962+00:00",
+      "http_status": 200,
+      "version": "OpenEnergyMonitor documentation build 0.0.1 (page title)",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-home-energy.html",
+      "upstream_path": "applications/home-energy.html",
+      "locators": [
+        {
+          "section": "Home energy monitoring; MyElectric; feed setup; dashboard",
+          "rendered_lines": "7-15, 25-48"
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "kind": "official product documentation",
+      "url": "https://www.home-assistant.io/docs/energy/",
+      "access_start_utc": "2026-10-07T21:25:04.524814+00:00",
+      "http_status": 200,
+      "version": "Live documentation captured 2026-10-07; no immutable release stated on page",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-energy.html",
+      "upstream_path": "docs/energy/",
+      "locators": [
+        {
+          "section": "Energy sources and power/energy sensor assumptions",
+          "rendered_lines": "25-43"
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "kind": "official product documentation",
+      "url": "https://www.home-assistant.io/docs/configuration/long-term-statistics/",
+      "access_start_utc": "2026-10-07T21:25:04.613177+00:00",
+      "http_status": 200,
+      "version": "Live documentation captured 2026-10-07; no immutable release stated on page",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-long-term-statistics.html",
+      "upstream_path": "docs/configuration/long-term-statistics/",
+      "locators": [
+        {
+          "section": "Statistics values, Total increasing reset behavior, use of long-term statistics and unit comparability",
+          "rendered_lines": "57-99"
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "kind": "official product documentation",
+      "url": "https://www.home-assistant.io/docs/energy/faq/",
+      "access_start_utc": "2026-10-07T21:25:05.162120+00:00",
+      "http_status": 200,
+      "version": "Live documentation captured 2026-10-07; no immutable release stated on page",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-energy-faq.html",
+      "upstream_path": "docs/energy/faq/",
+      "locators": [
+        {
+          "section": "Inflated totals after combined resettable sensors; sensor attributes",
+          "rendered_lines": "62-84"
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "kind": "official alternative implementation documentation",
+      "url": "https://docs.pola.rs/user-guide/io/csv/",
+      "access_start_utc": "2026-10-07T21:30:36.266974+00:00",
+      "http_status": 200,
+      "version": "Current Polars user guide captured 2026-10-07; no release pin stated",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/polars-csv-guide.html",
+      "upstream_path": "user-guide/io/csv/",
+      "locators": [
+        {
+          "symbols": "Rust CsvReader; CsvReadOptions; LazyCsvReader",
+          "rendered_lines": "155-185, 209-228"
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "kind": "official alternative implementation documentation",
+      "url": "https://docs.pola.rs/user-guide/transformations/time-series/parsing/",
+      "access_start_utc": "2026-10-07T21:30:36.451005+00:00",
+      "http_status": 200,
+      "version": "Current Polars user guide captured 2026-10-07; no release pin stated",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/polars-time-series-parsing.html",
+      "upstream_path": "user-guide/transformations/time-series/parsing/",
+      "locators": [
+        {
+          "symbols": "CSV date parsing; datetime datatype; schema inference",
+          "rendered_lines": "163-216, 217-245"
+        }
+      ]
+    },
+    {
+      "id": "S09",
+      "kind": "package registry metadata",
+      "url": "https://crates.io/api/v1/crates/csv",
+      "access_start_utc": "2026-10-07T21:27:32.652018+00:00",
+      "http_status": 200,
+      "version": "registry reports newest/max version 1.4.0, created 2025-10-17",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/crates-io-csv-registry.json",
+      "upstream_path": "crate csv metadata",
+      "locators": [
+        {
+          "json_pointers": "/crate/newest_version; /crate/max_version; /versions[num=1.4.0]/created_at"
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "kind": "immutable release tag provenance",
+      "captures": [
+        {
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/git/ref/tags/1.4.0",
+          "access_start_utc": "2026-10-07T21:27:32.788666+00:00",
+          "http_status": 200,
+          "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-tag-1.4.0-ref.json",
+          "upstream_path": "refs/tags/1.4.0",
+          "locators": [
+            {
+              "json_pointers": "/ref; /object/sha; /object/type"
+            }
+          ]
+        },
+        {
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/git/tags/2dc6e06cf8a9f199542f1fa5ba35b1b072280e3a",
+          "access_start_utc": "2026-10-07T21:27:33.027186+00:00",
+          "http_status": 200,
+          "version": "annotated tag 1.4.0, tag object reports valid signature",
+          "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-tag-1.4.0-object.json",
+          "upstream_path": "annotated tag object",
+          "locators": [
+            {
+              "json_pointers": "/tag; /object/sha; /tagger/date; /verification/verified; /verification/reason"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S11",
+      "kind": "immutable release commit metadata",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "access_start_utc": "2026-10-07T21:27:33.215318+00:00",
+      "http_status": 200,
+      "version": "csv 1.4.0; commit 4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-commit-4a3997e91d668ea1d8595bdef15625a77cf2308a.json",
+      "upstream_path": "commit metadata",
+      "locators": [
+        {
+          "json_pointers": "/sha; /commit/message; /commit/committer/date"
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "kind": "immutable public component source",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "access_start_utc": "2026-10-07T21:27:33.419978+00:00",
+      "http_status": 200,
+      "version": "csv 1.4.0 at commit 4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-reader.txt",
+      "upstream_path": "src/reader.rs",
+      "locators": [
+        {
+          "symbols": "ReaderBuilder::default; ReaderBuilder::has_headers; ReaderBuilder::flexible; ReaderBuilder::comment",
+          "lines": "40-48; 227-229; 230-310; 545-581"
+        },
+        {
+          "symbols": "Reader::read_record; Reader::read_byte_record; ReaderState::add_record",
+          "lines": "1530-1577; 1578 onward; 1882-1900"
+        },
+        {
+          "symbols": "read_record_unequal_fails; read_record_unequal_ok; read_record_unequal_continue",
+          "lines": "2321-2398"
+        }
+      ]
+    },
+    {
+      "id": "S13",
+      "kind": "immutable public component source",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/error.rs",
+      "access_start_utc": "2026-10-07T21:27:33.572513+00:00",
+      "http_status": 200,
+      "version": "csv 1.4.0 at commit 4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-error.txt",
+      "upstream_path": "src/error.rs",
+      "locators": [
+        {
+          "symbols": "ErrorKind::UnequalLengths; Error::position",
+          "lines": "69-80; 105-109"
+        }
+      ]
+    },
+    {
+      "id": "S14",
+      "kind": "immutable public component source",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/Cargo.toml",
+      "access_start_utc": "2026-10-07T21:27:33.877135+00:00",
+      "http_status": 200,
+      "version": "csv 1.4.0 at commit 4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-cargo-toml.txt",
+      "upstream_path": "Cargo.toml",
+      "locators": [
+        {
+          "symbols": "package version; csv-core dependency",
+          "lines": "1-24"
+        }
+      ]
+    },
+    {
+      "id": "S15",
+      "kind": "immutable public component source",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "access_start_utc": "2026-10-07T21:29:18.116302+00:00",
+      "http_status": 200,
+      "version": "csv-core 0.1.13 within csv 1.4.0 tag commit",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-csv-core-reader.txt",
+      "upstream_path": "csv-core/src/reader.rs",
+      "locators": [
+        {
+          "symbols": "ReaderBuilder::comment; DFA comment transition; comment tests comment_1..comment_5",
+          "lines": "230-238; 791-809; 991; 1684-1720"
+        }
+      ]
+    },
+    {
+      "id": "S16",
+      "kind": "immutable public component source",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/Cargo.toml",
+      "access_start_utc": "2026-10-07T21:29:18.254374+00:00",
+      "http_status": 200,
+      "version": "csv-core 0.1.13",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-csv-core-cargo.txt",
+      "upstream_path": "csv-core/Cargo.toml",
+      "locators": [
+        {
+          "symbols": "package.version",
+          "lines": "2-3"
+        }
+      ]
+    },
+    {
+      "id": "S17",
+      "kind": "issue history",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/46",
+      "access_start_utc": "2026-10-07T21:28:08.166836+00:00",
+      "http_status": 200,
+      "version": "issue #46 created 2016-06-28; closed 2017-05-23",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46.json",
+      "upstream_path": "issue #46",
+      "locators": [
+        {
+          "json_pointers": "/title; /state; /created_at; /closed_at; /body"
+        }
+      ]
+    },
+    {
+      "id": "S18",
+      "kind": "issue history",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/46/timeline",
+      "access_start_utc": "2026-10-07T21:28:08.354361+00:00",
+      "http_status": 200,
+      "version": "issue timeline captured 2026-10-07",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-timeline.json",
+      "upstream_path": "issue #46 timeline",
+      "locators": [
+        {
+          "events": "referenced commit a267ded9dfd595e013a074a9cd3ef1dc6cfb6373 at 2017-05-23T00:57:58Z; closed event 2017-05-23T01:20:41Z; referenced commit 6f24780f26a81336bc919e4e2b07cdcadb0c309d"
+        }
+      ]
+    },
+    {
+      "id": "S19",
+      "kind": "issue fix commit evidence",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/a267ded9dfd595e013a074a9cd3ef1dc6cfb6373",
+      "capture_time_utc": "2026-10-07T21:28:32.529781+00:00",
+      "capture_time_basis": "local file mtime immediately after response write; request start was not separately emitted",
+      "http_status": 200,
+      "version": "commit a267ded9dfd595e013a074a9cd3ef1dc6cfb6373, 2017-05-23",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-fix-candidate-commit.json",
+      "upstream_path": "commit metadata and changed paths",
+      "locators": [
+        {
+          "json_pointers": "/sha; /commit/message; /commit/committer/date; /files"
+        }
+      ]
+    },
+    {
+      "id": "S20",
+      "kind": "issue resolution/merge commit evidence",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/6f24780f26a81336bc919e4e2b07cdcadb0c309d",
+      "capture_time_utc": "2026-10-07T21:28:32.950829+00:00",
+      "capture_time_basis": "local file mtime immediately after response write; request start was not separately emitted",
+      "http_status": 200,
+      "version": "commit 6f24780f26a81336bc919e4e2b07cdcadb0c309d, 2017-05-23",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-close-rewrite-commit.json",
+      "upstream_path": "commit metadata and changed paths",
+      "locators": [
+        {
+          "json_pointers": "/sha; /commit/message; /commit/committer/date; /files"
+        }
+      ]
+    },
+    {
+      "id": "S21",
+      "kind": "issue implementation and regression source",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/a267ded9dfd595e013a074a9cd3ef1dc6cfb6373/csv-core/src/reader.rs",
+      "access_start_utc": "2026-10-07T21:28:56.455918+00:00",
+      "http_status": 200,
+      "version": "commit a267ded9dfd595e013a074a9cd3ef1dc6cfb6373",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-csv-core-reader.txt",
+      "upstream_path": "csv-core/src/reader.rs",
+      "locators": [
+        {
+          "symbols": "ReaderBuilder::comment; DFA comment handling; parser comment transition; comment_1/comment_2/comment_3 tests",
+          "lines": "150-173; 253-260; 759-789; 988; 1579-1590"
+        }
+      ]
+    },
+    {
+      "id": "S22",
+      "kind": "issue implementation caller source",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/a267ded9dfd595e013a074a9cd3ef1dc6cfb6373/src/reader.rs",
+      "access_start_utc": "2026-10-07T21:28:56.611444+00:00",
+      "http_status": 200,
+      "version": "commit a267ded9dfd595e013a074a9cd3ef1dc6cfb6373",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-reader.txt",
+      "upstream_path": "src/reader.rs",
+      "locators": [
+        {
+          "symbols": "ReaderBuilder::comment; caller into CoreReaderBuilder::comment",
+          "lines": "475-511"
+        }
+      ]
+    },
+    {
+      "id": "S23",
+      "kind": "open issue evidence",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/363",
+      "access_start_utc": "2026-10-07T21:27:34.192635+00:00",
+      "http_status": 200,
+      "version": "issue #363 opened 2024-04-24; still open in capture; report says csv 1.3.0",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-363.json",
+      "upstream_path": "issue #363",
+      "locators": [
+        {
+          "json_pointers": "/title; /state; /created_at; /body"
+        },
+        {
+          "web_rendered_lines": "GitHub issue statement and example: lines 131-194 (opened as 1.3.0 in rendered page)"
+        }
+      ]
+    },
+    {
+      "id": "S24",
+      "kind": "unmerged proposed fix evidence",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/pulls/396",
+      "access_start_utc": "2026-10-07T21:27:34.421028+00:00",
+      "http_status": 200,
+      "version": "PR #396 open; merged_at null in capture 2026-10-07",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-pull-396.json",
+      "upstream_path": "pull request #396",
+      "locators": [
+        {
+          "json_pointers": "/title; /state; /merged_at; /updated_at; /head/sha; /base/sha"
+        },
+        {
+          "web_rendered_lines": "PR status/open state and proposed EOF-comment fix/test: lines 131-215"
+        }
+      ]
+    },
+    {
+      "id": "S25",
+      "kind": "supporting timezone implementation source",
+      "url": "https://docs.rs/chrono-tz/latest/src/chrono_tz/timezone_impl.rs.html",
+      "access_start_utc": "2026-10-07T21:34:43.320509+00:00",
+      "http_status": 200,
+      "version": "chrono-tz 0.10.4 reported in captured docs.rs HTML; supporting evidence only, not a selected app dependency",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/chrono-tz-timezone-impl.html",
+      "upstream_path": "chrono_tz/timezone_impl.rs",
+      "locators": [
+        {
+          "symbol": "impl TimeZone for Tz::offset_from_local_datetime",
+          "rendered_lines": "371-394; LocalResult::Ambiguous and LocalResult::None branches"
+        }
+      ]
+    },
+    {
+      "id": "S26",
+      "kind": "issue discussion evidence",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/46/comments",
+      "access_start_utc": "2026-10-07T21:28:08.808006+00:00",
+      "http_status": 200,
+      "version": "issue #46 comments captured 2026-10-07",
+      "captured_bytes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-comments.json",
+      "upstream_path": "issue #46 comments",
+      "locators": [
+        {
+          "json_pointers": "array of comment records; problem framing and workaround discussion"
+        }
+      ]
+    }
+  ]
+}

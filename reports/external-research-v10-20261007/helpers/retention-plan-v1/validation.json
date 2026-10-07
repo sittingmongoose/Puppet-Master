@@ -1,0 +1,24 @@
+{
+  "accessed_paths": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/archive-candidates.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/public-witness-candidates.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/retention-plan.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/snapshot.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/summary.json"
+  ],
+  "archive_created": false,
+  "completed_at": "2026-10-07T22:14:27.989561+00:00",
+  "deterministic_offline_replay_identical": true,
+  "inventory_rows": 2851,
+  "offline_replay_reads_writes_confined_to_helper": true,
+  "plan_sha256": "7ddbc149a861068ca823c04c3ce2f0ff540b63e646f33d70b2357b35dbaf8a87",
+  "pointer_references_resolved": 9869,
+  "public_witness_candidate_fields_hashes_ranges_validated": true,
+  "remote_verification_performed": false,
+  "schema": "er10.retention.classifier-validation.v1",
+  "source_body_witness_limit": "Only one previously inventoried public source object (7232 bytes) inspected for a declared witness; no candidate/vendor execution.",
+  "source_files_deleted": false,
+  "unique_object_bytes": 116857910,
+  "unique_objects": 1151,
+  "unique_paths": 2304
+}

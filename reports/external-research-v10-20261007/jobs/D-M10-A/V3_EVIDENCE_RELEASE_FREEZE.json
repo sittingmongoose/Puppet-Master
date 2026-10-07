@@ -1,0 +1,23 @@
+{
+  "schema": "ER10-cohort3-M10-v3-evidence-release-gate",
+  "frozen_at": "2026-10-07T21:37:08.884863+00:00",
+  "native_identity": "01a11843-9fcd-7f01-b2d5-f60d1f7a1259",
+  "native_status": "complete",
+  "quiet": true,
+  "settled": true,
+  "budget_delivery_eligible": true,
+  "evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/evidence.md",
+    "sha256": "b9d74f90db1c592153b4e9d81840021691b32b108cd30903db91bcfc4ce115dc",
+    "bytes": 5777
+  },
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/treatment/fresh-evidence-first-answer-v3/INPUT_MAP.json",
+    "sha256": "4fe0564efe266e032eb61eff1197e079627a8f2e5e89cda57af915b3aec69440"
+  },
+  "withholding": "Evidence task/map/question supplied no proposal path or bytes. Advisory map no firewall; actual access audit incomplete_unknown. Proposal now released only to separate fresh reconciliation Goal, no continuation or Sol source key.",
+  "exact_proposal": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/common/fresh-common-untrusted-proposal-v3/draft.md",
+    "sha256": "1f5d5db7937498255192e0a8b679d6322807bb525a74c3ebcaa55b2ae145154a"
+  }
+}

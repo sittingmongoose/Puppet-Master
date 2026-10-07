@@ -1,0 +1,275 @@
+{
+  "schema": "ER10-cohort3-ordinary-review-freeze-v3",
+  "case": "D-M10-A",
+  "version": "v3",
+  "reviewer": "J2",
+  "arm": "treatment",
+  "verdict": "FullSourceFAIL",
+  "coverage": "FULL_DECLARED_SCOPE",
+  "unassessed": [],
+  "dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M10-A-v3-review-J2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M10-A-v3-review-J2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-v3-review-J2:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M10-A-v3-review-J2",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "latestTerminalSummary": null,
+    "latestTerminalResultContextTransferId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "summary": null,
+    "resultContextTransferId": null,
+    "waitTimedOut": false
+  },
+  "actual_t3_thread_binding": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M10-A-v3-review-J2",
+    "link": "[ER10 COHORT3 M10A v3 independent J2](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-v3-review-J2)",
+    "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "title": "ER10 COHORT3 M10A v3 independent J2",
+    "createdBy": "agent",
+    "creationSource": "mcp",
+    "status": "completed",
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-v3-review-J2:ordinal:1",
+    "activeRunId": null,
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "linkedPullRequest": null,
+    "titleRegeneration": null,
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+    "relationshipToParent": "subagent",
+    "runCount": 1,
+    "itemCount": 17,
+    "pendingRequestCount": 0,
+    "archived": false,
+    "settled": false,
+    "settledAt": null,
+    "snoozed": false,
+    "snoozedUntil": null,
+    "createdAt": "2026-10-07T21:45:32.378Z",
+    "updatedAt": "2026-10-07T21:49:56.030Z"
+  },
+  "actual_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-v3-review-J2:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T21:45:32.380Z",
+    "startedAt": "2026-10-07T21:45:34.148Z",
+    "completedAt": "2026-10-07T21:49:56.030Z"
+  },
+  "quiet": true,
+  "settled": true,
+  "settle_sequence": 533488,
+  "native_goal_required": false,
+  "dispatch_to_delivery_seconds": 263.65,
+  "queue_startup_seconds": 1.768,
+  "artifacts": {
+    "judgment.md": {
+      "sha256": "96491b62a5dc47f1fdfde9c97548c6c707e93899bd59338db1aadc0a3296b50d",
+      "bytes": 20838
+    },
+    "checks.json": {
+      "sha256": "d1381a529d04b6c6c220831a37f4a8b1e2db1309a551aefda1a6ea75c4ec068f",
+      "bytes": 9283
+    },
+    "INPUT_MAP.json": {
+      "sha256": "9ecb1f96851230d66e7c2ffd601e311557b9439e3d751f3460f12bc2ae84dcb0",
+      "bytes": 3287
+    },
+    "assignment.md": {
+      "sha256": "e01434d60173dd6bac1f775a50407a8ede7ff40c0e502fe878eae0d565120c33",
+      "bytes": 3076
+    },
+    "dispatch.json": {
+      "sha256": "e0a2f9242eefac24b172a37d2c762a461b1d6e0ade74c852f564f2060a7677cd",
+      "bytes": 986
+    },
+    "quiet_task_receipt.json": {
+      "sha256": "e8641ffa0fd13231ba6912945007d4646d7e2ba853e1710f4abf8dea11480f8b",
+      "bytes": 5972
+    },
+    "t3_terminal_receipt.json": {
+      "sha256": "ad9deedb5b6e21061fe34687f7d670067adc71563d2d1187468ecd9ba5f62299",
+      "bytes": 6351
+    }
+  },
+  "billing": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cache_tokens": null,
+  "generated_tokens": null,
+  "source_operations": [
+    {
+      "observed_complete_utc": "2026-10-07T21:45:45Z",
+      "op": "read_exact_input_map",
+      "tool": "exec_command/cat"
+    },
+    {
+      "at_utc": "2026-10-07T21:45:54.556697+00:00",
+      "through_utc": "2026-10-07T21:45:54.562489+00:00",
+      "op": "read_all_six_declared_nonprimary_texts_with_line_numbers_and_hash_all_eight_files",
+      "tool": "exec_command/local_Python"
+    },
+    {
+      "observed_complete_utc": "2026-10-07T21:46:02Z",
+      "op": "primary_section_reads_and_heading_scan",
+      "tool": "exec_command/nl_sed_rg",
+      "httpcache_line_ranges": [
+        [
+          160,
+          870
+        ],
+        [
+          870,
+          1585
+        ]
+      ],
+      "httpsem": "section-heading and Authorization locator scan; output reread from in-session stored results after display truncation"
+    },
+    {
+      "observed_complete_utc": "2026-10-07T21:46:16Z",
+      "op": "primary_condition_checks",
+      "tool": "exec_command/local_Python_and_nl_sed",
+      "httpsem_line_ranges": [
+        [
+          3480,
+          3725
+        ],
+        [
+          5062,
+          5082
+        ],
+        [
+          5615,
+          5734
+        ],
+        [
+          5872,
+          6022
+        ],
+        [
+          6182,
+          6289
+        ],
+        [
+          7444,
+          7479
+        ]
+      ],
+      "httpcache_line_ranges": [
+        [
+          1208,
+          1439
+        ]
+      ]
+    },
+    {
+      "observed_complete_utc": "2026-10-07T21:46:45Z",
+      "op": "verify_versions_storage_reuse_304_5xx_exception_application_scope_and_status_counterexample",
+      "tool": "exec_command/local_Python",
+      "httpcache_line_ranges": [
+        [
+          1,
+          50
+        ],
+        [
+          142,
+          162
+        ],
+        [
+          282,
+          337
+        ],
+        [
+          466,
+          524
+        ],
+        [
+          930,
+          989
+        ],
+        [
+          1536,
+          1568
+        ]
+      ],
+      "httpsem_line_ranges": [
+        [
+          1,
+          55
+        ],
+        [
+          6839,
+          6857
+        ],
+        [
+          6915,
+          6967
+        ],
+        [
+          7852,
+          7862
+        ],
+        [
+          7886,
+          7905
+        ]
+      ]
+    },
+    {
+      "at_utc": "2026-10-07T21:49:33.323009+00:00",
+      "op": "write_judgment_and_checks_and_reconfirm_all_declared_file_hashes",
+      "tool": "exec_command/local_Python"
+    },
+    {
+      "at_utc": "2026-10-07T21:49:52.676666+00:00",
+      "op": "validate_authored_outputs_JSON_parse_judgment_hash_byte_count_exactly_six_axes_coverage_and_null_usage_fields",
+      "tool": "exec_command/local_Python"
+    }
+  ],
+  "scientific_checks": {
+    "all_hashes_match": true,
+    "source_claim_condition_audit": "performed",
+    "eight_disposition_audit": "performed",
+    "intermediate_to_final_preservation": "performed",
+    "fixture_status_audit": "proposed_only",
+    "material_defect_ids": [
+      "J2-D1"
+    ],
+    "material_defect_locator": {
+      "final_line": 21,
+      "source": "RFC 9111 June 2022 section 4.3.3",
+      "source_lines": [
+        938,
+        949
+      ]
+    },
+    "counterexample": "hypothetical same-account/language eligible stale entry, client max-stale permission, content-bearing 503 during validation; not executed"
+  },
+  "output_volume": {
+    "judgment_utf8_bytes": 20838,
+    "judgment_words_whitespace_split": 2772,
+    "judgment_sha256": "96491b62a5dc47f1fdfde9c97548c6c707e93899bd59338db1aadc0a3296b50d",
+    "output_tokens": null
+  },
+  "blinding_limit": {
+    "method_blind": false,
+    "method_specific_paths_exposed": true,
+    "incidental_process_and_resource_metadata_in_approved_final": true,
+    "resource_metadata_used_in_scientific_verdict": false,
+    "restricted_history_or_other_answers_read": false,
+    "outside_declared_files_read": false,
+    "external_writes": false,
+    "lifecycle_or_budget_audit": "not performed; outside scientific assessment"
+  },
+  "frozen_at": "2026-10-07T21:50:34.074838+00:00"
+}

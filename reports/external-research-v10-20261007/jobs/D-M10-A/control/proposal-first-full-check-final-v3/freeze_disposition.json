@@ -1,0 +1,39 @@
+{
+  "stage": "D-M10-A/control/proposal-first-full-check-final-v3",
+  "native_identity": "01a11843-c718-7bf3-88af-d60a38f22ccf",
+  "native_status": "complete",
+  "t3_status": "completed",
+  "quiet": true,
+  "requestedAt": "2026-10-07T21:27:37.219Z",
+  "startedAt": "2026-10-07T21:27:37.910Z",
+  "completedAt": "2026-10-07T21:34:36.908Z",
+  "dispatch_to_delivery_seconds": 419.689,
+  "stage_ceiling_seconds": 1920,
+  "absolute_case_deadline": "2026-10-07T22:00:48.636Z",
+  "budget_delivery_eligible": true,
+  "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/control/proposal-first-full-check-final-v3/final.md",
+  "output_sha256": "b981141c46e6104a029c08c319afb1edbcddb68ac8ba815ced5f7dbdde1e765d",
+  "output_bytes": 6943,
+  "scientific_files": {
+    "final.md": {
+      "sha256": "b981141c46e6104a029c08c319afb1edbcddb68ac8ba815ced5f7dbdde1e765d",
+      "bytes": 6943
+    },
+    "critique.md": {
+      "sha256": "79da321e07f369298af76ebaec4883a19878621d047e6155b8fb3a3c13097bee",
+      "bytes": 3990
+    }
+  },
+  "raw_native_goal_counters": {
+    "objective_sha256": "2d6eab476f69c9c32dcddf648b11a327cdd4755a28c30d21b20b465d60eb697e",
+    "status": "complete",
+    "tokensUsed": 75892,
+    "tokenBudget": null,
+    "timeUsedSeconds": 385
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "source_quality": "UNASSESSED",
+  "scope_audit": "incomplete_unknown; advisorymap notfirewall",
+  "frozen_at": "2026-10-07T21:34:57.569656+00:00"
+}

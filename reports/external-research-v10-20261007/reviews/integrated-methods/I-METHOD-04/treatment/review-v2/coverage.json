@@ -1,0 +1,685 @@
+{
+  "schema_version": 1,
+  "case_id": "I-METHOD-04",
+  "review_target": "treatment/reviser-v2",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "rationale": "All declared scientific scope assessed; no established material false claim or required-scope omission. Unreported BagIt writer/profile limits, underspecified historical test conditions and minor dating/option wording prevent FULL_PASS.",
+  "assessment_coverage_complete": true,
+  "scope_frozen_before_judgment": "Original brief O1-O6 and original P1-P6 decisions; final owner choices and complete semantic/rendered content.",
+  "count_definition": "complete means inventory size; assessed means review completed, not that a candidate assertion was proven. Groups overlap; only obligations_total_excluding_rollups sums O1-O6 + 35 atomic plan decisions + 12 owner decisions.",
+  "counts": {
+    "six_axes": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "O1_O6": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "plan_sections": {
+      "complete": 6,
+      "assessed": 6,
+      "unassessed": 0
+    },
+    "atomic_plan_decisions": {
+      "complete": 35,
+      "assessed": 35,
+      "unassessed": 0
+    },
+    "owner_decisions": {
+      "complete": 12,
+      "assessed": 12,
+      "unassessed": 0
+    },
+    "obligations_total_excluding_rollups": {
+      "complete": 53,
+      "assessed": 53,
+      "unassessed": 0
+    },
+    "consequential_checks": {
+      "complete": 29,
+      "assessed": 29,
+      "unassessed": 0
+    },
+    "final_records": {
+      "complete": 9,
+      "assessed": 9,
+      "unassessed": 0
+    },
+    "final_record_fields": {
+      "complete": 90,
+      "assessed": 90,
+      "unassessed": 0
+    },
+    "final_document_fields": {
+      "complete": 11,
+      "assessed": 11,
+      "unassessed": 0
+    },
+    "final_recursive_semantic_leaves": {
+      "complete": 830,
+      "assessed": 830,
+      "unassessed": 0
+    },
+    "rendered_views": {
+      "complete": 9,
+      "assessed": 9,
+      "unassessed": 0
+    },
+    "criticism_dispositions": {
+      "complete": 9,
+      "assessed": 9,
+      "unassessed": 0
+    },
+    "original_cited_sources": {
+      "complete": 16,
+      "assessed": 16,
+      "unassessed": 0
+    }
+  },
+  "material_error_count": 0,
+  "nonmaterial_error_count": 1,
+  "material_defects": [],
+  "limitations": [
+    "L1_BAGIT_PROFILE",
+    "L2_HISTORY_TEST_CONDITIONS",
+    "L3_OPTION_WORDING",
+    "L4_CASE_STUDY_DATE"
+  ],
+  "unassessed_obligations": [],
+  "unassessed_consequential_findings": [],
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original brief and all plan/owner obligations",
+      "status": "ASSESSED_COMPLETE",
+      "result": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims, definitions, versions and applicability",
+      "status": "ASSESSED_COMPLETE",
+      "result": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "axis": 3,
+      "name": "Bounded discovery, mechanisms, alternatives, negatives and opportunities",
+      "status": "ASSESSED_COMPLETE",
+      "result": "PASS"
+    },
+    {
+      "axis": 4,
+      "name": "Incorrect rejection/correction or false already-covered disposition",
+      "status": "ASSESSED_COMPLETE",
+      "result": "PASS"
+    },
+    {
+      "axis": 5,
+      "name": "Research-to-critique-to-final preservation, options and uncertainty",
+      "status": "ASSESSED_COMPLETE",
+      "result": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed validation and witness applicability",
+      "status": "ASSESSED_COMPLETE",
+      "result": "PASS"
+    }
+  ],
+  "obligations": {
+    "O1": {
+      "status": "ASSESSED",
+      "result": "SATISFIED",
+      "assessment": "Brief-led discovery: institutional ingest analogy, FFprobe/FFmpeg, BWF MetaEdit, BagIt and PREMIS; useful negative and optional findings; no exhaustive opportunity claim."
+    },
+    "O2": {
+      "status": "ASSESSED",
+      "result": "SATISFIED_WITH_LIMITATIONS",
+      "assessment": "Immutable bagit-python code, governing definitions and callers support the authored mechanisms; unreported 0.97 writer/profile and conformance limits constrain the 1.0 reference candidate."
+    },
+    "O3": {
+      "status": "ASSESSED",
+      "result": "SATISFIED_WITH_LIMITATIONS",
+      "assessment": "Real #152 report, PR #184, merge, released tag and inspected tests establish history; exact automated regression absent and proposed test environment is underspecified."
+    },
+    "O4": {
+      "status": "ASSESSED",
+      "result": "SATISFIED",
+      "assessment": "All six sections and all 35 atomic decisions compared; already-covered claims stay within supplied P1-P6."
+    },
+    "O5": {
+      "status": "ASSESSED",
+      "result": "SATISFIED_SCIENTIFIC_CONTENT",
+      "assessment": "Admitted substantive critique independently checked and all nine final criticism dispositions assessed; family/dispatch provenance is host-only under review instructions."
+    },
+    "O6": {
+      "status": "ASSESSED",
+      "result": "SATISFIED_WITH_LIMITATIONS",
+      "assessment": "Coherent complete proposed replacement, options, rejections, validation and uncertainty; minor optional-record/digest wording ambiguity, no build or validation claim."
+    }
+  },
+  "plan": {
+    "P1": {
+      "status": "ASSESSED",
+      "result": "SATISFIED",
+      "original_plan_line": 7,
+      "final_json_pointer": "/findings/4/conditions/P1",
+      "decisions": [
+        {
+          "id": "P1.1",
+          "obligation": "Local desktop ingest of selected WAV/BWF, FLAC and MP3 from removable media",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P1.2",
+          "obligation": "Copy originals to ingest area",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P1.3",
+          "obligation": "Compute fixity",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P1.4",
+          "obligation": "Preserve filenames and relative folder structure",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P1.5",
+          "obligation": "Do not edit source media",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        }
+      ]
+    },
+    "P2": {
+      "status": "ASSESSED",
+      "result": "SATISFIED",
+      "original_plan_line": 11,
+      "final_json_pointer": "/findings/4/conditions/P2",
+      "decisions": [
+        {
+          "id": "P2.1",
+          "obligation": "Display duration",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P2.2",
+          "obligation": "Display channels",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P2.3",
+          "obligation": "Display encoding",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P2.4",
+          "obligation": "Display observed embedded metadata",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P2.5",
+          "obligation": "User-entered accession notes",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P2.6",
+          "obligation": "Waveform/listen spot inspection",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P2.7",
+          "obligation": "Keep observations separate from corrections",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        }
+      ]
+    },
+    "P3": {
+      "status": "ASSESSED",
+      "result": "SATISFIED",
+      "original_plan_line": 15,
+      "final_json_pointer": "/findings/4/conditions/P3",
+      "decisions": [
+        {
+          "id": "P3.1",
+          "obligation": "Explicit user request for listening derivative",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P3.2",
+          "obligation": "Choose settings after preview",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P3.3",
+          "obligation": "Original audio remains preservation source",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P3.4",
+          "obligation": "Visible failed/interrupted transformation disposition",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        }
+      ]
+    },
+    "P4": {
+      "status": "ASSESSED",
+      "result": "SATISFIED_WITH_LIMITATIONS",
+      "original_plan_line": 19,
+      "final_json_pointer": "/findings/4/conditions/P4",
+      "decisions": [
+        {
+          "id": "P4.1",
+          "obligation": "Package originals",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P4.2",
+          "obligation": "Derivative references",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P4.3",
+          "obligation": "Provenance",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P4.4",
+          "obligation": "Fixity records",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P4.5",
+          "obligation": "Transformation settings and tool version",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P4.6",
+          "obligation": "Reopen makes missing/changed content visible",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        }
+      ]
+    },
+    "P5": {
+      "status": "ASSESSED",
+      "result": "SATISFIED_WITH_LIMITATIONS",
+      "original_plan_line": 23,
+      "final_json_pointer": "/findings/4/conditions/P5",
+      "decisions": [
+        {
+          "id": "P5.1",
+          "obligation": "Metadata parser undecided",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P5.2",
+          "obligation": "Decoder/encoder undecided",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P5.3",
+          "obligation": "Package serializer undecided",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P5.4",
+          "obligation": "Playback component undecided",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P5.5",
+          "obligation": "Offline Windows or Linux",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P5.6",
+          "obligation": "No interview upload",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P5.7",
+          "obligation": "No embedded metadata changes for display",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        }
+      ]
+    },
+    "P6": {
+      "status": "ASSESSED",
+      "result": "SATISFIED",
+      "original_plan_line": 27,
+      "final_json_pointer": "/findings/4/conditions/P6",
+      "decisions": [
+        {
+          "id": "P6.1",
+          "obligation": "Synthetic interrupted copy validation",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P6.2",
+          "obligation": "Synthetic malformed metadata validation",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P6.3",
+          "obligation": "Synthetic unusual layout validation",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P6.4",
+          "obligation": "Synthetic conversion validation",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P6.5",
+          "obligation": "Synthetic package fixity validation",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        },
+        {
+          "id": "P6.6",
+          "obligation": "No recipe, component-version or preservation-quality validation asserted",
+          "status": "ASSESSED",
+          "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+        }
+      ]
+    }
+  },
+  "owner_decisions": [
+    {
+      "id": "D01",
+      "decision": "Derivative container/codec and lossless/lossy choice",
+      "status": "ASSESSED",
+      "result": "OPEN_COMPATIBLE"
+    },
+    {
+      "id": "D02",
+      "decision": "Target sample rate, bit depth, filters, channel and metadata maps",
+      "status": "ASSESSED",
+      "result": "OPEN_WITH_EXPLICIT_PREVIEW"
+    },
+    {
+      "id": "D03",
+      "decision": "Per-file versus batch requests",
+      "status": "ASSESSED",
+      "result": "OPEN_WITH_PER_FILE_PROPOSAL"
+    },
+    {
+      "id": "D04",
+      "decision": "Collision/unsupported path resolution and reversible mapping",
+      "status": "ASSESSED",
+      "result": "OPEN_WITH_NO_SILENT_RENAMING"
+    },
+    {
+      "id": "D05",
+      "decision": "Exact metadata whitelist and correction fields",
+      "status": "ASSESSED",
+      "result": "OPEN_WITH_READ_ONLY_ORIGINALS"
+    },
+    {
+      "id": "D06",
+      "decision": "Native versus bundled package serializer",
+      "status": "ASSESSED",
+      "result": "OPEN_WITH_SOURCE_APPLICABILITY_LIMIT"
+    },
+    {
+      "id": "D07",
+      "decision": "Formal event record and local subset versus full PREMIS",
+      "status": "ASSESSED",
+      "result": "OPEN_WITH_MANDATORY_PROVENANCE_WORDING_LIMIT"
+    },
+    {
+      "id": "D08",
+      "decision": "Playback backend and UI",
+      "status": "ASSESSED",
+      "result": "OPEN_WITH_CROSS_PLATFORM_PROTOTYPE"
+    },
+    {
+      "id": "D09",
+      "decision": "Batch review UI/export/CSV",
+      "status": "ASSESSED",
+      "result": "OPTIONAL_ANALOGY"
+    },
+    {
+      "id": "D10",
+      "decision": "BWF MetaEdit QA/export",
+      "status": "ASSESSED",
+      "result": "OPTIONAL_BWF_SPECIFIC"
+    },
+    {
+      "id": "D11",
+      "decision": "Quality thresholds and listening acceptance",
+      "status": "ASSESSED",
+      "result": "OPEN_NOT_INFERRED_FROM_PROBE"
+    },
+    {
+      "id": "D12",
+      "decision": "Institutional rights/consent/access/retention policy",
+      "status": "ASSESSED",
+      "result": "OUTSIDE_TECHNICAL_EVIDENCE_NO_AUTOMATED_DECISION"
+    }
+  ],
+  "final_records": [
+    {
+      "id": "O1_OPEN_DISCOVERY",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    },
+    {
+      "id": "O2_PINNED_CODE",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    },
+    {
+      "id": "O3_HISTORY",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    },
+    {
+      "id": "O4_P1_TO_P6_COMPARISON",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    },
+    {
+      "id": "FULL_PLAN_REPLACEMENT",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    },
+    {
+      "id": "O5_CRITIC_DISPOSITION",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    },
+    {
+      "id": "O6_CHOICES_AND_LIMITS",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    },
+    {
+      "id": "P6_ACCEPTANCE",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    },
+    {
+      "id": "EXECUTION_RECORD",
+      "status": "ASSESSED",
+      "all_authored_fields_assessed": true
+    }
+  ],
+  "consequential_checks": [
+    {
+      "id": "C01",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C02",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C03",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C04",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C05",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C06",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C07",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C08",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C09",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C10",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C11",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C12",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C13",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C14",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C15",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C16",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C17",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C18",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C19",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C20",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C21",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C22",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C23",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C24",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C25",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C26",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C27",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C28",
+      "status": "ASSESSED"
+    },
+    {
+      "id": "C29",
+      "status": "ASSESSED"
+    }
+  ],
+  "exhaustive_opportunity_recall_claimed": false,
+  "host_only_not_adjudicated": [
+    "Provider/family and dispatch identity, activation/terminal lifecycle, timing/quota/economics and billing. The original O5 family wording is recorded, not certified from self-authored metadata."
+  ],
+  "boundary_disclosure": [
+    "Only own-arm named scientific artifacts and public primary sources used for judgment.",
+    "Also read adjacent own-arm research semantic.json (byte-identical to admitted embedded input) and research preservation_check.md; the latter self-report is excluded as scientific/preservation truth. No other arm/case/parent/campaign-state/review contents read."
+  ],
+  "blinding_limits": [
+    "Paths disclose arm label.",
+    "Visible renderer/procedure/Goal metadata can reveal method differences.",
+    "Author timing/counters ignored; no counterpart outputs, scores, cost/speed targets or parent analysis used."
+  ],
+  "usage": {
+    "input_tokens": null,
+    "cache_read_tokens": null,
+    "cache_creation_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billed_amount": null,
+    "billed_currency": null
+  },
+  "completed_at_utc": "2026-10-07T21:54:05.633577+00:00"
+}

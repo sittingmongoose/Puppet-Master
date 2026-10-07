@@ -1,0 +1,249 @@
+{
+  "schema_version": "1.0",
+  "case": "I-METHOD-06",
+  "stage": "control/reviser-v1",
+  "goal_identity": "01a11816-0c76-7631-9743-0395ce923436",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/input-map.json",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/source-map.json"
+  ],
+  "source_directories_from_input_map": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/sources"
+  ],
+  "own_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/artifact.md",
+  "own_source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/reviser-v1/source-map.json",
+  "own_evidence_directories": [
+    "sources/research/",
+    "sources/critic/"
+  ],
+  "source_hashes": "Omitted for host-side mechanical hashing.",
+  "first_useful_saved_finding_at_utc": "2026-10-07T20:46:58Z",
+  "complete_artifact_at_utc": "2026-10-07T20:46:58Z",
+  "source_operations": {
+    "input_map_file_read_operations": 1,
+    "predecessor_file_read_operations": 6,
+    "unique_predecessor_files_read": 4,
+    "research_capture_file_read_operations": 8,
+    "critic_capture_excerpt_read_operations": 6,
+    "total_file_read_operations": 21,
+    "unique_capture_files_inspected": 13,
+    "mapped_capture_files_copied_verbatim": 26,
+    "new_web_or_search_tool_invocations": 0,
+    "new_public_source_retrievals": 0,
+    "source_execution_or_local_product_tests": 0,
+    "note": "Only the exact input map, four named predecessor files, and source-map-named captures under the two admitted source directories were used. Large captured-page boilerplate was not treated as evidence; changed Restic claims were checked against pinned captured source excerpts and the mapped issue/release/test records."
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "captured_path": "sources/research/restic-issue-5667.html",
+      "requested_url": "https://github.com/restic/restic/issues/5667",
+      "version_or_scope": "Restic 0.18.1 Windows/amd64 malformed quoted source path; empty-snapshot issue report.",
+      "use": "Concrete empty-snapshot failure; report does not establish a process exit code."
+    },
+    {
+      "id": "S02",
+      "captured_path": "sources/research/restic-pr-21852.html",
+      "requested_url": "https://github.com/restic/restic/pull/21852",
+      "version_or_scope": "Merged 2026-06-21; commit 8d7679c83110257bc458e0ed68c7985cd37cecb9.",
+      "use": "Fix, helper regression-test context, and reported upstream checks; not checks run by this stage."
+    },
+    {
+      "id": "S03",
+      "captured_path": "sources/research/restic-release-v0.19.1.html",
+      "requested_url": "https://github.com/restic/restic/releases/tag/v0.19.1",
+      "version_or_scope": "Signed v0.19.1 release, peeled commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf.",
+      "use": "Release notes list the issue/fix; v0.19.1 remains research baseline only."
+    },
+    {
+      "id": "S04",
+      "captured_path": "sources/research/restic-v0.19.1-cmd_backup.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup.go",
+      "version_or_scope": "Pinned v0.19.1 caller and filterExisting.",
+      "use": "All-inaccessible inputs abort before repository open; mixed accessible/inaccessible inputs may save a snapshot before ErrInvalidSourceData."
+    },
+    {
+      "id": "S05",
+      "captured_path": "sources/research/restic-v0.19.1-cmd_backup_test.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup_test.go",
+      "version_or_scope": "Pinned TestFilterExistingUnreadable.",
+      "use": "Helper-level ENOTDIR/NUL all-invalid and mixed cases; not an end-to-end repository-write test."
+    },
+    {
+      "id": "S06",
+      "captured_path": "sources/research/restic-v0.19.1-cmd_check.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+      "version_or_scope": "Pinned v0.19.1 check command.",
+      "use": "Structural/default and full/subset data-read paths are distinct; scope follows command selection."
+    },
+    {
+      "id": "S07",
+      "captured_path": "sources/research/restic-v0.19.1-checker.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/checker/checker.go",
+      "version_or_scope": "Pinned v0.19.1 checker implementation.",
+      "use": "Tree structure and repository pack-read behavior."
+    },
+    {
+      "id": "S08",
+      "captured_path": "sources/research/restic-working-with-repos.html",
+      "requested_url": "https://restic.readthedocs.io/en/v0.19.1/045_working_with_repos.html",
+      "version_or_scope": "Restic 0.19.1 versioned documentation.",
+      "use": "Structural, full-data and subset semantics; copy/deduplication tradeoffs."
+    },
+    {
+      "id": "S09",
+      "captured_path": "sources/research/restic-backup-docs.html",
+      "requested_url": "https://restic.readthedocs.io/en/v0.19.1/040_backup.html",
+      "version_or_scope": "Restic 0.19.1 versioned documentation.",
+      "use": "Engine snapshot analogy only; not PM capture-consistency or app-restore proof."
+    },
+    {
+      "id": "S10",
+      "captured_path": "sources/research/kopia-consistency.html",
+      "requested_url": "https://kopia.io/docs/advanced/consistency/",
+      "version_or_scope": "Kopia documentation captured 2026-10-07; not release-pinned.",
+      "use": "Alternative verification ladder; documentation claim, not Restic or PM runtime evidence."
+    },
+    {
+      "id": "S11",
+      "captured_path": "sources/research/kopia-snapshot-verify-docs.html",
+      "requested_url": "https://kopia.io/docs/reference/command-line/common/snapshot-verify/",
+      "version_or_scope": "Kopia current CLI documentation captured 2026-10-07; not release-pinned.",
+      "use": "Optional percentage/full-file verification behavior in documentation."
+    },
+    {
+      "id": "S12",
+      "captured_path": "sources/research/kopia-issue-3605.html",
+      "requested_url": "https://github.com/kopia/kopia/issues/3605",
+      "version_or_scope": "Historical Kopia 0.15.0 report from 2024; page observed open without linked PR.",
+      "use": "Historical ENOSPC caution only; no claim about current Kopia."
+    },
+    {
+      "id": "S13",
+      "captured_path": "sources/research/borg-check.html",
+      "requested_url": "https://borgbackup.readthedocs.io/en/1.4.5/usage/check.html",
+      "version_or_scope": "Borg 1.4.5 documentation.",
+      "use": "Alternative full-data verification and separate potentially lossy repair operation."
+    },
+    {
+      "id": "S14",
+      "captured_path": "sources/research/rclone-copy-docs.html",
+      "requested_url": "https://rclone.org/commands/rclone_copy/",
+      "version_or_scope": "rclone documentation captured 2026-10-07; not release-pinned.",
+      "use": "Copy is a transport primitive; it does not define PM snapshot identity/completion."
+    },
+    {
+      "id": "S15",
+      "captured_path": "sources/research/rclone-sync-docs.html",
+      "requested_url": "https://rclone.org/commands/rclone_sync/",
+      "version_or_scope": "rclone documentation captured 2026-10-07; not release-pinned.",
+      "use": "Sync can delete destination-only data; rejected for a live Project Vault."
+    },
+    {
+      "id": "S16",
+      "captured_path": "sources/research/cisa-stopransomware-resource.html",
+      "requested_url": "https://www.cisa.gov/sites/default/files/2023-10/StopRansomware-Guide-508C-v3_1.pdf",
+      "resolved_url": "https://www.cisa.gov/resources-tools/resources/stopransomware-guide",
+      "version_or_scope": "CISA resource metadata page; substantive guidance is S17.",
+      "use": "Resource metadata and PDF link only."
+    },
+    {
+      "id": "S17",
+      "captured_path": "sources/research/cisa-stopransomware-guide.pdf",
+      "requested_url": "https://www.cisa.gov/sites/default/files/2025-03/StopRansomware-Guide%20508.pdf",
+      "version_or_scope": "CISA #StopRansomware Guide; revision date 2023-10-19.",
+      "use": "Offline encrypted backup and availability/integrity testing guidance; not PM acceptance."
+    },
+    {
+      "id": "S18",
+      "captured_path": "sources/research/nist-sp800-34r1.pdf",
+      "requested_url": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-34r1.pdf",
+      "version_or_scope": "NIST SP 800-34 Rev. 1.",
+      "use": "Alternate-platform recovery testing and documented outcomes; not PM acceptance."
+    },
+    {
+      "id": "P01",
+      "captured_path": "sources/critic/restic-5667-issue.html",
+      "requested_url": "https://github.com/restic/restic/issues/5667",
+      "version_or_scope": "Restic 0.18.1 Windows/amd64 malformed quoted source path.",
+      "use": "Independent capture of concrete empty-snapshot issue evidence."
+    },
+    {
+      "id": "P02",
+      "captured_path": "sources/critic/restic-pr-21852.html",
+      "requested_url": "https://github.com/restic/restic/pull/21852",
+      "version_or_scope": "Merged 2026-06-21; commit 8d7679c83110257bc458e0ed68c7985cd37cecb9.",
+      "use": "Independent capture of fix, review/test limits, and upstream-reported checks."
+    },
+    {
+      "id": "P03",
+      "captured_path": "sources/critic/restic-v0.19.1-release.html",
+      "requested_url": "https://github.com/restic/restic/releases/tag/v0.19.1",
+      "version_or_scope": "v0.19.1 release and peeled commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf.",
+      "use": "Independent capture that release notes name the issue/fix."
+    },
+    {
+      "id": "P04",
+      "captured_path": "sources/critic/restic-6aa3-cmd_backup.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup.go",
+      "version_or_scope": "Pinned v0.19.1 caller and filterExisting.",
+      "use": "Directly checked all-inaccessible/mixed-source and incomplete snapshot distinctions."
+    },
+    {
+      "id": "P05",
+      "captured_path": "sources/critic/restic-6aa3-cmd_backup_test.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup_test.go",
+      "version_or_scope": "Pinned TestFilterExistingUnreadable.",
+      "use": "Directly checked helper-level ENOTDIR/NUL coverage and test limit."
+    },
+    {
+      "id": "P06",
+      "captured_path": "sources/critic/restic-6aa3-cmd_check.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+      "version_or_scope": "Pinned v0.19.1 check command.",
+      "use": "Directly checked data-read selection and subset scope."
+    },
+    {
+      "id": "P07",
+      "captured_path": "sources/critic/restic-6aa3-checker.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/checker/checker.go",
+      "version_or_scope": "Pinned v0.19.1 checker implementation.",
+      "use": "Directly checked structural and pack-read definitions."
+    },
+    {
+      "id": "P08",
+      "captured_path": "sources/critic/restic-6aa3-working_with_repos.rst",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/doc/045_working_with_repos.rst",
+      "version_or_scope": "Pinned v0.19.1 repository documentation.",
+      "use": "Directly checked structural/full/subset descriptions and n/t behavior."
+    }
+  ],
+  "native_goal_counters": {
+    "activation_snapshot": {
+      "identity": "01a11816-0c76-7631-9743-0395ce923436",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    "preterminal_snapshot": {
+      "observed_at_utc": "2026-10-07T20:48:21Z",
+      "identity": "01a11816-0c76-7631-9743-0395ce923436",
+      "status": "active",
+      "tokensUsed": 121625,
+      "timeUsedSeconds": 615
+    },
+    "terminal_snapshot": "Reported by actual update_goal and terminal get_goal responses; no post-terminal artifact mutation."
+  },
+  "distinct_counters": {
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null,
+    "reason": "Native Goal responses do not expose these distinct counters; null means unknown, not zero. Aggregate Goal token/time counters are recorded separately."
+  }
+}

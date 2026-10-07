@@ -1,0 +1,283 @@
+{
+  "schema": "ER10_IMMUTABLE_WORKING_SUPPLEMENT_V1",
+  "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "files": [
+    {
+      "relative_path": "reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "capture_basis": "complete owner original failure-inclusive mechanical economics",
+      "capture_at": "2026-10-07T22:00:03.510673+00:00",
+      "expected_sha256": "647c1dd17d46831ef3901924b4fb467fc324feded5c1d4934d2a0d3aaf142165",
+      "snapshot_path": "working-input/reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 5829,
+      "sha256": "647c1dd17d46831ef3901924b4fb467fc324feded5c1d4934d2a0d3aaf142165",
+      "expected_hash_matches": true
+    },
+    {
+      "relative_path": "reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "capture_basis": "complete owner original failure-inclusive mechanical economics",
+      "capture_at": "2026-10-07T22:00:03.512202+00:00",
+      "expected_sha256": "d8cb815b090cd096a66a91c46cbbf288f6879cd5f05f9812b915a25ba93df102",
+      "snapshot_path": "working-input/reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 4133,
+      "sha256": "d8cb815b090cd096a66a91c46cbbf288f6879cd5f05f9812b915a25ba93df102",
+      "expected_hash_matches": true
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "capture_basis": "complete owner original failure-inclusive mechanical economics",
+      "capture_at": "2026-10-07T22:00:03.513460+00:00",
+      "expected_sha256": "e8be320ca936dc01a168126f1b6ab64e70c07deba0191f2f39ed2f253006112c",
+      "snapshot_path": "working-input/reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 6719,
+      "sha256": "e8be320ca936dc01a168126f1b6ab64e70c07deba0191f2f39ed2f253006112c",
+      "expected_hash_matches": true
+    },
+    {
+      "relative_path": "reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "capture_basis": "complete owner original failure-inclusive mechanical economics",
+      "capture_at": "2026-10-07T22:00:03.514615+00:00",
+      "expected_sha256": "712dc57eddff2cd3ac71abcb35e0469fd28c562fa1feed64109ba5f2c2b9863a",
+      "snapshot_path": "working-input/reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "bytes": 5910,
+      "sha256": "712dc57eddff2cd3ac71abcb35e0469fd28c562fa1feed64109ba5f2c2b9863a",
+      "expected_hash_matches": true
+    },
+    {
+      "relative_path": "helpers/targeted-cohort4/D-M12-A/pair-freeze-v3.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M12-A/pair-freeze-v3.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.520380+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/targeted-cohort4/D-M12-A/pair-freeze-v3.json",
+      "bytes": 1900,
+      "sha256": "3f1145e5141f1ed2de6d0eab60acde3d8ad4d656a2384f9f9051b0ab1c216cd1",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/targeted-cohort4/D-M13-A/pair-freeze-v2.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M13-A/pair-freeze-v2.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.521525+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/targeted-cohort4/D-M13-A/pair-freeze-v2.json",
+      "bytes": 4136,
+      "sha256": "800b4de3040b2fe82fd52c24806062de5ddb1d1a93db42456956d5cc66bc6836",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/targeted-cohort4/D-M14-A/pair-freeze-v3.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/pair-freeze-v3.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.522791+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/targeted-cohort4/D-M14-A/pair-freeze-v3.json",
+      "bytes": 1931,
+      "sha256": "02e10e34e1074db6980bf72c7571c9bd853e4d3eeb636aa9b6cb6ba2ac3afbb0",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/targeted-cohort4/D-M15-A/pair-freeze-v3.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M15-A/pair-freeze-v3.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.523834+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/targeted-cohort4/D-M15-A/pair-freeze-v3.json",
+      "bytes": 3191,
+      "sha256": "3e64c1c937142ef60714b69bbfcb65bee4c9332002a2f4670f69af95a0c9cf59",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method01-pair-freeze.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method01-pair-freeze.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.536628+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/integrated-execution/method01-pair-freeze.json",
+      "bytes": 19177,
+      "sha256": "f9328c23d39e93ec6701e77ba64468ee4b4cd6440e6608a923811154c4ba0408",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/integrated-execution/method03-pair-freeze.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method03-pair-freeze.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.538400+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/integrated-execution/method03-pair-freeze.json",
+      "bytes": 3533,
+      "sha256": "6aa7cfeb0b960c00f4a61b29c7a5d96300eec14ae0ac7fa0e91d1e34604c3902",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/integrated-execution/i-method-04-pair-freeze-v2.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-04-pair-freeze-v2.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.539340+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/integrated-execution/i-method-04-pair-freeze-v2.json",
+      "bytes": 2999,
+      "sha256": "29f9f6fddaeaaa47f13ba0da1da1760664acabdacbbaf201df00bb4e1ea46b3e",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "reviews/integrated-methods/I-METHOD-04/control/review-v2/frozen-review.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/control/review-v2/frozen-review.json",
+      "capture_basis": "explicit complete frozen delivered own-arm review",
+      "capture_at": "2026-10-07T22:00:03.540528+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/reviews/integrated-methods/I-METHOD-04/control/review-v2/frozen-review.json",
+      "bytes": 50884,
+      "sha256": "bb85277d0326f365e5e826d5c5b4322a9a7610817a6c9ea8b9e886879847ac72",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "reviews/integrated-methods/I-METHOD-04/treatment/review-v2/frozen-review.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/frozen-review.json",
+      "capture_basis": "explicit complete frozen delivered own-arm review",
+      "capture_at": "2026-10-07T22:00:03.541565+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/frozen-review.json",
+      "bytes": 52866,
+      "sha256": "71c454fafedff92da9c38aa2b6275e1daa5da34cf40cb183803049a2fcc351fc",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/integrated-execution/i-method-05-pair-freeze-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-05-pair-freeze-v1.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.542829+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/integrated-execution/i-method-05-pair-freeze-v1.json",
+      "bytes": 2493,
+      "sha256": "a3c41a32f21b5e769e5b3affd157b6a53d8e5cf978d8b586f89726dad27e6e84",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/integrated-execution/i-method-06-pair-freeze-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-06-pair-freeze-v1.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.543786+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/integrated-execution/i-method-06-pair-freeze-v1.json",
+      "bytes": 2493,
+      "sha256": "9a1f324be75731d6c51e77ec8330dbc39c5543385b07079a877296229d7d7b63",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/integrated-execution/i-fast-02-pair-freeze-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-02-pair-freeze-v1.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.544949+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/integrated-execution/i-fast-02-pair-freeze-v1.json",
+      "bytes": 2513,
+      "sha256": "93fc5ba218d58de6d2456fb2161925a33e147fa79d2ee38760414ead4e4863cc",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "reviews/integrated-methods/I-FAST-02/treatment/review-v1/frozen-review.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/treatment/review-v1/frozen-review.json",
+      "capture_basis": "explicit complete frozen delivered own-arm review",
+      "capture_at": "2026-10-07T22:00:03.545326+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/reviews/integrated-methods/I-FAST-02/treatment/review-v1/frozen-review.json",
+      "bytes": 40627,
+      "sha256": "1c80425aa8c1bb40bc8ac58f2239fb88d1354f3be14a3deeee1e3f54a87fedb6",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/integrated-execution/i-fast-03-pair-freeze-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json",
+      "capture_basis": "observed owner mechanical pair freeze only; no candidate text read",
+      "capture_at": "2026-10-07T22:00:03.545922+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json",
+      "bytes": 2512,
+      "sha256": "32b421c1b04bd06c28a9e76f21a4c3cc93d1e5747103e009228db80e2951b36b",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "jobs/D-M08-A/V3_PAIR_FREEZE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/V3_PAIR_FREEZE.json",
+      "capture_basis": "owner completed mechanical pair freeze",
+      "capture_at": "2026-10-07T22:00:03.548636+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/jobs/D-M08-A/V3_PAIR_FREEZE.json",
+      "bytes": 3850,
+      "sha256": "98d02c7ac96c6c9b87643225af272a9de27fbffa397852c47082d323b31e982c",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "jobs/D-M08-B/V3_PAIR_FREEZE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/V3_PAIR_FREEZE.json",
+      "capture_basis": "owner completed mechanical pair freeze",
+      "capture_at": "2026-10-07T22:00:03.549804+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/jobs/D-M08-B/V3_PAIR_FREEZE.json",
+      "bytes": 3850,
+      "sha256": "63a7791a8ae93992e061d8040ff81b45e2e77db1aa99ef40d0257efc21047963",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "jobs/D-M10-A/V3_PAIR_FREEZE.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/V3_PAIR_FREEZE.json",
+      "capture_basis": "owner completed mechanical pair freeze",
+      "capture_at": "2026-10-07T22:00:03.550082+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/jobs/D-M10-A/V3_PAIR_FREEZE.json",
+      "bytes": 5237,
+      "sha256": "3ef8b597fc2d0149bd158aab2bf737419af63463353084b1aade4957358207b2",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "state/D-M12-A-prospective-v3-root-binding.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M12-A-prospective-v3-root-binding.json",
+      "capture_basis": "explicit root authority or original mechanical failure-inclusive cost",
+      "capture_at": "2026-10-07T22:00:03.551196+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/state/D-M12-A-prospective-v3-root-binding.json",
+      "bytes": 2528,
+      "sha256": "2a7a56d46208d830e0e86c60ce7abedbe29707e7c166f1092a82a1c903118645",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "state/D-M02-B-prospective-v3-root-binding.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M02-B-prospective-v3-root-binding.json",
+      "capture_basis": "explicit root authority or original mechanical failure-inclusive cost",
+      "capture_at": "2026-10-07T22:00:03.552090+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/state/D-M02-B-prospective-v3-root-binding.json",
+      "bytes": 1522,
+      "sha256": "8ef49e4c235cb15473a4ace008f8a71db99ce821ed10da252c99cf1cb1f4eaa5",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "state/final-finite-t0-interpretation-before-starts-v1.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-finite-t0-interpretation-before-starts-v1.json",
+      "capture_basis": "explicit root authority or original mechanical failure-inclusive cost",
+      "capture_at": "2026-10-07T22:00:03.552922+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/state/final-finite-t0-interpretation-before-starts-v1.json",
+      "bytes": 1281,
+      "sha256": "d9d8bc305ba8eec5a29af525bdc84fad4b3c50fee4c2d5296232c1cc3253da1d",
+      "expected_hash_matches": null
+    },
+    {
+      "relative_path": "helpers/targeted-cohort4/D-M14-A/economics-inclusive.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json",
+      "capture_basis": "explicit root authority or original mechanical failure-inclusive cost",
+      "capture_at": "2026-10-07T22:00:03.553193+00:00",
+      "expected_sha256": null,
+      "snapshot_path": "working-input/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json",
+      "bytes": 18056,
+      "sha256": "48d78692918bc04c12b158f3ae71b6a912b117bacd7fce1949839ea7a76afac9",
+      "expected_hash_matches": null
+    }
+  ],
+  "observed_cutoff": "2026-10-07T22:00:03.554086+00:00",
+  "not_simultaneous": true
+}

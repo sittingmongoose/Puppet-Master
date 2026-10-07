@@ -1,0 +1,298 @@
+{
+  "stage": "I-METHOD-06/treatment/reviser-v1",
+  "native_goal_identity": "01a11813-c907-7533-b44b-7cc1b97b7e8e",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/reviser-v1/input-map.json",
+  "own_output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/reviser-v1",
+  "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/reviser-v1/artifact.md",
+  "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/reviser-v1/source-map.json",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/critic-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/critic-v1/source-map.json"
+  ],
+  "timestamps": {
+    "first_useful_saved_finding_at_utc": "2026-10-07T20:42:57Z",
+    "first_useful_finding": "Restic may leave an incomplete snapshot when mixed required sources are supplied; v0.19.0 tests assert the error result, not persisted partial contents. This correction was first saved as part of the complete artifact.",
+    "complete_artifact_saved_at_utc": "2026-10-07T20:45:08.064739Z",
+    "source_map_saved_before_completion_at_utc": "2026-10-07T20:45:49TUTCZ",
+    "stage_deadline_utc": "2026-10-07T20:49:58.310655Z",
+    "whole_arm_deadline_utc": "2026-10-07T20:51:45.651929Z"
+  },
+  "source_operations": {
+    "input_map_file_reads": 2,
+    "unique_predecessor_files_read_in_full": 4,
+    "predecessor_file_reads": 9,
+    "research_capture_content_reads": 19,
+    "unique_research_capture_files_reviewed": 15,
+    "research_vs_critic_capture_byte_comparison_pairs": 16,
+    "byte_identical_comparison_pairs": 16,
+    "mismatched_comparison_pairs": 0,
+    "research_capture_files_copied_verbatim_to_own_sources": 26,
+    "new_public_web_queries": 0,
+    "new_http_requests": 0,
+    "downloaded_code_execution_or_installer_use": false,
+    "original_case_or_campaign_source_files_opened": 0,
+    "notes": "The initial combined display of the four predecessors was truncated, so each was then read in full separately. Critical captures listed in the critic source-map were compared byte-for-byte against the corresponding research-v1 captures; all 16 compared pairs were identical. BRS-006.md and BRS-023.md are cited by the critic under the original cases source path outside the input-map source directories and were not opened."
+  },
+  "native_goal_counters": {
+    "status_when_observed": "active",
+    "aggregate_goal_tokens_used": 146205,
+    "aggregate_goal_time_used_seconds": 575,
+    "remaining_tokens": null,
+    "completion_budget_report": null,
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null,
+    "counter_scope": "Actual aggregate native Goal counters from get_goal while active, recorded separately; per-category and billing counters were not exposed. Terminal counters are returned separately after completion."
+  },
+  "hash_policy": "Captured bytes were copied verbatim under sources/. No hashes were computed or authored by this reviser; host hashes mechanically.",
+  "evidence": [
+    {
+      "id": "R01",
+      "url": "https://docs.aws.amazon.com/aws-backup/latest/devguide/restoring-a-backup.html",
+      "captured_at_utc": "2026-10-07T20:09:22.742037527Z",
+      "source_version": "AWS Backup Developer Guide latest page as accessed 2026-10-07",
+      "capture_path": "sources/aws_backup_restore_resource.capture",
+      "locator": "Non-destructive restores; restore testing; page sections corresponding to guide headings",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/aws_backup_restore_resource.capture"
+    },
+    {
+      "id": "R02",
+      "url": "https://docs.aws.amazon.com/aws-backup/latest/devguide/restore-testing.html",
+      "captured_at_utc": "2026-10-07T20:09:22.737038332Z",
+      "source_version": "AWS Backup Developer Guide latest page as accessed 2026-10-07",
+      "capture_path": "sources/aws_backup_restore_testing.capture",
+      "locator": "Overview; restore testing compared with restore; data deletion; cost control; validation/status and cleanup sections",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/aws_backup_restore_testing.capture"
+    },
+    {
+      "id": "R03",
+      "url": "https://docs.aws.amazon.com/wellarchitected/2024-06-27/framework/rel_backing_up_data_periodic_recovery_testing_data.html",
+      "captured_at_utc": "2026-10-07T20:09:22.750036239Z",
+      "source_version": "AWS Well-Architected Framework edition 2024-06-27, REL09-BP04",
+      "capture_path": "sources/aws_rel09_bp04.capture",
+      "locator": "Anti-patterns; implementation guidance; steps 2 and 5\u20137 (validation, test restore to new location, elapsed time)",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/aws_rel09_bp04.capture"
+    },
+    {
+      "id": "R04",
+      "url": "https://borgbackup.readthedocs.io/en/1.4.5/usage/check.html",
+      "captured_at_utc": "2026-10-07T20:10:34.932450152Z",
+      "source_version": "Borg 1.4.5 documentation",
+      "capture_path": "sources/borg_check_v145.capture",
+      "locator": "borg check description; --verify-data; repository-only/archive checks; repair warning",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/borg_check_v145.capture"
+    },
+    {
+      "id": "R05",
+      "url": "https://restic.readthedocs.io/en/v0.19.1/077_troubleshooting.html",
+      "captured_at_utc": "2026-10-07T20:10:34.949416454Z",
+      "source_version": "restic 0.19.1 documentation",
+      "capture_path": "sources/restic_docs_v0191_check.capture",
+      "locator": "Finding damaged data; check --read-data; full repository read cost; check output; separate repository integrity from restore",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_docs_v0191_check.capture"
+    },
+    {
+      "id": "R06",
+      "url": "https://restic.readthedocs.io/en/v0.19.1/045_working_with_repos.html",
+      "captured_at_utc": "2026-10-07T20:10:34.928415599Z",
+      "source_version": "restic 0.19.1 documentation",
+      "capture_path": "sources/restic_docs_v0191_copy.capture",
+      "locator": "Copying snapshots between repositories; different encryption keys; interruption/resume; chunker parameter constraints",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_docs_v0191_copy.capture"
+    },
+    {
+      "id": "R07",
+      "url": "https://restic.readthedocs.io/en/v0.19.1/050_restore.html",
+      "captured_at_utc": "2026-10-07T20:10:34.945416291Z",
+      "source_version": "restic 0.19.1 documentation",
+      "capture_path": "sources/restic_docs_v0191_restore.capture",
+      "locator": "Restoring from a snapshot to --target; immutable snapshot selector examples; in-place caveats",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_docs_v0191_restore.capture"
+    },
+    {
+      "id": "R08",
+      "url": "https://github.com/restic/restic/issues/4467",
+      "captured_at_utc": "2026-10-07T20:09:23.606898225Z",
+      "source_version": "restic issue #4467; opened 2023-09-14; closed and linked to #5347",
+      "capture_path": "sources/restic_issue_4467.capture",
+      "locator": "Issue title/body: missing path supplied by --files-from; snapshot written from remaining data; exit code 0 instead of expected incomplete code 3",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_issue_4467.capture"
+    },
+    {
+      "id": "R09",
+      "url": "https://github.com/restic/restic/pull/5347.patch",
+      "captured_at_utc": "2026-10-07T20:09:23.123976009Z",
+      "source_version": "restic pull request #5347 patch series; six patch commits in captured response",
+      "capture_path": "sources/restic_pr_5347_patch.capture",
+      "locator": "Patch 1 source/result changes and changelog; cmd_backup.go; cmd_backup_integration_test.go; cmd_backup_test.go; subsequent revisions 2\u20136",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_pr_5347_patch.capture"
+    },
+    {
+      "id": "R10",
+      "url": "https://github.com/restic/restic/releases/tag/v0.19.0",
+      "captured_at_utc": "2026-10-07T20:09:23.050987765Z",
+      "source_version": "restic 0.19.0 release, 2026-06-09; signed tag; short commit 12875cc",
+      "capture_path": "sources/restic_release_v0190.capture",
+      "locator": "Release summary/details list fix #4467; full tag commit resolved in R21",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_release_v0190.capture"
+    },
+    {
+      "id": "R11",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/cmd/restic/cmd_backup.go",
+      "captured_at_utc": "2026-10-07T20:09:22.654051699Z",
+      "source_version": "restic v0.19.0, commit 12875cc48ed34111f71fe94a24a47ad11660f3a4",
+      "capture_path": "sources/restic_v0190_backup_go.capture",
+      "locator": "ErrInvalidSourceData/ErrNoSourceData 168\u2013172; filterExisting 174\u2013194; collectTargets 395\u2013454; runBackup definition/caller 486\u2013706",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_backup_go.capture"
+    },
+    {
+      "id": "R12",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/cmd/restic/cmd_backup_integration_test.go",
+      "captured_at_utc": "2026-10-07T20:11:14.535003927Z",
+      "source_version": "restic v0.19.0, commit 12875cc48ed34111f71fe94a24a47ad11660f3a4",
+      "capture_path": "sources/restic_v0190_backup_integration_test.capture",
+      "locator": "TestBackupNonExistingFile 260\u2013287; mixed targets and all-missing target outcomes",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_backup_integration_test.capture"
+    },
+    {
+      "id": "R13",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/cmd/restic/cmd_backup_test.go",
+      "captured_at_utc": "2026-10-07T20:09:22.719616918Z",
+      "source_version": "restic v0.19.0, commit 12875cc48ed34111f71fe94a24a47ad11660f3a4",
+      "capture_path": "sources/restic_v0190_backup_test_go.capture",
+      "locator": "TestCollectTargets 16\u201377; mixed existing/non-existing targets return ErrInvalidSourceData",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_backup_test_go.capture"
+    },
+    {
+      "id": "R14",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/cmd/restic/cmd_check_test.go",
+      "captured_at_utc": "2026-10-07T20:10:34.861994898Z",
+      "source_version": "restic v0.19.0, commit 12875cc48ed34111f71fe94a24a47ad11660f3a4",
+      "capture_path": "sources/restic_v0190_check_test_go.capture",
+      "locator": "TestParsePercentage 18\u201347; TestStringToIntSlice 49\u201374; pack subset selection tests 76\u2013184; check-cache tests 186\u2013end",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_check_test_go.capture"
+    },
+    {
+      "id": "R15",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/internal/checker/checker.go",
+      "captured_at_utc": "2026-10-07T20:10:34.820787113Z",
+      "source_version": "restic v0.19.0, commit 12875cc48ed34111f71fe94a24a47ad11660f3a4",
+      "capture_path": "sources/restic_v0190_checker_go.capture",
+      "locator": "New 44\u201354; Structure 142\u2013194; checkTree 196\u2013267; ReadPacks 296\u2013319",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_checker_go.capture"
+    },
+    {
+      "id": "R16",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/cmd/restic/cmd_check.go",
+      "captured_at_utc": "2026-10-07T20:10:34.828411529Z",
+      "source_version": "restic v0.19.0, commit 12875cc48ed34111f71fe94a24a47ad11660f3a4",
+      "capture_path": "sources/restic_v0190_cmd_check_go.capture",
+      "locator": "CheckOptions/AddFlags 74\u201390; runCheck 229\u2013429; buildPacksFilter 431\u2013489; --read-data path selects all packs",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_cmd_check_go.capture"
+    },
+    {
+      "id": "R17",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/cmd/restic/cmd_copy.go",
+      "captured_at_utc": "2026-10-07T20:10:34.822411285Z",
+      "source_version": "restic v0.19.0, commit 12875cc48ed34111f71fe94a24a47ad11660f3a4",
+      "capture_path": "sources/restic_v0190_cmd_copy_go.capture",
+      "locator": "runCopy 108\u2013169; copyTreeBatched 192\u2013256; copyTree 257\u2013313; separate source read-lock and destination append-lock",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_cmd_copy_go.capture"
+    },
+    {
+      "id": "R18",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/doc/045_working_with_repos.rst",
+      "captured_at_utc": "2026-10-07T20:10:34.881413686Z",
+      "source_version": "restic v0.19.0 documentation",
+      "capture_path": "sources/restic_v0190_repo_working_doc.capture",
+      "locator": "Copying snapshots between repositories section begins at source line 202; key/chunker/interruption notes and repository checks",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_repo_working_doc.capture"
+    },
+    {
+      "id": "R19",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/doc/050_restore.rst",
+      "captured_at_utc": "2026-10-07T20:10:34.868720855Z",
+      "source_version": "restic v0.19.0 documentation",
+      "capture_path": "sources/restic_v0190_restore_doc.capture",
+      "locator": "Restoring from a snapshot begins at line 17; restore to --target; in-place section begins at 114",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_restore_doc.capture"
+    },
+    {
+      "id": "R20",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/doc/075_scripting.rst",
+      "captured_at_utc": "2026-10-07T20:09:22.731039299Z",
+      "source_version": "restic v0.19.0 documentation",
+      "capture_path": "sources/restic_v0190_scripting_doc.capture",
+      "locator": "Exit code semantics including incomplete backup result; line locator in captured file under Exit codes",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_scripting_doc.capture"
+    },
+    {
+      "id": "R21",
+      "url": "https://github.com/restic/restic.git",
+      "captured_at_utc": "2026-10-07T20:10:34.622403145Z",
+      "source_version": "read-only git ls-remote tag resolution for v0.19.0",
+      "capture_path": "sources/restic_v0190_tag_ref.txt",
+      "locator": "refs/tags/v0.19.0 object 03c5fd7a97fa7009f5986e35ab1ca2bbfde83096; peeled commit 12875cc48ed34111f71fe94a24a47ad11660f3a4",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_tag_ref.txt"
+    },
+    {
+      "id": "R22",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.0/doc/077_troubleshooting.rst",
+      "captured_at_utc": "2026-10-07T20:10:34.847412302Z",
+      "source_version": "restic v0.19.0 documentation",
+      "capture_path": "sources/restic_v0190_troubleshooting_doc.capture",
+      "locator": "Finding damaged data; check --read-data reads repository data; repair caution and independent copy guidance",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0190_troubleshooting_doc.capture"
+    },
+    {
+      "id": "R23",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.1/cmd/restic/cmd_backup.go",
+      "captured_at_utc": "2026-10-07T20:10:34.847336457Z",
+      "source_version": "restic v0.19.1, commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+      "capture_path": "sources/restic_v0191_backup_go.capture",
+      "locator": "exit-code documentation 48\u201353; filterExisting 169\u2013204; collectTargets 399\u2013460; runBackup definition/caller 490 onward",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0191_backup_go.capture"
+    },
+    {
+      "id": "R24",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.1/cmd/restic/cmd_backup_integration_test.go",
+      "captured_at_utc": "2026-10-07T20:11:14.533003927Z",
+      "source_version": "restic v0.19.1, commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+      "capture_path": "sources/restic_v0191_backup_integration_test.capture",
+      "locator": "TestBackupNonExistingFile 260\u2013287; incomplete mixed-target and all-missing outcomes",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0191_backup_integration_test.capture"
+    },
+    {
+      "id": "R25",
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.19.1/cmd/restic/cmd_backup_test.go",
+      "captured_at_utc": "2026-10-07T20:10:34.853412547Z",
+      "source_version": "restic v0.19.1, commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+      "capture_path": "sources/restic_v0191_backup_test_go.capture",
+      "locator": "TestCollectTargets 17\u201378; TestFilterExistingUnreadable 80\u2013100, explicitly marked regression test for #5667",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0191_backup_test_go.capture"
+    },
+    {
+      "id": "R26",
+      "url": "https://github.com/restic/restic.git",
+      "captured_at_utc": "2026-10-07T20:10:34.521399034Z",
+      "source_version": "read-only git ls-remote tag resolution for v0.19.1",
+      "capture_path": "sources/restic_v0191_tag_ref.txt",
+      "locator": "refs/tags/v0.19.1 object 6099d4b5c4376368d42b9982c7d3e93ba13d83b1; peeled commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+      "upstream_capture_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/treatment/research-v1/sources/restic_v0191_tag_ref.txt"
+    }
+  ],
+  "validation": {
+    "tests_run": false,
+    "build_run": false,
+    "backup_or_restore_run": false,
+    "destination_check_run": false,
+    "application_or_runtime_operation": false,
+    "new_public_query": false,
+    "canon_or_repository_changed": false,
+    "destructive_action": false
+  }
+}

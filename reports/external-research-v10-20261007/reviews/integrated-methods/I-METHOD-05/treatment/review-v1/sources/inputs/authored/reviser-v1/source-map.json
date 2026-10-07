@@ -1,0 +1,311 @@
+{
+  "schema": "I-METHOD-05-reviser-source-map-v1",
+  "stage": "I-METHOD-05/treatment/reviser-v1",
+  "goal_identity": "01a1180f-7840-7763-9322-7f6c6eee8b74",
+  "native_goal_thread_id": "01a1180f-7840-7763-9322-7f6c6eee8b74",
+  "created_at_utc": "2026-10-07T20:30:58Z",
+  "stage_deadline_utc": "2026-10-07T20:45:17.181505Z",
+  "whole_arm_deadline_utc": "2026-10-07T20:49:20.932703Z",
+  "input_boundary": {
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/reviser-v1/input-map.json",
+      "bytes": 1978,
+      "sha256": "908d0d1bee13bd661fa7af95289cea3727d0b6b3915bd4cd76d2ff25662e948c"
+    },
+    "boundary": "Exact same-arm candidate inventory, both topic artifacts/maps, full critic/map, and only the captured source bytes listed in the input map.",
+    "other_arm_or_campaign_material_read": false,
+    "original_campaign_inputs_or_parent_evaluator_history_read": false,
+    "original_inputs_modified": false
+  },
+  "predecessors": [
+    {
+      "stage": "discovery-v1",
+      "artifact": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/artifact.md",
+        "bytes": 18550,
+        "sha256": "4e7c8dfd06f066363dfa4352897569d89b3f37b7c3fe12c72e30d97242427bbc"
+      },
+      "source_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source-map.json",
+        "bytes": 11620,
+        "sha256": "7f5d2cfa38ec47b586f89a9074c652a14aeb9c47b08a9b65cda93e7005b465b6"
+      },
+      "captured_sources": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/sources/discovery-capture.md",
+          "bytes": 6816,
+          "sha256": "e9bf4052c38ba938949c39be257b5e5165e0c671bf2527ee843b1c39c187d39b"
+        }
+      ]
+    },
+    {
+      "stage": "research-topic-a-v1",
+      "artifact": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/artifact.md",
+        "bytes": 12210,
+        "sha256": "2ae9cab6bd061b92300ded762cdf7625094f9094b5ec321596584a12465c10d5"
+      },
+      "source_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json",
+        "bytes": 8207,
+        "sha256": "f1b75d5a76776d7c18766d2892d4244a277f044038a6ee1951233a591dabbf45"
+      },
+      "captured_sources": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/sources/first-useful-finding.md",
+          "bytes": 1028,
+          "sha256": "ab336e76e0979ac404397b74809ed0bdc49663b846106ba8d7c65fc92f800006"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/sources/topic-a-public-sources.md",
+          "bytes": 2358,
+          "sha256": "ee32ebd045acb1d3c8240ab561b560484b23cc8cc7cc905be09761caf715a0a5"
+        }
+      ]
+    },
+    {
+      "stage": "research-topic-b-v1",
+      "artifact": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/artifact.md",
+        "bytes": 17835,
+        "sha256": "1b668a826cca9729d065c1072cb0eb906968ffeeaa70ff33b500d77103feb0ea"
+      },
+      "source_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json",
+        "bytes": 8565,
+        "sha256": "0c7d4dc53799bb8d63c11f2b58af988222842a672da9d8cbfb9d219bfa474bf2"
+      },
+      "captured_sources": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/sources/topic-b-capture.md",
+          "bytes": 2292,
+          "sha256": "7bd969d7b9a5dbe48f356096f17f4bed7f0340729d2c0820731dccba7b2e934e"
+        }
+      ]
+    },
+    {
+      "stage": "critic-v1",
+      "artifact": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/artifact.md",
+        "bytes": 17607,
+        "sha256": "eb5910e3983a0f1d98896aa499addcf0cc6e65afc31a3926294b20ba6296ce5c"
+      },
+      "source_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source-map.json",
+        "bytes": 7402,
+        "sha256": "0155455acf04fbbffc1cf32519561b8e685f74d07a5e8e7658eb25889d4bb2cc"
+      },
+      "captured_sources": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/sources/first-useful-finding.md",
+          "bytes": 1715,
+          "sha256": "d73c0fbec9bce82d6dacd8a6d763010ae33be952b469b32e60d245f7c83d680b"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/sources/independent-public-source-capture.md",
+          "bytes": 4329,
+          "sha256": "5ae7b2381f46a8d420709189492e289da34459ffd11c0bd36c89713adbc306ce"
+        }
+      ]
+    }
+  ],
+  "first_useful_saved_finding": {
+    "path": "sources/first-useful-finding.md",
+    "saved_at_utc": "2026-10-07T20:32:25Z",
+    "bytes": 1966,
+    "sha256": "05ddcc03f8eaaa28a2e98d648acffb640d86e8c844c25d5baf03d0367a37e30f"
+  },
+  "full_artifact": {
+    "path": "artifact.md",
+    "bytes": 27781,
+    "sha256": "2a08cbdc82ec56955024600f106908f232e11d9cec35a3d76686b11547e038e8",
+    "completion_observed_utc": "2026-10-07T20:38:50Z",
+    "completion_timestamp_basis": "Final artifact was present at the exact declared path with this full-file byte count and SHA-256 during output inspection."
+  },
+  "evidence": {
+    "captured_source_bytes_copied": true,
+    "directory": "sources/input-captures/",
+    "copies": [
+      {
+        "path": "sources/input-captures/discovery/discovery-capture.md",
+        "bytes": 6816,
+        "sha256": "e9bf4052c38ba938949c39be257b5e5165e0c671bf2527ee843b1c39c187d39b",
+        "source": "../discovery-v1/sources/discovery-capture.md"
+      },
+      {
+        "path": "sources/input-captures/topic-a/first-useful-finding.md",
+        "bytes": 1028,
+        "sha256": "ab336e76e0979ac404397b74809ed0bdc49663b846106ba8d7c65fc92f800006",
+        "source": "../research-topic-a-v1/sources/first-useful-finding.md"
+      },
+      {
+        "path": "sources/input-captures/topic-a/topic-a-public-sources.md",
+        "bytes": 2358,
+        "sha256": "ee32ebd045acb1d3c8240ab561b560484b23cc8cc7cc905be09761caf715a0a5",
+        "source": "../research-topic-a-v1/sources/topic-a-public-sources.md"
+      },
+      {
+        "path": "sources/input-captures/topic-b/topic-b-capture.md",
+        "bytes": 2292,
+        "sha256": "7bd969d7b9a5dbe48f356096f17f4bed7f0340729d2c0820731dccba7b2e934e",
+        "source": "../research-topic-b-v1/sources/topic-b-capture.md"
+      },
+      {
+        "path": "sources/input-captures/critic/first-useful-finding.md",
+        "bytes": 1715,
+        "sha256": "d73c0fbec9bce82d6dacd8a6d763010ae33be952b469b32e60d245f7c83d680b",
+        "source": "../critic-v1/sources/first-useful-finding.md"
+      },
+      {
+        "path": "sources/input-captures/critic/independent-public-source-capture.md",
+        "bytes": 4329,
+        "sha256": "5ae7b2381f46a8d420709189492e289da34459ffd11c0bd36c89713adbc306ce",
+        "source": "../critic-v1/sources/independent-public-source-capture.md"
+      }
+    ]
+  },
+  "source_operations": [
+    {
+      "window_utc": "2026-10-07T20:31:18Z",
+      "operation": "Read the exact reviser input-map; it names four same-arm predecessor stages, their source directories, and this stage's declared output paths."
+    },
+    {
+      "window_utc": "2026-10-07T20:31:27Z/2026-10-07T20:32:06Z",
+      "operation": "Read the same-arm discovery inventory, complete topic-A and topic-B artifacts and source maps, complete critic artifact and source map; enumerated only the four map-declared source directories; SHA-256 checked all declared predecessor artifacts, maps and source captures. All recorded identities matched."
+    },
+    {
+      "window_utc": "2026-10-07T20:32:06Z/2026-10-07T20:32:25Z",
+      "operation": "Read the six exact captured source-byte files and completed the capture/source-map provenance review. No new public searches, other-arm sources, original campaign inputs, parent/evaluator history, or code downloads."
+    },
+    {
+      "window_utc": "2026-10-07T20:32:25Z",
+      "operation": "Saved the first useful reviser finding before completing the full artifact."
+    },
+    {
+      "window_utc": "2026-10-07T20:32:53Z",
+      "operation": "Copied only the six map-declared captured source-byte files into this stage's sources/input-captures/ evidence tree; originals were left unchanged."
+    },
+    {
+      "window_utc": "2026-10-07T20:36:10Z",
+      "operation": "Observed the complete artifact at 27,635 bytes and recorded its full-file SHA-256. No scientific tests, builds, application checks, benchmarks, or source code execution."
+    },
+    {
+      "window_utc": "2026-10-07T20:38:50Z",
+      "operation": "Completed final-scope edits to include one-tab-per-path-per-group and pinned Ropey complexity/clone details; verified final artifact byte count and SHA-256."
+    }
+  ],
+  "public_source_versions_and_capture_times": [
+    {
+      "source": "Ropey",
+      "version": "1.6.1",
+      "commit": "d41ee247f2f097c7f9c8e4730b7dd884734f1ee5",
+      "capture_times_utc": "2026-10-07T20:04:46Z/20:12:28Z discovery; 20:14Z/20:16Z topic A reused context; 20:14:21Z/20:18:22Z topic B; 20:22:25Z/20:26:02Z independent critic",
+      "locator_correction": "Use the verified commit spelling for crlf.rs; critic identified a malformed topic-B locator."
+    },
+    {
+      "source": "Zed external-change history",
+      "issue": "48697",
+      "pull_request": "51037",
+      "merge_commit": "50aef1f115493aab506df9d5b33da5435dc36bfc",
+      "regression": "test_dirty_buffer_reloads_after_undo",
+      "release": "v0.229.0; tag release commit 7c07887 per critic capture",
+      "capture_times_utc": "2026-10-07T20:04:46Z/20:07:15Z discovery; 20:14Z/20:16Z topic A; 20:22:25Z/20:26:02Z critic"
+    },
+    {
+      "source": "notify",
+      "version": "8.2.0",
+      "capture_times_utc": "2026-10-07T20:04:46Z/20:12:28Z discovery; re-used in topic A and critic captures"
+    },
+    {
+      "source": "tempfile",
+      "version": "3.27.0",
+      "capture_times_utc": "2026-10-07T20:04:46Z/20:12:28Z discovery; re-opened 2026-10-07T20:22:25Z/20:26:02Z critic"
+    },
+    {
+      "source": "Rust standard library filesystem docs",
+      "version": "std 1.99.0 docs, commit b940084d7 dated 2026-09-28 per discovery map",
+      "capture_times_utc": "2026-10-07T20:04:46Z/20:12:28Z discovery"
+    },
+    {
+      "source": "Slint issue",
+      "version": "issue 8147 reports Slint 1.10 on Windows",
+      "capture_times_utc": "2026-10-07T20:04:46Z/20:12:28Z discovery; re-opened 2026-10-07T20:22:25Z/20:26:02Z critic"
+    },
+    {
+      "source": "VS Code Working Copies",
+      "version": "mutable wiki/docs; analogy only",
+      "capture_times_utc": "2026-10-07T20:04:46Z/20:12:28Z discovery; re-opened 2026-10-07T20:22:25Z/20:26:02Z critic"
+    },
+    {
+      "source": "crop",
+      "version": "upstream README accessed 2026-10-07; not commit-pinned",
+      "capture_times_utc": "2026-10-07T20:04:46Z/20:12:28Z discovery"
+    }
+  ],
+  "stage_accounting": {
+    "parallel_workers_used_by_reviser": 0,
+    "nested_delegation_used": false,
+    "previous_discovery_topic_and_critic_stages_consumed_as_frozen_predecessors": true,
+    "stage_deadline_respected": true,
+    "whole_arm_deadline": "2026-10-07T20:49:20.932703Z"
+  },
+  "validation": {
+    "executed_scientific_checks": [],
+    "executed_builds_or_application_tests": [],
+    "application_validated": false,
+    "validation_proposals": "Eight proposal-only groups are in artifact.md; none were executed.",
+    "upstream_reported_result": "Zed PR #51037 reports 28 checks; attributed to upstream and not run in this stage.",
+    "sourcepass_claim": false,
+    "speed_claim": false,
+    "broad_discovery_exhaustiveness_claim": false
+  },
+  "unknown_usage": null,
+  "unknown_billing": null,
+  "declared_recipe": {
+    "discovery_inventory_seconds_max": 600,
+    "topic_a_comparison_seconds_max": 300,
+    "topic_b_comparison_seconds_max": 300,
+    "parallel_topic_stage_allowed_cap": 2,
+    "critic_seconds_max": 600,
+    "final_reviser_seconds_max": 900,
+    "aggregate_occupied_work_seconds_max": 2700,
+    "research_subdivision_seconds_max": 1200,
+    "phase_dependencies_frozen": true,
+    "this_stage_consumed_completed_predecessors": true,
+    "no_nested_delegation_or_extra_workers": true
+  },
+  "occupied_work_accounting": {
+    "basis": "Recorded stage start/completion windows from the same-arm source maps and Goal creation; per-stage occupied intervals are summed so parallel topic work counts twice. Inter-stage wall gaps are also included in the conservative arm total.",
+    "discovery": {
+      "start_utc": "2026-10-07T20:04:46Z",
+      "complete_utc": "2026-10-07T20:13:01Z",
+      "seconds": 495
+    },
+    "topic_a": {
+      "start_utc": "2026-10-07T20:14:26Z",
+      "complete_utc": "2026-10-07T20:17:28Z",
+      "seconds": 182
+    },
+    "topic_b": {
+      "start_utc": "2026-10-07T20:14:21Z",
+      "complete_utc": "2026-10-07T20:18:22Z",
+      "seconds": 241
+    },
+    "topic_parallel_overlap_seconds": 182,
+    "research_phase_with_interstage_gaps_and_parallel_overlap_seconds": 1118,
+    "critic": {
+      "start_utc": "2026-10-07T20:20:22Z",
+      "complete_utc": "2026-10-07T20:28:14Z",
+      "seconds": 472
+    },
+    "final_reviser": {
+      "start_utc": "2026-10-07T20:30:58Z",
+      "complete_observed_utc": "2026-10-07T20:38:50Z",
+      "seconds": 472
+    },
+    "stage_interval_sum_seconds": 1862,
+    "whole_arm_elapsed_wall_seconds_at_final_artifact_completion": 2044,
+    "conservative_whole_arm_total_with_parallel_topic_overlap_seconds": 2226,
+    "all_subdivision_and_whole_arm_caps_respected_at_final_artifact_completion": true
+  }
+}

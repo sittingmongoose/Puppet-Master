@@ -1,0 +1,227 @@
+{
+  "record_at": "2026-10-07T21:40:36.338711+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md": {
+      "sha256": "fc85ff378a0fb31a47785251482275012c24034183d1ac9408c158899b4e932e",
+      "bytes": 24918
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/source-map.json": {
+      "sha256": "8b0547f4838d709c0259d5e12c5a5a1b1564701dd656810dbb87a196153a2503",
+      "bytes": 23080
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/chrono-tz-timezone-impl.html": {
+      "sha256": "e698fc0b76bb72c21770453e2887020c42dd4577e1345beb503b951854b755a0",
+      "bytes": 69915
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/crates-io-csv-registry.json": {
+      "sha256": "b88b8f91b579e49c7395cc0fb891abb7501f9bcde2ed780545b99c2cda20c8e6",
+      "bytes": 104518
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-energy-faq.html": {
+      "sha256": "d96c532bb4c89e65579520f7d685c9f888cc0b0e1bd05e060b95facc4fe1f355",
+      "bytes": 60036
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-energy.html": {
+      "sha256": "6649a5be3d07e9ce051bbd65672539e44e35eb8d4bbf3a379dff6afefa342767",
+      "bytes": 47521
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/ha-long-term-statistics.html": {
+      "sha256": "21b62044c3d65e8367567bd44d9702cafa8632f49dc366996a052a488ed0b66f",
+      "bytes": 62930
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-daily-kwh.html": {
+      "sha256": "5577e66d438f3510ae0aab9897c8edd33490c92e9ae08bdb2f9839bb2c6bd713",
+      "bytes": 17954
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-feeds.html": {
+      "sha256": "4cc228714690f7a5dd5ebce08e0d5a7226a25d2c8615c57290b5d4022666dd65",
+      "bytes": 19403
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/oem-home-energy.html": {
+      "sha256": "15950b8be31c74d52b8bed2a01cbd7e791c3c7ea2f094291812cc9ef1cc82667",
+      "bytes": 13816
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/polars-csv-guide.html": {
+      "sha256": "53fe95a1dbbef084c34ed30243c1b3212f39619dbd947687df29ed589dd6eb81",
+      "bytes": 129380
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/polars-time-series-parsing.html": {
+      "sha256": "4d33422283165a05d36b3b9f3543e88ee48c693000dc530fa628d528c851e5ab",
+      "bytes": 150719
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-cargo-toml.txt": {
+      "sha256": "9edf0f197e736f3eeb49798b2c3fd777cef6e0c63df678967beb94c982808d9e",
+      "bytes": 952
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-csv-core-cargo.txt": {
+      "sha256": "3c3ea65fd98cd5faff6e4c34c537e3869a51adc5b97f676b2388622e336d86df",
+      "bytes": 846
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-csv-core-reader.txt": {
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+      "bytes": 69459
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-error.txt": {
+      "sha256": "b26d087bb4c1c1c4f5bce43db850f3dc840d754d43229252a1dc68dcec0097a0",
+      "bytes": 10420
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-1.4.0-reader.txt": {
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+      "bytes": 90075
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-commit-4a3997e91d668ea1d8595bdef15625a77cf2308a.json": {
+      "sha256": "8641863f5b2da3ff6cf49f5362261c22face01e9b760cd140d22b3bb98d6b453",
+      "bytes": 4853
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-363.json": {
+      "sha256": "98ea751c1335f3c1237c54f715380a89c0736485519bc13bcdb2f926b76e2226",
+      "bytes": 4166
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-close-rewrite-commit.json": {
+      "sha256": "a959c87f4a73f8ce1816e4f1436be488d9de4cf5045f71cdb87702c0cad988be",
+      "bytes": 636172
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-comments.json": {
+      "sha256": "62a9077eebb2959fa742437d00dd038ca7b76fd981990525ed823a2475d0e39f",
+      "bytes": 10798
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-csv-core-reader.txt": {
+      "sha256": "5daa0ac1a9d050efb01c2cf3fda17ea20b80f4141caf00ee9d3a7618bb66ca74",
+      "bytes": 65889
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-fix-candidate-commit.json": {
+      "sha256": "7df9004aaec8d0a052c26ff475f3edfd1b1fe5971270805959fde10d096bd97e",
+      "bytes": 640706
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-reader.txt": {
+      "sha256": "790f02e7277f5dd30d967cbb1e0ec660c175c40728a4dd35ee038a25ec0328eb",
+      "bytes": 81744
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46-timeline.json": {
+      "sha256": "595d695ffa0415f26ba1fe6bf188902c6db0469570d08ed373fd0c6f8f30389f",
+      "bytes": 43544
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-issue-46.json": {
+      "sha256": "482797f16bd1d4f737e54c051e88c9f308b4401dbc2e1570ada3fd7959ceaf25",
+      "bytes": 3800
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-pull-396.json": {
+      "sha256": "fff8778dc90c36fec9cc89562eeb706f6af7e0b15ce55a1d53f4050ae7e82f31",
+      "bytes": 16249
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-tag-1.4.0-object.json": {
+      "sha256": "d28d9ed5bdf796c93e32abf22b1c7b8eb1dbd7c85f1f12719fbeb4c181a288f0",
+      "bytes": 1856
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/sources/rust-csv-tag-1.4.0-ref.json": {
+      "sha256": "7506ebe3da27ee04731611d4b38387400d41f979adc64e65f31f0c27c23abcb2",
+      "bytes": 335
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-FAST-03-control-research-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T21:23:25.272Z",
+    "startedAt": "2026-10-07T21:23:25.868Z",
+    "completedAt": "2026-10-07T21:40:17.385Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "passive_terminal_export": {
+    "stage": "I-FAST-03/control/research-v1",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/I-FAST-03--control--research-v1--8bc43c530c5a4563.json",
+    "sha256": "8bc43c530c5a4563306d766c711f86c48f2e9f756ecec46a91c4583cb7666cb4",
+    "bytes": 10858,
+    "capture": {
+      "create_goal": "missing_actual_response",
+      "get_goal": "missing_actual_response",
+      "update_goal": "missing_actual_response"
+    }
+  },
+  "native_state_projections": [
+    {
+      "objective_sha256": "37070bdc8426a67588db797336f2a4535f2887d5db695e829e4f6673581bd4b4",
+      "status": "complete",
+      "tokensUsed": 366618,
+      "tokenBudget": null,
+      "timeUsedSeconds": 988
+    }
+  ],
+  "native_binding": [
+    {
+      "id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-FAST-03-control-research-v1%3Aordinal%3A1",
+      "driver": "codex",
+      "providerInstanceId": "codex_gmail",
+      "providerSessionId": "provider-session:provider-instance:codex_gmail:shared",
+      "nativeThreadRef": {
+        "driver": "codex",
+        "nativeId": "01a1183f-ee9d-7d93-adb6-46bb24607d85",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T21:40:16.446Z",
+      "contextUsage": null,
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:codex:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%25253Adelegate-task%25253Aer10-I-FAST-03-control-research-v1%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T21:40:16.446Z",
+        "sha256": "b4315a90afcfdd79ca965ef25e8ef7a17a1bbff968ce6d7760db7604edcaa1dd"
+      }
+    }
+  ],
+  "raw_response_capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  },
+  "native_identity": "01a1183f-ee9d-7d93-adb6-46bb24607d85",
+  "native_terminal": "complete",
+  "same_identity": true,
+  "native_createdAt": null,
+  "native_carrier": "actual projection NOT raw response",
+  "native_timestamp_limit": "createdAt/update epoch absent from selected Codex projection; exact observation time kept",
+  "native_goal_aggregate_tokens": 366618,
+  "native_elapsed_seconds": 988,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "record_at": "2026-10-07T21:23:24.791197+00:00",
+    "prospective_stage_deadline": "2026-10-07T21:43:14.125819+00:00",
+    "prospective_arm_deadline": "2026-10-07T22:08:14.125819+00:00",
+    "clientRequestId": "er10-I-FAST-03-control-research-v1",
+    "carrier": "ROOT_PROSPECTIVE_CARRIER_V2",
+    "mode": "async",
+    "role": "research",
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

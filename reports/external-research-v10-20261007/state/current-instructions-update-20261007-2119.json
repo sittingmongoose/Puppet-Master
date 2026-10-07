@@ -1,0 +1,20 @@
+{
+  "observed_at": "2026-10-07T21:21:24.376639+00:00",
+  "actual_files": [
+    {
+      "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+      "sha256": "d827d8ff1e53bd4c49d3f6814c9937aabe8aea0580f2c31d3b3ee089244c01b8",
+      "nas1_lines": []
+    },
+    {
+      "path": "/home/sittingmongoose/.codex/AGENTS.md",
+      "sha256": "71b6b684ffdd7440573b1b8296ac9730eab8d485fa27961f8f9149ecb51188d7",
+      "nas1_lines": [
+        "- Nas1 Intel VM (`ubuntu-agent-nas1`, DHCP `192.168.50.136`) is under validation and unavailable for production work. Single-stream GPU capture failed; recording, Moonlight and independent GUI limits are not established. Use the P1000 VM (`192.168.50.179`) until the canonical guide marks Nas1 ready."
+      ]
+    }
+  ],
+  "latest_user_instructions": "Replace earlier provided AGENTS instructions; Nas1 validation host unavailable for production. Keep existing T3-owned current VM binding and scopes.",
+  "scope_effect": "No source/candidate/allowance/permission changes. No other-host work.",
+  "no_agentrules_git_edit": true
+}

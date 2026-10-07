@@ -1,0 +1,10 @@
+{
+  "prospective_admitted_at": "2026-10-07T21:52:44.019575+00:00",
+  "deadline": "2026-10-07T22:12:44.019575+00:00",
+  "stage_minutes": 20,
+  "latest_absolute_deadline": "2026-10-07T22:21:56.716615+00:00",
+  "common_T0": "2026-10-07T21:21:56.716615+00:00",
+  "common_deadline": "2026-10-07T22:41:56.716615+00:00",
+  "rule": "min(actual prospective admission + allowance, frozen latest cut, commondeadline); earlier T3 requestedAt governs if earlier",
+  "no_reset": true
+}

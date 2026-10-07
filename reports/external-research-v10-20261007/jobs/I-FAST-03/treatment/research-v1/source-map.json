@@ -1,0 +1,218 @@
+{
+  "case_id": "I-FAST-03",
+  "role": "treatment/research-v1",
+  "boundary": "Exact brief and frozen plan plus self-discovered public sources only",
+  "source_operation_counts": {
+    "web_search_batches": 7,
+    "web_open_find_click_batches": 3,
+    "public_http_capture_attempts": 28,
+    "public_http_capture_successes": 24,
+    "public_http_404_failures": 4,
+    "github_rest_metadata_attempts": 3,
+    "github_rest_metadata_403_failures": 3
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://docs.openenergymonitor.org/emoncms/graphs.html",
+      "version": "OpenEnergyMonitor public documentation snapshot (accessed 2026-10-07)",
+      "path": "sources/emoncms-graphs.html",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "d3573885e4c14140a22cd3600efd629ac34313959dd52cdb49aac3813a684e4e",
+      "symbols_or_sections": [
+        "View Graphs: selecting multiple feeds",
+        "Configuring a custom graph and averages",
+        "Feed statistics",
+        "CSV export and null values"
+      ],
+      "ranges": [
+        "rendered lines 8-40"
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://docs.openenergymonitor.org/emoncms/feeds.html",
+      "version": "OpenEnergyMonitor public documentation snapshot (accessed 2026-10-07)",
+      "path": "sources/emoncms-feeds.html",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "389edcb2f685a0f09b6d83c68d878fa3f205db38391ad73e75ef29695a7f1d12",
+      "symbols_or_sections": [
+        "Feeds page/import CSV action",
+        "Fixed vs variable interval engines",
+        "Missing fixed-interval values stored as null and charted as gaps"
+      ],
+      "ranges": [
+        "rendered lines 8-47"
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://github.com/emoncms/graph/issues/142",
+      "version": "GitHub issue snapshot; issue #142 opened 2022-09-17; status shown closed at access",
+      "path": "sources/emoncms-graph-issue-142.html",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "5205c0bdfeb959117e0070bbb8021ea31f27feaceb6f11f2a84d6fa43b669d3e",
+      "symbols_or_sections": [
+        "Issue report: cumulative-feed daily chart differs from derived daily feed; missing days reported"
+      ],
+      "ranges": [
+        "rendered lines 129-203"
+      ]
+    },
+    {
+      "id": "S4",
+      "url": "https://github.com/pandas-dev/pandas/issues/7160",
+      "version": "GitHub issue snapshot; issue #7160 opened 2014-05-18; milestone 0.19.0",
+      "path": "sources/pandas-issue-7160.html",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "0283e188c392695e87e393e98f5cf76a576b2579fd5b3e3f642ccaceb71d43ab",
+      "symbols_or_sections": [
+        "Issue reproducer: duplicate supplied names caused first column data to be overwritten/lost"
+      ],
+      "ranges": [
+        "rendered lines 133-185; milestone lines 151-157, 212-214"
+      ]
+    },
+    {
+      "id": "S5",
+      "url": "https://github.com/pandas-dev/pandas/issues/66259",
+      "version": "GitHub issue snapshot; issue #66259 opened 2026-07-10; milestone 3.1",
+      "path": "sources/pandas-issue-66259.html",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "c3224350ceee9a549bbeab1d987cfa72a3f14cbfcae2ece483f44c08090c7e96",
+      "symbols_or_sections": [
+        "Parallel read_csv regressions; low_memory=False bypass; large-file conditions; no PR listed"
+      ],
+      "ranges": [
+        "rendered lines 133-169, 208-229, 271-281"
+      ]
+    },
+    {
+      "id": "S6",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v0.19.0/pandas/io/parsers.py",
+      "version": "pandas release tag v0.19.0",
+      "path": "sources/pandas-v0.19.0-parser.py",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "adbe3428a777cd0f46886124a70b26b08b359cc2a629b5916721b914aa8ce066",
+      "symbols_or_sections": [
+        "TextFileReader._maybe_dedup_names",
+        "read_csv parser name handling"
+      ],
+      "ranges": [
+        "lines 1161-1180 (issue-linked comment and suffixing loop)"
+      ]
+    },
+    {
+      "id": "S7",
+      "url": "https://pandas.pydata.org/docs/whatsnew/v0.19.0.html",
+      "version": "pandas v0.19.0 release notes, dated 2016-10-02",
+      "path": "sources/pandas-v0.19.0-whatsnew.html",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "5950e0bba6e9379ca53fb9159ca4e80552e4b38346133a7dcbeac7791f5899f3",
+      "symbols_or_sections": [
+        "Method read_csv has improved support for duplicate column names; GH7160 and GH9424; before/after reproducer"
+      ],
+      "ranges": [
+        "rendered lines 508-557"
+      ]
+    },
+    {
+      "id": "S8",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/pandas/io/parsers/readers.py",
+      "version": "pandas release tag v3.0.6",
+      "path": "sources/pandas-v3.0.6-readers.py",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "1bed69628c1f726ab3cef9584a5672acedf4db0fc37f3838f5ca8a5b3869b56b",
+      "symbols_or_sections": [
+        "_validate_names",
+        "_read caller",
+        "read_csv signature/options"
+      ],
+      "ranges": [
+        "lines 234-306; read_csv signature and documentation around lines 900-1045; low_memory docs lines 724-733"
+      ]
+    },
+    {
+      "id": "S9",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/pandas/tests/io/parser/test_header.py",
+      "version": "pandas release tag v3.0.6",
+      "path": "sources/pandas-v3.0.6-test_header.py",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "f559987c79f78d28e9eb600dc93df3928aaf6ebb836e276b9a4a6fa60f1c7006",
+      "symbols_or_sections": [
+        "test_mangles_multi_index(all_parsers): repeated header labels receive deterministic suffixes"
+      ],
+      "ranges": [
+        "lines 496-545; test function line 533"
+      ]
+    },
+    {
+      "id": "S10",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/doc/source/user_guide/io.rst",
+      "version": "pandas release tag v3.0.6",
+      "path": "sources/pandas-v3.0.6-io-guide.rst",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "abc1df34fbfeb692a0489e9012795d2ccd6a6599fdd3cf7e996e548993198bec",
+      "symbols_or_sections": [
+        "read_csv header/names/low_memory options",
+        "Handling column names; duplicate-name behavior"
+      ],
+      "ranges": [
+        "lines 80-130, 205-215, 527-575"
+      ]
+    },
+    {
+      "id": "S11",
+      "url": "https://raw.githubusercontent.com/pandas-dev/pandas/v3.0.6/doc/source/whatsnew/v3.0.6.rst",
+      "version": "pandas release tag v3.0.6",
+      "path": "sources/pandas-v3.0.6-release-notes.rst",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "7851b96e14e336195692f24efe5fab7f90d01934c2a80387d64c7f400e52a034",
+      "symbols_or_sections": [
+        "Release notes for comparison-version context"
+      ],
+      "ranges": [
+        "file entire release-notes page"
+      ]
+    },
+    {
+      "id": "S12",
+      "url": "https://docs.python.org/3/library/zoneinfo.html",
+      "version": "Python 3.14.7 documentation snapshot",
+      "path": "sources/python-zoneinfo.html",
+      "retrieved_at_utc": "2026-10-07T21:34:04Z",
+      "sha256": "288b62fda09d6695452ea4cf919b771dbf3e0fe49d73de1e4d6578b889ed8f7c",
+      "symbols_or_sections": [
+        "ZoneInfo IANA database source and fallback",
+        "fold semantics for ambiguous DST wall times",
+        "Windows tzdata dependency"
+      ],
+      "ranges": [
+        "rendered lines 9-67 and 77"
+      ]
+    }
+  ],
+  "admitted_inputs": {
+    "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/research-v1/input-map.json",
+    "case_inputs": [
+      {
+        "name": "brief.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/brief.md",
+        "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73",
+        "bytes": 5149
+      },
+      {
+        "name": "plan.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/plan.md",
+        "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+        "bytes": 1714
+      },
+      {
+        "name": "INPUTS.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/INPUTS.md",
+        "sha256": "e25cf8e741130f4d3c5867234a2a43ddf9818688b3c25b8f8eba05a340235dac",
+        "bytes": 1917
+      }
+    ]
+  }
+}

@@ -1,0 +1,4200 @@
+# Mechanical finding views
+
+Renderer: m14-renderer-1.0.0
+
+Input SHA-256: 56967ba0417074a3a0c599b6f881972ca0121b23a2fa5d65a267fbc842f27e83
+
+Candidate-authored content; no substantive adjudication by renderer.
+
+
+## Decision view
+
+
+### O1_OPEN_DISCOVERY
+
+[Complete record](#finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4)
+
+
+Summary
+
+```
+Need-led public discovery supports a staged, reviewable ingest workflow with separate preservation, inspection and access-copy decisions.
+```
+
+
+Disposition
+
+```
+Accepted with scope limits. The institutional workflow is an analogy; a reviewable batch export remains a product choice, not a required UI.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "condition": "Begin from oral-history desk need. Do not treat release-format recommendations as a recipe for born-digital interviews or automatically rewrite metadata.",
+  "review_before_commit": "Decide whether this desk needs a batch review/export step. The Library of Congress CSV is an example only; do not require its interface or storage topology."
+}
+```
+
+
+### O2_PINNED_CODE
+
+[Complete record](#finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f)
+
+
+Summary
+
+```
+Pinned bagit-python v1.9.0 evidence supports the staging and fixity cautions, and reveals a statically traceable sibling-prefix symlink path-boundary failure in its validator.
+```
+
+
+Disposition
+
+```
+The implementation evidence is accepted. Do not rely on v1.9.0's path check alone as a security boundary for untrusted package contents. This is a static source-path finding, not a dynamically demonstrated exploit.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "version": "Exact code and tests captured from bagit-python v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe.",
+  "scope": "bagit-python is an optional reference candidate. BagIt 1.0 is the proposed package standard, not a mandatory Python runtime.",
+  "path_safety": "Treat manifest and fetch paths as untrusted. Do not treat this release's commonprefix check as the host application's security boundary.",
+  "adoption_gate": "Before any use on untrusted bags, use a corrected implementation or enforce canonical path-segment containment in the host, reject or safely handle symlinks/reparse points, guard against time-of-check/time-of-use changes, and test sibling-prefix escapes and races on Windows and Linux. These are proposed gates; none was implemented or tested here.",
+  "staging": "Run only against a completed staging copy; never pass the removable source tree to make_bag()."
+}
+```
+
+
+### O3_HISTORY
+
+[Complete record](#finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528)
+
+
+Summary
+
+```
+Issue #152 has a traceable upstream fix in a released version; separate issue #157 remains relevant to the exact release code.
+```
+
+
+Disposition
+
+```
+Issue/fix/release applicability supported; no automated regression test for the exact tilde case was found.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "release": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe contains the merged change.",
+  "claim_limit": "No inference that any downstream product shipped this code."
+}
+```
+
+
+### O4_P1_TO_P6_COMPARISON
+
+[Complete record](#finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558)
+
+
+Summary
+
+```
+Every frozen P1–P6 decision is compared with an explicit disposition, including the fresh critic's path, race, tag-manifest, and reviewability additions.
+```
+
+
+Disposition
+
+```
+Complete comparison within the supplied six-part plan. All critic additions are accepted as proposed requirements; product options and validation status remain explicit.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "already_covered": "The inherited plan already covers the six headline areas and repeated constraints; no unrelated whole-project coverage is inferred.",
+  "cross_reference_limit": "The supplied comparison slice contains only this six-part plan; no broader system guarantees are inferred.",
+  "critic_disposition": {
+    "P1": "Accept preflight, collisions, resumable states, independent destination reread, and non-final partial states. Add stable source identity during copy, no-follow/reparse handling, and atomic staging/finalization as proposed.",
+    "P2": "Retain duration, channels/layout, encoding, tags, notes, waveform/listen view, and separate corrections. Keep parser read-only and source metadata immutable; show unknown layouts and warnings. Add bounded malformed-input handling; display must not write embedded metadata.",
+    "P3": "Retain explicit opt-in and settings preview with no default lossy conversion, resampling, normalization, or downmix. Run only from a verified accession copy; keep output temporary until successful exit and profile check. A successful probe does not establish audio quality or preservation suitability.",
+    "P4": "Retain BagIt 1.0 as a proposed model, complete manifests, provenance, and reopen fixity. Keep no fetch.txt/remote payload. Clarify tag-manifest coverage and gate bagit-python on the path-boundary correction.",
+    "P5": "Keep components undecided. Pin exact binary hashes/build flags/codecs/licenses/dependencies for both OSes before shipping. Keep bagit-python conditional, BWF MetaEdit optional and BWF-specific, and playback/UI as prototype choices.",
+    "P6": "Retain all five original synthetic categories and all existing path/platform/privacy cases. Add the exact sibling-prefix symlink and path-race cases, with listed and unexpected file behavior."
+  }
+}
+```
+
+
+### FULL_PLAN_REPLACEMENT
+
+[Complete record](#finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d)
+
+
+Summary
+
+```
+Complete proposed replacement for the inherited sandbox plan: local ingest, inspection, derivatives, packaging, component choices, and acceptance.
+```
+
+
+Disposition
+
+```
+Complete proposed replacement incorporating the fresh critique; not built or validated. Product choices remain open, and the result is DIAGNOSTIC_UNQUALIFIED.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "scope": [
+    "One archivist and up to 100 selected WAV/BWF, FLAC, and MP3 files.",
+    "No speech transcription, public publishing, automated rights decision, or legal advice.",
+    "Offline Windows or Linux; no interview audio or metadata upload; source media remains unchanged."
+  ],
+  "P1": "Preflight selected files for read access, space, duplicate/case/Unicode collisions, symlink/reparse points, and unsafe paths; show the proposed mapping. Verify a stable source identity before and during copy, copy to a new local accession staging directory, hash while reading, independently reread the destination, and compare SHA-512 and SHA-256 before marking verified. Preserve received names and relative paths; stop for archivist choice when the target filesystem cannot represent a name, and record any reversible mapping. Keep discovered/copying/verified/warning/failed/interrupted/resumed states. Never finalize partial copy. Resume only after source identity and copied bytes are rechecked; do not delete source. Use no-follow/reparse protections as appropriate and atomically finalize only a complete verified staging copy. These are proposed controls, not tested behavior.",
+  "P2": "Show duration, channel count/layout, encoding, observed embedded metadata, and archivist notes. Evaluate a pinned FFprobe 9.0.2 read-only adapter; record exact parser version/build and warnings. Keep observed source fields immutable; store corrections separately with author/time. Show errors and unknown channel layouts without guessing; inspection/display has no source-metadata write function. Decode waveform on demand and show channels separately. Bound malformed-input processing and surface failures; acceptance remains proposed.",
+  "P3": "Create a derivative only on explicit per-file request. Preview container/codec, sample rate, sample format/bit depth, channel map, metadata map, and any resampling/filter. FFmpeg 9.0.2 is a candidate only after exact build, codec, and license review on both platforms. No default lossy recipe, normalization, resampling, or downmix. Run only from a verified accession copy. Write temporary output; after successful process exit, inspect the selected output profile before atomic finalization. Keep failure/interruption visible, quarantine partial output, and leave the original unchanged. Record exact tool/build/command/settings, source/output identities, and outcome. A successful probe establishes neither listening quality nor preservation suitability.",
+  "P4": "Use BagIt 1.0 as the proposed folder model, not a selected runtime. Include bagit.txt, bag-info.txt, data/originals/<received-path>, data/derivatives/<stable-id>/<chosen-name>, data/records/ingest.json, and SHA-512 and SHA-256 payload manifests and tag manifests. List every payload file, including notes/provenance, in payload manifests. Each tag manifest must list every payload manifest, must not list any tag manifest, and should list the remaining tag files; do not imply recursive self-coverage. Use no fetch.txt or remote payload. Record source and copy digests, processing events, tools/settings, derivative relationship, and outcome. A digest detects later change against its baseline but proves neither authenticity nor original correctness. Finalize only after complete copy and full fixity. Reopen performs full fixity and reports missing/changed/unexpected files; size/count alone is not fixity.",
+  "P5": "Keep components undecided while shortlisting FFprobe/FFmpeg 9.0.2, BagIt 1.0, and a PREMIS-inspired event record. Compare a native BagIt serializer with bagit-python 1.9.0 only on staging copies and only after path-encoding tests and the path-boundary gate: use a corrected implementation or host-enforced canonical path-segment containment, symlink/reparse defenses, and proposed sibling-prefix/race tests on Windows and Linux. Do not rely on v1.9.0's validator alone for untrusted content. BWF MetaEdit 26.08.1 is optional BWF-only QA/export, never a writer to originals. Playback backend/UI are cross-platform prototype choices. Before shipping, lock exact binary hashes, build flags, enabled codecs, licenses, and dependencies for both platforms.",
+  "P6": "Propose synthetic checks for interrupted copy/unplug/resume/source change; malformed/contradictory RIFF/BWF, FLAC, and ID3 metadata; mono/stereo/multichannel/discrete/unknown layouts; selected conversion parameters and crash/cancel behavior; package tampering by missing/changed/extra/renamed/truncated payload and altered tag files. Add percent/CR/LF and encoded-looking paths, Unicode/case collisions, long and Windows-reserved paths, symlink/reparse/shared-prefix and the exact sibling-prefix escape, path replacement/time-of-check/time-of-use races, read-only media, low space, 100 files, disconnected network, no-egress, and Windows/Linux cases. Check listed and unexpected files. Keep file-level profile/fixity/failure checks separate from human listening review. Synthetic content only; mark every check proposed until run."
+}
+```
+
+
+### O5_CRITIC_DISPOSITION
+
+[Complete record](#finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c)
+
+
+Summary
+
+```
+Fresh criticism is received and each technical and plan-level objection is explicitly dispositioned; remaining items are product choices or untested proposals.
+```
+
+
+Disposition
+
+```
+Accept the critic's path-boundary correction and all bounded plan recommendations. No technical objection is left unaddressed; event schema and review workflow choices remain explicitly open. No runtime exploit is claimed.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "critic_source": "Exact own-arm critic-v2/artifact.md and source-map.json; no other arm, case, evaluator material, or parent history was used.",
+  "criticism_dispositions": [
+    {
+      "criticism": "The v1.9.0 commonprefix check admits a sibling-prefix path when resolved through a symlink; validation later opens the path.",
+      "disposition": "Accept as a static source-path finding. Strengthen O2/P5 adoption gates and retain the limit that no runtime reproducer or exploit was run."
+    },
+    {
+      "criticism": "Do not rely on this validator as a security boundary for untrusted package contents.",
+      "disposition": "Accept. Require a corrected implementation or host-enforced canonical path-segment containment and symlink/reparse safeguards before any such use."
+    },
+    {
+      "criticism": "Make archive traversal resistant to symlink and time-of-check/time-of-use changes.",
+      "disposition": "Accept as proposed P1/P5 controls and P6 tests for no-follow/reparse handling, stable source identity, path replacement, and atomic staging/finalization. None is implemented or validated here."
+    },
+    {
+      "criticism": "Define a small PREMIS-inspired event schema or state that the schema decision remains open.",
+      "disposition": "Accept both parts: the decision between no record, a versioned local subset, and full PREMIS remains open; if a local record is retained, the proposal names unique event ID, event type/time, affected object IDs, tool/build/settings, outcome, and source-to-derivative relationship. No conformance claim."
+    },
+    {
+      "criticism": "Treat the LoC review CSV as an analogy and decide whether batch review/export is needed.",
+      "disposition": "Accept. Keep review/export optional and make it a product-owner choice, not a required UI."
+    },
+    {
+      "criticism": "Clarify tag-manifest coverage.",
+      "disposition": "Accept RFC 8493 §2.2.1: each tag manifest lists every payload manifest, does not list tag manifests, and should list the remaining tag files. Do not imply recursive self-coverage."
+    },
+    {
+      "criticism": "Add the detailed P1–P6 path, malformed-input, copy/derivative, package, dependency, and acceptance conditions.",
+      "disposition": "Accept and include each addition in O4 and the complete P1–P6 replacement."
+    },
+    {
+      "criticism": "Separate file-level checks from human listening and do not treat a successful probe as audio-quality acceptance.",
+      "disposition": "Accept as separate proposed validation. No listening review, quality threshold, or archival-quality result is claimed."
+    },
+    {
+      "criticism": "Preserve the one-archivist/up-to-100-file scope, no-broader-coverage limit, and DIAGNOSTIC_UNQUALIFIED status.",
+      "disposition": "Accept. These limits remain explicit in the full replacement and execution record."
+    }
+  ],
+  "unresolved_objections": [],
+  "open_product_decisions": [
+    "Whether to retain an event record and whether to implement full PREMIS or a documented versioned local subset.",
+    "Whether the desk needs a batch review/export, and the remaining codec, path-collision, metadata, package serializer, playback/UI, rights/access/retention, and institutional-policy choices."
+  ]
+}
+```
+
+
+### O6_CHOICES_AND_LIMITS
+
+[Complete record](#finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872)
+
+
+Summary
+
+```
+The full replacement covers the supplied O1–O6 and P1–P6 slice while leaving evidence-underdetermined product and institutional choices open.
+```
+
+
+Disposition
+
+```
+Complete within the supplied plan slice. No broader system coverage, product quality, policy, or validation result is inferred.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "coverage": {
+    "O1": "Need-led discovery and optional reviewable workflow.",
+    "O2": "Pinned implementation behavior and conditional safe-adoption gate.",
+    "O3": "Issue/fix/release applicability and separate percent-encoding limitation.",
+    "O4": "Disposition of all P1–P6 plan decisions.",
+    "O5": "Fresh criticism and itemized response.",
+    "O6": "Complete scope, open choices, and validation limits."
+  },
+  "scope": [
+    "One archivist and up to 100 selected WAV/BWF, FLAC, and MP3 files.",
+    "No transcription, public publishing, automated rights decision, or legal advice.",
+    "Offline Windows/Linux, no interview audio or metadata upload, and no source-media mutation."
+  ],
+  "event_record": "A local PREMIS-inspired schema is an option, not a conformance claim. If retained, the proposed minimum fields are unique event identifier, event type, event time, affected object identifiers, tool/build/settings, outcome, and source-to-derivative relationship; full PREMIS is a separate choice.",
+  "validation_separation": "File-level metadata/profile/fixity/failure-state checks and human listening review are separate proposed activities. Neither alone establishes archival quality."
+}
+```
+
+
+### P6_ACCEPTANCE
+
+[Complete record](#finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1)
+
+
+Summary
+
+```
+P6 retains every inherited synthetic acceptance category and adds explicit path-boundary, race, package, platform, and listening-review separation cases.
+```
+
+
+Disposition
+
+```
+Proposed acceptance only; not executed. Synthetic data only; no personal interviews.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "plan_locator": "Inherited frozen plan P6 as represented in research-v2/artifact.md and its complete authored payload.",
+  "data": "Synthetic content only; no personal interviews.",
+  "execution_status": "Every listed case is proposed; none was run."
+}
+```
+
+
+### EXECUTION_RECORD
+
+[Complete record](#finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b)
+
+
+Summary
+
+```
+Reviser operations and costs are recorded separately from proposed product validation and from native Goal aggregate counters.
+```
+
+
+Disposition
+
+```
+Semantic set complete; generic renderer and preservation check are required deliverables. DIAGNOSTIC_UNQUALIFIED; no app or product test executed.
+```
+
+
+Governing conditions (complete)
+
+```json
+{
+  "candidate": "I-METHOD-04/treatment/reviser-v2",
+  "dispatch_target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "account": "sittingmongoose@gmail.com",
+    "reasoningEffort": "max",
+    "serviceTier": "priority"
+  },
+  "deadline": {
+    "earliest_cold_preparation_utc": "2026-10-07T20:47:52.249474+00:00",
+    "dispatch_record_at_utc": "2026-10-07T21:26:17.529597+00:00",
+    "stage_allowance_seconds": 1200,
+    "stage_deadline_utc": "2026-10-07T21:46:17.529597+00:00",
+    "whole_arm_deadline_utc": "2026-10-07T21:47:52.249474+00:00",
+    "role_max_seconds": 1200,
+    "whole_arm_occupied_cap_seconds": 3600,
+    "prior_nonoverlapping_occupied_seconds": 2083.699,
+    "final_reserve_seconds": 0,
+    "no_reset_or_extension": true
+  },
+  "outputs": [
+    "semantic.json: sole authored semantic set.",
+    "artifact.md: all generic M14 renderer views and exact authored input.",
+    "source-map.json and 16 linked source captures under sources/.",
+    "preservation_check.md: complete-scope and field-preservation review."
+  ]
+}
+```
+
+
+## Evidence view
+
+
+### O1_OPEN_DISCOVERY
+
+[Complete record](#finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4)
+
+```json
+[
+  "A Library of Congress literary audio workflow documents a test ingest that creates a review CSV before formal ingest and scripted FFmpeg MP3 access copies from WAV masters. This supports review-before-commit and derivative provenance, but not importing its settings or storage topology.",
+  "The LoC audio statement prefers native resolution and uncompressed media-independent audio and lists BWF WAVE with embedded metadata as preferred in that statement's scope. It does not require converting oral-history intake MP3 or FLAC files to WAVE.",
+  "FFprobe documents structured machine-readable format and stream output. FFmpeg documents metadata mapping and override controls. BWF MetaEdit is a specialized BWF tool that can validate and edit embedded metadata."
+]
+```
+
+
+### O2_PINNED_CODE
+
+[Complete record](#finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f)
+
+```json
+[
+  "make_bag() defaults to SHA-256 and SHA-512, then moves input directory contents into a data folder in place before writing bag metadata and manifests. Never run it on removable source media; stage a copy first.",
+  "Bag.validate() defaults to full fixity recalculation. fast=True returns after Payload-Oxum file-count and byte-count checks and does not recalculate manifest checksums.",
+  "_load_manifests() and fetch_entries() call _path_is_dangerous() when interpreting manifest and fetch paths. RFC 8493 §5.1 requires implementations not to access files outside the bag when using bag paths.",
+  "_encode_filename() replaces CR and LF but not literal percent. Issue #157 describes the separate BagIt 1.0 interoperability problem; the exact v1.9.0 encoder still lacks percent handling.",
+  "Static path trace: _path_is_dangerous() resolves the joined path, normalizes it, then compares strings with os.path.commonprefix(). A POSIX-style data/link symlink resolving from /tmp/bag into /tmp/bag-sibling/file has the common string prefix /tmp/bag and can be accepted. payload_files() emits file names from the data walk; _validate_entries() passes the relative path to _calc_hashes(), and _calculate_file_hashes() joins and opens it. RFC 8493 §5.1 says paths must not cause files outside the bag to be accessed. The captured code was read, not run; no filesystem case or application exploit was demonstrated."
+]
+```
+
+
+### O3_HISTORY
+
+[Complete record](#finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528)
+
+```json
+[
+  "Issue #152 reports a Linux/Python false unsafe-path rejection for a name containing ~$_- because os.path.expandvars() expands it. The issue supplies a reproducible example.",
+  "PR #184 removes the expandvars check from _path_is_dangerous(); merge commit 753679c9b342660d038f65a8dc4f755ab95d679b closes #152. The v1.9.0 release notes list #184 and the exact tagged source no longer calls expandvars.",
+  "The merge patch changes one source file with two deletions and no test addition. The release test file has generic unsafe path checks, but not the exact issue #152 name. Thus the issue reproduction and code delta are regression evidence; a committed automated regression test is not established.",
+  "At the same v1.9.0 tag, _encode_filename() handles CR/LF but not literal percent; RFC 8493 requires encoding percent too. This is a separate limitation, not a consequence of #152."
+]
+```
+
+
+### O4_P1_TO_P6_COMPARISON
+
+[Complete record](#finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558)
+
+```json
+[
+  "P1–P6 retain the inherited scope and its original constraints. The additions refine copy safety, parser boundaries, derivative verification, BagIt path/fixity handling, dependency gates, and synthetic acceptance.",
+  "The critic confirms that coverage means only the six supplied plan decisions; no whole-product or system-wide guarantee is inferred."
+]
+```
+
+
+### FULL_PLAN_REPLACEMENT
+
+[Complete record](#finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d)
+
+```json
+[
+  "The replacement retains the inherited one-archivist, up-to-100-file scope and every P1–P6 decision while incorporating all accepted critic conditions. This is a proposal; the renderer does not adjudicate it."
+]
+```
+
+
+### O5_CRITIC_DISPOSITION
+
+[Complete record](#finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c)
+
+```json
+[
+  "The critic's static path trace is confirmed against the exact v1.9.0 source, test, and RFC captures: commonprefix is a character-prefix check; a symlink-resolved sibling path can share that prefix; validation joins and opens manifest paths; RFC 8493 §5.1 prohibits outside-bag access.",
+  "The critic's remaining recommendations concern proposed safeguards, explicit package rules, separation of file checks from human listening, and product decisions; they are incorporated below without claiming tests were run."
+]
+```
+
+
+### O6_CHOICES_AND_LIMITS
+
+[Complete record](#finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872)
+
+```json
+[
+  "The inherited plan and fresh critique cover one archivist and up to 100 selected audio files, offline Windows/Linux use, unchanged sources, inspection/correction separation, opt-in derivatives, package fixity/provenance, and proposed synthetic acceptance.",
+  "Technical sources support bounded mechanisms and candidate dependencies; they do not determine codecs, quality thresholds, rights/consent, access, retention, or institutional policy."
+]
+```
+
+
+### P6_ACCEPTANCE
+
+[Complete record](#finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1)
+
+```json
+[
+  "The inherited plan requests interrupted copy, malformed metadata, unusual channel layout, encoding conversion, and package fixity; all are retained.",
+  "The critic adds the exact sibling-prefix/symlink path case, path races, and separation of file-level checks from human listening review."
+]
+```
+
+
+### EXECUTION_RECORD
+
+[Complete record](#finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b)
+
+```json
+[
+  "Activated one fresh native Goal, confirmed it active with get_goal, then sent one activation-only auto notice to the exact supplied parent thread. No parent history or alternate target was used.",
+  "Read the exact dispatch bound, input map, own research and critique drafts/source maps, exact same-arm captured source bytes, and only the named generic M14 contract and renderer.",
+  "Copied 16 same-arm public primary-source captures byte-for-byte (8,426,094 bytes); each source-map size and SHA-256 matched before and after copying.",
+  "Statically checked the changed path-boundary claim against the exact captured v1.9.0 code/tests and RFC, checked PREMIS fields/object linkage and tag-manifest requirements, and wrote a complete replacement semantic set. No downloaded code or test suite was executed."
+]
+```
+
+
+## Conditions view
+
+
+### O1_OPEN_DISCOVERY
+
+[Complete record](#finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4)
+
+```json
+{
+  "condition": "Begin from oral-history desk need. Do not treat release-format recommendations as a recipe for born-digital interviews or automatically rewrite metadata.",
+  "review_before_commit": "Decide whether this desk needs a batch review/export step. The Library of Congress CSV is an example only; do not require its interface or storage topology."
+}
+```
+
+
+### O2_PINNED_CODE
+
+[Complete record](#finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f)
+
+```json
+{
+  "version": "Exact code and tests captured from bagit-python v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe.",
+  "scope": "bagit-python is an optional reference candidate. BagIt 1.0 is the proposed package standard, not a mandatory Python runtime.",
+  "path_safety": "Treat manifest and fetch paths as untrusted. Do not treat this release's commonprefix check as the host application's security boundary.",
+  "adoption_gate": "Before any use on untrusted bags, use a corrected implementation or enforce canonical path-segment containment in the host, reject or safely handle symlinks/reparse points, guard against time-of-check/time-of-use changes, and test sibling-prefix escapes and races on Windows and Linux. These are proposed gates; none was implemented or tested here.",
+  "staging": "Run only against a completed staging copy; never pass the removable source tree to make_bag()."
+}
+```
+
+
+### O3_HISTORY
+
+[Complete record](#finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528)
+
+```json
+{
+  "release": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe contains the merged change.",
+  "claim_limit": "No inference that any downstream product shipped this code."
+}
+```
+
+
+### O4_P1_TO_P6_COMPARISON
+
+[Complete record](#finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558)
+
+```json
+{
+  "already_covered": "The inherited plan already covers the six headline areas and repeated constraints; no unrelated whole-project coverage is inferred.",
+  "cross_reference_limit": "The supplied comparison slice contains only this six-part plan; no broader system guarantees are inferred.",
+  "critic_disposition": {
+    "P1": "Accept preflight, collisions, resumable states, independent destination reread, and non-final partial states. Add stable source identity during copy, no-follow/reparse handling, and atomic staging/finalization as proposed.",
+    "P2": "Retain duration, channels/layout, encoding, tags, notes, waveform/listen view, and separate corrections. Keep parser read-only and source metadata immutable; show unknown layouts and warnings. Add bounded malformed-input handling; display must not write embedded metadata.",
+    "P3": "Retain explicit opt-in and settings preview with no default lossy conversion, resampling, normalization, or downmix. Run only from a verified accession copy; keep output temporary until successful exit and profile check. A successful probe does not establish audio quality or preservation suitability.",
+    "P4": "Retain BagIt 1.0 as a proposed model, complete manifests, provenance, and reopen fixity. Keep no fetch.txt/remote payload. Clarify tag-manifest coverage and gate bagit-python on the path-boundary correction.",
+    "P5": "Keep components undecided. Pin exact binary hashes/build flags/codecs/licenses/dependencies for both OSes before shipping. Keep bagit-python conditional, BWF MetaEdit optional and BWF-specific, and playback/UI as prototype choices.",
+    "P6": "Retain all five original synthetic categories and all existing path/platform/privacy cases. Add the exact sibling-prefix symlink and path-race cases, with listed and unexpected file behavior."
+  }
+}
+```
+
+
+### FULL_PLAN_REPLACEMENT
+
+[Complete record](#finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d)
+
+```json
+{
+  "scope": [
+    "One archivist and up to 100 selected WAV/BWF, FLAC, and MP3 files.",
+    "No speech transcription, public publishing, automated rights decision, or legal advice.",
+    "Offline Windows or Linux; no interview audio or metadata upload; source media remains unchanged."
+  ],
+  "P1": "Preflight selected files for read access, space, duplicate/case/Unicode collisions, symlink/reparse points, and unsafe paths; show the proposed mapping. Verify a stable source identity before and during copy, copy to a new local accession staging directory, hash while reading, independently reread the destination, and compare SHA-512 and SHA-256 before marking verified. Preserve received names and relative paths; stop for archivist choice when the target filesystem cannot represent a name, and record any reversible mapping. Keep discovered/copying/verified/warning/failed/interrupted/resumed states. Never finalize partial copy. Resume only after source identity and copied bytes are rechecked; do not delete source. Use no-follow/reparse protections as appropriate and atomically finalize only a complete verified staging copy. These are proposed controls, not tested behavior.",
+  "P2": "Show duration, channel count/layout, encoding, observed embedded metadata, and archivist notes. Evaluate a pinned FFprobe 9.0.2 read-only adapter; record exact parser version/build and warnings. Keep observed source fields immutable; store corrections separately with author/time. Show errors and unknown channel layouts without guessing; inspection/display has no source-metadata write function. Decode waveform on demand and show channels separately. Bound malformed-input processing and surface failures; acceptance remains proposed.",
+  "P3": "Create a derivative only on explicit per-file request. Preview container/codec, sample rate, sample format/bit depth, channel map, metadata map, and any resampling/filter. FFmpeg 9.0.2 is a candidate only after exact build, codec, and license review on both platforms. No default lossy recipe, normalization, resampling, or downmix. Run only from a verified accession copy. Write temporary output; after successful process exit, inspect the selected output profile before atomic finalization. Keep failure/interruption visible, quarantine partial output, and leave the original unchanged. Record exact tool/build/command/settings, source/output identities, and outcome. A successful probe establishes neither listening quality nor preservation suitability.",
+  "P4": "Use BagIt 1.0 as the proposed folder model, not a selected runtime. Include bagit.txt, bag-info.txt, data/originals/<received-path>, data/derivatives/<stable-id>/<chosen-name>, data/records/ingest.json, and SHA-512 and SHA-256 payload manifests and tag manifests. List every payload file, including notes/provenance, in payload manifests. Each tag manifest must list every payload manifest, must not list any tag manifest, and should list the remaining tag files; do not imply recursive self-coverage. Use no fetch.txt or remote payload. Record source and copy digests, processing events, tools/settings, derivative relationship, and outcome. A digest detects later change against its baseline but proves neither authenticity nor original correctness. Finalize only after complete copy and full fixity. Reopen performs full fixity and reports missing/changed/unexpected files; size/count alone is not fixity.",
+  "P5": "Keep components undecided while shortlisting FFprobe/FFmpeg 9.0.2, BagIt 1.0, and a PREMIS-inspired event record. Compare a native BagIt serializer with bagit-python 1.9.0 only on staging copies and only after path-encoding tests and the path-boundary gate: use a corrected implementation or host-enforced canonical path-segment containment, symlink/reparse defenses, and proposed sibling-prefix/race tests on Windows and Linux. Do not rely on v1.9.0's validator alone for untrusted content. BWF MetaEdit 26.08.1 is optional BWF-only QA/export, never a writer to originals. Playback backend/UI are cross-platform prototype choices. Before shipping, lock exact binary hashes, build flags, enabled codecs, licenses, and dependencies for both platforms.",
+  "P6": "Propose synthetic checks for interrupted copy/unplug/resume/source change; malformed/contradictory RIFF/BWF, FLAC, and ID3 metadata; mono/stereo/multichannel/discrete/unknown layouts; selected conversion parameters and crash/cancel behavior; package tampering by missing/changed/extra/renamed/truncated payload and altered tag files. Add percent/CR/LF and encoded-looking paths, Unicode/case collisions, long and Windows-reserved paths, symlink/reparse/shared-prefix and the exact sibling-prefix escape, path replacement/time-of-check/time-of-use races, read-only media, low space, 100 files, disconnected network, no-egress, and Windows/Linux cases. Check listed and unexpected files. Keep file-level profile/fixity/failure checks separate from human listening review. Synthetic content only; mark every check proposed until run."
+}
+```
+
+
+### O5_CRITIC_DISPOSITION
+
+[Complete record](#finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c)
+
+```json
+{
+  "critic_source": "Exact own-arm critic-v2/artifact.md and source-map.json; no other arm, case, evaluator material, or parent history was used.",
+  "criticism_dispositions": [
+    {
+      "criticism": "The v1.9.0 commonprefix check admits a sibling-prefix path when resolved through a symlink; validation later opens the path.",
+      "disposition": "Accept as a static source-path finding. Strengthen O2/P5 adoption gates and retain the limit that no runtime reproducer or exploit was run."
+    },
+    {
+      "criticism": "Do not rely on this validator as a security boundary for untrusted package contents.",
+      "disposition": "Accept. Require a corrected implementation or host-enforced canonical path-segment containment and symlink/reparse safeguards before any such use."
+    },
+    {
+      "criticism": "Make archive traversal resistant to symlink and time-of-check/time-of-use changes.",
+      "disposition": "Accept as proposed P1/P5 controls and P6 tests for no-follow/reparse handling, stable source identity, path replacement, and atomic staging/finalization. None is implemented or validated here."
+    },
+    {
+      "criticism": "Define a small PREMIS-inspired event schema or state that the schema decision remains open.",
+      "disposition": "Accept both parts: the decision between no record, a versioned local subset, and full PREMIS remains open; if a local record is retained, the proposal names unique event ID, event type/time, affected object IDs, tool/build/settings, outcome, and source-to-derivative relationship. No conformance claim."
+    },
+    {
+      "criticism": "Treat the LoC review CSV as an analogy and decide whether batch review/export is needed.",
+      "disposition": "Accept. Keep review/export optional and make it a product-owner choice, not a required UI."
+    },
+    {
+      "criticism": "Clarify tag-manifest coverage.",
+      "disposition": "Accept RFC 8493 §2.2.1: each tag manifest lists every payload manifest, does not list tag manifests, and should list the remaining tag files. Do not imply recursive self-coverage."
+    },
+    {
+      "criticism": "Add the detailed P1–P6 path, malformed-input, copy/derivative, package, dependency, and acceptance conditions.",
+      "disposition": "Accept and include each addition in O4 and the complete P1–P6 replacement."
+    },
+    {
+      "criticism": "Separate file-level checks from human listening and do not treat a successful probe as audio-quality acceptance.",
+      "disposition": "Accept as separate proposed validation. No listening review, quality threshold, or archival-quality result is claimed."
+    },
+    {
+      "criticism": "Preserve the one-archivist/up-to-100-file scope, no-broader-coverage limit, and DIAGNOSTIC_UNQUALIFIED status.",
+      "disposition": "Accept. These limits remain explicit in the full replacement and execution record."
+    }
+  ],
+  "unresolved_objections": [],
+  "open_product_decisions": [
+    "Whether to retain an event record and whether to implement full PREMIS or a documented versioned local subset.",
+    "Whether the desk needs a batch review/export, and the remaining codec, path-collision, metadata, package serializer, playback/UI, rights/access/retention, and institutional-policy choices."
+  ]
+}
+```
+
+
+### O6_CHOICES_AND_LIMITS
+
+[Complete record](#finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872)
+
+```json
+{
+  "coverage": {
+    "O1": "Need-led discovery and optional reviewable workflow.",
+    "O2": "Pinned implementation behavior and conditional safe-adoption gate.",
+    "O3": "Issue/fix/release applicability and separate percent-encoding limitation.",
+    "O4": "Disposition of all P1–P6 plan decisions.",
+    "O5": "Fresh criticism and itemized response.",
+    "O6": "Complete scope, open choices, and validation limits."
+  },
+  "scope": [
+    "One archivist and up to 100 selected WAV/BWF, FLAC, and MP3 files.",
+    "No transcription, public publishing, automated rights decision, or legal advice.",
+    "Offline Windows/Linux, no interview audio or metadata upload, and no source-media mutation."
+  ],
+  "event_record": "A local PREMIS-inspired schema is an option, not a conformance claim. If retained, the proposed minimum fields are unique event identifier, event type, event time, affected object identifiers, tool/build/settings, outcome, and source-to-derivative relationship; full PREMIS is a separate choice.",
+  "validation_separation": "File-level metadata/profile/fixity/failure-state checks and human listening review are separate proposed activities. Neither alone establishes archival quality."
+}
+```
+
+
+### P6_ACCEPTANCE
+
+[Complete record](#finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1)
+
+```json
+{
+  "plan_locator": "Inherited frozen plan P6 as represented in research-v2/artifact.md and its complete authored payload.",
+  "data": "Synthetic content only; no personal interviews.",
+  "execution_status": "Every listed case is proposed; none was run."
+}
+```
+
+
+### EXECUTION_RECORD
+
+[Complete record](#finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b)
+
+```json
+{
+  "candidate": "I-METHOD-04/treatment/reviser-v2",
+  "dispatch_target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "account": "sittingmongoose@gmail.com",
+    "reasoningEffort": "max",
+    "serviceTier": "priority"
+  },
+  "deadline": {
+    "earliest_cold_preparation_utc": "2026-10-07T20:47:52.249474+00:00",
+    "dispatch_record_at_utc": "2026-10-07T21:26:17.529597+00:00",
+    "stage_allowance_seconds": 1200,
+    "stage_deadline_utc": "2026-10-07T21:46:17.529597+00:00",
+    "whole_arm_deadline_utc": "2026-10-07T21:47:52.249474+00:00",
+    "role_max_seconds": 1200,
+    "whole_arm_occupied_cap_seconds": 3600,
+    "prior_nonoverlapping_occupied_seconds": 2083.699,
+    "final_reserve_seconds": 0,
+    "no_reset_or_extension": true
+  },
+  "outputs": [
+    "semantic.json: sole authored semantic set.",
+    "artifact.md: all generic M14 renderer views and exact authored input.",
+    "source-map.json and 16 linked source captures under sources/.",
+    "preservation_check.md: complete-scope and field-preservation review."
+  ]
+}
+```
+
+
+## Options view
+
+
+### O1_OPEN_DISCOVERY
+
+[Complete record](#finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4)
+
+```json
+[
+  "FFprobe 9.0.2 candidate for inspection; validate against synthetic formats and malformed metadata.",
+  "Optional BWF MetaEdit for BWF-specific inspection only.",
+  "Reviewable batch CSV can be built into UI or exported.",
+  "Product-owner choice: build a reviewable batch view or export if the desk needs it; the LoC CSV is not mandatory."
+]
+```
+
+
+### O2_PINNED_CODE
+
+[Complete record](#finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f)
+
+```json
+[
+  "Keep BagIt 1.0 as the interoperability target and compare a native serializer with a corrected or host-contained reference implementation.",
+  "Retain bagit-python 1.9.0 only as a conditional interoperability reference after the path-safety gate; it is not selected as the product runtime."
+]
+```
+
+
+### O3_HISTORY
+
+[Complete record](#finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528)
+
+```json
+[
+  "Add exact issue #152 filename test on Linux and Windows.",
+  "Add literal percent, CR/LF/CRLF path tests including names that resemble encoded paths."
+]
+```
+
+
+### O4_P1_TO_P6_COMPARISON
+
+[Complete record](#finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558)
+
+```json
+[
+  "Keep output codecs/recipes, collision resolution, exact metadata fields, package serializer, full PREMIS versus subset, playback backend, and optional BWF tool undecided until product-owner and institutional-policy choices are made.",
+  "Choose whether a reviewable batch export is useful; do not infer a required CSV UI from the Library of Congress example."
+]
+```
+
+
+### FULL_PLAN_REPLACEMENT
+
+[Complete record](#finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d)
+
+```json
+[
+  "Product choices not determined by evidence: lossless/lossy outputs and target settings; per-file or batch requests; path-collision policy; exact metadata whitelist; native or bundled serializer; full PREMIS or a documented local subset; playback API/UI; and whether a batch review/export or BWF MetaEdit fits the workflow.",
+  "If a PREMIS-inspired event record is retained, choose a small versioned schema or full PREMIS. A proposed minimum local schema records a unique event identifier, event type, event time, affected object identifiers, tool/build/settings, outcome, and source-to-derivative relationship. This is not a PREMIS conformance claim."
+]
+```
+
+
+### O5_CRITIC_DISPOSITION
+
+[Complete record](#finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c)
+
+```json
+[
+  "Use a corrected library or a native serializer; any v1.9.0 reference use remains conditional on an external host path-boundary gate.",
+  "Choose a versioned local event schema or full PREMIS only if product requirements require an event record.",
+  "Choose whether review-before-commit needs a batch UI or export."
+]
+```
+
+
+### O6_CHOICES_AND_LIMITS
+
+[Complete record](#finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872)
+
+```json
+[
+  "Open: output codecs and recipes, target settings, per-file versus batch workflow, path-collision policy, metadata whitelist, event record and schema, native versus bundled serializer, playback API/UI, review export, optional BWF tool, and institutional rights/access/retention policy.",
+  "No evidence-backed choice is made among these alternatives."
+]
+```
+
+
+### P6_ACCEPTANCE
+
+[Complete record](#finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1)
+
+```json
+[
+  "Run the selected exact dependency builds only after product choices and safety gates are locked."
+]
+```
+
+
+### EXECUTION_RECORD
+
+[Complete record](#finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b)
+
+```json
+[
+  "Provider component categories (input/cache-read/cache-creation/generated/reasoning tokens and billing amount/currency) are all unknown null, not zero.",
+  "Native Goal aggregate counters are retained as a separate, unsummed snapshot; do not add them to provider component usage."
+]
+```
+
+
+## Optional leads view
+
+
+### O1_OPEN_DISCOVERY
+
+[Complete record](#finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4)
+
+```json
+[
+  "Keep technical metadata, source tags, archivist note and correction as separate values.",
+  "Use BWF workflow guidance only when source format and collection policy make it applicable."
+]
+```
+
+
+### O2_PINNED_CODE
+
+[Complete record](#finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f)
+
+```json
+[
+  "Do not use fast Payload-Oxum counts as fixity.",
+  "Add the exact sibling-prefix symlink, manifest/fetch path, reparse-point, and race cases to proposed cross-platform tests.",
+  "Keep issue #157 percent/CR/LF encoding tests separate from the #152 false-rejection regression."
+]
+```
+
+
+### O3_HISTORY
+
+[Complete record](#finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528)
+
+```json
+[
+  "Dispositions: #152 corrected false rejection; #157 path interoperability remains open in the examined release code."
+]
+```
+
+
+### O4_P1_TO_P6_COMPARISON
+
+[Complete record](#finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558)
+
+```json
+[
+  "Reject converting all sources to BWF/WAV from the LoC preference alone; parser success as preservation validation; fast BagIt size/count as fixity; BWF data-chunk MD5 as whole-file fixity; automatic metadata correction; and remote fetch.",
+  "Treat the sibling-prefix path trace as static code analysis; do not describe it as a runtime exploit result."
+]
+```
+
+
+### FULL_PLAN_REPLACEMENT
+
+[Complete record](#finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d)
+
+```json
+[
+  "Optional review CSV, BWF-specific QA/export, second digest manifest, full PREMIS integration if required, a replaceable parser/playback adapter, and a documented local event-schema subset."
+]
+```
+
+
+### O5_CRITIC_DISPOSITION
+
+[Complete record](#finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c)
+
+```json
+[
+  "The sibling-prefix symlink and race cases are proposed tests, not reported runtime results.",
+  "Keep the issue #152 fix chain separate from the unresolved issue #157 percent-encoding limitation."
+]
+```
+
+
+### O6_CHOICES_AND_LIMITS
+
+[Complete record](#finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872)
+
+```json
+[
+  "Optional batch review/export, BWF-specific QA, a second digest manifest, full PREMIS if required, and replaceable parser/playback adapters."
+]
+```
+
+
+### P6_ACCEPTANCE
+
+[Complete record](#finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1)
+
+```json
+[
+  "Keep each synthetic input, expected result, warnings, path mapping, tool/build/settings, and outcome recorded."
+]
+```
+
+
+### EXECUTION_RECORD
+
+[Complete record](#finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b)
+
+```json
+[
+  "First useful reviser finding, observed by 2026-10-07T21:28:36Z: the pinned v1.9.0 commonprefix check can accept a sibling-prefix path resolved through a symlink, while the validation caller opens the joined path; this is static analysis only.",
+  "Generic preparation lower bound: 454.056 seconds. Qualification lower bound: 0.316 seconds. Qualification wall time and billing are unknown; cold and amortized economics remain separate and are never treated as free time.",
+  "Capture URLs, identities, versions, byte counts, time windows, hashes, and own-stage paths are in source-map.json."
+]
+```
+
+
+## Validation view
+
+
+### O1_OPEN_DISCOVERY
+
+[Complete record](#finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4)
+
+```json
+[
+  "Proposed: compare parser results on synthetic valid/malformed WAV/BWF, FLAC and MP3; no audio file was decoded in this research.",
+  "No product workflow or batch-review usability test was performed."
+]
+```
+
+
+### O2_PINNED_CODE
+
+[Complete record](#finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f)
+
+```json
+[
+  "Static review of the exact captured source and test bytes was performed. No code, test suite, filesystem reproducer, application, or downloaded code was executed.",
+  "Proposed checks: SHA-512/SHA-256 fixity; missing/changed/extra package files; percent/CR/LF names; outside paths; sibling-prefix symlink and reparse-point paths; and path replacement races."
+]
+```
+
+
+### O3_HISTORY
+
+[Complete record](#finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528)
+
+```json
+[
+  "Proposed only: regression suite on the selected exact build; no upstream or product test was run here."
+]
+```
+
+
+### O4_P1_TO_P6_COMPARISON
+
+[Complete record](#finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558)
+
+```json
+[
+  "P6 checks are proposed only. No application, dependency, audio, package, platform, security, performance, or quality test was executed."
+]
+```
+
+
+### FULL_PLAN_REPLACEMENT
+
+[Complete record](#finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d)
+
+```json
+[
+  "All P6 checks are proposals only. No app build, audio test, conversion, package validation, performance check, no-egress test, listening review, or quality assessment was executed.",
+  "Separate file-level inspection/profile/fixity results from human listening review; neither alone establishes archival quality. No quality threshold is set."
+]
+```
+
+
+### O5_CRITIC_DISPOSITION
+
+[Complete record](#finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c)
+
+```json
+[
+  "Performed here: static comparison of the cited path-check, payload walk, validation hash caller/open, relevant tests, RFC 8493 path and tag-manifest rules, PREMIS event definitions, and issue #157 capture.",
+  "Not performed: runtime symlink/reparse/race reproduction, BagIt suite, archive, application, audio, security, quality, performance, or platform test."
+]
+```
+
+
+### O6_CHOICES_AND_LIMITS
+
+[Complete record](#finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872)
+
+```json
+[
+  "All product and acceptance validation remains proposed. No implementation, listening review, preservation-quality assessment, or product test was performed."
+]
+```
+
+
+### P6_ACCEPTANCE
+
+[Complete record](#finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1)
+
+```json
+[
+  "Copy: interrupt at each stage, unplug/resume, source change, stable source identity, independent destination reread, partial-state recovery, read-only source, low space, and 100 selected files.",
+  "Metadata: malformed/contradictory RIFF/BWF, FLAC, and ID3; mono, stereo, multichannel, discrete, and unknown channel layouts; parser warnings and bounded failure/resource behavior.",
+  "Derivatives: explicit per-file settings, metadata/channel mapping, resampling/filter choice, crash/cancel, quarantined partial output, post-output profile/fixity checks, and separate human listening review.",
+  "Package: missing, changed, extra, renamed, or truncated payload; altered tag files/manifests; complete SHA-512/SHA-256 fixity and reopen behavior.",
+  "Paths: percent, CR/LF/CRLF, encoded-looking names, Unicode/case collisions, long and Windows-reserved names, absolute/traversal paths, symlink/reparse points, shared-prefix sibling escape, path replacement/time-of-check/time-of-use races, and both listed-file and unexpected-file behavior.",
+  "Environment: Windows/Linux, disconnected network, no-egress, and synthetic-only data.",
+  "All cases remain proposals until the implementation runs them; no performance, preservation-quality, or listening-quality threshold is asserted."
+]
+```
+
+
+### EXECUTION_RECORD
+
+[Complete record](#finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b)
+
+```json
+[
+  "Executed: exact-source static review, same-arm capture copy/hash checks, M14 renderer invocation, and full scope/preservation review.",
+  "Not executed: application build/test, BagIt test suite or runtime reproducer, audio parsing/conversion/listening, package validation, no-egress, performance, quality, or deployment checks."
+]
+```
+
+
+## Uncertainty view
+
+
+### O1_OPEN_DISCOVERY
+
+[Complete record](#finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4)
+
+```json
+[
+  "FFmpeg/FFprobe docs are live and not release-pinned. A release binary must be verified at build time.",
+  "The LoC case study is institutional practice, not a product build or performance result."
+]
+```
+
+
+### O2_PINNED_CODE
+
+[Complete record](#finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f)
+
+```json
+[
+  "The commonprefix path trace is a source-level inference; it was not dynamically reproduced and is not reported as a demonstrated application exploit.",
+  "Symlink/reparse and race behavior is platform- and host-implementation-dependent; product safety remains unvalidated.",
+  "The release page's captured version context is bounded to the v1.9.0 tag; no downstream product usage is inferred."
+]
+```
+
+
+### O3_HISTORY
+
+[Complete record](#finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528)
+
+```json
+[
+  "The PR does not add a test, and a source release note cannot prove downstream use."
+]
+```
+
+
+### O4_P1_TO_P6_COMPARISON
+
+[Complete record](#finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558)
+
+```json
+[
+  "No source resolves local rights/consent/retention/access policy or declares an output-quality threshold.",
+  "Windows/Linux path-race and reparse behavior requires implementation-specific tests."
+]
+```
+
+
+### FULL_PLAN_REPLACEMENT
+
+[Complete record](#finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d)
+
+```json
+[
+  "Format statements do not mandate converting born-digital oral histories. Local rights/consent, access, retention, and institutional policy remain outside the evidence and plan scope.",
+  "The safe path implementation, platform-specific reparse behavior, race resistance, output-quality thresholds, and package/runtime choices remain unvalidated or undecided."
+]
+```
+
+
+### O5_CRITIC_DISPOSITION
+
+[Complete record](#finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c)
+
+```json
+[
+  "The critic's path trace is not a dynamic exploit demonstration; application-level exploitability and platform-specific race behavior remain untested.",
+  "The product's event-record requirement, schema, quality threshold, rights/consent, access, and retention decisions remain open."
+]
+```
+
+
+### O6_CHOICES_AND_LIMITS
+
+[Complete record](#finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872)
+
+```json
+[
+  "Public technical evidence does not resolve local rights, consent, access, retention, output-quality thresholds, or institutional policy.",
+  "The inherited plan comparison is limited to the supplied P1–P6 slice."
+]
+```
+
+
+### P6_ACCEPTANCE
+
+[Complete record](#finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1)
+
+```json
+[
+  "No product test or human listening review was performed; no performance, preservation-quality, or audio-quality conclusion is offered."
+]
+```
+
+
+### EXECUTION_RECORD
+
+[Complete record](#finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b)
+
+```json
+[
+  "Per-request provider token categories and billing are unavailable and remain null/unknown.",
+  "Native Goal aggregate counters are not provider component costs and remain separate and unsummed.",
+  "A static path trace does not prove a runtime exploit or product-level exposure."
+]
+```
+
+
+## Sources view
+
+
+### O1_OPEN_DISCOVERY
+
+[Complete record](#finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4)
+
+```json
+[
+  {
+    "identity": "Library of Congress literary audio archives workflow case study",
+    "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+    "version": "2022 institutional case study",
+    "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+    "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+    "source_id": "SRC-LOC-ORAL-HISTORY",
+    "source_map_path": "source-map.json",
+    "locator": "PDF discussion of ingest review CSV and MP3 access derivatives",
+    "claim": "Institutional oral-history analogy."
+  },
+  {
+    "identity": "Library of Congress Recommended Formats Statement Audio",
+    "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+    "version": "Current annual HTML edition at capture",
+    "capture_path": "sources/S02-loc-rfs-audio.html",
+    "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+    "source_id": "SRC-LOC-RFS-AUDIO",
+    "source_map_path": "source-map.json",
+    "locator": "IV.ii.A and IV.ii.C",
+    "claim": "Format preference scope."
+  },
+  {
+    "identity": "Library of Congress FDD000357 BWF Version 2",
+    "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+    "version": "FDD000357 current page at capture",
+    "capture_path": "sources/S03-loc-bwf-v2.html",
+    "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+    "source_id": "SRC-LOC-BWF-V2",
+    "source_map_path": "source-map.json",
+    "locator": "Local use and sustainability",
+    "claim": "BWF/LPCM practice."
+  },
+  {
+    "identity": "FFprobe documentation",
+    "url": "https://www.ffmpeg.org/ffprobe-all.html",
+    "version": "Live documentation, not release-pinned",
+    "capture_path": "sources/S12-ffprobe-8.1.html",
+    "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+    "source_id": "SRC-FFPROBE",
+    "source_map_path": "source-map.json",
+    "locator": "Description and output writers",
+    "claim": "Read-only inspection candidate."
+  },
+  {
+    "identity": "FFmpeg CLI documentation",
+    "url": "https://www.ffmpeg.org/ffmpeg.html",
+    "version": "Live documentation, not release-pinned",
+    "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+    "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+    "source_id": "SRC-FFMPEG-DOCS",
+    "source_map_path": "source-map.json",
+    "locator": "-map_metadata and -metadata sections",
+    "claim": "Mapping behavior."
+  },
+  {
+    "identity": "BWF MetaEdit official product page",
+    "url": "https://mediaarea.net/BWFMetaEdit",
+    "version": "26.08.1 observed at capture",
+    "capture_path": "sources/S14-bwfmetaedit-product.html",
+    "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+    "source_id": "SRC-BWF-METAEDIT",
+    "source_map_path": "source-map.json",
+    "locator": "Features",
+    "claim": "BWF-specific optional product."
+  }
+]
+```
+
+
+### O2_PINNED_CODE
+
+[Complete record](#finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f)
+
+```json
+[
+  {
+    "identity": "bagit.py immutable release source",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+    "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+    "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+    "source_id": "SRC-BAGIT-CODE",
+    "source_map_path": "source-map.json",
+    "locator": "v1.9.0 _path_is_dangerous(), payload_files(), _validate_entries(), _calc_hashes(), _calculate_file_hashes(), make_bag(), and Bag.validate()",
+    "claim": "Pinned implementation path and fixity behavior."
+  },
+  {
+    "identity": "bagit-python immutable release tests",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+    "version": "v1.9.0 same commit",
+    "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+    "source_id": "SRC-BAGIT-TESTS",
+    "source_map_path": "source-map.json",
+    "locator": "v1.9.0 unsafe-directory and fetch-path tests",
+    "claim": "Existing traversal tests; the sibling-prefix symlink case is not present in the cited tests."
+  },
+  {
+    "identity": "RFC 8493 BagIt 1.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+    "version": "RFC 8493",
+    "capture_path": "sources/S01-rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "source_id": "SRC-RFC8493",
+    "source_map_path": "source-map.json",
+    "locator": "§§2.1.3, 2.2.1, 5.1",
+    "claim": "Manifest rules and the requirement not to access files outside the bag."
+  },
+  {
+    "identity": "bagit-python issue 157 path encoding bug",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+    "version": "Issue opened 2022-02-15",
+    "capture_path": "sources/S16-bagit-issue-157.html",
+    "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+    "source_id": "SRC-ISSUE-157",
+    "source_map_path": "source-map.json",
+    "locator": "Issue body",
+    "claim": "Separate percent-encoding condition."
+  }
+]
+```
+
+
+### O3_HISTORY
+
+[Complete record](#finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528)
+
+```json
+[
+  {
+    "identity": "bagit-python issue 152 tilde filename false error",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+    "version": "Issue opened 2021-04-23",
+    "capture_path": "sources/S07-issue-152.html",
+    "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+    "source_id": "SRC-ISSUE-152",
+    "source_map_path": "source-map.json",
+    "locator": "Issue description and reproduction",
+    "claim": "Real regression report."
+  },
+  {
+    "identity": "bagit-python PR 184 remove expandvars",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+    "version": "Merged 2025-06-13; closes issue 152",
+    "capture_path": "sources/S08-pr-184.html",
+    "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+    "source_id": "SRC-PR-184",
+    "source_map_path": "source-map.json",
+    "locator": "Merged PR conversation",
+    "claim": "Reviewed fix."
+  },
+  {
+    "identity": "bagit-python merge commit 753679",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+    "version": "753679c9b342660d038f65a8dc4f755ab95d679b",
+    "capture_path": "sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+    "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+    "source_id": "SRC-COMMIT-753679",
+    "source_map_path": "source-map.json",
+    "locator": "Commit diff",
+    "claim": "Exact source change."
+  },
+  {
+    "identity": "LibraryOfCongress bagit-python release",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+    "version": "v1.9.0, commit 861ddacb339d5b92659f0187a402f501d841abbe",
+    "capture_path": "sources/S04-bagit-v1.9.0-release.html",
+    "sha256": "5da3ece07de54bebb17417cfa7ab83ebf6ff3343f154192aad9c2a9302056680",
+    "source_id": "SRC-BAGIT-RELEASE",
+    "source_map_path": "source-map.json",
+    "locator": "v1.9.0 release notes",
+    "claim": "Release applicability."
+  },
+  {
+    "identity": "bagit.py immutable release source",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+    "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+    "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+    "source_id": "SRC-BAGIT-CODE",
+    "source_map_path": "source-map.json",
+    "locator": "_path_is_dangerous() and _encode_filename()",
+    "claim": "Release code behavior."
+  },
+  {
+    "identity": "bagit-python immutable release tests",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+    "version": "v1.9.0 same commit",
+    "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+    "source_id": "SRC-BAGIT-TESTS",
+    "source_map_path": "source-map.json",
+    "locator": "Unsafe-path tests",
+    "claim": "Regression coverage limit."
+  },
+  {
+    "identity": "bagit-python issue 157 path encoding bug",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+    "version": "Issue opened 2022-02-15",
+    "capture_path": "sources/S16-bagit-issue-157.html",
+    "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+    "source_id": "SRC-ISSUE-157",
+    "source_map_path": "source-map.json",
+    "locator": "Issue description",
+    "claim": "Separate path-encoding concern."
+  },
+  {
+    "identity": "RFC 8493 BagIt 1.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+    "version": "RFC 8493",
+    "capture_path": "sources/S01-rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "source_id": "SRC-RFC8493",
+    "source_map_path": "source-map.json",
+    "locator": "§2.1.3",
+    "claim": "Normative encoding rule."
+  }
+]
+```
+
+
+### O4_P1_TO_P6_COMPARISON
+
+[Complete record](#finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558)
+
+```json
+[
+  {
+    "identity": "RFC 8493 BagIt 1.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+    "version": "RFC 8493",
+    "capture_path": "sources/S01-rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "source_id": "SRC-RFC8493",
+    "source_map_path": "source-map.json",
+    "locator": "§§2.1.3, 2.2.1, 3, 5.1",
+    "claim": "BagIt payload/tag manifest, validity, and path requirements."
+  },
+  {
+    "identity": "bagit.py immutable release source",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+    "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+    "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+    "source_id": "SRC-BAGIT-CODE",
+    "source_map_path": "source-map.json",
+    "locator": "Pinned v1.9.0 implementation",
+    "claim": "Staging, fixity, and path-check behavior."
+  },
+  {
+    "identity": "bagit-python immutable release tests",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+    "version": "v1.9.0 same commit",
+    "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+    "source_id": "SRC-BAGIT-TESTS",
+    "source_map_path": "source-map.json",
+    "locator": "Pinned v1.9.0 unsafe path tests",
+    "claim": "Existing test coverage limits."
+  },
+  {
+    "identity": "Library of Congress Recommended Formats Statement Audio",
+    "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+    "version": "Current annual HTML edition at capture",
+    "capture_path": "sources/S02-loc-rfs-audio.html",
+    "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+    "source_id": "SRC-LOC-RFS-AUDIO",
+    "source_map_path": "source-map.json",
+    "locator": "IV.ii.A and IV.ii.C",
+    "claim": "Bounded format preferences and metadata context."
+  },
+  {
+    "identity": "Library of Congress literary audio archives workflow case study",
+    "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+    "version": "2022 institutional case study",
+    "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+    "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+    "source_id": "SRC-LOC-ORAL-HISTORY",
+    "source_map_path": "source-map.json",
+    "locator": "Review CSV and derivative workflow",
+    "claim": "Institutional analogy only."
+  },
+  {
+    "identity": "FFprobe documentation",
+    "url": "https://www.ffmpeg.org/ffprobe-all.html",
+    "version": "Live documentation, not release-pinned",
+    "capture_path": "sources/S12-ffprobe-8.1.html",
+    "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+    "source_id": "SRC-FFPROBE",
+    "source_map_path": "source-map.json",
+    "locator": "Machine-readable format/stream sections",
+    "claim": "Inspection adapter candidate."
+  },
+  {
+    "identity": "FFmpeg CLI documentation",
+    "url": "https://www.ffmpeg.org/ffmpeg.html",
+    "version": "Live documentation, not release-pinned",
+    "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+    "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+    "source_id": "SRC-FFMPEG-DOCS",
+    "source_map_path": "source-map.json",
+    "locator": "Metadata mapping and override sections",
+    "claim": "Explicit derivative mapping."
+  },
+  {
+    "identity": "Library of Congress PREMIS Data Dictionary",
+    "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+    "version": "PREMIS 3.0",
+    "capture_path": "sources/S10-premis-v3.pdf",
+    "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+    "source_id": "SRC-PREMIS",
+    "source_map_path": "source-map.json",
+    "locator": "Event entity §§2.1–2.7",
+    "claim": "Event-record option and scope."
+  }
+]
+```
+
+
+### FULL_PLAN_REPLACEMENT
+
+[Complete record](#finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d)
+
+```json
+[
+  {
+    "identity": "RFC 8493 BagIt 1.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+    "version": "RFC 8493",
+    "capture_path": "sources/S01-rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "source_id": "SRC-RFC8493",
+    "source_map_path": "source-map.json",
+    "locator": "§§2–5, especially 2.1.3, 2.2.1 and 5.1",
+    "claim": "BagIt structure, manifest rules, fixity, and path safety."
+  },
+  {
+    "identity": "bagit.py immutable release source",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+    "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+    "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+    "source_id": "SRC-BAGIT-CODE",
+    "source_map_path": "source-map.json",
+    "locator": "Pinned v1.9.0 source symbols",
+    "claim": "Implementation candidate and adoption conditions."
+  },
+  {
+    "identity": "bagit-python immutable release tests",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+    "version": "v1.9.0 same commit",
+    "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+    "source_id": "SRC-BAGIT-TESTS",
+    "source_map_path": "source-map.json",
+    "locator": "Pinned v1.9.0 test symbols",
+    "claim": "Existing test limits and proposed cases."
+  },
+  {
+    "identity": "bagit-python issue 152 tilde filename false error",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+    "version": "Issue opened 2021-04-23",
+    "capture_path": "sources/S07-issue-152.html",
+    "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+    "source_id": "SRC-ISSUE-152",
+    "source_map_path": "source-map.json",
+    "locator": "Issue body",
+    "claim": "Bounded historical false-rejection report."
+  },
+  {
+    "identity": "bagit-python PR 184 remove expandvars",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+    "version": "Merged 2025-06-13; closes issue 152",
+    "capture_path": "sources/S08-pr-184.html",
+    "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+    "source_id": "SRC-PR-184",
+    "source_map_path": "source-map.json",
+    "locator": "Merged PR",
+    "claim": "Fix relationship."
+  },
+  {
+    "identity": "bagit-python merge commit 753679",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+    "version": "753679c9b342660d038f65a8dc4f755ab95d679b",
+    "capture_path": "sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+    "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+    "source_id": "SRC-COMMIT-753679",
+    "source_map_path": "source-map.json",
+    "locator": "Exact merge patch",
+    "claim": "Two-line deletion and no added regression test."
+  },
+  {
+    "identity": "bagit-python issue 157 path encoding bug",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+    "version": "Issue opened 2022-02-15",
+    "capture_path": "sources/S16-bagit-issue-157.html",
+    "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+    "source_id": "SRC-ISSUE-157",
+    "source_map_path": "source-map.json",
+    "locator": "Issue body",
+    "claim": "Separate percent-encoding interoperability issue."
+  },
+  {
+    "identity": "Library of Congress Recommended Formats Statement Audio",
+    "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+    "version": "Current annual HTML edition at capture",
+    "capture_path": "sources/S02-loc-rfs-audio.html",
+    "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+    "source_id": "SRC-LOC-RFS-AUDIO",
+    "source_map_path": "source-map.json",
+    "locator": "IV.ii.A and IV.ii.C",
+    "claim": "Limited institutional format preference."
+  },
+  {
+    "identity": "Library of Congress FDD000357 BWF Version 2",
+    "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+    "version": "FDD000357 current page at capture",
+    "capture_path": "sources/S03-loc-bwf-v2.html",
+    "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+    "source_id": "SRC-LOC-BWF-V2",
+    "source_map_path": "source-map.json",
+    "locator": "Local use and sustainability sections",
+    "claim": "BWF context."
+  },
+  {
+    "identity": "Library of Congress literary audio archives workflow case study",
+    "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+    "version": "2022 institutional case study",
+    "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+    "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+    "source_id": "SRC-LOC-ORAL-HISTORY",
+    "source_map_path": "source-map.json",
+    "locator": "Review CSV, test ingest, WAV masters and MP3 access copies",
+    "claim": "Workflow analogy only."
+  },
+  {
+    "identity": "Library of Congress PREMIS Data Dictionary",
+    "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+    "version": "PREMIS 3.0",
+    "capture_path": "sources/S10-premis-v3.pdf",
+    "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+    "source_id": "SRC-PREMIS",
+    "source_map_path": "source-map.json",
+    "locator": "Event entity §§2.1–2.7",
+    "claim": "Event field names and object linkage; local subset is not full conformance."
+  },
+  {
+    "identity": "FFprobe documentation",
+    "url": "https://www.ffmpeg.org/ffprobe-all.html",
+    "version": "Live documentation, not release-pinned",
+    "capture_path": "sources/S12-ffprobe-8.1.html",
+    "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+    "source_id": "SRC-FFPROBE",
+    "source_map_path": "source-map.json",
+    "locator": "Machine-readable format and stream output",
+    "claim": "Inspection candidate."
+  },
+  {
+    "identity": "FFmpeg CLI documentation",
+    "url": "https://www.ffmpeg.org/ffmpeg.html",
+    "version": "Live documentation, not release-pinned",
+    "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+    "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+    "source_id": "SRC-FFMPEG-DOCS",
+    "source_map_path": "source-map.json",
+    "locator": "Metadata mapping and override controls",
+    "claim": "Derivative behavior candidate."
+  },
+  {
+    "identity": "FFmpeg official release page",
+    "url": "https://ffmpeg.org/download.html",
+    "version": "9.0.2 released 2026-09-18",
+    "capture_path": "sources/S13-ffmpeg-download.html",
+    "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442",
+    "source_id": "SRC-FFMPEG-RELEASE",
+    "source_map_path": "source-map.json",
+    "locator": "9.0.2 release entry",
+    "claim": "Version candidate only."
+  },
+  {
+    "identity": "BWF MetaEdit official product page",
+    "url": "https://mediaarea.net/BWFMetaEdit",
+    "version": "26.08.1 observed at capture",
+    "capture_path": "sources/S14-bwfmetaedit-product.html",
+    "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+    "source_id": "SRC-BWF-METAEDIT",
+    "source_map_path": "source-map.json",
+    "locator": "Product features and MD5 scope",
+    "claim": "Optional BWF-only lead."
+  }
+]
+```
+
+
+### O5_CRITIC_DISPOSITION
+
+[Complete record](#finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c)
+
+```json
+[
+  {
+    "identity": "bagit.py immutable release source",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+    "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+    "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+    "source_id": "SRC-BAGIT-CODE",
+    "source_map_path": "source-map.json",
+    "locator": "v1.9.0 path check, payload walk, _validate_entries(), _calc_hashes(), and file open",
+    "claim": "Static sibling-prefix path trace."
+  },
+  {
+    "identity": "bagit-python immutable release tests",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+    "version": "v1.9.0 same commit",
+    "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+    "source_id": "SRC-BAGIT-TESTS",
+    "source_map_path": "source-map.json",
+    "locator": "Unsafe-directory and fetch-path test definitions",
+    "claim": "Existing coverage and omitted symlink case."
+  },
+  {
+    "identity": "RFC 8493 BagIt 1.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+    "version": "RFC 8493",
+    "capture_path": "sources/S01-rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "source_id": "SRC-RFC8493",
+    "source_map_path": "source-map.json",
+    "locator": "§§2.2.1 and 5.1",
+    "claim": "Tag-manifest rules and prohibition on outside-bag access."
+  },
+  {
+    "identity": "Library of Congress PREMIS Data Dictionary",
+    "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+    "version": "PREMIS 3.0",
+    "capture_path": "sources/S10-premis-v3.pdf",
+    "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+    "source_id": "SRC-PREMIS",
+    "source_map_path": "source-map.json",
+    "locator": "Event entity §§2.1–2.7",
+    "claim": "Minimum event fields and object linkage context."
+  },
+  {
+    "identity": "bagit-python issue 157 path encoding bug",
+    "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+    "version": "Issue opened 2022-02-15",
+    "capture_path": "sources/S16-bagit-issue-157.html",
+    "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+    "source_id": "SRC-ISSUE-157",
+    "source_map_path": "source-map.json",
+    "locator": "Issue body",
+    "claim": "Separate path-encoding condition."
+  },
+  {
+    "identity": "Library of Congress literary audio archives workflow case study",
+    "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+    "version": "2022 institutional case study",
+    "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+    "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+    "source_id": "SRC-LOC-ORAL-HISTORY",
+    "source_map_path": "source-map.json",
+    "locator": "Review CSV workflow",
+    "claim": "Optional analogy."
+  }
+]
+```
+
+
+### O6_CHOICES_AND_LIMITS
+
+[Complete record](#finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872)
+
+```json
+[
+  {
+    "identity": "Library of Congress PREMIS Data Dictionary",
+    "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+    "version": "PREMIS 3.0",
+    "capture_path": "sources/S10-premis-v3.pdf",
+    "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+    "source_id": "SRC-PREMIS",
+    "source_map_path": "source-map.json",
+    "locator": "Event entity §§2.1–2.7",
+    "claim": "Event schema option; no full-conformance claim."
+  },
+  {
+    "identity": "Library of Congress literary audio archives workflow case study",
+    "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+    "version": "2022 institutional case study",
+    "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+    "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+    "source_id": "SRC-LOC-ORAL-HISTORY",
+    "source_map_path": "source-map.json",
+    "locator": "Test ingest, review CSV, masters and access-copy workflow",
+    "claim": "Bounded institutional analogy."
+  },
+  {
+    "identity": "Library of Congress Recommended Formats Statement Audio",
+    "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+    "version": "Current annual HTML edition at capture",
+    "capture_path": "sources/S02-loc-rfs-audio.html",
+    "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+    "source_id": "SRC-LOC-RFS-AUDIO",
+    "source_map_path": "source-map.json",
+    "locator": "Audio format preference scope",
+    "claim": "Not a born-digital conversion recipe."
+  },
+  {
+    "identity": "RFC 8493 BagIt 1.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+    "version": "RFC 8493",
+    "capture_path": "sources/S01-rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "source_id": "SRC-RFC8493",
+    "source_map_path": "source-map.json",
+    "locator": "BagIt structure and fixity rules",
+    "claim": "Package option and constraints."
+  }
+]
+```
+
+
+### P6_ACCEPTANCE
+
+[Complete record](#finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1)
+
+```json
+[
+  {
+    "identity": "RFC 8493 BagIt 1.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+    "version": "RFC 8493",
+    "capture_path": "sources/S01-rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "source_id": "SRC-RFC8493",
+    "source_map_path": "source-map.json",
+    "locator": "§§2.1.3, 2.2.1, 5.1",
+    "claim": "Manifest, tag-file, and path cases."
+  },
+  {
+    "identity": "bagit.py immutable release source",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+    "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+    "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+    "source_id": "SRC-BAGIT-CODE",
+    "source_map_path": "source-map.json",
+    "locator": "Pinned path-check and validation callers",
+    "claim": "Sibling-prefix/race test motivation."
+  },
+  {
+    "identity": "bagit-python immutable release tests",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+    "version": "v1.9.0 same commit",
+    "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+    "source_id": "SRC-BAGIT-TESTS",
+    "source_map_path": "source-map.json",
+    "locator": "Unsafe-directory and fetch tests",
+    "claim": "Existing tests inspected, not run."
+  },
+  {
+    "identity": "Library of Congress literary audio archives workflow case study",
+    "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+    "version": "2022 institutional case study",
+    "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+    "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+    "source_id": "SRC-LOC-ORAL-HISTORY",
+    "source_map_path": "source-map.json",
+    "locator": "Test-ingest workflow",
+    "claim": "Review-before-commit analogy only."
+  }
+]
+```
+
+
+### EXECUTION_RECORD
+
+[Complete record](#finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b)
+
+```json
+[
+  {
+    "identity": "bagit.py immutable release source",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+    "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+    "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+    "source_id": "SRC-BAGIT-CODE",
+    "source_map_path": "source-map.json",
+    "locator": "Pinned v1.9.0 path-check and validation code",
+    "claim": "Changed consequential claim checked against exact source bytes."
+  },
+  {
+    "identity": "bagit-python immutable release tests",
+    "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+    "version": "v1.9.0 same commit",
+    "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+    "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+    "source_id": "SRC-BAGIT-TESTS",
+    "source_map_path": "source-map.json",
+    "locator": "Pinned unsafe-path tests",
+    "claim": "Test coverage checked; tests not executed."
+  },
+  {
+    "identity": "RFC 8493 BagIt 1.0",
+    "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+    "version": "RFC 8493",
+    "capture_path": "sources/S01-rfc8493.txt",
+    "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+    "source_id": "SRC-RFC8493",
+    "source_map_path": "source-map.json",
+    "locator": "§§2.2.1 and 5.1",
+    "claim": "Tag and outside-bag access requirements checked."
+  },
+  {
+    "identity": "Library of Congress PREMIS Data Dictionary",
+    "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+    "version": "PREMIS 3.0",
+    "capture_path": "sources/S10-premis-v3.pdf",
+    "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+    "source_id": "SRC-PREMIS",
+    "source_map_path": "source-map.json",
+    "locator": "Event entity definitions",
+    "claim": "Event field/object-link claims checked."
+  }
+]
+```
+
+
+## Complete record detail view
+
+
+<a id="finding-5d976c2e5edc36033854effa23b7f474f78431bedf0bc070ff7766c77a4016a4"></a>
+
+
+### O1_OPEN_DISCOVERY
+
+```json
+{
+  "id": "O1_OPEN_DISCOVERY",
+  "summary": "Need-led public discovery supports a staged, reviewable ingest workflow with separate preservation, inspection and access-copy decisions.",
+  "disposition": "Accepted with scope limits. The institutional workflow is an analogy; a reviewable batch export remains a product choice, not a required UI.",
+  "evidence": [
+    "A Library of Congress literary audio workflow documents a test ingest that creates a review CSV before formal ingest and scripted FFmpeg MP3 access copies from WAV masters. This supports review-before-commit and derivative provenance, but not importing its settings or storage topology.",
+    "The LoC audio statement prefers native resolution and uncompressed media-independent audio and lists BWF WAVE with embedded metadata as preferred in that statement's scope. It does not require converting oral-history intake MP3 or FLAC files to WAVE.",
+    "FFprobe documents structured machine-readable format and stream output. FFmpeg documents metadata mapping and override controls. BWF MetaEdit is a specialized BWF tool that can validate and edit embedded metadata."
+  ],
+  "conditions": {
+    "condition": "Begin from oral-history desk need. Do not treat release-format recommendations as a recipe for born-digital interviews or automatically rewrite metadata.",
+    "review_before_commit": "Decide whether this desk needs a batch review/export step. The Library of Congress CSV is an example only; do not require its interface or storage topology."
+  },
+  "options": [
+    "FFprobe 9.0.2 candidate for inspection; validate against synthetic formats and malformed metadata.",
+    "Optional BWF MetaEdit for BWF-specific inspection only.",
+    "Reviewable batch CSV can be built into UI or exported.",
+    "Product-owner choice: build a reviewable batch view or export if the desk needs it; the LoC CSV is not mandatory."
+  ],
+  "optional_leads": [
+    "Keep technical metadata, source tags, archivist note and correction as separate values.",
+    "Use BWF workflow guidance only when source format and collection policy make it applicable."
+  ],
+  "validation": [
+    "Proposed: compare parser results on synthetic valid/malformed WAV/BWF, FLAC and MP3; no audio file was decoded in this research.",
+    "No product workflow or batch-review usability test was performed."
+  ],
+  "uncertainty": [
+    "FFmpeg/FFprobe docs are live and not release-pinned. A release binary must be verified at build time.",
+    "The LoC case study is institutional practice, not a product build or performance result."
+  ],
+  "sources": [
+    {
+      "identity": "Library of Congress literary audio archives workflow case study",
+      "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "version": "2022 institutional case study",
+      "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "source_map_path": "source-map.json",
+      "locator": "PDF discussion of ingest review CSV and MP3 access derivatives",
+      "claim": "Institutional oral-history analogy."
+    },
+    {
+      "identity": "Library of Congress Recommended Formats Statement Audio",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "version": "Current annual HTML edition at capture",
+      "capture_path": "sources/S02-loc-rfs-audio.html",
+      "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+      "source_id": "SRC-LOC-RFS-AUDIO",
+      "source_map_path": "source-map.json",
+      "locator": "IV.ii.A and IV.ii.C",
+      "claim": "Format preference scope."
+    },
+    {
+      "identity": "Library of Congress FDD000357 BWF Version 2",
+      "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+      "version": "FDD000357 current page at capture",
+      "capture_path": "sources/S03-loc-bwf-v2.html",
+      "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+      "source_id": "SRC-LOC-BWF-V2",
+      "source_map_path": "source-map.json",
+      "locator": "Local use and sustainability",
+      "claim": "BWF/LPCM practice."
+    },
+    {
+      "identity": "FFprobe documentation",
+      "url": "https://www.ffmpeg.org/ffprobe-all.html",
+      "version": "Live documentation, not release-pinned",
+      "capture_path": "sources/S12-ffprobe-8.1.html",
+      "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+      "source_id": "SRC-FFPROBE",
+      "source_map_path": "source-map.json",
+      "locator": "Description and output writers",
+      "claim": "Read-only inspection candidate."
+    },
+    {
+      "identity": "FFmpeg CLI documentation",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "version": "Live documentation, not release-pinned",
+      "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+      "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+      "source_id": "SRC-FFMPEG-DOCS",
+      "source_map_path": "source-map.json",
+      "locator": "-map_metadata and -metadata sections",
+      "claim": "Mapping behavior."
+    },
+    {
+      "identity": "BWF MetaEdit official product page",
+      "url": "https://mediaarea.net/BWFMetaEdit",
+      "version": "26.08.1 observed at capture",
+      "capture_path": "sources/S14-bwfmetaedit-product.html",
+      "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+      "source_id": "SRC-BWF-METAEDIT",
+      "source_map_path": "source-map.json",
+      "locator": "Features",
+      "claim": "BWF-specific optional product."
+    }
+  ]
+}
+```
+
+
+<a id="finding-7f228bd14b531372c8d317344c7eb97feef5baba3806e2981a749dae0eaed94f"></a>
+
+
+### O2_PINNED_CODE
+
+```json
+{
+  "id": "O2_PINNED_CODE",
+  "summary": "Pinned bagit-python v1.9.0 evidence supports the staging and fixity cautions, and reveals a statically traceable sibling-prefix symlink path-boundary failure in its validator.",
+  "disposition": "The implementation evidence is accepted. Do not rely on v1.9.0's path check alone as a security boundary for untrusted package contents. This is a static source-path finding, not a dynamically demonstrated exploit.",
+  "evidence": [
+    "make_bag() defaults to SHA-256 and SHA-512, then moves input directory contents into a data folder in place before writing bag metadata and manifests. Never run it on removable source media; stage a copy first.",
+    "Bag.validate() defaults to full fixity recalculation. fast=True returns after Payload-Oxum file-count and byte-count checks and does not recalculate manifest checksums.",
+    "_load_manifests() and fetch_entries() call _path_is_dangerous() when interpreting manifest and fetch paths. RFC 8493 §5.1 requires implementations not to access files outside the bag when using bag paths.",
+    "_encode_filename() replaces CR and LF but not literal percent. Issue #157 describes the separate BagIt 1.0 interoperability problem; the exact v1.9.0 encoder still lacks percent handling.",
+    "Static path trace: _path_is_dangerous() resolves the joined path, normalizes it, then compares strings with os.path.commonprefix(). A POSIX-style data/link symlink resolving from /tmp/bag into /tmp/bag-sibling/file has the common string prefix /tmp/bag and can be accepted. payload_files() emits file names from the data walk; _validate_entries() passes the relative path to _calc_hashes(), and _calculate_file_hashes() joins and opens it. RFC 8493 §5.1 says paths must not cause files outside the bag to be accessed. The captured code was read, not run; no filesystem case or application exploit was demonstrated."
+  ],
+  "conditions": {
+    "version": "Exact code and tests captured from bagit-python v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe.",
+    "scope": "bagit-python is an optional reference candidate. BagIt 1.0 is the proposed package standard, not a mandatory Python runtime.",
+    "path_safety": "Treat manifest and fetch paths as untrusted. Do not treat this release's commonprefix check as the host application's security boundary.",
+    "adoption_gate": "Before any use on untrusted bags, use a corrected implementation or enforce canonical path-segment containment in the host, reject or safely handle symlinks/reparse points, guard against time-of-check/time-of-use changes, and test sibling-prefix escapes and races on Windows and Linux. These are proposed gates; none was implemented or tested here.",
+    "staging": "Run only against a completed staging copy; never pass the removable source tree to make_bag()."
+  },
+  "options": [
+    "Keep BagIt 1.0 as the interoperability target and compare a native serializer with a corrected or host-contained reference implementation.",
+    "Retain bagit-python 1.9.0 only as a conditional interoperability reference after the path-safety gate; it is not selected as the product runtime."
+  ],
+  "optional_leads": [
+    "Do not use fast Payload-Oxum counts as fixity.",
+    "Add the exact sibling-prefix symlink, manifest/fetch path, reparse-point, and race cases to proposed cross-platform tests.",
+    "Keep issue #157 percent/CR/LF encoding tests separate from the #152 false-rejection regression."
+  ],
+  "validation": [
+    "Static review of the exact captured source and test bytes was performed. No code, test suite, filesystem reproducer, application, or downloaded code was executed.",
+    "Proposed checks: SHA-512/SHA-256 fixity; missing/changed/extra package files; percent/CR/LF names; outside paths; sibling-prefix symlink and reparse-point paths; and path replacement races."
+  ],
+  "uncertainty": [
+    "The commonprefix path trace is a source-level inference; it was not dynamically reproduced and is not reported as a demonstrated application exploit.",
+    "Symlink/reparse and race behavior is platform- and host-implementation-dependent; product safety remains unvalidated.",
+    "The release page's captured version context is bounded to the v1.9.0 tag; no downstream product usage is inferred."
+  ],
+  "sources": [
+    {
+      "identity": "bagit.py immutable release source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "source_id": "SRC-BAGIT-CODE",
+      "source_map_path": "source-map.json",
+      "locator": "v1.9.0 _path_is_dangerous(), payload_files(), _validate_entries(), _calc_hashes(), _calculate_file_hashes(), make_bag(), and Bag.validate()",
+      "claim": "Pinned implementation path and fixity behavior."
+    },
+    {
+      "identity": "bagit-python immutable release tests",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version": "v1.9.0 same commit",
+      "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "source_id": "SRC-BAGIT-TESTS",
+      "source_map_path": "source-map.json",
+      "locator": "v1.9.0 unsafe-directory and fetch-path tests",
+      "claim": "Existing traversal tests; the sibling-prefix symlink case is not present in the cited tests."
+    },
+    {
+      "identity": "RFC 8493 BagIt 1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "source_id": "SRC-RFC8493",
+      "source_map_path": "source-map.json",
+      "locator": "§§2.1.3, 2.2.1, 5.1",
+      "claim": "Manifest rules and the requirement not to access files outside the bag."
+    },
+    {
+      "identity": "bagit-python issue 157 path encoding bug",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+      "version": "Issue opened 2022-02-15",
+      "capture_path": "sources/S16-bagit-issue-157.html",
+      "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+      "source_id": "SRC-ISSUE-157",
+      "source_map_path": "source-map.json",
+      "locator": "Issue body",
+      "claim": "Separate percent-encoding condition."
+    }
+  ]
+}
+```
+
+
+<a id="finding-b5e890276412b7e9954549066b865a253b557360887039a1ef70c75979186528"></a>
+
+
+### O3_HISTORY
+
+```json
+{
+  "id": "O3_HISTORY",
+  "summary": "Issue #152 has a traceable upstream fix in a released version; separate issue #157 remains relevant to the exact release code.",
+  "disposition": "Issue/fix/release applicability supported; no automated regression test for the exact tilde case was found.",
+  "evidence": [
+    "Issue #152 reports a Linux/Python false unsafe-path rejection for a name containing ~$_- because os.path.expandvars() expands it. The issue supplies a reproducible example.",
+    "PR #184 removes the expandvars check from _path_is_dangerous(); merge commit 753679c9b342660d038f65a8dc4f755ab95d679b closes #152. The v1.9.0 release notes list #184 and the exact tagged source no longer calls expandvars.",
+    "The merge patch changes one source file with two deletions and no test addition. The release test file has generic unsafe path checks, but not the exact issue #152 name. Thus the issue reproduction and code delta are regression evidence; a committed automated regression test is not established.",
+    "At the same v1.9.0 tag, _encode_filename() handles CR/LF but not literal percent; RFC 8493 requires encoding percent too. This is a separate limitation, not a consequence of #152."
+  ],
+  "conditions": {
+    "release": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe contains the merged change.",
+    "claim_limit": "No inference that any downstream product shipped this code."
+  },
+  "options": [
+    "Add exact issue #152 filename test on Linux and Windows.",
+    "Add literal percent, CR/LF/CRLF path tests including names that resemble encoded paths."
+  ],
+  "optional_leads": [
+    "Dispositions: #152 corrected false rejection; #157 path interoperability remains open in the examined release code."
+  ],
+  "validation": [
+    "Proposed only: regression suite on the selected exact build; no upstream or product test was run here."
+  ],
+  "uncertainty": [
+    "The PR does not add a test, and a source release note cannot prove downstream use."
+  ],
+  "sources": [
+    {
+      "identity": "bagit-python issue 152 tilde filename false error",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+      "version": "Issue opened 2021-04-23",
+      "capture_path": "sources/S07-issue-152.html",
+      "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+      "source_id": "SRC-ISSUE-152",
+      "source_map_path": "source-map.json",
+      "locator": "Issue description and reproduction",
+      "claim": "Real regression report."
+    },
+    {
+      "identity": "bagit-python PR 184 remove expandvars",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "version": "Merged 2025-06-13; closes issue 152",
+      "capture_path": "sources/S08-pr-184.html",
+      "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+      "source_id": "SRC-PR-184",
+      "source_map_path": "source-map.json",
+      "locator": "Merged PR conversation",
+      "claim": "Reviewed fix."
+    },
+    {
+      "identity": "bagit-python merge commit 753679",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "version": "753679c9b342660d038f65a8dc4f755ab95d679b",
+      "capture_path": "sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+      "source_id": "SRC-COMMIT-753679",
+      "source_map_path": "source-map.json",
+      "locator": "Commit diff",
+      "claim": "Exact source change."
+    },
+    {
+      "identity": "LibraryOfCongress bagit-python release",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+      "version": "v1.9.0, commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S04-bagit-v1.9.0-release.html",
+      "sha256": "5da3ece07de54bebb17417cfa7ab83ebf6ff3343f154192aad9c2a9302056680",
+      "source_id": "SRC-BAGIT-RELEASE",
+      "source_map_path": "source-map.json",
+      "locator": "v1.9.0 release notes",
+      "claim": "Release applicability."
+    },
+    {
+      "identity": "bagit.py immutable release source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "source_id": "SRC-BAGIT-CODE",
+      "source_map_path": "source-map.json",
+      "locator": "_path_is_dangerous() and _encode_filename()",
+      "claim": "Release code behavior."
+    },
+    {
+      "identity": "bagit-python immutable release tests",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version": "v1.9.0 same commit",
+      "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "source_id": "SRC-BAGIT-TESTS",
+      "source_map_path": "source-map.json",
+      "locator": "Unsafe-path tests",
+      "claim": "Regression coverage limit."
+    },
+    {
+      "identity": "bagit-python issue 157 path encoding bug",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+      "version": "Issue opened 2022-02-15",
+      "capture_path": "sources/S16-bagit-issue-157.html",
+      "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+      "source_id": "SRC-ISSUE-157",
+      "source_map_path": "source-map.json",
+      "locator": "Issue description",
+      "claim": "Separate path-encoding concern."
+    },
+    {
+      "identity": "RFC 8493 BagIt 1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "source_id": "SRC-RFC8493",
+      "source_map_path": "source-map.json",
+      "locator": "§2.1.3",
+      "claim": "Normative encoding rule."
+    }
+  ]
+}
+```
+
+
+<a id="finding-213d79b13427d637b82005438d42b03cf7cf37f0f8b1012270fa64e314140558"></a>
+
+
+### O4_P1_TO_P6_COMPARISON
+
+```json
+{
+  "id": "O4_P1_TO_P6_COMPARISON",
+  "summary": "Every frozen P1–P6 decision is compared with an explicit disposition, including the fresh critic's path, race, tag-manifest, and reviewability additions.",
+  "disposition": "Complete comparison within the supplied six-part plan. All critic additions are accepted as proposed requirements; product options and validation status remain explicit.",
+  "evidence": [
+    "P1–P6 retain the inherited scope and its original constraints. The additions refine copy safety, parser boundaries, derivative verification, BagIt path/fixity handling, dependency gates, and synthetic acceptance.",
+    "The critic confirms that coverage means only the six supplied plan decisions; no whole-product or system-wide guarantee is inferred."
+  ],
+  "conditions": {
+    "already_covered": "The inherited plan already covers the six headline areas and repeated constraints; no unrelated whole-project coverage is inferred.",
+    "cross_reference_limit": "The supplied comparison slice contains only this six-part plan; no broader system guarantees are inferred.",
+    "critic_disposition": {
+      "P1": "Accept preflight, collisions, resumable states, independent destination reread, and non-final partial states. Add stable source identity during copy, no-follow/reparse handling, and atomic staging/finalization as proposed.",
+      "P2": "Retain duration, channels/layout, encoding, tags, notes, waveform/listen view, and separate corrections. Keep parser read-only and source metadata immutable; show unknown layouts and warnings. Add bounded malformed-input handling; display must not write embedded metadata.",
+      "P3": "Retain explicit opt-in and settings preview with no default lossy conversion, resampling, normalization, or downmix. Run only from a verified accession copy; keep output temporary until successful exit and profile check. A successful probe does not establish audio quality or preservation suitability.",
+      "P4": "Retain BagIt 1.0 as a proposed model, complete manifests, provenance, and reopen fixity. Keep no fetch.txt/remote payload. Clarify tag-manifest coverage and gate bagit-python on the path-boundary correction.",
+      "P5": "Keep components undecided. Pin exact binary hashes/build flags/codecs/licenses/dependencies for both OSes before shipping. Keep bagit-python conditional, BWF MetaEdit optional and BWF-specific, and playback/UI as prototype choices.",
+      "P6": "Retain all five original synthetic categories and all existing path/platform/privacy cases. Add the exact sibling-prefix symlink and path-race cases, with listed and unexpected file behavior."
+    }
+  },
+  "options": [
+    "Keep output codecs/recipes, collision resolution, exact metadata fields, package serializer, full PREMIS versus subset, playback backend, and optional BWF tool undecided until product-owner and institutional-policy choices are made.",
+    "Choose whether a reviewable batch export is useful; do not infer a required CSV UI from the Library of Congress example."
+  ],
+  "optional_leads": [
+    "Reject converting all sources to BWF/WAV from the LoC preference alone; parser success as preservation validation; fast BagIt size/count as fixity; BWF data-chunk MD5 as whole-file fixity; automatic metadata correction; and remote fetch.",
+    "Treat the sibling-prefix path trace as static code analysis; do not describe it as a runtime exploit result."
+  ],
+  "validation": [
+    "P6 checks are proposed only. No application, dependency, audio, package, platform, security, performance, or quality test was executed."
+  ],
+  "uncertainty": [
+    "No source resolves local rights/consent/retention/access policy or declares an output-quality threshold.",
+    "Windows/Linux path-race and reparse behavior requires implementation-specific tests."
+  ],
+  "sources": [
+    {
+      "identity": "RFC 8493 BagIt 1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "source_id": "SRC-RFC8493",
+      "source_map_path": "source-map.json",
+      "locator": "§§2.1.3, 2.2.1, 3, 5.1",
+      "claim": "BagIt payload/tag manifest, validity, and path requirements."
+    },
+    {
+      "identity": "bagit.py immutable release source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "source_id": "SRC-BAGIT-CODE",
+      "source_map_path": "source-map.json",
+      "locator": "Pinned v1.9.0 implementation",
+      "claim": "Staging, fixity, and path-check behavior."
+    },
+    {
+      "identity": "bagit-python immutable release tests",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version": "v1.9.0 same commit",
+      "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "source_id": "SRC-BAGIT-TESTS",
+      "source_map_path": "source-map.json",
+      "locator": "Pinned v1.9.0 unsafe path tests",
+      "claim": "Existing test coverage limits."
+    },
+    {
+      "identity": "Library of Congress Recommended Formats Statement Audio",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "version": "Current annual HTML edition at capture",
+      "capture_path": "sources/S02-loc-rfs-audio.html",
+      "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+      "source_id": "SRC-LOC-RFS-AUDIO",
+      "source_map_path": "source-map.json",
+      "locator": "IV.ii.A and IV.ii.C",
+      "claim": "Bounded format preferences and metadata context."
+    },
+    {
+      "identity": "Library of Congress literary audio archives workflow case study",
+      "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "version": "2022 institutional case study",
+      "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "source_map_path": "source-map.json",
+      "locator": "Review CSV and derivative workflow",
+      "claim": "Institutional analogy only."
+    },
+    {
+      "identity": "FFprobe documentation",
+      "url": "https://www.ffmpeg.org/ffprobe-all.html",
+      "version": "Live documentation, not release-pinned",
+      "capture_path": "sources/S12-ffprobe-8.1.html",
+      "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+      "source_id": "SRC-FFPROBE",
+      "source_map_path": "source-map.json",
+      "locator": "Machine-readable format/stream sections",
+      "claim": "Inspection adapter candidate."
+    },
+    {
+      "identity": "FFmpeg CLI documentation",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "version": "Live documentation, not release-pinned",
+      "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+      "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+      "source_id": "SRC-FFMPEG-DOCS",
+      "source_map_path": "source-map.json",
+      "locator": "Metadata mapping and override sections",
+      "claim": "Explicit derivative mapping."
+    },
+    {
+      "identity": "Library of Congress PREMIS Data Dictionary",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version": "PREMIS 3.0",
+      "capture_path": "sources/S10-premis-v3.pdf",
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "source_id": "SRC-PREMIS",
+      "source_map_path": "source-map.json",
+      "locator": "Event entity §§2.1–2.7",
+      "claim": "Event-record option and scope."
+    }
+  ]
+}
+```
+
+
+<a id="finding-f9ebff3c6e088fbe23a281b498cf18a4cef469b395d8ab2683d59b111c72396d"></a>
+
+
+### FULL_PLAN_REPLACEMENT
+
+```json
+{
+  "id": "FULL_PLAN_REPLACEMENT",
+  "summary": "Complete proposed replacement for the inherited sandbox plan: local ingest, inspection, derivatives, packaging, component choices, and acceptance.",
+  "disposition": "Complete proposed replacement incorporating the fresh critique; not built or validated. Product choices remain open, and the result is DIAGNOSTIC_UNQUALIFIED.",
+  "evidence": [
+    "The replacement retains the inherited one-archivist, up-to-100-file scope and every P1–P6 decision while incorporating all accepted critic conditions. This is a proposal; the renderer does not adjudicate it."
+  ],
+  "conditions": {
+    "scope": [
+      "One archivist and up to 100 selected WAV/BWF, FLAC, and MP3 files.",
+      "No speech transcription, public publishing, automated rights decision, or legal advice.",
+      "Offline Windows or Linux; no interview audio or metadata upload; source media remains unchanged."
+    ],
+    "P1": "Preflight selected files for read access, space, duplicate/case/Unicode collisions, symlink/reparse points, and unsafe paths; show the proposed mapping. Verify a stable source identity before and during copy, copy to a new local accession staging directory, hash while reading, independently reread the destination, and compare SHA-512 and SHA-256 before marking verified. Preserve received names and relative paths; stop for archivist choice when the target filesystem cannot represent a name, and record any reversible mapping. Keep discovered/copying/verified/warning/failed/interrupted/resumed states. Never finalize partial copy. Resume only after source identity and copied bytes are rechecked; do not delete source. Use no-follow/reparse protections as appropriate and atomically finalize only a complete verified staging copy. These are proposed controls, not tested behavior.",
+    "P2": "Show duration, channel count/layout, encoding, observed embedded metadata, and archivist notes. Evaluate a pinned FFprobe 9.0.2 read-only adapter; record exact parser version/build and warnings. Keep observed source fields immutable; store corrections separately with author/time. Show errors and unknown channel layouts without guessing; inspection/display has no source-metadata write function. Decode waveform on demand and show channels separately. Bound malformed-input processing and surface failures; acceptance remains proposed.",
+    "P3": "Create a derivative only on explicit per-file request. Preview container/codec, sample rate, sample format/bit depth, channel map, metadata map, and any resampling/filter. FFmpeg 9.0.2 is a candidate only after exact build, codec, and license review on both platforms. No default lossy recipe, normalization, resampling, or downmix. Run only from a verified accession copy. Write temporary output; after successful process exit, inspect the selected output profile before atomic finalization. Keep failure/interruption visible, quarantine partial output, and leave the original unchanged. Record exact tool/build/command/settings, source/output identities, and outcome. A successful probe establishes neither listening quality nor preservation suitability.",
+    "P4": "Use BagIt 1.0 as the proposed folder model, not a selected runtime. Include bagit.txt, bag-info.txt, data/originals/<received-path>, data/derivatives/<stable-id>/<chosen-name>, data/records/ingest.json, and SHA-512 and SHA-256 payload manifests and tag manifests. List every payload file, including notes/provenance, in payload manifests. Each tag manifest must list every payload manifest, must not list any tag manifest, and should list the remaining tag files; do not imply recursive self-coverage. Use no fetch.txt or remote payload. Record source and copy digests, processing events, tools/settings, derivative relationship, and outcome. A digest detects later change against its baseline but proves neither authenticity nor original correctness. Finalize only after complete copy and full fixity. Reopen performs full fixity and reports missing/changed/unexpected files; size/count alone is not fixity.",
+    "P5": "Keep components undecided while shortlisting FFprobe/FFmpeg 9.0.2, BagIt 1.0, and a PREMIS-inspired event record. Compare a native BagIt serializer with bagit-python 1.9.0 only on staging copies and only after path-encoding tests and the path-boundary gate: use a corrected implementation or host-enforced canonical path-segment containment, symlink/reparse defenses, and proposed sibling-prefix/race tests on Windows and Linux. Do not rely on v1.9.0's validator alone for untrusted content. BWF MetaEdit 26.08.1 is optional BWF-only QA/export, never a writer to originals. Playback backend/UI are cross-platform prototype choices. Before shipping, lock exact binary hashes, build flags, enabled codecs, licenses, and dependencies for both platforms.",
+    "P6": "Propose synthetic checks for interrupted copy/unplug/resume/source change; malformed/contradictory RIFF/BWF, FLAC, and ID3 metadata; mono/stereo/multichannel/discrete/unknown layouts; selected conversion parameters and crash/cancel behavior; package tampering by missing/changed/extra/renamed/truncated payload and altered tag files. Add percent/CR/LF and encoded-looking paths, Unicode/case collisions, long and Windows-reserved paths, symlink/reparse/shared-prefix and the exact sibling-prefix escape, path replacement/time-of-check/time-of-use races, read-only media, low space, 100 files, disconnected network, no-egress, and Windows/Linux cases. Check listed and unexpected files. Keep file-level profile/fixity/failure checks separate from human listening review. Synthetic content only; mark every check proposed until run."
+  },
+  "options": [
+    "Product choices not determined by evidence: lossless/lossy outputs and target settings; per-file or batch requests; path-collision policy; exact metadata whitelist; native or bundled serializer; full PREMIS or a documented local subset; playback API/UI; and whether a batch review/export or BWF MetaEdit fits the workflow.",
+    "If a PREMIS-inspired event record is retained, choose a small versioned schema or full PREMIS. A proposed minimum local schema records a unique event identifier, event type, event time, affected object identifiers, tool/build/settings, outcome, and source-to-derivative relationship. This is not a PREMIS conformance claim."
+  ],
+  "optional_leads": [
+    "Optional review CSV, BWF-specific QA/export, second digest manifest, full PREMIS integration if required, a replaceable parser/playback adapter, and a documented local event-schema subset."
+  ],
+  "validation": [
+    "All P6 checks are proposals only. No app build, audio test, conversion, package validation, performance check, no-egress test, listening review, or quality assessment was executed.",
+    "Separate file-level inspection/profile/fixity results from human listening review; neither alone establishes archival quality. No quality threshold is set."
+  ],
+  "uncertainty": [
+    "Format statements do not mandate converting born-digital oral histories. Local rights/consent, access, retention, and institutional policy remain outside the evidence and plan scope.",
+    "The safe path implementation, platform-specific reparse behavior, race resistance, output-quality thresholds, and package/runtime choices remain unvalidated or undecided."
+  ],
+  "sources": [
+    {
+      "identity": "RFC 8493 BagIt 1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "source_id": "SRC-RFC8493",
+      "source_map_path": "source-map.json",
+      "locator": "§§2–5, especially 2.1.3, 2.2.1 and 5.1",
+      "claim": "BagIt structure, manifest rules, fixity, and path safety."
+    },
+    {
+      "identity": "bagit.py immutable release source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "source_id": "SRC-BAGIT-CODE",
+      "source_map_path": "source-map.json",
+      "locator": "Pinned v1.9.0 source symbols",
+      "claim": "Implementation candidate and adoption conditions."
+    },
+    {
+      "identity": "bagit-python immutable release tests",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version": "v1.9.0 same commit",
+      "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "source_id": "SRC-BAGIT-TESTS",
+      "source_map_path": "source-map.json",
+      "locator": "Pinned v1.9.0 test symbols",
+      "claim": "Existing test limits and proposed cases."
+    },
+    {
+      "identity": "bagit-python issue 152 tilde filename false error",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+      "version": "Issue opened 2021-04-23",
+      "capture_path": "sources/S07-issue-152.html",
+      "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+      "source_id": "SRC-ISSUE-152",
+      "source_map_path": "source-map.json",
+      "locator": "Issue body",
+      "claim": "Bounded historical false-rejection report."
+    },
+    {
+      "identity": "bagit-python PR 184 remove expandvars",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "version": "Merged 2025-06-13; closes issue 152",
+      "capture_path": "sources/S08-pr-184.html",
+      "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+      "source_id": "SRC-PR-184",
+      "source_map_path": "source-map.json",
+      "locator": "Merged PR",
+      "claim": "Fix relationship."
+    },
+    {
+      "identity": "bagit-python merge commit 753679",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "version": "753679c9b342660d038f65a8dc4f755ab95d679b",
+      "capture_path": "sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+      "source_id": "SRC-COMMIT-753679",
+      "source_map_path": "source-map.json",
+      "locator": "Exact merge patch",
+      "claim": "Two-line deletion and no added regression test."
+    },
+    {
+      "identity": "bagit-python issue 157 path encoding bug",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+      "version": "Issue opened 2022-02-15",
+      "capture_path": "sources/S16-bagit-issue-157.html",
+      "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+      "source_id": "SRC-ISSUE-157",
+      "source_map_path": "source-map.json",
+      "locator": "Issue body",
+      "claim": "Separate percent-encoding interoperability issue."
+    },
+    {
+      "identity": "Library of Congress Recommended Formats Statement Audio",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "version": "Current annual HTML edition at capture",
+      "capture_path": "sources/S02-loc-rfs-audio.html",
+      "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+      "source_id": "SRC-LOC-RFS-AUDIO",
+      "source_map_path": "source-map.json",
+      "locator": "IV.ii.A and IV.ii.C",
+      "claim": "Limited institutional format preference."
+    },
+    {
+      "identity": "Library of Congress FDD000357 BWF Version 2",
+      "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+      "version": "FDD000357 current page at capture",
+      "capture_path": "sources/S03-loc-bwf-v2.html",
+      "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+      "source_id": "SRC-LOC-BWF-V2",
+      "source_map_path": "source-map.json",
+      "locator": "Local use and sustainability sections",
+      "claim": "BWF context."
+    },
+    {
+      "identity": "Library of Congress literary audio archives workflow case study",
+      "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "version": "2022 institutional case study",
+      "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "source_map_path": "source-map.json",
+      "locator": "Review CSV, test ingest, WAV masters and MP3 access copies",
+      "claim": "Workflow analogy only."
+    },
+    {
+      "identity": "Library of Congress PREMIS Data Dictionary",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version": "PREMIS 3.0",
+      "capture_path": "sources/S10-premis-v3.pdf",
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "source_id": "SRC-PREMIS",
+      "source_map_path": "source-map.json",
+      "locator": "Event entity §§2.1–2.7",
+      "claim": "Event field names and object linkage; local subset is not full conformance."
+    },
+    {
+      "identity": "FFprobe documentation",
+      "url": "https://www.ffmpeg.org/ffprobe-all.html",
+      "version": "Live documentation, not release-pinned",
+      "capture_path": "sources/S12-ffprobe-8.1.html",
+      "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+      "source_id": "SRC-FFPROBE",
+      "source_map_path": "source-map.json",
+      "locator": "Machine-readable format and stream output",
+      "claim": "Inspection candidate."
+    },
+    {
+      "identity": "FFmpeg CLI documentation",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "version": "Live documentation, not release-pinned",
+      "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+      "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+      "source_id": "SRC-FFMPEG-DOCS",
+      "source_map_path": "source-map.json",
+      "locator": "Metadata mapping and override controls",
+      "claim": "Derivative behavior candidate."
+    },
+    {
+      "identity": "FFmpeg official release page",
+      "url": "https://ffmpeg.org/download.html",
+      "version": "9.0.2 released 2026-09-18",
+      "capture_path": "sources/S13-ffmpeg-download.html",
+      "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442",
+      "source_id": "SRC-FFMPEG-RELEASE",
+      "source_map_path": "source-map.json",
+      "locator": "9.0.2 release entry",
+      "claim": "Version candidate only."
+    },
+    {
+      "identity": "BWF MetaEdit official product page",
+      "url": "https://mediaarea.net/BWFMetaEdit",
+      "version": "26.08.1 observed at capture",
+      "capture_path": "sources/S14-bwfmetaedit-product.html",
+      "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+      "source_id": "SRC-BWF-METAEDIT",
+      "source_map_path": "source-map.json",
+      "locator": "Product features and MD5 scope",
+      "claim": "Optional BWF-only lead."
+    }
+  ]
+}
+```
+
+
+<a id="finding-2f1de78dda5d0c91ee18a6193988118c0be690ceca4746fce8bd1b781fe67e1c"></a>
+
+
+### O5_CRITIC_DISPOSITION
+
+```json
+{
+  "id": "O5_CRITIC_DISPOSITION",
+  "summary": "Fresh criticism is received and each technical and plan-level objection is explicitly dispositioned; remaining items are product choices or untested proposals.",
+  "disposition": "Accept the critic's path-boundary correction and all bounded plan recommendations. No technical objection is left unaddressed; event schema and review workflow choices remain explicitly open. No runtime exploit is claimed.",
+  "evidence": [
+    "The critic's static path trace is confirmed against the exact v1.9.0 source, test, and RFC captures: commonprefix is a character-prefix check; a symlink-resolved sibling path can share that prefix; validation joins and opens manifest paths; RFC 8493 §5.1 prohibits outside-bag access.",
+    "The critic's remaining recommendations concern proposed safeguards, explicit package rules, separation of file checks from human listening, and product decisions; they are incorporated below without claiming tests were run."
+  ],
+  "conditions": {
+    "critic_source": "Exact own-arm critic-v2/artifact.md and source-map.json; no other arm, case, evaluator material, or parent history was used.",
+    "criticism_dispositions": [
+      {
+        "criticism": "The v1.9.0 commonprefix check admits a sibling-prefix path when resolved through a symlink; validation later opens the path.",
+        "disposition": "Accept as a static source-path finding. Strengthen O2/P5 adoption gates and retain the limit that no runtime reproducer or exploit was run."
+      },
+      {
+        "criticism": "Do not rely on this validator as a security boundary for untrusted package contents.",
+        "disposition": "Accept. Require a corrected implementation or host-enforced canonical path-segment containment and symlink/reparse safeguards before any such use."
+      },
+      {
+        "criticism": "Make archive traversal resistant to symlink and time-of-check/time-of-use changes.",
+        "disposition": "Accept as proposed P1/P5 controls and P6 tests for no-follow/reparse handling, stable source identity, path replacement, and atomic staging/finalization. None is implemented or validated here."
+      },
+      {
+        "criticism": "Define a small PREMIS-inspired event schema or state that the schema decision remains open.",
+        "disposition": "Accept both parts: the decision between no record, a versioned local subset, and full PREMIS remains open; if a local record is retained, the proposal names unique event ID, event type/time, affected object IDs, tool/build/settings, outcome, and source-to-derivative relationship. No conformance claim."
+      },
+      {
+        "criticism": "Treat the LoC review CSV as an analogy and decide whether batch review/export is needed.",
+        "disposition": "Accept. Keep review/export optional and make it a product-owner choice, not a required UI."
+      },
+      {
+        "criticism": "Clarify tag-manifest coverage.",
+        "disposition": "Accept RFC 8493 §2.2.1: each tag manifest lists every payload manifest, does not list tag manifests, and should list the remaining tag files. Do not imply recursive self-coverage."
+      },
+      {
+        "criticism": "Add the detailed P1–P6 path, malformed-input, copy/derivative, package, dependency, and acceptance conditions.",
+        "disposition": "Accept and include each addition in O4 and the complete P1–P6 replacement."
+      },
+      {
+        "criticism": "Separate file-level checks from human listening and do not treat a successful probe as audio-quality acceptance.",
+        "disposition": "Accept as separate proposed validation. No listening review, quality threshold, or archival-quality result is claimed."
+      },
+      {
+        "criticism": "Preserve the one-archivist/up-to-100-file scope, no-broader-coverage limit, and DIAGNOSTIC_UNQUALIFIED status.",
+        "disposition": "Accept. These limits remain explicit in the full replacement and execution record."
+      }
+    ],
+    "unresolved_objections": [],
+    "open_product_decisions": [
+      "Whether to retain an event record and whether to implement full PREMIS or a documented versioned local subset.",
+      "Whether the desk needs a batch review/export, and the remaining codec, path-collision, metadata, package serializer, playback/UI, rights/access/retention, and institutional-policy choices."
+    ]
+  },
+  "options": [
+    "Use a corrected library or a native serializer; any v1.9.0 reference use remains conditional on an external host path-boundary gate.",
+    "Choose a versioned local event schema or full PREMIS only if product requirements require an event record.",
+    "Choose whether review-before-commit needs a batch UI or export."
+  ],
+  "optional_leads": [
+    "The sibling-prefix symlink and race cases are proposed tests, not reported runtime results.",
+    "Keep the issue #152 fix chain separate from the unresolved issue #157 percent-encoding limitation."
+  ],
+  "validation": [
+    "Performed here: static comparison of the cited path-check, payload walk, validation hash caller/open, relevant tests, RFC 8493 path and tag-manifest rules, PREMIS event definitions, and issue #157 capture.",
+    "Not performed: runtime symlink/reparse/race reproduction, BagIt suite, archive, application, audio, security, quality, performance, or platform test."
+  ],
+  "uncertainty": [
+    "The critic's path trace is not a dynamic exploit demonstration; application-level exploitability and platform-specific race behavior remain untested.",
+    "The product's event-record requirement, schema, quality threshold, rights/consent, access, and retention decisions remain open."
+  ],
+  "sources": [
+    {
+      "identity": "bagit.py immutable release source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "source_id": "SRC-BAGIT-CODE",
+      "source_map_path": "source-map.json",
+      "locator": "v1.9.0 path check, payload walk, _validate_entries(), _calc_hashes(), and file open",
+      "claim": "Static sibling-prefix path trace."
+    },
+    {
+      "identity": "bagit-python immutable release tests",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version": "v1.9.0 same commit",
+      "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "source_id": "SRC-BAGIT-TESTS",
+      "source_map_path": "source-map.json",
+      "locator": "Unsafe-directory and fetch-path test definitions",
+      "claim": "Existing coverage and omitted symlink case."
+    },
+    {
+      "identity": "RFC 8493 BagIt 1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "source_id": "SRC-RFC8493",
+      "source_map_path": "source-map.json",
+      "locator": "§§2.2.1 and 5.1",
+      "claim": "Tag-manifest rules and prohibition on outside-bag access."
+    },
+    {
+      "identity": "Library of Congress PREMIS Data Dictionary",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version": "PREMIS 3.0",
+      "capture_path": "sources/S10-premis-v3.pdf",
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "source_id": "SRC-PREMIS",
+      "source_map_path": "source-map.json",
+      "locator": "Event entity §§2.1–2.7",
+      "claim": "Minimum event fields and object linkage context."
+    },
+    {
+      "identity": "bagit-python issue 157 path encoding bug",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+      "version": "Issue opened 2022-02-15",
+      "capture_path": "sources/S16-bagit-issue-157.html",
+      "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+      "source_id": "SRC-ISSUE-157",
+      "source_map_path": "source-map.json",
+      "locator": "Issue body",
+      "claim": "Separate path-encoding condition."
+    },
+    {
+      "identity": "Library of Congress literary audio archives workflow case study",
+      "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "version": "2022 institutional case study",
+      "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "source_map_path": "source-map.json",
+      "locator": "Review CSV workflow",
+      "claim": "Optional analogy."
+    }
+  ]
+}
+```
+
+
+<a id="finding-e6ae1373d2b2c9d60e0bb3da7d2f7b12b7b33928d7660e05eec4530547610872"></a>
+
+
+### O6_CHOICES_AND_LIMITS
+
+```json
+{
+  "id": "O6_CHOICES_AND_LIMITS",
+  "summary": "The full replacement covers the supplied O1–O6 and P1–P6 slice while leaving evidence-underdetermined product and institutional choices open.",
+  "disposition": "Complete within the supplied plan slice. No broader system coverage, product quality, policy, or validation result is inferred.",
+  "evidence": [
+    "The inherited plan and fresh critique cover one archivist and up to 100 selected audio files, offline Windows/Linux use, unchanged sources, inspection/correction separation, opt-in derivatives, package fixity/provenance, and proposed synthetic acceptance.",
+    "Technical sources support bounded mechanisms and candidate dependencies; they do not determine codecs, quality thresholds, rights/consent, access, retention, or institutional policy."
+  ],
+  "conditions": {
+    "coverage": {
+      "O1": "Need-led discovery and optional reviewable workflow.",
+      "O2": "Pinned implementation behavior and conditional safe-adoption gate.",
+      "O3": "Issue/fix/release applicability and separate percent-encoding limitation.",
+      "O4": "Disposition of all P1–P6 plan decisions.",
+      "O5": "Fresh criticism and itemized response.",
+      "O6": "Complete scope, open choices, and validation limits."
+    },
+    "scope": [
+      "One archivist and up to 100 selected WAV/BWF, FLAC, and MP3 files.",
+      "No transcription, public publishing, automated rights decision, or legal advice.",
+      "Offline Windows/Linux, no interview audio or metadata upload, and no source-media mutation."
+    ],
+    "event_record": "A local PREMIS-inspired schema is an option, not a conformance claim. If retained, the proposed minimum fields are unique event identifier, event type, event time, affected object identifiers, tool/build/settings, outcome, and source-to-derivative relationship; full PREMIS is a separate choice.",
+    "validation_separation": "File-level metadata/profile/fixity/failure-state checks and human listening review are separate proposed activities. Neither alone establishes archival quality."
+  },
+  "options": [
+    "Open: output codecs and recipes, target settings, per-file versus batch workflow, path-collision policy, metadata whitelist, event record and schema, native versus bundled serializer, playback API/UI, review export, optional BWF tool, and institutional rights/access/retention policy.",
+    "No evidence-backed choice is made among these alternatives."
+  ],
+  "optional_leads": [
+    "Optional batch review/export, BWF-specific QA, a second digest manifest, full PREMIS if required, and replaceable parser/playback adapters."
+  ],
+  "validation": [
+    "All product and acceptance validation remains proposed. No implementation, listening review, preservation-quality assessment, or product test was performed."
+  ],
+  "uncertainty": [
+    "Public technical evidence does not resolve local rights, consent, access, retention, output-quality thresholds, or institutional policy.",
+    "The inherited plan comparison is limited to the supplied P1–P6 slice."
+  ],
+  "sources": [
+    {
+      "identity": "Library of Congress PREMIS Data Dictionary",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version": "PREMIS 3.0",
+      "capture_path": "sources/S10-premis-v3.pdf",
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "source_id": "SRC-PREMIS",
+      "source_map_path": "source-map.json",
+      "locator": "Event entity §§2.1–2.7",
+      "claim": "Event schema option; no full-conformance claim."
+    },
+    {
+      "identity": "Library of Congress literary audio archives workflow case study",
+      "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "version": "2022 institutional case study",
+      "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "source_map_path": "source-map.json",
+      "locator": "Test ingest, review CSV, masters and access-copy workflow",
+      "claim": "Bounded institutional analogy."
+    },
+    {
+      "identity": "Library of Congress Recommended Formats Statement Audio",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "version": "Current annual HTML edition at capture",
+      "capture_path": "sources/S02-loc-rfs-audio.html",
+      "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+      "source_id": "SRC-LOC-RFS-AUDIO",
+      "source_map_path": "source-map.json",
+      "locator": "Audio format preference scope",
+      "claim": "Not a born-digital conversion recipe."
+    },
+    {
+      "identity": "RFC 8493 BagIt 1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "source_id": "SRC-RFC8493",
+      "source_map_path": "source-map.json",
+      "locator": "BagIt structure and fixity rules",
+      "claim": "Package option and constraints."
+    }
+  ]
+}
+```
+
+
+<a id="finding-dd2fd434b7641607a71fb8ba03bd837ddc5c13a426525e66fe06dfaee81bfbe1"></a>
+
+
+### P6_ACCEPTANCE
+
+```json
+{
+  "id": "P6_ACCEPTANCE",
+  "summary": "P6 retains every inherited synthetic acceptance category and adds explicit path-boundary, race, package, platform, and listening-review separation cases.",
+  "disposition": "Proposed acceptance only; not executed. Synthetic data only; no personal interviews.",
+  "evidence": [
+    "The inherited plan requests interrupted copy, malformed metadata, unusual channel layout, encoding conversion, and package fixity; all are retained.",
+    "The critic adds the exact sibling-prefix/symlink path case, path races, and separation of file-level checks from human listening review."
+  ],
+  "conditions": {
+    "plan_locator": "Inherited frozen plan P6 as represented in research-v2/artifact.md and its complete authored payload.",
+    "data": "Synthetic content only; no personal interviews.",
+    "execution_status": "Every listed case is proposed; none was run."
+  },
+  "options": [
+    "Run the selected exact dependency builds only after product choices and safety gates are locked."
+  ],
+  "optional_leads": [
+    "Keep each synthetic input, expected result, warnings, path mapping, tool/build/settings, and outcome recorded."
+  ],
+  "validation": [
+    "Copy: interrupt at each stage, unplug/resume, source change, stable source identity, independent destination reread, partial-state recovery, read-only source, low space, and 100 selected files.",
+    "Metadata: malformed/contradictory RIFF/BWF, FLAC, and ID3; mono, stereo, multichannel, discrete, and unknown channel layouts; parser warnings and bounded failure/resource behavior.",
+    "Derivatives: explicit per-file settings, metadata/channel mapping, resampling/filter choice, crash/cancel, quarantined partial output, post-output profile/fixity checks, and separate human listening review.",
+    "Package: missing, changed, extra, renamed, or truncated payload; altered tag files/manifests; complete SHA-512/SHA-256 fixity and reopen behavior.",
+    "Paths: percent, CR/LF/CRLF, encoded-looking names, Unicode/case collisions, long and Windows-reserved names, absolute/traversal paths, symlink/reparse points, shared-prefix sibling escape, path replacement/time-of-check/time-of-use races, and both listed-file and unexpected-file behavior.",
+    "Environment: Windows/Linux, disconnected network, no-egress, and synthetic-only data.",
+    "All cases remain proposals until the implementation runs them; no performance, preservation-quality, or listening-quality threshold is asserted."
+  ],
+  "uncertainty": [
+    "No product test or human listening review was performed; no performance, preservation-quality, or audio-quality conclusion is offered."
+  ],
+  "sources": [
+    {
+      "identity": "RFC 8493 BagIt 1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "source_id": "SRC-RFC8493",
+      "source_map_path": "source-map.json",
+      "locator": "§§2.1.3, 2.2.1, 5.1",
+      "claim": "Manifest, tag-file, and path cases."
+    },
+    {
+      "identity": "bagit.py immutable release source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "source_id": "SRC-BAGIT-CODE",
+      "source_map_path": "source-map.json",
+      "locator": "Pinned path-check and validation callers",
+      "claim": "Sibling-prefix/race test motivation."
+    },
+    {
+      "identity": "bagit-python immutable release tests",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version": "v1.9.0 same commit",
+      "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "source_id": "SRC-BAGIT-TESTS",
+      "source_map_path": "source-map.json",
+      "locator": "Unsafe-directory and fetch tests",
+      "claim": "Existing tests inspected, not run."
+    },
+    {
+      "identity": "Library of Congress literary audio archives workflow case study",
+      "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "version": "2022 institutional case study",
+      "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "source_map_path": "source-map.json",
+      "locator": "Test-ingest workflow",
+      "claim": "Review-before-commit analogy only."
+    }
+  ]
+}
+```
+
+
+<a id="finding-6ecbcfd2174eab4f3fff9b056d5074eee8e36f6d50be24089fa5d5ab02eec52b"></a>
+
+
+### EXECUTION_RECORD
+
+```json
+{
+  "id": "EXECUTION_RECORD",
+  "summary": "Reviser operations and costs are recorded separately from proposed product validation and from native Goal aggregate counters.",
+  "disposition": "Semantic set complete; generic renderer and preservation check are required deliverables. DIAGNOSTIC_UNQUALIFIED; no app or product test executed.",
+  "evidence": [
+    "Activated one fresh native Goal, confirmed it active with get_goal, then sent one activation-only auto notice to the exact supplied parent thread. No parent history or alternate target was used.",
+    "Read the exact dispatch bound, input map, own research and critique drafts/source maps, exact same-arm captured source bytes, and only the named generic M14 contract and renderer.",
+    "Copied 16 same-arm public primary-source captures byte-for-byte (8,426,094 bytes); each source-map size and SHA-256 matched before and after copying.",
+    "Statically checked the changed path-boundary claim against the exact captured v1.9.0 code/tests and RFC, checked PREMIS fields/object linkage and tag-manifest requirements, and wrote a complete replacement semantic set. No downloaded code or test suite was executed."
+  ],
+  "conditions": {
+    "candidate": "I-METHOD-04/treatment/reviser-v2",
+    "dispatch_target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "account": "sittingmongoose@gmail.com",
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "deadline": {
+      "earliest_cold_preparation_utc": "2026-10-07T20:47:52.249474+00:00",
+      "dispatch_record_at_utc": "2026-10-07T21:26:17.529597+00:00",
+      "stage_allowance_seconds": 1200,
+      "stage_deadline_utc": "2026-10-07T21:46:17.529597+00:00",
+      "whole_arm_deadline_utc": "2026-10-07T21:47:52.249474+00:00",
+      "role_max_seconds": 1200,
+      "whole_arm_occupied_cap_seconds": 3600,
+      "prior_nonoverlapping_occupied_seconds": 2083.699,
+      "final_reserve_seconds": 0,
+      "no_reset_or_extension": true
+    },
+    "outputs": [
+      "semantic.json: sole authored semantic set.",
+      "artifact.md: all generic M14 renderer views and exact authored input.",
+      "source-map.json and 16 linked source captures under sources/.",
+      "preservation_check.md: complete-scope and field-preservation review."
+    ]
+  },
+  "options": [
+    "Provider component categories (input/cache-read/cache-creation/generated/reasoning tokens and billing amount/currency) are all unknown null, not zero.",
+    "Native Goal aggregate counters are retained as a separate, unsummed snapshot; do not add them to provider component usage."
+  ],
+  "optional_leads": [
+    "First useful reviser finding, observed by 2026-10-07T21:28:36Z: the pinned v1.9.0 commonprefix check can accept a sibling-prefix path resolved through a symlink, while the validation caller opens the joined path; this is static analysis only.",
+    "Generic preparation lower bound: 454.056 seconds. Qualification lower bound: 0.316 seconds. Qualification wall time and billing are unknown; cold and amortized economics remain separate and are never treated as free time.",
+    "Capture URLs, identities, versions, byte counts, time windows, hashes, and own-stage paths are in source-map.json."
+  ],
+  "validation": [
+    "Executed: exact-source static review, same-arm capture copy/hash checks, M14 renderer invocation, and full scope/preservation review.",
+    "Not executed: application build/test, BagIt test suite or runtime reproducer, audio parsing/conversion/listening, package validation, no-egress, performance, quality, or deployment checks."
+  ],
+  "uncertainty": [
+    "Per-request provider token categories and billing are unavailable and remain null/unknown.",
+    "Native Goal aggregate counters are not provider component costs and remain separate and unsummed.",
+    "A static path trace does not prove a runtime exploit or product-level exposure."
+  ],
+  "sources": [
+    {
+      "identity": "bagit.py immutable release source",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "source_id": "SRC-BAGIT-CODE",
+      "source_map_path": "source-map.json",
+      "locator": "Pinned v1.9.0 path-check and validation code",
+      "claim": "Changed consequential claim checked against exact source bytes."
+    },
+    {
+      "identity": "bagit-python immutable release tests",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "version": "v1.9.0 same commit",
+      "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "source_id": "SRC-BAGIT-TESTS",
+      "source_map_path": "source-map.json",
+      "locator": "Pinned unsafe-path tests",
+      "claim": "Test coverage checked; tests not executed."
+    },
+    {
+      "identity": "RFC 8493 BagIt 1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "version": "RFC 8493",
+      "capture_path": "sources/S01-rfc8493.txt",
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "source_id": "SRC-RFC8493",
+      "source_map_path": "source-map.json",
+      "locator": "§§2.2.1 and 5.1",
+      "claim": "Tag and outside-bag access requirements checked."
+    },
+    {
+      "identity": "Library of Congress PREMIS Data Dictionary",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version": "PREMIS 3.0",
+      "capture_path": "sources/S10-premis-v3.pdf",
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "source_id": "SRC-PREMIS",
+      "source_map_path": "source-map.json",
+      "locator": "Event entity definitions",
+      "claim": "Event field/object-link claims checked."
+    }
+  ]
+}
+```
+
+
+## Exact authored input
+
+The fenced payload retains the complete UTF-8 input text, including unknown fields. The separator newline before the closing fence is renderer framing.
+
+```json
+{
+  "artifact_type": "Candidate-authored authoritative M14 semantic finding set",
+  "case_id": "I-METHOD-04",
+  "candidate": "treatment/reviser-v2",
+  "status": "DIAGNOSTIC_UNQUALIFIED. Complete authored O1–O6/P1–P6 replacement and criticism dispositions; not built or validated; no quality or speed claim.",
+  "renderer_contract": "This JSON is the sole candidate-authored semantic input. The only projection is the exact named generic M14 renderer; it preserves all authored fields and does not rank, adjudicate, fetch sources, or write science. The full semantic set and complete views are delivered with preservation_check.md.",
+  "source_boundary": "Scientific inputs were only the exact input map's own research draft/source map, own critic draft/source map, and the linked same-arm captured primary source bytes. The inherited research semantic JSON was taken from the exact authored-input block embedded in research-v2/artifact.md; no separate predecessor semantic file or predecessor preservation check was read. Also read only the named generic M14 contract and renderer plus the candidate's exact dispatch config. No broad discovery, other arms/cases, campaign packet/state/evaluator keys, parent history, source cache, new semantic cache/oracle, downloaded-code execution, or external messages.",
+  "input_identities": {
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/input-map.json",
+      "sha256": "bcfc273449e8b09bf10e371b280406b22e4aa170d090d61a2b370c0d59a66aa2"
+    },
+    "dispatch_config": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/dispatch-config.json",
+      "sha256": "b71c818406e07ed8b47a139cd79e70a7ae5f3a4a4be4f9807b98d7e83d58f4eb"
+    },
+    "research_draft": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/artifact.md",
+      "sha256": "6eca00c854395b38c8418fb815f66dbf7237df9d7336f02d0d2caa29a469db23"
+    },
+    "research_source_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/source-map.json",
+      "sha256": "7157817f25f8393e5704a620f93469bf4f92c1a0accc2923b1052ea6e812149b"
+    },
+    "critic_draft": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/artifact.md",
+      "sha256": "ddced1f4b5538af820463b5256ee4d6a94eeb537445c4b311b1a5c5024db8a68"
+    },
+    "critic_source_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/source-map.json",
+      "sha256": "b41a1b900feb47c655c9d833befa6b4ef8416ef93488e15b753c450ae8e32e6c"
+    },
+    "generic_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/m14-generic-contract-v1.md",
+      "sha256": "992952c865ffe571651ef2b1241c77ec7ca62b475094315bb8f0be01eaa01fd8"
+    },
+    "generic_renderer": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py",
+      "sha256": "80e925fe69e7ccc2d58297fd48ab857795545d6d94572b653bffc5803ace9ef0"
+    },
+    "embedded_predecessor_semantic": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/artifact.md#Exact-authored-input",
+      "sha256": "1bc410403d7d44825e84bdf7c6829b167a5821c5aa72c04341404209b02a8b56"
+    }
+  },
+  "first_useful_finding": {
+    "text": "The pinned v1.9.0 commonprefix check can accept a sibling-prefix path resolved through a symlink; the validation caller later opens the joined manifest path, contrary to RFC 8493 §5.1. Static source-path analysis only; no runtime reproducer.",
+    "source_ids": [
+      "SRC-BAGIT-CODE",
+      "SRC-BAGIT-TESTS",
+      "SRC-RFC8493"
+    ],
+    "observed_at_or_before_utc": "2026-10-07T21:28:36Z"
+  },
+  "obligation_coverage": {
+    "O1": "O1_OPEN_DISCOVERY.",
+    "O2": "O2_PINNED_CODE.",
+    "O3": "O3_HISTORY.",
+    "O4": "O4_P1_TO_P6_COMPARISON.",
+    "O5": "O5_CRITIC_DISPOSITION.",
+    "O6": "O6_CHOICES_AND_LIMITS plus the complete FULL_PLAN_REPLACEMENT."
+  },
+  "operations_and_costs": {
+    "native_goal_identity": "01a11842-acb8-7850-977d-953e26a980a3",
+    "native_goal_initial_active_snapshot": {
+      "observed_at_or_before_utc": "2026-10-07T21:26:54Z",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "meaning": "Actual native get_goal snapshot before the one activation notice; aggregate counters, unsummed."
+    },
+    "native_goal_pre_render_snapshot": {
+      "observed_at_utc": "2026-10-07 21:33:44 UTC",
+      "status": "active",
+      "tokensUsed": 121534,
+      "timeUsedSeconds": 426,
+      "meaning": "Actual same-identity get_goal snapshot before final semantic/render output; aggregate counters, unsummed and not provider component costs."
+    },
+    "parent_activation_notice": {
+      "attempts": 1,
+      "clientRequestId": "er10-I-METHOD-04-treatment-reviser-v2-active",
+      "threadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+      "message": "Native active: I-METHOD-04/treatment/reviser-v2, identity 01a11842-acb8-7850-977d-953e26a980a3.",
+      "delivery_requested": "auto",
+      "result": {
+        "delivery": "started",
+        "status": "starting",
+        "messageId": "message:mcp:6a797069-7e0e-425d-92da-8efaf3993140:thread-send:er10-I-METHOD-04-treatment-reviser-v2-active",
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:ordinal:45"
+      }
+    },
+    "first_useful_finding": {
+      "text": "Pinned v1.9.0 commonprefix check can accept a sibling-prefix symlink path while validation opens the joined path; static source analysis only.",
+      "observed_at_or_before_utc": "2026-10-07T21:28:36Z"
+    },
+    "source_copy": {
+      "source_count": 16,
+      "bytes_total": 8426094,
+      "copy_source": "same-arm critic-v2/sources; source IDs also matched research-v2/source-map.json",
+      "copy_time_utc": "after 2026-10-07T21:28:36Z and before 2026-10-07T21:33:44Z",
+      "all_source_sizes_and_sha256_verified_before_and_after": true,
+      "downloaded_code_executed": false
+    },
+    "renderer": {
+      "contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/m14-generic-contract-v1.md",
+      "script": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py",
+      "invocation": "python3 /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json --output /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/artifact.md",
+      "projection_policy": "Renderer is mechanical; authored semantic.json is sole scientific input."
+    },
+    "preparation_lower_bound_seconds": 454.056,
+    "qualification_lower_bound_seconds": 0.316,
+    "qualification_wall_seconds": null,
+    "qualification_billing": null,
+    "cost_economics": "Generic preparation and qualification lower bounds are recorded separately. Qualification wall time/billing are unknown. Cold and amortized economics are not collapsed; no time is treated as free.",
+    "deadline": {
+      "earliest_cold_preparation_utc": "2026-10-07T20:47:52.249474+00:00",
+      "dispatch_record_at_utc": "2026-10-07T21:26:17.529597+00:00",
+      "stage_allowance_seconds": 1200,
+      "stage_deadline_utc": "2026-10-07T21:46:17.529597+00:00",
+      "whole_arm_deadline_utc": "2026-10-07T21:47:52.249474+00:00",
+      "role_max_seconds": 1200,
+      "whole_arm_occupied_cap_seconds": 3600,
+      "prior_nonoverlapping_occupied_seconds": 2083.699,
+      "final_reserve_seconds": 0,
+      "no_reset_or_extension": true
+    },
+    "component_usage": {
+      "input_tokens": null,
+      "cache_read_tokens": null,
+      "cache_creation_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billed_amount": null,
+      "billed_currency": null,
+      "meaning": "Provider component usage and billing unavailable; null means unknown, not zero."
+    },
+    "claim_limit": "DIAGNOSTIC_UNQUALIFIED. No product build/test, BagIt runtime/test, audio conversion/listening, package validation, performance, quality, deployment, or shipping claim."
+  },
+  "findings": [
+    {
+      "id": "O1_OPEN_DISCOVERY",
+      "summary": "Need-led public discovery supports a staged, reviewable ingest workflow with separate preservation, inspection and access-copy decisions.",
+      "disposition": "Accepted with scope limits. The institutional workflow is an analogy; a reviewable batch export remains a product choice, not a required UI.",
+      "evidence": [
+        "A Library of Congress literary audio workflow documents a test ingest that creates a review CSV before formal ingest and scripted FFmpeg MP3 access copies from WAV masters. This supports review-before-commit and derivative provenance, but not importing its settings or storage topology.",
+        "The LoC audio statement prefers native resolution and uncompressed media-independent audio and lists BWF WAVE with embedded metadata as preferred in that statement's scope. It does not require converting oral-history intake MP3 or FLAC files to WAVE.",
+        "FFprobe documents structured machine-readable format and stream output. FFmpeg documents metadata mapping and override controls. BWF MetaEdit is a specialized BWF tool that can validate and edit embedded metadata."
+      ],
+      "conditions": {
+        "condition": "Begin from oral-history desk need. Do not treat release-format recommendations as a recipe for born-digital interviews or automatically rewrite metadata.",
+        "review_before_commit": "Decide whether this desk needs a batch review/export step. The Library of Congress CSV is an example only; do not require its interface or storage topology."
+      },
+      "options": [
+        "FFprobe 9.0.2 candidate for inspection; validate against synthetic formats and malformed metadata.",
+        "Optional BWF MetaEdit for BWF-specific inspection only.",
+        "Reviewable batch CSV can be built into UI or exported.",
+        "Product-owner choice: build a reviewable batch view or export if the desk needs it; the LoC CSV is not mandatory."
+      ],
+      "optional_leads": [
+        "Keep technical metadata, source tags, archivist note and correction as separate values.",
+        "Use BWF workflow guidance only when source format and collection policy make it applicable."
+      ],
+      "validation": [
+        "Proposed: compare parser results on synthetic valid/malformed WAV/BWF, FLAC and MP3; no audio file was decoded in this research.",
+        "No product workflow or batch-review usability test was performed."
+      ],
+      "uncertainty": [
+        "FFmpeg/FFprobe docs are live and not release-pinned. A release binary must be verified at build time.",
+        "The LoC case study is institutional practice, not a product build or performance result."
+      ],
+      "sources": [
+        {
+          "identity": "Library of Congress literary audio archives workflow case study",
+          "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+          "version": "2022 institutional case study",
+          "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "source_id": "SRC-LOC-ORAL-HISTORY",
+          "source_map_path": "source-map.json",
+          "locator": "PDF discussion of ingest review CSV and MP3 access derivatives",
+          "claim": "Institutional oral-history analogy."
+        },
+        {
+          "identity": "Library of Congress Recommended Formats Statement Audio",
+          "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+          "version": "Current annual HTML edition at capture",
+          "capture_path": "sources/S02-loc-rfs-audio.html",
+          "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+          "source_id": "SRC-LOC-RFS-AUDIO",
+          "source_map_path": "source-map.json",
+          "locator": "IV.ii.A and IV.ii.C",
+          "claim": "Format preference scope."
+        },
+        {
+          "identity": "Library of Congress FDD000357 BWF Version 2",
+          "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+          "version": "FDD000357 current page at capture",
+          "capture_path": "sources/S03-loc-bwf-v2.html",
+          "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+          "source_id": "SRC-LOC-BWF-V2",
+          "source_map_path": "source-map.json",
+          "locator": "Local use and sustainability",
+          "claim": "BWF/LPCM practice."
+        },
+        {
+          "identity": "FFprobe documentation",
+          "url": "https://www.ffmpeg.org/ffprobe-all.html",
+          "version": "Live documentation, not release-pinned",
+          "capture_path": "sources/S12-ffprobe-8.1.html",
+          "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+          "source_id": "SRC-FFPROBE",
+          "source_map_path": "source-map.json",
+          "locator": "Description and output writers",
+          "claim": "Read-only inspection candidate."
+        },
+        {
+          "identity": "FFmpeg CLI documentation",
+          "url": "https://www.ffmpeg.org/ffmpeg.html",
+          "version": "Live documentation, not release-pinned",
+          "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+          "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+          "source_id": "SRC-FFMPEG-DOCS",
+          "source_map_path": "source-map.json",
+          "locator": "-map_metadata and -metadata sections",
+          "claim": "Mapping behavior."
+        },
+        {
+          "identity": "BWF MetaEdit official product page",
+          "url": "https://mediaarea.net/BWFMetaEdit",
+          "version": "26.08.1 observed at capture",
+          "capture_path": "sources/S14-bwfmetaedit-product.html",
+          "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+          "source_id": "SRC-BWF-METAEDIT",
+          "source_map_path": "source-map.json",
+          "locator": "Features",
+          "claim": "BWF-specific optional product."
+        }
+      ]
+    },
+    {
+      "id": "O2_PINNED_CODE",
+      "summary": "Pinned bagit-python v1.9.0 evidence supports the staging and fixity cautions, and reveals a statically traceable sibling-prefix symlink path-boundary failure in its validator.",
+      "disposition": "The implementation evidence is accepted. Do not rely on v1.9.0's path check alone as a security boundary for untrusted package contents. This is a static source-path finding, not a dynamically demonstrated exploit.",
+      "evidence": [
+        "make_bag() defaults to SHA-256 and SHA-512, then moves input directory contents into a data folder in place before writing bag metadata and manifests. Never run it on removable source media; stage a copy first.",
+        "Bag.validate() defaults to full fixity recalculation. fast=True returns after Payload-Oxum file-count and byte-count checks and does not recalculate manifest checksums.",
+        "_load_manifests() and fetch_entries() call _path_is_dangerous() when interpreting manifest and fetch paths. RFC 8493 §5.1 requires implementations not to access files outside the bag when using bag paths.",
+        "_encode_filename() replaces CR and LF but not literal percent. Issue #157 describes the separate BagIt 1.0 interoperability problem; the exact v1.9.0 encoder still lacks percent handling.",
+        "Static path trace: _path_is_dangerous() resolves the joined path, normalizes it, then compares strings with os.path.commonprefix(). A POSIX-style data/link symlink resolving from /tmp/bag into /tmp/bag-sibling/file has the common string prefix /tmp/bag and can be accepted. payload_files() emits file names from the data walk; _validate_entries() passes the relative path to _calc_hashes(), and _calculate_file_hashes() joins and opens it. RFC 8493 §5.1 says paths must not cause files outside the bag to be accessed. The captured code was read, not run; no filesystem case or application exploit was demonstrated."
+      ],
+      "conditions": {
+        "version": "Exact code and tests captured from bagit-python v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe.",
+        "scope": "bagit-python is an optional reference candidate. BagIt 1.0 is the proposed package standard, not a mandatory Python runtime.",
+        "path_safety": "Treat manifest and fetch paths as untrusted. Do not treat this release's commonprefix check as the host application's security boundary.",
+        "adoption_gate": "Before any use on untrusted bags, use a corrected implementation or enforce canonical path-segment containment in the host, reject or safely handle symlinks/reparse points, guard against time-of-check/time-of-use changes, and test sibling-prefix escapes and races on Windows and Linux. These are proposed gates; none was implemented or tested here.",
+        "staging": "Run only against a completed staging copy; never pass the removable source tree to make_bag()."
+      },
+      "options": [
+        "Keep BagIt 1.0 as the interoperability target and compare a native serializer with a corrected or host-contained reference implementation.",
+        "Retain bagit-python 1.9.0 only as a conditional interoperability reference after the path-safety gate; it is not selected as the product runtime."
+      ],
+      "optional_leads": [
+        "Do not use fast Payload-Oxum counts as fixity.",
+        "Add the exact sibling-prefix symlink, manifest/fetch path, reparse-point, and race cases to proposed cross-platform tests.",
+        "Keep issue #157 percent/CR/LF encoding tests separate from the #152 false-rejection regression."
+      ],
+      "validation": [
+        "Static review of the exact captured source and test bytes was performed. No code, test suite, filesystem reproducer, application, or downloaded code was executed.",
+        "Proposed checks: SHA-512/SHA-256 fixity; missing/changed/extra package files; percent/CR/LF names; outside paths; sibling-prefix symlink and reparse-point paths; and path replacement races."
+      ],
+      "uncertainty": [
+        "The commonprefix path trace is a source-level inference; it was not dynamically reproduced and is not reported as a demonstrated application exploit.",
+        "Symlink/reparse and race behavior is platform- and host-implementation-dependent; product safety remains unvalidated.",
+        "The release page's captured version context is bounded to the v1.9.0 tag; no downstream product usage is inferred."
+      ],
+      "sources": [
+        {
+          "identity": "bagit.py immutable release source",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+          "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "source_id": "SRC-BAGIT-CODE",
+          "source_map_path": "source-map.json",
+          "locator": "v1.9.0 _path_is_dangerous(), payload_files(), _validate_entries(), _calc_hashes(), _calculate_file_hashes(), make_bag(), and Bag.validate()",
+          "claim": "Pinned implementation path and fixity behavior."
+        },
+        {
+          "identity": "bagit-python immutable release tests",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "version": "v1.9.0 same commit",
+          "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "source_id": "SRC-BAGIT-TESTS",
+          "source_map_path": "source-map.json",
+          "locator": "v1.9.0 unsafe-directory and fetch-path tests",
+          "claim": "Existing traversal tests; the sibling-prefix symlink case is not present in the cited tests."
+        },
+        {
+          "identity": "RFC 8493 BagIt 1.0",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "version": "RFC 8493",
+          "capture_path": "sources/S01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "source_id": "SRC-RFC8493",
+          "source_map_path": "source-map.json",
+          "locator": "§§2.1.3, 2.2.1, 5.1",
+          "claim": "Manifest rules and the requirement not to access files outside the bag."
+        },
+        {
+          "identity": "bagit-python issue 157 path encoding bug",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+          "version": "Issue opened 2022-02-15",
+          "capture_path": "sources/S16-bagit-issue-157.html",
+          "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+          "source_id": "SRC-ISSUE-157",
+          "source_map_path": "source-map.json",
+          "locator": "Issue body",
+          "claim": "Separate percent-encoding condition."
+        }
+      ]
+    },
+    {
+      "id": "O3_HISTORY",
+      "summary": "Issue #152 has a traceable upstream fix in a released version; separate issue #157 remains relevant to the exact release code.",
+      "disposition": "Issue/fix/release applicability supported; no automated regression test for the exact tilde case was found.",
+      "evidence": [
+        "Issue #152 reports a Linux/Python false unsafe-path rejection for a name containing ~$_- because os.path.expandvars() expands it. The issue supplies a reproducible example.",
+        "PR #184 removes the expandvars check from _path_is_dangerous(); merge commit 753679c9b342660d038f65a8dc4f755ab95d679b closes #152. The v1.9.0 release notes list #184 and the exact tagged source no longer calls expandvars.",
+        "The merge patch changes one source file with two deletions and no test addition. The release test file has generic unsafe path checks, but not the exact issue #152 name. Thus the issue reproduction and code delta are regression evidence; a committed automated regression test is not established.",
+        "At the same v1.9.0 tag, _encode_filename() handles CR/LF but not literal percent; RFC 8493 requires encoding percent too. This is a separate limitation, not a consequence of #152."
+      ],
+      "conditions": {
+        "release": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe contains the merged change.",
+        "claim_limit": "No inference that any downstream product shipped this code."
+      },
+      "options": [
+        "Add exact issue #152 filename test on Linux and Windows.",
+        "Add literal percent, CR/LF/CRLF path tests including names that resemble encoded paths."
+      ],
+      "optional_leads": [
+        "Dispositions: #152 corrected false rejection; #157 path interoperability remains open in the examined release code."
+      ],
+      "validation": [
+        "Proposed only: regression suite on the selected exact build; no upstream or product test was run here."
+      ],
+      "uncertainty": [
+        "The PR does not add a test, and a source release note cannot prove downstream use."
+      ],
+      "sources": [
+        {
+          "identity": "bagit-python issue 152 tilde filename false error",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+          "version": "Issue opened 2021-04-23",
+          "capture_path": "sources/S07-issue-152.html",
+          "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+          "source_id": "SRC-ISSUE-152",
+          "source_map_path": "source-map.json",
+          "locator": "Issue description and reproduction",
+          "claim": "Real regression report."
+        },
+        {
+          "identity": "bagit-python PR 184 remove expandvars",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+          "version": "Merged 2025-06-13; closes issue 152",
+          "capture_path": "sources/S08-pr-184.html",
+          "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+          "source_id": "SRC-PR-184",
+          "source_map_path": "source-map.json",
+          "locator": "Merged PR conversation",
+          "claim": "Reviewed fix."
+        },
+        {
+          "identity": "bagit-python merge commit 753679",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+          "version": "753679c9b342660d038f65a8dc4f755ab95d679b",
+          "capture_path": "sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+          "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+          "source_id": "SRC-COMMIT-753679",
+          "source_map_path": "source-map.json",
+          "locator": "Commit diff",
+          "claim": "Exact source change."
+        },
+        {
+          "identity": "LibraryOfCongress bagit-python release",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+          "version": "v1.9.0, commit 861ddacb339d5b92659f0187a402f501d841abbe",
+          "capture_path": "sources/S04-bagit-v1.9.0-release.html",
+          "sha256": "5da3ece07de54bebb17417cfa7ab83ebf6ff3343f154192aad9c2a9302056680",
+          "source_id": "SRC-BAGIT-RELEASE",
+          "source_map_path": "source-map.json",
+          "locator": "v1.9.0 release notes",
+          "claim": "Release applicability."
+        },
+        {
+          "identity": "bagit.py immutable release source",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+          "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "source_id": "SRC-BAGIT-CODE",
+          "source_map_path": "source-map.json",
+          "locator": "_path_is_dangerous() and _encode_filename()",
+          "claim": "Release code behavior."
+        },
+        {
+          "identity": "bagit-python immutable release tests",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "version": "v1.9.0 same commit",
+          "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "source_id": "SRC-BAGIT-TESTS",
+          "source_map_path": "source-map.json",
+          "locator": "Unsafe-path tests",
+          "claim": "Regression coverage limit."
+        },
+        {
+          "identity": "bagit-python issue 157 path encoding bug",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+          "version": "Issue opened 2022-02-15",
+          "capture_path": "sources/S16-bagit-issue-157.html",
+          "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+          "source_id": "SRC-ISSUE-157",
+          "source_map_path": "source-map.json",
+          "locator": "Issue description",
+          "claim": "Separate path-encoding concern."
+        },
+        {
+          "identity": "RFC 8493 BagIt 1.0",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "version": "RFC 8493",
+          "capture_path": "sources/S01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "source_id": "SRC-RFC8493",
+          "source_map_path": "source-map.json",
+          "locator": "§2.1.3",
+          "claim": "Normative encoding rule."
+        }
+      ]
+    },
+    {
+      "id": "O4_P1_TO_P6_COMPARISON",
+      "summary": "Every frozen P1–P6 decision is compared with an explicit disposition, including the fresh critic's path, race, tag-manifest, and reviewability additions.",
+      "disposition": "Complete comparison within the supplied six-part plan. All critic additions are accepted as proposed requirements; product options and validation status remain explicit.",
+      "evidence": [
+        "P1–P6 retain the inherited scope and its original constraints. The additions refine copy safety, parser boundaries, derivative verification, BagIt path/fixity handling, dependency gates, and synthetic acceptance.",
+        "The critic confirms that coverage means only the six supplied plan decisions; no whole-product or system-wide guarantee is inferred."
+      ],
+      "conditions": {
+        "already_covered": "The inherited plan already covers the six headline areas and repeated constraints; no unrelated whole-project coverage is inferred.",
+        "cross_reference_limit": "The supplied comparison slice contains only this six-part plan; no broader system guarantees are inferred.",
+        "critic_disposition": {
+          "P1": "Accept preflight, collisions, resumable states, independent destination reread, and non-final partial states. Add stable source identity during copy, no-follow/reparse handling, and atomic staging/finalization as proposed.",
+          "P2": "Retain duration, channels/layout, encoding, tags, notes, waveform/listen view, and separate corrections. Keep parser read-only and source metadata immutable; show unknown layouts and warnings. Add bounded malformed-input handling; display must not write embedded metadata.",
+          "P3": "Retain explicit opt-in and settings preview with no default lossy conversion, resampling, normalization, or downmix. Run only from a verified accession copy; keep output temporary until successful exit and profile check. A successful probe does not establish audio quality or preservation suitability.",
+          "P4": "Retain BagIt 1.0 as a proposed model, complete manifests, provenance, and reopen fixity. Keep no fetch.txt/remote payload. Clarify tag-manifest coverage and gate bagit-python on the path-boundary correction.",
+          "P5": "Keep components undecided. Pin exact binary hashes/build flags/codecs/licenses/dependencies for both OSes before shipping. Keep bagit-python conditional, BWF MetaEdit optional and BWF-specific, and playback/UI as prototype choices.",
+          "P6": "Retain all five original synthetic categories and all existing path/platform/privacy cases. Add the exact sibling-prefix symlink and path-race cases, with listed and unexpected file behavior."
+        }
+      },
+      "options": [
+        "Keep output codecs/recipes, collision resolution, exact metadata fields, package serializer, full PREMIS versus subset, playback backend, and optional BWF tool undecided until product-owner and institutional-policy choices are made.",
+        "Choose whether a reviewable batch export is useful; do not infer a required CSV UI from the Library of Congress example."
+      ],
+      "optional_leads": [
+        "Reject converting all sources to BWF/WAV from the LoC preference alone; parser success as preservation validation; fast BagIt size/count as fixity; BWF data-chunk MD5 as whole-file fixity; automatic metadata correction; and remote fetch.",
+        "Treat the sibling-prefix path trace as static code analysis; do not describe it as a runtime exploit result."
+      ],
+      "validation": [
+        "P6 checks are proposed only. No application, dependency, audio, package, platform, security, performance, or quality test was executed."
+      ],
+      "uncertainty": [
+        "No source resolves local rights/consent/retention/access policy or declares an output-quality threshold.",
+        "Windows/Linux path-race and reparse behavior requires implementation-specific tests."
+      ],
+      "sources": [
+        {
+          "identity": "RFC 8493 BagIt 1.0",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "version": "RFC 8493",
+          "capture_path": "sources/S01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "source_id": "SRC-RFC8493",
+          "source_map_path": "source-map.json",
+          "locator": "§§2.1.3, 2.2.1, 3, 5.1",
+          "claim": "BagIt payload/tag manifest, validity, and path requirements."
+        },
+        {
+          "identity": "bagit.py immutable release source",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+          "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "source_id": "SRC-BAGIT-CODE",
+          "source_map_path": "source-map.json",
+          "locator": "Pinned v1.9.0 implementation",
+          "claim": "Staging, fixity, and path-check behavior."
+        },
+        {
+          "identity": "bagit-python immutable release tests",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "version": "v1.9.0 same commit",
+          "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "source_id": "SRC-BAGIT-TESTS",
+          "source_map_path": "source-map.json",
+          "locator": "Pinned v1.9.0 unsafe path tests",
+          "claim": "Existing test coverage limits."
+        },
+        {
+          "identity": "Library of Congress Recommended Formats Statement Audio",
+          "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+          "version": "Current annual HTML edition at capture",
+          "capture_path": "sources/S02-loc-rfs-audio.html",
+          "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+          "source_id": "SRC-LOC-RFS-AUDIO",
+          "source_map_path": "source-map.json",
+          "locator": "IV.ii.A and IV.ii.C",
+          "claim": "Bounded format preferences and metadata context."
+        },
+        {
+          "identity": "Library of Congress literary audio archives workflow case study",
+          "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+          "version": "2022 institutional case study",
+          "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "source_id": "SRC-LOC-ORAL-HISTORY",
+          "source_map_path": "source-map.json",
+          "locator": "Review CSV and derivative workflow",
+          "claim": "Institutional analogy only."
+        },
+        {
+          "identity": "FFprobe documentation",
+          "url": "https://www.ffmpeg.org/ffprobe-all.html",
+          "version": "Live documentation, not release-pinned",
+          "capture_path": "sources/S12-ffprobe-8.1.html",
+          "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+          "source_id": "SRC-FFPROBE",
+          "source_map_path": "source-map.json",
+          "locator": "Machine-readable format/stream sections",
+          "claim": "Inspection adapter candidate."
+        },
+        {
+          "identity": "FFmpeg CLI documentation",
+          "url": "https://www.ffmpeg.org/ffmpeg.html",
+          "version": "Live documentation, not release-pinned",
+          "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+          "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+          "source_id": "SRC-FFMPEG-DOCS",
+          "source_map_path": "source-map.json",
+          "locator": "Metadata mapping and override sections",
+          "claim": "Explicit derivative mapping."
+        },
+        {
+          "identity": "Library of Congress PREMIS Data Dictionary",
+          "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+          "version": "PREMIS 3.0",
+          "capture_path": "sources/S10-premis-v3.pdf",
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "source_id": "SRC-PREMIS",
+          "source_map_path": "source-map.json",
+          "locator": "Event entity §§2.1–2.7",
+          "claim": "Event-record option and scope."
+        }
+      ]
+    },
+    {
+      "id": "FULL_PLAN_REPLACEMENT",
+      "summary": "Complete proposed replacement for the inherited sandbox plan: local ingest, inspection, derivatives, packaging, component choices, and acceptance.",
+      "disposition": "Complete proposed replacement incorporating the fresh critique; not built or validated. Product choices remain open, and the result is DIAGNOSTIC_UNQUALIFIED.",
+      "evidence": [
+        "The replacement retains the inherited one-archivist, up-to-100-file scope and every P1–P6 decision while incorporating all accepted critic conditions. This is a proposal; the renderer does not adjudicate it."
+      ],
+      "conditions": {
+        "scope": [
+          "One archivist and up to 100 selected WAV/BWF, FLAC, and MP3 files.",
+          "No speech transcription, public publishing, automated rights decision, or legal advice.",
+          "Offline Windows or Linux; no interview audio or metadata upload; source media remains unchanged."
+        ],
+        "P1": "Preflight selected files for read access, space, duplicate/case/Unicode collisions, symlink/reparse points, and unsafe paths; show the proposed mapping. Verify a stable source identity before and during copy, copy to a new local accession staging directory, hash while reading, independently reread the destination, and compare SHA-512 and SHA-256 before marking verified. Preserve received names and relative paths; stop for archivist choice when the target filesystem cannot represent a name, and record any reversible mapping. Keep discovered/copying/verified/warning/failed/interrupted/resumed states. Never finalize partial copy. Resume only after source identity and copied bytes are rechecked; do not delete source. Use no-follow/reparse protections as appropriate and atomically finalize only a complete verified staging copy. These are proposed controls, not tested behavior.",
+        "P2": "Show duration, channel count/layout, encoding, observed embedded metadata, and archivist notes. Evaluate a pinned FFprobe 9.0.2 read-only adapter; record exact parser version/build and warnings. Keep observed source fields immutable; store corrections separately with author/time. Show errors and unknown channel layouts without guessing; inspection/display has no source-metadata write function. Decode waveform on demand and show channels separately. Bound malformed-input processing and surface failures; acceptance remains proposed.",
+        "P3": "Create a derivative only on explicit per-file request. Preview container/codec, sample rate, sample format/bit depth, channel map, metadata map, and any resampling/filter. FFmpeg 9.0.2 is a candidate only after exact build, codec, and license review on both platforms. No default lossy recipe, normalization, resampling, or downmix. Run only from a verified accession copy. Write temporary output; after successful process exit, inspect the selected output profile before atomic finalization. Keep failure/interruption visible, quarantine partial output, and leave the original unchanged. Record exact tool/build/command/settings, source/output identities, and outcome. A successful probe establishes neither listening quality nor preservation suitability.",
+        "P4": "Use BagIt 1.0 as the proposed folder model, not a selected runtime. Include bagit.txt, bag-info.txt, data/originals/<received-path>, data/derivatives/<stable-id>/<chosen-name>, data/records/ingest.json, and SHA-512 and SHA-256 payload manifests and tag manifests. List every payload file, including notes/provenance, in payload manifests. Each tag manifest must list every payload manifest, must not list any tag manifest, and should list the remaining tag files; do not imply recursive self-coverage. Use no fetch.txt or remote payload. Record source and copy digests, processing events, tools/settings, derivative relationship, and outcome. A digest detects later change against its baseline but proves neither authenticity nor original correctness. Finalize only after complete copy and full fixity. Reopen performs full fixity and reports missing/changed/unexpected files; size/count alone is not fixity.",
+        "P5": "Keep components undecided while shortlisting FFprobe/FFmpeg 9.0.2, BagIt 1.0, and a PREMIS-inspired event record. Compare a native BagIt serializer with bagit-python 1.9.0 only on staging copies and only after path-encoding tests and the path-boundary gate: use a corrected implementation or host-enforced canonical path-segment containment, symlink/reparse defenses, and proposed sibling-prefix/race tests on Windows and Linux. Do not rely on v1.9.0's validator alone for untrusted content. BWF MetaEdit 26.08.1 is optional BWF-only QA/export, never a writer to originals. Playback backend/UI are cross-platform prototype choices. Before shipping, lock exact binary hashes, build flags, enabled codecs, licenses, and dependencies for both platforms.",
+        "P6": "Propose synthetic checks for interrupted copy/unplug/resume/source change; malformed/contradictory RIFF/BWF, FLAC, and ID3 metadata; mono/stereo/multichannel/discrete/unknown layouts; selected conversion parameters and crash/cancel behavior; package tampering by missing/changed/extra/renamed/truncated payload and altered tag files. Add percent/CR/LF and encoded-looking paths, Unicode/case collisions, long and Windows-reserved paths, symlink/reparse/shared-prefix and the exact sibling-prefix escape, path replacement/time-of-check/time-of-use races, read-only media, low space, 100 files, disconnected network, no-egress, and Windows/Linux cases. Check listed and unexpected files. Keep file-level profile/fixity/failure checks separate from human listening review. Synthetic content only; mark every check proposed until run."
+      },
+      "options": [
+        "Product choices not determined by evidence: lossless/lossy outputs and target settings; per-file or batch requests; path-collision policy; exact metadata whitelist; native or bundled serializer; full PREMIS or a documented local subset; playback API/UI; and whether a batch review/export or BWF MetaEdit fits the workflow.",
+        "If a PREMIS-inspired event record is retained, choose a small versioned schema or full PREMIS. A proposed minimum local schema records a unique event identifier, event type, event time, affected object identifiers, tool/build/settings, outcome, and source-to-derivative relationship. This is not a PREMIS conformance claim."
+      ],
+      "optional_leads": [
+        "Optional review CSV, BWF-specific QA/export, second digest manifest, full PREMIS integration if required, a replaceable parser/playback adapter, and a documented local event-schema subset."
+      ],
+      "validation": [
+        "All P6 checks are proposals only. No app build, audio test, conversion, package validation, performance check, no-egress test, listening review, or quality assessment was executed.",
+        "Separate file-level inspection/profile/fixity results from human listening review; neither alone establishes archival quality. No quality threshold is set."
+      ],
+      "uncertainty": [
+        "Format statements do not mandate converting born-digital oral histories. Local rights/consent, access, retention, and institutional policy remain outside the evidence and plan scope.",
+        "The safe path implementation, platform-specific reparse behavior, race resistance, output-quality thresholds, and package/runtime choices remain unvalidated or undecided."
+      ],
+      "sources": [
+        {
+          "identity": "RFC 8493 BagIt 1.0",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "version": "RFC 8493",
+          "capture_path": "sources/S01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "source_id": "SRC-RFC8493",
+          "source_map_path": "source-map.json",
+          "locator": "§§2–5, especially 2.1.3, 2.2.1 and 5.1",
+          "claim": "BagIt structure, manifest rules, fixity, and path safety."
+        },
+        {
+          "identity": "bagit.py immutable release source",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+          "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "source_id": "SRC-BAGIT-CODE",
+          "source_map_path": "source-map.json",
+          "locator": "Pinned v1.9.0 source symbols",
+          "claim": "Implementation candidate and adoption conditions."
+        },
+        {
+          "identity": "bagit-python immutable release tests",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "version": "v1.9.0 same commit",
+          "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "source_id": "SRC-BAGIT-TESTS",
+          "source_map_path": "source-map.json",
+          "locator": "Pinned v1.9.0 test symbols",
+          "claim": "Existing test limits and proposed cases."
+        },
+        {
+          "identity": "bagit-python issue 152 tilde filename false error",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+          "version": "Issue opened 2021-04-23",
+          "capture_path": "sources/S07-issue-152.html",
+          "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+          "source_id": "SRC-ISSUE-152",
+          "source_map_path": "source-map.json",
+          "locator": "Issue body",
+          "claim": "Bounded historical false-rejection report."
+        },
+        {
+          "identity": "bagit-python PR 184 remove expandvars",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+          "version": "Merged 2025-06-13; closes issue 152",
+          "capture_path": "sources/S08-pr-184.html",
+          "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+          "source_id": "SRC-PR-184",
+          "source_map_path": "source-map.json",
+          "locator": "Merged PR",
+          "claim": "Fix relationship."
+        },
+        {
+          "identity": "bagit-python merge commit 753679",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+          "version": "753679c9b342660d038f65a8dc4f755ab95d679b",
+          "capture_path": "sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+          "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+          "source_id": "SRC-COMMIT-753679",
+          "source_map_path": "source-map.json",
+          "locator": "Exact merge patch",
+          "claim": "Two-line deletion and no added regression test."
+        },
+        {
+          "identity": "bagit-python issue 157 path encoding bug",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+          "version": "Issue opened 2022-02-15",
+          "capture_path": "sources/S16-bagit-issue-157.html",
+          "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+          "source_id": "SRC-ISSUE-157",
+          "source_map_path": "source-map.json",
+          "locator": "Issue body",
+          "claim": "Separate percent-encoding interoperability issue."
+        },
+        {
+          "identity": "Library of Congress Recommended Formats Statement Audio",
+          "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+          "version": "Current annual HTML edition at capture",
+          "capture_path": "sources/S02-loc-rfs-audio.html",
+          "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+          "source_id": "SRC-LOC-RFS-AUDIO",
+          "source_map_path": "source-map.json",
+          "locator": "IV.ii.A and IV.ii.C",
+          "claim": "Limited institutional format preference."
+        },
+        {
+          "identity": "Library of Congress FDD000357 BWF Version 2",
+          "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+          "version": "FDD000357 current page at capture",
+          "capture_path": "sources/S03-loc-bwf-v2.html",
+          "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+          "source_id": "SRC-LOC-BWF-V2",
+          "source_map_path": "source-map.json",
+          "locator": "Local use and sustainability sections",
+          "claim": "BWF context."
+        },
+        {
+          "identity": "Library of Congress literary audio archives workflow case study",
+          "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+          "version": "2022 institutional case study",
+          "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "source_id": "SRC-LOC-ORAL-HISTORY",
+          "source_map_path": "source-map.json",
+          "locator": "Review CSV, test ingest, WAV masters and MP3 access copies",
+          "claim": "Workflow analogy only."
+        },
+        {
+          "identity": "Library of Congress PREMIS Data Dictionary",
+          "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+          "version": "PREMIS 3.0",
+          "capture_path": "sources/S10-premis-v3.pdf",
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "source_id": "SRC-PREMIS",
+          "source_map_path": "source-map.json",
+          "locator": "Event entity §§2.1–2.7",
+          "claim": "Event field names and object linkage; local subset is not full conformance."
+        },
+        {
+          "identity": "FFprobe documentation",
+          "url": "https://www.ffmpeg.org/ffprobe-all.html",
+          "version": "Live documentation, not release-pinned",
+          "capture_path": "sources/S12-ffprobe-8.1.html",
+          "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+          "source_id": "SRC-FFPROBE",
+          "source_map_path": "source-map.json",
+          "locator": "Machine-readable format and stream output",
+          "claim": "Inspection candidate."
+        },
+        {
+          "identity": "FFmpeg CLI documentation",
+          "url": "https://www.ffmpeg.org/ffmpeg.html",
+          "version": "Live documentation, not release-pinned",
+          "capture_path": "sources/S11-ffmpeg-8.1-cli.html",
+          "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+          "source_id": "SRC-FFMPEG-DOCS",
+          "source_map_path": "source-map.json",
+          "locator": "Metadata mapping and override controls",
+          "claim": "Derivative behavior candidate."
+        },
+        {
+          "identity": "FFmpeg official release page",
+          "url": "https://ffmpeg.org/download.html",
+          "version": "9.0.2 released 2026-09-18",
+          "capture_path": "sources/S13-ffmpeg-download.html",
+          "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442",
+          "source_id": "SRC-FFMPEG-RELEASE",
+          "source_map_path": "source-map.json",
+          "locator": "9.0.2 release entry",
+          "claim": "Version candidate only."
+        },
+        {
+          "identity": "BWF MetaEdit official product page",
+          "url": "https://mediaarea.net/BWFMetaEdit",
+          "version": "26.08.1 observed at capture",
+          "capture_path": "sources/S14-bwfmetaedit-product.html",
+          "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+          "source_id": "SRC-BWF-METAEDIT",
+          "source_map_path": "source-map.json",
+          "locator": "Product features and MD5 scope",
+          "claim": "Optional BWF-only lead."
+        }
+      ]
+    },
+    {
+      "id": "O5_CRITIC_DISPOSITION",
+      "summary": "Fresh criticism is received and each technical and plan-level objection is explicitly dispositioned; remaining items are product choices or untested proposals.",
+      "disposition": "Accept the critic's path-boundary correction and all bounded plan recommendations. No technical objection is left unaddressed; event schema and review workflow choices remain explicitly open. No runtime exploit is claimed.",
+      "evidence": [
+        "The critic's static path trace is confirmed against the exact v1.9.0 source, test, and RFC captures: commonprefix is a character-prefix check; a symlink-resolved sibling path can share that prefix; validation joins and opens manifest paths; RFC 8493 §5.1 prohibits outside-bag access.",
+        "The critic's remaining recommendations concern proposed safeguards, explicit package rules, separation of file checks from human listening, and product decisions; they are incorporated below without claiming tests were run."
+      ],
+      "conditions": {
+        "critic_source": "Exact own-arm critic-v2/artifact.md and source-map.json; no other arm, case, evaluator material, or parent history was used.",
+        "criticism_dispositions": [
+          {
+            "criticism": "The v1.9.0 commonprefix check admits a sibling-prefix path when resolved through a symlink; validation later opens the path.",
+            "disposition": "Accept as a static source-path finding. Strengthen O2/P5 adoption gates and retain the limit that no runtime reproducer or exploit was run."
+          },
+          {
+            "criticism": "Do not rely on this validator as a security boundary for untrusted package contents.",
+            "disposition": "Accept. Require a corrected implementation or host-enforced canonical path-segment containment and symlink/reparse safeguards before any such use."
+          },
+          {
+            "criticism": "Make archive traversal resistant to symlink and time-of-check/time-of-use changes.",
+            "disposition": "Accept as proposed P1/P5 controls and P6 tests for no-follow/reparse handling, stable source identity, path replacement, and atomic staging/finalization. None is implemented or validated here."
+          },
+          {
+            "criticism": "Define a small PREMIS-inspired event schema or state that the schema decision remains open.",
+            "disposition": "Accept both parts: the decision between no record, a versioned local subset, and full PREMIS remains open; if a local record is retained, the proposal names unique event ID, event type/time, affected object IDs, tool/build/settings, outcome, and source-to-derivative relationship. No conformance claim."
+          },
+          {
+            "criticism": "Treat the LoC review CSV as an analogy and decide whether batch review/export is needed.",
+            "disposition": "Accept. Keep review/export optional and make it a product-owner choice, not a required UI."
+          },
+          {
+            "criticism": "Clarify tag-manifest coverage.",
+            "disposition": "Accept RFC 8493 §2.2.1: each tag manifest lists every payload manifest, does not list tag manifests, and should list the remaining tag files. Do not imply recursive self-coverage."
+          },
+          {
+            "criticism": "Add the detailed P1–P6 path, malformed-input, copy/derivative, package, dependency, and acceptance conditions.",
+            "disposition": "Accept and include each addition in O4 and the complete P1–P6 replacement."
+          },
+          {
+            "criticism": "Separate file-level checks from human listening and do not treat a successful probe as audio-quality acceptance.",
+            "disposition": "Accept as separate proposed validation. No listening review, quality threshold, or archival-quality result is claimed."
+          },
+          {
+            "criticism": "Preserve the one-archivist/up-to-100-file scope, no-broader-coverage limit, and DIAGNOSTIC_UNQUALIFIED status.",
+            "disposition": "Accept. These limits remain explicit in the full replacement and execution record."
+          }
+        ],
+        "unresolved_objections": [],
+        "open_product_decisions": [
+          "Whether to retain an event record and whether to implement full PREMIS or a documented versioned local subset.",
+          "Whether the desk needs a batch review/export, and the remaining codec, path-collision, metadata, package serializer, playback/UI, rights/access/retention, and institutional-policy choices."
+        ]
+      },
+      "options": [
+        "Use a corrected library or a native serializer; any v1.9.0 reference use remains conditional on an external host path-boundary gate.",
+        "Choose a versioned local event schema or full PREMIS only if product requirements require an event record.",
+        "Choose whether review-before-commit needs a batch UI or export."
+      ],
+      "optional_leads": [
+        "The sibling-prefix symlink and race cases are proposed tests, not reported runtime results.",
+        "Keep the issue #152 fix chain separate from the unresolved issue #157 percent-encoding limitation."
+      ],
+      "validation": [
+        "Performed here: static comparison of the cited path-check, payload walk, validation hash caller/open, relevant tests, RFC 8493 path and tag-manifest rules, PREMIS event definitions, and issue #157 capture.",
+        "Not performed: runtime symlink/reparse/race reproduction, BagIt suite, archive, application, audio, security, quality, performance, or platform test."
+      ],
+      "uncertainty": [
+        "The critic's path trace is not a dynamic exploit demonstration; application-level exploitability and platform-specific race behavior remain untested.",
+        "The product's event-record requirement, schema, quality threshold, rights/consent, access, and retention decisions remain open."
+      ],
+      "sources": [
+        {
+          "identity": "bagit.py immutable release source",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+          "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "source_id": "SRC-BAGIT-CODE",
+          "source_map_path": "source-map.json",
+          "locator": "v1.9.0 path check, payload walk, _validate_entries(), _calc_hashes(), and file open",
+          "claim": "Static sibling-prefix path trace."
+        },
+        {
+          "identity": "bagit-python immutable release tests",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "version": "v1.9.0 same commit",
+          "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "source_id": "SRC-BAGIT-TESTS",
+          "source_map_path": "source-map.json",
+          "locator": "Unsafe-directory and fetch-path test definitions",
+          "claim": "Existing coverage and omitted symlink case."
+        },
+        {
+          "identity": "RFC 8493 BagIt 1.0",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "version": "RFC 8493",
+          "capture_path": "sources/S01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "source_id": "SRC-RFC8493",
+          "source_map_path": "source-map.json",
+          "locator": "§§2.2.1 and 5.1",
+          "claim": "Tag-manifest rules and prohibition on outside-bag access."
+        },
+        {
+          "identity": "Library of Congress PREMIS Data Dictionary",
+          "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+          "version": "PREMIS 3.0",
+          "capture_path": "sources/S10-premis-v3.pdf",
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "source_id": "SRC-PREMIS",
+          "source_map_path": "source-map.json",
+          "locator": "Event entity §§2.1–2.7",
+          "claim": "Minimum event fields and object linkage context."
+        },
+        {
+          "identity": "bagit-python issue 157 path encoding bug",
+          "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+          "version": "Issue opened 2022-02-15",
+          "capture_path": "sources/S16-bagit-issue-157.html",
+          "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+          "source_id": "SRC-ISSUE-157",
+          "source_map_path": "source-map.json",
+          "locator": "Issue body",
+          "claim": "Separate path-encoding condition."
+        },
+        {
+          "identity": "Library of Congress literary audio archives workflow case study",
+          "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+          "version": "2022 institutional case study",
+          "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "source_id": "SRC-LOC-ORAL-HISTORY",
+          "source_map_path": "source-map.json",
+          "locator": "Review CSV workflow",
+          "claim": "Optional analogy."
+        }
+      ]
+    },
+    {
+      "id": "O6_CHOICES_AND_LIMITS",
+      "summary": "The full replacement covers the supplied O1–O6 and P1–P6 slice while leaving evidence-underdetermined product and institutional choices open.",
+      "disposition": "Complete within the supplied plan slice. No broader system coverage, product quality, policy, or validation result is inferred.",
+      "evidence": [
+        "The inherited plan and fresh critique cover one archivist and up to 100 selected audio files, offline Windows/Linux use, unchanged sources, inspection/correction separation, opt-in derivatives, package fixity/provenance, and proposed synthetic acceptance.",
+        "Technical sources support bounded mechanisms and candidate dependencies; they do not determine codecs, quality thresholds, rights/consent, access, retention, or institutional policy."
+      ],
+      "conditions": {
+        "coverage": {
+          "O1": "Need-led discovery and optional reviewable workflow.",
+          "O2": "Pinned implementation behavior and conditional safe-adoption gate.",
+          "O3": "Issue/fix/release applicability and separate percent-encoding limitation.",
+          "O4": "Disposition of all P1–P6 plan decisions.",
+          "O5": "Fresh criticism and itemized response.",
+          "O6": "Complete scope, open choices, and validation limits."
+        },
+        "scope": [
+          "One archivist and up to 100 selected WAV/BWF, FLAC, and MP3 files.",
+          "No transcription, public publishing, automated rights decision, or legal advice.",
+          "Offline Windows/Linux, no interview audio or metadata upload, and no source-media mutation."
+        ],
+        "event_record": "A local PREMIS-inspired schema is an option, not a conformance claim. If retained, the proposed minimum fields are unique event identifier, event type, event time, affected object identifiers, tool/build/settings, outcome, and source-to-derivative relationship; full PREMIS is a separate choice.",
+        "validation_separation": "File-level metadata/profile/fixity/failure-state checks and human listening review are separate proposed activities. Neither alone establishes archival quality."
+      },
+      "options": [
+        "Open: output codecs and recipes, target settings, per-file versus batch workflow, path-collision policy, metadata whitelist, event record and schema, native versus bundled serializer, playback API/UI, review export, optional BWF tool, and institutional rights/access/retention policy.",
+        "No evidence-backed choice is made among these alternatives."
+      ],
+      "optional_leads": [
+        "Optional batch review/export, BWF-specific QA, a second digest manifest, full PREMIS if required, and replaceable parser/playback adapters."
+      ],
+      "validation": [
+        "All product and acceptance validation remains proposed. No implementation, listening review, preservation-quality assessment, or product test was performed."
+      ],
+      "uncertainty": [
+        "Public technical evidence does not resolve local rights, consent, access, retention, output-quality thresholds, or institutional policy.",
+        "The inherited plan comparison is limited to the supplied P1–P6 slice."
+      ],
+      "sources": [
+        {
+          "identity": "Library of Congress PREMIS Data Dictionary",
+          "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+          "version": "PREMIS 3.0",
+          "capture_path": "sources/S10-premis-v3.pdf",
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "source_id": "SRC-PREMIS",
+          "source_map_path": "source-map.json",
+          "locator": "Event entity §§2.1–2.7",
+          "claim": "Event schema option; no full-conformance claim."
+        },
+        {
+          "identity": "Library of Congress literary audio archives workflow case study",
+          "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+          "version": "2022 institutional case study",
+          "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "source_id": "SRC-LOC-ORAL-HISTORY",
+          "source_map_path": "source-map.json",
+          "locator": "Test ingest, review CSV, masters and access-copy workflow",
+          "claim": "Bounded institutional analogy."
+        },
+        {
+          "identity": "Library of Congress Recommended Formats Statement Audio",
+          "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+          "version": "Current annual HTML edition at capture",
+          "capture_path": "sources/S02-loc-rfs-audio.html",
+          "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+          "source_id": "SRC-LOC-RFS-AUDIO",
+          "source_map_path": "source-map.json",
+          "locator": "Audio format preference scope",
+          "claim": "Not a born-digital conversion recipe."
+        },
+        {
+          "identity": "RFC 8493 BagIt 1.0",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "version": "RFC 8493",
+          "capture_path": "sources/S01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "source_id": "SRC-RFC8493",
+          "source_map_path": "source-map.json",
+          "locator": "BagIt structure and fixity rules",
+          "claim": "Package option and constraints."
+        }
+      ]
+    },
+    {
+      "id": "P6_ACCEPTANCE",
+      "summary": "P6 retains every inherited synthetic acceptance category and adds explicit path-boundary, race, package, platform, and listening-review separation cases.",
+      "disposition": "Proposed acceptance only; not executed. Synthetic data only; no personal interviews.",
+      "evidence": [
+        "The inherited plan requests interrupted copy, malformed metadata, unusual channel layout, encoding conversion, and package fixity; all are retained.",
+        "The critic adds the exact sibling-prefix/symlink path case, path races, and separation of file-level checks from human listening review."
+      ],
+      "conditions": {
+        "plan_locator": "Inherited frozen plan P6 as represented in research-v2/artifact.md and its complete authored payload.",
+        "data": "Synthetic content only; no personal interviews.",
+        "execution_status": "Every listed case is proposed; none was run."
+      },
+      "options": [
+        "Run the selected exact dependency builds only after product choices and safety gates are locked."
+      ],
+      "optional_leads": [
+        "Keep each synthetic input, expected result, warnings, path mapping, tool/build/settings, and outcome recorded."
+      ],
+      "validation": [
+        "Copy: interrupt at each stage, unplug/resume, source change, stable source identity, independent destination reread, partial-state recovery, read-only source, low space, and 100 selected files.",
+        "Metadata: malformed/contradictory RIFF/BWF, FLAC, and ID3; mono, stereo, multichannel, discrete, and unknown channel layouts; parser warnings and bounded failure/resource behavior.",
+        "Derivatives: explicit per-file settings, metadata/channel mapping, resampling/filter choice, crash/cancel, quarantined partial output, post-output profile/fixity checks, and separate human listening review.",
+        "Package: missing, changed, extra, renamed, or truncated payload; altered tag files/manifests; complete SHA-512/SHA-256 fixity and reopen behavior.",
+        "Paths: percent, CR/LF/CRLF, encoded-looking names, Unicode/case collisions, long and Windows-reserved names, absolute/traversal paths, symlink/reparse points, shared-prefix sibling escape, path replacement/time-of-check/time-of-use races, and both listed-file and unexpected-file behavior.",
+        "Environment: Windows/Linux, disconnected network, no-egress, and synthetic-only data.",
+        "All cases remain proposals until the implementation runs them; no performance, preservation-quality, or listening-quality threshold is asserted."
+      ],
+      "uncertainty": [
+        "No product test or human listening review was performed; no performance, preservation-quality, or audio-quality conclusion is offered."
+      ],
+      "sources": [
+        {
+          "identity": "RFC 8493 BagIt 1.0",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "version": "RFC 8493",
+          "capture_path": "sources/S01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "source_id": "SRC-RFC8493",
+          "source_map_path": "source-map.json",
+          "locator": "§§2.1.3, 2.2.1, 5.1",
+          "claim": "Manifest, tag-file, and path cases."
+        },
+        {
+          "identity": "bagit.py immutable release source",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+          "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "source_id": "SRC-BAGIT-CODE",
+          "source_map_path": "source-map.json",
+          "locator": "Pinned path-check and validation callers",
+          "claim": "Sibling-prefix/race test motivation."
+        },
+        {
+          "identity": "bagit-python immutable release tests",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "version": "v1.9.0 same commit",
+          "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "source_id": "SRC-BAGIT-TESTS",
+          "source_map_path": "source-map.json",
+          "locator": "Unsafe-directory and fetch tests",
+          "claim": "Existing tests inspected, not run."
+        },
+        {
+          "identity": "Library of Congress literary audio archives workflow case study",
+          "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+          "version": "2022 institutional case study",
+          "capture_path": "sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "source_id": "SRC-LOC-ORAL-HISTORY",
+          "source_map_path": "source-map.json",
+          "locator": "Test-ingest workflow",
+          "claim": "Review-before-commit analogy only."
+        }
+      ]
+    },
+    {
+      "id": "EXECUTION_RECORD",
+      "summary": "Reviser operations and costs are recorded separately from proposed product validation and from native Goal aggregate counters.",
+      "disposition": "Semantic set complete; generic renderer and preservation check are required deliverables. DIAGNOSTIC_UNQUALIFIED; no app or product test executed.",
+      "evidence": [
+        "Activated one fresh native Goal, confirmed it active with get_goal, then sent one activation-only auto notice to the exact supplied parent thread. No parent history or alternate target was used.",
+        "Read the exact dispatch bound, input map, own research and critique drafts/source maps, exact same-arm captured source bytes, and only the named generic M14 contract and renderer.",
+        "Copied 16 same-arm public primary-source captures byte-for-byte (8,426,094 bytes); each source-map size and SHA-256 matched before and after copying.",
+        "Statically checked the changed path-boundary claim against the exact captured v1.9.0 code/tests and RFC, checked PREMIS fields/object linkage and tag-manifest requirements, and wrote a complete replacement semantic set. No downloaded code or test suite was executed."
+      ],
+      "conditions": {
+        "candidate": "I-METHOD-04/treatment/reviser-v2",
+        "dispatch_target": {
+          "providerInstanceId": "codex_gmail",
+          "driverKind": "codex",
+          "model": "gpt-6-luna",
+          "account": "sittingmongoose@gmail.com",
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "deadline": {
+          "earliest_cold_preparation_utc": "2026-10-07T20:47:52.249474+00:00",
+          "dispatch_record_at_utc": "2026-10-07T21:26:17.529597+00:00",
+          "stage_allowance_seconds": 1200,
+          "stage_deadline_utc": "2026-10-07T21:46:17.529597+00:00",
+          "whole_arm_deadline_utc": "2026-10-07T21:47:52.249474+00:00",
+          "role_max_seconds": 1200,
+          "whole_arm_occupied_cap_seconds": 3600,
+          "prior_nonoverlapping_occupied_seconds": 2083.699,
+          "final_reserve_seconds": 0,
+          "no_reset_or_extension": true
+        },
+        "outputs": [
+          "semantic.json: sole authored semantic set.",
+          "artifact.md: all generic M14 renderer views and exact authored input.",
+          "source-map.json and 16 linked source captures under sources/.",
+          "preservation_check.md: complete-scope and field-preservation review."
+        ]
+      },
+      "options": [
+        "Provider component categories (input/cache-read/cache-creation/generated/reasoning tokens and billing amount/currency) are all unknown null, not zero.",
+        "Native Goal aggregate counters are retained as a separate, unsummed snapshot; do not add them to provider component usage."
+      ],
+      "optional_leads": [
+        "First useful reviser finding, observed by 2026-10-07T21:28:36Z: the pinned v1.9.0 commonprefix check can accept a sibling-prefix path resolved through a symlink, while the validation caller opens the joined path; this is static analysis only.",
+        "Generic preparation lower bound: 454.056 seconds. Qualification lower bound: 0.316 seconds. Qualification wall time and billing are unknown; cold and amortized economics remain separate and are never treated as free time.",
+        "Capture URLs, identities, versions, byte counts, time windows, hashes, and own-stage paths are in source-map.json."
+      ],
+      "validation": [
+        "Executed: exact-source static review, same-arm capture copy/hash checks, M14 renderer invocation, and full scope/preservation review.",
+        "Not executed: application build/test, BagIt test suite or runtime reproducer, audio parsing/conversion/listening, package validation, no-egress, performance, quality, or deployment checks."
+      ],
+      "uncertainty": [
+        "Per-request provider token categories and billing are unavailable and remain null/unknown.",
+        "Native Goal aggregate counters are not provider component costs and remain separate and unsummed.",
+        "A static path trace does not prove a runtime exploit or product-level exposure."
+      ],
+      "sources": [
+        {
+          "identity": "bagit.py immutable release source",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+          "version": "v1.9.0 commit 861ddacb339d5b92659f0187a402f501d841abbe",
+          "capture_path": "sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "source_id": "SRC-BAGIT-CODE",
+          "source_map_path": "source-map.json",
+          "locator": "Pinned v1.9.0 path-check and validation code",
+          "claim": "Changed consequential claim checked against exact source bytes."
+        },
+        {
+          "identity": "bagit-python immutable release tests",
+          "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+          "version": "v1.9.0 same commit",
+          "capture_path": "sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "source_id": "SRC-BAGIT-TESTS",
+          "source_map_path": "source-map.json",
+          "locator": "Pinned unsafe-path tests",
+          "claim": "Test coverage checked; tests not executed."
+        },
+        {
+          "identity": "RFC 8493 BagIt 1.0",
+          "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+          "version": "RFC 8493",
+          "capture_path": "sources/S01-rfc8493.txt",
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "source_id": "SRC-RFC8493",
+          "source_map_path": "source-map.json",
+          "locator": "§§2.2.1 and 5.1",
+          "claim": "Tag and outside-bag access requirements checked."
+        },
+        {
+          "identity": "Library of Congress PREMIS Data Dictionary",
+          "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+          "version": "PREMIS 3.0",
+          "capture_path": "sources/S10-premis-v3.pdf",
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "source_id": "SRC-PREMIS",
+          "source_map_path": "source-map.json",
+          "locator": "Event entity definitions",
+          "claim": "Event field/object-link claims checked."
+        }
+      ]
+    }
+  ]
+}
+
+```

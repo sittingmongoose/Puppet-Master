@@ -1,0 +1,44 @@
+{
+  "schema": "er10.exact-mechanical-predecessor-bundle.v1",
+  "scope": "Verbatim candidate-authored inventory/topic drafts and exact original source-map references; no host scientific synthesis or quality judgment",
+  "stage_order": [
+    "research-topic-a",
+    "research-topic-b"
+  ],
+  "exact_original_files": [
+    {
+      "role": "research-topic-a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/artifact.md",
+      "sha256": "f49b9f6a0a17c0bbc5050229627ffb1f4ac17bf073bc827a8db722b2cb5825ee",
+      "bytes": 15715
+    },
+    {
+      "role": "research-topic-a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/source-map.json",
+      "sha256": "891cd7381bebd59a2c758956b768bcf0ed3e970be7d7ebeb23df62cd9de20aa9",
+      "bytes": 9319
+    },
+    {
+      "role": "research-topic-b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/artifact.md",
+      "sha256": "0ff7f9277193197e5d0ab36f19d8d5eb772d58b4c79d1d56479843497d312b20",
+      "bytes": 15567
+    },
+    {
+      "role": "research-topic-b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/source-map.json",
+      "sha256": "a68c42593264c5a6a5069ff205d85b8d373c1b4b71413c33bb41466e71ed65f5",
+      "bytes": 11133
+    }
+  ],
+  "captured_source_directories": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/sources",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources"
+  ],
+  "assembly_started_at": "2026-10-07T20:28:04.752016+00:00",
+  "assembly_completed_at": "2026-10-07T20:28:04.756317+00:00",
+  "output_sha256": "5d481044e29a0891ebc32df8a4955a8c2298a16665eb38f0ebf79b4652ee7104",
+  "output_bytes": 31376,
+  "originals_unchanged": true,
+  "not_additional_candidate_work": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ER10_PUBLICATION_CURATOR_V1",
+  "batch": "BATCH008",
+  "fixed_cutoff": "2026-10-07T22:26:17.559800+00:00",
+  "started_at": "2026-10-07T22:26:17.559800+00:00",
+  "deadline": "2026-10-07T22:51:17.559800+00:00",
+  "writing_reserve_seconds": 300,
+  "latest_verified_commit": "9aebdb76b1bfd05e1523d9b187d00685ffcd78cb",
+  "target": {
+    "driverKind": "codex",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "high",
+      "serviceTier": "priority"
+    }
+  },
+  "sole_git_writer": "root",
+  "scratch_limit_bytes": 8589934592,
+  "staging_limit_bytes": 536870912
+}

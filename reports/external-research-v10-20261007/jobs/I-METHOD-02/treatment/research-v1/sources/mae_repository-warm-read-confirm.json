@@ -1,0 +1,36 @@
+{
+  "cache_mode": "warm",
+  "elapsed_seconds": 0.0035177480003767414,
+  "ended_at": "2026-10-07T19:25:46.289308+00:00",
+  "network_requests": 0,
+  "operation": "read",
+  "record": {
+    "commit": null,
+    "commit_binding": null,
+    "extracted": {
+      "bytes": 386473,
+      "sha256": "a3521e122365464c97dbf7ec7d54a2d97ae5657d388a1f9b65d770c59a10c2e7"
+    },
+    "extraction": {
+      "range": null,
+      "version": "identity-v1"
+    },
+    "headers": {
+      "Content-Length": null,
+      "Content-Type": "text/html; charset=utf-8",
+      "ETag": "W/\"1efccaa5caaf0a09bab4d3f78fa4c1ab\"",
+      "Last-Modified": null
+    },
+    "original_url": "https://github.com/TETRAS-IIIF/mirador-annotation-editor",
+    "raw": {
+      "bytes": 386473,
+      "sha256": "a3521e122365464c97dbf7ec7d54a2d97ae5657d388a1f9b65d770c59a10c2e7"
+    },
+    "retrieved_at": "2026-10-07T19:25:22.001168+00:00",
+    "retrieved_url": "https://github.com/TETRAS-IIIF/mirador-annotation-editor"
+  },
+  "record_id": "b5964a4e39621e0af4a942e71cc9184b3ebce531ede5c626c21324b129817236",
+  "source": "b5964a4e39621e0af4a942e71cc9184b3ebce531ede5c626c21324b129817236",
+  "started_at": "2026-10-07T19:25:46.285762+00:00",
+  "status": "ok"
+}

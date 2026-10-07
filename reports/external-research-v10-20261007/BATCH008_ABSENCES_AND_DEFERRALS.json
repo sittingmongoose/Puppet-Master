@@ -1,0 +1,1332 @@
+{
+  "schema": "ER10-batch008-absences-v1",
+  "fixed_cutoff": "2026-10-07T22:26:17.559800+00:00",
+  "campaign_complete": false,
+  "omissions": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/capabilities-v1.json",
+      "status": "BULKY_DUPLICATE_CATALOG_CAPTURE_EXCLUDED"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/public-witness-candidates.json",
+      "sha256": "293cda2f105b56da3f73ee982c73f304933328594b6d2620509dc7cb4960773b",
+      "bytes": 5211,
+      "status": "HELD_QUOTE_FRAGMENTS_NOT_PUBLISHED_METADATA_COPY_ONLY",
+      "withheld_fields": [
+        {
+          "pointer": "/public_witness_candidates/0/witnesses/0/exact_utf8_raw_json_slice",
+          "sha256": "ca3c6ac1c011bc6a266300bacf1b4c9e32cea55871adb1206c82419d6c55aefe",
+          "utf8_bytes": 71,
+          "status": "HOLD_NOT_APPROVED_NOT_PUBLISHED"
+        },
+        {
+          "pointer": "/public_witness_candidates/0/witnesses/1/exact_utf8_raw_json_slice",
+          "sha256": "ec0dd418fd3a6c50f6a29c0937cf147909107fe7ecde7451dbf7a6677a02866f",
+          "utf8_bytes": 19,
+          "status": "HOLD_NOT_APPROVED_NOT_PUBLISHED"
+        },
+        {
+          "pointer": "/public_witness_candidates/0/witnesses/2/exact_utf8_raw_json_slice",
+          "sha256": "41b31758b5bfd4eaf819bff9dd1aa265a9580ac053d4af2afbee4a17ed103b65",
+          "utf8_bytes": 28,
+          "status": "HOLD_NOT_APPROVED_NOT_PUBLISHED"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/final.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/rewrite.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/change_dependency_check.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/amendment.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/final.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/ROOT_ADMISSION_V2.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/PROSPECTIVE_CARRIER_V2.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/export.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/native_terminal_receipt.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V2_FAILURE_DISPOSITION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/quiet_task_receipt.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V2_FAILURE_DISPOSITION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/dispatch.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V2_FAILURE_DISPOSITION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/boundary.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V2_FAILURE_DISPOSITION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/t3_terminal_clock_receipt.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V2_FAILURE_DISPOSITION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/task.txt",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V2_FAILURE_DISPOSITION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/timings.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V2_FAILURE_DISPOSITION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/critique.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-A/V2_FAILURE_DISPOSITION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/final.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-B/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/rewrite.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-B/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/change_dependency_check.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-B/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/amendment.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-B/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/final.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-B/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/ROOT_ADMISSION_V2.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-B/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/PROSPECTIVE_CARRIER_V2.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-B/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/export.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M08-B/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/final.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M10-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/critique.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M10-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/question.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M10-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/evidence.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M10-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/final.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M10-A/V3_PAIR_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/ROOT_ADMISSION_V2.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M10-A/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/PROSPECTIVE_CARRIER_V2.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M10-A/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/export.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/D-M10-A/PROSPECTIVE_V2_SCOPE_OVERLAY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-gauge_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-all_qc_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-issue-120.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-pr-123.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-pr-123-files.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/RainfallQC-release-v1.0.2.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/SQLite-transactional.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/Rust-csv-1.4.0-Reader.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/src/rainfallqc/checks/gauge_checks.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/src/rainfallqc/qc_frameworks/inbuilt_qc_frameworks.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/src/rainfallqc/qc_frameworks/apply_qc_framework.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/tests/unit/test_gauge_checks.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/pyproject.toml",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/GitHub API commit response",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/GitHub API directory listing",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-01/control/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-schedule-reference.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-realtime-proto.proto",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-realtime-best-practices.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.10.0-matcher.java",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-pr-4066.patch",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-4066-to-v2.2.0-compare.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-issue-observed-b0c9829e-vpm.java",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-realtime-reference.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.10.0-matcher-test.java",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.10.0-polling-caller.java",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-issue-4058.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-pull-4066.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.2.0-release.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.2.0-matcher.java",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.2.0-matcher-test.java",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/otp-v2.2.0-polling-caller.java",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-validator-issue-2174.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-validator-latest-release.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-03/treatment/reviser-v1/sources/gtfs-validator-v8.0.1-release.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-03/treatment/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/artifact.md#Exact-authored-input",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-04/treatment/reviser-v2/semantic.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/INPUTS.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/brief.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/plan.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-008.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-018.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-020.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-026.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-027.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-028.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/F-082.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/source/text_and_size_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/INPUTS.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/brief.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/plan.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-008.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-018.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-020.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-026.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-027.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-028.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/F-082.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/discovery-v1/source/text_and_size_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/INPUTS.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/brief.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/plan.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-008.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-018.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-020.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-026.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-027.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-028.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/F-082.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-a-v1/source/text_and_size_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/INPUTS.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/brief.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/plan.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-008.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-018.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-020.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-026.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-027.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-028.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/F-082.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/research-topic-b-v1/source/text_and_size_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/INPUTS.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/brief.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/plan.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/F-008.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/F-018.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/F-020.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/F-026.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/F-027.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/F-028.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/F-082.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source/text_and_size_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../discovery-v1/artifact.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../discovery-v1/source-map.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../discovery-v1/sources/discovery-capture.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../research-topic-a-v1/artifact.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../research-topic-a-v1/source-map.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../research-topic-a-v1/sources/first-useful-finding.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../research-topic-a-v1/sources/topic-a-public-sources.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../research-topic-b-v1/artifact.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../research-topic-b-v1/source-map.json",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/../research-topic-b-v1/sources/topic-b-capture.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-METHOD-05/treatment/review-v1/sources/inputs/authored/critic-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/sources/research-v1/noaa-coops-data-retrieval-api.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/sources/research-v1/noaa-coops-response-help.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/sources/research-v1/noaa-coops-metadata-api.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/sources/research-v1/noaa-tide-predictions-help.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-02/control/review-v1/sources/admitted/reviser-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/emoncms-graphs.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/emoncms-feeds.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/emoncms-graph-issue-142.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-issue-7160.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-issue-66259.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v0.19.0-parser.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v0.19.0-whatsnew.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v3.0.6-readers.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v3.0.6-test_header.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v3.0.6-io-guide.rst",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v3.0.6-release-notes.rst",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/python-zoneinfo.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/critic-pandas-v3.0.6-readers.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/critic-pandas-issue-66259.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/critic-python-csv.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/critic-pandas-v0.19.0-whatsnew.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/critic-finalizer-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/emoncms-graphs.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/emoncms-feeds.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/emoncms-graph-issue-142.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-issue-7160.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-issue-66259.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v0.19.0-parser.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v0.19.0-whatsnew.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v3.0.6-readers.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v3.0.6-test_header.py",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v3.0.6-io-guide.rst",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/pandas-v3.0.6-release-notes.rst",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/sources/python-zoneinfo.html",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from reviews/integrated-methods/I-FAST-03/treatment/review-v1/sources/admitted/research-v1-source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/INPUTS.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/brief.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/plan.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-008.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-018.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-020.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-026.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-027.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-028.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/F-082.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source/text_and_size_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../discovery-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/INPUTS.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/brief.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/plan.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-008.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-018.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-020.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-026.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-027.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-028.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/F-082.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source/text_and_size_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-a-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/INPUTS.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/brief.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/plan.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-008.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-018.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-020.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-026.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-027.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-028.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/F-082.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/definitions_and_transactions.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/editing_and_save_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source/text_and_size_context.md",
+      "status": "ABSENT_AFTER_CUTOFF_OR_UNSTABLE",
+      "exists_at_selection": false,
+      "why": "exact selected source/freeze reference from jobs/I-METHOD-05/treatment/critic-v1/../research-topic-b-v1/source-map.json"
+    },
+    {
+      "path": "historical GLM P27 witness",
+      "status": "ORIGINAL_MISSING_WITNESS_REMAINS_ABSENT",
+      "no_witness_invented": true
+    }
+  ],
+  "preserved_limits": [
+    "M16 last treatment join and paired review not closed at cutoff: protocols/nomination/lifecycle metadata only. Live candidate findings/final science not opened.",
+    "M07A/B, M09A, M06A/B final-authorized successors unstarted-held: protocols only; no future answers/reviews.",
+    "C01 missing control review: original grade NULL and original defect count0 preserved, new normalization NULL only; no error-free inference.",
+    "C02 O1 remainder/C03 actual native BLOCKED and comparative HOLD unchanged. Actual9ba selected lock distinct old44ba.",
+    "METHOD02v2/FAST01 full standalone diagnostic grades are independent of unchanged paired HOLD.",
+    "Historical old GLM P27 absent; no witness invented.",
+    "Prior three malformed JSON and five stale expected hashes retained/disclosed through pinned prior verification; any new limits remain exact original bytes. Unresolved locator checks are not repaired.",
+    "No private archive exists and no source-cache cleanup yet. Only actual pre-cutoff B2--7 duplicate-payload cleanup receipts are included.",
+    "Normalizer deterministic 20MB projection omitted in favor of exact input identities, essential code/map and byte-replay references. Retention repeated input documents compacted into exact references, byte expansion verified. Held fragments prevent claiming full public classifier replay.",
+    "All after-cutoff or unstable originals excluded. No future files are admitted from current existence."
+  ]
+}

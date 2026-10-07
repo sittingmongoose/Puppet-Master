@@ -1,0 +1,61 @@
+{
+  "schema": "er10.exact.complete.pair.freeze.v1",
+  "case": "I-METHOD-04",
+  "version": "v2",
+  "record_at": "2026-10-07T21:42:00.718001+00:00",
+  "both_finals_frozen": true,
+  "both_full_final_carriers_present": true,
+  "both_native_complete_terminal_states": true,
+  "all_tasks_quiet": true,
+  "current_actual_task_statuses": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/i-method-04-pair-current-quiet-v2.json",
+  "finals": {
+    "treatment": {
+      "role": "reviser",
+      "native_terminal": "complete",
+      "native_identity": "01a11842-acb8-7850-977d-953e26a980a3",
+      "native_active_observed": true,
+      "delivery_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/frozen-delivery.json",
+      "final_files": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/artifact.md": {
+          "sha256": "f87735349d1462d60d633688f0a53050b5055ae7629ccc45263c48a141c73704",
+          "bytes": 238470
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/source-map.json": {
+          "sha256": "3cc56f3bef312dac2a36abd4e1a0435e27a7fa51d9fd6cc9808361636db5c7db",
+          "bytes": 33678
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json": {
+          "sha256": "56967ba0417074a3a0c599b6f881972ca0121b23a2fa5d65a267fbc842f27e83",
+          "bytes": 80585
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/preservation_check.md": {
+          "sha256": "5a01bf36a4b1f1bc962e575b6efb5712083f9743bd59aae46efe8b4c85f529f6",
+          "bytes": 4654
+        }
+      },
+      "source_quality": null,
+      "lifecycle_hold": null
+    },
+    "control": {
+      "role": "reviser",
+      "native_terminal": "complete",
+      "native_identity": "01a11836-c068-7f73-a7f3-a05a8dbfd86b",
+      "native_active_observed": true,
+      "delivery_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/frozen-delivery.json",
+      "final_files": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/artifact.md": {
+          "sha256": "ddba25b195feb56f27482208ce4a4d756bdd87ea420b92bbc8180ab4b305f157",
+          "bytes": 35640
+        },
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/control/reviser-v2/source-map.json": {
+          "sha256": "c972dca672b171eac4e9258ec91dfadd4f78f39517b3f581d3eb87c80c8f444c",
+          "bytes": 14424
+        }
+      },
+      "source_quality": null,
+      "lifecycle_hold": null
+    }
+  },
+  "source_assessment": null,
+  "scope": "mechanical gate only; actual reviewers decide full scientific completeness/source correctness; lifecycle/time limits separate"
+}

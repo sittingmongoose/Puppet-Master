@@ -1,0 +1,21 @@
+{
+  "recentRuns": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M10-A-control-proposal-first-full-check-final-v3:ordinal:1",
+      "ordinal": 1,
+      "status": "starting",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T21:27:37.219Z",
+      "startedAt": null,
+      "completedAt": null
+    }
+  ],
+  "stage_ceiling_seconds": 1920,
+  "logical_phase_ceiling_minutes": [
+    24,
+    8
+  ],
+  "absolute_case_deadline": "2026-10-07T22:00:48.636Z",
+  "clock_basis": "Actual T3 requestedAt; common T0 2026-10-07T21:20:48.636Z immutable shared/queue/startup/delivery included no reset"
+}

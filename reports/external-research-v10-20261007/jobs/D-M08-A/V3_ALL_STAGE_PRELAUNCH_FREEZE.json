@@ -1,0 +1,370 @@
+{
+  "schema": "COHORT3-finalfinite-v3-prelaunch-freeze",
+  "case": "D-M08-A",
+  "root_schedule": {
+    "owner": "targeted-cohort3",
+    "family": "Luna",
+    "new_version": 3,
+    "common_stages": [
+      {
+        "assignment": "fresh-common-draft",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      {
+        "assignment": "fresh-independent-common-critique",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "control": [
+      {
+        "assignment": "coherent-rewrite-check-final",
+        "native_goals": 1,
+        "minutes": 24,
+        "logical_phases": [
+          18,
+          6
+        ],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "local-amendment-dependency-check-render",
+        "native_goals": 1,
+        "minutes": 24,
+        "logical_phases": [
+          8,
+          10,
+          6
+        ],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 40,
+    "common_absolute_pair_wall_minutes": 40,
+    "arm_overlap": true,
+    "original_case_card_sha256": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "control",
+      "treatment"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "root_schedule_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "binding": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "account": "sittingmongoose@gmail.com"
+  },
+  "carrier": "prospectivepassivev2 actualstate, missingrawAPI explicit",
+  "original_science_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/case-card.json": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/INPUT_MAP.json": "35da6031fb7c1bad0e0046c551cf5ba952cdabac5d5464f48ead74f98f11d239",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/SEED_INPUT_MAP.json": "8dba42375d482542c94f92ff79705152faa3022fda18bedcb3c32ec8f8438132",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md": "0e629a9f8ec08c16675db47304b6f31c022f4a98d563121e93010f75ae99ea27",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json": "88f51a4eb5429e3d41e050063967bf4477450171e93f96cd5399375244dad2cd"
+  },
+  "all_stages": [
+    {
+      "stage": "D-M08-A/common/fresh-common-draft-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/assignment.md",
+      "task_sha256": "73e3601d54aedb4fed6e3e501d011787559d995de54af5760236fc5076216daf",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/boundary.json"
+      },
+      "input_map_sha256": "c54ba0d3c49a737e68dc6ad250474b2ddc8d2fac05ea4ef57ddea5c9efec3a1a",
+      "assignment": {
+        "assignment": "fresh-common-draft",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/draft.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/case-card.json": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/INPUT_MAP.json": "35da6031fb7c1bad0e0046c551cf5ba952cdabac5d5464f48ead74f98f11d239",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/SEED_INPUT_MAP.json": "8dba42375d482542c94f92ff79705152faa3022fda18bedcb3c32ec8f8438132",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md": "0e629a9f8ec08c16675db47304b6f31c022f4a98d563121e93010f75ae99ea27",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json": "88f51a4eb5429e3d41e050063967bf4477450171e93f96cd5399375244dad2cd"
+      },
+      "objective": "Execute ER10 D-M08-A v3 fresh-common-draft",
+      "clientRequestId": "er10-cohort3-D-M08-A-common-fresh-common-draft-v3"
+    },
+    {
+      "stage": "D-M08-A/common/fresh-independent-common-critique-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/assignment.md",
+      "task_sha256": "c510c29e29b0efbeb7b03cbd3266bddfdfec28aadbcadf388886ea9fbe44708c",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "eaf3a59f867666e4b394ada0dd6af983a69067c485f42f78f4a25f422e2429cb",
+      "assignment": {
+        "assignment": "fresh-independent-common-critique",
+        "native_goals": 1,
+        "minutes": 8,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/critique.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/case-card.json": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/INPUT_MAP.json": "35da6031fb7c1bad0e0046c551cf5ba952cdabac5d5464f48ead74f98f11d239",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/SEED_INPUT_MAP.json": "8dba42375d482542c94f92ff79705152faa3022fda18bedcb3c32ec8f8438132",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md": "0e629a9f8ec08c16675db47304b6f31c022f4a98d563121e93010f75ae99ea27",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json": "88f51a4eb5429e3d41e050063967bf4477450171e93f96cd5399375244dad2cd"
+      },
+      "objective": "Execute ER10 D-M08-A v3 fresh-independent-common-critique",
+      "clientRequestId": "er10-cohort3-D-M08-A-common-fresh-independent-common-critique-v3"
+    },
+    {
+      "stage": "D-M08-A/control/coherent-rewrite-check-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/assignment.md",
+      "task_sha256": "2137f880a1ea151145ea97162a5aa0f34d967e7acaee2cc1f1c4ddd6404743f7",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        },
+        "critique": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/critique.md",
+          "kind": "exact supplied common candidate critique; not optional adoption list, not evaluator truth"
+        }
+      },
+      "input_map_sha256": "28fc8cf9586ea909d4e354ff47c8a55e41645ba2b2364fbe5bb5ce7ee13c8dc2",
+      "assignment": {
+        "assignment": "coherent-rewrite-check-final",
+        "native_goals": 1,
+        "minutes": 24,
+        "logical_phases": [
+          18,
+          6
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/control/coherent-rewrite-check-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/case-card.json": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/INPUT_MAP.json": "35da6031fb7c1bad0e0046c551cf5ba952cdabac5d5464f48ead74f98f11d239",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/SEED_INPUT_MAP.json": "8dba42375d482542c94f92ff79705152faa3022fda18bedcb3c32ec8f8438132",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md": "0e629a9f8ec08c16675db47304b6f31c022f4a98d563121e93010f75ae99ea27",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json": "88f51a4eb5429e3d41e050063967bf4477450171e93f96cd5399375244dad2cd"
+      },
+      "objective": "Execute ER10 D-M08-A v3 coherent-rewrite-check-final",
+      "clientRequestId": "er10-cohort3-D-M08-A-control-coherent-rewrite-check-final-v3"
+    },
+    {
+      "stage": "D-M08-A/treatment/local-amendment-dependency-check-render-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/treatment/local-amendment-dependency-check-render-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/treatment/local-amendment-dependency-check-render-v3/assignment.md",
+      "task_sha256": "d39d16b9edfd15690023108213f15494a0b7412cb46d2efc258dbf033df16ae5",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "httpsem",
+            "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+            "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "httpcache",
+            "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+            "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/treatment/local-amendment-dependency-check-render-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-common-draft-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        },
+        "critique": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/common/fresh-independent-common-critique-v3/critique.md",
+          "kind": "exact supplied common candidate critique; not optional adoption list, not evaluator truth"
+        }
+      },
+      "input_map_sha256": "ed5e29039bcaa1aaed3cfb8b53872b402972be797fad9f7325a7ff5993c145cd",
+      "assignment": {
+        "assignment": "local-amendment-dependency-check-render",
+        "native_goals": 1,
+        "minutes": 24,
+        "logical_phases": [
+          8,
+          10,
+          6
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/treatment/local-amendment-dependency-check-render-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "codex_gmail",
+        "driverKind": "codex",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        },
+        "account": "sittingmongoose@gmail.com"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/case-card.json": "e0c4ad84edd969fec90d55e82c2f7eac947a0fda28531330edb365c2bbb739b2",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/INPUT_MAP.json": "35da6031fb7c1bad0e0046c551cf5ba952cdabac5d5464f48ead74f98f11d239",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/SEED_INPUT_MAP.json": "8dba42375d482542c94f92ff79705152faa3022fda18bedcb3c32ec8f8438132",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md": "0e629a9f8ec08c16675db47304b6f31c022f4a98d563121e93010f75ae99ea27",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json": "88f51a4eb5429e3d41e050063967bf4477450171e93f96cd5399375244dad2cd"
+      },
+      "objective": "Execute ER10 D-M08-A v3 local-amendment-dependency-check-render",
+      "clientRequestId": "er10-cohort3-D-M08-A-treatment-local-amendment-dependency-check-render-v3"
+    }
+  ],
+  "attempt_limit": 1,
+  "old_versions": "immutable; costs retained inclusive separate, no priorfailedscience inputs/no bestof",
+  "frozen_at": "2026-10-07T20:27:58.289545+00:00"
+}

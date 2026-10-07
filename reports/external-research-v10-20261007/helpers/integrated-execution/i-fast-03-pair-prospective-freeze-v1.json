@@ -1,0 +1,38 @@
+{
+  "case": "I-FAST-03",
+  "record_at": "2026-10-07T21:23:14.125819+00:00",
+  "both_arm_all_stages_maps_configs_policies_frozen": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/prospective-config-v1.json",
+      "sha256": "03b753a094fbb0f3d7d9ec1296d54a073d3df3869d49e0f5062aefa6606f4019",
+      "map_sha256": "fe8ee1743e951b955ee6dac09e6be666308fbf93319de45e763e6a777da5c7f9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/prospective-config-v1.json",
+      "sha256": "d04ae63e5c2032ebb392bb3f57618a008384ad3a96761271559ffe380dcd09d7",
+      "map_sha256": "a79bb2a6df05869acea50055b444893e2e065319aafaf91742a43d1890a35f4b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/prospective-config-v1.json",
+      "sha256": "01e60ade2fe36fbc76efa5d3f5fd52fe88961a7a5c96a2df1fd89d5827586c39",
+      "map_sha256": "83d415bceef3e75c2772345c66c9a971e9c73a8bafb649aea27b70cb774b246c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/research-v1/prospective-config-v1.json",
+      "sha256": "55bd3e2b5d059f4f13517f21188c8f19bcd7851a66cbfe07d421413d35099bcd",
+      "map_sha256": "49961525564033cf6162dfc72cd69d51bf28ec808a76af3d4eb7a1d684b81a2a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/treatment/critic-finalizer-v1/prospective-config-v1.json",
+      "sha256": "45bc47b8324834fcb18d6023799edf8f2ec555195e7f14d07a99ca499ecfbb39",
+      "map_sha256": "29397b2bf712d424ea0849e9cf013e04fa20f0f78483a8030a127485cec5eae8"
+    }
+  ],
+  "neither_arm_dispatched": true,
+  "root_recipe_unchanged": true,
+  "full_science_unchanged": true,
+  "registered_write_paths": true,
+  "actual_task_ids_registered_immediately_after_dispatch_before_activation_event": true,
+  "research_reserves": "control600critic+900final; treatment600critic-finalizer",
+  "no_old_answers_evaluator_facts": true
+}

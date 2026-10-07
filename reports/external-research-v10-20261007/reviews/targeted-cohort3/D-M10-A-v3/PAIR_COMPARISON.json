@@ -1,0 +1,96 @@
+{
+  "case": "D-M10-A",
+  "version": "v3",
+  "is_method_comparison": true,
+  "disposition": "COMPLETE_FULL_SOURCE_PAIR_BOTH_FAIL",
+  "control": "FullSourceFAIL",
+  "treatment": "FullSourceFAIL",
+  "six_axes": "Full declared scope independently assessed each arm; no weighted rubric",
+  "conclusion": "Neither procedure achieved full source quality in this exact trial. Control omits response must-understand presence when stating no-store exception; treatment omits 5xx exception to full validation response handling. Treatment consumes more observed stage and cold-wall time. No successful treatment speed/quality advantage, causal generalization or billing/quota estimate.",
+  "review_freezes": {
+    "J2": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M10-A-v3/J2/freeze_disposition.json",
+    "J1": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M10-A-v3/J1/freeze_disposition.json"
+  },
+  "pair_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/V3_PAIR_FREEZE.json",
+  "evidence_release_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M10-A/V3_EVIDENCE_RELEASE_FREEZE.json",
+  "economics": {
+    "new_upper_bound_minutes_each_cold": 40,
+    "original_15min_success_claim": false,
+    "shared_stage_dispatch_to_delivery_seconds_fully_charged_each_arm": 369.12,
+    "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 1791.243,
+    "paired_critical_wall_seconds": 1433.632,
+    "arms": {
+      "control": {
+        "occupied_dispatch_to_delivery_seconds_including_full_shared": 788.809,
+        "actual_common_T0_to_final_delivery_seconds": 828.272,
+        "own_stage_seconds": {
+          "D-M10-A/control/proposal-first-full-check-final-v3": 419.689
+        },
+        "queue_and_host_handoff_seconds": 39.46300000000002,
+        "native_goal_raw_counters": [
+          {
+            "objective_sha256": "2d6eab476f69c9c32dcddf648b11a327cdd4755a28c30d21b20b465d60eb697e",
+            "status": "complete",
+            "tokensUsed": 75892,
+            "tokenBudget": null,
+            "timeUsedSeconds": 385
+          }
+        ],
+        "final_bytes": 6943,
+        "failure_inclusive_known_worker_delivery_sum_seconds": 1042.732
+      },
+      "treatment": {
+        "occupied_dispatch_to_delivery_seconds_including_full_shared": 1371.554,
+        "actual_common_T0_to_final_delivery_seconds": 1433.632,
+        "own_stage_seconds": {
+          "D-M10-A/treatment/fresh-evidence-first-answer-v3": 562.941,
+          "D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3": 439.493
+        },
+        "queue_and_host_handoff_seconds": 62.0780000000002,
+        "native_goal_raw_counters": [
+          {
+            "objective_sha256": "5bb9ee96f5d1dfd67d72bd26bcc6c60ee2933a572eea38e6184616b0dd7e175d",
+            "status": "complete",
+            "tokensUsed": 69179,
+            "tokenBudget": null,
+            "timeUsedSeconds": 402
+          },
+          {
+            "objective_sha256": "287c1e1902d4f3f98962086d92f70a6bfaa089b29ef1731c4877f42514a56f2c",
+            "status": "complete",
+            "tokensUsed": 95998,
+            "tokenBudget": null,
+            "timeUsedSeconds": 408
+          }
+        ],
+        "final_bytes": 8308,
+        "failure_inclusive_known_worker_delivery_sum_seconds": 1625.477
+      }
+    },
+    "shared_native_goal_raw_counters": [
+      {
+        "objective_sha256": "e777234a188e55ceaf9db997c301fac41794674446341d14f4d19caae38381a8",
+        "status": "complete",
+        "tokensUsed": 61353,
+        "tokenBudget": null,
+        "timeUsedSeconds": 341
+      }
+    ],
+    "review_occupied_seconds": {
+      "J1": 365.322,
+      "J2": 263.65
+    },
+    "aggregate_candidate_plus_reviews_stage_sum_seconds": 2420.215,
+    "overlap": "Root-authorized control/evidence overlap; treatment evidence and fresh reconciliation sequential. Stage sums differ from wall time, contention inseparable; parent not another worker.",
+    "billing": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "old_failure_costs": "Prior v2 failedseed delivery253.923s retained full charge each cold/once aggregate; no old science reused. New v3 limits and additional costs separate, no original15 success.",
+    "host_capture_cost": "Individual exact capture costs retained, no synthesized total when unknown."
+  },
+  "eligibility": "All v3 stages native-active/complete, quiet and within new budgets; prior failedseed disposition unchanged.",
+  "provenance": "Evidence separately frozen before exactproposal release to fresh reconciliation; reconciliation read evidence/proposal together, not itself blind. Path maps advisory no firewall; method paths/embedded metadata reduce review blinding. Source access audit incomplete. No application tests executed.",
+  "frozen_at": "2026-10-07T21:52:05.304473+00:00"
+}

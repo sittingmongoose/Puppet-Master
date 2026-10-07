@@ -1,0 +1,29 @@
+{
+  "carrier": "PASSIVE_NATIVE_STATE_V2_NOT_RAW_API",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T21:38:04.421991+00:00",
+    "entries": [
+      {
+        "stage": "D-M10-A/treatment/fresh-proposal-release-reconcile-final-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M10-A--treatment--fresh-proposal-release-reconcile-final-v3--711647189ff99673.json",
+        "sha256": "711647189ff99673e2f929043ef1ca449fc953a5f7fc45e855c536ea544557e5",
+        "bytes": 11092,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "native_identity": "01a1184c-be0a-7440-abb7-eb3221cded06",
+  "raw_api_bodies": null,
+  "createdAt": null,
+  "host_capture_wall_seconds": 0.0580821,
+  "observed_status": "active",
+  "active_verified": true,
+  "binding_verified": true,
+  "scope_audit": "incomplete_unknown; advisorymap notfirewall"
+}

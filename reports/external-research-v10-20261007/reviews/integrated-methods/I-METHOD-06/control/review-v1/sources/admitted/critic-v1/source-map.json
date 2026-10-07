@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0",
+  "case": "I-METHOD-06",
+  "stage": "control/critic-v1",
+  "goal_identity": "01a1180d-a29d-7621-8151-8b784b02317c",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/input-map.json",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/artifact.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/source-map.json"
+  ],
+  "reviewed_inputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/brief.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/plan.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/INPUTS.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/source/ (all 11 files)"
+  ],
+  "own_artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/artifact.md",
+  "own_source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/critic-v1/source-map.json",
+  "first_useful_saved_finding_at_utc": "2026-10-07T20:33:40Z",
+  "complete_artifact_at_utc": "2026-10-07T20:35:36Z",
+  "independent_evidence_sources": [
+    {
+      "id": "P01",
+      "captured_path": "sources/restic-5667-issue.html",
+      "requested_url": "https://github.com/restic/restic/issues/5667",
+      "accessed_at_utc": "2026-10-07T20:31:37Z",
+      "version_or_scope": "Restic 0.18.1 Windows/amd64 malformed quoted source path; issue reproducer records a zero-file snapshot. SHA-256 c19f2bbfff6c01869792db61827803465b3aa19666c44043b1bcef9d7797339f"
+    },
+    {
+      "id": "P02",
+      "captured_path": "sources/restic-pr-21852.html",
+      "requested_url": "https://github.com/restic/restic/pull/21852",
+      "accessed_at_utc": "2026-10-07T20:31:37Z",
+      "version_or_scope": "Merged 2026-06-21, commit 8d7679c83110257bc458e0ed68c7985cd37cecb9. PR notes the fix and mixed-source ErrInvalidSourceData behavior; page reports 12 checks passed. SHA-256 43b928b5859f681add5af6a3a533d904a0faca86ce7ca585707158a1ef8c19ba"
+    },
+    {
+      "id": "P03",
+      "captured_path": "sources/restic-v0.19.1-release.html",
+      "requested_url": "https://github.com/restic/restic/releases/tag/v0.19.1",
+      "accessed_at_utc": "2026-10-07T20:31:37Z",
+      "version_or_scope": "Signed release published 2026-07-05; release notes list #5667/#21852. Peeled release commit examined: 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf. SHA-256 55a95d75b7a67a2b8f90de2d6015fff1f509f720f4ccb875fb7445eaa4aa871b"
+    },
+    {
+      "id": "P04",
+      "captured_path": "sources/restic-6aa3-cmd_backup.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup.go",
+      "accessed_at_utc": "2026-10-07T20:31:37Z",
+      "version_or_scope": "Pinned caller and filterExisting: all inaccessible sources return before repository open; mixed sources continue through Snapshot, then report ErrInvalidSourceData. SHA-256 4db7ec672c5f1dbc807189e079909a1bfb603ae58fc0a1cb7d016e2e2a1b9805"
+    },
+    {
+      "id": "P05",
+      "captured_path": "sources/restic-6aa3-cmd_backup_test.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup_test.go",
+      "accessed_at_utc": "2026-10-07T20:31:37Z",
+      "version_or_scope": "Pinned TestFilterExistingUnreadable tests helper behavior for ENOTDIR and embedded NUL, all-invalid and mixed lists; not end-to-end repository writes. SHA-256 4f862160306dbcfd22d6e6dbf23d90f5ee09839dc59737bb69d1b0709d076e0c"
+    },
+    {
+      "id": "P06",
+      "captured_path": "sources/restic-6aa3-cmd_check.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+      "accessed_at_utc": "2026-10-07T20:31:37Z",
+      "version_or_scope": "Pinned check command: default structure checks, optional data reads, current pack selection and filter behavior. SHA-256 e8509b18f0c8d0e474e02d9bafa122ef5ee577a7dbf3c93ccb7d3e450748c163"
+    },
+    {
+      "id": "P07",
+      "captured_path": "sources/restic-6aa3-checker.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/checker/checker.go",
+      "accessed_at_utc": "2026-10-07T20:31:37Z",
+      "version_or_scope": "Pinned checker.Structure and ReadPacks governing definitions. SHA-256 89b0789ebd7ecd3d01f3b92f9e31db76825adae483b9613bb6808c585e537c6a"
+    },
+    {
+      "id": "P08",
+      "captured_path": "sources/restic-6aa3-working_with_repos.rst",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/doc/045_working_with_repos.rst",
+      "accessed_at_utc": "2026-10-07T20:31:37Z",
+      "version_or_scope": "Pinned documentation: structural default, full read, n/t partitions, randomized percentage/size, and no full-coverage guarantee for repeated random subsets. SHA-256 56bfbe763b9cae005700f9472f73f69acaa28eea07d6fe258471af729ffffcd6"
+    }
+  ],
+  "independent_search_queries": [
+    "site:github.com/restic/restic/pull/21852 filterExisting TestFilterExistingUnreadable",
+    "site:github.com/restic/restic/releases/tag/v0.19.1 5667 21852",
+    "site:github.com/restic/restic/blob/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go read-data-subset"
+  ],
+  "source_operations": {
+    "web_tool_invocations": 4,
+    "search_queries": 3,
+    "page_open_click_find_operations": 21,
+    "direct_http_capture_window_utc": {
+      "started_at": "2026-10-07T20:31:37Z",
+      "completed_at": "2026-10-07T20:31:39Z"
+    },
+    "direct_http_capture_attempts": 8,
+    "direct_http_capture_successes": 8,
+    "read_only_git_tag_reference_lookups": 0,
+    "source_execution_or_local_product_tests": 0,
+    "note": "Independent checks used official Restic GitHub pages and raw files pinned to the v0.19.1 peeled commit. No downloaded source was executed."
+  },
+  "verified_findings": [
+    "Issue #5667 describes a malformed quoted Windows path on Restic 0.18.1 and a saved zero-file snapshot.",
+    "PR #21852 merged 8d7679c; v0.19.1 release notes name the fix.",
+    "Pinned runBackup returns before repository open for all invalid source roots, but mixed invalid/valid roots continue through snapshot creation and return ErrInvalidSourceData after reporting the snapshot.",
+    "The pinned regression test covers helper-level ENOTDIR/NUL cases, not an end-to-end snapshot write.",
+    "Pinned Restic check separates structural checks from data reads; n/t partitions apply to the current pack set and random subset passes do not guarantee eventual full coverage."
+  ],
+  "native_goal_counters": {
+    "activation_snapshot": {
+      "identity": "01a1180d-a29d-7621-8151-8b784b02317c",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    "preterminal_snapshot": {
+      "observed_at_utc": "2026-10-07T20:35:01Z",
+      "identity": "01a1180d-a29d-7621-8151-8b784b02317c",
+      "status": "active",
+      "tokensUsed": 139461,
+      "timeUsedSeconds": 367
+    },
+    "terminal_snapshot": "Reported by the actual update_goal and terminal get_goal responses; no post-terminal artifact mutation."
+  },
+  "distinct_counters": {
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null,
+    "reason": "Native Goal responses did not expose these distinct counters; null means unknown, not zero. Aggregate Goal token/time counters are reported separately above."
+  }
+}

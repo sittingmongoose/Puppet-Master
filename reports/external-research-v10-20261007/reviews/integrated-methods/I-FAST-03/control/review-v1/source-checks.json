@@ -1,0 +1,678 @@
+{
+  "schema_version": 1,
+  "case_id": "I-FAST-03",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "scope": "Entire admitted authored final and original brief/plan; scientific content only, with external process facets explicitly not verified",
+  "counts": {
+    "consequential_checks_complete": 22,
+    "assessed": 22,
+    "unassessed": 0,
+    "material_error_count": 0,
+    "nonmaterial_limitation_groups": 3,
+    "broken_direct_citation_instances": 2
+  },
+  "checks": [
+    {
+      "id": "SC01",
+      "claim": "OEM feeds distinguish fixed/variable timestamps, absent fixed values and CSV IO",
+      "final_claim_locations": "final L30; draft L19",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R01",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R01-oem-feeds.html",
+          "url": "https://docs.openenergymonitor.org/emoncms/feeds.html",
+          "sha256": "389edcb2f685a0f09b6d83c68d878fa3f205db38391ad73e75ef29695a7f1d12",
+          "version": "live OpenEnergyMonitor docs, title build 0.0.1",
+          "locator": "extracted lines 73-112; Engines; Feeds page"
+        }
+      ],
+      "conclusion": "Direct documentation supports the analogy. Gap behavior has a fill-nulls exception; final adopts its own labelled-derived-series policy, not a claim that OEM never fills gaps."
+    },
+    {
+      "id": "SC02",
+      "claim": "OEM joining and accumulators change displayed gap/reset treatment",
+      "final_claim_locations": "final L30; draft L20",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R02",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R02-oem-daily-kwh.html",
+          "url": "https://docs.openenergymonitor.org/emoncms/daily-kwh.html",
+          "sha256": "b69491deb54f64d0b9a8d7e4878728541a9a6a5dde539aa6008eef2131af9d02",
+          "version": "live OpenEnergyMonitor docs, title build 0.0.1",
+          "locator": "extracted lines 71-106; From an energy meter reading; From an input that resets"
+        }
+      ],
+      "conclusion": "Join connects missing values; accumulators remove resets and bridge gaps. Rejecting these as unlabelled defaults fits P3; optional derived series is preserved."
+    },
+    {
+      "id": "SC03",
+      "claim": "OEM home energy UI is a pertinent analogy",
+      "final_claim_locations": "final L30",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R03",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R03-oem-home-energy.html",
+          "url": "https://docs.openenergymonitor.org/applications/home-energy.html",
+          "sha256": "97a2679674bd1a5fdc462708d964b4033e6dee7d7e3ed26f3fdda1274d71a77d",
+          "version": "live OpenEnergyMonitor docs, title build 0.0.1",
+          "locator": "extracted lines 40-61; MyElectric"
+        }
+      ],
+      "conclusion": "Power and historic daily energy views exist. This does not establish a turnkey export-review tool, laptop performance or this building's formats."
+    },
+    {
+      "id": "SC04",
+      "claim": "HA statistics/reset behavior is an analogy, not a generic meter rule",
+      "final_claim_locations": "final L31, L78",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_WITH_CONDITIONS",
+      "evidence": [
+        {
+          "source_id": "R04",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R04-ha-energy.html",
+          "url": "https://www.home-assistant.io/docs/energy/",
+          "sha256": "893e3b8498e29a5974ab7cdcb753f61c9a6794b798c2a00f089c1b84acdf9b3c",
+          "version": "live page/API captured at 2026-10-07T21:58:05.310883+00:00",
+          "locator": "extracted lines 32-38; Energy sources"
+        },
+        {
+          "source_id": "R05",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R05-ha-lts.html",
+          "url": "https://www.home-assistant.io/docs/configuration/long-term-statistics/",
+          "sha256": "f0018a81829f7a6e0c6373b2182b47924b6377ec68eb6b569cf1d7b16cc877bb",
+          "version": "live HA docs, website banner 2026.10.0; not an immutable core implementation pin",
+          "locator": "extracted lines 38-43, 53-88; Total increasing; unit/state-class changes"
+        }
+      ],
+      "conclusion": "The documented reset condition is a decrease greater than 10%, with smaller decreases handled differently. Final does not adopt the threshold. Statements are about documentation, not all HA releases."
+    },
+    {
+      "id": "SC05",
+      "claim": "Summing asynchronously resettable sensors can inflate HA totals",
+      "final_claim_locations": "final L31; draft L21",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R06",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R06-ha-faq.html",
+          "url": "https://www.home-assistant.io/docs/energy/faq/",
+          "sha256": "92cc8d380dfaa8debc35fb8fa7dfe78184d3a79f0dd000b325d2c1de8eb9da6d",
+          "version": "live HA docs, website banner 2026.10.0",
+          "locator": "extracted lines 56-59; inflated totals"
+        }
+      ],
+      "conclusion": "The FAQ describes a false transient when separate resets occur at different times and recommends separate cumulative sources. Final keeps the failure cue without importing the algorithm."
+    },
+    {
+      "id": "SC06",
+      "claim": "Polars is a Rust CSV/lazy alternative; selection lacks scale evidence",
+      "final_claim_locations": "final L32, L90",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_BOUNDED_OPTION",
+      "evidence": [
+        {
+          "source_id": "R07",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R07-polars-csv.html",
+          "url": "https://docs.pola.rs/user-guide/io/csv/",
+          "sha256": "a964e12c6f1bd1b266cbd9acc09171d8b7c248c1be1788d1f77eee5f18ebe557",
+          "version": "unversioned live Polars guide",
+          "locator": "extracted lines 138-151, 167-175; CsvReadOptions; LazyCsvReader"
+        },
+        {
+          "source_id": "R08",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R08-polars-times.html",
+          "url": "https://docs.pola.rs/user-guide/transformations/time-series/parsing/",
+          "sha256": "2ec804abd5e2082a6eaf6822468ee4f0c6ec5696c5243d1e651d37272d9ad6a1",
+          "version": "unversioned live Polars guide",
+          "locator": "extracted lines 150-185; try_parse_dates and schema inference"
+        }
+      ],
+      "conclusion": "Rust CSV and lazy APIs are documented. No comparative benchmark or row-count threshold is established. Final accurately treats Polars as optional and retains provenance."
+    },
+    {
+      "id": "SC07",
+      "claim": "chrono-tz distinguishes ambiguous from nonexistent local times",
+      "final_claim_locations": "final L33, L80",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R22",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R22-chrono-tz.html",
+          "url": "https://docs.rs/chrono-tz/0.10.4/src/chrono_tz/timezone_impl.rs.html",
+          "sha256": "278bc7ffa68e9269ba0d214cd1864d796352a799d2c1448e84a519027b1b8289",
+          "version": "chrono-tz 0.10.4 docs.rs versioned source",
+          "locator": "source lines 364-389, extracted lines 433-458; TimeZone::offset_from_local_datetime"
+        }
+      ],
+      "conclusion": "Governing TimeZone implementation checks adjacent local spans, returns Ambiguous for overlaps and None for gaps. It is a supporting example, not a selected app dependency."
+    },
+    {
+      "id": "SC08",
+      "claim": "csv release 1.4.0 is published and corresponds to the stated immutable commit",
+      "final_claim_locations": "final L37, L90",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R09",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R09-csv-version.json",
+          "url": "https://crates.io/api/v1/crates/csv/1.4.0",
+          "sha256": "8128b3ec7bf056d9da8004371d508072fa504fb94d8ff55c4abd46e99fd6a151",
+          "version": "registry csv 1.4.0",
+          "locator": "/version/num, /version/created_at, /version/checksum"
+        },
+        {
+          "source_id": "R10",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R10-csv-tag-ref.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/git/ref/tags/1.4.0",
+          "sha256": "7506ebe3da27ee04731611d4b38387400d41f979adc64e65f31f0c27c23abcb2",
+          "version": "refs/tags/1.4.0",
+          "locator": "/object/sha; tag ref"
+        },
+        {
+          "source_id": "R11",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R11-csv-tag-object.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/git/tags/2dc6e06cf8a9f199542f1fa5ba35b1b072280e3a",
+          "sha256": "d28d9ed5bdf796c93e32abf22b1c7b8eb1dbd7c85f1f12719fbeb4c181a288f0",
+          "version": "annotated tag 2dc6e06cf8a9f199542f1fa5ba35b1b072280e3a",
+          "locator": "/tag; /object/sha; /verification"
+        },
+        {
+          "source_id": "R23",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate",
+          "url": "https://crates.io/api/v1/crates/csv/1.4.0/download",
+          "sha256": "52cd9d68cf7efc6ddfaaee42e7288d3a99d613d4b50f76ce9827ae0c6e14f938",
+          "version": "published csv 1.4.0 package",
+          "locator": "archive csv-1.4.0/.cargo_vcs_info.json; src/reader.rs; src/error.rs"
+        }
+      ],
+      "conclusion": "Publication is 2025-10-17. The package declares the pinned commit and its inspected reader/error bytes equal the immutable captures. These identity checks complement actual code reading; they are not behavior tests."
+    },
+    {
+      "id": "SC09",
+      "claim": "ReaderBuilder defaults and strict/flexible row-width behavior",
+      "final_claim_locations": "final L37, L66",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R12",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R12-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+          "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "src/reader.rs L40-48, L232-310, L1578-1613, L1619-1673, L1882-1900"
+        },
+        {
+          "source_id": "R13",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R13-error.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/error.rs",
+          "sha256": "b26d087bb4c1c1c4f5bce43db850f3dc840d754d43229252a1dc68dcec0097a0",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "src/error.rs L70-82, L100-110"
+        }
+      ],
+      "conclusion": "Defaults have headers enabled and flexible disabled. read_byte_record_impl sets position and invokes add_record. add_record compares to the first expected width when flexibility is off. Flexible parsing disables this width check; semantic validation remains the app's responsibility."
+    },
+    {
+      "id": "SC10",
+      "claim": "Shape tests permit later reads and carry diagnostic positions",
+      "final_claim_locations": "final L37, L66, L100",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_AS_STATIC_TEST_EVIDENCE",
+      "evidence": [
+        {
+          "source_id": "R12",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R12-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+          "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "src/reader.rs L2321-2398: read_record_unequal_fails/ok/continue"
+        }
+      ],
+      "conclusion": "Tests encode strict errors, flexible return of ragged data, and continued reads after a width error using ByteRecord and has_headers(false). Their presence is regression evidence, not this reviewer or candidate executing the tests. It does not certify all line locators or all malformed CSV."
+    },
+    {
+      "id": "SC11",
+      "claim": "Line-number cautions from #422 and #395 are bounded correctly",
+      "final_claim_locations": "final L21, L39, L66, L116",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_AS_REPORTS",
+      "evidence": [
+        {
+          "source_id": "R20",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R20-issue422.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/422",
+          "sha256": "b3f5df746f8a6a0220d2c6e06fd6fe646e86af9336c6176dc5173e299bd37759",
+          "version": "open issue #422, live capture; csv-core example has no release pin",
+          "locator": "/title, /state, /body"
+        },
+        {
+          "source_id": "R21",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R21-issue395.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/395",
+          "sha256": "2c8a109e16b71d0ed50a897135a683c488ab1f3f62d7a6bfd15e98bdde0120cc",
+          "version": "open issue #395; body links historical core commit f973cd49a91e5f71d063b45ffeb469765c4f5a86",
+          "locator": "/title, /state, /body; read_record / reader.position CRLF reproducer"
+        },
+        {
+          "source_id": "R12",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R12-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+          "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "src/reader.rs L1625-1650"
+        },
+        {
+          "source_id": "R15",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R15-core-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+          "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "csv-core/src/reader.rs L663-698; newline counting and record termination"
+        }
+      ],
+      "conclusion": "#422 reports line 4 instead of expected 5. #395 concerns reader.position() for the next record after CRLF, not proof that all attached record positions fail. Final treats both as diagnostic risks without claiming a fix, universal defect, or executed reproduction in 1.4.0. App ordinals are proposed and parsing failures remain file-level where boundaries are unknown."
+    },
+    {
+      "id": "SC12",
+      "claim": "StringRecord UTF-8 enforcement and ByteRecord/transcoding alternatives",
+      "final_claim_locations": "final L22, L41, L68, L117",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R12",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R12-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+          "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "src/reader.rs L688-708, L1530-1539, L1578-1673"
+        },
+        {
+          "source_id": "R14",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R14-string-record.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/string_record.rs",
+          "sha256": "3c30b700d01dd876083a72406a6093642528304bfa69600b4bec54aa8086211a",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "src/string_record.rs L621-652: StringRecord::read"
+        }
+      ],
+      "conclusion": "The caller reads byte records, validates UTF-8, clears invalid StringRecord contents and returns Utf8 error. Byte-oriented preview plus immutable original bytes avoids pretending that erroneous string contents survived. Explicit versioned transcoding is a proposed product policy; the library does not promise reversible transcoding."
+    },
+    {
+      "id": "SC13",
+      "claim": "Issue #46 connects comment support to implementation and tests",
+      "final_claim_locations": "final L43, L127",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R16",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R16-issue46.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/46",
+          "sha256": "482797f16bd1d4f737e54c051e88c9f308b4401dbc2e1570ada3fd7959ceaf25",
+          "version": "issue #46, feature request, closed 2017-05-23",
+          "locator": "/title, /body, /state, /closed_at"
+        },
+        {
+          "source_id": "research-v1/S18",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S18--rust-csv-issue-46-timeline.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/46/timeline",
+          "sha256": "595d695ffa0415f26ba1fe6bf188902c6db0469570d08ed373fd0c6f8f30389f",
+          "version": "captured public issue timeline",
+          "locator": "referenced a267ded...; closed; referenced 6f24780... events"
+        },
+        {
+          "source_id": "research-v1/S19",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S19--rust-csv-issue-46-fix-candidate-commit.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/a267ded9dfd595e013a074a9cd3ef1dc6cfb6373",
+          "sha256": "7df9004aaec8d0a052c26ff475f3edfd1b1fe5971270805959fde10d096bd97e",
+          "version": "commit a267ded9dfd595e013a074a9cd3ef1dc6cfb6373",
+          "locator": "/commit/message; /files[filename=csv-core/src/reader.rs]/patch"
+        },
+        {
+          "source_id": "R27",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R27-close-commit.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/6f24780f26a81336bc919e4e2b07cdcadb0c309d",
+          "sha256": "a959c87f4a73f8ce1816e4f1436be488d9de4cf5045f71cdb87702c0cad988be",
+          "version": "commit 6f24780f26a81336bc919e4e2b07cdcadb0c309d",
+          "locator": "/commit/message; /files[filename=csv-core/src/reader.rs]/patch"
+        },
+        {
+          "source_id": "R29",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R29-fix-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/a267ded9dfd595e013a074a9cd3ef1dc6cfb6373/src/reader.rs",
+          "sha256": "790f02e7277f5dd30d967cbb1e0ec660c175c40728a4dd35ee038a25ec0328eb",
+          "version": "commit a267ded9dfd595e013a074a9cd3ef1dc6cfb6373",
+          "locator": "src/reader.rs L475-513: ReaderBuilder::comment"
+        },
+        {
+          "source_id": "R30",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R30-fix-core-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/a267ded9dfd595e013a074a9cd3ef1dc6cfb6373/csv-core/src/reader.rs",
+          "sha256": "5daa0ac1a9d050efb01c2cf3fda17ea20b80f4141caf00ee9d3a7618bb66ca74",
+          "version": "commit a267ded9dfd595e013a074a9cd3ef1dc6cfb6373",
+          "locator": "csv-core/src/reader.rs L254-261, L1579-1590: comment_1..3"
+        }
+      ],
+      "conclusion": "Both rewrite commit messages name #46; public caller, implementation and comment tests exist. This is a pertinent CSV-dialect feature/failure evolution, conditionally relevant to actual comment-bearing exports. It does not show the building needs comments."
+    },
+    {
+      "id": "SC14",
+      "claim": "Comment support and tests exist in a published applicable release",
+      "final_claim_locations": "final L43",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_WITH_DEPENDENCY_CONDITION",
+      "evidence": [
+        {
+          "source_id": "R12",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R12-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+          "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "src/reader.rs L545-581"
+        },
+        {
+          "source_id": "R15",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R15-core-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+          "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "csv-core/src/reader.rs L131-149, L230-239, L988-994, L1683-1722"
+        },
+        {
+          "source_id": "R24",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R24-core.crate",
+          "url": "https://crates.io/api/v1/crates/csv-core/0.1.13/download",
+          "sha256": "704a3c26996a80471189265814dbc2c257598b96b8a7feae2d31ace646bb9782",
+          "version": "published csv-core 0.1.13",
+          "locator": "archive csv-core-0.1.13/src/reader.rs"
+        },
+        {
+          "source_id": "R23",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R23-csv.crate",
+          "url": "https://crates.io/api/v1/crates/csv/1.4.0/download",
+          "sha256": "52cd9d68cf7efc6ddfaaee42e7288d3a99d613d4b50f76ce9827ae0c6e14f938",
+          "version": "published csv 1.4.0 package",
+          "locator": "archive Cargo.toml L204-205; Cargo.lock L28-34"
+        }
+      ],
+      "conclusion": "Core default comment=None, public caller delegates and released core source contains comment_1..5. Published package source equals the pinned inspected bytes. csv 1.4.0 permits core ^0.1.11; package lock records 0.1.13, but a downstream app must pin its resolved dependency graph. No claim about an actual app build is credited."
+    },
+    {
+      "id": "SC15",
+      "claim": "EOF comment fix proposal is unmerged and not shown in the inspected release",
+      "final_claim_locations": "final L43, L110, L127",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED",
+      "evidence": [
+        {
+          "source_id": "R17",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R17-issue363.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/363",
+          "sha256": "98ea751c1335f3c1237c54f715380a89c0736485519bc13bcdb2f926b76e2226",
+          "version": "issue #363, open",
+          "locator": "/body (reported csv 1.3.0); /state"
+        },
+        {
+          "source_id": "R18",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R18-pr396.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/pulls/396",
+          "sha256": "fff8778dc90c36fec9cc89562eeb706f6af7e0b15ce55a1d53f4050ae7e82f31",
+          "version": "PR #396, open; head dc203cf278cbe92abef1c995a425fb50b5247b80",
+          "locator": "/state, /merged_at, /head/sha"
+        },
+        {
+          "source_id": "R19",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R19-pr396-files.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/pulls/396/files",
+          "sha256": "e442e6d428781b749f37417b6bf015829c023d9c4937db890316d2498d997cb6",
+          "version": "PR #396 file diff at the captured head",
+          "locator": "/0/filename, /0/patch: transition_final_dfa and two EOF-comment tests"
+        },
+        {
+          "source_id": "R15",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R15-core-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+          "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "csv-core/src/reader.rs L746-758; L1683-1722"
+        }
+      ],
+      "conclusion": "The proposed in_comment EOF branch and specific regression tests are absent from inspected core 0.1.13. Reported old-version defect is not automatically a verified current runtime failure. Final correctly retains an unresolved, opt-in risk rather than saying an open PR shipped."
+    },
+    {
+      "id": "SC16",
+      "claim": "Width parsing is not full syntax or energy validation",
+      "final_claim_locations": "final L66, L78, L90",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_WITH_LIMIT",
+      "evidence": [
+        {
+          "source_id": "R12",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R12-reader.rs",
+          "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+          "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+          "version": "csv 1.4.0, commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; inspected core 0.1.13",
+          "locator": "src/reader.rs L675-708: permissive parser design and listed errors"
+        }
+      ],
+      "conclusion": "Strict here means width checking, not a strict syntax validator. The final explicitly separates app validation and does not promise quoting errors from csv. Malformed-syntax cases beyond its fixtures remain an implementation risk, not an executed guarantee."
+    },
+    {
+      "id": "SC17",
+      "claim": "The proposed energy, coverage and boundary policies preserve the original safety conditions",
+      "final_claim_locations": "final L78-82, L96, L103-109",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_AS_PROPOSAL",
+      "evidence": [
+        {
+          "source_id": "research-v1/S02",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/admitted/research-v1--S02--oem-daily-kwh.html",
+          "url": "https://docs.openenergymonitor.org/emoncms/daily-kwh.html",
+          "sha256": "5577e66d438f3510ae0aab9897c8edd33490c92e9ae08bdb2f9839bb2c6bd713",
+          "version": "live captured OEM documentation",
+          "locator": "extracted lines 71-106; cumulative energy and power analogies"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/brief.md",
+          "locator": "L5-13, L45-52",
+          "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/plan.md",
+          "locator": "P1 L7; P3 L15; P4 L19; P6 L27",
+          "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        }
+      ],
+      "conclusion": "Average power needs known duration; cumulative differences need ordering/interpretation; decreases are flagged rather than generic threshold/reset inference. Unknown cadence gives unavailable coverage. Boundary allocation is explicitly open with flagged/unallocated interim results. These are conservative proposals, not evidence of successful calculations or causal savings."
+    },
+    {
+      "id": "SC18",
+      "claim": "Locality/privacy correction preserves the frozen product but overreads the draft",
+      "final_claim_locations": "final L23, L92, L118; critic L37-39; draft L79",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "NONMATERIAL_OVERSTATEMENT",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/plan.md",
+          "locator": "P5 L23",
+          "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md",
+          "locator": "L79",
+          "sha256": "fc85ff378a0fb31a47785251482275012c24034183d1ac9408c158899b4e932e",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        }
+      ],
+      "conclusion": "Run without a network service/account connection specifies lack of a requirement; it does not necessarily prohibit optional connections. Final L23 recasts it as no connection may exist. The actual replacement still works locally and retains the identifier opt-in rule, so the critique's stronger characterization creates no demonstrated material product error."
+    },
+    {
+      "id": "SC19",
+      "claim": "Explicit incomparable-period warning is narrowed in finalization",
+      "final_claim_locations": "final L51, L78-86, L121; draft L48, L71",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "NONMATERIAL_PRESERVATION_LOSS",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md",
+          "locator": "L48: incompatible interpretations or materially different coverage labelled as a limitation; L71: no unsupported cutoff",
+          "sha256": "fc85ff378a0fb31a47785251482275012c24034183d1ac9408c158899b4e932e",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        },
+        {
+          "source_id": "R05",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R05-ha-lts.html",
+          "url": "https://www.home-assistant.io/docs/configuration/long-term-statistics/",
+          "sha256": "f0018a81829f7a6e0c6373b2182b47924b6377ec68eb6b569cf1d7b16cc877bb",
+          "version": "live HA documentation",
+          "locator": "extracted lines 81-88: unit/state-class comparability"
+        }
+      ],
+      "conclusion": "Final displays units, interpretation version and valid/missing/excluded coverage and leaves cutoffs open, but does not explicitly retain the draft's warning for incompatible interpretations or materially different coverage. This is a real loss of a useful condition. No incompatible numeric ratio, falsely comparable result or built behavior is asserted, so the evidence supports a planning limitation rather than a demonstrated material calculation error."
+    },
+    {
+      "id": "SC20",
+      "claim": "Final direct tag and timeline citations are defective despite correct linked captures",
+      "final_claim_locations": "final L37 S10 and L43 S18 links",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "NONMATERIAL_CITATION_ERROR",
+      "evidence": [
+        {
+          "source_id": "R25",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R25-final-tag-link.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/git/tags/1.4.0",
+          "sha256": "23804f39a3dbb7478a1c003f80f04dfec732a2b560e258442db8a905ad6cdb25",
+          "version": "rendered final endpoint /git/tags/1.4.0",
+          "locator": "HTTP 404 JSON response"
+        },
+        {
+          "source_id": "R10",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R10-csv-tag-ref.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/git/ref/tags/1.4.0",
+          "sha256": "7506ebe3da27ee04731611d4b38387400d41f979adc64e65f31f0c27c23abcb2",
+          "version": "live page/API captured at 2026-10-07T21:58:05.606319+00:00",
+          "locator": "ref object"
+        },
+        {
+          "source_id": "R11",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R11-csv-tag-object.json",
+          "url": "https://api.github.com/repos/BurntSushi/rust-csv/git/tags/2dc6e06cf8a9f199542f1fa5ba35b1b072280e3a",
+          "sha256": "d28d9ed5bdf796c93e32abf22b1c7b8eb1dbd7c85f1f12719fbeb4c181a288f0",
+          "version": "live page/API captured at 2026-10-07T21:58:05.633536+00:00",
+          "locator": "tag object"
+        },
+        {
+          "source_id": "R32",
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-FAST-03/control/review-v1/sources/independent/R32-final-timeline.html",
+          "url": "https://github.com/BurntSushi/rust-csv/issues/46/timeline",
+          "sha256": "a132f509b5a0a3f9b1f0e72caf1d8f8d050353e0da29b60d3db92acc05cb8d9a",
+          "version": "rendered final /issues/46/timeline URL; HTTP 404 at 2026-10-07T22:08:15.261536+00:00",
+          "locator": "HTTP 404 HTML response"
+        }
+      ],
+      "conclusion": "The final tag-object URL uses a version name rather than object SHA and returns 404; its GitHub issue/timeline URL also returns 404. The scientific source maps identify the valid API tag and timeline captures, whose contents were checked. These are two access defects within one nonmaterial citation limitation; the underlying claims are supported."
+    },
+    {
+      "id": "SC21",
+      "claim": "All four substantive critic dispositions, options and proposed fixtures survive",
+      "final_claim_locations": "final L19-24, L98-121; critic L21-45, L51-71",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_WITH_SC18_LIMIT",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/artifact.md",
+          "locator": "L21-45; L51-56; L69-71",
+          "sha256": "94ff3e0702e62642bde4c33b67f2818d51582db1b140ae6801efb60943508ce3",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/artifact.md",
+          "locator": "L19-24; L98-121",
+          "sha256": "d23509d1f0f75b7138994faa27e2d4589d5d29648fde0adb6d83f54e8125fa8b",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        }
+      ],
+      "conclusion": "Rows/encoding/locality/boundaries each have a visible disposition and conditions. Boundary start/end, proportional split, exclusion/flagging remain alternatives. Byte review/transcoding, byte-offset validation and optional connectivity remain open. No outstanding critic objection is silently labelled solved by an executed test."
+    },
+    {
+      "id": "SC22",
+      "claim": "Validation is proposed rather than an executed application witness",
+      "final_claim_locations": "final L7, L98-112, L132",
+      "assessment_status": "ASSESSED",
+      "source_judgment": "SUPPORTED_AS_DECLARATION_NO_RUNTIME_CREDIT",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/reviser-v1/artifact.md",
+          "locator": "L98-112",
+          "sha256": "d23509d1f0f75b7138994faa27e2d4589d5d29648fde0adb6d83f54e8125fa8b",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/research-v1/artifact.md",
+          "locator": "L13; L85-94",
+          "sha256": "fc85ff378a0fb31a47785251482275012c24034183d1ac9408c158899b4e932e",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-FAST-03/control/critic-v1/artifact.md",
+          "locator": "L69",
+          "sha256": "94ff3e0702e62642bde4c33b67f2818d51582db1b140ae6801efb60943508ce3",
+          "version": "frozen admitted input bytes; identity recorded in admitted-manifest.json"
+        }
+      ],
+      "conclusion": "No runtime test result is supplied or credited. The eleven fixture proposals have concrete cases and intended invariants. Static upstream tests/code/package inspection establish narrower source facts, not building export correctness, savings, speed or application suitability."
+    }
+  ],
+  "admitted_manifest": "sources/admitted-manifest.json",
+  "independent_manifest": "sources/independent-manifest.json",
+  "retrieval_limits": [
+    "R26, R28 and R31 returned rate-limit 403; their error bodies are retained, not treated as source truth. Admitted primary captures and successful independent code/package/closure captures support the limited history conclusion.",
+    "No Git ancestry compare result is asserted."
+  ],
+  "reviewer_validation": {
+    "executed": [
+      "Public read-only retrieval",
+      "Static code and governing caller/definition inspection",
+      "Published archive member inspection without executing code",
+      "Byte comparisons and evidence identity checks",
+      "Complete semantic scope and preservation comparison"
+    ],
+    "not_executed": [
+      "Application build",
+      "Dependency tests",
+      "Parser reproducer",
+      "Meter-data computation",
+      "Performance benchmark"
+    ]
+  },
+  "usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "cache_hits": null,
+    "billing_amount": null
+  },
+  "assessment_saved_at_utc": "2026-10-07T22:07:12.090564+00:00",
+  "review_finalized_at_utc": "2026-10-07T22:10:21.434679+00:00",
+  "delivery_verification": {
+    "json_parse_and_inventory_checks": "passed",
+    "all_cited_evidence_paths_and_sha256": "passed",
+    "all_39_decision_rows_in_judgment": "passed",
+    "source_identity_checks_not_behavior_validation": true
+  }
+}

@@ -1,0 +1,2075 @@
+{
+  "schema_version": 1,
+  "scope": "Exact admitted sources and independent public retrieval only; hash equality establishes byte identity, not truth",
+  "sources": [
+    {
+      "source_id": "SRC-BAGIT-CODE",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "candidate_version": "bagit-python v1.9.0; commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "candidate_locator": "make_bag() lines 141–260; DEFAULT_CHECKSUMS near module constants; Bag.validate() 586–616; fetch_entries() 545–574; _load_manifests() 620–745; _path_is_dangerous() 925–941; _encode_filename()/_decode_filename() 1405–1414",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "size": 54632,
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "size": 54632,
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "size": 54632,
+          "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py"
+        }
+      ],
+      "independent_bytes_equal": true
+    },
+    {
+      "source_id": "SRC-BAGIT-RELEASE",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+      "candidate_version": "Release tag v1.9.0; release commit 861ddacb339d5b92659f0187a402f501d841abbe; page marks latest release at capture",
+      "candidate_locator": "v1.9.0 release notes; PR #184 entry; v1.8.0...v1.9.0 changelog",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S04-bagit-v1.9.0-release.html",
+          "size": 216336,
+          "sha256": "5da3ece07de54bebb17417cfa7ab83ebf6ff3343f154192aad9c2a9302056680",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S04-bagit-v1.9.0-release.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S04-bagit-v1.9.0-release.html",
+          "size": 216336,
+          "sha256": "5da3ece07de54bebb17417cfa7ab83ebf6ff3343f154192aad9c2a9302056680",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S04-bagit-v1.9.0-release.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S04-bagit-v1.9.0-release.html",
+          "size": 216336,
+          "sha256": "5da3ece07de54bebb17417cfa7ab83ebf6ff3343f154192aad9c2a9302056680",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S04-bagit-v1.9.0-release.html"
+        }
+      ],
+      "independent_bytes_equal": false,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-BAGIT-TESTS",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "candidate_version": "bagit-python v1.9.0; same commit 861ddacb339d5b92659f0187a402f501d841abbe",
+      "candidate_locator": "test_unsafe_directory_entries_raise_error() lines 346–375; test_fetch_unsafe_payloads() lines 1067–1090",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "size": 49297,
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "size": 49297,
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py",
+          "size": 49297,
+          "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py"
+        }
+      ],
+      "independent_bytes_equal": true
+    },
+    {
+      "source_id": "SRC-BWF-METAEDIT",
+      "url": "https://mediaarea.net/BWFMetaEdit",
+      "candidate_version": "Version 26.08.1 observed at capture",
+      "candidate_locator": "Features: BWF metadata import/edit/export/validation; MD5 applies to WAVE data chunk only",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S14-bwfmetaedit-product.html",
+          "size": 20610,
+          "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S14-bwfmetaedit-product.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S14-bwfmetaedit-product.html",
+          "size": 20610,
+          "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S14-bwfmetaedit-product.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S14-bwfmetaedit-product.html",
+          "size": 20610,
+          "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S14-bwfmetaedit-product.html"
+        }
+      ],
+      "independent_bytes_equal": true,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-COMMIT-753679",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "candidate_version": "Commit 753679c9b342660d038f65a8dc4f755ab95d679b; one file, two deletions",
+      "candidate_locator": "_path_is_dangerous(self,path): removes os.path.expandvars(path) != path check",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+          "size": 735,
+          "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+          "size": 735,
+          "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+          "size": 735,
+          "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch"
+        }
+      ],
+      "independent_bytes_equal": true
+    },
+    {
+      "source_id": "SRC-FFMPEG-DOCS",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "candidate_version": "Live upstream documentation captured 2026-10-07; not release-version-pinned",
+      "candidate_locator": "-map_metadata and -metadata sections; metadata mapping and override behavior",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S11-ffmpeg-8.1-cli.html",
+          "size": 225502,
+          "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S11-ffmpeg-8.1-cli.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S11-ffmpeg-8.1-cli.html",
+          "size": 225502,
+          "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S11-ffmpeg-8.1-cli.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S11-ffmpeg-8.1-cli.html",
+          "size": 225502,
+          "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S11-ffmpeg-8.1-cli.html"
+        }
+      ],
+      "independent_bytes_equal": true,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-FFMPEG-RELEASE",
+      "url": "https://ffmpeg.org/download.html",
+      "candidate_version": "FFmpeg 9.0.2, released 2026-09-18; latest stable 9.0 branch release at capture",
+      "candidate_locator": "Release 9.0.2; branch distinction between stable point releases and moving master",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S13-ffmpeg-download.html",
+          "size": 27484,
+          "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S13-ffmpeg-download.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S13-ffmpeg-download.html",
+          "size": 27484,
+          "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S13-ffmpeg-download.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S13-ffmpeg-download.html",
+          "size": 27484,
+          "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S13-ffmpeg-download.html"
+        }
+      ],
+      "independent_bytes_equal": true,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-FFPROBE",
+      "url": "https://www.ffmpeg.org/ffprobe-all.html",
+      "candidate_version": "Live upstream documentation captured 2026-10-07; not release-version-pinned",
+      "candidate_locator": "Description, selected output writers/sections, machine-readable output and metadata sections",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S12-ffprobe-8.1.html",
+          "size": 2462291,
+          "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S12-ffprobe-8.1.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S12-ffprobe-8.1.html",
+          "size": 2462291,
+          "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S12-ffprobe-8.1.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S12-ffprobe-8.1.html",
+          "size": 2462291,
+          "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S12-ffprobe-8.1.html"
+        }
+      ],
+      "independent_bytes_equal": true,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-ISSUE-152",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+      "candidate_version": "Issue #152; opened 2021-04-23; Linux/Python reproducer",
+      "candidate_locator": "Issue body, reproducer filename data/blah/~$_-expect_fail.doc and os.path.expandvars behavior",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S07-issue-152.html",
+          "size": 271789,
+          "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S07-issue-152.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S07-issue-152.html",
+          "size": 271789,
+          "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S07-issue-152.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S07-issue-152.html",
+          "size": 271789,
+          "sha256": "4fa807637bcac9272cb97dd2fd1f2b3a18c9635441edfa35cb6861872312ceed",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S07-issue-152.html"
+        }
+      ],
+      "independent_bytes_equal": false,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-ISSUE-157",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+      "candidate_version": "Issue #157 opened 2022-02-15; BagIt 1.0 path encoding complaint",
+      "candidate_locator": "Issue report on percent-encoding CR/LF/% in manifest paths",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S16-bagit-issue-157.html",
+          "size": 240223,
+          "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S16-bagit-issue-157.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S16-bagit-issue-157.html",
+          "size": 240223,
+          "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S16-bagit-issue-157.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S16-bagit-issue-157.html",
+          "size": 240223,
+          "sha256": "06e5f79dae382d0c406d6310a0a110c2e9c6e852ab2e977ae11fd5aa2920b4f7",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S16-bagit-issue-157.html"
+        }
+      ],
+      "independent_bytes_equal": false,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-LOC-BWF-V2",
+      "url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+      "candidate_version": "FDD000357, BWF Version 2; current page observed 2026-10-07",
+      "candidate_locator": "Local use, sustainability, embedded metadata and BWF MetaEdit sections",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S03-loc-bwf-v2.html",
+          "size": 33400,
+          "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S03-loc-bwf-v2.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S03-loc-bwf-v2.html",
+          "size": 33400,
+          "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S03-loc-bwf-v2.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S03-loc-bwf-v2.html",
+          "size": 33400,
+          "sha256": "0542ae7a3208323b37f606ff9622e4063ab4b69c6a778711f6b729b9a31e575c",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S03-loc-bwf-v2.html"
+        }
+      ],
+      "independent_bytes_equal": false,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "candidate_version": "2022 Journal of Digital Media Management institutional case study",
+      "candidate_locator": "Documented batch ingest review CSV; scripted FFmpeg MP3 derivatives; BagIt context; long-term and access copies",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "size": 2280105,
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S15-loc-literary-audio-workflow-2022.pdf"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "size": 2280105,
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S15-loc-literary-audio-workflow-2022.pdf"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S15-loc-literary-audio-workflow-2022.pdf",
+          "size": 2280105,
+          "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S15-loc-literary-audio-workflow-2022.pdf"
+        }
+      ],
+      "independent_bytes_equal": true
+    },
+    {
+      "source_id": "SRC-LOC-RFS-AUDIO",
+      "url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "candidate_version": "Current Library of Congress HTML edition observed 2026-10-07; annual statement",
+      "candidate_locator": "IV.ii.A, media-independent audio format preferences; IV.ii.C metadata",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S02-loc-rfs-audio.html",
+          "size": 19259,
+          "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S02-loc-rfs-audio.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S02-loc-rfs-audio.html",
+          "size": 19259,
+          "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S02-loc-rfs-audio.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S02-loc-rfs-audio.html",
+          "size": 19259,
+          "sha256": "2a419216eb2488959fa1329e2c0c60f411fa979521b58c8c8f2bae1c19b7ca76",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S02-loc-rfs-audio.html"
+        }
+      ],
+      "independent_bytes_equal": false,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-PR-184",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "candidate_version": "PR #184; merged 2025-06-13; links/closes #152",
+      "candidate_locator": "PR conversation and merged status; one commit",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S08-pr-184.html",
+          "size": 299295,
+          "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S08-pr-184.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S08-pr-184.html",
+          "size": 299295,
+          "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S08-pr-184.html"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S08-pr-184.html",
+          "size": 299295,
+          "sha256": "d30fcb139b25d0205337e1e57a7152f595a533479a4d657fdf2f956d7ea89ec0",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S08-pr-184.html"
+        }
+      ],
+      "independent_bytes_equal": false,
+      "independent_extracted_text_equal": true
+    },
+    {
+      "source_id": "SRC-PREMIS",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "candidate_version": "PREMIS 3.0",
+      "candidate_locator": "Event entity: §§2.1–2.7; mandatory eventIdentifier, eventType, eventDateTime; eventOutcomeInformation and linked objects/agents",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S10-premis-v3.pdf",
+          "size": 2176353,
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S10-premis-v3.pdf"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S10-premis-v3.pdf",
+          "size": 2176353,
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S10-premis-v3.pdf"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S10-premis-v3.pdf",
+          "size": 2176353,
+          "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S10-premis-v3.pdf"
+        }
+      ],
+      "independent_bytes_equal": true
+    },
+    {
+      "source_id": "SRC-RFC8493",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "candidate_version": "RFC 8493; BagIt 1.0",
+      "candidate_locator": "§§2.1.2–2.1.3 (payload and manifests), 2.2 (tag files), 2.4 (algorithms), 3 (complete/valid), 5.1 (path safety)",
+      "captures": [
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/research-v2/sources/S01-rfc8493.txt",
+          "size": 48783,
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S01-rfc8493.txt"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/critic-v2/sources/S01-rfc8493.txt",
+          "size": 48783,
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S01-rfc8493.txt"
+        },
+        {
+          "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/sources/S01-rfc8493.txt",
+          "size": 48783,
+          "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+          "matches_declared": true,
+          "review_copy": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/admitted-S01-rfc8493.txt"
+        }
+      ],
+      "independent_bytes_equal": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "C01",
+      "claim_or_obligation": "LoC test ingest creates a CSV for review before formal ingest",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/0/evidence/0"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-LOC-ORAL-HISTORY"
+      ],
+      "source_range_or_definition": "PDF printed pp.30-31; derived text lines 626-641",
+      "governing_conditions_and_judgment": "Institutional workflow analogy only; does not mandate this desk UI/storage/policy.",
+      "material_error": false
+    },
+    {
+      "id": "C02",
+      "claim_or_obligation": "WAV masters and scripted FFmpeg MP3 access copies in LoC workflow",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/0/evidence/0"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-LOC-ORAL-HISTORY"
+      ],
+      "source_range_or_definition": "PDF printed p.30; derived text 563-600",
+      "governing_conditions_and_judgment": "Distinct institutional collections use different custody/package arrangements; no command recipe transplanted.",
+      "material_error": false
+    },
+    {
+      "id": "C03",
+      "claim_or_obligation": "LoC RFS preference for native resolution, uncompressed audio and BWF",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/0/evidence/1"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-LOC-RFS-AUDIO"
+      ],
+      "source_range_or_definition": "IV.ii.A and IV.ii.C; raw HTML captured at official URL",
+      "governing_conditions_and_judgment": "Release/media-independent preference scope; no requirement to upsample or convert received MP3/FLAC.",
+      "material_error": false
+    },
+    {
+      "id": "C04",
+      "claim_or_obligation": "BWF/LPCM analog-reformatting context",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/0/sources/2"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-LOC-BWF-V2"
+      ],
+      "source_range_or_definition": "FDD000357 Local use and LC preference; Last Updated 06/10/2024",
+      "governing_conditions_and_judgment": "Applies to analog mono/stereo reformatting context, not universal born-digital intake.",
+      "material_error": false
+    },
+    {
+      "id": "C05",
+      "claim_or_obligation": "FFprobe structured format and stream output supports read-only adapter shortlist",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/0/evidence/2"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-FFPROBE"
+      ],
+      "source_range_or_definition": "Description, -show_format, -show_streams, Writers/json; derived text 1331-1355, 2098-2102, 2201-2210, 2602-2614",
+      "governing_conditions_and_judgment": "Candidate only. Live docs not release-pinned; no completeness or malformed-input safety claim established.",
+      "material_error": false
+    },
+    {
+      "id": "C06",
+      "claim_or_obligation": "FFmpeg metadata mapping and overrides",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/0/evidence/2"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-FFMPEG-DOCS"
+      ],
+      "source_range_or_definition": "-metadata and -map_metadata; derived text 1753-1770, 3732-3788",
+      "governing_conditions_and_judgment": "Global metadata automatic copy and explicit override are documented; selected-build behavior and chosen whitelist remain gates.",
+      "material_error": false
+    },
+    {
+      "id": "C07",
+      "claim_or_obligation": "FFmpeg/FFprobe 9.0.2 is a proposed version candidate",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/4/conditions/P5"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-FFMPEG-RELEASE"
+      ],
+      "source_range_or_definition": "Official download release 9.0.2, 2026-09-18, 9.0 branch",
+      "governing_conditions_and_judgment": "Source release availability only; docs filenames containing 8.1 do not identify their actual release. No binary/build/platform test.",
+      "material_error": false
+    },
+    {
+      "id": "C08",
+      "claim_or_obligation": "BWF MetaEdit 26.08.1 supports BWF metadata inspection/export/validation",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/4/conditions/P5"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BWF-METAEDIT"
+      ],
+      "source_range_or_definition": "Product version and Features",
+      "governing_conditions_and_judgment": "Optional specialized product; page also supports writing. Final bars writer use on originals.",
+      "material_error": false
+    },
+    {
+      "id": "C09",
+      "claim_or_obligation": "BWF MetaEdit audio-data-chunk MD5 is not whole-file fixity",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/3/optional_leads/0"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BWF-METAEDIT"
+      ],
+      "source_range_or_definition": "Features: MD5 scope; official raw page and derived text",
+      "governing_conditions_and_judgment": "Chunk digest excludes non-audio metadata; cannot substitute for whole accession/package digest.",
+      "material_error": false
+    },
+    {
+      "id": "C10",
+      "claim_or_obligation": "PREMIS event fields and object linkage support a local inspired schema",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/6/conditions/event_record"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-PREMIS"
+      ],
+      "source_range_or_definition": "PREMIS 3.0 printed pp.137-142,155; derived text 5715-5753,5760-5910,6266-6287",
+      "governing_conditions_and_judgment": "Identifier/type/date-time mandatory for an Event; relates to Objects. Optional explicit linkage can be stored in either direction. Local subset is not full conformance.",
+      "material_error": false
+    },
+    {
+      "id": "C11",
+      "claim_or_obligation": "make_bag defaults to SHA-256/SHA-512 and mutates supplied directory in place",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/1/evidence/0"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BAGIT-CODE"
+      ],
+      "source_range_or_definition": "bagit.py:128,141-160,211-245,260-272 at 861ddacb339d5b92659f0187a402f501d841abbe",
+      "governing_conditions_and_judgment": "In-place staging warning supported; source removable tree must not be argument.",
+      "material_error": false
+    },
+    {
+      "id": "C12",
+      "claim_or_obligation": "Bag.validate default recorded checksum recalculation versus fast Oxum",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_CONDITIONS",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/1/evidence/1"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BAGIT-CODE"
+      ],
+      "source_range_or_definition": "bagit.py:586-604,778-795,797-837,860-908,1111-1149",
+      "governing_conditions_and_judgment": "fast=True requires Oxum and skips checksum comparison. Full recorded fixity is not an all-rules BagIt 1.0 conformance proof; see C27.",
+      "material_error": false
+    },
+    {
+      "id": "C13",
+      "claim_or_obligation": "Manifest/fetch paths reach _path_is_dangerous",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/1/evidence/2"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BAGIT-CODE",
+        "SRC-RFC8493"
+      ],
+      "source_range_or_definition": "bagit.py:545-572,620-727,925-940; RFC §5.1 lines 874-891",
+      "governing_conditions_and_judgment": "Includes payload and tag manifest paths and fetch entries. RFC prohibits outside-bag file access.",
+      "material_error": false
+    },
+    {
+      "id": "C14",
+      "claim_or_obligation": "Sibling-prefix file symlink can pass check and lead to outside read",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_STATIC_INFERENCE",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/1/evidence/4"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BAGIT-CODE",
+        "SRC-RFC8493",
+        "R26",
+        "R27",
+        "R28",
+        "R22",
+        "R23"
+      ],
+      "source_range_or_definition": "bagit.py:425-438,385-413,683-697,778-795,860-888,925-940,1111-1149; CPython genericpath:69-83, posixpath:409-416, os:345-419",
+      "governing_conditions_and_judgment": "POSIX bag /tmp/bag; data/link points to existing readable /tmp/bag-sibling/file; matching manifest entry and otherwise adequate bag. File symlink is enumerated; completeness can pass; open follows link. Static trace only, no runtime or Windows exploit proof.",
+      "material_error": false
+    },
+    {
+      "id": "C15",
+      "claim_or_obligation": "Existing pinned tests do not establish exact tilde or sibling-prefix regression",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_BOUNDED_NEGATIVE",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/1/sources/1"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BAGIT-TESTS"
+      ],
+      "source_range_or_definition": "test.py:346-375,1067-1090; full captured file searched/read for tilde/percent/symlink conditions",
+      "governing_conditions_and_judgment": "Negative claim bounded to captured test.py and shown fix patch, not every upstream test or historical CI run.",
+      "material_error": false
+    },
+    {
+      "id": "C16",
+      "claim_or_obligation": "Literal percent encoding defect remains in pinned release and is separate from #152",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/2/evidence/3"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BAGIT-CODE",
+        "SRC-RFC8493",
+        "SRC-ISSUE-157"
+      ],
+      "source_range_or_definition": "bagit.py:1255-1259,1374-1414; RFC §2.1.3 lines 414-425 and §2.2.3; issue body",
+      "governing_conditions_and_judgment": "Encoder handles CR/LF, omits %. Decoder omits %25. Exact v1.9.0 condition verified; no current-master or ecosystem-wide defect inference.",
+      "material_error": false
+    },
+    {
+      "id": "C17",
+      "claim_or_obligation": "Issue #152 is real historical environment-dependent false rejection",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_LIMIT",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/2/evidence/0"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-ISSUE-152",
+        "R21",
+        "R22"
+      ],
+      "source_range_or_definition": "Issue body: bff20d2, RHEL 7.5, Python 3.7.4; comments 825870635,825913001,2704150109",
+      "governing_conditions_and_judgment": "expandvars consults environment; variable existence/value matters. Final reports an issue rather than universal current behavior. Proposed filename-only regression lacks explicit environment setup.",
+      "material_error": false
+    },
+    {
+      "id": "C18",
+      "claim_or_obligation": "PR #184 merge is included in released v1.9.0, with no test addition",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/2/evidence/1"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-PR-184",
+        "SRC-COMMIT-753679",
+        "SRC-BAGIT-RELEASE",
+        "R17",
+        "R18",
+        "R19",
+        "R20",
+        "R29"
+      ],
+      "source_range_or_definition": "PR merged 2025-06-13; merge 753679c9b342660d038f65a8dc4f755ab95d679b; release tag 861ddacb339d5b92659f0187a402f501d841abbe; API compare ahead_by=2, merge_base=753679",
+      "governing_conditions_and_judgment": "Merged fix is released upstream; no downstream-shipping inference. GitHub .patch shows original parent commit 68907823...; merge API confirms exact merge and two deletions.",
+      "material_error": false
+    },
+    {
+      "id": "C19",
+      "claim_or_obligation": "BagIt 1.0 folder, opaque payload and every-manifest coverage proposal",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/4/conditions/P4"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-RFC8493"
+      ],
+      "source_range_or_definition": "RFC §§2.1.1-2.1.3 and §3; raw lines 326-425,734-760",
+      "governing_conditions_and_judgment": "Every payload manifest lists every payload once; note/provenance JSON inside data is payload. Standard choice is proposed, runtime not selected.",
+      "material_error": false
+    },
+    {
+      "id": "C20",
+      "claim_or_obligation": "Tag manifests must cover payload manifests, exclude tag manifests, should cover other tags",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/4/conditions/P4"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-RFC8493"
+      ],
+      "source_range_or_definition": "RFC §2.2.1; raw lines 432-471",
+      "governing_conditions_and_judgment": "Final corrects recursive self-coverage implication and preserves MUST/SHOULD distinction.",
+      "material_error": false
+    },
+    {
+      "id": "C21",
+      "claim_or_obligation": "Digest baseline/fixity does not prove original correctness/authenticity; counts not fixity",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/4/conditions/P4"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-RFC8493",
+        "SRC-BAGIT-CODE"
+      ],
+      "source_range_or_definition": "RFC §§3,5.4; raw lines 734-760,930-937; bagit.py:778-795",
+      "governing_conditions_and_judgment": "Accidental-change detection against baseline; no signature or preservation-quality assurance inferred.",
+      "material_error": false
+    },
+    {
+      "id": "C22",
+      "claim_or_obligation": "Copy and derivative verification controls are design proposals",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_AS_PROPOSAL",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/4/conditions/P1 and /findings/4/conditions/P3"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BAGIT-CODE",
+        "SRC-FFMPEG-DOCS"
+      ],
+      "source_range_or_definition": "Final semantic lines 580,582 and P6; make_bag in-place and FFmpeg mapping documentation",
+      "governing_conditions_and_judgment": "No adopted host implementation, atomicity/race proof or audio result supplied. Proposals preserve originals, explicit preview and failure visibility.",
+      "material_error": false
+    },
+    {
+      "id": "C23",
+      "claim_or_obligation": "Already-covered dispositions are limited to actual frozen P1-P6 headings/constraints",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/3/conditions/already_covered"
+        }
+      ],
+      "evidence_source_ids": [
+        "INPUT-PLAN",
+        "INPUT-BRIEF"
+      ],
+      "source_range_or_definition": "Frozen plan lines 7,11,15,19,23,27; brief lines 32-37",
+      "governing_conditions_and_judgment": "No claim that digest choice, path guards or an unseen broader system was already implemented or specified.",
+      "material_error": false
+    },
+    {
+      "id": "C24",
+      "claim_or_obligation": "Six explicit rejections/corrections are warranted",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/3/optional_leads/0"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-LOC-RFS-AUDIO",
+        "SRC-LOC-BWF-V2",
+        "SRC-BAGIT-CODE",
+        "SRC-BWF-METAEDIT",
+        "SRC-RFC8493",
+        "INPUT-PLAN"
+      ],
+      "source_range_or_definition": "No universal source conversion, probe-as-quality, fast-count-as-fixity, chunk-as-whole-digest, automatic source corrections or remote fetch",
+      "governing_conditions_and_judgment": "Remote fetch is an app scope choice despite being permitted by BagIt; BWF tool editing capability does not defeat optional read-only use.",
+      "material_error": false
+    },
+    {
+      "id": "C25",
+      "claim_or_obligation": "Final semantic fields, all views and criticism content are preserved",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_STRUCTURAL_AND_SEMANTIC_COMPARISON",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "all /findings records plus document-level fields"
+        }
+      ],
+      "evidence_source_ids": [
+        "INPUT-FINAL",
+        "INPUT-RESEARCH",
+        "INPUT-CRITIC"
+      ],
+      "source_range_or_definition": "Rendered artifact all 4200 lines; nine views; complete detail lines 1893-3014; exact input 3015-4200; rendered-field-comparison.json",
+      "governing_conditions_and_judgment": "100 final fenced blocks and 90 record fields agree with authored data; full content assessed semantically against original and critique. Structural equality alone is not scope/source truth.",
+      "material_error": false
+    },
+    {
+      "id": "C26",
+      "claim_or_obligation": "Formal event-record option versus mandatory P4 provenance",
+      "assessment_status": "ASSESSED",
+      "result": "NONMATERIAL_WORDING_LIMIT",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/5/conditions/criticism_dispositions/3 and /findings/6/conditions/event_record"
+        }
+      ],
+      "evidence_source_ids": [
+        "INPUT-PLAN",
+        "SRC-PREMIS",
+        "INPUT-FINAL"
+      ],
+      "source_range_or_definition": "Final semantic lines 583,589,795,820,826,932; original P4 line19; PREMIS p137",
+      "governing_conditions_and_judgment": "No formal PREMIS Event entity can coexist with audit logs, but blanket no record wording is ambiguous. Final P4 explicitly requires processing events/settings/outcome, so no mandatory provenance omission established.",
+      "material_error": false
+    },
+    {
+      "id": "C27",
+      "claim_or_obligation": "Unreported pinned writer and validator profile limits",
+      "assessment_status": "ASSESSED",
+      "result": "NONMATERIAL_APPLICABILITY_OMISSION",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/1/options and /findings/4/conditions/P5"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-BAGIT-CODE",
+        "SRC-RFC8493"
+      ],
+      "source_range_or_definition": "bagit.py:243-245,343-358,620-727,385-413,839-908; RFC §§2.1.1,2.1.3,3",
+      "governing_conditions_and_judgment": "make_bag emits BagIt-Version 0.97, not 1.0. Validator merges entries and lacks a per-manifest all-payload coverage check; full checksum recalculation is not a 1.0 conformance oracle. Not exposed in final. Library stays conditional and no unqualified conformity/runtime selection is asserted, so limitation not established material false claim.",
+      "material_error": false
+    },
+    {
+      "id": "C28",
+      "claim_or_obligation": "Case-study source labeled 2022 although internal paper edition is 2021",
+      "assessment_status": "ASSESSED",
+      "result": "NONMATERIAL_METADATA_ERROR",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/0/sources/0/version and other SRC-LOC-ORAL-HISTORY references"
+        }
+      ],
+      "evidence_source_ids": [
+        "SRC-LOC-ORAL-HISTORY"
+      ],
+      "source_range_or_definition": "PDF physical p1 printed p20: revised 2021-04-23, copyright 2021, Vol10(1), pp20-35; URL host directory /2022/05",
+      "governing_conditions_and_judgment": "2022 is the hosting-path year, not established article edition. Workflow evidence unchanged; one bibliographic error identity, not repeated errors per renderer/view.",
+      "material_error": false
+    },
+    {
+      "id": "C29",
+      "claim_or_obligation": "Complete proposed acceptance and unresolved owner choices are retained without validation claims",
+      "assessment_status": "ASSESSED",
+      "result": "SUPPORTED_WITH_OPTION_WORDING_LIMIT",
+      "candidate_locations": [
+        {
+          "semantic_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-04/treatment/reviser-v2/semantic.json",
+          "json_pointer_or_locator": "/findings/4/options, /findings/6/options, /findings/7/validation"
+        }
+      ],
+      "evidence_source_ids": [
+        "INPUT-BRIEF",
+        "INPUT-PLAN",
+        "INPUT-FINAL",
+        "INPUT-CRITIC"
+      ],
+      "source_range_or_definition": "Original P6 line27; final P6 lines585,997-1073 and options589,936,940",
+      "governing_conditions_and_judgment": "All five synthetic categories plus paths/races/privacy/platform cases are proposals. P4 mandates both digests while optional leads call second digest optional; per-file proposal/batch option also remains visible. These are design-choice wording limits, not source-backed built behavior.",
+      "material_error": false
+    }
+  ],
+  "independent_public_retrievals": [
+    {
+      "source_id": "SRC-BAGIT-CODE",
+      "requested_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "final_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/bagit.py",
+      "access_start_utc": "2026-10-07T21:43:48.617199+00:00",
+      "access_end_utc": "2026-10-07T21:43:48.694185+00:00",
+      "status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "54632",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"f9da4e2deaf0074e5cc2b91439449b3b4a511b6fb2b5c050a91e2b60cbd60115\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "ADAE:10CB56:8374C:BB1E5:6AC6BCF9",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:43:48 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740081-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "1",
+        "X-Timer": "S1791409429.677715,VS0,VE1",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "93a4248c3994dd36e22f211ec9231173bf9c6cfa",
+        "Expires": "Wed, 07 Oct 2026 21:48:48 GMT",
+        "Source-Age": "25"
+      },
+      "size": 54632,
+      "sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S05-bagit-861ddacb339d5b92659f0187a402f501d841abbe.py"
+    },
+    {
+      "source_id": "SRC-BAGIT-RELEASE",
+      "requested_url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+      "final_url": "https://github.com/LibraryOfCongress/bagit-python/releases/tag/v1.9.0",
+      "access_start_utc": "2026-10-07T21:43:48.619313+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.172906+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"32c8867302bd2ed71d59a3b60203e9a0\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "no-referrer-when-downgrade",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "Set-Cookie": "_gh_sess=wcNoT9YbiNZAH7%2BNg5dH%2B2C3JDvGR560vE7838GZ2FRfK8UPhcweFKSd9WXKhT8DUrlfaIfHx3F1nYQ9WwPbFwYP8HCE9%2F5Y%2BldLn5nVxCVqU2EQztZ0JJXmUbNdFYT%2BSY8U5MCOlIMIX7P2HQ30ShJkq3nKKemBp1SvyuJynjaSKhUEHw8e4OC%2F7hYTyXZ87lBYhiaeRNPIXtaKcK81AYZ5WzTrMpde7n0fDEN3GEgAFkN95p3TPyrGzAreMbpwzhnAnH0cEA0VYzPDcip9AA%3D%3D--9cGR3wXwjLj7CjGd--TrKUmUp%2FxPCaUElTum1%2BsQ%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+        "X-GitHub-Request-Id": "CF1E:32BFDC:500286:691402:6AC6BD14",
+        "x-github-edge-region": "iad",
+        "connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "size": 216340,
+      "sha256": "1a9ebb98166f38777ec9a0d291b541094e11c70008c5a9b17fed5658a3bce705",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S04-bagit-v1.9.0-release.html"
+    },
+    {
+      "source_id": "SRC-BAGIT-TESTS",
+      "requested_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "final_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/861ddacb339d5b92659f0187a402f501d841abbe/test.py",
+      "access_start_utc": "2026-10-07T21:43:48.621129+00:00",
+      "access_end_utc": "2026-10-07T21:43:48.701564+00:00",
+      "status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "49297",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"c6d11ff9bb3785279a3e10b7dacebecde56dd4bd3e6b19c1a34306b0bc2e56eb\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "5E7E:BEAAD:492E2:65FF1:6AC6B171",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:43:48 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740082-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "1",
+        "X-Timer": "S1791409429.683832,VS0,VE3",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "fc1d210e3719c6eb906e8056743aa73e3bed19ea",
+        "Expires": "Wed, 07 Oct 2026 21:48:48 GMT",
+        "Source-Age": "25"
+      },
+      "size": 49297,
+      "sha256": "751f20546c671b9128e9577d077c39574586d7c9be42921f4cd3ab86a5e0ef6a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S06-bagit-test-861ddacb339d5b92659f0187a402f501d841abbe.py"
+    },
+    {
+      "source_id": "SRC-BWF-METAEDIT",
+      "requested_url": "https://mediaarea.net/BWFMetaEdit",
+      "final_url": "https://mediaarea.net/BWFMetaEdit",
+      "access_start_utc": "2026-10-07T21:43:48.622473+00:00",
+      "access_end_utc": "2026-10-07T21:43:48.847173+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:48 GMT",
+        "Server": "Apache",
+        "X-Powered-By": "PHP/7.4.33",
+        "Cache-Control": "max-age=0, must-revalidate, private",
+        "Link": "</css/main-c029fd1.css>; rel=\"preload\"; as=\"style\"; nopush,</js/main-de2711e.js>; rel=\"preload\"; as=\"script\"; nopush",
+        "Expires": "Wed, 07 Oct 2026 21:43:48 GMT",
+        "Set-Cookie": "PHPSESSID=stiaggeaer4orcdlojth7nomfk; path=/; HttpOnly",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Vary": "Accept-Encoding",
+        "X-UA-Compatible": "IE=edge",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "size": 20610,
+      "sha256": "7ec25815af64a1a912cbfb63fffe88de3610949bb768922e6d73c4a17c52ff70",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S14-bwfmetaedit-product.html"
+    },
+    {
+      "source_id": "SRC-COMMIT-753679",
+      "requested_url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "final_url": "https://github.com/LibraryOfCongress/bagit-python/commit/753679c9b342660d038f65a8dc4f755ab95d679b.patch",
+      "access_start_utc": "2026-10-07T21:43:48.624050+00:00",
+      "access_end_utc": "2026-10-07T21:43:48.841451+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:48 GMT",
+        "Content-Type": "text/plain; charset=utf-8",
+        "x-repository-download": "git clone https://github.com/LibraryOfCongress/bagit-python.git",
+        "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"c423e4f9b7a12fd07bf0b8296dbf0be8\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "no-referrer-when-downgrade",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "Set-Cookie": "_gh_sess=%2B22%2Flb%2FdjX1Bv373mE18CbTTbgok139VJRm1n6lqFLjaukWwV5QCrmTMU388GEK600YaO6liECWZHUllUZoXuwx%2Bd1SX7yDCT30z0V%2BZZih2lzuarURtLfdQskAJWmYHF%2B%2FjfC3PkaJTV3xCZ%2B0NKEUbkI4fanUdzQWufgbJIJuiVuo%2BoETdpuzC5FKU7wwOTUuChjGDUANP6N9iU5QXZWxQJBqgP9BwhdzGgplsGCLJSfuH%2ByG0LjOk4ZsBUwiXc008KHa4yoG62TV%2BxLWSHA%3D%3D--%2FfP3g1uMB%2FwD64OY--86visjUXURmeH1BsORrfPg%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+        "Content-Length": "735",
+        "X-GitHub-Request-Id": "CF18:CDCDF:4E7E04:65EBD2:6AC6BD14",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 735,
+      "sha256": "c423e4f9b7a12fd07bf0b8296dbf0be89b1940c03702f355522320e2486779d7",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S09-fix-753679c9b342660d038f65a8dc4f755ab95d679b.patch"
+    },
+    {
+      "source_id": "SRC-FFMPEG-DOCS",
+      "requested_url": "https://www.ffmpeg.org/ffmpeg.html",
+      "final_url": "https://www.ffmpeg.org/ffmpeg.html",
+      "access_start_utc": "2026-10-07T21:43:48.625815+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.724315+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Server": "Apache/2.4.63 (Red Hat Enterprise Linux) OpenSSL/3.5.8 mod_fcgid/2.3.9",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Wed, 07 Oct 2026 16:21:47 GMT",
+        "ETag": "\"370de-65d42830a1040\"",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "225502",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "size": 225502,
+      "sha256": "e04c69cd08537b9b9d8d16ecaab9f56d938455e54ef42c37a2019053df8495cb",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S11-ffmpeg-8.1-cli.html"
+    },
+    {
+      "source_id": "SRC-FFMPEG-RELEASE",
+      "requested_url": "https://ffmpeg.org/download.html",
+      "final_url": "https://ffmpeg.org/download.html",
+      "access_start_utc": "2026-10-07T21:43:48.695299+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.403250+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Server": "Apache/2.4.63 (Red Hat Enterprise Linux) OpenSSL/3.5.8 mod_fcgid/2.3.9",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Mon, 21 Sep 2026 23:34:19 GMT",
+        "ETag": "\"6b5c-65c06b06aad20\"",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "27484",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "size": 27484,
+      "sha256": "e1b15edebbabe602905de2b10aa4784fa3b0ed6125582248b686ba3aab3c6442",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S13-ffmpeg-download.html"
+    },
+    {
+      "source_id": "SRC-FFPROBE",
+      "requested_url": "https://www.ffmpeg.org/ffprobe-all.html",
+      "final_url": "https://www.ffmpeg.org/ffprobe-all.html",
+      "access_start_utc": "2026-10-07T21:43:48.702453+00:00",
+      "access_end_utc": "2026-10-07T21:43:50.118480+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Server": "Apache/2.4.63 (Red Hat Enterprise Linux) OpenSSL/3.5.8 mod_fcgid/2.3.9",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Wed, 07 Oct 2026 16:22:24 GMT",
+        "ETag": "\"259253-65d4285379541\"",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "2462291",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "size": 2462291,
+      "sha256": "6a862a570dd572bad0c4c453dc590fe254d3830675b02e7d64f7145dfc0dea46",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S12-ffprobe-8.1.html"
+    },
+    {
+      "source_id": "SRC-ISSUE-152",
+      "requested_url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+      "final_url": "https://github.com/LibraryOfCongress/bagit-python/issues/152",
+      "access_start_utc": "2026-10-07T21:43:48.841953+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.579857+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+        "Link": "</LibraryOfCongress/bagit-python/issues/152/secondary_view?markAsRead=true&queryId=d324f8f0ee98ef593631341352149769041edc93f024de27c5ade01732b2fe72>; rel=preload; as=fetch; crossorigin=use-credentials",
+        "Referrer-Policy": "no-referrer-when-downgrade",
+        "server-timing": "issue_layout-fragment;desc=\"issue_layout fragment\";dur=163.598546,issue_conversation_content-fragment;desc=\"issue_conversation_content fragment\";dur=574.932942,nginx;desc=\"NGINX\";dur=0.565317,glb;desc=\"GLB\";dur=27.262402",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, X-Issues-React-Relay-Cache, X-Issues-Viewer-TanStack-Cache, Accept, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-voltron-version": "c8822c3",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "Set-Cookie": "_gh_sess=Tv7L2VnykAiSX1GN7NPkUFlheH5g67dI%2FzFuB5vbJXmdX8LTVliQZfwuFWRZpjtcTysjFRO0cW3tG5Ze7yZi3wcaUv%2FOYEKwli3pBLZJpOLvCG3FLvpMRNPd7VuAilx3ob2bvOP%2Bp%2F05rOiwB%2F%2Bptipxsc881HgwYpo3ZSR2QeV1tg4hmEMJmBltgatY1qqKWL3lrNVYME2sN%2Bf46dqAf415Pfqo4VvDJ8NDfdc9o1RSfmMfMB2a0TrlK6eEOcQJvcpJEi5%2BhpfORX2hV2JINg%3D%3D--8GSbMQxEt27L7qjP--YnwlAIRvMUbhr1pf50HaZg%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+        "X-GitHub-Request-Id": "CF24:D129B:511840:692D7F:6AC6BD14",
+        "x-github-edge-region": "iad",
+        "connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "size": 271782,
+      "sha256": "82141f68113bd9d91d745f8d7d74a071742aac5158238fb5ada245b97b1c175b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S07-issue-152.html"
+    },
+    {
+      "source_id": "SRC-ISSUE-157",
+      "requested_url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+      "final_url": "https://github.com/LibraryOfCongress/bagit-python/issues/157",
+      "access_start_utc": "2026-10-07T21:43:48.847810+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.374634+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+        "Link": "</LibraryOfCongress/bagit-python/issues/157/secondary_view?markAsRead=true&queryId=d324f8f0ee98ef593631341352149769041edc93f024de27c5ade01732b2fe72>; rel=preload; as=fetch; crossorigin=use-credentials",
+        "Referrer-Policy": "no-referrer-when-downgrade",
+        "server-timing": "issue_layout-fragment;desc=\"issue_layout fragment\";dur=149.506012,issue_conversation_content-fragment;desc=\"issue_conversation_content fragment\";dur=358.727272,nginx;desc=\"NGINX\";dur=0.342036,glb;desc=\"GLB\";dur=35.273967",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, X-Issues-React-Relay-Cache, X-Issues-Viewer-TanStack-Cache, Accept, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-voltron-version": "c8822c3",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "Set-Cookie": "_gh_sess=K9AyjdfUYTEmTxjzXmylGIW4KVdtFA13G%2FemtjOn0li0f1xWDq8JXoDnOWJVmktXZOw8aDXmXUMTcAhNLfT2X9pbRxZMLcUM%2BOLqJyEmyoMaSWCm9AFes7nANA9JPshpWxymYPAXbU9qygng8V5M4ETxfwAnr%2Fx%2FlMwxHcLPELQdOs3ooQbv%2B4Gz0N%2FnAdZpzDep1llkJH8mh5PFSAyFX6%2BSt1%2FTa9U3yjrseSny44do5ZVDngGRRRdMw6fXUKeQ0XJ8BYqGu%2B5TLYDC0ypWLw%3D%3D--Ev0hSuNT12mj%2BEgo--LZIUKrn2Yix8AGBQry5%2BBQ%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+        "X-GitHub-Request-Id": "CF20:50BD:2C0EFF:38E55E:6AC6BD14",
+        "x-github-edge-region": "iad",
+        "connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "size": 240215,
+      "sha256": "d0c466d088735bf2b5d9d811a1819b182cfd05489939331940cc4e88b2be8491",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S16-bagit-issue-157.html"
+    },
+    {
+      "source_id": "SRC-LOC-BWF-V2",
+      "requested_url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+      "final_url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+      "access_start_utc": "2026-10-07T21:43:49.175102+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.321085+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "cloudflare",
+        "Accept-Ranges": "bytes",
+        "x-frame-options": "deny",
+        "Set-Cookie": "HttpOnly",
+        "cf-cache-status": "DYNAMIC",
+        "CF-RAY": "a47015649ed543ff-EWR"
+      },
+      "size": 33104,
+      "sha256": "8a5e1edd9648cac87ad1be943f0bc67616b40d9b64c73dc15cb00e69f190d83e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S03-loc-bwf-v2.html"
+    },
+    {
+      "source_id": "SRC-LOC-ORAL-HISTORY",
+      "requested_url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "final_url": "https://blogs.loc.gov/thesignal/files/2022/05/JDMM_10_1_JDMM0002_Darby_et_al.pdf?loclr=blogpoe",
+      "access_start_utc": "2026-10-07T21:43:49.322590+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.524696+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "application/pdf",
+        "Content-Length": "2280105",
+        "Connection": "close",
+        "Server": "cloudflare",
+        "Last-Modified": "Mon, 23 May 2022 20:34:44 GMT",
+        "etag": "\"3ec3903c7b9a944f627e24a464902f11\"",
+        "expires": "Sat, 08 Dec 2029 07:30:26 GMT",
+        "Accept-Ranges": "bytes",
+        "Cache-Control": "public, max-age=99999997",
+        "cf-cache-status": "REVALIDATED",
+        "CF-RAY": "a47015658d0d0956-EWR"
+      },
+      "size": 2280105,
+      "sha256": "646f2cb4e9ffa47668fcf436d89d84317bae2780e7221fdb4bda9ba89a77d42b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S15-loc-literary-audio-workflow-2022.pdf"
+    },
+    {
+      "source_id": "SRC-LOC-RFS-AUDIO",
+      "requested_url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "final_url": "https://www.loc.gov/preservation/resources/rfs/audio.html",
+      "access_start_utc": "2026-10-07T21:43:49.376771+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.547828+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Server": "cloudflare",
+        "Accept-Ranges": "bytes",
+        "x-frame-options": "deny",
+        "Set-Cookie": "HttpOnly",
+        "cf-cache-status": "DYNAMIC",
+        "CF-RAY": "a4701565cfc8de97-EWR"
+      },
+      "size": 18963,
+      "sha256": "1cb0276d5b78a3058de5d86057b053e39bd224b098c6151508e49cca4452c72b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S02-loc-rfs-audio.html"
+    },
+    {
+      "source_id": "SRC-PR-184",
+      "requested_url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "final_url": "https://github.com/LibraryOfCongress/bagit-python/pull/184",
+      "access_start_utc": "2026-10-07T21:43:49.403870+00:00",
+      "access_end_utc": "2026-10-07T21:43:50.040869+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-cache",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com api.github.com/cmc_internal/api/; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com *.googleusercontent.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com; script-src github.githubassets.com 'sha256-tSjmyPUky1KbRZ0fw9VUil3wFEbeM82rtbJDygGJAXw='; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+        "Referrer-Policy": "no-referrer-when-downgrade",
+        "server-timing": "pull_request_layout-fragment;desc=\"pull_request_layout fragment\";dur=309.242736,conversation_content-fragment;desc=\"conversation_content fragment\";dur=468.384773,conversation_sidebar-fragment;desc=\"conversation_sidebar fragment\";dur=340.493272,nginx;desc=\"NGINX\";dur=0.53686,glb;desc=\"GLB\";dur=27.023858",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, X-Requested-With, X-GitHub-Client-Version, Sec-Fetch-Site,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-voltron-version": "c8822c3",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "Set-Cookie": "_gh_sess=RhwBeN%2BAmBjy5ArTufQmaEXRjzTp020RIpf24fx79potA9FJ%2FoUxsOVVWRFegP08Glg5CaR6%2FIbeAY15V45c1loDkSyzy%2BiQH%2FZZIo1zUPDUsENXx3JiAJt9KbR9QHEyKx6DhPjbb2ZgB73jLW2Xw4ZYjngnMj6xzcJITmyPpzyrq9isKKxIeqHY9QW8QIzg2vhJUS6k7fwXFCsXBGW5OR5ut9fRHHQtVS55vWPPgbV7XbdgNh8IsYrn6%2Ft%2BbHFxaUHmHqNqN7ylPSX8165fbg%3D%3D--%2Bkv1uON32V3cnULm--kqfXKdH3xosC10BeP%2BO%2FZQ%3D%3D; path=/; HttpOnly; secure; SameSite=Lax",
+        "X-GitHub-Request-Id": "CF28:27B017:52BAEF:6BB4C9:6AC6BD15",
+        "x-github-edge-region": "iad",
+        "connection": "close",
+        "Transfer-Encoding": "chunked"
+      },
+      "size": 299294,
+      "sha256": "a7fbe13ce6f2ebbc3998935cc54bfe887caae5fdbd3650d145447575b8945d63",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S08-pr-184.html"
+    },
+    {
+      "source_id": "SRC-PREMIS",
+      "requested_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "final_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "access_start_utc": "2026-10-07T21:43:49.541045+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.665315+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "application/pdf",
+        "Content-Length": "2176353",
+        "Connection": "close",
+        "Server": "cloudflare",
+        "last-modified": "Thu, 07 Jan 2016 14:57:30 GMT",
+        "etag": "\"1742d-213561-528bfb0956a80\"",
+        "Accept-Ranges": "bytes",
+        "x-frame-options": "deny",
+        "expires": "Thu, 08 Oct 2026 01:43:49 GMT",
+        "Cache-Control": "public, max-age=14400",
+        "cf-cache-status": "REVALIDATED",
+        "CF-RAY": "a4701566da3dcc98-EWR"
+      },
+      "size": 2176353,
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S10-premis-v3.pdf"
+    },
+    {
+      "source_id": "SRC-RFC8493",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "access_start_utc": "2026-10-07T21:43:49.548361+00:00",
+      "access_end_utc": "2026-10-07T21:43:49.658682+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:43:49 GMT",
+        "Content-Type": "text/plain;charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, max-age=86400",
+        "ETag": "W/\"c7c65e09c2ddf1e7ea885562b49da2ee\"",
+        "set-cookie": "__cf_bm=4dwXGTix0R6byWFQRuVVJJ4c00GFBsHWvr6CnvqEAQo-1791409429.5794396-1.0.1.1-jL7Gilw6daO2rzGjXwSG9Da7q7apqtmZMRX_T88.nOwfRXUJK5RskuFhu5SeMIwr3VQHgxQG62PbpXxmasWdsBBlcn0F08NhYz6hNZAOYxg8WDCTbGbMgY.FomJAYenD; HttpOnly; SameSite=None; Secure; Path=/; Domain=rfc-editor.org; Expires=Wed, 07 Oct 2026 22:13:49 GMT",
+        "Link": "<https://www.rfc-editor.org/info/rfc8493/>; rel=\"canonical\"",
+        "Cf-R2-Served": "1",
+        "Server": "cloudflare",
+        "CF-RAY": "a4701566dfdf069b-EWR",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "size": 48783,
+      "sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/public-S01-rfc8493.txt"
+    }
+  ],
+  "additional_retrievals": [
+    {
+      "source_id": "R17",
+      "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+      "access_start_utc": "2026-10-07T21:45:40.913760+00:00",
+      "access_end_utc": "2026-10-07T21:45:41.075115+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:45:41 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e\"",
+        "Last-Modified": "Fri, 13 Jun 2025 17:43:22 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "21",
+        "X-RateLimit-Used": "39",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791412424",
+        "Content-Length": "4053",
+        "X-GitHub-Request-Id": "8F72:58DC1:943FC4:1E96627:6AC6BD84",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 4053,
+      "sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R17-bagit-release-api.json"
+    },
+    {
+      "source_id": "R18",
+      "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/pulls/184",
+      "access_start_utc": "2026-10-07T21:45:40.915799+00:00",
+      "access_end_utc": "2026-10-07T21:45:41.229870+00:00",
+      "status": 200,
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Content-Length": "17852",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Oct 2026 21:45:41 GMT",
+        "ETag": "\"3f82b9c64514a1d9510033d62b83908e3cb65f449f68dae97bcb116e11c8d430\"",
+        "Last-Modified": "Wed, 11 Feb 2026 17:46:50 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept, Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "x-github-api-version-selected": "2022-11-28",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-XSS-Protection": "0",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "19",
+        "X-RateLimit-Used": "41",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791412424",
+        "X-GitHub-Request-Id": "8F88:920C6:9A6E49:1F9B464:6AC6BD84",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 17852,
+      "sha256": "3f82b9c64514a1d9510033d62b83908e3cb65f449f68dae97bcb116e11c8d430",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R18-bagit-pr184-api.json"
+    },
+    {
+      "source_id": "R19",
+      "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/commits/753679c9b342660d038f65a8dc4f755ab95d679b",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/commits/753679c9b342660d038f65a8dc4f755ab95d679b",
+      "access_start_utc": "2026-10-07T21:45:40.917230+00:00",
+      "access_end_utc": "2026-10-07T21:45:41.158927+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:45:41 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"e73731c9156a2858fc2581a19707be23b67c0bbc2c18537618d3043a73b6cb02\"",
+        "Last-Modified": "Fri, 13 Jun 2025 16:26:17 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "22",
+        "X-RateLimit-Used": "38",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791412424",
+        "Content-Length": "5811",
+        "X-GitHub-Request-Id": "8F94:6617B:9ABCE0:1F95756:6AC6BD84",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 5811,
+      "sha256": "e73731c9156a2858fc2581a19707be23b67c0bbc2c18537618d3043a73b6cb02",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R19-bagit-merge-api.json"
+    },
+    {
+      "source_id": "R20",
+      "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/git/ref/tags/v1.9.0",
+      "access_start_utc": "2026-10-07T21:45:40.918413+00:00",
+      "access_end_utc": "2026-10-07T21:45:41.077270+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:45:41 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a\"",
+        "Last-Modified": "Fri, 02 Oct 2026 14:20:56 GMT",
+        "X-Poll-Interval": "300",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "20",
+        "X-RateLimit-Used": "40",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791412424",
+        "Content-Length": "369",
+        "X-GitHub-Request-Id": "8F82:3B6931:AF3266:237AB3C:6AC6BD84",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 369,
+      "sha256": "7c41fcb68acb5959ef7fa44669f4c112f2e3ff0a7557d90622edff499a948c3a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R20-bagit-tag-api.json"
+    },
+    {
+      "source_id": "R21",
+      "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/152/comments",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/152/comments",
+      "access_start_utc": "2026-10-07T21:45:40.919835+00:00",
+      "access_end_utc": "2026-10-07T21:45:41.125768+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:45:41 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"e9058d43cde4c723f241b1c5873231cb2e3325e3df9b001b2c2023dace821a69\"",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "18",
+        "X-RateLimit-Used": "42",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791412424",
+        "Content-Length": "21921",
+        "X-GitHub-Request-Id": "8F86:3587AA:9713B0:1EE8F48:6AC6BD84",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 21921,
+      "sha256": "e9058d43cde4c723f241b1c5873231cb2e3325e3df9b001b2c2023dace821a69",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R21-bagit-issue152-comments.json"
+    },
+    {
+      "source_id": "R22",
+      "requested_url": "https://docs.python.org/3.11/library/os.path.html",
+      "final_url": "https://docs.python.org/3.11/library/os.path.html",
+      "access_start_utc": "2026-10-07T21:45:41.076735+00:00",
+      "access_end_utc": "2026-10-07T21:45:41.150318+00:00",
+      "status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "72192",
+        "server": "nginx",
+        "content-type": "text/html",
+        "last-modified": "Thu, 01 Oct 2026 16:54:18 GMT",
+        "etag": "\"6abe903a-11a00\"",
+        "x-clacks-overhead": "GNU Terry Pratchett",
+        "strict-transport-security": "max-age=315360000; includeSubDomains; preload",
+        "Via": "1.1 varnish, 1.1 varnish",
+        "Accept-Ranges": "bytes",
+        "Age": "0",
+        "Date": "Wed, 07 Oct 2026 21:45:41 GMT",
+        "X-Served-By": "cache-lga-kjfk8660024-LGA, cache-nyc-kteb1890056-NYC",
+        "X-Cache": "MISS, MISS",
+        "X-Cache-Hits": "0, 0",
+        "X-Timer": "S1791409541.121097,VS0,VE9",
+        "Vary": "Accept-Encoding"
+      },
+      "size": 72192,
+      "sha256": "f108244767dc9ae15da8ac9ff8b91fd249a93c5837f9d33c957d3bb856d35a59",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R22-python311-ospath.html"
+    },
+    {
+      "source_id": "R23",
+      "requested_url": "https://docs.python.org/3.11/library/os.html",
+      "final_url": "https://docs.python.org/3.11/library/os.html",
+      "access_start_utc": "2026-10-07T21:45:41.077669+00:00",
+      "access_end_utc": "2026-10-07T21:45:41.171477+00:00",
+      "status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "642880",
+        "server": "nginx",
+        "content-type": "text/html",
+        "last-modified": "Thu, 01 Oct 2026 16:54:18 GMT",
+        "etag": "\"6abe903a-9cf40\"",
+        "x-clacks-overhead": "GNU Terry Pratchett",
+        "strict-transport-security": "max-age=315360000; includeSubDomains; preload",
+        "Via": "1.1 varnish, 1.1 varnish",
+        "Accept-Ranges": "bytes",
+        "Age": "0",
+        "Date": "Wed, 07 Oct 2026 21:45:41 GMT",
+        "X-Served-By": "cache-lga-kjfk8660064-LGA, cache-nyc-kteb1890031-NYC",
+        "X-Cache": "HIT, MISS",
+        "X-Cache-Hits": "1, 0",
+        "X-Timer": "S1791409541.121203,VS0,VE6",
+        "Vary": "Accept-Encoding"
+      },
+      "size": 642880,
+      "sha256": "2e906848b058aedebe93446a471ec310610ff668d61a9ffd42cc8ebf240e9591",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R23-python311-os.html"
+    },
+    {
+      "source_id": "R24",
+      "requested_url": "https://api.github.com/repos/python/cpython/git/ref/tags/v3.11.17",
+      "final_url": "https://api.github.com/repos/python/cpython/git/ref/tags/v3.11.17",
+      "access_start_utc": "2026-10-07T21:46:47.687828+00:00",
+      "access_end_utc": "2026-10-07T21:46:47.834044+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:46:47 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"ffe314d60e88713c5f04976e1b6f55204caedce8e397baf4a82101da50fa2998\"",
+        "Last-Modified": "Wed, 07 Oct 2026 21:25:55 GMT",
+        "X-Poll-Interval": "300",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "12",
+        "X-RateLimit-Used": "48",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791412424",
+        "Content-Length": "335",
+        "X-GitHub-Request-Id": "B402:49F02:97E1E4:1F247B7:6AC6BDC7",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 335,
+      "sha256": "ffe314d60e88713c5f04976e1b6f55204caedce8e397baf4a82101da50fa2998",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R24-cpython-v3.11.17-ref.json"
+    },
+    {
+      "source_id": "R25",
+      "requested_url": "https://api.github.com/repos/python/cpython/git/tags/8e4c525dc9bcd1885bbf06f72c611124a7d26713",
+      "final_url": "https://api.github.com/repos/python/cpython/git/tags/8e4c525dc9bcd1885bbf06f72c611124a7d26713",
+      "access_start_utc": "2026-10-07T21:46:47.834334+00:00",
+      "access_end_utc": "2026-10-07T21:46:47.996601+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:46:47 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"0b6d008ff4f976dca4792441a1e7f242ac46953bce19ff858972cf2fc27c8288\"",
+        "Last-Modified": "Wed, 07 Oct 2026 21:25:55 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "11",
+        "X-RateLimit-Used": "49",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791412424",
+        "Content-Length": "2540",
+        "X-GitHub-Request-Id": "B408:1E941C:96E7D1:1EDA653:6AC6BDC7",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 2540,
+      "sha256": "0b6d008ff4f976dca4792441a1e7f242ac46953bce19ff858972cf2fc27c8288",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R25-cpython-v3.11.17-tag.json"
+    },
+    {
+      "source_id": "R26",
+      "requested_url": "https://raw.githubusercontent.com/python/cpython/e6392eb68a39cef49c9fe6431253050caa17a426/Lib/genericpath.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/e6392eb68a39cef49c9fe6431253050caa17a426/Lib/genericpath.py",
+      "access_start_utc": "2026-10-07T21:46:47.999023+00:00",
+      "access_end_utc": "2026-10-07T21:46:48.356084+00:00",
+      "status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "5246",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"cee9191395821d28cc1e672514a5ce383c6d807347764872d45461e62574037c\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "5CD2:4BEDE:11CE9:27D19:6AC6BDC7",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:46:48 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740091-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791409608.254278,VS0,VE92",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "fa0a9a9c29d04ac2fd142738c8325507cc1afaf0",
+        "Expires": "Wed, 07 Oct 2026 21:51:48 GMT",
+        "Source-Age": "0"
+      },
+      "size": 5246,
+      "sha256": "34497be8d2eb70df61e94cb2ee1938433145c977a56b36be37cc41a3a71d32c2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R26-cpython-genericpath.py"
+    },
+    {
+      "source_id": "R27",
+      "requested_url": "https://raw.githubusercontent.com/python/cpython/e6392eb68a39cef49c9fe6431253050caa17a426/Lib/posixpath.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/e6392eb68a39cef49c9fe6431253050caa17a426/Lib/posixpath.py",
+      "access_start_utc": "2026-10-07T21:46:47.999569+00:00",
+      "access_end_utc": "2026-10-07T21:46:48.113647+00:00",
+      "status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "17072",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"67d46d677054f4b11ec1b1c5e139440ae936d8e20a805274123a54fa9fd43bff\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "4F92:717E7:12190:28AB2:6AC6BDC7",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:46:48 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740098-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791409608.024456,VS0,VE81",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "24e90f2c9f7368a6bd1abc6e205bf78adf3435af",
+        "Expires": "Wed, 07 Oct 2026 21:51:48 GMT",
+        "Source-Age": "0"
+      },
+      "size": 17072,
+      "sha256": "aa5c97446b9d11a3b6d5a5f949a814243bbda8f2862d70bd9f18ad6961bb001c",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R27-cpython-posixpath.py"
+    },
+    {
+      "source_id": "R28",
+      "requested_url": "https://raw.githubusercontent.com/python/cpython/e6392eb68a39cef49c9fe6431253050caa17a426/Lib/os.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/e6392eb68a39cef49c9fe6431253050caa17a426/Lib/os.py",
+      "access_start_utc": "2026-10-07T21:46:48.000035+00:00",
+      "access_end_utc": "2026-10-07T21:46:48.140444+00:00",
+      "status": 200,
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "39530",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"38806d3012f5ce11508c22b99132286a08115a2ac8cb000d570b145a3cc94ac1\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "2E28:2A714B:14630:2AF28:6AC6BDC7",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Wed, 07 Oct 2026 21:46:48 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740040-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791409608.023162,VS0,VE98",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "b97e305429fe417835bddb1b629d252c4ead81e7",
+        "Expires": "Wed, 07 Oct 2026 21:51:48 GMT",
+        "Source-Age": "0"
+      },
+      "size": 39530,
+      "sha256": "8a5d4ac7b87c6c5b31fcb5081f7f7c06f8403a2fdb3eb23692c48933baeb899e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R28-cpython-os.py"
+    },
+    {
+      "source_id": "R29",
+      "requested_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/compare/753679c9b342660d038f65a8dc4f755ab95d679b...861ddacb339d5b92659f0187a402f501d841abbe",
+      "final_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/compare/753679c9b342660d038f65a8dc4f755ab95d679b...861ddacb339d5b92659f0187a402f501d841abbe",
+      "access_start_utc": "2026-10-07T21:49:44.031194+00:00",
+      "access_end_utc": "2026-10-07T21:49:44.427582+00:00",
+      "status": 200,
+      "headers": {
+        "Date": "Wed, 07 Oct 2026 21:49:44 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "ETag": "W/\"fd4e3b47c08864a00c063a29066ca3e83e570c4ccd872d425c5c130b442c7baf\"",
+        "Last-Modified": "Fri, 13 Jun 2025 17:42:48 GMT",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "x-github-api-version-selected": "2022-11-28",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Frame-Options": "deny",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "0",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Content-Security-Policy": "default-src 'none'",
+        "Server": "github.com",
+        "Accept-Ranges": "bytes",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "2",
+        "X-RateLimit-Used": "58",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Reset": "1791411842",
+        "Content-Length": "19460",
+        "X-GitHub-Request-Id": "A88C:2A674F:B68F70:2567939:6AC6BE78",
+        "x-github-edge-region": "iad",
+        "connection": "close"
+      },
+      "size": 19460,
+      "sha256": "fd4e3b47c08864a00c063a29066ca3e83e570c4ccd872d425c5c130b442c7baf",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/R29-bagit-release-ancestry.json"
+    }
+  ],
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "material_error_count": 0,
+  "nonmaterial_error_count": 1,
+  "coverage_counts": {
+    "consequential_checks": {
+      "complete": 29,
+      "assessed": 29,
+      "unassessed": 0
+    },
+    "original_cited_sources": {
+      "complete": 16,
+      "assessed": 16,
+      "unassessed": 0
+    },
+    "independent_public_retrievals": 29
+  },
+  "source_id_resolution": "SRC-* original URLs and exact local bytes resolve in sources entries; R17-R29 resolve in additional_retrievals; all fresh responses have raw bytes, response metadata and SHA-256 under sources/. INPUT-* resolve to admitted-input-manifest.json and original files.",
+  "reviewer_method": {
+    "public_retrieval": "Direct unauthenticated HTTPS GET; no private account access. Web primary-page opens used for independent corroboration.",
+    "html_extraction": "Standard-library HTMLParser; derived .txt is convenience text, not original bytes. Scripts/styles ignored and never executed.",
+    "pdf_extraction": "pdftotext -layout to reviewer-owned sources text files; raw PDFs retained. Printed page numbers used for semantic source locations.",
+    "code_review": "Read source only; no downloaded code imported/executed. Static paths traced to definitions/callers.",
+    "rendered_artifact_review": "Every view block parsed and compared to exact authored field; all nine complete records/document-level fields and all options/leads/unknown fields assessed.",
+    "validation": "No app/dependency/audio/runtime exploit test run; no case-specific rescue or candidate rewrite."
+  },
+  "preservation": {
+    "research_records": 8,
+    "final_records": 9,
+    "research_record_fields": 80,
+    "final_record_fields": 90,
+    "research_document_fields": 11,
+    "final_document_fields": 11,
+    "final_recursive_semantic_leaves": 830,
+    "view_counts": {
+      "research": 9,
+      "final": 9
+    },
+    "all_views_field_equal": true,
+    "embedded_input_bytes_equal": true,
+    "source_identity_matches_all_three_stages": true,
+    "critic_dispositions_assessed": 9,
+    "critic_dispositions_preserved": 9,
+    "unassessed_critic_dispositions": 0,
+    "structural_report_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/sources/rendered-field-comparison.json"
+  },
+  "excluded_from_science": [
+    "Self-reported provider/family identity, Goal lifecycle/receipts, author timing/quota/cost and billing; these are host-owned.",
+    "Adjacent same-arm research preservation_check.md assertions. Research semantic.json was read but is byte-identical to the admitted embedded research input; preservation judgment uses that admitted payload."
+  ],
+  "blinding_limits": [
+    "Arm visible in exact paths.",
+    "Rendered/procedure metadata can reveal method differences.",
+    "No other-arm output/score/cost/speed target, parent analysis or evaluator answer supplied or consulted."
+  ],
+  "usage": {
+    "input_tokens": null,
+    "cache_read_tokens": null,
+    "cache_creation_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billed_amount": null,
+    "billed_currency": null
+  },
+  "completed_at_utc": "2026-10-07T21:54:05.637986+00:00"
+}

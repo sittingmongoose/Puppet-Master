@@ -1,0 +1,201 @@
+{
+  "schema": "ER10_IMMUTABLE_WORKING_INPUT_V1",
+  "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "capture_started_at": "2026-10-07T21:56:51.778648+00:00",
+  "simultaneous_snapshot": false,
+  "files": [
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/COMPARISONS.json",
+      "relative_path": "helpers/targeted-supervisor/COMPARISONS.json",
+      "snapshot_path": "working-input/helpers/targeted-supervisor/COMPARISONS.json",
+      "sha256": "8a6c438a03064073b3af875b636a2462bdde9dae5e0bd7a19ce8bb095f2ed6f9",
+      "bytes": 33467,
+      "capture_at": "2026-10-07T21:56:51.778711+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/COMPARISONS.json",
+      "relative_path": "helpers/targeted-cohort2/COMPARISONS.json",
+      "snapshot_path": "working-input/helpers/targeted-cohort2/COMPARISONS.json",
+      "sha256": "8e4341a5a492b70561bace7a2f6b3b95c9901f74473e0cc579b2507163714ff7",
+      "bytes": 86980,
+      "capture_at": "2026-10-07T21:56:51.780263+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/COMPARISONS.json",
+      "relative_path": "reviews/targeted-cohort3/COMPARISONS.json",
+      "snapshot_path": "working-input/reviews/targeted-cohort3/COMPARISONS.json",
+      "sha256": "b5633d8a5faf58b48a0554b631ccf5f030f4726c23c584f0dd3131e01c7b352f",
+      "bytes": 26316,
+      "capture_at": "2026-10-07T21:56:51.781974+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/COMPARISONS.json",
+      "relative_path": "helpers/targeted-cohort4/COMPARISONS.json",
+      "snapshot_path": "working-input/helpers/targeted-cohort4/COMPARISONS.json",
+      "sha256": "d1b92872707ff17756de46a343b31a417f1a8f51e9061203da6f877d6861dd5b",
+      "bytes": 48742,
+      "capture_at": "2026-10-07T21:56:51.783244+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/COMPARISONS.json",
+      "relative_path": "helpers/integrated-execution/COMPARISONS.json",
+      "snapshot_path": "working-input/helpers/integrated-execution/COMPARISONS.json",
+      "sha256": "b5978475088de9c554eb6bb08d04ee6c98c6d56dbcae27da45e5e6ea1f9fcecd",
+      "bytes": 132582,
+      "capture_at": "2026-10-07T21:56:51.784647+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/COMPARISONS.json",
+      "relative_path": "reviews/anchors/COMPARISONS.json",
+      "snapshot_path": "working-input/reviews/anchors/COMPARISONS.json",
+      "sha256": "8694786338d3a5b310cbb86d26fe3c38bcd0d9f78c792ba631717ba91d5a4256",
+      "bytes": 6309,
+      "capture_at": "2026-10-07T21:56:51.785506+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/confirmation/COMPARISONS.json",
+      "relative_path": "reviews/confirmation/COMPARISONS.json",
+      "snapshot_path": "working-input/reviews/confirmation/COMPARISONS.json",
+      "sha256": "5e224b233eb55b3348245a788469636dbb177995cf640e32c13d331f425d79d1",
+      "bytes": 92677,
+      "capture_at": "2026-10-07T21:56:51.786470+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/logical-slot-index-v1.json",
+      "relative_path": "state/logical-slot-index-v1.json",
+      "snapshot_path": "working-input/state/logical-slot-index-v1.json",
+      "sha256": "45670c83f4bbc54a8d030ae488acc87de22a946f3113ec6d6a14148745c156a9",
+      "bytes": 14947,
+      "capture_at": "2026-10-07T21:56:51.788109+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/final-finite-prospective-admissions-v3.json",
+      "relative_path": "state/final-finite-prospective-admissions-v3.json",
+      "snapshot_path": "working-input/state/final-finite-prospective-admissions-v3.json",
+      "sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+      "bytes": 21569,
+      "capture_at": "2026-10-07T21:56:51.789178+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/I-METHOD-02-prospective-v2-root-binding.json",
+      "relative_path": "state/I-METHOD-02-prospective-v2-root-binding.json",
+      "snapshot_path": "working-input/state/I-METHOD-02-prospective-v2-root-binding.json",
+      "sha256": "681e2cc3ae5d4cd8c0499a2de091d72e1f2c3162dce1a12cdc8bd49059b847d3",
+      "bytes": 1943,
+      "capture_at": "2026-10-07T21:56:51.789499+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/I-METHOD-04-prospective-v2-root-binding.json",
+      "relative_path": "state/I-METHOD-04-prospective-v2-root-binding.json",
+      "snapshot_path": "working-input/state/I-METHOD-04-prospective-v2-root-binding.json",
+      "sha256": "02fbdb71e99318f3da413ccecce91b71321d1898c4fb32ab3f0ab32d50619e78",
+      "bytes": 3562,
+      "capture_at": "2026-10-07T21:56:51.790417+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/count-and-claim-contract-v1.json",
+      "relative_path": "helpers/final-report/count-and-claim-contract-v1.json",
+      "snapshot_path": "working-input/helpers/final-report/count-and-claim-contract-v1.json",
+      "sha256": "30f8d9774cdd1213e713536b4ea3daa30772af5428d4b4daa0a77a0ae19dc26b",
+      "bytes": 2970,
+      "capture_at": "2026-10-07T21:56:51.791299+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/resolve_public_evidence.py",
+      "relative_path": "helpers/final-report/resolve_public_evidence.py",
+      "snapshot_path": "working-input/helpers/final-report/resolve_public_evidence.py",
+      "sha256": "2dde5b614dd4d83cbb32541a97b62bcaa7e8ffa9cbf1e5627e4296219ed32784",
+      "bytes": 3320,
+      "capture_at": "2026-10-07T21:56:51.791530+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/config.json",
+      "relative_path": "helpers/final-report/normalizer-v1/config.json",
+      "snapshot_path": "working-input/helpers/final-report/normalizer-v1/config.json",
+      "sha256": "382cc3bdadd090baad997ae01656a6cef9110aa17bd2eb2a65c3e11c3cca2b2e",
+      "bytes": 455,
+      "capture_at": "2026-10-07T21:56:51.791733+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/recorded-usage-root-validation-v1.json",
+      "relative_path": "state/recorded-usage-root-validation-v1.json",
+      "snapshot_path": "working-input/state/recorded-usage-root-validation-v1.json",
+      "sha256": "c2171d071594966e69a506aca6f79ec16a309034c9245801ddde90bd49d5c97b",
+      "bytes": 966,
+      "capture_at": "2026-10-07T21:56:51.791945+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage/observation-20261007T211653Z-aa6ea07490bb4a08.json",
+      "relative_path": "helpers/recorded-usage/observation-20261007T211653Z-aa6ea07490bb4a08.json",
+      "snapshot_path": "working-input/helpers/recorded-usage/observation-20261007T211653Z-aa6ea07490bb4a08.json",
+      "sha256": "aa6ea07490bb4a0888b799fd35eb0aa7d1f80873e4836330bbb7a2481d6d3034",
+      "bytes": 3649663,
+      "capture_at": "2026-10-07T21:56:51.792975+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1.json",
+      "relative_path": "state/targeted-cohort1.json",
+      "snapshot_path": "working-input/state/targeted-cohort1.json",
+      "sha256": "87071226c3e1c6a8be1c6c705a83c8a149ce1da1bb9af57e9209415ecbfffce8",
+      "bytes": 2069841,
+      "capture_at": "2026-10-07T21:56:51.823281+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2.json",
+      "relative_path": "state/targeted-cohort2.json",
+      "snapshot_path": "working-input/state/targeted-cohort2.json",
+      "sha256": "bf085db8938760546aec5235c5252bd0ad4ee616bb790be3813342b6317d9565",
+      "bytes": 284231,
+      "capture_at": "2026-10-07T21:56:51.834616+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+      "relative_path": "state/targeted-cohort3.json",
+      "snapshot_path": "working-input/state/targeted-cohort3.json",
+      "sha256": "7be93836914019d3fef527c2a1753f9adca5a40f388d23156feb6ff83011085f",
+      "bytes": 170653,
+      "capture_at": "2026-10-07T21:56:51.836322+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4.json",
+      "relative_path": "state/targeted-cohort4.json",
+      "snapshot_path": "working-input/state/targeted-cohort4.json",
+      "sha256": "403b6bc7b954c472baff4b8b04ed1ca98e9ff1dfb4f79d5cd6b8becb6b772e95",
+      "bytes": 162044,
+      "capture_at": "2026-10-07T21:56:51.837638+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods.json",
+      "relative_path": "state/integrated-methods.json",
+      "snapshot_path": "working-input/state/integrated-methods.json",
+      "sha256": "61e445bef02e1c496f2cd5eea967c7c8f5412bd1ba969ec7a1a9ffa2e4e38ad6",
+      "bytes": 1648036,
+      "capture_at": "2026-10-07T21:56:51.838383+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/confirmation-cases.json",
+      "relative_path": "state/confirmation-cases.json",
+      "snapshot_path": "working-input/state/confirmation-cases.json",
+      "sha256": "c97cd4b30e929a856698c2c127f56d5b31d0dd334ed0ed19bc154085148f168e",
+      "bytes": 24606,
+      "capture_at": "2026-10-07T21:56:51.845826+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-supervisor.json",
+      "relative_path": "state/anchor-supervisor.json",
+      "snapshot_path": "working-input/state/anchor-supervisor.json",
+      "sha256": "e6b0a6c8bd943dde459a45c9f4269066b4306cfe86f64833772990a65e11324e",
+      "bytes": 28684,
+      "capture_at": "2026-10-07T21:56:51.846748+00:00"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/confirmation-supervisor-terminal-finalaudit-v1.json",
+      "relative_path": "state/confirmation-supervisor-terminal-finalaudit-v1.json",
+      "snapshot_path": "working-input/state/confirmation-supervisor-terminal-finalaudit-v1.json",
+      "sha256": "a7e97a379437502f3cae556cac2cac171886aa8ed7404d3051124cde2c74447f",
+      "bytes": 2654,
+      "capture_at": "2026-10-07T21:56:51.847023+00:00"
+    }
+  ],
+  "observed_cutoff": "2026-10-07T21:56:51.848034+00:00"
+}

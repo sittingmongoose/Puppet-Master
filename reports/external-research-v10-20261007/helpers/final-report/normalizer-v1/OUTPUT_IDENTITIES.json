@@ -1,0 +1,88 @@
+{
+  "schema": "ER10_NORMALIZER_DELIVERY_IDENTITIES_V1",
+  "status": "WORKING_IN_PROGRESS",
+  "helper_completed_at": "2026-10-07T22:17:03.833896+00:00",
+  "config_deadline": "2026-10-07T22:26:22.000Z",
+  "snapshot_file_count": 139,
+  "snapshot_bytes": 11799114,
+  "all_snapshot_identities_verified": true,
+  "all_snapshot_files_read_only": true,
+  "logical_slots": 40,
+  "logical_arms": 80,
+  "observed_bound_version_records": 53,
+  "validation_passed": 23,
+  "validation_total": 23,
+  "unresolved_mappings": 945,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/normalizer.py",
+      "bytes": 94834,
+      "sha256": "09affee74e9131867995f0e03f8cb7d62d565708fa795918808af5faf9877f5a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/README.md",
+      "bytes": 9739,
+      "sha256": "b4fa30ba932477c4c0ff747594bbe1ea9fe254bc04204a23ba7da172f7193148"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/WORKING.md",
+      "bytes": 7246,
+      "sha256": "b727bd8ed665b09a385407e167703d91d9e4cd57ee889ee7cb76f16d5ed36497"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/field-map.json",
+      "bytes": 1960821,
+      "sha256": "233f6b2e8a3fd4c31f8aa203889c7dcead3ebc4b09f235e5132f1f1b35ee010a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/WORKING-normalized.json",
+      "bytes": 20510106,
+      "sha256": "1918c04b7f0dfa984572c1c852e611675a35c4a0a5b7b24e9a1295f5c7ccf3e6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/validation.json",
+      "bytes": 12047,
+      "sha256": "b357cd8f19aa21429741041a895caafefe04c6b0eb19beb30869f5cc9a5444c3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/unresolved-schema-mapping.json",
+      "bytes": 362540,
+      "sha256": "bc6be331e0a436a99d10cf4f5f7ae28ba600ae6182e89053cc4252d54fb0cbb6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/REPRODUCTION_VALIDATION.json",
+      "bytes": 1363,
+      "sha256": "f8cb10ce4403acdee74615c267a9eb6065ed2350fe89c4bcc29a8f946462b74f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/OWNER_SNAPSHOT_IDENTITIES.json",
+      "bytes": 3230,
+      "sha256": "96f5ef268e71a8b47e75f581723de297e572582e3c13e4365e16f5a9707ce074"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/working-input-manifest.json",
+      "bytes": 11124,
+      "sha256": "b0d7739296de59eac549887dc0b9e583ef3ea36062bddc5488b42b70b01a5d1c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/working-supplement-manifest.json",
+      "bytes": 43706,
+      "sha256": "49389498863b5717cc7d969665dfc121f7990ba43cfcad6400090a15de877e17"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/working-mechanical-manifest.json",
+      "bytes": 16919,
+      "sha256": "be5fd1ec5e5b13d2ff9603a6c2cb80a578133b39fa5304f84c54072be0e0f696"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/working-arm-map-manifest.json",
+      "bytes": 17330,
+      "sha256": "4a4bff7883aadc73959bea6fddccae0cf6d7e652cfc9f7f181325ad5df2a94ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/working-label-join-manifest.json",
+      "bytes": 857,
+      "sha256": "9eedee5733f34395bcedb2347ecea5ad114fc51bce387ee4c3a86c9bd08b32ca"
+    }
+  ]
+}

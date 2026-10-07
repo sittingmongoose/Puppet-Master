@@ -1,0 +1,184 @@
+{
+  "stage": "I-METHOD-05/control/reviser-v1",
+  "stage_disposition": "Complete integrated full-scope revised proposal; research only; no product canon or code changed.",
+  "deadline_utc": "2026-10-07T20:42:24.847250Z",
+  "native_goal": {
+    "identity_thread_id": "01a1180c-c5e2-77b1-9458-638ecc241744",
+    "objective_chars": 2943,
+    "token_budget": null,
+    "created_at_epoch_seconds_from_create_goal": 1791404880,
+    "status_before_science": "active; get_goal after create_goal returned the same identity",
+    "get_goal_active_projection": {
+      "identity_thread_id": "01a1180c-c5e2-77b1-9458-638ecc241744",
+      "status": "active",
+      "tokens_used_at_check": 0
+    }
+  },
+  "activation_notice": {
+    "sent_once": true,
+    "thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-integrated-method-supervisor-v1",
+    "mode_requested": "auto",
+    "client_request_id": "er10-I-METHOD-05-control-reviser-v1-active",
+    "message": "Native active: I-METHOD-05/control/reviser-v1, identity 01a1180c-c5e2-77b1-9458-638ecc241744",
+    "host_state_projection": {
+      "delivery": "steered",
+      "status": "running",
+      "message_id": "message:mcp:0a09d23f-8272-47a8-8b0c-8cee8cc710be:thread-send:er10-I-METHOD-05-control-reviser-v1-active",
+      "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-integrated-method-supervisor-v1:ordinal:23"
+    }
+  },
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/input-map.json",
+    "sha256": "41086612c147dea6ab978cdde100f158c1182c4297dc534feb9fa868778e525f"
+  },
+  "candidate_inventory": {
+    "separate_same_arm_inventory_declared": false,
+    "result": "The exact input map declares only the two topic predecessors and critic as predecessors; no separate inventory file was declared. No other inventory or stage file was read."
+  },
+  "predecessors_read": [
+    {
+      "role": "topic A complete draft",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/artifact.md",
+      "sha256": "f49b9f6a0a17c0bbc5050229627ffb1f4ac17bf073bc827a8db722b2cb5825ee"
+    },
+    {
+      "role": "topic A source map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/source-map.json",
+      "sha256": "891cd7381bebd59a2c758956b768bcf0ed3e970be7d7ebeb23df62cd9de20aa9"
+    },
+    {
+      "role": "topic B complete draft",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/artifact.md",
+      "sha256": "0ff7f9277193197e5d0ab36f19d8d5eb772d58b4c79d1d56479843497d312b20"
+    },
+    {
+      "role": "topic B source map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/source-map.json",
+      "sha256": "a68c42593264c5a6a5069ff205d85b8d373c1b4b71413c33bb41466e71ed65f5"
+    },
+    {
+      "role": "full critic artifact",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/critic-v1/artifact.md",
+      "sha256": "4ee82161cc9f6620ca2c3b893fb8395590424373922497ca4aeb758a6ab557f5"
+    },
+    {
+      "role": "full critic source map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/critic-v1/source-map.json",
+      "sha256": "b747796dc04a4411a4d4db50a31aaad266f5fdf6251981f1bf17e3cd01c6fd97"
+    }
+  ],
+  "captured_evidence_copied_under_own_sources": [
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/sources/first-useful-finding.md",
+      "copy": "sources/topic-a-first-useful-finding.md",
+      "sha256": "7c009e93b209cb444df0d1401d8ed2ee3ab9fff0103ff4ec396d9a8256f532f4"
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-a-v1/sources/zed-buffer-undo-reload.md",
+      "copy": "sources/topic-a-zed-buffer-undo-reload.md",
+      "sha256": "b50235c2e2dc54e4120705740fd1807427fe8d32c3517a31a9dfd0ce9d655185"
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources/first-finding.md",
+      "copy": "sources/topic-b-first-finding.md",
+      "sha256": "95c447904322024cdeca949de80097bfb5db438dd050caf18667e8d166423425"
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/research-topic-b-v1/sources/public-evidence.md",
+      "copy": "sources/topic-b-public-evidence.md",
+      "sha256": "4ca5c029facab16de0ef1675394e42c9ec65122c957b016e278945ef86fe85b8"
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/critic-v1/sources/first-useful-finding.md",
+      "copy": "sources/critic-first-useful-finding.md",
+      "sha256": "e354244da3c64282c369d9f1bf2885ef3eeee456b96b40c8033433eb0f17c342"
+    },
+    {
+      "origin": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/critic-v1/sources/primary-source-evidence.md",
+      "copy": "sources/critic-primary-source-evidence.md",
+      "sha256": "92bec3c6264561351abec78d4de460358d207141286b0994b5e698bd2af03281"
+    }
+  ],
+  "public_source_capture_versions_and_times": [
+    {
+      "ids": ["Z1", "Z2", "Z3", "Z4", "Z5"],
+      "sources": [
+        "https://github.com/zed-industries/zed/issues/48697",
+        "https://github.com/zed-industries/zed/pull/51037",
+        "https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/language/src/buffer.rs",
+        "https://raw.githubusercontent.com/zed-industries/zed/426a5666dc12e37b2441f135388b683be8ade481/crates/project/tests/integration/project_tests.rs",
+        "https://zed.dev/releases/preview/0.192.5"
+      ],
+      "versions": "Issue opened 2026-02-07; PR merged 2026-03-10; implementation/test commit 426a5666dc12e37b2441f135388b683be8ade481; exact shipped release tag unresolved.",
+      "capture_utc": "Topic A browser capture around 2026-10-07T20:04:19Z–20:10:08Z; critic recapture 2026-10-07T20:18:08Z–20:24:15Z.",
+      "limits": "Browser-visible source excerpts and authored notes, not complete raw-page archives; release route redirected to a channel listing."
+    },
+    {
+      "ids": ["R1", "R2", "R3", "R4", "R5", "R6", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10"],
+      "sources": [
+        "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/Cargo.toml",
+        "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/rope.rs",
+        "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/rope_builder.rs",
+        "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/src/crlf.rs",
+        "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/tests/crlf.rs",
+        "https://raw.githubusercontent.com/cessen/ropey/v1.6.1/CHANGELOG.md",
+        "https://docs.rs/crate/ropey/1.6.1/source/"
+      ],
+      "version": "Ropey 1.6.1; published release 2023-10-18 as recorded in critic evidence.",
+      "capture_utc": "Topic B versioned source/docs approximately 2026-10-07T20:07:06Z–20:10:56Z; critic immutable-source review 2026-10-07T20:18:08Z–20:24:15Z.",
+      "limits": "Source/test/changelog evolution is supported; no issue-to-PR chain or dedicated regression linkage was established. No raw source download or execution."
+    },
+    {
+      "ids": ["S1", "S2", "S3", "S4", "P11", "P12", "P13"],
+      "sources": [
+        "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/compiler/widgets/material/textedit.slint",
+        "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/compiler/widgets/common/textedit-base.slint",
+        "https://raw.githubusercontent.com/slint-ui/slint/v1.12.0/internal/core/items/text.rs",
+        "https://github.com/slint-ui/slint/issues/8877",
+        "https://docs.slint.dev/latest/docs/slint/reference/std-widgets/views/textedit/",
+        "https://github.com/slint-ui/slint/discussions/12343"
+      ],
+      "versions": "Pinned Slint code v1.12.0; #8877 reporter environment Slint 1.12, Rust, Windows 11 23H2, wint+Skia; #12343 mentions Slint 1.17.0; latest docs URL is mutable.",
+      "capture_utc": "Topic B approximately 2026-10-07T20:06:23Z–20:11:35Z; critic pinned-source review 2026-10-07T20:18:08Z–20:24:15Z.",
+      "limits": "#8877 is one configuration-specific report and not a benchmark; no fix/release established. #12343 was not deeply inspected and remains uncertain."
+    }
+  ],
+  "source_operations": {
+    "local_read_window_utc": "2026-10-07T20:28:18Z–20:30:01Z",
+    "local_reads": "Exact input-map, its six declared predecessors (both complete topic drafts/maps and full critic artifact/map), and the six evidence notes in the three mapped source directories. The source notes were copied byte-for-byte under this stage's own sources/ directory and the recorded SHA-256 values match their origins.",
+    "original_inputs": "Not read. Original-input names/hashes appearing inside the permitted predecessor maps were not followed or opened.",
+    "other_stage_files_or_history": "Not read; no other candidate inventory was declared by the exact input map.",
+    "new_public_research": "None in this final stage; used only the prior bounded public-source capture notes declared by the mapped predecessors.",
+    "local_writes": "Created sources/first-useful-finding.md at 2026-10-07T20:30:01Z; copied six mapped evidence notes; authored artifact.md, then sha256-recorded final content by 2026-10-07T20:34:01Z; authored this source-map.json."
+  },
+  "outputs": {
+    "artifact": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/artifact.md",
+      "sha256": "aa54c03322cb723962a158b9a00020a5e0d5dfa9c4c581fc88a7ac2cf45da841",
+      "full_artifact_completion_utc": "2026-10-07T20:34:01Z"
+    },
+    "first_useful_saved_finding": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/sources/first-useful-finding.md",
+      "sha256": "ef15f936c8ed3ddbbc0863447795c749106348fcc05d58ad20570b2d4618f1e2",
+      "saved_utc": "2026-10-07T20:30:01Z"
+    },
+    "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-05/control/reviser-v1/source-map.json"
+  },
+  "executed_checks": {
+    "sha256_identity_checks": "Applied only to the exact input map, six declared predecessors, six mapped evidence notes, own artifact, and own evidence copies.",
+    "application_tests": [],
+    "benchmarks": [],
+    "builds": [],
+    "source_execution": false,
+    "sourcepass": false
+  },
+  "usage": null,
+  "billing": null,
+  "usage_billing_note": "Experimental usage and billing telemetry were not exposed; null means unknown, not zero.",
+  "scope_limits": [
+    "No nested delegation or other workers.",
+    "No original campaign inputs, parent/evaluator history, other arms/cases, campaign packets, scored solutions, evaluator keys, or old-case science.",
+    "No repo/canonical/WorkNode changes, account configuration, purchases, private files, third-party messages/issues/PRs, worktrees, external runner/installers, downloaded source, or code execution.",
+    "No new broad discovery or mechanical host synthesis of scientific content."
+  ]
+}

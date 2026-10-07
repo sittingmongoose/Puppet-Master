@@ -1,0 +1,229 @@
+{
+  "schema_version": "1.0",
+  "case": "I-METHOD-06",
+  "stage": "control/research-v1",
+  "goal_identity": "01a117fe-f514-7831-a9aa-45e52fa409d4",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-06/control/research-v1/input-map.json",
+  "source_hashes": "Omitted for host-side hash computation, as requested.",
+  "sources": [
+    {
+      "id": "S01",
+      "captured_path": "sources/restic-issue-5667.html",
+      "requested_url": "https://github.com/restic/restic/issues/5667",
+      "accessed_at_utc": "2026-10-07T20:17:08Z",
+      "version_or_scope": "Issue report against restic 0.18.1, Windows/amd64; live issue page captured as observed on 2026-10-07",
+      "locator": "Issue #5667; report and command output, page lines 129-215 in web capture",
+      "use": "Concrete empty-snapshot failure when all requested root paths are inaccessible; report does not establish a particular process exit code."
+    },
+    {
+      "id": "S02",
+      "captured_path": "sources/restic-pr-21852.html",
+      "requested_url": "https://github.com/restic/restic/pull/21852",
+      "accessed_at_utc": "2026-10-07T20:17:09Z",
+      "version_or_scope": "Merged 2026-06-21; merged commit 8d7679c83110257bc458e0ed68c7985cd37cecb9",
+      "locator": "PR #21852; diff cmd/restic/cmd_backup.go and cmd/restic/cmd_backup_test.go; changelog/unreleased/issue-5667",
+      "use": "Fix explanation, reviewer limit, regression test, 12 checks passed; PR text says no-source abort and partial-source error."
+    },
+    {
+      "id": "S03",
+      "captured_path": "sources/restic-release-v0.19.1.html",
+      "requested_url": "https://github.com/restic/restic/releases/tag/v0.19.1",
+      "accessed_at_utc": "2026-10-07T20:17:10Z",
+      "version_or_scope": "Signed release v0.19.1, published 2026-07-05; peeled tag commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf; tag object 6099d4b5c4376368d42b9982c7d3e93ba13d83b1; refs resolved again 2026-10-07T20:22:05Z",
+      "locator": "Release changelog entry #5667 and #21852; official release page lists both",
+      "use": "Release applicability is explicit in the release notes, not inferred from merge alone."
+    },
+    {
+      "id": "S04",
+      "captured_path": "sources/restic-v0.19.1-cmd_backup.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup.go",
+      "accessed_at_utc": "2026-10-07T20:18:50Z",
+      "version_or_scope": "Restic v0.19.1 peeled signed-tag commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+      "locator": "cmd/restic/cmd_backup.go; ErrInvalidSourceData/ErrNoSourceData/filterExisting lines 168-198; collectTargets return at 450-458; runBackup caller at 490-519; repo open at 534-538; source error and finish path at 653-706",
+      "symbols": [
+        "filterExisting",
+        "collectTargets",
+        "runBackup",
+        "ErrNoSourceData",
+        "ErrInvalidSourceData"
+      ],
+      "use": "At pinned release, any Lstat error is skipped; no accessible target aborts before repository open, some skipped targets set success=false, and an incomplete snapshot may still be saved before ErrInvalidSourceData is returned."
+    },
+    {
+      "id": "S05",
+      "captured_path": "sources/restic-v0.19.1-cmd_backup_test.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_backup_test.go",
+      "accessed_at_utc": "2026-10-07T20:18:51Z",
+      "version_or_scope": "Restic v0.19.1 peeled signed-tag commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+      "locator": "cmd/restic/cmd_backup_test.go; TestFilterExistingUnreadable lines 80-100",
+      "symbols": [
+        "TestFilterExistingUnreadable"
+      ],
+      "use": "Pinned shipped source has regression cases for all unreadable and mixed existing/unreadable targets. Test was inspected, not run in this research stage."
+    },
+    {
+      "id": "S06",
+      "captured_path": "sources/restic-v0.19.1-cmd_check.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/cmd/restic/cmd_check.go",
+      "accessed_at_utc": "2026-10-07T20:18:51Z",
+      "version_or_scope": "Restic v0.19.1 peeled signed-tag commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+      "locator": "cmd/restic/cmd_check.go; CheckOptions and flags lines 74-95; checkFlags lines 97-139; runCheck lines 229-429; buildPacksFilter lines 431-486",
+      "symbols": [
+        "CheckOptions",
+        "checkFlags",
+        "runCheck",
+        "buildPacksFilter"
+      ],
+      "use": "Default check and optional full/subset data-read paths are distinct; actual scope follows filter and flag selection."
+    },
+    {
+      "id": "S07",
+      "captured_path": "sources/restic-v0.19.1-checker.go",
+      "requested_url": "https://raw.githubusercontent.com/restic/restic/6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf/internal/checker/checker.go",
+      "accessed_at_utc": "2026-10-07T20:18:51Z",
+      "version_or_scope": "Restic v0.19.1 peeled signed-tag commit 6aa3a516ce654808a1f28f9fa21e9b7c8e6e90bf",
+      "locator": "internal/checker/checker.go; Structure lines 142-194; ReadPacks lines 291-319",
+      "symbols": [
+        "Checker.Structure",
+        "Checker.ReadPacks"
+      ],
+      "use": "Governing implementation for traversal of snapshot trees and dispatch of pack reads."
+    },
+    {
+      "id": "S08",
+      "captured_path": "sources/restic-working-with-repos.html",
+      "requested_url": "https://restic.readthedocs.io/en/v0.19.1/045_working_with_repos.html",
+      "accessed_at_utc": "2026-10-07T20:20:58Z",
+      "version_or_scope": "Restic 0.19.1 versioned documentation",
+      "locator": "Checking integrity and consistency section; current official docs lines 247-309; includes structural check, --read-data, and deterministic/random --read-data-subset descriptions",
+      "use": "Structural default and full-data versus subset semantics/cost; fixed version docs."
+    },
+    {
+      "id": "S09",
+      "captured_path": "sources/restic-backup-docs.html",
+      "requested_url": "https://restic.readthedocs.io/en/v0.19.1/040_backup.html",
+      "accessed_at_utc": "2026-10-07T20:18:51Z",
+      "version_or_scope": "Restic 0.19.1 versioned documentation",
+      "locator": "Backing up section; snapshot creation and parent/dedup explanation",
+      "use": "Engine analogy only; a snapshot is an engine-level tree, not PM capture-consistency or app-restore proof."
+    },
+    {
+      "id": "S10",
+      "captured_path": "sources/kopia-consistency.html",
+      "requested_url": "https://kopia.io/docs/advanced/consistency/",
+      "accessed_at_utc": "2026-10-07T20:20:58Z",
+      "version_or_scope": "Kopia current documentation captured 2026-10-07; no immutable release pin for this docs page",
+      "locator": "Verifying Validity of Snapshots sections: structure/blob existence vs download/decrypt/decompress; full restore described as gold standard",
+      "use": "Alternative verification ladder; documentation claim is not release-pinned runtime evidence."
+    },
+    {
+      "id": "S11",
+      "captured_path": "sources/kopia-snapshot-verify-docs.html",
+      "requested_url": "https://kopia.io/docs/reference/command-line/common/snapshot-verify/",
+      "accessed_at_utc": "2026-10-07T20:18:52Z",
+      "version_or_scope": "Kopia current CLI documentation captured 2026-10-07; no immutable release pin",
+      "locator": "snapshot verify flags, especially --verify-files-percent and JSON output",
+      "use": "Optional percentage file sampling and full file-read behavior in docs."
+    },
+    {
+      "id": "S12",
+      "captured_path": "sources/kopia-issue-3605.html",
+      "requested_url": "https://github.com/kopia/kopia/issues/3605",
+      "accessed_at_utc": "2026-10-07T20:17:10Z",
+      "version_or_scope": "Historical report for Kopia 0.15.0 from 2024-02-01; page observed open with no linked PR on 2026-10-07",
+      "locator": "Issue #3605 description/status/development",
+      "use": "Historical example of verify reporting success after ENOSPC errors; unresolved on captured page, so no claim about current Kopia releases."
+    },
+    {
+      "id": "S13",
+      "captured_path": "sources/borg-check.html",
+      "requested_url": "https://borgbackup.readthedocs.io/en/1.4.5/usage/check.html",
+      "accessed_at_utc": "2026-10-07T20:20:58Z",
+      "version_or_scope": "Borg 1.4.5 versioned documentation",
+      "locator": "borg check description/options; --verify-data and repair-mode warning sections",
+      "use": "Alternative: deep cryptographic data read vs repository-level checks; repair is read-only by default and repair flag is potentially lossy."
+    },
+    {
+      "id": "S14",
+      "captured_path": "sources/rclone-copy-docs.html",
+      "requested_url": "https://rclone.org/commands/rclone_copy/",
+      "accessed_at_utc": "2026-10-07T20:18:51Z",
+      "version_or_scope": "rclone current documentation captured 2026-10-07; no release pin",
+      "locator": "Synopsis, copy semantics, checksums/logger flags",
+      "use": "copy does not delete destination-only data, but it is a transport primitive and its per-file logger is predictive during execution."
+    },
+    {
+      "id": "S15",
+      "captured_path": "sources/rclone-sync-docs.html",
+      "requested_url": "https://rclone.org/commands/rclone_sync/",
+      "accessed_at_utc": "2026-10-07T20:18:52Z",
+      "version_or_scope": "rclone current documentation captured 2026-10-07; no release pin",
+      "locator": "Synopsis and delete semantics",
+      "use": "Rejected for live Project Vault replication; sync makes destination match source and may delete destination-only content."
+    },
+    {
+      "id": "S16",
+      "captured_path": "sources/cisa-stopransomware-resource.html",
+      "requested_url": "https://www.cisa.gov/sites/default/files/2023-10/StopRansomware-Guide-508C-v3_1.pdf",
+      "resolved_url": "https://www.cisa.gov/resources-tools/resources/stopransomware-guide",
+      "accessed_at_utc": "2026-10-07T20:20:58Z",
+      "version_or_scope": "CISA #StopRansomware Guide metadata page; revision date October 19, 2023; captured response was HTML after redirect",
+      "locator": "Resource page metadata and PDF link",
+      "use": "Revision/date and link discovery only; substantive backup guidance sourced from the PDF record S17 and official page search result."
+    },
+    {
+      "id": "S17",
+      "captured_path": "sources/cisa-stopransomware-guide.pdf",
+      "requested_url": "https://www.cisa.gov/sites/default/files/2025-03/StopRansomware-Guide%20508.pdf",
+      "accessed_at_utc": "2026-10-07T20:21:26Z",
+      "version_or_scope": "CISA #StopRansomware Guide, revision date October 19, 2023; PDF file linked by CISA resource page",
+      "locator": "Part 1 backup recommendations and recovery section; maintain offline encrypted backups and regularly test availability/integrity",
+      "use": "Public government guidance supporting separate/offline copies and periodic recovery testing; not a PM-specific acceptance standard."
+    },
+    {
+      "id": "S18",
+      "captured_path": "sources/nist-sp800-34r1.pdf",
+      "requested_url": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-34r1.pdf",
+      "accessed_at_utc": "2026-10-07T20:20:58Z",
+      "version_or_scope": "NIST SP 800-34 Rev. 1, Contingency Planning Guide for Federal Information Systems",
+      "locator": "Section 3.5.1, PDF page 40, lines 1746-1760; alternate-platform recovery from backup media and test results/lessons learned",
+      "use": "Supports an isolated restore exercise with documented outcomes; not a PM-specific acceptance standard."
+    }
+  ],
+  "source_operation_counts": {
+    "web_tool_invocations": 9,
+    "search_queries": 23,
+    "page_open_click_find_operations": 27,
+    "direct_http_capture_attempts": 27,
+    "direct_http_capture_successes": 27,
+    "public_api_rate_limit_failures": 1,
+    "read_only_git_tag_reference_lookups": 2,
+    "distinct_captured_files": 18,
+    "source_execution_or_local_product_tests": 0
+  },
+  "counter_policy": {
+    "goal_tokensUsed_and_timeUsedSeconds": "Aggregate native Goal counters; keep separate from distinct usage categories.",
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null,
+    "reasoning_tokens": null,
+    "billing": null,
+    "reason": "These distinct counters were not exposed in the native Goal response; null means unknown, not zero.",
+    "activation_snapshot": {
+      "identity": "01a117fe-f514-7831-a9aa-45e52fa409d4",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    "preterminal_snapshot": {
+      "observed_at_utc": "2026-10-07T20:27:21Z",
+      "identity": "01a117fe-f514-7831-a9aa-45e52fa409d4",
+      "status": "active",
+      "tokensUsed": 277194,
+      "timeUsedSeconds": 877
+    },
+    "terminal_snapshot": "Reported by actual final get_goal response; no post-terminal artifact mutation."
+  },
+  "first_useful_saved_finding_at_utc": "2026-10-07T20:21:53Z",
+  "complete_draft_at_utc": "2026-10-07T20:26:39Z"
+}

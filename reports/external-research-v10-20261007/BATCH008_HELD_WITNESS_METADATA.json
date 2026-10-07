@@ -1,0 +1,119 @@
+{
+  "schema": "ER10-held-witness-metadata-only-v1",
+  "original_identity": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/public-witness-candidates.json",
+    "sha256": "293cda2f105b56da3f73ee982c73f304933328594b6d2620509dc7cb4960773b",
+    "bytes": 5211
+  },
+  "copy_transform": "exact_utf8_raw_json_slice fields withheld; original unchanged",
+  "withheld_fields": [
+    {
+      "pointer": "/public_witness_candidates/0/witnesses/0/exact_utf8_raw_json_slice",
+      "sha256": "ca3c6ac1c011bc6a266300bacf1b4c9e32cea55871adb1206c82419d6c55aefe",
+      "utf8_bytes": 71,
+      "status": "HOLD_NOT_APPROVED_NOT_PUBLISHED"
+    },
+    {
+      "pointer": "/public_witness_candidates/0/witnesses/1/exact_utf8_raw_json_slice",
+      "sha256": "ec0dd418fd3a6c50f6a29c0937cf147909107fe7ecde7451dbf7a6677a02866f",
+      "utf8_bytes": 19,
+      "status": "HOLD_NOT_APPROVED_NOT_PUBLISHED"
+    },
+    {
+      "pointer": "/public_witness_candidates/0/witnesses/2/exact_utf8_raw_json_slice",
+      "sha256": "41b31758b5bfd4eaf819bff9dd1aa265a9580ac053d4af2afbee4a17ed103b65",
+      "utf8_bytes": 28,
+      "status": "HOLD_NOT_APPROVED_NOT_PUBLISHED"
+    }
+  ],
+  "metadata": {
+    "archive_created": false,
+    "cleanup_executed": false,
+    "inspection_at": "2026-10-07T22:13:01.140485+00:00",
+    "plan_only": true,
+    "public_witness_candidates": [
+      {
+        "candidate_id": "I-METHOD-05-control-check14-Slint8877-reported-size",
+        "frozen_assertion": {
+          "original_fields": {
+            "claim": "Slint #8877 is a configuration-specific performance report, not benchmark or shipped fix",
+            "judgment": "Final reproduces the reported approximately 130,172 x3 size accurately and makes no performance threshold or fix/release claim.",
+            "result": "SUPPORTED",
+            "version_or_condition": "report Slint 1.12, Rust, Windows 11 23H2, wint/skia; opened 2025-07-09"
+          },
+          "pointer": "/checks/14",
+          "published_path": "reports/external-research-v10-20261007/reviews/integrated-methods/I-METHOD-05/control/review-v1/source-checks.json",
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/source-checks.json",
+          "sha256": "678a3e04cb03d5a1f41ee40158013a53decbcf791b7b0e1b24457ee166bb8ac9"
+        },
+        "immutable_alternative_limit": "Pinned widget implementation could inspect behavior but cannot reconstruct what the public reporter said. Mutable GitHub issue/API may later be edited or removed.",
+        "license_publication_constraints": "Issue text copyright/license not established by public accessibility or a source repository license. No full body/code/attachment included. Candidate consists of a short attributed factual excerpt; Root must establish permission/permissibility before GitHub publication. If not permissible or insufficient, retain the narrow original object on HOLD and do not silently discard it.",
+        "private_archive_candidate": false,
+        "raw_source": {
+          "bytes": 7232,
+          "capture_record": {
+            "pointer": "/retrievals/33",
+            "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/source-checks.json",
+            "requested_url": "https://api.github.com/repos/slint-ui/slint/issues/8877",
+            "sha256": "678a3e04cb03d5a1f41ee40158013a53decbcf791b7b0e1b24457ee166bb8ac9"
+          },
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-issue-8877.json",
+          "sha256": "5fe95914f9b2267e7173def36c41d47fd7c6c202a5a3cec17b8f0b4369cdb19e",
+          "source_json_pointer": "/body",
+          "url": "https://github.com/slint-ui/slint/issues/8877"
+        },
+        "replay": "For inspection of the retained source, verify full-object SHA then compare exact listed byte ranges and slice hashes. On future authorized upstream replay, the JSON serialization may differ; compare decoded /body fragments with attribution, not arbitrary API wrapper bytes.",
+        "retention_reason": "The frozen reviewer checked the issue-reported numeric size and configuration, without a benchmark/threshold/fix claim. These exact fragments locate a small potential public witness for that limited reported-fact assertion.",
+        "scope_limit": "The fragments do not preserve the full reproduction program, text attachment, actual measured runtime, all issue history, or a backend benchmark. They establish only the exact quoted reported-size/environment fragments; no new source judgment.",
+        "status": "HOLD_PUBLICATION_PERMISSION_AND_SCIENTIFIC_SUFFICIENCY_REVIEW",
+        "total_witness_bytes": 118,
+        "witnesses": [
+          {
+            "byte_range_half_open": [
+              2977,
+              3048
+            ],
+            "bytes": 71,
+            "decoded_text_note": "Raw JSON escape bytes remain exact; these are fragments within the issue body string, not standalone JSON.",
+            "exact_utf8_raw_json_slice": {
+              "withheld": "HOLD_PENDING_ROOT_PUBLICATION_PERMISSION_AND_SUFFICIENCY_DECISION"
+            },
+            "original_json_pointer": "/body",
+            "sha256": "ca3c6ac1c011bc6a266300bacf1b4c9e32cea55871adb1206c82419d6c55aefe"
+          },
+          {
+            "byte_range_half_open": [
+              5543,
+              5562
+            ],
+            "bytes": 19,
+            "decoded_text_note": "Raw JSON escape bytes remain exact; these are fragments within the issue body string, not standalone JSON.",
+            "exact_utf8_raw_json_slice": {
+              "withheld": "HOLD_PENDING_ROOT_PUBLICATION_PERMISSION_AND_SUFFICIENCY_DECISION"
+            },
+            "original_json_pointer": "/body",
+            "sha256": "ec0dd418fd3a6c50f6a29c0937cf147909107fe7ecde7451dbf7a6677a02866f"
+          },
+          {
+            "byte_range_half_open": [
+              5566,
+              5594
+            ],
+            "bytes": 28,
+            "decoded_text_note": "Raw JSON escape bytes remain exact; these are fragments within the issue body string, not standalone JSON.",
+            "exact_utf8_raw_json_slice": {
+              "withheld": "HOLD_PENDING_ROOT_PUBLICATION_PERMISSION_AND_SUFFICIENCY_DECISION"
+            },
+            "original_json_pointer": "/body",
+            "sha256": "41b31758b5bfd4eaf819bff9dd1aa265a9580ac053d4af2afbee4a17ed103b65"
+          }
+        ]
+      }
+    ],
+    "schema": "er10.retention.public-witness-candidates.v1",
+    "snapshot_object_sha256": "5fe95914f9b2267e7173def36c41d47fd7c6c202a5a3cec17b8f0b4369cdb19e"
+  },
+  "status": "HOLD_PENDING_ROOT_DECISION",
+  "private_archive_exists": false,
+  "source_cache_cleanup_executed": false
+}

@@ -1,0 +1,154 @@
+{
+  "artifacts": [
+    {
+      "bytes": 11239,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/README.md",
+      "sha256": "e087f459ae450ce3031a1dd0537f389730d95a646bebfe4156d80756f90d628d"
+    },
+    {
+      "bytes": 31215,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/classify.py",
+      "sha256": "1583e55be1799fb4bb95429cd3380fec0e662bee7e4810882b8426b76fee2e1e"
+    },
+    {
+      "bytes": 3596,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/validate.py",
+      "sha256": "3db5e92c6a8a76aa31b398cb182516c488bc465e0f3debaaf36a1410eed80d88"
+    },
+    {
+      "bytes": 9822138,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/snapshot.json",
+      "sha256": "afac19bce2f1b7ba3d39122b69ece4b381da6ce42adc5d00a512c6dcbc5ef8cb"
+    },
+    {
+      "bytes": 7541300,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/retention-plan.json",
+      "sha256": "7ddbc149a861068ca823c04c3ce2f0ff540b63e646f33d70b2357b35dbaf8a87"
+    },
+    {
+      "bytes": 686,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/archive-candidates.json",
+      "sha256": "f7f6edd40b359ea87c6349ae76c0ab5a2ed70bb56c190b4ea6944d4b584907d4"
+    },
+    {
+      "bytes": 5211,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/public-witness-candidates.json",
+      "sha256": "293cda2f105b56da3f73ee982c73f304933328594b6d2620509dc7cb4960773b"
+    },
+    {
+      "bytes": 2544,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/summary.json",
+      "sha256": "25528778a88de92d32f1de3e0efdcb4d4ab845663bd2bb90de153495a30e9cbe"
+    },
+    {
+      "bytes": 1384,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/retention-plan-v1/validation.json",
+      "sha256": "5fe90aa468ffccb68f4028a7dbb1c4148835c55f20a8593d95661dabd0b45c7f"
+    }
+  ],
+  "batch007_opened": false,
+  "batches_in_scope": [
+    4,
+    5,
+    6
+  ],
+  "cleanup_executed": false,
+  "completed_at": "2026-10-07T22:15:56.082927+00:00",
+  "future_results_require_root_extension": true,
+  "limits": [
+    "245 stable upstream locator candidates are not verified reconstruction/source-provenance verdicts.",
+    "127 conditional version/tag replay candidates require mutation/hash verification.",
+    "779 unknown exact upstream replay objects include 66 retained authored matches; 713 raw-source objects remain unresolved HOLD.",
+    "One 118-byte public-witness candidate remains HOLD for permission and full scientific sufficiency.",
+    "One exact original malformed source-map remains unparsed and unresolved.",
+    "Root must independently verify GitHub original retention, actual license/replay and any justified private witness archive before scoped cleanup."
+  ],
+  "network_or_source_refetch": false,
+  "original_deadline": "2026-10-07T22:34:56.000Z",
+  "plan_only": true,
+  "private_archive_recommendation": "NONE_JUSTIFIED_BY_BOUNDED_EVIDENCE; zero candidates, no archive created",
+  "repository_changes": false,
+  "requested_binding": {
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "high",
+      "serviceTier": "priority"
+    },
+    "providerInstanceId": "codex_gmail"
+  },
+  "schema": "ER10-retention-planner-terminal-v1",
+  "snapshot_closed_at": "2026-10-07T22:07:34.196694+00:00",
+  "snapshot_started_at": "2026-10-07T22:07:30.022070+00:00",
+  "source_files_deleted": false,
+  "status": "FINITE_PLAN_COMPLETE_WITH_EXPLICIT_HOLDS",
+  "totals": {
+    "actual_unique_object_bytes": 116857910,
+    "actual_unique_objects": 1151,
+    "compact_authored_duplicate_objects": 75,
+    "disposition_objects": {
+      "HOLD_LOCATOR_RELEVANCE_OR_MINIMAL_WITNESS_UNRESOLVED": 713,
+      "NO_DEFAULT_ARCHIVE_CONDITIONAL_VERSION_REPLAY_ROOT_VERIFY": 127,
+      "NO_PRIVATE_FULL_BODY_COPY_REQUIRED_BY_IDENTIFIED_STABLE_LOCATOR": 236,
+      "RETAIN_COMPACT_AUTHORED_ORIGINAL_VERIFY_GITHUB_NO_PRIVATE_RAW_DUPLICATE": 75
+    },
+    "essential_private_archive_proposed_bytes": 0,
+    "essential_private_archive_proposed_objects": 0,
+    "frozen_metadata_record_skips": 1,
+    "identity_matching_rows": 2851,
+    "identity_unresolved_rows": 0,
+    "investigated_inventory_rows": 2851,
+    "locator_class_breakdown": {
+      "IMMUTABLE_GIT_COMMIT_FILE": {
+        "inventory_rows": 843,
+        "objects": 223,
+        "unique_object_bytes": 11251388,
+        "unique_paths": 698
+      },
+      "LIVE_MUTABLE_DOC_API_HISTORY": {
+        "inventory_rows": 1129,
+        "objects": 433,
+        "unique_object_bytes": 63910841,
+        "unique_paths": 870
+      },
+      "MISSING_LOCATOR": {
+        "inventory_rows": 503,
+        "objects": 346,
+        "unique_object_bytes": 7046750,
+        "unique_paths": 437
+      },
+      "RELEASED_SPECIFICATION": {
+        "inventory_rows": 76,
+        "objects": 22,
+        "unique_object_bytes": 15697813,
+        "unique_paths": 63
+      },
+      "VERSIONED_RELEASE_OR_TAG": {
+        "inventory_rows": 300,
+        "objects": 127,
+        "unique_object_bytes": 18951118,
+        "unique_paths": 236
+      }
+    },
+    "locator_class_objects": {
+      "IMMUTABLE_GIT_COMMIT_FILE": 223,
+      "LIVE_MUTABLE_DOC_API_HISTORY": 433,
+      "MISSING_LOCATOR": 346,
+      "RELEASED_SPECIFICATION": 22,
+      "VERSIONED_RELEASE_OR_TAG": 127
+    },
+    "metadata_records_inspected": 333,
+    "not_final_all_campaign_inventory": true,
+    "objects_with_exact_frozen_assertion_reference": 164,
+    "objects_with_frozen_review_reference": 647,
+    "public_witness_candidate_bytes": 118,
+    "public_witness_candidate_count": 1,
+    "stable_replay_locator_objects": 245,
+    "unique_paths": 2304,
+    "unknown_exact_replay_objects": 779,
+    "unresolved_hold_objects": 713,
+    "versioned_conditional_replay_objects": 127
+  },
+  "validation": "Deterministic offline replay identical; 9869 pointer references resolve; witness fields/hash/ranges match frozen metadata; no raw source execution or private archive.",
+  "writing_reserve_seconds": 300
+}
