@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6034,
+      "line_count": 6036,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "a5089d10b477d9b486a516736032822cf7a94224768678daacde72ba94adbe2b",
+      "sha256": "3772f1a0e79e9e4e28c82c3cb84a0dff6ba3a4b6a1323f9d5cfdfc783a4ab592",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -5614,9 +5614,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 55,
-        "True": 72
+        "True": 77
       },
-      "heading_count": 261,
+      "heading_count": 271,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5710,9 +5710,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 10629,
+      "line_count": 11066,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 127,
+      "plan_unit_count": 132,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5840,7 +5840,12 @@
         "DL-136",
         "DL-137",
         "DL-138",
-        "DL-139"
+        "DL-139",
+        "DL-140",
+        "DL-141",
+        "DL-142",
+        "DL-143",
+        "DL-144"
       ],
       "reasoning_tiers": [
         "high",
@@ -5867,9 +5872,14 @@
         "case_l_storage_root_lock_fallback_decision_drift",
         "case_l_supplemental_kernel_depth_decision_drift",
         "case_l_supplemental_probe_decision_drift",
+        "chat_icon_family_drift",
         "chat_motion_and_streaming_drift",
+        "chat_nier_mode_drift",
         "chat_room_send_semantics",
+        "chat_send_stop_presentation_drift",
+        "chat_status_legibility_drift",
         "chat_transcript_presentation_drift",
+        "chat_working_activity_presentation_drift",
         "child_run_history_retention_drift",
         "collaborative_run_failure_event_drift",
         "collaborative_workflow_event_scope_expansion",
@@ -5973,15 +5983,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "40e772d99af6f243b2b15753be1584a7f6ae18631f13444e32be1306c798f1f4",
+      "sha256": "3a6a49cfdcba081aae81a23068a77e1ede8c11809bea295592445912b7c5f7f2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 127
+        "accepted": 132
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 38,
+        "decision": 43,
         "requirement": 88
       },
       "validation_surfaces": [
@@ -7372,9 +7382,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 35,
-        "True": 548
+        "True": 554
       },
-      "heading_count": 950,
+      "heading_count": 957,
       "implementation_surfaces": [
         "Concepts/PMConcept7.html",
         "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js",
@@ -7501,9 +7511,9 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 40033,
+      "line_count": 40411,
       "path": "Plans/FinalGUISpec.md",
-      "plan_unit_count": 583,
+      "plan_unit_count": 589,
       "plan_unit_ids": [
         "F3-501",
         "F3-502",
@@ -8087,7 +8097,13 @@
         "F3-580",
         "F3-581",
         "F3-582",
-        "F3-583"
+        "F3-583",
+        "F3-584",
+        "F3-585",
+        "F3-586",
+        "F3-587",
+        "F3-588",
+        "F3-589"
       ],
       "reasoning_tiers": [
         "high",
@@ -8098,7 +8114,12 @@
         "advice_presented_as_card",
         "browser_concept_promoted_to_native_certification",
         "busy_send_semantics_drift",
+        "chat_icon_family_drift",
+        "chat_nier_mode_drift",
+        "chat_send_stop_presentation_drift",
+        "chat_status_legibility_drift",
         "chat_transcript_presentation_drift",
+        "chat_working_activity_presentation_drift",
         "collaboration_popup_or_activity_family_grammar_drift",
         "compatibility_drift",
         "composer_stack_collision",
@@ -8208,10 +8229,10 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "1851dc94810cabbfc6c8c663f6cacee461a0570d6c0d782dfe34e7ab4482c3a5",
+      "sha256": "b634ef963c1b7f7bac9b658ee48e2f906af2cfad619b381700ddd784f46f9d67",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 582,
+        "accepted": 588,
         "retired": 1
       },
       "title": "Puppet Master GUI Specification -- Slint Rewrite",
@@ -8223,7 +8244,7 @@
         "gui_requirement": 29,
         "integration_contract": 13,
         "interaction_contract": 5,
-        "requirement": 451,
+        "requirement": 457,
         "security_constraint": 1,
         "validation_rule": 1
       },
@@ -20549,7 +20570,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-02T04:17:33Z",
+  "generated_at_utc": "2026-10-07T21:12:13Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20558,12 +20579,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3560,
-      "True": 3372
+      "True": 3383
     },
-    "plan_unit_count": 6932,
+    "plan_unit_count": 6943,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6740,
+      "accepted": 6751,
       "retired": 182,
       "superseded": 10
     },
@@ -20596,7 +20617,7 @@
       "contract": 5,
       "contract_requirement": 2,
       "data_contract": 8,
-      "decision": 61,
+      "decision": 66,
       "deferred_enhancement": 8,
       "delta_contract": 1,
       "derived_control_policy": 1,
@@ -20630,7 +20651,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5392,
+      "requirement": 5398,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

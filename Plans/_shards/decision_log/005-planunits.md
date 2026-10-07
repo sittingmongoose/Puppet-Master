@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2953-L10601
+Source lines: L3112-L11038
 
-Source SHA256: `40e772d99af6f243b2b15753be1584a7f6ae18631f13444e32be1306c798f1f4`
+Source SHA256: `3a6a49cfdcba081aae81a23068a77e1ede8c11809bea295592445912b7c5f7f2`
 
 ---
 
@@ -7656,4 +7656,282 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Release_Supply_Chain.md
   - Plans/Automated_Testing_System.md
+```
+
+### DL-140 - Assistant Chat Icons Become One Neon Family
+
+```yaml
+plan_unit_id: DL-140
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-140 records the owner decision of 2026-10-01, extended on 2026-10-02 and approved on 2026-10-07. Every icon in
+  the assistant chat is drawn from one icon registry with one drawing per concept, reused everywhere, in the activity
+  bar's neon-sign look: a lit stroke over a halo of the same ink plus a soft glow behind the host, never a blur or
+  filter (F3-584). Ordinary controls ignite on hover or keyboard focus; status icons are always lit and moving like
+  the activity bar; concept icons are lit and still; each icon moves part by part in its own way, the activity bar
+  included; colour is reserved for status; module cards draw their marks lit and still. The wand is redrawn as a rod
+  with a star tip and the Fast-mode bolt is amber and strikes like lightning (F3-588). The halo approach stays after
+  DL-139 made blur available, because it costs the same on the Skia CPU raster and NieR Mode draws no glow. Jared
+  asked: "I really like the icons/animations used for the items in the chat activity bar.  They are kind of like
+  neon signs, each with unique animations.  Can you redesign the icons used everywhere else in that html concept to
+  match that style?  That includes the icons in the working animation(which arent far off now).  The icons next to the
+  thread activity history previews should convey to the user the status of that thread easily.  A lot of the icons
+  will be repeated so that is fine, you shouldnt make bespoke icons for artifacts everywhere it's needed when you
+  already have 1, if that makes sense." He answered "Ignite on hover (Recommended)",
+  "Per-glyph, bar included (Recommended)" and "Portable neon (Recommended)", later wrote "The magic wand looks more
+  like a magic pencil.  So that needs to be fixed.  Lightning bolt for fast mode should be colored and hopefully its
+  animated.  Most of it looked good from what I saw." and "I like option 3.  Also, the working animation with the
+  circle and ball, the ball should be orbiting on the circle, not on the outside of it.  And the lightning bolt, the
+  animation is a little off, maybe think of lighting being a crack, like you see lightning coming down from the
+  sky(even though it comes from the ground technically but that isnt how it looks).  Right now the lightning bolt just
+  kinda looks like it almost shakes which misses the opportunity to act like lightning.", and approved the result on
+  2026-10-07: "changes are approved, you can PM_Chat_Assistant_5.6_Pro_Standalone.html with your version"
+gui_related: true
+gui_classification_reason: Records an owner decision on the assistant chat's visual design.
+split_recommended: false
+depends_on: [DL-139, F3-425, ACD-469]
+unblocks: [F3-584, F3-588]
+acceptance_criteria:
+  - "Every assistant chat icon is drawn from one registry with one drawing per concept (F3-584)."
+  - "Controls ignite on hover or focus, status icons are always lit and moving, and concept icons are lit and still."
+  - "The icon glow is a halo and a soft host glow, not a blur or filter."
+  - "The owner answers are preserved verbatim with their source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_icon_family_drift
+reasoning_tier: high
+context_scope: chat_neon_icons
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/00-plans-index.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/PLAN.md, SHA-256 a60dc9a203f9b55c4b30b5a919678110524a4d7933e7cae380cd1d974d95475d"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
+preserved_exact_tokens:
+  - "DL-140"
+  - "neon signs"
+  - "Ignite on hover (Recommended)"
+  - "Per-glyph, bar included (Recommended)"
+  - "Portable neon (Recommended)"
+negative_constraints:
+  - "Do not draw a separate icon for each place a concept appears."
+  - "Do not draw the icon glow with a blur or filter."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-141 - Every Status Reads At A Glance From One Shared Set Of Marks
+
+```yaml
+plan_unit_id: DL-141
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-141 records the owner decision of 2026-10-01, amended on 2026-10-02. One set of 13 status marks draws every
+  status in the assistant chat (thread rows, the chat header, the activity bar previews, To-Dos, plan steps and module
+  cards), each mark a distinct shape that reads without colour or motion (F3-585). Thread-row marks show only while
+  the history drawer is wide. The working mark's bead travels on its ring. In lists needs you outshines working, and
+  idle and paused never read more lit than a live status on the same row state. The chat header's status word takes
+  its mark's tone. Lead rulings within the decision: the working mark draws a still ring with only its bead moving
+  (one lap in 9 s), the needs-you mark hops with a glow swell, and idle contrast below 3:1 on hovered or selected
+  light-theme rows is accepted under Jared's standing rule that concepts get no accessibility-only work. Jared asked
+  that "The icons next to the thread activity history previews should convey to the user the status of that thread
+  easily.", chose "Wide mode only", and wrote "the ball should be orbiting on the circle, not on the outside of it."
+gui_related: true
+gui_classification_reason: Records an owner decision on the assistant chat's visual design.
+split_recommended: false
+depends_on: [DL-140]
+unblocks: [F3-585]
+acceptance_criteria:
+  - "The status set of F3-585 draws every status in the assistant chat."
+  - "Thread-row status marks show only while the history drawer is wide."
+  - "The owner answers are preserved verbatim with their source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_status_legibility_drift
+reasoning_tier: high
+context_scope: chat_neon_icons
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/PLAN.md, SHA-256 a60dc9a203f9b55c4b30b5a919678110524a4d7933e7cae380cd1d974d95475d"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
+preserved_exact_tokens:
+  - "DL-141"
+  - "Wide mode only"
+  - "the ball should be orbiting on the circle, not on the outside of it."
+negative_constraints:
+  - "Do not show thread-row status marks in the narrow history drawer."
+  - "Do not let idle or paused read more lit than a live status."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-142 - The Working Activity Live Step Is A Dark Disc With A Lit Icon
+
+```yaml
+plan_unit_id: DL-142
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-142 records the owner decision of 2026-10-01. In the working activity the live subject's node and the centre disc
+  are a dark disc rimmed in the phase hue with the subject's icon lit in that hue and acting while the run runs;
+  finished subjects are lit green, pending subjects sit at rest, and only the live node and the current strip or rail
+  disc act (F3-586). Jared chose "Dark disc, lit glyph (Recommended)".
+gui_related: true
+gui_classification_reason: Records an owner decision on the assistant chat's visual design.
+split_recommended: false
+depends_on: [DL-140, ACD-473]
+unblocks: [F3-586]
+acceptance_criteria:
+  - "The live node and the centre disc are a dark disc with a lit icon in the phase hue (F3-586)."
+  - "Finished subjects are lit green and never act."
+  - "The owner answer is preserved verbatim with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_working_activity_presentation_drift
+reasoning_tier: high
+context_scope: chat_neon_icons
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/PLAN.md, SHA-256 a60dc9a203f9b55c4b30b5a919678110524a4d7933e7cae380cd1d974d95475d"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
+preserved_exact_tokens:
+  - "DL-142"
+  - "Dark disc, lit glyph (Recommended)"
+negative_constraints:
+  - "Do not draw the live step as a filled accent disc with a dark icon."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-143 - Send And Stop Are The Solid Living Design
+
+```yaml
+plan_unit_id: DL-143
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-143 records the owner decision of 2026-10-02. The composer's Send and Stop control is the solid-living design
+  (F3-587): a solid chip, accent for Send and Queue and danger for Stop, with the craft in the glyph; the paper plane
+  lifts off and a fresh plane morphs into the Stop square before the danger colour floods; the square breathes gently
+  while a run is live; Queue stacks planes with a count; empty and full clicks sputter; the second click of a
+  double-click is ignored. Three designs were prototyped and judged (orbit-tie 56, ignition 50.5, solid-living 45);
+  Jared picked option 3, solid-living, and the judge's defects in it were fixed while building it. The behaviour stays
+  with F3-563 and ACD-471. Jared wrote "The send and stop buttons for the composer need to be really good too as they
+  are something that will be looked at a lot." and then "I like option 3."
+gui_related: true
+gui_classification_reason: Records an owner decision on the assistant chat's visual design.
+split_recommended: false
+depends_on: [DL-108, F3-563, ACD-471]
+unblocks: [F3-587]
+acceptance_criteria:
+  - "The composer renders the solid-living Send and Stop control of F3-587 in every state."
+  - "Stop never clears the follow-up queue, and the double-click guard uses the click count, not a time window."
+  - "The owner answers are preserved verbatim with their source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_send_stop_presentation_drift
+reasoning_tier: high
+context_scope: chat_send_stop
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/VERDICT.md, SHA-256 2bc323ea16e66d08512e3260969a9b3031c1688889d0f0e61363bce561b5e48a"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/SOLID-LIVING-NOTES.md, SHA-256 15bcacd90861b391404fbe9415f71fe79df7670c12a962c9cb59035875b9eb87"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/specs/SENDSTOP-BUILD.md, SHA-256 50c4cf5663543942eb6b11bab45c0d9b1bacfddeb4460979a748a3ad0b50890b"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
+preserved_exact_tokens:
+  - "DL-143"
+  - "solid-living"
+  - "I like option 3."
+negative_constraints:
+  - "Do not show the plane on the danger colour."
+  - "Do not guard the double-click with a time window."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-144 - NieR Mode Covers The Whole Assistant Chat And Scene Changes Cross Fade
+
+```yaml
+plan_unit_id: DL-144
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-144 records the owner decisions of 2026-10-02. NieR Mode (SSYS-042) covers every assistant chat surface, with
+  each installed part placed in the chat and the transcript stage counted as the app's ground so the scene shows
+  behind the conversation (F3-589). A change from one scene to another cross-fades by opacity over 520 ms, never above
+  either scene's resting strength, everywhere a scene changes, PMConcept7 included; the chat adds no moving touches
+  inside the scenes. In the concept NieR Light and NieR Dark are Demo Studio themes (lab only, ACD-474); in the
+  product NieR Mode stays the Settings switch. Jared wrote "Dont forget about the new NieR mode found in
+  PMConcept7.html, that will impacting this once it is ported into PMoncept7(not your job) so might as well address
+  those changes now too.", then "might as well add the nier mode to the whole concept as well.  it will need to be
+  done eventually so might as well have you do it.  Make it a selectable theme in the demo studio.", and on the two
+  scene ideas "Also the images you sent me looked good.  Do 2 but not 1."
+gui_related: true
+gui_classification_reason: Records an owner decision on the assistant chat's visual design.
+split_recommended: false
+depends_on: [DL-140, SSYS-042, F3-441, ACD-474]
+unblocks: [F3-589]
+acceptance_criteria:
+  - "Every assistant chat surface renders under NieR Mode with its parts placed as F3-589 lists."
+  - "A change between two scenes cross-fades over 520 ms and swaps instantly under reduced motion."
+  - "The owner answers are preserved verbatim with their source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_nier_mode_drift
+reasoning_tier: high
+context_scope: chat_nier_mode
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/specs/NIER.md, SHA-256 ea5f2a23dc4b48b50bdd90da19492aecbfa9b779a853d1d55942a1571fa059b5"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
+preserved_exact_tokens:
+  - "DL-144"
+  - "Do 2 but not 1."
+negative_constraints:
+  - "Do not make NieR Mode a ninth selectable theme in the product."
+  - "Do not add moving touches inside the scenes in the chat."
+owner_hints:
+  - Plans/FinalGUISpec.md
 ```
