@@ -1651,8 +1651,10 @@
   }
   /* the stepper builds ±1 steps; minutes step by 5 (FOUNDATION REQUEST: a `step` option on pmxStepper) */
   function stepBy(html, n) { return html.replace('data-delta="-1"', 'data-delta="-' + n + '"').replace('data-delta="1"', 'data-delta="' + n + '"'); }
-  /* the ink keys restart on every open, so nothing inks on open (M2) */
-  function inked(key, text) { var P2 = window.PM56_PMX; return P2 && P2.ink ? P2.ink('sched:' + (ui.openSeq || 0) + ':' + key, text) : esc(text); }
+  /* the ink keys restart on every open, so nothing inks on open (M2). A drag
+     rewrites the time every frame; ink waits for pointerup so the read-back
+     does not flash on each step. */
+  function inked(key, text) { if (ui.schedDrag) return esc(text); var P2 = window.PM56_PMX; return P2 && P2.ink ? P2.ink('sched:' + (ui.openSeq || 0) + ':' + key, text) : esc(text); }
   function tzTrigger(ctx, action, anchor, zone) {
     return SH.pickerButton({ action: action, anchor: anchor, strong: esc(zoneCity(zone)), small: esc(zoneShort(zone)), iconHtml: ctx.icon('down', 11) });
   }
@@ -1678,10 +1680,16 @@
   /* a plate label's half width, generous for the widest theme font (Poppins, the retro mono): 3.8 px a character */
   function labelHalf(text) { return String(text).length * 3.8 + 2; }
   var NOW_W = 24;  /* the "now" label */
-  function trackSvg(d, w, now, W) {
-    var PP = SH.pmxPlateParts, zone = d.timezone, X0 = 24, X1 = W - 24, TL = 44, span = 48 * 3600000, full = W >= 700;
+  /* shared with the drag so the drawing and the pointer can never disagree */
+  function trackFrame(zone, now, W) {
+    var X0 = 24, X1 = W - 24, span = 48 * 3600000;
     var p0 = zp(zone, now - 2 * 3600000);
-    var start = now - 2 * 3600000 - ((p0 ? p0.mi : 0) * 60000 + (p0 ? p0.s : 0) * 1000), end = start + span;
+    var start = now - 2 * 3600000 - ((p0 ? p0.mi : 0) * 60000 + (p0 ? p0.s : 0) * 1000);
+    return { start: start, end: start + span, span: span, X0: X0, X1: X1 };
+  }
+  function trackSvg(d, w, now, W) {
+    var PP = SH.pmxPlateParts, zone = d.timezone, TL = 44, full = W >= 700;
+    var f = trackFrame(zone, now, W), start = f.start, end = f.end, span = f.span, X0 = f.X0, X1 = f.X1;
     function x(t) { return Math.round((X0 + (t - start) / span * (X1 - X0)) * 10) / 10; }
     var sendX = w.ok ? (w.at < start ? X0 : w.at > end ? X1 : x(w.at)) : null, nowX = x(now);
     var labStep = full ? 6 : 12, minorStep = full ? 1 : 3, out = '', firstMid = null;
@@ -1710,13 +1718,14 @@
     }
     out += '<g class="pmx-sched-now" data-pmx-part="when"><line x1="' + nowX + '" x2="' + nowX + '" y1="' + (TL - 10) + '" y2="' + (TL + 10) + '"/>' +
       PP.label({ x: nowX - 10, y: 66, text: 'now', anchor: 'end' }) + '</g>';
+    out += '<rect class="pmx-sched-hit" x="' + X0 + '" y="' + (TL - 20) + '" width="' + (X1 - X0) + '" height="40"/>';
     if (w.ok && w.past) {
       out += PP.label({ x: X0, y: 92, text: 'That time has passed. Pick a later one.', cls: 'lab' }).replace('<text ', '<text data-state="past" ');
     } else if (w.ok) {
       var late = w.at > end, state = late ? 'later' : 'on';
       var say = late ? 'Sends ' + w.day : 'Sends ' + w.clock;
       var right = sendX > X1 - 170;
-      out += '<g class="pmx-sched-marker" data-state="' + state + '" data-pmx-part="when" style="--x:' + sendX + 'px"><line x1="0" x2="0" y1="' + TL + '" y2="80"/>' +
+      out += '<g class="pmx-sched-marker" data-state="' + state + '" data-pmx-part="when" style="--x:' + sendX + 'px"><rect class="pmx-sched-grab" x="-12" y="' + (TL - 18) + '" width="24" height="52"/><line x1="0" x2="0" y1="' + TL + '" y2="80"/>' +
         '<circle class="pmx-sched-dot" cx="0" cy="' + TL + '" r="4"/>' + PP.glyph('clock', -7, 80, 14) +
         PP.label({ x: right ? -14 : 14, y: 92, text: esc(say), anchor: right ? 'end' : 'start', cls: 'lab' }) + '</g>';
     } else {
@@ -1725,8 +1734,15 @@
     return out;
   }
   function trackPlate(d, w, now) {
-    function one(mode, W) { return SH.pmxPlate({ key: 'sched-track-' + mode, kind: 'schedule', mode: mode, w: W, h: TRACK_H, fitH: TRACK_H, svg: trackSvg(d, w, now, W), cls: 'pmx-sched-plate' }); }
-    return '<div class="pmx-sched-slot" data-k="sched-track-slot">' + SH.pmxPlateFit({ key: 'sched-track', kind: 'schedule', affects: 'when', plates: [one('full', 904), one('compact', 580)] }) + '</div>';
+    function one(mode, W) {
+      var fr = trackFrame(d.timezone, now, W);
+      var attrs = 'data-sched-t0="' + fr.start + '" data-sched-span="' + fr.span + '" data-sched-x0="' + fr.X0 + '" data-sched-x1="' + fr.X1 + '"';
+      return SH.pmxPlate({ key: 'sched-track-' + mode, kind: 'schedule', mode: mode, w: W, h: TRACK_H, fitH: TRACK_H, svg: trackSvg(d, w, now, W), cls: 'pmx-sched-plate', attrs: attrs });
+    }
+    var frame = trackFrame(d.timezone, now, 904), minA = Math.ceil((Date.now() + 60000) / 300000) * 300000;
+    var valueNow = w.ok ? w.at : minA, valueText = w.ok ? (w.day + ' · ' + w.clock + ' · ' + w.rel) : 'Pick a date and a time';
+    return '<div class="pmx-sched-slot" data-k="sched-track-slot" data-sched-drag role="slider" tabindex="0" aria-label="Send time" aria-valuemin="' + minA + '" aria-valuemax="' + frame.end + '" aria-valuenow="' + valueNow + '" aria-valuetext="' + esc(valueText) + '" title="Drag the marker or use the arrow keys"' + (ui.schedDrag ? ' data-dragging=""' : '') + '>' +
+      SH.pmxPlateFit({ key: 'sched-track', kind: 'schedule', affects: 'when', plates: [one('full', 904), one('compact', 580)] }) + '</div>';
   }
 
   /* ---------------------------------------------------------------- the week map (8.8 plate) */
@@ -1862,20 +1878,16 @@
       '<p class="pmx-sched-resolved" data-state="' + (w.ok && !w.past ? 'ok' : 'check') + '">' + resolved + '</p></div>' +
       (dstSay ? '<p class="pmx-sched-dstsay">' + SH.pmxGlyph('clock', 13) + '<span>' + esc(dstSay) + '</span></p>' : '');
     var when = SH.pmxQuestion({ key: 'sched-msg-when', cls: 'pmx-sched-when', title: 'When should it send?', meta: presets, body: trackPlate(d, w, now) + inputs });
-    /* lower: who answers it and what happens if it is missed; the promises; Technical details */
+    /* lower: who answers it and what happens if it is missed. Schedule Message
+       has no promise lines and no Technical details (Build At, the manager and
+       the record still use techBlock). */
     var missed = optionOf(MISSED_MSG_OPTIONS, d.missed);
     var route = SH.pmxCtl({ key: 'sched-msg-route', layout: 'stack', label: 'Answered by', affects: 'route',
       helper: 'We’ll use exactly this model and account. If it isn’t available then, we’ll hold the message and ask you. We never swap it.',
       control: window.PM56_PICKERS.modelButton('sched-pick-model', 'schedule-model', d.modelId) });
     var miss = SH.pmxCtl({ key: 'sched-msg-missed', layout: 'stack', label: 'If Puppet Master is closed at that time', affects: 'missed', helper: esc(missed.description),
       control: missedControl(ctx, 'sched-pick-msg-missed', 'sched-msg-missed-pick', missed, d, 'msg-grace') });
-    var grace = '';
-    var promises = SH.pmxPromises(
-      SH.pmxPromise({ key: 'sched-mp1', glyph: 'lock', text: files.length ? 'Sends this exact copy; later edits to the file won’t be sent.' : 'Sends this exact text; later edits won’t change it.' }) +
-      SH.pmxPromise({ key: 'sched-mp2', glyph: 'clock', text: 'You can edit or cancel it any time before it sends.' }));
-    var tech = techBlock('message', [(editing ? 'Command: cmd.chat.schedule_message.update' : 'Command: cmd.chat.schedule_message'),
-      w.ok ? 'Sends at ' + new Date(w.at).toISOString() + ' (UTC) · ' + d.timezone : 'Time zone ' + d.timezone].concat(editing ? ['Schedule id ' + ui.editingMsgId] : []));
-    var lower = '<div class="pmx-sched-lower" data-k="sched-msg-lower"><div class="pmx-sched-cell">' + route + promises + '</div><div class="pmx-sched-cell">' + miss + grace + tech + '</div></div>';
+    var lower = '<div class="pmx-sched-lower" data-k="sched-msg-lower"><div class="pmx-sched-cell">' + route + '</div><div class="pmx-sched-cell">' + miss + '</div></div>';
     /* foot: the read-back in the voice, the refusal in its place when Schedule is refused */
     var over = text.length > 8000, empty = !text.trim();
     var reason = empty ? 'Write a message first.' : over ? 'That’s too long (8,000 characters max).' : '';
@@ -3221,6 +3233,99 @@
     else return;
     clearRefusal(k.indexOf('msg-') === 0 ? md : bd);
     reRender(ctx);
+  });
+
+  /* Schedule Message: the 48-hour track is the send-time control. Drag snaps
+     to 15 minutes (5 with Shift) and never lands in the past. The overlay
+     repaint is one frame; ink waits until pointerup. */
+  var dragPtr = null, dragFrame = 0;
+  function minAllowedAt() { return Math.ceil((Date.now() + 60000) / 300000) * 300000; }
+  function visibleTrackFig(slot) {
+    var fit = slot.querySelector('.pmx-plate-fit');
+    var mode = (fit && fit.getAttribute('data-fit')) || 'full';
+    var fig = slot.querySelector('.pmx-plate[data-mode="' + mode + '"]');
+    if (fig && fig.getClientRects().length) return fig;
+    var plates = slot.querySelectorAll('.pmx-plate');
+    for (var i = 0; i < plates.length; i++) if (plates[i].getClientRects().length) return plates[i];
+    return fig;
+  }
+  function writeMsgInstant(d, t) {
+    var p = T0.parts(d.timezone, t); if (!p) return;
+    d.date = ymdOf(p); d.time = pad2(p.h) + ':' + pad2(p.mi); clearRefusal(d);
+  }
+  function applyTrackX(slot, clientX, shift) {
+    var d = ui.msgDraft; if (!d) return;
+    var fig = visibleTrackFig(slot); if (!fig) return;
+    var svg = fig.querySelector('svg'); if (!svg) return;
+    var ctm = svg.getScreenCTM(); if (!ctm) return;
+    var t0 = Number(fig.getAttribute('data-sched-t0')), span = Number(fig.getAttribute('data-sched-span'));
+    var x0 = Number(fig.getAttribute('data-sched-x0')), x1 = Number(fig.getAttribute('data-sched-x1'));
+    if (![t0, span, x0, x1].every(function (n) { return Number.isFinite(n); }) || x1 <= x0 || span <= 0) return;
+    var vx = new DOMPoint(clientX, 0).matrixTransform(ctm.inverse()).x;
+    vx = Math.max(x0, Math.min(x1, vx));
+    var step = shift ? 300000 : 900000;
+    var t = Math.round((t0 + (vx - x0) / (x1 - x0) * span) / step) * step;
+    t = Math.max(minAllowedAt(), Math.min(t0 + span, t));
+    writeMsgInstant(d, t);
+  }
+  function paintDrag() {
+    dragFrame = 0;
+    if (!ui.schedDrag) return;
+    var ctx = EXT.ctx && EXT.ctx();
+    if (ctx && ctx.renderOverlays) ctx.renderOverlays();
+  }
+  function scheduleDragPaint() { if (!dragFrame) dragFrame = requestAnimationFrame(paintDrag); }
+  function endSchedDrag() {
+    if (dragPtr == null && !ui.schedDrag) return;
+    if (dragFrame) { cancelAnimationFrame(dragFrame); dragFrame = 0; }
+    var ctx = EXT.ctx && EXT.ctx();
+    if (ui.schedDrag && ctx && ctx.renderOverlays) ctx.renderOverlays();
+    ui.schedDrag = false;
+    dragPtr = null;
+    if (ctx) reRender(ctx);
+  }
+  function stepMsgKey(d, target) {
+    var t = Math.round(target / 300000) * 300000;
+    t = Math.max(minAllowedAt(), Math.min(trackFrame(d.timezone, nowMinute(), 904).end, t));
+    writeMsgInstant(d, t);
+  }
+  document.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0 || !ui.msgDraft || ui.schedDrag) return;
+    var slot = e.target && e.target.closest && e.target.closest('.sched-dialog--message .pmx-sched-slot[data-sched-drag]');
+    if (!slot) return;
+    e.preventDefault();
+    try { slot.setPointerCapture(e.pointerId); } catch (err) { }
+    try { slot.focus({ preventScroll: true }); } catch (err2) { }
+    slot.setAttribute('data-dragging', '');
+    ui.schedDrag = true;
+    dragPtr = e.pointerId;
+    applyTrackX(slot, e.clientX, e.shiftKey);
+    scheduleDragPaint();
+  });
+  document.addEventListener('pointermove', function (e) {
+    if (!ui.schedDrag || e.pointerId !== dragPtr) return;
+    var slot = document.querySelector('.sched-dialog--message .pmx-sched-slot[data-sched-drag]');
+    if (!slot) return;
+    applyTrackX(slot, e.clientX, e.shiftKey);
+    scheduleDragPaint();
+  });
+  document.addEventListener('pointerup', function (e) { if (e.pointerId === dragPtr) endSchedDrag(); });
+  document.addEventListener('pointercancel', function (e) { if (e.pointerId === dragPtr) endSchedDrag(); });
+  document.addEventListener('keydown', function (e) {
+    var slot = e.target && e.target.closest && e.target.closest('.sched-dialog--message .pmx-sched-slot[data-sched-drag]');
+    if (!slot || !ui.msgDraft || e.altKey || e.ctrlKey || e.metaKey || ui.schedDrag) return;
+    var d = ui.msgDraft, w = msgWhen(d, nowMinute()), from = w.ok ? w.at : minAllowedAt(), target = null;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') target = from + (e.shiftKey ? 3600000 : 300000);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') target = from + (e.shiftKey ? -3600000 : -300000);
+    else if (e.key === 'PageDown') target = from + 86400000;
+    else if (e.key === 'PageUp') target = from - 86400000;
+    else if (e.key === 'Home') target = minAllowedAt();
+    else if (e.key === 'End') target = trackFrame(d.timezone, nowMinute(), 904).end;
+    else return;
+    e.preventDefault();
+    stepMsgKey(d, target);
+    var ctx = EXT.ctx && EXT.ctx();
+    if (ctx) reRender(ctx);
   });
 
   /* =====================================================================

@@ -24,16 +24,20 @@
  * defect.
  *
  *   node tests/scheduling-verify.mjs            # against index.html
- *   node tests/scheduling-verify.mjs --json     # machine-readable
+ *   node tests/scheduling-verify.mjs --file <html> --json
  */
-import { chromium } from 'playwright-core';
+import { chromium } from 'playwright';
 import { writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
-const TARGET = 'file://' + resolve(ROOT, 'index.html');
+function argVal(flag) { const i = process.argv.indexOf(flag); return i >= 0 ? process.argv[i + 1] : ''; }
+const fileArg = argVal('--file');
+const TARGET = fileArg
+  ? (fileArg.startsWith('file:') ? fileArg : 'file://' + resolve(fileArg))
+  : 'file://' + resolve(ROOT, 'index.html');
 const JSON_OUT = process.argv.includes('--json');
 
 const results = [];
@@ -614,6 +618,137 @@ async function main() {
     check('a user-supplied reset time is labelled "user supplied", never "provider reported"',
       /user supplied/i.test(supplied) && !/provider reported/i.test(supplied), supplied);
   }
+
+  /* ================================================================
+     7b. Schedule Message: drag the 48-hour track, then the arrow keys.
+         The track is the control. 15-minute snaps, 5 with Shift, never past.
+     ================================================================ */
+  await runAction('sched-close-dialog');
+  await page.waitForTimeout(200);
+  await runAction('sched-open-message');
+  await page.waitForTimeout(500);
+  const trackOpen = await ev(() => {
+    const dlg = document.querySelector('.sched-dialog--message');
+    const slot = document.querySelector('[data-k="sched-track-slot"]');
+    const text = dlg ? dlg.innerText : '';
+    return {
+      role: slot && slot.getAttribute('role'),
+      label: slot && slot.getAttribute('aria-label'),
+      hit: !!document.querySelector('.sched-dialog--message .pmx-sched-hit'),
+      grab: !!document.querySelector('.sched-dialog--message .pmx-sched-grab'),
+      tech: !!document.querySelector('.sched-dialog--message [data-action="sched-toggle-tech"]'),
+      promise: /later edits|any time before it sends/.test(text),
+      mode: (document.querySelector('[data-k="sched-track"]') || {}).getAttribute?.('data-fit') || ''
+    };
+  });
+  check('Schedule Message track is a send-time slider', trackOpen.role === 'slider' && trackOpen.label === 'Send time' && trackOpen.hit && trackOpen.grab, JSON.stringify(trackOpen));
+  check('Schedule Message has no Technical details and no promise lines', trackOpen.tech === false && trackOpen.promise === false, JSON.stringify(trackOpen));
+  const dragGeom = await ev(() => {
+    const slot = document.querySelector('[data-k="sched-track-slot"]');
+    if (!slot || slot.getAttribute('role') !== 'slider') return null;
+    const fig = [...slot.querySelectorAll('.pmx-plate')].find(p => p.getClientRects().length);
+    if (!fig || !fig.querySelector('.pmx-sched-dot')) return null;
+    const svg = fig.querySelector('svg');
+    const ctm = svg.getScreenCTM();
+    const x0 = +fig.getAttribute('data-sched-x0'), x1 = +fig.getAttribute('data-sched-x1');
+    const a = new DOMPoint(x0, 44).matrixTransform(ctm);
+    const b = new DOMPoint(x1, 44).matrixTransform(ctm);
+    const dot = fig.querySelector('.pmx-sched-dot').getBoundingClientRect();
+    return { x: dot.x + dot.width / 2, y: dot.y + dot.height / 2, ax: a.x, bx: b.x, span: +fig.getAttribute('data-sched-span'), mode: fig.getAttribute('data-mode'), now: +slot.getAttribute('aria-valuenow') };
+  });
+  check('the open sheet shows the full 48-hour plate', !!(dragGeom && dragGeom.mode === 'full'), JSON.stringify(dragGeom));
+  if (!dragGeom) {
+    check('dragging the marker advances the send time about 200px, snapped to 15 minutes', false, 'no track');
+    check('the drag writes the Date and Time inputs, the marker label, the read-back and the primary', false, 'no track');
+    check('ArrowRight adds 5 minutes', false, 'no track');
+    check('Shift+ArrowUp adds 60 minutes', false, 'no track');
+    check('Home goes to the next allowed minute, never the past', false, 'no track');
+    check('a narrow sheet shows the compact plate', false, 'no track');
+    check('dragging the compact plate changes the send time', false, 'no track');
+  } else {
+  await page.mouse.move(dragGeom.x, dragGeom.y);
+  await page.mouse.down();
+  await page.mouse.move(dragGeom.x + 200, dragGeom.y, { steps: 10 });
+  await page.waitForTimeout(80);
+  const midDrag = await ev(() => {
+    const slot = document.querySelector('[data-k="sched-track-slot"]');
+    const marker = document.querySelector('.sched-dialog--message .pmx-sched-marker');
+    const cs = marker ? getComputedStyle(marker) : null;
+    return {
+      dragging: !!(slot && slot.hasAttribute('data-dragging')),
+      ink: document.querySelectorAll('.sched-dialog--message .pmx-ink').length,
+      transition: cs ? cs.transitionProperty + ' ' + cs.transitionDuration : '',
+      now: slot ? +slot.getAttribute('aria-valuenow') : 0,
+      time: (document.querySelector('[data-sched-input="msg-time"]') || {}).value || '',
+      label: (document.querySelector('.sched-dialog--message .pmx-sched-marker text') || {}).textContent || ''
+    };
+  });
+  await page.mouse.up();
+  await page.waitForTimeout(250);
+  const dragged = await ev(() => {
+    const slot = document.querySelector('[data-k="sched-track-slot"]');
+    return {
+      now: slot ? +slot.getAttribute('aria-valuenow') : 0,
+      dragging: !!(slot && slot.hasAttribute('data-dragging')),
+      time: (document.querySelector('[data-sched-input="msg-time"]') || {}).value || '',
+      date: (document.querySelector('[data-sched-input="msg-date"]') || {}).value || '',
+      label: (document.querySelector('.sched-dialog--message .pmx-sched-marker text') || {}).textContent || '',
+      primary: (document.querySelector('.sched-dialog--message .pmx-primary') || {}).textContent || '',
+      read: (document.querySelector('.sched-dialog--message .pmx-readback') || {}).textContent || ''
+    };
+  });
+  const rawDelta = (dragGeom.bx - dragGeom.ax) ? (200 / (dragGeom.bx - dragGeom.ax)) * dragGeom.span : 0;
+  check('dragging the marker advances the send time about 200px, snapped to 15 minutes',
+    midDrag.dragging && !midDrag.ink && /none/.test(midDrag.transition) && dragged.now > dragGeom.now &&
+    Math.abs((dragged.now - dragGeom.now) - rawDelta) < 16 * 60000 && dragged.now % 900000 === 0 && !dragged.dragging,
+    JSON.stringify({ rawDelta, before: dragGeom.now, mid: midDrag, after: dragged }));
+  check('the drag writes the Date and Time inputs, the marker label, the read-back and the primary',
+    /^\d{2}:\d{2}$/.test(dragged.time) && /^\d{4}-\d{2}-\d{2}$/.test(dragged.date) &&
+    dragged.label.indexOf('Sends') === 0 && dragged.primary.indexOf('Schedule for') === 0 && dragged.read.length > 12,
+    JSON.stringify(dragged));
+  await page.focus('[data-k="sched-track-slot"]');
+  const key0 = dragged.now;
+  await page.keyboard.press('ArrowRight');
+  await page.waitForTimeout(180);
+  const key1 = await ev(() => +document.querySelector('[data-k="sched-track-slot"]').getAttribute('aria-valuenow'));
+  check('ArrowRight adds 5 minutes', key1 - key0 === 300000, String(key1 - key0));
+  await page.keyboard.down('Shift');
+  await page.keyboard.press('ArrowUp');
+  await page.keyboard.up('Shift');
+  await page.waitForTimeout(180);
+  const key2 = await ev(() => +document.querySelector('[data-k="sched-track-slot"]').getAttribute('aria-valuenow'));
+  check('Shift+ArrowUp adds 60 minutes', key2 - key1 === 3600000, String(key2 - key1));
+  await page.keyboard.press('Home');
+  await page.waitForTimeout(180);
+  const homed = await ev(() => {
+    const slot = document.querySelector('[data-k="sched-track-slot"]');
+    return { now: +slot.getAttribute('aria-valuenow'), min: +slot.getAttribute('aria-valuemin') };
+  });
+  check('Home goes to the next allowed minute, never the past', homed.now === homed.min && homed.now >= Date.now(), JSON.stringify(homed));
+  const saved = page.viewportSize();
+  await page.setViewportSize({ width: 700, height: 900 });
+  await page.waitForTimeout(500);
+  const compact = await ev(() => {
+    const fig = [...document.querySelectorAll('[data-k="sched-track-slot"] .pmx-plate')].find(p => p.getClientRects().length);
+    const dot = fig && fig.querySelector('.pmx-sched-dot');
+    const r = dot ? dot.getBoundingClientRect() : null;
+    return { mode: fig && fig.getAttribute('data-mode'), x: r && r.x + r.width / 2, y: r && r.y + r.height / 2, now: +document.querySelector('[data-k="sched-track-slot"]').getAttribute('aria-valuenow') };
+  });
+  check('a narrow sheet shows the compact plate', compact.mode === 'compact', JSON.stringify(compact));
+  if (compact.x) {
+    await page.mouse.move(compact.x, compact.y);
+    await page.mouse.down();
+    await page.mouse.move(compact.x + 80, compact.y, { steps: 6 });
+    await page.mouse.up();
+    await page.waitForTimeout(250);
+  }
+  const compactAfter = await ev(() => +document.querySelector('[data-k="sched-track-slot"]').getAttribute('aria-valuenow'));
+  check('dragging the compact plate changes the send time', compact.mode === 'compact' && compactAfter !== compact.now && compactAfter % 900000 === 0, JSON.stringify({ before: compact.now, after: compactAfter }));
+  if (saved) await page.setViewportSize(saved);
+  await page.waitForTimeout(200);
+  }
+  await runAction('sched-close-dialog');
+  await page.waitForTimeout(200);
 
   /* ================================================================
      8. console is clean; final reset
