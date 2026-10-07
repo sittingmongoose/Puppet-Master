@@ -28,7 +28,7 @@
  *   One-shot kind per part: arrive (default, pose -> rest), bounce (nx-pb: rest -> pose -> rest), reveal (nx-pc:
  *   clip from --ac to --ae). nx-pn parts sit out loops. The glyph's loop shape is its act (root class nx-a-<act>).
  * - The size gate (plan §1), by the size argument: below 12 no part moves (all parts render static, except the
- *   opacity-only reveal parts flagged x: the Fast bolt's crack at 10-11 px, on Jared's request); 12-14 a
+ *   opacity-only reveal parts flagged x: the Fast bolt's strike at 10-11 px, on Jared's request); 12-14 a
  *   travel part needs >= 1.5 rendered px of travel and a reveal part (clip or opacity only) >= 1.5 px of length,
  *   otherwise it renders static; 15 and up everything moves. Context CSS corrects a context that renders an icon
  *   below its size argument by stopping .nx-p there.
@@ -53,8 +53,9 @@
     function fmt(n) { var v = Math.round(n * 1000) / 1000; return String(Object.is(v, -0) ? 0 : v); }
     function num(v, d) { var n = Number(v); return isFinite(n) && n > 0 ? n : d; }
 
-    /* element constructors (24-unit grid). x: {c: extra class, dash: stroke-dasharray, f: filled} */
-    function el(tag, attrs, x) { var o = { tag: tag, attrs: attrs }; if (x) { if (x.c) o.cls = x.c; if (x.dash) o.dash = x.dash; if (x.f) o.f = 1; } return o; }
+    /* element constructors (24-unit grid). x: {c: extra class, dash: stroke-dasharray, f: filled, nh: no halo (an
+       overlay that only lights during an act, like the Fast bolt's strike fills, stays out of every halo)} */
+    function el(tag, attrs, x) { var o = { tag: tag, attrs: attrs }; if (x) { if (x.c) o.cls = x.c; if (x.dash) o.dash = x.dash; if (x.f) o.f = 1; if (x.nh) o.nh = 1; } return o; }
     function P(d, x) { return el('path', { d: d }, x); }
     function C(cx, cy, r, x) { return el('circle', { cx: cx, cy: cy, r: r }, x); }
     function R(x0, y0, w, h, rx, x) { var a = { x: x0, y: y0, width: w, height: h }; if (rx) a.rx = rx; return el('rect', a, x); }
@@ -141,7 +142,8 @@
        THE GLYPHS. Part poses: ax/ay translate and cr circle radius (user units), ar rotate (deg, + = clockwise),
        ao opacity at the pose, ad stagger (ms), ac/ae clip insets on the view box (user units, top right bottom
        left), o pivot [x,y] or 'c' (fill-box centre), b bounce one-shot, n sits out loops, x an opacity-only
-       reveal that stays a part below 12 px (the Fast bolt's crack only).
+       reveal that stays a part below 12 px (the Fast bolt's strike overlays only). An element with class nx-ov is
+       an act overlay: hidden at rest everywhere (neon-icons.css section 6) and lit only by a context's own keyframes.
        Acts (loop shapes, neon-icons.css nx-L-*): strike, seq, fill, wave, swap, spin, hop, drop, ratchet, blink.
        ====================================================================== */
     var BUBBLE = 'M4.5 5.5h15A1.5 1.5 0 0 1 21 7v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17h-1A1.5 1.5 0 0 1 3 15.5V7a1.5 1.5 0 0 1 1.5-1.5z';
@@ -153,6 +155,8 @@
        concept glyph, so a question waiting for you is one drawing wherever it shows */
     var ASK_BUBBLE = 'M5 3h14a2.5 2.5 0 0 1 2.5 2.5v10.5a2.5 2.5 0 0 1-2.5 2.5h-6.5L8 21.8v-3.3H5A2.5 2.5 0 0 1 2.5 16V5.5A2.5 2.5 0 0 1 5 3z';
     var ASK_Q = ['M9.4 8.6a2.6 2.6 0 1 1 3.9 2.25c-.85.45-1.3 1.05-1.3 1.9v.1', 'M12 15.6h.01'];
+    /* the lightning bolt's outline (lightning, below) */
+    var BOLT = 'M13 2 4 14h7l-1 8 10-13h-7Z';
 
     var GLYPHS = {
       /* ---- the activity domains (the bar is the reference surface) ---- */
@@ -282,14 +286,16 @@
       question: G([P(ASK_BUBBLE), M([P(ASK_Q[0]), P(ASK_Q[1])], { ay: -3.4 })], 'hop'),
       check: G([M(P('m5 12 4 4L19 6'), { ao: .6, ac: '0 20 0 4', ae: '0 4 0 4' })], 'seq'),
       branch: G([P('M6 3v12a4 4 0 0 0 4 4h8'), C(6, 3, 2), C(18, 19, 2), P('M6 9h7a4 4 0 0 0 4-4V3'), M(C(17, 3, 2), { ao: .2, b: 1 })], 'seq', 'control'),
-      /* lightning: a crack, never a shake (Jared, 2026-10-02: "think of lightning being a crack, like you see lightning
-         coming down from the sky"). The bolt's outline (M13 2 4 14h7l-1 8 10-13h-7Z) is cut into four bands, top to
-         bottom: the spike, the zig, the neck and the point, each its own part, so a crack can travel down it. The Fast
-         bolt's strike (neon-icons.css 8b) blanks the bolt and lights the bands top to bottom, then flashes the halo.
-         The parts are opacity-only reveals (x: they still render as parts below 12 px, where the Fast bolt lives) and
-         sit out the generic loops (n); in a button host the hover one-shot lights them in turn. */
-      lightning: G([M(P('M13 8V2L8.5 8'), { ao: .15, n: 1, x: 1 }), M(P('M8.5 8 4 14h7M13 8v1h7l-3.85 5'), { ao: .15, n: 1, x: 1, ad: 40 }),
-        M(P('M11 14l-.5 4M16.15 14l-3.07 4'), { ao: .15, n: 1, x: 1, ad: 80 }), M(P('M10.5 18 10 22l3.08-4'), { ao: .15, n: 1, x: 1, ad: 120 })], 'none'),
+      /* lightning: a strike, never a shake (Jared, 2026-10-02: "think of lightning being a crack, like you see lightning
+         coming down from the sky"; 2026-10-07: the old crack "reads like the bottom half is glitching out black and not
+         really animating down from the top"). The outline (BOLT) is one static tube that never dims. Over it lie six
+         filled copies of the same silhouette, hidden at rest and kept out of every halo (nh): five leader slabs, each
+         clipped to a 4-unit band from the top (neon-icons.css 8b, a static clip), and one whole flash fill. The Fast
+         bolt's strike lights the slabs top to bottom, so a bright fill runs down the bolt, then the flash fill, the halo
+         and the backlight fire the return stroke, re-flash and fade into an afterglow. The overlays are opacity-only
+         parts (x: they still render as parts below 12 px, where the Fast bolt lives) that sit out the generic loops (n);
+         8b gives them their only animations, so outside a .nx-bolt (the Fast row's unlit glyph) they stay hidden. */
+      lightning: G([P(BOLT)].concat(['f', 0, 1, 2, 3, 4].map(function (k) { return M(P(BOLT, { f: 1, nh: 1, c: 'nx-ov nx-bk nx-bk' + k }), { ao: 0, n: 1, x: 1 }); })), 'none'),
       star: G([M(P('m12 2 3 6 7 .9-5 4.8 1.3 6.8L12 17l-6.3 3.5L7 13.7 2 8.9 9 8Z'), { ar: 18, o: [12, 11.5], b: 1 })], 'wave'),
       image: G([R(3, 3, 18, 18, 2), P('m21 15-5-5L5 21'), M(C(8.5, 8.5, 1.5), { ao: .2, b: 1 })], 'seq'),
       code: G([M(P('m8 8-4 4 4 4'), { ax: -3, b: 1 }), M(P('M16 8l4 4-4 4'), { ax: 3, b: 1 }), P('M13.5 5.5l-3 13')], 'swap'),
@@ -461,10 +467,12 @@
       return '<' + e.tag + ' class="' + c + '"' + attrs(e) + '/>';
     }
     /* One halo layer for a list of elements: merged into one d, except an element carrying a transform attribute
-       (role-orbit's ellipse), which keeps its own halo element so its geometry stays exact. */
+       (role-orbit's ellipse), which keeps its own halo element so its geometry stays exact. An nh element has no
+       halo. */
     function halo(els, cls) {
       var ds = [], solo = '';
       els.forEach(function (e) {
+        if (e.nh) return;
         if (e.attrs.transform) solo += '<' + e.tag + ' class="' + cls + '"' + attrs({ attrs: e.attrs }) + '/>';
         else ds.push(pathOf(e));
       });
@@ -472,8 +480,8 @@
     }
     /* the size gate for one moving part at `size` px (plan §1) */
     function moves(p, size, origin) {
-      /* x: an opacity-only reveal that keeps its part below 12 px (the Fast bolt's crack, on Jared's request; it
-         travels nowhere, so nothing smears at 10-11 px) */
+      /* x: an opacity-only reveal that keeps its part below 12 px (the Fast bolt's strike overlays, on Jared's
+         request; they travel nowhere, so nothing smears at 10-11 px) */
       if (size < 12) return !!(p.m.x && !travels(p.m));
       if (size >= 15) return true;
       var m = p.m, k = size / 24, b = [1e9, 1e9, -1e9, -1e9];
