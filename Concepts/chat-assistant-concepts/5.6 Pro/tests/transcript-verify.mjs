@@ -842,11 +842,32 @@ const overflowLayout = await page.evaluate(() => {
     sibling: !!(panel && panel.parentElement?.classList.contains('message-chrome'))
   };
 });
-ok('overflow stacks meta, toolbar, then panel as sibling rows',
+ok('overflow keeps meta and toolbar on one row; panel below as a sibling',
   overflowLayout.sibling &&
-  overflowLayout.metaBottom <= overflowLayout.actTop + 2 &&
-  overflowLayout.actBottom <= overflowLayout.panelTop + 2, overflowLayout);
+  Math.abs((overflowLayout.metaTop + overflowLayout.metaBottom) / 2 -
+    (overflowLayout.actTop + overflowLayout.actBottom) / 2) <= 2 &&
+  overflowLayout.panelTop >= Math.max(overflowLayout.metaBottom, overflowLayout.actBottom) - 2, overflowLayout);
 await page.click('.message-assistant .pm-msg-more');
+await page.waitForTimeout(350);
+/* A user turn's toolbar must not move when its overflow opens: meta and
+   actions keep their row, the panel takes its own line below. */
+await bringIntoView(page, '.message-user');
+await page.hover('.message-user .message-body');
+await page.waitForTimeout(300);
+const userActsRect = () => page.evaluate(() => {
+  const r = document.querySelector('.message-user .message-actions')?.getBoundingClientRect();
+  return r ? { left: r.left, top: r.top } : null;
+});
+const userActsBefore = await userActsRect();
+await page.click('.message-user .pm-msg-more');
+await page.waitForTimeout(350);
+const userActsAfter = await userActsRect();
+ok('user-turn toolbar stays on its row when its overflow opens',
+  userActsBefore && userActsAfter &&
+  Math.abs(userActsAfter.left - userActsBefore.left) <= 2 &&
+  Math.abs(userActsAfter.top - userActsBefore.top) <= 2,
+  { before: userActsBefore, after: userActsAfter });
+await page.click('.message-user .pm-msg-more');
 await page.waitForTimeout(350);
 await page.hover('.message-assistant .message-body');
 await page.waitForTimeout(300);
