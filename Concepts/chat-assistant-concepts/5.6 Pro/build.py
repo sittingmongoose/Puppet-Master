@@ -104,6 +104,14 @@ out=shell.replace('/*__PM_STYLES__*/',css).replace('/*__PM_DATA__*/',data).repla
 targets=[root/'index.html', root/'PM_Chat_Assistant_5.6_Pro_Standalone.html']
 digest=hashlib.sha256(out.encode(ENC)).hexdigest()
 
+if '--out' in sys.argv:
+    # A private build for one worker's screenshots while others edit sources: writes only the named file, never
+    # either deliverable, so parallel workers never read a half-written index.html.
+    p=Path(sys.argv[sys.argv.index('--out')+1]).resolve()
+    p.write_text(out, encoding=ENC)
+    print(f'Built {p} (sha256 {digest[:16]}).')
+    raise SystemExit(0)
+
 if '--check' in sys.argv:
     # Both deliverables must be byte-identical to a fresh build. index.html
     # was once hand-patched with <link>/<script> tags, which silently gave
