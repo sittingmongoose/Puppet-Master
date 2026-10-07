@@ -167,9 +167,9 @@ svg:where(.nx) .nx-p {
 }
 /* self-centred parts (strike and scan about their own box) */
 svg:where(.nx) .nx-pf { transform-box: fill-box; transform-origin: center; }
-/* Act overlays (nx-ov: the Fast bolt's strike fills, the wand's sparkle bursts): drawn in the
+/* Act overlays (nx-ov: the Fast bolt's strike fills, the wand's sparkle bursts, the grill's smoke): drawn in the
    glyph but hidden and still at rest everywhere, so no generic one-shot or loop ever shows them; only a context's own
-   keyframes light them (8b, 8c). They have no halo (neon-icons.js nh). Reduced motion leaves them hidden. */
+   keyframes light them (8b, 8c, 8d). They have no halo (neon-icons.js nh). Reduced motion leaves them hidden. */
 svg:where(.nx) .nx-ov { opacity: 0; animation: none; }
 /* continuous turns are linear in every voice (an eased orbit lurches); retro keeps its stepped texture */
 svg:where(.nx-a-spin) { --nx-le: linear; }
@@ -386,6 +386,43 @@ svg:where([data-nx="wand"]) .nx-wray { stroke-width: calc(var(--nx-stroke-base, 
 @keyframes nx-wand-spark { 0% { transform: rotate(0deg); opacity: 1; } 28% { transform: rotate(40deg); opacity: .5; } 50% { transform: rotate(68deg); opacity: 1; } 100% { transform: rotate(90deg); opacity: 1; } }
 @keyframes nx-wand-ray { 0%, 34% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes nx-wand-flare { 50% { opacity: 1; } }
+
+/* ------------------------------------------------------------------ 8d. Grill Me's kettle grill (2026-10-07) */
+/* OWNER of this block: Neon icons. neon-icons.js grill: whenever a context plays the glyph's one-shot (--nx-1: a
+   hovered or focused host, a mounting still mark), the lid swings open about its left hinge, flames flicker in the
+   gap, a puff of smoke (two wisps, the second 60 ms behind) rises out of it and drifts off, and the lid drops shut
+   with a small clank, in about a second (the grill's own --nx-d1). The lid's keyframes are bespoke (lift, hold, an
+   accelerating drop in short segments, one bounce), so the voice's easing still shapes every segment (Retro and NieR
+   step it). The flames and the smoke are act overlays (nx-ov): hidden at rest, they take their keyframes from the same
+   --nx-1 (unset, the declaration is invalid and they stay still) and never play below 12 px (nx-z0), where the lid
+   does not move either. Transform and opacity only; reduced motion (section 10) stops all of it. */
+svg:where([data-nx="grill"]) { --nx-d1: 1000ms; }
+svg:where([data-nx="grill"]) .nx-glid { animation: nx-grill-lid var(--nx-1); }
+svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gfl { animation: nx-grill-flame var(--nx-1); }
+svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gsm1 { animation: nx-grill-smoke1 var(--nx-1); }
+svg:where([data-nx="grill"]:not(.nx-z0)) .nx-gsm2 { animation: nx-grill-smoke2 var(--nx-1); }
+/* the smoke is a finer tube than the kettle */
+svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 1.8) * var(--nx-tone-k, 1) * .75); }
+@keyframes nx-grill-lid {
+  0% { transform: translate(0px, 0px) rotate(0deg); } 24%, 50% { transform: translate(0px, -1.2px) rotate(-20deg); }
+  58% { transform: translate(0px, -.96px) rotate(-16deg); } 63% { transform: translate(0px, -.54px) rotate(-9deg); }
+  67% { transform: translate(0px, 0px) rotate(0deg); } 73% { transform: translate(0px, -.19px) rotate(-3.2deg); }
+  79%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+@keyframes nx-grill-flame {
+  0%, 10% { opacity: 0; transform: translate(0px, .6px); } 18% { opacity: 1; transform: translate(0px, 0px); }
+  24% { opacity: .6; transform: translate(0px, .3px); } 30% { opacity: 1; transform: translate(0px, -.3px); }
+  37% { opacity: .7; transform: translate(0px, 0px); } 44% { opacity: 1; transform: translate(0px, -.2px); }
+  52% { opacity: .8; transform: translate(0px, 0px); } 60%, 100% { opacity: 0; transform: translate(0px, .6px); }
+}
+@keyframes nx-grill-smoke1 {
+  0%, 26% { opacity: 0; transform: translate(0px, 0px); } 36% { opacity: .85; transform: translate(.6px, -1.6px); }
+  62% { opacity: .55; transform: translate(1.8px, -4px); } 80%, 100% { opacity: 0; transform: translate(2.4px, -5.6px); }
+}
+@keyframes nx-grill-smoke2 {
+  0%, 32% { opacity: 0; transform: translate(0px, 0px); } 42% { opacity: .85; transform: translate(.4px, -1.6px); }
+  68% { opacity: .5; transform: translate(1.2px, -4.2px); } 86%, 100% { opacity: 0; transform: translate(1.6px, -6px); }
+}
 
 /* ------------------------------------------------------------------ 9. the status set (plan §3) */
 /* The wrapper carries the list rhythm; .nx-st-base is the static lit layer, .nx-st-move the moving part. Wired

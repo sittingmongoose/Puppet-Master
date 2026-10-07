@@ -208,6 +208,16 @@
       'kind-revert': G([P('M9 4h6.5L19 7.5V20H9'), M([P('M13 12H7.5a3.5 3.5 0 0 0 0 7H9'), P('m10 9-3 3 3 3')], { ax: 3, ao: .5 })], 'strike'),
       'kind-eli5': G([P(BUBBLE), M(P('M8 11.2h6'), { ao: .55, ac: '0 17 0 7', ae: '0 9 0 7' })], 'seq'),
       'kind-defaults': G([P(BUBBLE), P('M9.2 11.2h5.6'), M(P('M12 8.4v5.6'), { ao: .55, ac: '11.2 0 12.8 0', ae: '7.4 0 9 0' })], 'seq'),
+      /* Grill Me (2026-10-07): a kettle grill in tubes, the scout's prototype anatomy (the pmx Grill Me puppet stands at
+         the same little kettle): a domed lid with its handle, the rim, the round bowl with three grill marks, two legs.
+         Its act (neon-icons.css 8d): the lid swings open about its left hinge (the moving part, nx-glid), a puff of
+         smoke (two wisps) rises out of the gap while flames flicker under the lid, then the lid drops shut with a
+         small clank. The smoke and the flames are act overlays (nx-ov: hidden at rest, no halo); they play only while
+         a context plays the glyph's one-shot (--nx-1), and never below 12 px. */
+      grill: G([M([P('M4.5 10.5a7.5 7.5 0 0 1 15 0z'), P('M10.6 1.8h2.8M12 1.8V3')], { ar: -20, ay: -1.2, o: [4.5, 10.5], b: 1, c: 'nx-glid' }),
+        P('M3 12.5h18'), P('M4.5 12.5a7.5 7.5 0 0 0 15 0'), P('M8 18.8 6.5 22.5M16 18.8l1.5 3.7'), P('M8 15.2l1.2 1.2M11.4 15.2l1.2 1.2M14.8 15.2l1.2 1.2'),
+        P('M9.75 9.1C9.65 9.82 10.25 10.3 10.21 10.97C10.17 11.43 9.78 11.5 9.4 11.5C9.02 11.5 8.63 11.43 8.59 10.97C8.55 10.35 9.15 10.18 9.75 9.1ZM12 8.1C11.9 9.12 13.4 9.8 13.35 10.75C13.3 11.4 12.78 11.5 12.4 11.5C12.02 11.5 11.5 11.4 11.45 10.75C11.4 9.87 11.4 9.63 12 8.1ZM15.75 8.8C15.65 9.61 16.25 10.15 16.21 10.91C16.16 11.42 15.78 11.5 15.4 11.5C15.02 11.5 14.63 11.42 14.59 10.91C14.55 10.2 15.15 10.02 15.75 8.8Z', { f: 1, nh: 1, c: 'nx-ov nx-gfl' }),
+        P('M15.8 11.2c-.9-.9.9-1.7 0-2.9', { nh: 1, c: 'nx-ov nx-gsm nx-gsm1' }), P('M18.6 11.2c-.9-.9.9-1.7 0-2.9', { nh: 1, c: 'nx-ov nx-gsm nx-gsm2' })], 'strike'),
 
       /* ---- working steps (Orbit) ---- */
       sparkles: G([M(P('m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2Z'), { ao: .5, b: 1 }),
@@ -398,7 +408,8 @@
        the back arc (reset/restore/rewind/undo) = the app arc; trash = PMX (threadops' copy retired);
        chevrons = PMX (the app's chevron/down/up/left were the same shapes); clock = PMX clock (app-wide).
        New: plan (a folded map), shield, bug, hourglass, speaker/speaker-off (chat-sound SPK at the
-       family stroke), the 13 status marks, question (the needs-you bubble as the questionnaire's concept glyph).
+       family stroke), the 13 status marks, question (the needs-you bubble as the questionnaire's concept glyph),
+       grill (Grill Me's kettle grill, 2026-10-07).
        module-shell CHEVRON is chevron-down.
        ====================================================================== */
     var ALIAS = {
@@ -408,7 +419,9 @@
       'kind-bsd': 'eye', 'kind-bsd-on': 'eye', 'eye-lid': 'kind-bsd-auto', 'eye-closed': 'kind-bsd-off', 'clock-bar': 'kind-build-at',
       done: 'check', complete: 'check', completed: 'check', tick: 'check',
       /* one drawing per concept: the plain ring and the ring with a dot */
-      effort: 'ring', 'role-circle': 'ring', 'role-lead': 'ring-dot'
+      effort: 'ring', 'role-circle': 'ring', 'role-lead': 'ring-dot',
+      /* Grill Me's names (module-shell's static role-bowl drawing is retired by this alias: registerMany skips it) */
+      'grill-me': 'grill', 'role-grill': 'grill', 'role-bowl': 'grill'
     };
 
     /* ======================================================================
