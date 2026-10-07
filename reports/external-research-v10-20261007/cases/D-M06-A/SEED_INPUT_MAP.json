@@ -1,0 +1,22 @@
+{
+  "case_id": "D-M06-A",
+  "producer": "ROOT_BOUND_SAME_FAMILY_CANDIDATE",
+  "status": "SEED_NOT_GENERATED",
+  "generation_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/brief.md",
+  "original_sources": [
+    {
+      "source_id": "jcs",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+      "sha256": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240"
+    }
+  ],
+  "required_outputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/seed/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/seed/fixtures.json"
+  ],
+  "receipt_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/seed/SEED_RECEIPT.json",
+  "critic_stage_for_M08": null,
+  "seed_minutes": 3,
+  "no_expected_answers": true,
+  "not_evaluator_truth": true
+}

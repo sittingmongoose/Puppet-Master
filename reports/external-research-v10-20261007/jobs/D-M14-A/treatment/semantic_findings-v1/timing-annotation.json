@@ -1,0 +1,13 @@
+{
+  "actual_T3_requestedAt": "2026-10-07T18:55:24.338Z",
+  "actual_T3_startedAt": "2026-10-07T18:55:24.990Z",
+  "original": {
+    "prepared_at": "2026-10-07T18:55:18.516752+00:00",
+    "first_dispatch": "2026-10-07T18:55:18.516752+00:00",
+    "stage_deadline": "2026-10-07T19:04:18.516752+00:00",
+    "arm_deadline": "2026-10-07T19:10:18.516752+00:00",
+    "requestedAt_correction": "Earlier actual T3 requestedAt governs; linked annotations retain original."
+  },
+  "effective_boundary": "Prospective boundary earlier than actual requestedAt retained conservatively; no extension.",
+  "native_activation_observation": "Candidate actual create/get active receipt present"
+}

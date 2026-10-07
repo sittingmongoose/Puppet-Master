@@ -1,0 +1,52 @@
+{
+  "requested_objective": "D-M04-A control research",
+  "requested_execution_context": {
+    "provider_or_profile": "codex_gmail",
+    "account": "sittingmongoose@gmail.com",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "max"
+  },
+  "observed_runtime_context": {
+    "environment": "T3 Code through Codex harness",
+    "model": "gpt-6-luna",
+    "reasoning_effort": "max",
+    "source": "runtime_info supplied to this thread"
+  },
+  "identity_verification_limit": "Native Goal API responses expose the Goal threadId/status but do not expose the Gmail profile/provider alias. The provider/account above are user-specified and were not independently queried or changed.",
+  "observed_goal_identity_state": {
+    "threadId": "01a117aa-688d-7eb2-a31e-62fef0d9aec0",
+    "objective": "D-M04-A control research",
+    "status": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt": 1791398424,
+    "updatedAt": 1791398424
+  },
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117aa-688d-7eb2-a31e-62fef0d9aec0",
+      "objective": "D-M04-A control research",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791398424,
+      "updatedAt": 1791398424
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "first_get_goal_response": {
+    "goal": {
+      "threadId": "01a117aa-688d-7eb2-a31e-62fef0d9aec0",
+      "objective": "D-M04-A control research",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791398424,
+      "updatedAt": 1791398424
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "observed_at_utc": "2026-10-07 18:40:24 UTC"
+}

@@ -1,0 +1,47 @@
+{
+  "task": "ER10 I-ANCHOR-LUNA treatment/research-v1",
+  "timezone": "UTC",
+  "dispatch_at_utc": null,
+  "dispatch_at_note": "Dispatch timestamp is not separately exposed by the runtime; no timestamp inferred.",
+  "start_at_utc": "2026-10-07 18:26:32 UTC",
+  "start_at_source": "Native create_goal observed createdAt=1791397592 Unix seconds.",
+  "first_useful_saved_finding_at_utc": "2026-10-07 18:29:40 UTC",
+  "draft_saved_at_utc": "2026-10-07 18:38:43 UTC",
+  "native_goal_terminal_at_utc": "2026-10-07 18:44:09 UTC",
+  "native_goal_usage_observations": [
+    {
+      "observed_at_utc": "2026-10-07 18:26:49 UTC",
+      "source": "activation get_goal",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    {
+      "observed_at_utc": "2026-10-07 18:38:04 UTC",
+      "source": "get_goal",
+      "status": "active",
+      "tokensUsed": 277999,
+      "timeUsedSeconds": 692
+    },
+    {
+      "observed_at_utc": "2026-10-07 18:39:56 UTC",
+      "source": "get_goal",
+      "status": "active",
+      "tokensUsed": 326140,
+      "timeUsedSeconds": 796
+    },
+    {
+      "observed_at_utc": "2026-10-07 18:44:09 UTC",
+      "source": "terminal get_goal",
+      "status": "complete",
+      "tokensUsed": 333443,
+      "timeUsedSeconds": 841
+    }
+  ],
+  "external_provider_tokens": null,
+  "external_provider_billing": null,
+  "external_usage_note": "Provider/model token and billing usage are not exposed by the native Goal tools; unknown. Native Goal counters above are reported separately and are not treated as provider billing.",
+  "terminal_receipt_status": "saved",
+  "status": "complete",
+  "native_goal_terminal_observed_at_utc": "2026-10-07 18:44:09 UTC"
+}

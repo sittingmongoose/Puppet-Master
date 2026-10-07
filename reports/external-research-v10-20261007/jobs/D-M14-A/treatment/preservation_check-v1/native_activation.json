@@ -1,0 +1,19 @@
+{
+  "create_receipt": {
+    "status": "not_persisted",
+    "note": "create_goal returned before serialization failed; its exact response was not retained by the orchestration cell."
+  },
+  "active_get_response": {
+    "goal": {
+      "threadId": "01a117be-83c0-7ae3-9daf-30d9de2bb981",
+      "objective": "Execute D-M14-A treatment preservation_check from INPUT_MAP.json and deliver preservation_check.md by the bounded stage deadline.",
+      "status": "active",
+      "tokensUsed": 2584,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399741,
+      "updatedAt": 1791399741
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

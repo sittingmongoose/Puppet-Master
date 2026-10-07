@@ -1,0 +1,24 @@
+{
+  "original_arm_dispatch_utc": "2026-10-07T18:26:52.851649Z",
+  "absolute_whole_arm_deadline_utc": "2026-10-07T19:11:52.851649Z",
+  "critic_deadline_utc": "2026-10-07T18:56:52.851649Z",
+  "researcher_allocated_seconds": 1200,
+  "critic_allocated_seconds": 600,
+  "final_reviser_reserved_seconds": 900,
+  "remaining_critic_seconds_at_input_prep": 689.327414,
+  "critic_start_utc": "2026-10-07T18:45:23.524235Z",
+  "critic_start_basis": "INPUTS.md critic deadline minus its remaining-at-prep value; native Goal createdAt independently corresponds to 2026-10-07T18:45:35Z.",
+  "first_useful_saved_finding_utc": "2026-10-07T18:54:23Z",
+  "critique_ready_utc": "2026-10-07T18:56:49Z",
+  "native_terminal_utc": "2026-10-07T18:56:54Z",
+  "native_terminal_time_basis": "Exact native updatedAt epoch 1791399414 from update_goal/get_goal; this is about 2 seconds after the critic deadline in INPUTS.md. Critique files were ready before terminalization.",
+  "usage": {
+    "input_tokens": null,
+    "cache_tokens": null,
+    "output_tokens": null,
+    "reasoning_tokens": null,
+    "native_goal_tokens_used": 180328,
+    "billing": "unknown"
+  },
+  "usage_note": "The available native Goal response exposes aggregate token/time fields only; input/cache/output/reasoning breakdown and billing are not exposed. Do not sum enclosing snapshots."
+}

@@ -1,0 +1,43 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "pathdoc",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/pathlib.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1eb64284f142028c3338da705d2a9e1c640bf115c189b27787301bf7ff3fc6de",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathdoc.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "pathcode",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/pathlib.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "dc14d8207519fb8bcdd9c7bae1d54da3ad1b339aa83d4979c16057cd552a3487",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathcode.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "pathscan",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_pathlib.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1198a722bfbd6bd8f924f2b87b38b2d617d48358bf5498190682c077f6af5b1c",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathscan.py",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "predecessor_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/navigate-v1/report.md",
+      "sha256": "d1c9e4e52587ba0ce1cb403a5ba8b09305b9aaabe4dcecb06b7233520ab1d050"
+    }
+  ],
+  "writable_stage_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/focused_read-v1",
+  "stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/focused_read-v1/report.md",
+  "final_output": null,
+  "logical_card_stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/outputs/treatment/focused_read.md"
+}

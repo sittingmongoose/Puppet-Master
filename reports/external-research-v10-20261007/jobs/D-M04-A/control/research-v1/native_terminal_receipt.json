@@ -1,0 +1,54 @@
+{
+  "objective": "D-M04-A control research",
+  "goal_thread_id": "01a117aa-688d-7eb2-a31e-62fef0d9aec0",
+  "pre_terminal_get_goal_response": {
+    "goal": {
+      "threadId": "01a117aa-688d-7eb2-a31e-62fef0d9aec0",
+      "objective": "D-M04-A control research",
+      "status": "active",
+      "tokensUsed": 67639,
+      "timeUsedSeconds": 303,
+      "createdAt": 1791398424,
+      "updatedAt": 1791398728
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "update_goal_response": {
+    "goal": {
+      "threadId": "01a117aa-688d-7eb2-a31e-62fef0d9aec0",
+      "objective": "D-M04-A control research",
+      "status": "complete",
+      "tokensUsed": 67639,
+      "timeUsedSeconds": 317,
+      "createdAt": 1791398424,
+      "updatedAt": 1791398741
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "post_terminal_get_goal_response": {
+    "goal": {
+      "threadId": "01a117aa-688d-7eb2-a31e-62fef0d9aec0",
+      "objective": "D-M04-A control research",
+      "status": "complete",
+      "tokensUsed": 67639,
+      "timeUsedSeconds": 317,
+      "createdAt": 1791398424,
+      "updatedAt": 1791398741
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "terminal_observed_at_utc": "2026-10-07 18:45:41 UTC",
+  "observed_final_state": {
+    "threadId": "01a117aa-688d-7eb2-a31e-62fef0d9aec0",
+    "objective": "D-M04-A control research",
+    "status": "complete",
+    "tokensUsed": 67639,
+    "timeUsedSeconds": 317,
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "identity_note": "Goal threadId is the native Goal identity. Runtime reports T3 Code/Codex, gpt-6-luna max; native Goal API does not expose the requested codex_gmail profile/account."
+}

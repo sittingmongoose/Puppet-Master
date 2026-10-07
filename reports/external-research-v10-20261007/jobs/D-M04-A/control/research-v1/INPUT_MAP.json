@@ -1,0 +1,46 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "sqltransaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_capture": "SQLite transaction documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqltransaction.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlwal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwal.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlpragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlpragma.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlwalcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+      "version_or_capture": "SQLite version-3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwalcode.c",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1",
+  "cache": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/source-cache-v1",
+  "helper": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/exact_bytes.py",
+  "access": "Only listed case sources, this stage map, own output/cache, applicable AGENTS. No siblings/evaluators/campaign analysis."
+}

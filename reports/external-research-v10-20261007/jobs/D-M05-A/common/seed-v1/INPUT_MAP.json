@@ -1,0 +1,18 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/prior-brief.md",
+  "sources": [
+    {
+      "source_id": "tarold",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarold.py",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8"
+    },
+    {
+      "source_id": "tardocold",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocold.rst",
+      "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99"
+    }
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1",
+  "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/prior-state.md",
+  "access": "Only prior brief and listed prior-applicable sources; do not read changes or updated brief, siblings, evaluator or campaign."
+}

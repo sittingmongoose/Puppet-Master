@@ -1,0 +1,43 @@
+{
+  "schema": "er10.integrated.input.v1",
+  "case_id": "I-METHOD-01",
+  "title": "Rain and stream station reconciliation workbench",
+  "track": "method_recipe",
+  "domain": "environmental hydrology / field data",
+  "status": "ready_inputs",
+  "prepared_at_utc": "2026-10-07T18:33:30.282036+00:00",
+  "input_mode": "brief_led_open_discovery_with_frozen_sandbox_plan",
+  "recipe": null,
+  "control_recipe": null,
+  "treatment_recipe": null,
+  "family_allocation": null,
+  "budget": null,
+  "stage_allowances": null,
+  "execution_binding_status": "UNBOUND",
+  "launch_ready": false,
+  "standard_scope_sizing_minutes": 45,
+  "sizing_note": "Task-size planning reference only; no execution allowance is bound. Speed cases retain full scope.",
+  "research_answers_supplied": false,
+  "evaluator_keys_supplied": false,
+  "public_source_seed_list_supplied": false,
+  "obligation_map": "brief.md#compact-obligation-map-requirements-not-an-answer-key",
+  "files": {
+    "INPUTS.md": {
+      "sha256": "f33cd23399deb8d450426c6346b1f8cc7a0a5992e56df45e84889ebe96ebbce7",
+      "bytes": 1927
+    },
+    "brief.md": {
+      "sha256": "d47b145147b0b0e58ded1a585bd004014268471b5d7da66587028c5a242176f9",
+      "bytes": 5231
+    },
+    "plan.md": {
+      "sha256": "3e41046c9f0ea6e7ff7223d6ba1d949190e42b36e72914c2720c152bc316c822",
+      "bytes": 1863
+    }
+  },
+  "source_copies": [],
+  "input_freeze_complete": true,
+  "input_frozen_at_utc": "2026-10-07T18:33:30.284610+00:00",
+  "freeze_policy": "Inputs chmod 0444; coordinator execution bindings remain external and prospective.",
+  "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01"
+}

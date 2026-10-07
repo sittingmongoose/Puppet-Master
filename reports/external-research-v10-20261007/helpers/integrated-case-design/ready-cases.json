@@ -1,0 +1,375 @@
+{
+  "schema": "er10.integrated.design-handoff.v1",
+  "created_at_utc": "2026-10-07T18:34:14.159323+00:00",
+  "scope": "preparation_only",
+  "case_count": 9,
+  "pm_slice_case_count": 2,
+  "cases": [
+    {
+      "case_id": "I-METHOD-01",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01",
+      "title": "Rain and stream station reconciliation workbench",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01/prepared.json",
+        "sha256": "3d0c274eafb65e69c306ab8f4e21cbd47f54719db1af65f73f96d9ed27a955a8",
+        "bytes": 1672
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "f33cd23399deb8d450426c6346b1f8cc7a0a5992e56df45e84889ebe96ebbce7",
+          "bytes": 1927
+        },
+        "brief.md": {
+          "sha256": "d47b145147b0b0e58ded1a585bd004014268471b5d7da66587028c5a242176f9",
+          "bytes": 5231
+        },
+        "plan.md": {
+          "sha256": "3e41046c9f0ea6e7ff7223d6ba1d949190e42b36e72914c2720c152bc316c822",
+          "bytes": 1863
+        }
+      },
+      "source_copy_count": 0
+    },
+    {
+      "case_id": "I-METHOD-02",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02",
+      "title": "Museum object-image annotation desk",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-02/prepared.json",
+        "sha256": "9b5573d67290c4c4bc2f4ccb08ab5363f8ba2ca31debd38ea0e94e947deb3840",
+        "bytes": 1665
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "d617d5fa6164fa19dbf569ee93399fe09ecefd485c279e3bd7997a7af00bf61a",
+          "bytes": 1927
+        },
+        "brief.md": {
+          "sha256": "c9820b2b6c95b3591de0eef4dc002ccb8d8e35719c7422c11f9f4add0b5e440d",
+          "bytes": 5129
+        },
+        "plan.md": {
+          "sha256": "5dd8d6230f5a4be45f9b0faf0d3748e0b5df30bb90b20a05c0634cdf476c063e",
+          "bytes": 1781
+        }
+      },
+      "source_copy_count": 0
+    },
+    {
+      "case_id": "I-METHOD-03",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03",
+      "title": "Transit transfer review kiosk",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03/prepared.json",
+        "sha256": "2ba6a590b4c77e9e6ccdab56cc81a343663535c87a45a5c6a1ac7b166437b445",
+        "bytes": 1660
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "6ac3ca9606f0359ad70ce8dd6c20a581a4da820584b889a692b8ce54bf4fb54d",
+          "bytes": 1927
+        },
+        "brief.md": {
+          "sha256": "18f0d4d44d638932060c0624b6876d21f0e33226971579f66916e8de2816853c",
+          "bytes": 5120
+        },
+        "plan.md": {
+          "sha256": "3451e59740282a558189908d03921dcbff4126105d788b6488ad0def90ff9f6a",
+          "bytes": 1765
+        }
+      },
+      "source_copy_count": 0
+    },
+    {
+      "case_id": "I-METHOD-04",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04",
+      "title": "Community oral-history ingest desk",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04/prepared.json",
+        "sha256": "5af28107873bdc23a9c100f80df7a960aa8b29704dbd23b313f75ea7ec1837e7",
+        "bytes": 1659
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "c18f6a3d3093131e7a9e7f9fc7e9c5dc81cdca766a0ac4efa539781df04a6142",
+          "bytes": 1927
+        },
+        "brief.md": {
+          "sha256": "c609c2ea956f269df5fbab3694b7a9425f72f24b65279e12aab3b5c1d727a1ab",
+          "bytes": 5140
+        },
+        "plan.md": {
+          "sha256": "c3da0fde53189778a3685ff4dae7f8c9cca2bd3a5d5a0f8614bc666c21a01a59",
+          "bytes": 1718
+        }
+      },
+      "source_copy_count": 0
+    },
+    {
+      "case_id": "I-METHOD-05",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05",
+      "title": "Read-only PM shared-buffer and file-integrity review",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05/prepared.json",
+        "sha256": "1e111c9f28f7d247443f3dc1f88fa8485ff4dac3ffd5dd9d0f30ff86a1f84690",
+        "bytes": 11028
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae",
+          "bytes": 2113
+        },
+        "brief.md": {
+          "sha256": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+          "bytes": 5605
+        },
+        "plan.md": {
+          "sha256": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+          "bytes": 2932
+        },
+        "source/F-008.md": {
+          "sha256": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+          "bytes": 2828
+        },
+        "source/F-018.md": {
+          "sha256": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+          "bytes": 2233
+        },
+        "source/F-020.md": {
+          "sha256": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+          "bytes": 2235
+        },
+        "source/F-026.md": {
+          "sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+          "bytes": 2399
+        },
+        "source/F-027.md": {
+          "sha256": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+          "bytes": 2090
+        },
+        "source/F-028.md": {
+          "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+          "bytes": 2001
+        },
+        "source/F-082.md": {
+          "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+          "bytes": 2294
+        },
+        "source/definitions_and_transactions.md": {
+          "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+          "bytes": 5313
+        },
+        "source/editing_and_save_context.md": {
+          "sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+          "bytes": 4948
+        },
+        "source/text_and_size_context.md": {
+          "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7",
+          "bytes": 3663
+        }
+      },
+      "source_copy_count": 10
+    },
+    {
+      "case_id": "I-METHOD-06",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06",
+      "title": "Read-only PM snapshot capture and verification review",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06/prepared.json",
+        "sha256": "255872eeb4c5071b4d6bce3af3a643b8f120d813d1c525d560f304d747d6afbd",
+        "bytes": 12148
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "726db147e5ae97c03c86169613fa313ac05f5a0a2cbd01cce669f82528404a50",
+          "bytes": 2113
+        },
+        "brief.md": {
+          "sha256": "2c9cded4ef7b6ca1d11bcfbde218bf49e7c493964022d7ed7f7f3e5b5634ffe9",
+          "bytes": 5708
+        },
+        "plan.md": {
+          "sha256": "304ba8e4ba46efc399176e4c68c40af0dc6be0873ab5d59b063889cb154770a9",
+          "bytes": 3228
+        },
+        "source/BRS-001.md": {
+          "sha256": "54475617a61b30a619746ca7f92c0b10501dce5f68007e74be0521419ec0d146",
+          "bytes": 2553
+        },
+        "source/BRS-004.md": {
+          "sha256": "c457a59a843d906e6f1c113800859cc08102788163fc063e45b5ed0e5a57192a",
+          "bytes": 3805
+        },
+        "source/BRS-005.md": {
+          "sha256": "109291ef836880790bd083bf271e2b33ec0f6e5c1641a32af4fb11004a58fff1",
+          "bytes": 3692
+        },
+        "source/BRS-006.md": {
+          "sha256": "234cf930ce4e1b582de298be39587713f164943b259c4c60135366dc43a3735e",
+          "bytes": 3667
+        },
+        "source/BRS-010.md": {
+          "sha256": "721c82c7946398bbd0f7766f67ec7e25eef2d27b94daec120195922886abe8c9",
+          "bytes": 2930
+        },
+        "source/BRS-017.md": {
+          "sha256": "ff9bd102297b484394e57a4e0a203677905fe883ef6d8ebb48c016330dea967e",
+          "bytes": 5453
+        },
+        "source/BRS-019.md": {
+          "sha256": "f47075ec350a87c6f65eafae3061c7c66964d9e6f535f7333f327b793ccf0008",
+          "bytes": 7651
+        },
+        "source/BRS-023.md": {
+          "sha256": "075c17c7ff747ca2e23a401128b10467863db4e0df4d5fe36a09d6fbc7caf1f1",
+          "bytes": 3092
+        },
+        "source/BRS-030.md": {
+          "sha256": "e1d7d0613914a2efa4de7a60f4938e40558c4c89e308085545b1b4e8b00dfa63",
+          "bytes": 7424
+        },
+        "source/non_goals.md": {
+          "sha256": "6b429d189287b99a69adde2d5bf68d9f5f8ec67c31e21e0db1dffb2341ab2dc0",
+          "bytes": 2012
+        },
+        "source/scope_and_owners.md": {
+          "sha256": "a5ccbd08488f10c1d966f5e9f29b07d1274535704b9907942f197637e007906a",
+          "bytes": 7104
+        }
+      },
+      "source_copy_count": 11
+    },
+    {
+      "case_id": "I-FAST-01",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01",
+      "title": "Historic aerial image comparison workspace",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01/prepared.json",
+        "sha256": "4a99604f854ee0f7f128c6d7b7c0f25ecbf1872cf11ed5dac704ef2b3272389f",
+        "bytes": 1661
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "a20b549073d5026e97900433055f986585b1986465baa5f780c6eee323fb7e4a",
+          "bytes": 1917
+        },
+        "brief.md": {
+          "sha256": "6dd2544d34fd845067a74914ec5b87767c2fdc447981616f0b231f887d53a40c",
+          "bytes": 5140
+        },
+        "plan.md": {
+          "sha256": "6e511c3749bfa87d7ddb0abc0dc616e854c898feb2bdc65cf6f4b15e24993651",
+          "bytes": 1751
+        }
+      },
+      "source_copy_count": 0
+    },
+    {
+      "case_id": "I-FAST-02",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02",
+      "title": "Harbour water-level comparison notebook",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-02/prepared.json",
+        "sha256": "86616f47c9531b7bc4edbee7e9d61dd5969982377de4fdfffe57205688518a67",
+        "bytes": 1660
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "375908fc306267fd15f50323ab9699d8f348bc13bd128564fdc6b54e233814e7",
+          "bytes": 1917
+        },
+        "brief.md": {
+          "sha256": "12a1ab55102d3423bcc634812c6d120f0143a8e7945e3c696bc920bd56cafc13",
+          "bytes": 5152
+        },
+        "plan.md": {
+          "sha256": "4e6e262b0a1fffb8d47023c629037368809c410f396de5d932eedb09fa859c05",
+          "bytes": 1712
+        }
+      },
+      "source_copy_count": 0
+    },
+    {
+      "case_id": "I-FAST-03",
+      "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03",
+      "title": "Community building energy interval dashboard",
+      "status": "ready_inputs",
+      "execution_binding_status": "UNBOUND",
+      "prepared_identity": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03/prepared.json",
+        "sha256": "47b175fb5a1532a68a52e7fd0a466a256dfc37d6fb4564e72bb3d4a33cad75a0",
+        "bytes": 1664
+      },
+      "input_identities": {
+        "INPUTS.md": {
+          "sha256": "e25cf8e741130f4d3c5867234a2a43ddf9818688b3c25b8f8eba05a340235dac",
+          "bytes": 1917
+        },
+        "brief.md": {
+          "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73",
+          "bytes": 5149
+        },
+        "plan.md": {
+          "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+          "bytes": 1714
+        }
+      },
+      "source_copy_count": 0
+    }
+  ],
+  "mechanical_check": "PASS: nine cases; exactly two PM cases; original bytes and all hashes verified",
+  "case_input_bytes_excluding_metadata": 162910,
+  "rule_and_packet_identities": [
+    {
+      "path": "/home/sittingmongoose/.codex/AGENTS.md",
+      "sha256": "2f99262d51ee86f0f956db7846f40bdeeae7f6d119df23e515b99e5a8ee495f9",
+      "bytes": 4405
+    },
+    {
+      "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+      "sha256": "d827d8ff1e53bd4c49d3f6814c9937aabe8aea0580f2c31d3b3ee089244c01b8",
+      "bytes": 20280
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/packet/ER10_T3_EXECUTE_HANDOFF.md",
+      "sha256": "4c7ab3438c32b8fef5682f9cb718998792a233dda1b5a51fc9061778083e4787",
+      "bytes": 52036
+    }
+  ],
+  "helper_identities": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-case-design/prepare_cases.py",
+      "sha256": "5efee3d0e84e3a20c6d2416e2ed00d3a0333cc7a86e82d5662c4640eb06f813f",
+      "bytes": 34047
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-case-design/README.md",
+      "sha256": "835f5ee57c495897f9f65c189379ca4a2fc13de9c215bf7ee1e3006d32ddd9f8",
+      "bytes": 5313
+    }
+  ],
+  "confirmation_cases_read": false,
+  "topology_anchors_read_or_modified": false,
+  "tasks_launched": 0,
+  "evaluations_performed": 0,
+  "scientific_answers_authored": false,
+  "recipes_bound": false,
+  "budgets_bound": false,
+  "family_allocation_bound": false
+}

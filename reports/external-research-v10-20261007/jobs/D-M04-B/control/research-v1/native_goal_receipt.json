@@ -1,0 +1,82 @@
+{
+  "captured_at_utc": "2026-10-07 18:56:14 UTC",
+  "requested_identity": "gpt-6-luna Max priority on codex_gmail sittingmongoose@gmail.com",
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117b9-1019-7bd3-9c07-562041acf024",
+      "objective": "D-M04-B control research",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399374,
+      "updatedAt": 1791399374
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal_response_after_creation": {
+    "goal": {
+      "threadId": "01a117b9-1019-7bd3-9c07-562041acf024",
+      "objective": "D-M04-B control research",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399374,
+      "updatedAt": 1791399374
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "active_identity_observation": {
+    "observed_at_utc": "2026-10-07 18:57:50 UTC",
+    "thread_configuration_response": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-control-research-v1\",\"modelSelection\":{\"instanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"options\":[{\"id\":\"reasoningEffort\",\"value\":\"max\"},{\"id\":\"serviceTier\",\"value\":\"priority\"}]},\"runtimeMode\":\"full-access\",\"interactionMode\":\"default\"}"
+        }
+      ],
+      "structuredContent": {
+        "threadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-control-research-v1",
+        "modelSelection": {
+          "instanceId": "codex_gmail",
+          "model": "gpt-6-luna",
+          "options": [
+            {"id": "reasoningEffort", "value": "max"},
+            {"id": "serviceTier", "value": "priority"}
+          ]
+        },
+        "runtimeMode": "full-access",
+        "interactionMode": "default"
+      },
+      "isError": false
+    },
+    "environment_identity_response": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"environmentId\":\"47363713-9592-474c-94b0-8191f32118eb\",\"label\":\"ubuntuserver\",\"serverVersion\":\"0.0.46-nightly.20261007.2774\",\"platform\":{\"os\":\"linux\",\"arch\":\"x64\",\"machine\":\"cloud\"},\"preferences\":{\"defaultThreadEnvMode\":\"worktree\",\"newWorktreesStartFromOrigin\":true,\"enableProviderUpdateChecks\":true,\"backgroundActivity\":{\"profile\":\"balanced\"},\"sourceControlWritingStyle\":{\"mode\":\"repo_conventions\",\"followChangeRequestTemplates\":true,\"customInstructions\":\"\",\"truncated\":false}}}"
+        }
+      ],
+      "structuredContent": {
+        "environmentId": "47363713-9592-474c-94b0-8191f32118eb",
+        "label": "ubuntuserver",
+        "serverVersion": "0.0.46-nightly.20261007.2774",
+        "platform": {"os": "linux", "arch": "x64", "machine": "cloud"},
+        "preferences": {
+          "defaultThreadEnvMode": "worktree",
+          "newWorktreesStartFromOrigin": true,
+          "enableProviderUpdateChecks": true,
+          "backgroundActivity": {"profile": "balanced"},
+          "sourceControlWritingStyle": {
+            "mode": "repo_conventions",
+            "followChangeRequestTemplates": true,
+            "customInstructions": "",
+            "truncated": false
+          }
+        }
+      },
+      "isError": false
+    }
+  }
+}

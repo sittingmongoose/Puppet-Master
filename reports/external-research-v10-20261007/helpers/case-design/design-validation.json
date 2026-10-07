@@ -1,0 +1,203 @@
+{
+  "schema": "pm.er10.targeted-design-validation.v1",
+  "cards": [
+    {
+      "case_id": "D-M01-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M01-B",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M02-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M02-B",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M03-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M03-B",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M04-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M04-B",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M05-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M05-B",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M06-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M06-B",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M07-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M07-B",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M08-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M08-B",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M09-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M10-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": true
+    },
+    {
+      "case_id": "D-M11-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M12-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": true,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M13-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M14-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": null,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M15-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": true,
+      "predecessor_missing": false
+    },
+    {
+      "case_id": "D-M16-A",
+      "method_exact": true,
+      "budget_each_arm": 15,
+      "obligations": 6,
+      "open_source_empty": true,
+      "predecessor_missing": false
+    }
+  ],
+  "verified_source_copies": 67,
+  "source_hash_mismatches": 0,
+  "scientific_code_executed": false,
+  "candidates_dispatched": 0,
+  "all_method_objects_exact": true,
+  "scope_note": "Mechanical authoring/input checks only; no source-truth evaluation."
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "er10.integrated.input.v1",
+  "case_id": "I-METHOD-04",
+  "title": "Community oral-history ingest desk",
+  "track": "method_recipe",
+  "domain": "digital audio preservation / archives",
+  "status": "ready_inputs",
+  "prepared_at_utc": "2026-10-07T18:33:30.289168+00:00",
+  "input_mode": "brief_led_open_discovery_with_frozen_sandbox_plan",
+  "recipe": null,
+  "control_recipe": null,
+  "treatment_recipe": null,
+  "family_allocation": null,
+  "budget": null,
+  "stage_allowances": null,
+  "execution_binding_status": "UNBOUND",
+  "launch_ready": false,
+  "standard_scope_sizing_minutes": 45,
+  "sizing_note": "Task-size planning reference only; no execution allowance is bound. Speed cases retain full scope.",
+  "research_answers_supplied": false,
+  "evaluator_keys_supplied": false,
+  "public_source_seed_list_supplied": false,
+  "obligation_map": "brief.md#compact-obligation-map-requirements-not-an-answer-key",
+  "files": {
+    "INPUTS.md": {
+      "sha256": "c18f6a3d3093131e7a9e7f9fc7e9c5dc81cdca766a0ac4efa539781df04a6142",
+      "bytes": 1927
+    },
+    "brief.md": {
+      "sha256": "c609c2ea956f269df5fbab3694b7a9425f72f24b65279e12aab3b5c1d727a1ab",
+      "bytes": 5140
+    },
+    "plan.md": {
+      "sha256": "c3da0fde53189778a3685ff4dae7f8c9cca2bd3a5d5a0f8614bc666c21a01a59",
+      "bytes": 1718
+    }
+  },
+  "source_copies": [],
+  "input_freeze_complete": true,
+  "input_frozen_at_utc": "2026-10-07T18:33:30.290508+00:00",
+  "freeze_policy": "Inputs chmod 0444; coordinator execution bindings remain external and prospective.",
+  "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-04"
+}

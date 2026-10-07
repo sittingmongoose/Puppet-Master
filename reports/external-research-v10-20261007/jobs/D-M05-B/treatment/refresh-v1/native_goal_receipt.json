@@ -1,0 +1,76 @@
+{
+  "job": "D-M05-B",
+  "arm": "treatment",
+  "stage": "refresh-v1",
+  "output_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/native_goal_receipt.json",
+  "capture_method": "JSON.stringify-equivalent pretty JSON via direct tool-response transcription into authorized static output path; no base64; no fabrication",
+  "capture_note": "Root follow-up authorizes prospective generic receipt mechanics only. This file records actual complete create/get responses observed in this run. No science/grade repair, no clock reset.",
+  "create_goal": {
+    "request": {
+      "objective": "D-M05-B treatment refresh"
+    },
+    "response_actual": {
+      "goal": {
+        "created_at_ms": 1791398739716,
+        "current_work": null,
+        "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+        "last_progress_at_ms": null,
+        "next_work": null,
+        "objective": "D-M05-B treatment refresh",
+        "percent_complete": 0,
+        "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+        "status": "active",
+        "token_budget": null,
+        "tokens_used": 0,
+        "updated_at_ms": 1791398739716
+      }
+    },
+    "activation": "succeeded; active goal observed, no stop required"
+  },
+  "get_goal_after_create": {
+    "request": {},
+    "response_actual": {
+      "goal": {
+        "created_at_ms": 1791398739716,
+        "current_work": null,
+        "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+        "last_progress_at_ms": null,
+        "next_work": null,
+        "objective": "D-M05-B treatment refresh",
+        "percent_complete": 0,
+        "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+        "status": "active",
+        "token_budget": null,
+        "tokens_used": 0,
+        "updated_at_ms": 1791398742087
+      }
+    }
+  },
+  "observed_active_identity_state": {
+    "providerInstanceId": "muse",
+    "model": "muse-spark-1.3-contributor",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+    "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+    "objective": "D-M05-B treatment refresh",
+    "status": "active",
+    "percent_complete": 0,
+    "tokens_used_native_cumulative": 0,
+    "tokens_used_note": "Native cumulative counter at activation; never reinterpreted as output/billing."
+  },
+  "creation_timestamp_native_binding": {
+    "created_at_ms": 1791398739716,
+    "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+    "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+    "shell_clock_at_receipt_read_utc": "2026-10-07T18:45:47Z",
+    "shell_clock_at_receipt_read_ms": 1791398747855,
+    "dispatch_at_utc": "2026-10-07T18:45:24.481Z"
+  },
+  "rules_read": {
+    "workspace_agentes": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md (read, head 120 lines observed)",
+    "global_claude": "~/.claude/CLAUDE.md (read, head 80 lines observed)",
+    "t3_inside_rules_observed": "Skip pm-mail/extra-workers inside T3; no unrelated writes; applicable working rules observed"
+  },
+  "capture_failures": []
+}

@@ -1,0 +1,70 @@
+{
+  "objective_requested": "D-M05-B control refresh",
+  "create_goal_response": {
+    "goal": {
+      "created_at_ms": 1791399026159,
+      "current_work": null,
+      "goal_id": "goal-01a117b3-ddef-7550-b452-9f7642f9d8ff",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "D-M05-B control refresh",
+      "percent_complete": 0,
+      "session_id": "01a117b3-87e5-75d0-bd60-6034e88eaccf",
+      "status": "active",
+      "token_budget": null,
+      "tokens_used": 0,
+      "updated_at_ms": 1791399026159
+    }
+  },
+  "get_goal_response": {
+    "goal": {
+      "created_at_ms": 1791399026159,
+      "current_work": null,
+      "goal_id": "goal-01a117b3-ddef-7550-b452-9f7642f9d8ff",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "D-M05-B control refresh",
+      "percent_complete": 0,
+      "session_id": "01a117b3-87e5-75d0-bd60-6034e88eaccf",
+      "status": "active",
+      "token_budget": null,
+      "tokens_used": 0,
+      "updated_at_ms": 1791399028397
+    }
+  },
+  "observed_active_identity": {
+    "role": "research sub-agent, Muse Contributor (muse-spark-1.3-contributor via T3 Code acpRegistry harness)",
+    "goal_id": "goal-01a117b3-ddef-7550-b452-9f7642f9d8ff",
+    "session_id": "01a117b3-87e5-75d0-bd60-6034e88eaccf",
+    "status": "active",
+    "objective": "D-M05-B control refresh",
+    "percent_complete": 0
+  },
+  "observed_state": {
+    "activation": "success",
+    "noGoal_equivalent": false,
+    "current_work": null,
+    "next_work": null,
+    "token_budget": null,
+    "tokens_used_at_activation": 0
+  },
+  "creation_timestamp_native_binding_freshness": {
+    "created_at_ms": 1791399026159,
+    "get_goal_updated_at_ms": 1791399028397,
+    "delta_ms_create_to_get": 2238,
+    "freshness": "fresh: get_goal immediately after create_goal shows same goal_id/session/active"
+  },
+  "clocks": {
+    "shell_utc_first": "2026-10-07T18:50:21.289201+00:00",
+    "shell_utc_receipt_ls": "2026-10-07T18:50:33.425116+00:00",
+    "absolute_cold_deadline_utc": "2026-10-07T18:57:02.674000+00:00",
+    "allowance_seconds": 420.253621,
+    "seed_charge_seconds": 162.747
+  },
+  "rules_read": {
+    "agents_md": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+    "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/INPUT_MAP.json",
+    "global_rules_note": "global pm-mail/agent-rules/T3 Inside-T3 rules provided inline in session system-reminder; Inside T3 Code the pm-mail and extra-worker sections are skipped per T3-rules"
+  },
+  "capture_method": "JSON.stringify-equivalent pretty JSON via inert quoted shell heredoc, no base64, no btoa/Buffer/fs"
+}

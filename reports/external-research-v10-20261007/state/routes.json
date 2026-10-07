@@ -20,11 +20,15 @@
     "receipt": "jobs/I-ANCHOR-MUSE/treatment/research-v1/native_goal_receipt.json"
   },
   "glm": {
-    "delegated_native_goal_activation": "NOT_YET_OBSERVED",
-    "admission": "hold new starts pending narrow check",
-    "diagnosis": "Installed genuine session/goal backend exists; prompt is role-prefixed, no direct T3 passthrough; ordinary slash defaults to bridge-owned loop; backend needs existing supported goal.mode=backend or scoped env override. No configuration changed."
+    "delegated_native_goal_activation": "INSTALLED_PROVIDER_INTEGRATION_GOALLOOPDRIVER_RUNNING_OBSERVED",
+    "admission": "Qualified unchanged installed integration /goal invocation for one matching control; total GLM cap2 incl root v2. Vendor backend target activation NOT claimed.",
+    "diagnosis": "Installed genuine session/goal backend exists; prompt is role-prefixed, no direct T3 passthrough; ordinary slash defaults to bridge-owned loop; backend needs existing supported goal.mode=backend or scoped env override. No configuration changed.",
+    "v2": "generalrole literal /goal supported existing integration, vendorbackend target notclaimed",
+    "receipt": "state/glm-v2-integration-activation-observation.json",
+    "state_receipt": "state/glm-v2-integration-goal-state-active.json"
   },
   "provenance_limits": "Tool receipts captured by candidates; narrow independent route crosscheck in progress. Exact isolated paths/context are not a filesystem firewall.",
   "route_findings": "helpers/native-route/route-findings.md",
-  "medium_v1_failure": "Native goal objective6081 chars exceeded4000; v2 runs without own-Goal slash prefix. Preserve original."
+  "medium_v1_failure": "Native goal objective6081 chars exceeded4000; v2 runs without own-Goal slash prefix. Preserve original.",
+  "updated_at": "2026-10-07T18:48:41.217121+00:00"
 }

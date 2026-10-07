@@ -1,0 +1,106 @@
+{
+  "schema": "pm.er10.research-source-usage.v1",
+  "case_id": "D-M04-A",
+  "mode": "FROZEN_PUBLIC_CORPUS_WITH_DECLARED_STAGE_CACHE",
+  "acquisition_boundary": "Local frozen byte verification and cache copy only; network_requests=0. This is not an Internet fetch or download-savings measurement.",
+  "sources": [
+    {
+      "source_id": "sqltransaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_capture": "SQLite transaction documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "cold_receipt": "cold-sqltransaction.json",
+      "operations": [
+        {
+          "operation": "cold",
+          "helper": "exact_bytes.py",
+          "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqltransaction.html",
+          "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+          "network_requests": 0
+        },
+        {
+          "operation": "read",
+          "tool": "rg/sed via exec_command",
+          "ranges": "raw lines 288–357, 378–395",
+          "purpose": "read/write and transaction acquisition; deferred/immediate behavior; BUSY on COMMIT and active-transaction cleanup"
+        }
+      ]
+    },
+    {
+      "source_id": "sqlwal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "cold_receipt": "cold-sqlwal.json",
+      "operations": [
+        {
+          "operation": "cold",
+          "helper": "exact_bytes.py",
+          "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwal.html",
+          "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+          "network_requests": 0
+        },
+        {
+          "operation": "read",
+          "tool": "rg/sed via exec_command",
+          "ranges": "raw lines 160–205, 270–318, 555–579, 672–711",
+          "purpose": "WAL concurrency and same-host condition; one writer; checkpoint starvation; documented SQLITE_BUSY cases"
+        }
+      ]
+    },
+    {
+      "source_id": "sqlpragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "cold_receipt": "cold-sqlpragma.json",
+      "operations": [
+        {
+          "operation": "cold",
+          "helper": "exact_bytes.py",
+          "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlpragma.html",
+          "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+          "network_requests": 0
+        },
+        {
+          "operation": "read",
+          "tool": "rg/sed via exec_command",
+          "ranges": "raw lines 576–588, 1208–1287",
+          "purpose": "busy_timeout handler semantics and journal_mode query/set result"
+        }
+      ]
+    },
+    {
+      "source_id": "sqlwalcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+      "version_or_capture": "SQLite version-3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "cold_receipt": "cold-sqlwalcode.json",
+      "operations": [
+        {
+          "operation": "cold",
+          "helper": "exact_bytes.py",
+          "source": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwalcode.c",
+          "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+          "network_requests": 0
+        },
+        {
+          "operation": "read",
+          "tool": "rg/sed via exec_command",
+          "ranges": "raw lines 2101–2118, 3681–3747",
+          "purpose": "WAL busy callback loop; one-writer lock and BUSY_SNAPSHOT on stale read snapshot"
+        }
+      ]
+    }
+  ],
+  "additional_primary_checks": []
+}
+

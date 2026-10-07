@@ -1,0 +1,46 @@
+{
+  "observed_at": "2026-10-07T18:54:31.112929+00:00",
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_fc21453a-44ec-4f62-bc07-f3f23e974af6/state.json",
+  "sha256": "5e85f56857cf7c86f93ce0515a6e1a9e18736a530e11ad948296fd51c7a9c4ee",
+  "actual_state": {
+    "objective": "Complete fresh ER10 I-ANCHOR-GLM control researcher v2 using exact assignment /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/control/research-v2/assignment.md and INPUTS.md. Save full draft/source/timing/actual installed integration Goal state receipts there. Existing integration already invoked; no second Goal or nested work. GLM5.3FlashMax, no accounts/config/externalrunner changes; vendor backend target not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "running",
+    "rounds": 0,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "[Read assignment/INPUTS/brief/plan and record native Goal receipt]",
+        "acceptance": "cat assignment.md INPUTS.md cases/I-ANCHOR-GLM/brief.md cases/I-ANCHOR-GLM/plan.md; write native_goal_receipt.json in jobs/I-ANCHOR-GLM/control/research-v2 with objective/assignment path, timestamps, backend session identity and observed driver state only; verify with `python3 -m json.tool native_goal_receipt.json` and confirm no edits to any Goal state.json (`git status`, `find` on the integration dir)",
+        "status": "pending"
+      },
+      {
+        "id": "t2",
+        "title": "[Primary-source research vs frozen plan]",
+        "acceptance": "Run public primary-source research per brief/plan (docs, issues, releases, pinned component behavior); log every source with stable ID, exact URL/version/range/retrieval metadata and bounded lawful evidence under sources/; verify sources/SOURCES.md exists and each ID cited in the draft is mapped (`grep -o 'S[0-9]*' draft.md` cross-checks SOURCES.md)",
+        "status": "pending"
+      },
+      {
+        "id": "t3",
+        "title": "[Write complete draft.md]",
+        "acceptance": "Produce draft.md covering all brief obligations with source-specific conditions, proposed-vs-executed checks separated, corrections/optional leads/uncertainties preserved and no critic verdict; verify `test -s draft.md` and that every obligation topic from brief.md appears (`grep -i <topic> draft.md` per obligation) with no second Goal or nested work",
+        "status": "pending"
+      },
+      {
+        "id": "t4",
+        "title": "[Save timings.json]",
+        "acceptance": "Write timings.json with original start (2026-10-07T18:50:04Z), first useful saved finding, draft-ready and truly observed native terminal time plus separate input/cache/output/reasoning usage when exposed, unknown billing left unknown; verify `python3 -m json.tool timings.json` and that timestamps parse and precede the 19:10:04Z researcher deadline (19:35:04Z wholearm)",
+        "status": "pending"
+      },
+      {
+        "id": "t5",
+        "title": "[Final receipts and inventory]",
+        "acceptance": "Capture native_terminal_receipt.json from actually observed driver terminal state (or record honestly that it is not yet terminal), then confirm only draft.md, sources/SOURCES.md, timings.json and the two receipts exist in research-v2 and nothing was written elsewhere; verify with `ls -la jobs/I-ANCHOR-GLM/control/research-v2`, `git status --porcelain` and `find jobs/I-ANCHOR-GLM/control/research-v2 -type f`",
+        "status": "pending"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791399012768,
+    "updatedAt": 1791399057258
+  },
+  "note": "Actual installed integration Goal running; unique exact controlv2 assignment objective association; vendor backend target not claimed."
+}

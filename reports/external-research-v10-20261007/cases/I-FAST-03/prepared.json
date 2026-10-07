@@ -1,0 +1,43 @@
+{
+  "schema": "er10.integrated.input.v1",
+  "case_id": "I-FAST-03",
+  "title": "Community building energy interval dashboard",
+  "track": "speed_budget",
+  "domain": "energy data / interval meter analysis",
+  "status": "ready_inputs",
+  "prepared_at_utc": "2026-10-07T18:33:30.385779+00:00",
+  "input_mode": "brief_led_open_discovery_with_frozen_sandbox_plan",
+  "recipe": null,
+  "control_recipe": null,
+  "treatment_recipe": null,
+  "family_allocation": null,
+  "budget": null,
+  "stage_allowances": null,
+  "execution_binding_status": "UNBOUND",
+  "launch_ready": false,
+  "standard_scope_sizing_minutes": 45,
+  "sizing_note": "Task-size planning reference only; no execution allowance is bound. Speed cases retain full scope.",
+  "research_answers_supplied": false,
+  "evaluator_keys_supplied": false,
+  "public_source_seed_list_supplied": false,
+  "obligation_map": "brief.md#compact-obligation-map-requirements-not-an-answer-key",
+  "files": {
+    "INPUTS.md": {
+      "sha256": "e25cf8e741130f4d3c5867234a2a43ddf9818688b3c25b8f8eba05a340235dac",
+      "bytes": 1917
+    },
+    "brief.md": {
+      "sha256": "3d7a0f91e63f409c4592560dd9d73bedc70cc12082e1e63ed86a88f46d754f73",
+      "bytes": 5149
+    },
+    "plan.md": {
+      "sha256": "b99ade2e9201635cbfbd21baa3f112dff4131032f8399d6923e7a18b4651789a",
+      "bytes": 1714
+    }
+  },
+  "source_copies": [],
+  "input_freeze_complete": true,
+  "input_frozen_at_utc": "2026-10-07T18:33:30.388074+00:00",
+  "freeze_policy": "Inputs chmod 0444; coordinator execution bindings remain external and prospective.",
+  "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-03"
+}

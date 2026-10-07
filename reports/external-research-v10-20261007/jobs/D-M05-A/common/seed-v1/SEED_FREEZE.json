@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "case": "D-M05-A",
+  "author_binding": {
+    "providerInstanceId": "muse",
+    "model": "muse-spark-1.3-contributor",
+    "options": {
+      "reasoning_effort": "max",
+      "mode": "default",
+      "approval_mode": "allowAll",
+      "auto_review": "off"
+    }
+  },
+  "seed_dispatch": "2026-10-07T18:42:01.962Z",
+  "native_start": "2026-10-07T18:42:04.805Z",
+  "terminal": "2026-10-07T18:43:55.200Z",
+  "seed_cold_equivalent_seconds": 113.238,
+  "amortized_seed_seconds": 56.619,
+  "frozen_at": "2026-10-07T18:44:34.345648+00:00",
+  "files": {
+    "prior-state.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/prior-state.md",
+      "sha256": "48ca796fd27d4898a030f430d68a5a5975da63b1d911835a5af502c4a837dca8",
+      "bytes": 8908
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/sources.json",
+      "sha256": "d161bdadd3e2ca7889c7a526a7d455cd6de4226d4f6c1b1cc96793b9f826e2a4",
+      "bytes": 1382
+    },
+    "native_goal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/native_goal_receipt.json",
+      "sha256": "47b25ce7ed3f33a1944feafe3219e27450b97204f17d7844e6013aabdc1337e0",
+      "bytes": 679
+    },
+    "native_terminal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/native_terminal_receipt.json",
+      "sha256": "83ee8b274e0e30ea4e33f4a1d34a6711d768c668a9ad3e744a7c98c2fbad4234",
+      "bytes": 680
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/t3-terminal-observed.json",
+      "sha256": "929ee14370f3a9631e9a96630b84146c605ec26b7e7cff33b3cea3f425149e0a",
+      "bytes": 20698
+    }
+  },
+  "billing": null,
+  "native_tokens": "raw native cumulative counters retained; not generated tokens or billing",
+  "source_quality": "UNASSESSED legitimate candidate seed, not truth",
+  "exposure": "No filesystem firewall; maps advisory"
+}

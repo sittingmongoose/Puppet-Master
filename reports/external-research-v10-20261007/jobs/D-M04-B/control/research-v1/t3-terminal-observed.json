@@ -1,0 +1,32 @@
+{
+  "status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-control-research-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-control-research-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-research-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-control-research-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-research-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "**ER10 M04 research artifacts are saved.** The 757-word draft contains conditional per-band recommendations, mask and transform policies, source limits, an alternative, and proposed fixtures. The fixtures were not run; no pass is claimed.\n\nThe native Goal is **complete**: `D-M04-B control research`, thread ID `01a117b9-1019-7bd3-9c07-562041acf024`. The active thread configuration confirmed `gpt-6-luna`, max reasoning, priority service tier, and `codex_gmail`.\n\n- [draft.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/draft.md)\n- [sources.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/sources.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/native_terminal_receipt.json)\n\nAll four mapped sources were cold-acquired and their receipts are in the same output directory: `cold-rasterresample.json`, `cold-rastermask.json`, `cold-rasterio.json`, and `cold-geotransform.json`. The private cache is at `/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/source-cache-v1/`; acquisition recorded zero network requests.\n\n**The six-minute allowance was exceeded.** The native Goal reports 634 seconds at completion; the final artifact bundle was saved by 19:06:55 UTC, at least 281 seconds beyond six minutes from the Goal\u2019s 18:56:14 UTC creation time. The dispatch timestamp was unavailable.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-research-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:6aaf0625-3d22-4974-ad85-de0303aec35d",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "summary": "**ER10 M04 research artifacts are saved.** The 757-word draft contains conditional per-band recommendations, mask and transform policies, source limits, an alternative, and proposed fixtures. The fixtures were not run; no pass is claimed.\n\nThe native Goal is **complete**: `D-M04-B control research`, thread ID `01a117b9-1019-7bd3-9c07-562041acf024`. The active thread configuration confirmed `gpt-6-luna`, max reasoning, priority service tier, and `codex_gmail`.\n\n- [draft.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/draft.md)\n- [sources.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/sources.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/native_terminal_receipt.json)\n\nAll four mapped sources were cold-acquired and their receipts are in the same output directory: `cold-rasterresample.json`, `cold-rastermask.json`, `cold-rasterio.json`, and `cold-geotransform.json`. The private cache is at `/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/source-cache-v1/`; acquisition recorded zero network requests.\n\n**The six-minute allowance was exceeded.** The native Goal reports 634 seconds at completion; the final artifact bundle was saved by 19:06:55 UTC, at least 281 seconds beyond six minutes from the Goal\u2019s 18:56:14 UTC creation time. The dispatch timestamp was unavailable.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-research-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:6aaf0625-3d22-4974-ad85-de0303aec35d",
+    "waitTimedOut": false
+  },
+  "runs": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-research-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T18:56:06.537Z",
+      "startedAt": "2026-10-07T18:56:07.153Z",
+      "completedAt": "2026-10-07T19:07:30.232Z"
+    }
+  ]
+}

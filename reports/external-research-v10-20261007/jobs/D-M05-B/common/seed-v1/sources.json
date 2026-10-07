@@ -1,0 +1,50 @@
+{
+  "job": "D-M05-B",
+  "seed": "common/seed-v1",
+  "map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/INPUT_MAP.json",
+  "brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/prior-brief.md",
+    "role": "prior brief (untrusted input, not evaluator truth)"
+  },
+  "sources": [
+    {
+      "source_id": "sqlwal",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwal.html",
+      "sha256_mapped": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "sha256_observed": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "hash_match": true,
+      "bytes_observed": 42143,
+      "role": "SQLite Write-Ahead Logging documentation (prior-applicable)"
+    },
+    {
+      "source_id": "sqlwalcode",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwalcode.c",
+      "sha256_mapped": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "sha256_observed": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "hash_match": true,
+      "bytes_observed": 177587,
+      "lines_observed": 4636,
+      "role": "SQLite WAL implementation source (prior-applicable)"
+    },
+    {
+      "source_id": "sqltransaction",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqltransaction.html",
+      "sha256_mapped": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "sha256_observed": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "hash_match": true,
+      "bytes_observed": 27068,
+      "role": "SQLite Transaction documentation (prior-applicable)"
+    }
+  ],
+  "outputs": {
+    "prior_state": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/prior-state.md",
+    "sources": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/sources.json",
+    "goal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/native_goal_receipt.json",
+    "terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/native_terminal_receipt.json"
+  },
+  "exclusions_observed": "Did not read changed brief/changes/new-release sources, other cases, arms, evaluators, campaign state, or prior ER9 answers.",
+  "usage": {
+    "counters": null,
+    "billing": null
+  }
+}

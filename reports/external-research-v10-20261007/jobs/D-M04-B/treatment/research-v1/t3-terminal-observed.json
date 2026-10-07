@@ -1,0 +1,32 @@
+{
+  "status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-treatment-research-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-treatment-research-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-treatment-research-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-treatment-research-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-treatment-research-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "The bounded research draft and native terminal receipt are complete. The draft is for fresh critic review; I\u2019m not reporting a pass.\n\n**Artifacts**\n\n- [draft.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/draft.md)\n- [sources.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/sources.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/native_terminal_receipt.json)\n\nThe four cold acquisition receipts are also saved in the research output directory. They report zero network requests; no Internet fetch savings are claimed.\n\n**Native Goal**\n\n- ID: `01a117aa-6bec-7c01-a5ea-da6869a10e2a`\n- State: **complete**\n- Terminal usage: 81,127 tokens; 328 seconds from Goal activation\n- The initial receipt write error is preserved in `native_goal_receipt.json`. Delegate dispatch time was not exposed by the native tools; the original six-minute allowance was not reset.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-treatment-research-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:34c688bc-971f-4f75-98a7-4a5722fa3e1c",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "summary": "The bounded research draft and native terminal receipt are complete. The draft is for fresh critic review; I\u2019m not reporting a pass.\n\n**Artifacts**\n\n- [draft.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/draft.md)\n- [sources.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/sources.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/treatment/research-v1/native_terminal_receipt.json)\n\nThe four cold acquisition receipts are also saved in the research output directory. They report zero network requests; no Internet fetch savings are claimed.\n\n**Native Goal**\n\n- ID: `01a117aa-6bec-7c01-a5ea-da6869a10e2a`\n- State: **complete**\n- Terminal usage: 81,127 tokens; 328 seconds from Goal activation\n- The initial receipt write error is preserved in `native_goal_receipt.json`. Delegate dispatch time was not exposed by the native tools; the original six-minute allowance was not reset.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-treatment-research-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:34c688bc-971f-4f75-98a7-4a5722fa3e1c",
+    "waitTimedOut": false
+  },
+  "runs": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-treatment-research-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T18:40:06.739Z",
+      "startedAt": "2026-10-07T18:40:07.555Z",
+      "completedAt": "2026-10-07T18:48:32.478Z"
+    }
+  ]
+}

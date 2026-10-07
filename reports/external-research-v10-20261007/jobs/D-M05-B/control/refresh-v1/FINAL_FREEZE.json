@@ -1,0 +1,43 @@
+{
+  "files": {
+    "final.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/final.md",
+      "sha256": "0db1dee0b7a7f7302549bb33fe0e458cec31ebe209d5a8117ff59f5e1bbf8d3c",
+      "bytes": 11519
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/sources.json",
+      "sha256": "ce6021c3779415403d97fe0384ccd6e34331796cc3efdcf32d17481516816b1d",
+      "bytes": 6387
+    },
+    "timings.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/timings.json",
+      "sha256": "1800bb55e33302943f28119a9831e2ec68bf5a46eca9fe8bc06789ac031588e2",
+      "bytes": 3162
+    },
+    "native_goal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/native_goal_receipt.json",
+      "sha256": "13af939b0f41ab9bd67f32268182ed2ff077e0d3ac02a50d2b77e61f15d42ce0",
+      "bytes": 2708
+    },
+    "native_terminal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/native_terminal_receipt.json",
+      "sha256": "d64dc29f03f0cadbc77c06fd057705091c3e452f81b509858eafea5dd69e0e8b",
+      "bytes": 2653
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/t3-terminal-observed.json",
+      "sha256": "bfe41990778b58f6e64be10b203603bf87cca4788944df8179887f3a34391f87",
+      "bytes": 13956
+    }
+  },
+  "dispatch_at": "2026-10-07T18:50:02.856Z",
+  "terminal": "2026-10-07T18:53:43.403Z",
+  "dispatch_to_terminal_seconds": 220.547,
+  "cold_seed_seconds": 162.747,
+  "intervening_seed_queue_seconds": 317.435,
+  "cold_inclusive_seconds": 700.729,
+  "semantic_status": "UNASSESSED",
+  "native_terminal": "completed",
+  "exposure": "Maps advisory, no filesystem firewall"
+}

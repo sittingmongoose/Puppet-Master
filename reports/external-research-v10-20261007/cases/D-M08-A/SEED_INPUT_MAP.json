@@ -1,0 +1,32 @@
+{
+  "case_id": "D-M08-A",
+  "producer": "ROOT_BOUND_SAME_FAMILY_CANDIDATE",
+  "status": "SEED_NOT_GENERATED",
+  "generation_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+  "original_sources": [
+    {
+      "source_id": "httpsem",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+    },
+    {
+      "source_id": "httpcache",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+    }
+  ],
+  "required_outputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/critique.md"
+  ],
+  "receipt_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/SEED_RECEIPT.json",
+  "critic_stage_for_M08": {
+    "draft": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/draft.md",
+    "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+    "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+    "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/critique.md"
+  },
+  "seed_minutes": 6,
+  "no_expected_answers": true,
+  "not_evaluator_truth": true
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "pm.er10.targeted-ready.v1",
+  "case_id": "D-M04-A",
+  "status": "READY_FOR_ROOT_BINDING",
+  "frozen_design_version": 1,
+  "input_map_complete": true,
+  "predecessor_inputs_complete": true,
+  "scientific_answers_included": false,
+  "dispatch_performed": false,
+  "family": "Luna",
+  "effort": "Max",
+  "minutes_per_arm": 15,
+  "arm_order": [
+    "control",
+    "treatment"
+  ],
+  "case_card_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/case-card.json",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/INPUT_MAP.json",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/case-card.json",
+      "sha256": "62669d091a02a685da3dee83796e8bf4617ec797935f9aab2309c871c7d881a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/CASE_CARD.md",
+      "sha256": "647e3134b794b762a5fb62cba109a931c8de19b23b844bbd50fa5bdb6a97d859"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/INPUT_MAP.json",
+      "sha256": "1e6c4089c6a3c7bf2393de0e2e2097d7a1b29559de410a0384cadb0fb8d2a3ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/brief.md",
+      "sha256": "82aa774af65de6e516bb26f3d3b70ad4720f8ff0031eee4fd948af6f4cff1ce5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources.json",
+      "sha256": "f41098cb6672ff229edc330814e0d6ba2fb75fdddf15b9c0212c7cb53ce02fda"
+    }
+  ],
+  "source_hashes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources.json",
+  "root_prerequisites": "Root must qualify exact account/model/native Goal/access/source retrieval policy/output-carrier before dispatch.",
+  "freeze_date_utc": "2026-10-07"
+}

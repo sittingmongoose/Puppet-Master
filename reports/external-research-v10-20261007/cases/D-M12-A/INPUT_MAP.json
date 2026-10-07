@@ -1,0 +1,14 @@
+{
+  "schema": "pm.er10.targeted-input-map.v1",
+  "case_id": "D-M12-A",
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/inputs/sources.json",
+  "sources": [],
+  "source_mode": "OPEN_DISCOVERY_BRIEF_ONLY",
+  "predecessor": null,
+  "output_directory_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/control",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/outputs/treatment"
+  },
+  "candidate_scope": "Root passes exact stage-specific inputs only; no parent campaign history, evaluator keys, other cases, helpers source library, or other-arm outputs."
+}

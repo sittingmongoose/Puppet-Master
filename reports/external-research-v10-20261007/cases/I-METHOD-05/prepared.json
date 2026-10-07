@@ -1,0 +1,258 @@
+{
+  "schema": "er10.integrated.input.v1",
+  "case_id": "I-METHOD-05",
+  "title": "Read-only PM shared-buffer and file-integrity review",
+  "track": "method_recipe",
+  "domain": "Puppet Master / editor file integrity",
+  "status": "ready_inputs",
+  "prepared_at_utc": "2026-10-07T18:33:30.290832+00:00",
+  "input_mode": "brief_led_open_discovery_with_frozen_sandbox_plan",
+  "recipe": null,
+  "control_recipe": null,
+  "treatment_recipe": null,
+  "family_allocation": null,
+  "budget": null,
+  "stage_allowances": null,
+  "execution_binding_status": "UNBOUND",
+  "launch_ready": false,
+  "standard_scope_sizing_minutes": 45,
+  "sizing_note": "Task-size planning reference only; no execution allowance is bound. Speed cases retain full scope.",
+  "research_answers_supplied": false,
+  "evaluator_keys_supplied": false,
+  "public_source_seed_list_supplied": false,
+  "obligation_map": "brief.md#compact-obligation-map-requirements-not-an-answer-key",
+  "files": {
+    "INPUTS.md": {
+      "sha256": "c077e05ab591041706495b8486c04957f4fee4c9fa672681dd590087077576ae",
+      "bytes": 2113
+    },
+    "brief.md": {
+      "sha256": "9b0b141cb8bc3a2ba86a7225cf836437fc9640d6f935f45b14d8be3103e22d3d",
+      "bytes": 5605
+    },
+    "plan.md": {
+      "sha256": "9f8047bac292088091eafb543251bc79662fe52f1c265c6a54aa0b041abedfd4",
+      "bytes": 2932
+    },
+    "source/F-008.md": {
+      "sha256": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+      "bytes": 2828
+    },
+    "source/F-018.md": {
+      "sha256": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+      "bytes": 2233
+    },
+    "source/F-020.md": {
+      "sha256": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+      "bytes": 2235
+    },
+    "source/F-026.md": {
+      "sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+      "bytes": 2399
+    },
+    "source/F-027.md": {
+      "sha256": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+      "bytes": 2090
+    },
+    "source/F-028.md": {
+      "sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+      "bytes": 2001
+    },
+    "source/F-082.md": {
+      "sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+      "bytes": 2294
+    },
+    "source/definitions_and_transactions.md": {
+      "sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+      "bytes": 5313
+    },
+    "source/editing_and_save_context.md": {
+      "sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+      "bytes": 4948
+    },
+    "source/text_and_size_context.md": {
+      "sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7",
+      "bytes": 3663
+    }
+  },
+  "source_copies": [
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [],
+      "original_lines": {
+        "start": 92,
+        "end": 121
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/definitions_and_transactions.md",
+      "copy_sha256": "322473f02b7bb409cf9aac8cffdcd7bfcd14b6d3ee77d2036473de6c1597d608",
+      "copy_bytes": 5313,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L92-L121"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [],
+      "original_lines": {
+        "start": 260,
+        "end": 291
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/editing_and_save_context.md",
+      "copy_sha256": "e2202206c9b219e8413fdfba639e91c6cd3d5ac720f3dac4f5afd787ce912440",
+      "copy_bytes": 4948,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L260-L291"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [],
+      "original_lines": {
+        "start": 334,
+        "end": 360
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/text_and_size_context.md",
+      "copy_sha256": "44dad53614033d8660ef892dd559bf83c8c784086f46c3818e383b23b76d66f7",
+      "copy_bytes": 3663,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L334-L360"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [
+        "F-008"
+      ],
+      "original_lines": {
+        "start": 926,
+        "end": 983
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/F-008.md",
+      "copy_sha256": "228a3d6d2f5f5dd76fbaad1a11101059b5f903e9886caee0473b12ca740b2254",
+      "copy_bytes": 2828,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L926-L983"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [
+        "F-018"
+      ],
+      "original_lines": {
+        "start": 1471,
+        "end": 1524
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/F-018.md",
+      "copy_sha256": "2aaa9d7050de3d76d758491049c5d89f5fe61d1194d9592fd4b6c8e8e7a8f146",
+      "copy_bytes": 2233,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L1471-L1524"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [
+        "F-020"
+      ],
+      "original_lines": {
+        "start": 1578,
+        "end": 1627
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/F-020.md",
+      "copy_sha256": "0d154458faf3f2d6173dcf7b84355d81490badfbc1bebcc9b9a9a67c07374874",
+      "copy_bytes": 2235,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L1578-L1627"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [
+        "F-026"
+      ],
+      "original_lines": {
+        "start": 1897,
+        "end": 1948
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/F-026.md",
+      "copy_sha256": "3dbb57e9cd4b912dd92d3000ae8fe77e14c269094a98ea4cfe7a6f8515376dea",
+      "copy_bytes": 2399,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L1897-L1948"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [
+        "F-027"
+      ],
+      "original_lines": {
+        "start": 1950,
+        "end": 2003
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/F-027.md",
+      "copy_sha256": "770088fd11b971154c27104ded235673da2d4f6b24666db6dd95ca3f6e51be7c",
+      "copy_bytes": 2090,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L1950-L2003"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [
+        "F-028"
+      ],
+      "original_lines": {
+        "start": 2005,
+        "end": 2053
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/F-028.md",
+      "copy_sha256": "dc6e71c3e801d5352b3a9629a7c0c18fd70e48212e98c7ba46318b7bf77e6e65",
+      "copy_bytes": 2001,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L2005-L2053"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/FileManager.md",
+      "original_units": [
+        "F-082"
+      ],
+      "original_lines": {
+        "start": 5119,
+        "end": 5167
+      },
+      "original_git_blob": "a798115a41e0a553a56d31393a376e59ad684227",
+      "original_file_sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "copy_relative_path": "source/F-082.md",
+      "copy_sha256": "b256763567a9d143c73b15eb40c74718c71a4446d352c184e2f69c81ea74ad5f",
+      "copy_bytes": 2294,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/FileManager.md#L5119-L5167"
+    }
+  ],
+  "input_freeze_complete": true,
+  "input_frozen_at_utc": "2026-10-07T18:33:30.331342+00:00",
+  "freeze_policy": "Inputs chmod 0444; coordinator execution bindings remain external and prospective.",
+  "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-05"
+}

@@ -1,0 +1,22 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6.1-sol",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "high"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ]
+  },
+  "clientRequestId": "er10-publication-batch002-v1",
+  "role": "implementation",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default"
+}

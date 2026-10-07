@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-10-07T18:30:48.789128+00:00",
+  "luna": {
+    "delegated_native_goal_activation": "INDEPENDENTLY_VERIFIED_TOOL_RESPONSE_AND_T3_NATIVE_THREAD_BINDING",
+    "tools": [
+      "create_goal",
+      "get_goal",
+      "update_goal"
+    ],
+    "receipt": "jobs/I-ANCHOR-LUNA/treatment/research-v1/native_goal_receipt.json"
+  },
+  "muse": {
+    "delegated_native_goal_activation": "INDEPENDENTLY_VERIFIED_TOOL_RESPONSE_AND_NATIVE_DURABLE_RECORD",
+    "tools": [
+      "muse.create_goal",
+      "muse.get_goal",
+      "muse.update_goal",
+      "muse.report_progress"
+    ],
+    "receipt": "jobs/I-ANCHOR-MUSE/treatment/research-v1/native_goal_receipt.json"
+  },
+  "glm": {
+    "delegated_native_goal_activation": "NOT_YET_OBSERVED",
+    "admission": "hold new starts pending narrow check",
+    "diagnosis": "Installed genuine session/goal backend exists; prompt is role-prefixed, no direct T3 passthrough; ordinary slash defaults to bridge-owned loop; backend needs existing supported goal.mode=backend or scoped env override. No configuration changed."
+  },
+  "provenance_limits": "Tool receipts captured by candidates; narrow independent route crosscheck in progress. Exact isolated paths/context are not a filesystem firewall.",
+  "route_findings": "helpers/native-route/route-findings.md",
+  "medium_v1_failure": "Native goal objective6081 chars exceeded4000; v2 runs without own-Goal slash prefix. Preserve original."
+}

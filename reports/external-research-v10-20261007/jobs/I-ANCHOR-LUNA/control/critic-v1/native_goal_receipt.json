@@ -1,0 +1,42 @@
+{
+  "create_goal": {
+    "goal": {
+      "threadId": "01a117af-41b3-7d11-abe5-2ddd26ba4e22",
+      "objective": "ER10 Luna control critic: full brief critique using exact INPUTS.md; save required files and terminalize",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791398735,
+      "updatedAt": 1791398735
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal": {
+    "goal": {
+      "threadId": "01a117af-41b3-7d11-abe5-2ddd26ba4e22",
+      "objective": "ER10 Luna control critic: full brief critique using exact INPUTS.md; save required files and terminalize",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791398735,
+      "updatedAt": 1791398735
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "thread_configuration": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+    "modelSelection": {
+      "instanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "options": [
+        {"id": "reasoningEffort", "value": "max"},
+        {"id": "serviceTier", "value": "priority"}
+      ]
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "capture_note": "create_goal and immediate get_goal both succeeded; the JSON values above preserve their actual returned fields. No failed capture occurred. The native Goal identity is goal.threadId; thread_configuration separately identifies the T3 wrapper thread."
+}

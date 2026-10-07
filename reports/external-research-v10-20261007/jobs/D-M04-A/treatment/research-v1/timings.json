@@ -1,0 +1,43 @@
+{
+  "schema": "pm.er10.research-timings.v1",
+  "case_id": "D-M04-A",
+  "stage": "treatment/research-v1",
+  "requested_active_identity_context": "gpt-6-luna Max priority on codex_gmail sittingmongoose@gmail.com",
+  "native_identity_observation": "Goal API exposed threadId/objective/status/timestamps/usage; provider, model, account binding, and binding-freshness are not exposed.",
+  "dispatch_utc": null,
+  "dispatch_note": "Exact delegate-dispatch timestamp was not available in the native Goal responses or clock observations.",
+  "goal_created_utc": "2026-10-07T18:55:03Z",
+  "first_useful_finding_utc": "2026-10-07T18:58:53Z",
+  "first_useful_finding_note": "Recorded the source-backed stale-snapshot finding: the 3.51.3 WAL write-acquisition path returns SQLITE_BUSY_SNAPSHOT and does not start the write transaction when the read snapshot is stale.",
+  "completion_utc": "2026-10-07T19:00:56Z",
+  "completion_note": "Final draft/source-key artifacts timestamped by clock at 19:00:56 UTC. Native update_goal returned status=complete at 19:00:09 UTC; the fresh get_goal confirmed complete.",
+  "timings_snapshot_utc": "2026-10-07 19:00:28 UTC",
+  "observed_elapsed_seconds_from_goal_creation_by_clock": 306,
+  "native_goal_usage": {
+    "at_creation": {
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "remainingTokens": null
+    },
+    "immediately_before_terminal_update": {
+      "tokensUsed": 54276,
+      "timeUsedSeconds": 285,
+      "remainingTokens": null
+    },
+    "update_goal_complete_response": {
+      "tokensUsed": 62910,
+      "timeUsedSeconds": 305,
+      "remainingTokens": null
+    },
+    "fresh_get_goal_after_update": {
+      "tokensUsed": 62910,
+      "timeUsedSeconds": 305,
+      "remainingTokens": null
+    },
+    "billing": null
+  },
+  "billing_note": "Billing is not observable in the native Goal responses; left null.",
+  "source_acquisition_observation": "Four cold local acquisitions completed at 2026-10-07T18:55:45–18:55:46Z with network_requests=0; see individual cold receipts.",
+  "errors_observed": "Initial cold helper calls passed source IDs instead of mapped source paths and failed; actual outputs are preserved separately in failed-cold-attempts.json. Correct path-based cold acquisition then succeeded for all four.",
+  "proposed_checks_status": "Not run."
+}

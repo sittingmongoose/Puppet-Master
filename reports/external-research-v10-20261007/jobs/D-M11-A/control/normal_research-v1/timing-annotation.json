@@ -1,0 +1,13 @@
+{
+  "actual_T3_requestedAt": "2026-10-07T18:55:34.243Z",
+  "actual_T3_startedAt": "2026-10-07T18:55:36.331Z",
+  "original": {
+    "prepared_at": "2026-10-07T18:55:24.596724+00:00",
+    "first_dispatch": "2026-10-07T18:55:24.596724+00:00",
+    "stage_deadline": "2026-10-07T19:07:24.596724+00:00",
+    "arm_deadline": "2026-10-07T19:10:24.596724+00:00",
+    "requestedAt_correction": "Earlier actual T3 requestedAt governs; linked annotations retain original."
+  },
+  "effective_boundary": "Prospective boundary earlier than actual requestedAt retained conservatively; no extension.",
+  "native_activation_observation": "Not yet observed; do not infer from running task"
+}

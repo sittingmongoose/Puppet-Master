@@ -1,0 +1,43 @@
+{
+  "note": "Preserves failed actual tool outputs separately. The cold helper expects a source path; the initial attempts passed IDs. No receipt was emitted for these failures. Successful path-based cold receipts are separate files.",
+  "attempts": [
+    {
+      "source_argument": "sqltransaction",
+      "actual_response": {
+        "exit_code": 1,
+        "stderr": "Traceback (most recent call last):\\n  File \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/exact_bytes.py\", line 6, in <module>\\n    b=source.read_bytes();assert hashlib.sha256(b).hexdigest()==a.sha256\\n  File \"/usr/lib/python3.14/pathlib.py\", line 778, in read_bytes\\n    with self.open(mode='rb', buffering=0) as f:\\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/usr/lib/python3.14/pathlib.py\", line 772, in open\\n    return io.open(self, mode, buffering, encoding, errors, newline)\\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\nFileNotFoundError: [Errno 2] No such file or directory: 'sqltransaction'"
+      },
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: 'sqltransaction'"
+    },
+    {
+      "source_argument": "sqlwal",
+      "actual_response": {
+        "exit_code": 1,
+        "stderr": "Traceback (most recent call last):\\n  File \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/exact_bytes.py\", line 6, in <module>\\n    b=source.read_bytes();assert hashlib.sha256(b).hexdigest()==a.sha256\\n  File \"/usr/lib/python3.14/pathlib.py\", line 778, in read_bytes\\n    with self.open(mode='rb', buffering=0) as f:\\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/usr/lib/python3.14/pathlib.py\", line 772, in open\\n    return io.open(self, mode, buffering, encoding, errors, newline)\\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\nFileNotFoundError: [Errno 2] No such file or directory: 'sqlwal'"
+      },
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: 'sqlwal'"
+    },
+    {
+      "source_argument": "sqlpragma",
+      "actual_response": {
+        "exit_code": 1,
+        "stderr": "Traceback (most recent call last):\\n  File \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/exact_bytes.py\", line 6, in <module>\\n    b=source.read_bytes();assert hashlib.sha256(b).hexdigest()==a.sha256\\n  File \"/usr/lib/python3.14/pathlib.py\", line 778, in read_bytes\\n    with self.open(mode='rb', buffering=0) as f:\\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/usr/lib/python3.14/pathlib.py\", line 772, in open\\n    return io.open(self, mode, buffering, encoding, errors, newline)\\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\nFileNotFoundError: [Errno 2] No such file or directory: 'sqlpragma'"
+      },
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: 'sqlpragma'"
+    },
+    {
+      "source_argument": "sqlwalcode",
+      "actual_response": {
+        "exit_code": 1,
+        "stderr": "Traceback (most recent call last):\\n  File \"/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/exact_bytes.py\", line 6, in <module>\\n    b=source.read_bytes();assert hashlib.sha256(b).hexdigest()==a.sha256\\n  File \"/usr/lib/python3.14/pathlib.py\", line 778, in read_bytes\\n    with self.open(mode='rb', buffering=0) as f:\\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/usr/lib/python3.14/pathlib.py\", line 772, in open\\n    return io.open(self, mode, buffering, encoding, errors, newline)\\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\nFileNotFoundError: [Errno 2] No such file or directory: 'sqlwalcode'"
+      },
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: 'sqlwalcode'"
+    }
+  ],
+  "additional_tool_error": {
+    "invocation": "functions.exec",
+    "actual_response": "Script failed: SyntaxError: Invalid or unexpected token",
+    "effect": "No source-acquisition command ran in that invocation."
+  }
+}
+

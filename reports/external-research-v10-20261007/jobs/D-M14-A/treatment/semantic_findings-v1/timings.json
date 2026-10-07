@@ -1,0 +1,74 @@
+{
+  "native_goal_thread_id": "01a117b8-6b5d-78b3-8c01-473e51ddb2dd",
+  "objective": "Execute D-M14-A treatment semantic_findings from /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1/INPUT_MAP.json and deliver semantic_findings.md by the bounded stage deadline.",
+  "actual_start_clock_utc": "2026-10-07 18:55:47 UTC",
+  "requested_stage_deadline_utc": "2026-10-07T19:04:18.516752+00:00",
+  "actual_t3_requested_at_utc": null,
+  "first_saved_useful_finding_utc": null,
+  "first_saved_time_note": "The first useful report write completed before the subsequent observed clock at 2026-10-07 18:57:39 UTC; its exact pre-write clock response was lost when the orchestration wrapper errored after the writes, so the exact timestamp is unknown.",
+  "last_report_confirmed_present_utc": "2026-10-07 18:59:16 UTC",
+  "source_operations": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1/INPUT_MAP.json",
+      "operation": "read",
+      "result": "Bindings to brief, manifest, four public primary files; no predecessors."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/README.md",
+      "operation": "read",
+      "result": "Generic renderer format only."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+      "operation": "read",
+      "sha256": "d10480e11e371410f596396f8c8562696b41277991e3e3297b9b122bac051f0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+      "operation": "read",
+      "sha256": "c4cd37441e9285345615faa390d283d0284003fec14639b99e9ac3627b70e6f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+      "operation": "read",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+      "operation": "read",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+      "operation": "read",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+      "operation": "read",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc"
+    },
+    {
+      "operation": "network",
+      "result": "No additional public fetches; zero extra source captures."
+    }
+  ],
+  "native_input_tokens": null,
+  "native_cached_tokens": null,
+  "native_generated_tokens": null,
+  "native_billing": null,
+  "native_total_tokens_used_from_terminal_response": 52979,
+  "native_time_used_seconds_from_terminal_response": 215,
+  "native_terminal_update_observed_at_utc": "2026-10-07 18:59:16 UTC",
+  "native_terminal_get_observed_at_utc": "2026-10-07 18:59:16 UTC",
+  "native_status_after_terminal_get": "complete",
+  "native_completion_overrun_seconds": 0,
+  "t3_delivery_overrun_seconds": 0,
+  "last_timing_record_write_observed_at_utc": "2026-10-07 19:00:43 UTC",
+  "notes": [
+    "Native activation create and active get responses are in native_activation.json.",
+    "Exact terminal update response and its subsequent get response are in native_terminal_receipt.json.",
+    "The final report contains six records; structural JSON parsing and required-field presence were checked. The renderer was not run, as instructed.",
+    "The stage report was confirmed present before the deadline. T3 delivery is also scheduled in this response before the deadline."
+  ]
+}

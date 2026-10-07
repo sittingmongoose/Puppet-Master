@@ -1,0 +1,40 @@
+{
+  "observed_at": "2026-10-07T18:42:55Z",
+  "native_goal": {
+    "threadId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+    "objective": "Research a complete evidence-backed proposal draft for the ER10 candidate brief specified by /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/INPUTS.md. Admit only legitimate case inputs from that map and primary public sources; exclude parent context, other arms, evaluation material, and historical answers. Preserve bounded source evidence with immutable identities, exact URL/version/retrieval metadata, small lawful excerpts or precise locators, and mechanical hashes. Save draft.md, sources/, timings.json, native_goal_receipt.json, and a terminal receipt in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1. Do not execute downloaded repository/install scripts on host or alter canon/main/WorkNodes/accounts. Distinguish proposal from any execution, do not delegate, and complete this Goal after saving outputs.",
+    "status": "complete",
+    "tokensUsed": 280226,
+    "timeUsedSeconds": 953,
+    "createdAt": 1791397622,
+    "updatedAt": 1791398575
+  },
+  "get_goal_result": {
+    "goal": {
+      "threadId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+      "objective": "Research a complete evidence-backed proposal draft for the ER10 candidate brief specified by /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/INPUTS.md. Admit only legitimate case inputs from that map and primary public sources; exclude parent context, other arms, evaluation material, and historical answers. Preserve bounded source evidence with immutable identities, exact URL/version/retrieval metadata, small lawful excerpts or precise locators, and mechanical hashes. Save draft.md, sources/, timings.json, native_goal_receipt.json, and a terminal receipt in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1. Do not execute downloaded repository/install scripts on host or alter canon/main/WorkNodes/accounts. Distinguish proposal from any execution, do not delegate, and complete this Goal after saving outputs.",
+      "status": "complete",
+      "tokensUsed": 280226,
+      "timeUsedSeconds": 953,
+      "createdAt": 1791397622,
+      "updatedAt": 1791398575
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "actual_usage": {
+    "native_goal_tokensUsed": 280226,
+    "native_goal_timeUsedSeconds": 953,
+    "elapsed_human": "15 minutes 53 seconds",
+    "token_budget": null,
+    "remainingTokens": null,
+    "billing": "not exposed; unknown"
+  },
+  "scope_exception": "A final recursive hash command read bytes of two pre-existing output-directory files named dispatch.json and task.txt. Their contents were not displayed, interpreted, or incorporated, and their hashes were not retained in deliverables. No further recursive reads were made.",
+  "deliverables": {
+    "draft_sha256": "30f387257559ea22a0e661405c5c79973585a4b504cf1b6cd10284b557839d96",
+    "source_register_sha256": "92f4f57f9e0732069532dc5a5510ce517b8a9a2dfb39c6d0a6b4d73bca80642a",
+    "source_fetch_manifest_sha256": "33559a1e56ba447d846f07c57b5bb9be5d284ac5a5711fa2cd2689e4f2a54e56",
+    "timings_file": "timings.json; final native status, terminal time, and reported usage are recorded there."
+  }
+}

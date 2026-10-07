@@ -1,0 +1,46 @@
+{
+  "schema": "pm.er10.targeted-ready.v1",
+  "case_id": "D-M14-A",
+  "status": "READY_FOR_ROOT_BINDING",
+  "frozen_design_version": 1,
+  "input_map_complete": true,
+  "predecessor_inputs_complete": true,
+  "scientific_answers_included": false,
+  "dispatch_performed": false,
+  "family": "Luna",
+  "effort": "Max",
+  "minutes_per_arm": 15,
+  "arm_order": [
+    "treatment",
+    "control"
+  ],
+  "case_card_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/case-card.json",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/INPUT_MAP.json",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/case-card.json",
+      "sha256": "67bc9697bc4abc6bc6b0169e5fee607444d326646eaccf308b7c9ce2587084e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/CASE_CARD.md",
+      "sha256": "a4c7a5767df339bc079c1d5d2426cb141a20a597a27d4dd846e11fa9ad33e3dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/INPUT_MAP.json",
+      "sha256": "d4d2d080347e39a13a63ea50aed387fae0cb2aeb74f2ec295155c6062292cfd9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+      "sha256": "d10480e11e371410f596396f8c8562696b41277991e3e3297b9b122bac051f0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+      "sha256": "c4cd37441e9285345615faa390d283d0284003fec14639b99e9ac3627b70e6f0"
+    }
+  ],
+  "source_hashes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+  "root_prerequisites": [
+    "Root-qualified generic mechanical renderer accepting candidate-authored semantic findings and supplying no substantive conclusions; capture version before dispatch."
+  ],
+  "freeze_date_utc": "2026-10-07"
+}

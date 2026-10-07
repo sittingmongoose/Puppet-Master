@@ -1,0 +1,85 @@
+{
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+      "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791398894,
+      "updatedAt": 1791398894
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "initial_get_goal_response": {
+    "goal": {
+      "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+      "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791398894,
+      "updatedAt": 1791398894
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "observed_active_get_goal_response": {
+    "goal": {
+      "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+      "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+      "status": "active",
+      "tokensUsed": 184661,
+      "timeUsedSeconds": 582,
+      "createdAt": 1791398894,
+      "updatedAt": 1791399477
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "observed_active_get_at_utc": "2026-10-07 18:58:34 UTC",
+  "observed_active_identity_response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1\",\"modelSelection\":{\"instanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"options\":[{\"id\":\"reasoningEffort\",\"value\":\"max\"},{\"id\":\"serviceTier\",\"value\":\"priority\"}]},\"runtimeMode\":\"full-access\",\"interactionMode\":\"default\"}"
+      }
+    ],
+    "structuredContent": {
+      "threadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+      "modelSelection": {
+        "instanceId": "codex_gmail",
+        "model": "gpt-6-luna",
+        "options": [
+          {
+            "id": "reasoningEffort",
+            "value": "max"
+          },
+          {
+            "id": "serviceTier",
+            "value": "priority"
+          }
+        ]
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default"
+    },
+    "isError": false
+  },
+  "active_identity_observed_at_utc": "2026-10-07 18:58:34 UTC",
+  "latest_active_get_goal_response": {
+    "goal": {
+      "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+      "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+      "status": "active",
+      "tokensUsed": 230027,
+      "timeUsedSeconds": 760,
+      "createdAt": 1791398894,
+      "updatedAt": 1791399655
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "latest_active_get_at_utc": "2026-10-07 19:01:26 UTC"
+}

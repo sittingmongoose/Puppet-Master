@@ -1,0 +1,35 @@
+{
+  "schema": "pm.er10.public-source-manifest.v1",
+  "case_id": "D-M02-B",
+  "mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "sources": [
+    {
+      "source_id": "rasterwindow",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/rasterwindow.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterresample",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/rasterresample.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "open_discovery_note": null
+}

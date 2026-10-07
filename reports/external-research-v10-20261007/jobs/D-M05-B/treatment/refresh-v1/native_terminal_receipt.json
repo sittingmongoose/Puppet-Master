@@ -1,0 +1,103 @@
+{
+  "job": "D-M05-B",
+  "arm": "treatment",
+  "stage": "refresh-v1",
+  "output_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/native_terminal_receipt.json",
+  "capture_method": "JSON.stringify-equivalent pretty JSON via direct tool-response transcription into authorized static output path; no base64; no fabrication; complete responses preserved, not summaries only",
+  "capture_note": "Root follow-up authorizes prospective generic receipt mechanics only. No science/grade repair, no clock reset. Authored deliverables (final.md, sources.json, timings.json) existed before terminal update.",
+  "pre_terminal_get_goal": {
+    "request": {},
+    "response_actual": {
+      "goal": {
+        "created_at_ms": 1791398739716,
+        "current_work": null,
+        "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+        "last_progress_at_ms": null,
+        "next_work": null,
+        "objective": "D-M05-B treatment refresh",
+        "percent_complete": 0,
+        "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+        "status": "paused",
+        "token_budget": null,
+        "tokens_used": 244066,
+        "updated_at_ms": 1791398767903
+      }
+    },
+    "observed_state": "paused at pre-terminal check (previously active at activation); percent_complete 0; native cumulative tokens_used 244066"
+  },
+  "update_goal_complete": {
+    "request": {
+      "status": "complete"
+    },
+    "response_actual": {
+      "goal": {
+        "created_at_ms": 1791398739716,
+        "current_work": null,
+        "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+        "last_progress_at_ms": null,
+        "next_work": null,
+        "objective": "D-M05-B treatment refresh",
+        "percent_complete": 100,
+        "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+        "status": "complete",
+        "token_budget": null,
+        "tokens_used": 244066,
+        "updated_at_ms": 1791398935933
+      }
+    },
+    "observed_state": "complete accepted; percent_complete 100"
+  },
+  "fresh_get_goal_after_complete": {
+    "request": {},
+    "response_actual": {
+      "goal": {
+        "created_at_ms": 1791398739716,
+        "current_work": null,
+        "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+        "last_progress_at_ms": null,
+        "next_work": null,
+        "objective": "D-M05-B treatment refresh",
+        "percent_complete": 100,
+        "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+        "status": "complete",
+        "token_budget": null,
+        "tokens_used": 244066,
+        "updated_at_ms": 1791398935933
+      }
+    },
+    "observed_state": "complete confirmed on fresh read; terminal state stable"
+  },
+  "observed_terminal_identity_state": {
+    "providerInstanceId": "muse",
+    "model": "muse-spark-1.3-contributor",
+    "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+    "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+    "objective": "D-M05-B treatment refresh",
+    "status": "complete",
+    "percent_complete": 100,
+    "tokens_used_native_cumulative": 244066,
+    "tokens_note": "Native cumulative counter; never reinterpreted as output/billing."
+  },
+  "terminal_clocks": {
+    "dispatch_at_utc": "2026-10-07T18:45:24.481Z",
+    "terminal_shell_utc": "2026-10-07T18:49:02Z",
+    "terminal_shell_ms": 1791398942997,
+    "native_complete_updated_at_ms": 1791398935933,
+    "physical_elapsed_dispatch_to_terminal_seconds_approx": 217.5,
+    "cold_equivalent_dispatch_plus_seed_seconds_approx": 380.3,
+    "allowance_seconds": 660.0,
+    "budget_status": "within allowance on both physical and cold-equivalent accountings"
+  },
+  "deliverables_confirmed": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/final.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/sources.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/timings.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/native_goal_receipt.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/native_terminal_receipt.json"
+  ],
+  "partial_output": false,
+  "overruns_marked": [
+    "final.md 1486 words vs soft 1100-word ceiling — marked in timings.json and preserved for governing-condition completeness; findings 7/8 within cap; time within allowance"
+  ],
+  "capture_failures": []
+}

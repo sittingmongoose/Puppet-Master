@@ -1,0 +1,36 @@
+{
+  "receipt_type": "native_goal_terminal_receipt",
+  "thread_id": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+  "terminal_state_observed_at_utc": "2026-10-07 18:44:09 UTC",
+  "terminal_goal_updated_at_unix_seconds": 1791398649,
+  "completion_call": {
+    "ok": true,
+    "result": {
+      "goal": {
+        "threadId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+        "objective": "Produce a complete, evidence-backed research proposal draft for the ER10 I-ANCHOR-LUNA brief. Use only the exact authorized input map and primary public sources; save draft.md, bounded immutable source evidence with hashes, native Goal activation/state and terminal receipts, and timings.json in the specified output directory. Do not execute downloaded repository/install scripts, alter canon/main/WorkNodes/accounts, use nested delegation, or impersonate the later same-family critic.",
+        "status": "complete",
+        "tokensUsed": 333443,
+        "timeUsedSeconds": 841,
+        "createdAt": 1791397592,
+        "updatedAt": 1791398649
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+    }
+  },
+  "terminal_get_goal_call": {
+    "goal": {
+      "threadId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+      "objective": "Produce a complete, evidence-backed research proposal draft for the ER10 I-ANCHOR-LUNA brief. Use only the exact authorized input map and primary public sources; save draft.md, bounded immutable source evidence with hashes, native Goal activation/state and terminal receipts, and timings.json in the specified output directory. Do not execute downloaded repository/install scripts, alter canon/main/WorkNodes/accounts, use nested delegation, or impersonate the later same-family critic.",
+      "status": "complete",
+      "tokensUsed": 333443,
+      "timeUsedSeconds": 841,
+      "createdAt": 1791397592,
+      "updatedAt": 1791398649
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "note": "The first completion call terminalized the Goal, but its response was not captured because the orchestration cell failed while building its save payload. This receipt preserves the subsequent terminal get_goal response and a separately captured idempotent completion call when available."
+}

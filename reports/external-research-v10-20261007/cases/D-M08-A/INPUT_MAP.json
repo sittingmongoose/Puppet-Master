@@ -1,0 +1,44 @@
+{
+  "schema": "pm.er10.targeted-input-map.v1",
+  "case_id": "D-M08-A",
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "httpsem",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version_or_capture": "RFC 9110 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "httpcache",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version_or_capture": "RFC 9111 June 2022; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "source_mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "predecessor": {
+    "type": "draftcritique",
+    "status": "REQUIRED_NOT_YET_PRODUCED",
+    "contract_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/PREDECESSOR.md",
+    "expected_paths": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/draft.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/seed/critique.md"
+    ],
+    "author_family": "Luna",
+    "seed_output_never_expected_answer": true,
+    "admission": "No READY.json and no arm dispatch until exact seed bytes, source refs, author/native receipt and hashes exist; seed inadequacy is reported, not fixed by Sol scientific content."
+  },
+  "output_directory_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/outputs/control",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/outputs/treatment"
+  },
+  "candidate_scope": "Root passes exact stage-specific inputs only; no parent campaign history, evaluator keys, other cases, helpers source library, or other-arm outputs."
+}

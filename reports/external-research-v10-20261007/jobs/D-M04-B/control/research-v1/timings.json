@@ -1,0 +1,37 @@
+{
+  "timing_basis": "UTC observations from native clock; no clock reset",
+  "allowance_minutes": 6,
+  "delegate_dispatch_timestamp_available": false,
+  "earliest_reliable_anchor": {
+    "event": "native Goal createdAt",
+    "unix_seconds": 1791399374,
+    "utc": "2026-10-07T18:56:14.000Z"
+  },
+  "allowance_deadline_from_anchor_utc": "2026-10-07T19:02:14.000Z",
+  "first_useful_finding_at_utc": "2026-10-07 18:57:30 UTC",
+  "research_artifacts_completion_observed_at_utc": "2026-10-07 19:06:48 UTC",
+  "allowance_status": "exceeded",
+  "overrun_from_earliest_reliable_anchor_seconds": 281,
+  "all_authored_artifacts_completed_at_utc": "2026-10-07 19:06:55 UTC",
+  "terminal_observed_at_utc": "2026-10-07 19:06:48 UTC",
+  "goal_status_after_terminal": "complete",
+  "observable_usage_after_terminal": {
+    "tokens_used": 105510,
+    "time_used_seconds": 634,
+    "remaining_tokens": null,
+    "completion_budget_report": null,
+    "billing_amount": null,
+    "billing_units": null,
+    "note": "Native Goal exposes token/time counters; no billing amount/units observed."
+  },
+  "observable_usage_before_terminal": {
+    "status": "active",
+    "tokens_used": 100196,
+    "time_used_seconds": 479,
+    "remaining_tokens": null,
+    "completion_budget_report": null,
+    "billing_amount": null,
+    "billing_units": null,
+    "note": "Native Goal exposes token/time counters; no billing amount/units observed."
+  }
+}

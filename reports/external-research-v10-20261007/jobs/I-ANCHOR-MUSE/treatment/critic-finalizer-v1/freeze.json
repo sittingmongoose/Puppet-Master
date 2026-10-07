@@ -1,0 +1,70 @@
+{
+  "frozen_at": "2026-10-07T18:39:56.815476+00:00",
+  "required": [
+    "final.md",
+    "critique.md",
+    "native_goal_receipt.json",
+    "native_terminal_receipt.json",
+    "timings.json",
+    "sources/SOURCES.md"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "4f136b83564a955fbeb3fc9682839a2b9eee4c34f49ad8713434b0f7fb24c43b",
+      "bytes": 1070
+    },
+    "config.json": {
+      "sha256": "9bb2586018e82951aaf15d7eaca5a57d5f61821aef2667b3a84247a48774a83c",
+      "bytes": 207
+    },
+    "critique.md": {
+      "sha256": "34fd29a5d156604b5bd94aec60d63138bb5e6185be0c3425808129a8a56bc2fc",
+      "bytes": 9656
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "65139f8faa31a2b219dbdac7efb1819315aa1252d4f9d6b88ea23cad20e99470",
+      "bytes": 2241
+    },
+    "final.md": {
+      "sha256": "14c83b7ab228a151a03393144c967a14a472d5f4cc561c663f868a9789e18202",
+      "bytes": 15370
+    },
+    "native_goal_receipt.json": {
+      "sha256": "7e8201c03c8b6e63b48e6630af82bcfa797ab46d10edc80eb6a312f5042f9b99",
+      "bytes": 1198
+    },
+    "native_terminal_receipt.json": {
+      "sha256": "df6058e5ea6d4af25cba713598ca186891ec9906420304f8791839d0a4749109",
+      "bytes": 1197
+    },
+    "prepared.json": {
+      "sha256": "ba7dea13a14a627e47069bd01950314d47148c3d43ee86f040dbac6d217a37ad",
+      "bytes": 1148
+    },
+    "sources/SOURCES.md": {
+      "sha256": "37325125ae94297d07a480659906fd7e18195f4c861d08174017ab4a70198d0b",
+      "bytes": 4549
+    },
+    "sources/bagit-v190-validate-excerpt.txt": {
+      "sha256": "4ca2c3e22eda398d61fb70fbd5dc373e4069aa72366585eab6bfc3eb16290262",
+      "bytes": 534
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "69d0e9d80d065a6a8bcd1fed27951f4d9164eb508cb8524e4590452c851ef522",
+      "bytes": 14286
+    },
+    "task.txt": {
+      "sha256": "725b599d4ddeca2e5824469003fd51642d1c204c5cdada8a5ea3e2d1ec088031",
+      "bytes": 3214
+    },
+    "timings.json": {
+      "sha256": "e53e11fda0999180287f9dfa6b45c11a08f15a823c77e1eaff02ed0152b354d2",
+      "bytes": 920
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "4bf83741596778de4698e281966a9e328b87c1c89d6f7045bf8660a6ecaa308d",
+      "bytes": 19152
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

@@ -1,0 +1,97 @@
+{
+  "frozen_at": "2026-10-07T18:43:23.883647+00:00",
+  "required": [
+    "critique.md",
+    "native_goal_receipt.json",
+    "native_terminal_receipt.json",
+    "timings.json",
+    "sources/SOURCES.md"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "8198bb002e6ae751ee7341410cbc1714c53bdf01664c4f1c2ad30380bab1a6bd",
+      "bytes": 1124
+    },
+    "config.json": {
+      "sha256": "9bb2586018e82951aaf15d7eaca5a57d5f61821aef2667b3a84247a48774a83c",
+      "bytes": 207
+    },
+    "critique.md": {
+      "sha256": "b91c309e99d45b1306be0b0b8a5cb920a324fe96b4b9a0f0cbb42f47e8217dcb",
+      "bytes": 19898
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "216fcf2d1356e0b4b39b000e295e21851f4e33ab0035933dfe330a0e65d1d22e",
+      "bytes": 2145
+    },
+    "native_goal_receipt.json": {
+      "sha256": "9c20dea2b06c1aee9365b7128d7781e802a926084e513f9b7ef2a4f44e02c5ca",
+      "bytes": 1215
+    },
+    "native_terminal_receipt.json": {
+      "sha256": "d3b036f4e924c7a200976627a5a358a78ebfd7ce8e2bcc72f90c174b8f077035",
+      "bytes": 1430
+    },
+    "prepared.json": {
+      "sha256": "b9f948cd9d7555c5b82fac474fef4d395d8c1a186b3ee7ba293d9388162dab0d",
+      "bytes": 1122
+    },
+    "sources/C1-bagit-python-v1.9.0.md": {
+      "sha256": "7371b0f7f5e2805f7640419f97758ba5a5fbe1b9d939cc16646befbc93f4b6a6",
+      "bytes": 2676
+    },
+    "sources/C2-rfc8493.md": {
+      "sha256": "0015d80b252ed23bc73436c08aa88b555b8f284251649b94834afe00e6bb4b5e",
+      "bytes": 3381
+    },
+    "sources/C3-sqlite-atomiccommit.md": {
+      "sha256": "0f4e498a5758ac2a56d39bd165eefb22ba7692470593da1d0f4892ce0612fbaf",
+      "bytes": 1450
+    },
+    "sources/C4-omeka-items.md": {
+      "sha256": "ab6d7cac0cc549905a3ec969405972caa222f071cdfef6654ae91b38c3951529",
+      "bytes": 2161
+    },
+    "sources/C5-issue177-pr174-release.md": {
+      "sha256": "1f587bfd61b30a4ef027501d7eb446f45ed6a267fbe96b1f3f04c04812634d2b",
+      "bytes": 2138
+    },
+    "sources/C5-issue177.json": {
+      "sha256": "2b65e13f3b57c10f71543a69f357400917c126ba80a9b92f1831c97d6108acc2",
+      "bytes": 3149
+    },
+    "sources/C5-pr174.json": {
+      "sha256": "ef0213f3d626ff2bae53ac9eb587d3374bcf362f655e023743726b02cbef4f1e",
+      "bytes": 19242
+    },
+    "sources/C5-release190.json": {
+      "sha256": "29857461eef516ec94c773da502f1be7aa98ba763d3e927219231ec8b3ccc345",
+      "bytes": 4260
+    },
+    "sources/C6-archivematica-scope.md": {
+      "sha256": "b3eb6699add0ecf8cd28a6d856813cf7e9f5f176e9279c6ecdb126b7e28caf17",
+      "bytes": 1421
+    },
+    "sources/SOURCES.md": {
+      "sha256": "4ad4c43067bfd35975bc80ab9045579511d241f52bf3097b5814fab80cc52c07",
+      "bytes": 5213
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "79f0acf335b21560b47684e6dca4366b42eba5af9fe6f76ae899c5cf08c7399e",
+      "bytes": 9602
+    },
+    "task.txt": {
+      "sha256": "f25a5c639f8f3151ae96b31a9130e33ba027a9bc3dcc92671b6c3ba4fa41aaa2",
+      "bytes": 3120
+    },
+    "timings.json": {
+      "sha256": "9b45e9ac5805760eb7de25f8f9e54f1a884e39497ae118ee094a7e5a21beb41b",
+      "bytes": 1537
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "4bf83741596778de4698e281966a9e328b87c1c89d6f7045bf8660a6ecaa308d",
+      "bytes": 19152
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

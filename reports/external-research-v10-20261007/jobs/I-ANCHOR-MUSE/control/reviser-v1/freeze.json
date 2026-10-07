@@ -1,0 +1,82 @@
+{
+  "frozen_at": "2026-10-07T18:49:00.470329+00:00",
+  "required": [
+    "final.md",
+    "critique-dispositions.md",
+    "native_goal_receipt.json",
+    "native_terminal_receipt.json",
+    "timings.json",
+    "sources/SOURCES.md"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "4f2d38bebd5a79dc0448cdf13ca3ca99d675f89bde219ba816931266787a8254",
+      "bytes": 1490
+    },
+    "config.json": {
+      "sha256": "9bb2586018e82951aaf15d7eaca5a57d5f61821aef2667b3a84247a48774a83c",
+      "bytes": 207
+    },
+    "critique-dispositions.md": {
+      "sha256": "57839ba3d3935db0017a2fda389d6e9b9a2c56f472523658d9b0ded961ef207e",
+      "bytes": 7011
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "34db7c5bc35a1b4e8e91e71b868c41d427fe4f5fd52770cee9d22499c636f8a9",
+      "bytes": 2154
+    },
+    "final.md": {
+      "sha256": "c52c41ad1bb7ca3671300ee5ab97d1ceb732d0ae519b2dfc3ce3ac6e2cb06080",
+      "bytes": 21259
+    },
+    "native_goal_receipt.json": {
+      "sha256": "f9d8eda0a88f602e3b153364d5eb94dc73f13aef4c605d841ef60951ea123a05",
+      "bytes": 1622
+    },
+    "native_terminal_receipt.json": {
+      "sha256": "ca5f5016dfbc2689fff3dd8be5bafa787962bb12caff954a17df8285adf31d9c",
+      "bytes": 1950
+    },
+    "prepared.json": {
+      "sha256": "7b7f9b8d090c70e07813081a2a1eb35aaf254d1e3962ba23d83c07796401b8ec",
+      "bytes": 1249
+    },
+    "sources/R1-rfc8493.md": {
+      "sha256": "b16cc36559242f18eb943b7dc05e871918d0f21bd27e4b3e6a2146f153fad784",
+      "bytes": 2800
+    },
+    "sources/R2-release190-issue177.md": {
+      "sha256": "e450a41e146890d19deb67dc8a80798b2cf39307ea79031c2205dc6c435cfa51",
+      "bytes": 1446
+    },
+    "sources/R3-omeka-items.md": {
+      "sha256": "963e019e1bf689badb7dc613d0fb98745111617c88fff2d3a3ea3793291f375e",
+      "bytes": 1681
+    },
+    "sources/R4-bagit-python-v1.9.0.md": {
+      "sha256": "5e9fe2e1595fa49990ebbc571f7ca6a8ce43f1eb6ceebcffcedc044439e52df7",
+      "bytes": 2162
+    },
+    "sources/SOURCES.md": {
+      "sha256": "7d2c6595a60dd9b29742f0afe7c10438a17be9e85015cc495d02c1109b40bd96",
+      "bytes": 4728
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "202fe5e1d5bed111abc6d79b6aa06d34f12f9d17ba0a963da0ba2c87f6327c47",
+      "bytes": 12210
+    },
+    "task.txt": {
+      "sha256": "ebb0c099d6a80e5dfaf40c6a2630715476be0249eef5479fc7d6c39ed25068ae",
+      "bytes": 2860
+    },
+    "timings.json": {
+      "sha256": "3df0c81717ab92fb0b832fd52c8ddfcbf139171845dfca0175bc6fed85489808",
+      "bytes": 1125
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "4bf83741596778de4698e281966a9e328b87c1c89d6f7045bf8660a6ecaa308d",
+      "bytes": 19152
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

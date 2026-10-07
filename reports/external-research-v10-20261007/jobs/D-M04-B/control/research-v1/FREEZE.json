@@ -1,0 +1,60 @@
+{
+  "arm": "control",
+  "files": {
+    "native_terminal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/native_terminal_receipt.json",
+      "sha256": "4372ac94c9b6f6ab23b7f3af5be97604d58c15f49c86a235f368f26e33db943a",
+      "bytes": 1586
+    },
+    "cold-rasterio.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/cold-rasterio.json",
+      "sha256": "aceb2018525c565eca5c494a8437697f8f643ddd71ce0346cfb923e498bb62c3",
+      "bytes": 638
+    },
+    "cold-geotransform.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/cold-geotransform.json",
+      "sha256": "7f89cbad759478f07f1a8a6c7c56e774f2eeefe1f03d35eacc8b77c47dad6cce",
+      "bytes": 641
+    },
+    "cold-rasterresample.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/cold-rasterresample.json",
+      "sha256": "d4e0ec23c47e1a0509d3b1e6e787f6ed0139ea3e83d2f0c9fedd98891b268309",
+      "bytes": 643
+    },
+    "draft.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/draft.md",
+      "sha256": "e1cb5543086a02c2aed6590d8f7f06a715e50ba5e2c9266170445d405d26e67b",
+      "bytes": 5519
+    },
+    "cold-rastermask.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/cold-rastermask.json",
+      "sha256": "988d8fa3a5c2008c75470bb9960206f8528183567cb377ca4b27e5658918e075",
+      "bytes": 639
+    },
+    "native_goal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/native_goal_receipt.json",
+      "sha256": "507141489564544071ef7696c2ec17ef611f967f787162eb358e02294a6ea140",
+      "bytes": 3466
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/t3-terminal-observed.json",
+      "sha256": "2e006a1c3a7de7fd75bf6fec3816e595d52936e577da8ae58705c98a09ec52ef",
+      "bytes": 6077
+    },
+    "timings.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/timings.json",
+      "sha256": "9bf2285e28eed6f02037e5b2d68992a60c4e36e7a0c453c30e329597b2167af4",
+      "bytes": 1416
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/research-v1/sources.json",
+      "sha256": "542e43abac23a1780c5d94d2388b9972c0b4e897813b3cad9f0c95ee7f5bea38",
+      "bytes": 4898
+    }
+  },
+  "cache": [],
+  "stage_seconds": 684.032,
+  "stage_within360": false,
+  "stage_overrun_seconds": 324.03200000000004,
+  "source_grade": "UNASSESSED"
+}

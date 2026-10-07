@@ -1,0 +1,50 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/brief.md",
+  "changes": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/changes.json",
+  "sources": [
+    {
+      "source_id": "tarold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarold.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocold.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarnew.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocnew.rst",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources.json",
+  "prior_state": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/prior-state.md",
+  "prior_sha256": "48ca796fd27d4898a030f430d68a5a5975da63b1d911835a5af502c4a837dca8",
+  "prior_sources": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/sources.json",
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/control/refresh-v1",
+  "access": "No other arm or evaluator paths. Common prior state is untrusted candidate proposal, never source truth.",
+  "allowance_seconds": 660,
+  "seed_charge_seconds": 113.238
+}

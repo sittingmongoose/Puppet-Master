@@ -1,0 +1,23 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/prior-brief.md",
+  "sources": [
+    {
+      "source_id": "sqlwal",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+    },
+    {
+      "source_id": "sqlwalcode",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwalcode.c",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be"
+    },
+    {
+      "source_id": "sqltransaction",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqltransaction.html",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e"
+    }
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1",
+  "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/common/seed-v1/prior-state.md",
+  "access": "Only prior brief and listed prior-applicable sources; do not read changes or updated brief, siblings, evaluator or campaign."
+}

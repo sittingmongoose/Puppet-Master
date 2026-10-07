@@ -1,0 +1,42 @@
+{
+  "schema": "pm.er10.targeted-input-map.v1",
+  "case_id": "D-M03-A",
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "pathdoc",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/pathlib.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1eb64284f142028c3338da705d2a9e1c640bf115c189b27787301bf7ff3fc6de",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathdoc.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "pathcode",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/pathlib.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "dc14d8207519fb8bcdd9c7bae1d54da3ad1b339aa83d4979c16057cd552a3487",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathcode.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "pathscan",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_pathlib.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1198a722bfbd6bd8f924f2b87b38b2d617d48358bf5498190682c077f6af5b1c",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathscan.py",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "source_mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "predecessor": null,
+  "output_directory_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/outputs/control",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/outputs/treatment"
+  },
+  "candidate_scope": "Root must pass stage-specific inputs only; no parent campaign history, evaluator keys, other cases, helpers source library, or other-arm outputs."
+}

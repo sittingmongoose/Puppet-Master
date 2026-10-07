@@ -1,0 +1,26 @@
+{
+  "case_id": "D-M07-B",
+  "producer": "ROOT_BOUND_SAME_FAMILY_CANDIDATE",
+  "status": "SEED_NOT_GENERATED",
+  "generation_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/brief.md",
+  "original_sources": [
+    {
+      "source_id": "projdoc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projdoc.rst",
+      "sha256": "261a0a3602984e91ed13179990c535bf19a4e841302554ee4fad25b77e4ade51"
+    },
+    {
+      "source_id": "projcode",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/sources/projcode.py",
+      "sha256": "f5f8a43cb7030e5d0462121a54414be74504586dbb1d32d4c37857f1de9dabda"
+    }
+  ],
+  "required_outputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/seed/draft.md"
+  ],
+  "receipt_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/inputs/seed/SEED_RECEIPT.json",
+  "critic_stage_for_M08": null,
+  "seed_minutes": 3,
+  "no_expected_answers": true,
+  "not_evaluator_truth": true
+}

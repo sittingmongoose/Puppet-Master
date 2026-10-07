@@ -1,0 +1,32 @@
+{
+  "status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-control-research-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-control-research-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-research-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-control-research-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-research-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Delivered the six finding draft with a useful alternative and proposed discriminating checks. The four mapped sources were cold-acquired from local frozen bytes; each receipt reports zero network requests.\n\n**Artifacts**\n\n- [draft.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/draft.md)\n- [sources.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/sources.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/native_terminal_receipt.json)\n\n**Goal:** `D-M04-A control research` \u2014 thread `01a117aa-688d-7eb2-a31e-62fef0d9aec0`, final state `complete`; recorded usage was 67,639 tokens and 317 seconds.\n\nThe runtime identified T3 Code/Codex with gpt-6-luna max. The Goal API did not expose the `codex_gmail` profile or account, so those remain user-specified rather than independently verified.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-research-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:c02e654a-f40e-444e-a458-a69562998e06",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "summary": "Delivered the six finding draft with a useful alternative and proposed discriminating checks. The four mapped sources were cold-acquired from local frozen bytes; each receipt reports zero network requests.\n\n**Artifacts**\n\n- [draft.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/draft.md)\n- [sources.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/sources.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/native_terminal_receipt.json)\n\n**Goal:** `D-M04-A control research` \u2014 thread `01a117aa-688d-7eb2-a31e-62fef0d9aec0`, final state `complete`; recorded usage was 67,639 tokens and 317 seconds.\n\nThe runtime identified T3 Code/Codex with gpt-6-luna max. The Goal API did not expose the `codex_gmail` profile or account, so those remain user-specified rather than independently verified.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-research-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:c02e654a-f40e-444e-a458-a69562998e06",
+    "waitTimedOut": false
+  },
+  "runs": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-research-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T18:40:06.112Z",
+      "startedAt": "2026-10-07T18:40:06.585Z",
+      "completedAt": "2026-10-07T18:46:00.060Z"
+    }
+  ]
+}

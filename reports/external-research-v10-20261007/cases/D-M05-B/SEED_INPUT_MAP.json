@@ -1,0 +1,31 @@
+{
+  "case_id": "D-M05-B",
+  "producer": "ROOT_BOUND_SAME_FAMILY_CANDIDATE",
+  "status": "SEED_NOT_GENERATED",
+  "generation_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/prior-brief.md",
+  "original_sources": [
+    {
+      "source_id": "sqlwal",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+    },
+    {
+      "source_id": "sqlwalcode",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqlwalcode.c",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be"
+    },
+    {
+      "source_id": "sqltransaction",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/sources/sqltransaction.html",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e"
+    }
+  ],
+  "required_outputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/seed/prior-state.md"
+  ],
+  "receipt_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/seed/SEED_RECEIPT.json",
+  "critic_stage_for_M08": null,
+  "seed_minutes": 4,
+  "no_expected_answers": true,
+  "not_evaluator_truth": true
+}

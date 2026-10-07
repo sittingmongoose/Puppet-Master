@@ -1,0 +1,37 @@
+{
+  "identity": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "start_utc": "2026-10-07 19:02:37 UTC",
+  "first_saved_useful_finding_utc": "2026-10-07 19:03:03 UTC",
+  "source_operations": [
+    {
+      "operation": "read",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1/INPUT_MAP.json"
+    },
+    {
+      "operation": "read",
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1/semantic_findings.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/mechanical_projection-v1/mechanical_projection.md"
+      ]
+    }
+  ],
+  "native_input_tokens": null,
+  "native_cache_tokens": null,
+  "native_generated_tokens": null,
+  "native_billing": null,
+  "native_status": "active_goal_observed_create_receipt_not_persisted"
+}

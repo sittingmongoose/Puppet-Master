@@ -1,0 +1,32 @@
+{
+  "dispatch_at": null,
+  "dispatch_at_note": "Not independently instrumented; assignment arrived at turn start.",
+  "start_at": "2026-10-07T18:27:02Z",
+  "start_at_note": "Native Goal createdAt=1791397622 (Unix seconds); local wall-clock capture immediately after activation was 2026-10-07T18:27:19Z. Request-start time was not separately exposed.",
+  "first_useful_saved_finding_at": "2026-10-07T18:29:31Z",
+  "first_useful_saved_finding": "Preliminary draft.md saved a concrete diagnosis of mutable timestamp/LWW and loss of concurrent history, based on the two authorized case inputs.",
+  "draft_saved_at": "2026-10-07T18:42:43Z",
+  "native_terminal_at": "2026-10-07T18:42:55Z",
+  "observed_usage": {
+    "initial_native_goal_tokensUsed": 0,
+    "initial_native_goal_timeUsedSeconds": 0,
+    "final_tokensUsed": 280226,
+    "final_timeUsedSeconds": 953,
+    "token_budget": null,
+    "remainingTokens": null,
+    "billing": "not exposed; unknown",
+    "elapsed_human": "15 minutes 53 seconds"
+  },
+  "draft_sha256_at_save": "30f387257559ea22a0e661405c5c79973585a4b504cf1b6cd10284b557839d96",
+  "last_active_native_observation": {
+    "observed_at": "2026-10-07T18:42:43Z",
+    "status": "active",
+    "tokensUsed": 276569,
+    "timeUsedSeconds": 940,
+    "remainingTokens": null,
+    "billing": "not exposed"
+  },
+  "scope_exception": "A final recursive hash command read bytes of two pre-existing output-directory files named dispatch.json and task.txt. Their contents were not displayed, interpreted, or incorporated, and their hashes were not retained in deliverables. No further recursive reads were made.",
+  "final_native_status": "complete",
+  "terminal_receipt_sha256": "c0bb59bf7da2cc375b4271be3680c9d7d8fd7d0e1693c878cdbde88f2e533602"
+}

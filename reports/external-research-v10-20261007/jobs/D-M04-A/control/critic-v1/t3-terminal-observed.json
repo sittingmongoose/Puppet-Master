@@ -1,0 +1,32 @@
+{
+  "status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-control-critic-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-control-critic-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-critic-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-control-critic-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-critic-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed before the arm deadline. The native Goal is complete: thread `01a117b0-3788-7a81-9690-3f3abc76087a`, created at 2026-10-07 18:46:52 UTC. Its final recorded usage was **98,499 tokens over 396 seconds (6m36s)**; billing was not reported.\n\n- [Corrected final, 879 words](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/final.md>)\n- [Critique, 8 dispositions](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/critique.md>)\n- [Source identities, ranges, operations, and cold receipts](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/sources.json>)\n- [Timings and observed counters](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/timings.json>)\n- [Native Goal activation receipt](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/native_goal_receipt.json>) \u00b7 [Terminal receipt with full tool responses](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/native_terminal_receipt.json>)\n\nAll four mapped originals were hash-checked from the supplied frozen local bytes into the critic\u2019s own cache. The proposed checks are documented but were not executed.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:fe0a4814-c0a0-4056-841e-7f3b91bda790",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "summary": "Completed before the arm deadline. The native Goal is complete: thread `01a117b0-3788-7a81-9690-3f3abc76087a`, created at 2026-10-07 18:46:52 UTC. Its final recorded usage was **98,499 tokens over 396 seconds (6m36s)**; billing was not reported.\n\n- [Corrected final, 879 words](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/final.md>)\n- [Critique, 8 dispositions](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/critique.md>)\n- [Source identities, ranges, operations, and cold receipts](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/sources.json>)\n- [Timings and observed counters](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/timings.json>)\n- [Native Goal activation receipt](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/native_goal_receipt.json>) \u00b7 [Terminal receipt with full tool responses](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/critic-v1/native_terminal_receipt.json>)\n\nAll four mapped originals were hash-checked from the supplied frozen local bytes into the critic\u2019s own cache. The proposed checks are documented but were not executed.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:fe0a4814-c0a0-4056-841e-7f3b91bda790",
+    "waitTimedOut": false
+  },
+  "runs": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-control-critic-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T18:46:26.721Z",
+      "startedAt": "2026-10-07T18:46:27.284Z",
+      "completedAt": "2026-10-07T18:54:00.922Z"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "clock_basis": "UTC from native clock tool; acquisition timestamps are from actual cold receipts.",
+  "goal_created_at_utc": "2026-10-07 18:40:24 UTC",
+  "first_useful_finding_utc": "2026-10-07T18:40:57.496826Z",
+  "first_useful_finding_note": "First useful operational result: cold acquisition receipt for sqltransaction recorded exact frozen-byte acquisition, network_requests=0, extraction=identity-v1. Scientific source text was inspected after this; that later event was not independently clock-stamped.",
+  "deliverable_completion_utc": "2026-10-07 18:45:28 UTC",
+  "native_goal_usage_before_terminal": {
+    "tokens_used": 0,
+    "time_used_seconds": 0,
+    "remaining_tokens": null,
+    "completion_budget_report": null
+  },
+  "observable_usage_fields": {
+    "tokens_used": 67639,
+    "time_used_seconds": 317,
+    "remaining_tokens": null,
+    "completion_budget_report": null,
+    "billing_cost": null,
+    "reason_billing_unknown": "No billing/cost field is exposed by the native Goal API."
+  },
+  "wall_clock_allowance": {
+    "started_by": "delegate dispatch, as specified by requester",
+    "goal_activation_observed_utc": "2026-10-07 18:40:24 UTC",
+    "budget_minutes": 6
+  },
+  "terminal_observed_at_utc": "2026-10-07 18:45:41 UTC",
+  "terminal_state": "complete"
+}

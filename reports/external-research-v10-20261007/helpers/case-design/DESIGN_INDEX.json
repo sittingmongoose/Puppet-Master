@@ -1,0 +1,446 @@
+{
+  "schema": "pm.er10.targeted-design-index.v1",
+  "status": "24_CARDS_DESIGNED_NOT_EXECUTED",
+  "ready_input_maps": 14,
+  "waiting_common_predecessor": 10,
+  "schedule": [
+    {
+      "case_id": "D-M01-A",
+      "domain": "storage",
+      "family": "Luna",
+      "method_id": "M01",
+      "scenario": "A",
+      "global_rank": 1,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M01-B",
+      "domain": "geospatial",
+      "family": "Luna",
+      "method_id": "M01",
+      "scenario": "B",
+      "global_rank": 2,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M02-A",
+      "domain": "http",
+      "family": "Luna",
+      "method_id": "M02",
+      "scenario": "A",
+      "global_rank": 3,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M02-B",
+      "domain": "geospatial",
+      "family": "Luna",
+      "method_id": "M02",
+      "scenario": "B",
+      "global_rank": 4,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M02-B/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M03-A",
+      "domain": "filesystem",
+      "family": "Muse",
+      "method_id": "M03",
+      "scenario": "A",
+      "global_rank": 5,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M03-B",
+      "domain": "geospatial",
+      "family": "Muse",
+      "method_id": "M03",
+      "scenario": "B",
+      "global_rank": 6,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-B/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M04-A",
+      "domain": "storage",
+      "family": "Luna",
+      "method_id": "M04",
+      "scenario": "A",
+      "global_rank": 7,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M04-B",
+      "domain": "geospatial",
+      "family": "Luna",
+      "method_id": "M04",
+      "scenario": "B",
+      "global_rank": 8,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M05-A",
+      "domain": "archives",
+      "family": "Muse",
+      "method_id": "M05",
+      "scenario": "A",
+      "global_rank": 9,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M05-B",
+      "domain": "storage",
+      "family": "Muse",
+      "method_id": "M05",
+      "scenario": "B",
+      "global_rank": 10,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M06-A",
+      "domain": "serialization",
+      "family": "GLM",
+      "method_id": "M06",
+      "scenario": "A",
+      "global_rank": 11,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [
+        "Root-qualified scoped native execution and independent-oracle operations before this method can dispatch; no designer execution."
+      ],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M06-B",
+      "domain": "geospatial",
+      "family": "GLM",
+      "method_id": "M06",
+      "scenario": "B",
+      "global_rank": 12,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [
+        "Root-qualified scoped native execution and independent-oracle operations before this method can dispatch; no designer execution."
+      ],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M07-A",
+      "domain": "storage",
+      "family": "GLM",
+      "method_id": "M07",
+      "scenario": "A",
+      "global_rank": 13,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M07-B",
+      "domain": "geospatial",
+      "family": "GLM",
+      "method_id": "M07",
+      "scenario": "B",
+      "global_rank": 14,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-B/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M08-A",
+      "domain": "http",
+      "family": "Luna",
+      "method_id": "M08",
+      "scenario": "A",
+      "global_rank": 15,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M08-B",
+      "domain": "geospatial",
+      "family": "Luna",
+      "method_id": "M08",
+      "scenario": "B",
+      "global_rank": 16,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M09-A",
+      "domain": "storage",
+      "family": "GLM",
+      "method_id": "M09",
+      "scenario": "A",
+      "global_rank": 17,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M10-A",
+      "domain": "http",
+      "family": "Luna",
+      "method_id": "M10",
+      "scenario": "A",
+      "global_rank": 18,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "WAITING_COMMON_CANDIDATE_PREDECESSOR",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/case-card.json",
+      "ready_receipt": null,
+      "predecessor_contract": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M10-A/PREDECESSOR.md"
+    },
+    {
+      "case_id": "D-M11-A",
+      "domain": "archives",
+      "family": "Muse",
+      "method_id": "M11",
+      "scenario": "A",
+      "global_rank": 19,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M12-A",
+      "domain": "open-discovery",
+      "family": "GLM",
+      "method_id": "M12",
+      "scenario": "A",
+      "global_rank": 20,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M12-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M13-A",
+      "domain": "archives",
+      "family": "Muse",
+      "method_id": "M13",
+      "scenario": "A",
+      "global_rank": 21,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M14-A",
+      "domain": "geospatial",
+      "family": "Luna",
+      "method_id": "M14",
+      "scenario": "A",
+      "global_rank": 22,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [
+        "Root-qualified generic mechanical renderer accepting candidate-authored semantic findings and supplying no substantive conclusions; capture version before dispatch."
+      ],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M15-A",
+      "domain": "open-discovery",
+      "family": "GLM",
+      "method_id": "M15",
+      "scenario": "A",
+      "global_rank": 23,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M15-A/READY.json",
+      "predecessor_contract": null
+    },
+    {
+      "case_id": "D-M16-A",
+      "domain": "open-discovery",
+      "family": "GLM",
+      "method_id": "M16",
+      "scenario": "A",
+      "global_rank": 24,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "minutes_each_arm": 15,
+      "input_status": "INPUT_MAP_READY",
+      "root_tool_prerequisites": [],
+      "case_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/case-card.json",
+      "ready_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M16-A/READY.json",
+      "predecessor_contract": null
+    }
+  ]
+}

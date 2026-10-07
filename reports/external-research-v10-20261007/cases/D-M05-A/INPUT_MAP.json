@@ -1,0 +1,67 @@
+{
+  "schema": "pm.er10.targeted-input-map.v1",
+  "case_id": "D-M05-A",
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "tarold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarold.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocold.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarnew.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocnew.rst",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "source_mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "predecessor": {
+    "type": "prior",
+    "status": "REQUIRED_NOT_YET_PRODUCED",
+    "contract_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/PREDECESSOR.md",
+    "expected_paths": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/seed/prior-state.md"
+    ],
+    "author_family": "Muse",
+    "seed_output_never_expected_answer": true,
+    "admission": "No READY.json and no arm dispatch until exact seed bytes, source refs, author/native receipt and hashes exist; seed inadequacy is reported, not fixed by Sol scientific content."
+  },
+  "output_directory_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/outputs/control",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/outputs/treatment"
+  },
+  "candidate_scope": "Root must pass stage-specific inputs only; no parent campaign history, evaluator keys, other cases, helpers source library, or other-arm outputs.",
+  "prior_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/prior-brief.md",
+  "changes": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/changes.json",
+  "seed_source_ids": [
+    "tarold",
+    "tardocold"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "activation_observed_at": "2026-10-07T18:27:19Z",
+  "create_goal_result": {
+    "goal": {
+      "threadId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+      "objective": "Research a complete evidence-backed proposal draft for the ER10 candidate brief specified by /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/INPUTS.md. Admit only legitimate case inputs from that map and primary public sources; exclude parent context, other arms, evaluation material, and historical answers. Preserve bounded source evidence with immutable identities, exact URL/version/retrieval metadata, small lawful excerpts or precise locators, and mechanical hashes. Save draft.md, sources/, timings.json, native_goal_receipt.json, and a terminal receipt in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1. Do not execute downloaded repository/install scripts on host or alter canon/main/WorkNodes/accounts. Distinguish proposal from any execution, do not delegate, and complete this Goal after saving outputs.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791397622,
+      "updatedAt": 1791397622
+    }
+  },
+  "get_goal_result": {
+    "goal": {
+      "threadId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+      "objective": "Research a complete evidence-backed proposal draft for the ER10 candidate brief specified by /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/INPUTS.md. Admit only legitimate case inputs from that map and primary public sources; exclude parent context, other arms, evaluation material, and historical answers. Preserve bounded source evidence with immutable identities, exact URL/version/retrieval metadata, small lawful excerpts or precise locators, and mechanical hashes. Save draft.md, sources/, timings.json, native_goal_receipt.json, and a terminal receipt in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1. Do not execute downloaded repository/install scripts on host or alter canon/main/WorkNodes/accounts. Distinguish proposal from any execution, do not delegate, and complete this Goal after saving outputs.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791397622,
+      "updatedAt": 1791397622
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "actual_usage": {
+    "tokens": "initial tool-reported native usage was 0; no per-operation usage telemetry available here",
+    "time": "initial tool-reported native elapsed time was 0 seconds; wall-clock timestamps are recorded separately",
+    "billing": "not exposed"
+  }
+}

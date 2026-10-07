@@ -1,0 +1,27 @@
+{
+  "case_id": "D-M04-A",
+  "stage": "control/critic-v1",
+  "arm_deadline_utc": "2026-10-07T18:55:05.994000+00:00",
+  "observed_events_utc": {
+    "native_goal_created_at_epoch_seconds": 1791398812,
+    "first_useful_finding": "2026-10-07 18:48:28 UTC",
+    "cold_source_receipts_completed_by": "2026-10-07T18:47:56.366147+00:00",
+    "critique_saved": "2026-10-07 18:50:30 UTC",
+    "final_authoring_started": "2026-10-07 18:52:50 UTC",
+    "final_saved": "2026-10-07 18:52:50 UTC",
+    "preterminal_goal_observed_at": "2026-10-07 18:53:28 UTC"
+  },
+  "goal_identity_and_preterminal_counters": {
+    "thread_id": "01a117b0-3788-7a81-9690-3f3abc76087a",
+    "objective": "D-M04-A control critic",
+    "status": "active",
+    "created_at": 1791398812,
+    "updated_at": 1791399170,
+    "tokens_used": 89457,
+    "time_used_seconds": 358,
+    "remaining_tokens": null,
+    "completion_budget_report": null,
+    "billing": null
+  },
+  "timing_basis": "UTC timestamps were read from clock__curr_time or the exact_bytes cold receipts. Billing was not reported by the Goal tools and is null."
+}

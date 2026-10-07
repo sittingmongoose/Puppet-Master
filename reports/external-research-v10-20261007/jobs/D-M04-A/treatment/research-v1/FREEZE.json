@@ -1,0 +1,82 @@
+{
+  "arm": "treatment",
+  "files": {
+    "native_terminal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/native_terminal_receipt.json",
+      "sha256": "0f68cb68d46d924c45447410bd49da644d587392e1f0563bbf9bcfd4d9c081a2",
+      "bytes": 2273
+    },
+    "draft.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/draft.md",
+      "sha256": "b2dc47eee1889e246b1c954adf4c82d895d61291da792c3c0df0033f7cc611ec",
+      "bytes": 5083
+    },
+    "cold-sqlwalcode.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/cold-sqlwalcode.json",
+      "sha256": "cb21322ff4157f13fef33e8cf13b57abd8666072f78da96adddeda93f082dc21",
+      "bytes": 629
+    },
+    "native_goal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/native_goal_receipt.json",
+      "sha256": "823dab500f9dce87a0c46538e8713b72f64880d238681ab8dcce40a42c8e04c5",
+      "bytes": 880
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/t3-terminal-observed.json",
+      "sha256": "289308a97dfac34951f3b76387c7d7206ca2d5ff11c23b0850f250bad467284b",
+      "bytes": 5209
+    },
+    "cold-sqlwal.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/cold-sqlwal.json",
+      "sha256": "d73c55cd4891ef3ed6915e264ea0f21445bddbda321be3090aec40672330d614",
+      "bytes": 627
+    },
+    "timings.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/timings.json",
+      "sha256": "ea299b6554b8a1ec0c1d91c8c4c8f11b61cbd161e7a03b3d6da1cbaa64ca46a6",
+      "bytes": 2317
+    },
+    "cold-sqltransaction.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/cold-sqltransaction.json",
+      "sha256": "172c32ac78403e2749d08205651de7a898c4240ca9d78d23a78ba317708ba9f0",
+      "bytes": 635
+    },
+    "failed-cold-attempts.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/failed-cold-attempts.json",
+      "sha256": "84753c9b378df105248d2ac8318801a427c9fdcdcd71f57afb25eec4be130400",
+      "bytes": 4092
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/sources.json",
+      "sha256": "c1432141d21d9aaf310eab0f9ac8be5992fff0d1cacd0ddbb563ee5e16afcdf0",
+      "bytes": 5089
+    },
+    "cold-sqlpragma.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/cold-sqlpragma.json",
+      "sha256": "b2a7b934b9b4a385d54f694759935d8ed7860187a18a5a34db758a8be7fe2cd0",
+      "bytes": 630
+    }
+  },
+  "cache": [
+    {
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143
+    },
+    {
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "bytes": 27068
+    },
+    {
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "bytes": 139778
+    },
+    {
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "bytes": 177587
+    }
+  ],
+  "stage_seconds": 388.116,
+  "stage_within360": false,
+  "stage_overrun_seconds": 28.115999999999985,
+  "source_grade": "UNASSESSED"
+}

@@ -1,0 +1,32 @@
+{
+  "status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-treatment-research-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-treatment-research-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-treatment-research-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-A-treatment-research-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-treatment-research-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Research draft and receipts are saved. Proposed checks remain unrun.\n\nGoal **01a117b7-da0e-7cb3-a9cb-16346de5e318** \u2014 \u201cD-M04-A treatment research\u201d \u2014 is **complete**. The native completion response reported 62,910 tokens and 305 seconds; billing was unavailable. The Goal API did not expose model, account binding, or binding freshness.\n\n- [draft.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/draft.md)\n- [sources.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/sources.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/native_goal_receipt.json) and [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/native_terminal_receipt.json)\n- [failed-cold-attempts.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/failed-cold-attempts.json) preserves the initial source-ID acquisition errors; all four path-based cold acquisitions then succeeded. Individual cold receipts are in the same output directory.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-treatment-research-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:3defff30-c0ca-4ca7-a99c-19448ee16f56",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "summary": "Research draft and receipts are saved. Proposed checks remain unrun.\n\nGoal **01a117b7-da0e-7cb3-a9cb-16346de5e318** \u2014 \u201cD-M04-A treatment research\u201d \u2014 is **complete**. The native completion response reported 62,910 tokens and 305 seconds; billing was unavailable. The Goal API did not expose model, account binding, or binding freshness.\n\n- [draft.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/draft.md)\n- [sources.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/sources.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/native_goal_receipt.json) and [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/native_terminal_receipt.json)\n- [failed-cold-attempts.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/failed-cold-attempts.json) preserves the initial source-ID acquisition errors; all four path-based cold acquisitions then succeeded. Individual cold receipts are in the same output directory.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-treatment-research-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:3defff30-c0ca-4ca7-a99c-19448ee16f56",
+    "waitTimedOut": false
+  },
+  "runs": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-A-treatment-research-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T18:54:47.101Z",
+      "startedAt": "2026-10-07T18:54:47.691Z",
+      "completedAt": "2026-10-07T19:01:15.130Z"
+    }
+  ]
+}

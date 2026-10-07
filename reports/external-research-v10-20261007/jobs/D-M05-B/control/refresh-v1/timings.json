@@ -1,0 +1,70 @@
+{
+  "job": "D-M05-B",
+  "arm": "control/refresh-v1",
+  "budget": {
+    "allowance_seconds": 420.253621,
+    "seed_charge_seconds": 162.747,
+    "absolute_cold_deadline_utc": "2026-10-07T18:57:02.674000+00:00",
+    "dispatch_wall_clock": null,
+    "dispatch_note": "exact delegate-dispatch wall-clock not supplied to this agent; absolute cold deadline governs; no reset; no extension"
+  },
+  "clocks_observed_shell_utc": {
+    "first_clock": "2026-10-07T18:50:21.289201+00:00",
+    "receipt_dir_list": "2026-10-07T18:50:33.425116+00:00",
+    "goal_receipt_saved": "2026-10-07T18:50:45.647146+00:00",
+    "hash_verify_and_first_grep": "2026-10-07T18:51:04.967902+00:00",
+    "wal_tx_excerpts": "2026-10-07T18:51:11.490572+00:00",
+    "lifecycle_recovery_bug_excerpts": "2026-10-07T18:51:16.614543+00:00",
+    "txn_walc_excerpts": "2026-10-07T18:51:21.166092+00:00",
+    "final_sources_check": "2026-10-07T18:52:52.556754+00:00",
+    "sources_saved": "2026-10-07T18:52:52.576174+00:00"
+  },
+  "first_useful_finding": {
+    "utc": "2026-10-07T18:51:04.967902+00:00",
+    "event": "all three source sha256 plus prior-state sha256 matched mapped values; WAL same-host/network constraint passages located (sqlwal lines 177-180, 286-291)"
+  },
+  "research_window": {
+    "start_utc": "2026-10-07T18:50:45.647146+00:00",
+    "end_utc": "2026-10-07T18:51:21.166092+00:00",
+    "note": "bounded read-only inspection of mapped sources only; well under 9min cap; protected final writing kept inside remaining allowance"
+  },
+  "completion": {
+    "final_md_words_observed": 1532,
+    "final_md_bytes_observed": 11519,
+    "final_md_soft_ceiling_words": 1100,
+    "word_overrun_marked": true,
+    "word_overrun_note": "1532 words exceeds the SOFT 1100-word ceiling; ceiling is soft and does not authorize omitting a governing condition, so completeness was kept and the overrun is marked here rather than trimmed",
+    "material_findings_count": 7,
+    "material_findings_cap": 8,
+    "findings_cap_met": true,
+    "final_md_observed_complete_utc": "2026-10-07T18:52:52.556754+00:00"
+  },
+  "native_goal_timings": {
+    "goal_id": "goal-01a117b3-ddef-7550-b452-9f7642f9d8ff",
+    "session_id": "01a117b3-87e5-75d0-bd60-6034e88eaccf",
+    "created_at_ms": 1791399026159,
+    "get_goal_updated_at_ms": 1791399028397,
+    "activation_delta_ms": 2238,
+    "terminal": "see native_terminal_receipt.json for pre-terminal get_goal, update_goal complete, and fresh get_goal responses"
+  },
+  "observed_counters": {
+    "tool_counters": null,
+    "usage": null,
+    "billing": null,
+    "tokens_used_at_activation": 0,
+    "note": "native cumulative tokens (if any) are never reinterpreted as output or billing; unknown clocks/usage remain null"
+  },
+  "operations": {
+    "retries": 0,
+    "child_tasks": 0,
+    "external_writes": 0,
+    "installs": 0,
+    "account_changes": 0,
+    "db_executions": 0
+  },
+  "partial_or_overrun": {
+    "partial_output": false,
+    "overruns": ["final.md 1532 words vs soft 1100-word ceiling (marked, completeness preserved)"],
+    "deadline_note": "all authored output completed inside absolute cold deadline 2026-10-07T18:57:02.674000+00:00"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "pm.er10.targeted-ready.v1",
+  "case_id": "D-M03-A",
+  "status": "READY_FOR_ROOT_BINDING",
+  "frozen_design_version": 1,
+  "input_map_complete": true,
+  "predecessor_inputs_complete": true,
+  "scientific_answers_included": false,
+  "dispatch_performed": false,
+  "family": "Muse",
+  "effort": "Max",
+  "minutes_per_arm": 15,
+  "arm_order": [
+    "control",
+    "treatment"
+  ],
+  "case_card_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/case-card.json",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/INPUT_MAP.json",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/case-card.json",
+      "sha256": "b36585f1a14fbe0bd8432a6426bda4d97f4a1dd9de00599c9fe631cd0c089888"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/CASE_CARD.md",
+      "sha256": "438088a546f94df8306eb1742820e4779840ddf820ba159988993be88d02347f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/INPUT_MAP.json",
+      "sha256": "1e70b0f7afaf40791a21e68bd2cfb4d80fd9a53d9b2b6c4c29fd425d08056d1a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/brief.md",
+      "sha256": "428d85013366c5050fbbfd09b3ea21f2869ac729114b623c103b3a47a5bf503c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources.json",
+      "sha256": "f3b6c1577dbdcae2bff0bd3fd50e027af1e84fd9c5dddff61d9c1f3bca87306f"
+    }
+  ],
+  "source_hashes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources.json",
+  "root_prerequisites": "Exact account/model/native Goal/access/output-carrier binding and source-read policy qualification remain root-owned. This receipt is not authority to launch or proof of a completed comparison.",
+  "freeze_date_utc": "2026-10-07"
+}

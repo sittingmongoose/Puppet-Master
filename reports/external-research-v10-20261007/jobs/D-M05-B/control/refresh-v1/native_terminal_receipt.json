@@ -1,0 +1,71 @@
+{
+  "objective": "D-M05-B control refresh",
+  "goal_id": "goal-01a117b3-ddef-7550-b452-9f7642f9d8ff",
+  "session_id": "01a117b3-87e5-75d0-bd60-6034e88eaccf",
+  "pre_terminal_get_goal_response": {
+    "goal": {
+      "created_at_ms": 1791399026159,
+      "current_work": null,
+      "goal_id": "goal-01a117b3-ddef-7550-b452-9f7642f9d8ff",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "D-M05-B control refresh",
+      "percent_complete": 0,
+      "session_id": "01a117b3-87e5-75d0-bd60-6034e88eaccf",
+      "status": "active",
+      "token_budget": null,
+      "tokens_used": 919262,
+      "updated_at_ms": 1791399194124
+    }
+  },
+  "update_goal_complete_response": {
+    "goal": {
+      "created_at_ms": 1791399026159,
+      "current_work": null,
+      "goal_id": "goal-01a117b3-ddef-7550-b452-9f7642f9d8ff",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "D-M05-B control refresh",
+      "percent_complete": 100,
+      "session_id": "01a117b3-87e5-75d0-bd60-6034e88eaccf",
+      "status": "complete",
+      "token_budget": null,
+      "tokens_used": 1029262,
+      "updated_at_ms": 1791399196362
+    }
+  },
+  "fresh_get_goal_response": {
+    "goal": {
+      "created_at_ms": 1791399026159,
+      "current_work": null,
+      "goal_id": "goal-01a117b3-ddef-7550-b452-9f7642f9d8ff",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "D-M05-B control refresh",
+      "percent_complete": 100,
+      "session_id": "01a117b3-87e5-75d0-bd60-6034e88eaccf",
+      "status": "complete",
+      "token_budget": null,
+      "tokens_used": 1139502,
+      "updated_at_ms": 1791399196362
+    }
+  },
+  "observed_terminal_state": {
+    "status": "complete",
+    "percent_complete": 100,
+    "authored_deliverable_existed_before_complete": true,
+    "deliverables": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/final.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/sources.json",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/control/refresh-v1/timings.json"
+    ]
+  },
+  "native_token_counters_observed_only": {
+    "tokens_used_pre_terminal": 919262,
+    "tokens_used_at_complete": 1029262,
+    "tokens_used_fresh_get": 1139502,
+    "note": "native cumulative counters recorded as observed only; never reinterpreted as output tokens or billing"
+  },
+  "capture_method": "complete actual tool JSON via inert quoted shell heredoc, no base64, no summaries-only",
+  "absolute_cold_deadline_utc": "2026-10-07T18:57:02.674000+00:00"
+}

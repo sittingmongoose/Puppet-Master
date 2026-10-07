@@ -1,0 +1,13 @@
+{
+  "route": "create_goal/get_goal/update_goal independently established",
+  "binding": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "delegate_schema": "target options map, mode async, no context copying, stable distinct request",
+  "receipt_capture": "actual JSON via apply_patch or inert quoted heredoc; preserve failures"
+}

@@ -1,0 +1,74 @@
+{
+  "observedAt": "2026-10-07T18:50:00Z",
+  "source": "T3 thread_read activity + thread_configuration and actual installed integration state.json",
+  "thread": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+    "link": "[ER10 GLM treatment researcher v2 native slash route](t3-thread://v1/47363713-9592-474c-94b0-8191f32118eb/thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2)",
+    "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "title": "ER10 GLM treatment researcher v2 native slash route",
+    "createdBy": "agent",
+    "creationSource": "mcp",
+    "status": "running",
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:1",
+    "activeRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:1",
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "linkedPullRequest": null,
+    "titleRegeneration": null,
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "parentThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad",
+    "relationshipToParent": "subagent",
+    "runCount": 1,
+    "itemCount": 30,
+    "pendingRequestCount": 0,
+    "archived": false,
+    "settled": false,
+    "settledAt": null,
+    "snoozed": false,
+    "snoozedUntil": null,
+    "createdAt": "2026-10-07T18:44:18.052Z",
+    "updatedAt": "2026-10-07T18:47:51.778Z"
+  },
+  "configuration": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+    "modelSelection": {
+      "instanceId": "zcode",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": [
+        {
+          "id": "thought",
+          "value": "max"
+        },
+        {
+          "id": "mode",
+          "value": "yolo"
+        }
+      ]
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "startMessage": {
+    "position": 1,
+    "visibility": "local",
+    "sourceThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-GLM-treatment-research-v2",
+    "itemId": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3A40a13efc-c988-48bb-b83e-b65c9a30cb95%3Aturn%3A1%3Aassistant%3Amessage%3Agoal-1791398664637-iv19om",
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-GLM-treatment-research-v2:ordinal:1",
+    "messageId": "message:provider:acpRegistry:native-item:provider-instance%3Azcode%3A40a13efc-c988-48bb-b83e-b65c9a30cb95%3Aturn%3A1%3Aassistant%3Amessage%3Agoal-1791398664637-iv19om",
+    "createdBy": "agent",
+    "creationSource": "provider",
+    "type": "assistant_message",
+    "status": "completed",
+    "title": null,
+    "text": "🎯 goal loop started: Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and",
+    "textTruncated": true,
+    "nextTextOffset": 700,
+    "updatedAt": "2026-10-07T18:44:26.827Z"
+  },
+  "claim": "Actual installed zcode-acp 0.65.1 GoalLoopDriver native /goal running state independently observed; vendor session/goal backend target is NOT activated or claimed. Objective exact assignment path matches v2. No custom runner or global config mutation.",
+  "rawStateReceipt": "state/glm-v2-integration-goal-state-active.json",
+  "boundary": "Supported installed provider-integration goal, distinct from vendor backend-native target. Native backend session identity retained separately from ACP/T3 session identity; unique objective/path association only unless a direct mapping is available."
+}

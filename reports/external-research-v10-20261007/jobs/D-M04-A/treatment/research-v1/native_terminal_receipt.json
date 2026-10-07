@@ -1,0 +1,58 @@
+{
+  "goal_identity": "01a117b7-da0e-7cb3-a9cb-16346de5e318",
+  "before_terminal_get_goal_response": {
+    "goal": {
+      "threadId": "01a117b7-da0e-7cb3-a9cb-16346de5e318",
+      "objective": "D-M04-A treatment research",
+      "status": "active",
+      "tokensUsed": 54276,
+      "timeUsedSeconds": 285,
+      "createdAt": 1791399303,
+      "updatedAt": 1791399589
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "update_goal_response": {
+    "goal": {
+      "threadId": "01a117b7-da0e-7cb3-a9cb-16346de5e318",
+      "objective": "D-M04-A treatment research",
+      "status": "complete",
+      "tokensUsed": 62910,
+      "timeUsedSeconds": 305,
+      "createdAt": 1791399303,
+      "updatedAt": 1791399609
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "update_goal_error": null,
+  "fresh_get_goal_response": {
+    "goal": {
+      "threadId": "01a117b7-da0e-7cb3-a9cb-16346de5e318",
+      "objective": "D-M04-A treatment research",
+      "status": "complete",
+      "tokensUsed": 62910,
+      "timeUsedSeconds": 305,
+      "createdAt": 1791399303,
+      "updatedAt": 1791399609
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "fresh_get_goal_error": null,
+  "observed_terminal_receipt_time_utc": "2026-10-07 19:00:09 UTC",
+  "visible_usage": {
+    "before_terminal_tokensUsed": 54276,
+    "before_terminal_timeUsedSeconds": 285,
+    "after_terminal_tokensUsed": 62910,
+    "after_terminal_timeUsedSeconds": 305,
+    "billing": null,
+    "billing_note": "Billing is not exposed by these Goal responses."
+  },
+  "identity_observation": {
+    "requested_context": "gpt-6-luna Max priority on codex_gmail sittingmongoose@gmail.com",
+    "native_goal_response_exposes": "Goal threadId, objective, status, timestamps, and usage fields; it does not expose provider/model/account binding or a binding-freshness field."
+  },
+  "native_creation_timestamp": 1791399303
+}

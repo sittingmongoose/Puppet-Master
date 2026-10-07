@@ -1,0 +1,31 @@
+{
+  "case_id": "D-M09-A",
+  "producer": "ROOT_BOUND_SAME_FAMILY_CANDIDATE",
+  "status": "SEED_NOT_GENERATED",
+  "generation_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/brief.md",
+  "original_sources": [
+    {
+      "source_id": "sqlbackup",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackup.html",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04"
+    },
+    {
+      "source_id": "sqlbackupapi",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupapi.html",
+      "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b"
+    },
+    {
+      "source_id": "sqlbackupcode",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/sources/sqlbackupcode.c",
+      "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7"
+    }
+  ],
+  "required_outputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/seed/draft.md"
+  ],
+  "receipt_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M09-A/inputs/seed/SEED_RECEIPT.json",
+  "critic_stage_for_M08": null,
+  "seed_minutes": 3,
+  "no_expected_answers": true,
+  "not_evaluator_truth": true
+}

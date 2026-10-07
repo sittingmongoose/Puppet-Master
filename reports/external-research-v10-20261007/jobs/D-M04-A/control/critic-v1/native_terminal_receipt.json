@@ -1,0 +1,55 @@
+{
+  "pre_terminal_get_goal_response": {
+    "goal": {
+      "threadId": "01a117b0-3788-7a81-9690-3f3abc76087a",
+      "objective": "D-M04-A control critic",
+      "status": "active",
+      "tokensUsed": 89457,
+      "timeUsedSeconds": 358,
+      "createdAt": 1791398812,
+      "updatedAt": 1791399170
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "pre_terminal_get_goal_error": null,
+  "update_goal_response": {
+    "goal": {
+      "threadId": "01a117b0-3788-7a81-9690-3f3abc76087a",
+      "objective": "D-M04-A control critic",
+      "status": "complete",
+      "tokensUsed": 98499,
+      "timeUsedSeconds": 396,
+      "createdAt": 1791398812,
+      "updatedAt": 1791399208
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "update_goal_error": null,
+  "post_terminal_get_goal_response": {
+    "goal": {
+      "threadId": "01a117b0-3788-7a81-9690-3f3abc76087a",
+      "objective": "D-M04-A control critic",
+      "status": "complete",
+      "tokensUsed": 98499,
+      "timeUsedSeconds": 396,
+      "createdAt": 1791398812,
+      "updatedAt": 1791399208
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "post_terminal_get_goal_error": null,
+  "observed_terminal_time_utc": "2026-10-07 18:53:28 UTC",
+  "observed_goal_identity_and_state": {
+    "thread_id": "01a117b0-3788-7a81-9690-3f3abc76087a",
+    "objective": "D-M04-A control critic",
+    "created_at": 1791398812,
+    "pre_terminal_status": "active",
+    "post_terminal_status": "complete",
+    "post_terminal_tokens_used": 98499,
+    "post_terminal_time_used_seconds": 396,
+    "billing": null
+  }
+}

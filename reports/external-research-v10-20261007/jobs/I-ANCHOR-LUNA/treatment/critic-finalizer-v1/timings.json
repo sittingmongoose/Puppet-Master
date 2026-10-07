@@ -1,0 +1,117 @@
+{
+  "stage": "ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1",
+  "timing_basis": {
+    "wholearm_ceiling_seconds": 2700,
+    "stage_allocations_seconds": {
+      "research": 1500,
+      "critic_finalizer": 1200
+    },
+    "unused_prior_stage_time_may_carry": true,
+    "prepared_inputs_original_dispatch_at": "2026-10-07T18:26:52.851605+00:00",
+    "prepared_inputs_deadline_as_recorded": "2026-10-07T19:11:52.851605+00:00",
+    "stricter_user_timing_correction": {
+      "root_researcher_recentRuns_requestedAt": "2026-10-07T18:26:21.980Z",
+      "source": "User supplied correction reporting the exact observed root researcher thread timestamp; no clock reset.",
+      "strict_wholearm_deadline": "2026-10-07T19:11:21.980Z",
+      "earlier_than_prepared_deadline_seconds": 30.871605,
+      "prepared_remaining_seconds_at_preparation": 1432.163809,
+      "revised_remaining_seconds_at_same_preparation_instant": 1401.292204,
+      "original_INPUTS_map_and_timing_receipt_preserved": true
+    }
+  },
+  "native_start": {
+    "wholearm_root_researcher_run_requestedAt": "2026-10-07T18:26:21.980Z",
+    "stage_goal_created_at_epoch_seconds": 1791398894,
+    "stage_goal_created_at_utc": "2026-10-07T18:48:14.000Z",
+    "stage_goal_id": "01a117b1-a740-73f3-a0c8-71816b2cbbfe"
+  },
+  "active_native_binding": {
+    "observed_at_utc": "2026-10-07T18:58:34Z",
+    "t3_thread_id": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+    "provider_instance_id": "codex_gmail",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "runtime_mode": "full-access",
+    "evidence": "Exact t3_thread_configuration tool response is stored in native_goal_receipt.json."
+  },
+  "milestones": {
+    "native_start": "2026-10-07T18:26:21.980Z (wholearm root researcher run requestedAt, user supplied observation)",
+    "first_useful_saved_finding": "2026-10-07T18:53:20.354576165Z (critique.md file creation time)",
+    "complete_content_output_ready": "2026-10-07T19:00:32.388085511Z (latest final/critique/SOURCES.md content mtime; later of the three content deliverables)",
+    "native_terminal": {
+      "goal_updatedAt_epoch_seconds": 1791399704,
+      "goal_updatedAt_utc": "2026-10-07T19:01:44.000Z",
+      "terminal_get_observed_at_utc": "2026-10-07 19:01:44 UTC",
+      "status": "complete",
+      "native_goal_id": "01a117b1-a740-73f3-a0c8-71816b2cbbfe"
+    },
+    "terminal_note": "Will be filled only from the actual update_goal and subsequent get_goal responses."
+  },
+  "clock_snapshot_at_preterminal_record": {
+    "observed_at_utc": "2026-10-07T18:58:34Z",
+    "remaining_seconds_to_strict_deadline": 767.98
+  },
+  "native_goal_usage_snapshots": [
+    {
+      "point": "initial get_goal after create_goal",
+      "observed_at_utc": null,
+      "goal_status": "active",
+      "tokens_used": 0,
+      "time_used_seconds": 0,
+      "remaining_tokens": null,
+      "completion_budget_report": null,
+      "timestamp_basis": "get_goal was called immediately after create_goal in the same execution; no separate clock sample was taken. The response itself reports goal createdAt/updatedAt epoch 1791398894, equivalent to 2026-10-07T18:48:14Z."
+    },
+    {
+      "point": "active get_goal before terminalization",
+      "observed_at_utc": "2026-10-07T18:58:34Z",
+      "goal_status": "active",
+      "tokens_used": 184661,
+      "time_used_seconds": 582,
+      "remaining_tokens": null,
+      "completion_budget_report": null
+    },
+    {
+      "point": "latest active get_goal before terminalization",
+      "observed_at_utc": "2026-10-07 19:01:26 UTC",
+      "goal_status": "active",
+      "tokens_used": 230027,
+      "time_used_seconds": 760,
+      "remaining_tokens": null,
+      "completion_budget_report": null
+    },
+    {
+      "point": "terminal get_goal after update_goal complete",
+      "observed_at_utc": "2026-10-07 19:01:44 UTC",
+      "goal_status": "complete",
+      "tokens_used": 235039,
+      "time_used_seconds": 810,
+      "remaining_tokens": null,
+      "completion_budget_report": null
+    }
+  ],
+  "detailed_token_metrics": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "output_tokens": null,
+    "reasoning_tokens": null,
+    "status": "Not exposed by available native Goal responses."
+  },
+  "billing": {
+    "amount": null,
+    "status": "Unknown; no billing metric exposed."
+  },
+  "aggregation_rule": "Goal token/time values are recorded as independent cumulative snapshots; snapshots are not summed.",
+  "artifacts": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_goal_receipt.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/timings.json",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_terminal_receipt.json (created after terminal get_goal)"
+  ],
+  "native_terminal_receipt_saved": true
+}

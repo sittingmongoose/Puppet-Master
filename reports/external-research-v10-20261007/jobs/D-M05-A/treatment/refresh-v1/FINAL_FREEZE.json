@@ -1,0 +1,43 @@
+{
+  "files": {
+    "final.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/treatment/refresh-v1/final.md",
+      "sha256": "502885bcb521b89c298bd7fb20444a981f2bfa56a4aef4b575eadde942c16627",
+      "bytes": 8717
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/treatment/refresh-v1/sources.json",
+      "sha256": "61b3b666180749bbd1819f09c0a7fa38acfb2cdefaf62048a40b4e744fc08075",
+      "bytes": 5490
+    },
+    "timings.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/treatment/refresh-v1/timings.json",
+      "sha256": "fd79b252cb87b227a59cf002ac4904cbbf4286be1233490019165ba86582ee77",
+      "bytes": 1562
+    },
+    "native_goal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/treatment/refresh-v1/native_goal_receipt.json",
+      "sha256": "0815249a01803907af19f1ad172768d356b831cb40f8eba203f4be67b4b661e7",
+      "bytes": 1769
+    },
+    "native_terminal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/treatment/refresh-v1/native_terminal_receipt.json",
+      "sha256": "a39edeb8b3908c45e836cfaf77b31d599dfba129544ae31df14af1cd9157dde7",
+      "bytes": 2336
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/treatment/refresh-v1/t3-terminal-observed.json",
+      "sha256": "91dd2fb7faed8377477ab19fbfd265234dde75d264dfc8557d6edc6973af904b",
+      "bytes": 14540
+    }
+  },
+  "dispatch_at": "2026-10-07T18:49:44.368Z",
+  "terminal": "2026-10-07T18:53:57.299Z",
+  "dispatch_to_terminal_seconds": 252.931,
+  "cold_seed_seconds": 113.238,
+  "intervening_seed_queue_seconds": 349.168,
+  "cold_inclusive_seconds": 715.337,
+  "semantic_status": "UNASSESSED",
+  "native_terminal": "completed",
+  "exposure": "Maps advisory, no filesystem firewall"
+}

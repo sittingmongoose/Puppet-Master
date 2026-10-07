@@ -1,0 +1,91 @@
+{
+  "job": "D-M05-B",
+  "arm": "treatment",
+  "stage": "refresh-v1",
+  "allowance_seconds": 660.0,
+  "seed_charge_seconds": 162.747,
+  "budget_note": "Maximum 660.000s from delegate dispatch through full authored output and native terminal, NO RESET. Seed 162.747s charged in full in each 15min cold-equivalent arm; aggregate physical seed recorded once. Both physical-elapsed and cold-equivalent (physical + seed) accountings reported; neither resets the clock.",
+  "dispatch_at_utc": "2026-10-07T18:45:24.481Z",
+  "shell_clocks_observed": [
+    {
+      "label": "receipt-dir read + INPUT_MAP",
+      "utc": "2026-10-07T18:45:47Z",
+      "ms": 1791398747855
+    },
+    {
+      "label": "prior-sources + AGENTS/global rules read",
+      "utc": "2026-10-07T18:46:01Z",
+      "ms": 1791398761178
+    },
+    {
+      "label": "dispatch timing + hash verification (first useful finding)",
+      "utc": "2026-10-07T18:46:22Z",
+      "ms": 1791398782939
+    },
+    {
+      "label": "transaction + wal.c pins read",
+      "utc": "2026-10-07T18:46:54Z",
+      "ms": 1791398814712
+    },
+    {
+      "label": "pre-final-writing",
+      "utc": "2026-10-07T18:47:19Z",
+      "ms": 1791398839355
+    },
+    {
+      "label": "final.md wordcount check",
+      "utc": "2026-10-07T18:48:02Z",
+      "ms": 1791398882506
+    },
+    {
+      "label": "pre-timings write",
+      "utc": "2026-10-07T18:48:40Z",
+      "ms": 1791398920347
+    }
+  ],
+  "first_useful_finding": {
+    "finding": "All three INPUT_MAP sha256 values matched observed sha256sum output; prior-state hash matched prior_sha256; byte/line counts recorded.",
+    "utc": "2026-10-07T18:46:22Z",
+    "seconds_after_dispatch_approx": 57.5
+  },
+  "research_window": {
+    "research_reads_utc": "2026-10-07T18:45:47Z through 2026-10-07T18:46:54Z (brief/changes/prior-state/prior-sources/manifest/AGENTS+global rules/frozen source ranges)",
+    "research_note": "Within 9-minute research cap; protected final writing followed inside remaining allowance; did not wait to fill budget."
+  },
+  "authored_completion": {
+    "final_md_observed_utc": "2026-10-07T18:48:02Z",
+    "final_md_words_observed": 1486,
+    "final_md_soft_ceiling": 1100,
+    "word_overrun_marked": true,
+    "word_overrun_note": "Soft ceiling exceeded by ~386 words; completeness of governing conditions preserved per brief (soft ceiling does not authorize omitting a governing condition). Overrun remains marked; no silent trim.",
+    "material_findings_count": 7,
+    "material_findings_cap": 8,
+    "findings_cap_met": true,
+    "sources_json_written_before_timings": true,
+    "timings_pre_write_utc": "2026-10-07T18:48:40Z",
+    "physical_elapsed_at_pre_timings_seconds_approx": 195.5,
+    "cold_equivalent_charged_at_pre_timings_seconds_approx": 358.3,
+    "physical_remaining_seconds_approx": 464.5,
+    "cold_equivalent_remaining_seconds_approx": 301.7,
+    "budget_status_at_authoring": "within allowance on both accountings; terminal delivery still to complete inside same allowance"
+  },
+  "native_timings": {
+    "goal_id": "goal-01a117af-7f04-71f0-bd33-43454308425b",
+    "session_id": "01a117af-4be8-79a1-9160-77b594020e7b",
+    "created_at_ms": 1791398739716,
+    "get_after_create_updated_at_ms": 1791398742087,
+    "tokens_used_at_activation": 0,
+    "tokens_note": "Native cumulative counter only; never reinterpreted as output/billing.",
+    "terminal": "recorded separately in native_terminal_receipt.json with complete actual responses"
+  },
+  "observed_counters": {
+    "counters": null,
+    "billing": null,
+    "usage_note": "Unknown clocks/usage remain null; no counters observed via supported interfaces."
+  },
+  "dispatch_wall_clock_note": "Exact dispatch wall-clock supplied via own output-dir dispatch-receipt.json dispatch_at; queue/startup included in elapsed from that stamp; no reset applied.",
+  "partial_output": false,
+  "overruns": [
+    "final.md 1486 words vs soft 1100-word ceiling — marked, justified by governing-condition completeness"
+  ]
+}

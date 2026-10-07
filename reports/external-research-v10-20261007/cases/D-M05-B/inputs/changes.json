@@ -1,0 +1,28 @@
+{
+  "case_id": "D-M05-B",
+  "predeclared_before_seed": true,
+  "changes": {
+    "noop": {
+      "from": "Queue store",
+      "to": "Job store",
+      "semantics": "Name only; no behavior change"
+    },
+    "material": {
+      "field": "deployment",
+      "from": "one Linux host, local disk",
+      "to": "two Linux hosts open one database on mounted network filesystem",
+      "unchanged": [
+        "SQLite 3.51.3",
+        "simultaneous readers and one writer",
+        "data model",
+        "restart recovery obligation"
+      ]
+    }
+  },
+  "seed_source_ids": [
+    "sqlwal",
+    "sqlwalcode",
+    "sqltransaction"
+  ],
+  "seed_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-B/inputs/prior-brief.md"
+}

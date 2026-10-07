@@ -1,0 +1,43 @@
+{
+  "schema": "er10.integrated.input.v1",
+  "case_id": "I-FAST-01",
+  "title": "Historic aerial image comparison workspace",
+  "track": "speed_budget",
+  "domain": "geospatial heritage / aerial imagery",
+  "status": "ready_inputs",
+  "prepared_at_utc": "2026-10-07T18:33:30.379767+00:00",
+  "input_mode": "brief_led_open_discovery_with_frozen_sandbox_plan",
+  "recipe": null,
+  "control_recipe": null,
+  "treatment_recipe": null,
+  "family_allocation": null,
+  "budget": null,
+  "stage_allowances": null,
+  "execution_binding_status": "UNBOUND",
+  "launch_ready": false,
+  "standard_scope_sizing_minutes": 45,
+  "sizing_note": "Task-size planning reference only; no execution allowance is bound. Speed cases retain full scope.",
+  "research_answers_supplied": false,
+  "evaluator_keys_supplied": false,
+  "public_source_seed_list_supplied": false,
+  "obligation_map": "brief.md#compact-obligation-map-requirements-not-an-answer-key",
+  "files": {
+    "INPUTS.md": {
+      "sha256": "a20b549073d5026e97900433055f986585b1986465baa5f780c6eee323fb7e4a",
+      "bytes": 1917
+    },
+    "brief.md": {
+      "sha256": "6dd2544d34fd845067a74914ec5b87767c2fdc447981616f0b231f887d53a40c",
+      "bytes": 5140
+    },
+    "plan.md": {
+      "sha256": "6e511c3749bfa87d7ddb0abc0dc616e854c898feb2bdc65cf6f4b15e24993651",
+      "bytes": 1751
+    }
+  },
+  "source_copies": [],
+  "input_freeze_complete": true,
+  "input_frozen_at_utc": "2026-10-07T18:33:30.382026+00:00",
+  "freeze_policy": "Inputs chmod 0444; coordinator execution bindings remain external and prospective.",
+  "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-FAST-01"
+}

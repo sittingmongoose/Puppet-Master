@@ -1,0 +1,41 @@
+{
+  "objective_requested": "D-M05-B prior-state seed",
+  "create_goal_response": {
+    "goal": {
+      "created_at_ms": 1791398535585,
+      "current_work": null,
+      "goal_id": "goal-01a117ac-61a1-7183-8f47-b31902b116b7",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "D-M05-B prior-state seed",
+      "percent_complete": 0,
+      "session_id": "01a117ac-3808-75a0-936b-847ace7c4a55",
+      "status": "active",
+      "token_budget": null,
+      "tokens_used": 0,
+      "updated_at_ms": 1791398535585
+    }
+  },
+  "get_goal_response": {
+    "goal": {
+      "created_at_ms": 1791398535585,
+      "current_work": null,
+      "goal_id": "goal-01a117ac-61a1-7183-8f47-b31902b116b7",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "D-M05-B prior-state seed",
+      "percent_complete": 0,
+      "session_id": "01a117ac-3808-75a0-936b-847ace7c4a55",
+      "status": "active",
+      "token_budget": null,
+      "tokens_used": 0,
+      "updated_at_ms": 1791398539178
+    }
+  },
+  "observed_identity": {
+    "goal_id": "goal-01a117ac-61a1-7183-8f47-b31902b116b7",
+    "session_id": "01a117ac-3808-75a0-936b-847ace7c4a55",
+    "status": "active",
+    "objective": "D-M05-B prior-state seed"
+  }
+}

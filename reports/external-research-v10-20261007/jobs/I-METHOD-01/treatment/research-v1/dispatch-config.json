@@ -1,0 +1,26 @@
+{
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "max"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ]
+  },
+  "mode": "async",
+  "role": "research",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "clientRequestId": "er10-I-METHOD-01-treatment-research-v1",
+  "record_at": "2026-10-07T18:56:45.844115+00:00",
+  "prospective_stage_deadline": "2026-10-07T19:16:45.844115+00:00",
+  "prospective_arm_deadline": "2026-10-07T19:41:45.844115+00:00",
+  "deadline_note": "conservative pre-dispatch wall deadline; if actual requestedAt is earlier supervisor appends correction, never replaces timestamps"
+}

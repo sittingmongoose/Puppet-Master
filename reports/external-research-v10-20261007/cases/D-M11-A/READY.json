@@ -1,0 +1,44 @@
+{
+  "schema": "pm.er10.targeted-ready.v1",
+  "case_id": "D-M11-A",
+  "status": "READY_FOR_ROOT_BINDING",
+  "frozen_design_version": 1,
+  "input_map_complete": true,
+  "predecessor_inputs_complete": true,
+  "scientific_answers_included": false,
+  "dispatch_performed": false,
+  "family": "Muse",
+  "effort": "Max",
+  "minutes_per_arm": 15,
+  "arm_order": [
+    "control",
+    "treatment"
+  ],
+  "case_card_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/case-card.json",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/INPUT_MAP.json",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/case-card.json",
+      "sha256": "57133cbd0802ec337bb00f55e75b20eccca9ce61b3757a5ab4ebf02d7e709f3f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/CASE_CARD.md",
+      "sha256": "3caece3b6f3263b8b8429ef7c038c8607bdb9161f2e4ccce26629be6da769788"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/INPUT_MAP.json",
+      "sha256": "ae6d7f6ee5a483e8699fb0d42d92b42e67d11d947fe29fe431dacdd22ec12004"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/brief.md",
+      "sha256": "8ff2c3095c6505c45fd4d48e19f07f1edd0f81251e00838215d5f41a64c12eef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources.json",
+      "sha256": "7319f42c6303bc9b7920905120f59a7ba2f74f5de76a17825564af91bd26ccb8"
+    }
+  ],
+  "source_hashes_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources.json",
+  "root_prerequisites": "Root must qualify exact account/model/native Goal/access/source retrieval policy/output-carrier before dispatch.",
+  "freeze_date_utc": "2026-10-07"
+}

@@ -1,0 +1,111 @@
+{
+  "schema": "er10.research.sources.v1",
+  "case_id": "D-M04-A",
+  "stage": "research-v1",
+  "access_boundary": "Only the brief, mapped frozen sources, stage map, applicable actual AGENTS/global rules, own output, and own private source cache were read. No sibling, evaluator, campaign analysis, or old candidate outputs.",
+  "helper": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/exact_bytes.py",
+  "acquisition": "For each source, invoked exact_bytes.py cold SOURCE --sha256 EXPECTED --cache <stage-cache> --receipt <output>/cold-SOURCEID.json. All four receipts report extraction identity-v1 and network_requests=0. Returned hash-named cache objects were inspected with native shell tools (rg/sed); no extraction reuse.",
+  "sources": [
+    {
+      "source_id": "sqltransaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_capture": "SQLite transaction documentation capture 2026-10-07",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "bytes": 27068,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/source-cache-v1/b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "cold_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/cold-sqltransaction.json",
+      "receipt_observation": {
+        "ended_at": "2026-10-07T18:40:57.496826+00:00",
+        "elapsed_seconds": 0.0005544799987546867,
+        "network_requests": 0,
+        "extraction": "identity-v1"
+      },
+      "line_ranges_read": [
+        "248-288",
+        "289-390"
+      ],
+      "operations": [
+        "rg -ni -o around BEGIN DEFERRED, BEGIN IMMEDIATE, upgrade, SQLITE_BUSY, SQLITE_LOCKED, ROLLBACK, COMMIT",
+        "sed -n '289,390p'",
+        "sed -n '248,288p'"
+      ]
+    },
+    {
+      "source_id": "sqlwal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/source-cache-v1/f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "cold_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/cold-sqlwal.json",
+      "receipt_observation": {
+        "ended_at": "2026-10-07T18:40:57.543789+00:00",
+        "elapsed_seconds": 0.0007689920003031148,
+        "network_requests": 0,
+        "extraction": "identity-v1"
+      },
+      "line_ranges_read": [
+        "160-177",
+        "242-322",
+        "672-712"
+      ],
+      "operations": [
+        "rg -ni -o around concurrency, busy, SQLITE_BUSY, SQLITE_LOCKED, reader, writer, checkpoint, snapshot",
+        "sed -n '160,177p'",
+        "sed -n '266,301p'",
+        "sed -n '672,712p'",
+        "sed -n '242,266p'",
+        "sed -n '322,358p'",
+        "sed -n '296,322p'"
+      ]
+    },
+    {
+      "source_id": "sqlpragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "bytes": 139778,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/source-cache-v1/b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "cold_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/cold-sqlpragma.json",
+      "receipt_observation": {
+        "ended_at": "2026-10-07T18:40:57.548534+00:00",
+        "elapsed_seconds": 0.0009261579998565139,
+        "network_requests": 0,
+        "extraction": "identity-v1"
+      },
+      "line_ranges_read": [
+        "576-592",
+        "1208-1238"
+      ],
+      "operations": [
+        "rg -ni -o around busy_timeout, busy handler, PRAGMA busy, sqlite3_busy_timeout, journal_mode",
+        "sed -n '576,592p'",
+        "sed -n '1208,1238p'"
+      ]
+    },
+    {
+      "source_id": "sqlwalcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+      "version_or_capture": "SQLite version-3.51.3",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "bytes": 177587,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/source-cache-v1/100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "cold_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/control/research-v1/cold-sqlwalcode.json",
+      "receipt_observation": {
+        "ended_at": "2026-10-07T18:40:57.547262+00:00",
+        "elapsed_seconds": 0.002841824001734687,
+        "network_requests": 0,
+        "extraction": "identity-v1"
+      },
+      "line_ranges_read": [
+        "3688-3755"
+      ],
+      "operations": [
+        "rg -n for sqlite3WalBeginWriteTransaction, BUSY_SNAPSHOT, SQLITE_BUSY_SNAPSHOT, WAL_WRITE_LOCK",
+        "sed -n '3688,3755p'"
+      ]
+    }
+  ],
+  "additional_primary_checks": [],
+  "additional_source_limitations": "No additional source was retrieved. Mapped-source search for SQLITE_LOCKED returned no occurrences; handling therefore remains explicitly unresolved."
+}

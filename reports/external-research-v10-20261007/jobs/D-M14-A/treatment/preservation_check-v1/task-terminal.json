@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-treatment-preservation_check-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-treatment-preservation_check-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-treatment-preservation_check-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M14-A-treatment-preservation_check-v1",
+  "status": "interrupted",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-treatment-preservation_check-v1:ordinal:1",
+  "latestTerminalStatus": "interrupted",
+  "latestTerminalSummary": "The Goal is active and its observed `get_goal` response is saved. The orchestration cell failed while serializing the successful `create_goal` response, so that exact receipt could not be preserved; I’ve recorded the gap instead of reconstructing it. I’m proceeding within the remaining deadline.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-treatment-preservation_check-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:741b38b2-2def-44c5-9f8e-623c85416dac",
+  "providerInstanceId": "codex_gmail",
+  "model": "gpt-6-luna",
+  "summary": "The Goal is active and its observed `get_goal` response is saved. The orchestration cell failed while serializing the successful `create_goal` response, so that exact receipt could not be preserved; I’ve recorded the gap instead of reconstructing it. I’m proceeding within the remaining deadline.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M14-A-treatment-preservation_check-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:741b38b2-2def-44c5-9f8e-623c85416dac",
+  "waitTimedOut": false
+}

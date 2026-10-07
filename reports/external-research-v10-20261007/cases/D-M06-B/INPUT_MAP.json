@@ -1,0 +1,44 @@
+{
+  "schema": "pm.er10.targeted-input-map.v1",
+  "case_id": "D-M06-B",
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "gdaltransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "source_mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "predecessor": {
+    "type": "algorithm",
+    "status": "REQUIRED_NOT_YET_PRODUCED",
+    "contract_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/PREDECESSOR.md",
+    "expected_paths": [
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/seed/draft.md",
+      "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/seed/fixtures.json"
+    ],
+    "author_family": "GLM",
+    "seed_output_never_expected_answer": true,
+    "admission": "No READY.json and no arm dispatch until exact seed bytes, source refs, author/native receipt and hashes exist; seed inadequacy is reported, not fixed by Sol scientific content."
+  },
+  "output_directory_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/outputs/control",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/outputs/treatment"
+  },
+  "candidate_scope": "Root must pass stage-specific inputs only; no parent campaign history, evaluator keys, other cases, helpers source library, or other-arm outputs."
+}

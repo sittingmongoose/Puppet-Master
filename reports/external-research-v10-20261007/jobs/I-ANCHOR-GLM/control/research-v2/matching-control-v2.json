@@ -1,0 +1,23 @@
+{
+  "frozen_before_dispatch_at": "2026-10-07T18:50:04.842698+00:00",
+  "version": 2,
+  "prospective": true,
+  "wholearm_ceiling_seconds": 2700,
+  "stages_seconds": [
+    1200,
+    600,
+    900
+  ],
+  "original_allowance_start": "2026-10-07T18:50:04.842698+00:00",
+  "deadline": "2026-10-07T19:35:04.842698+00:00",
+  "input_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/brief.md": "56a0de62ef7beae65cfbc31fb39e62c04203d5cd7f1986d56480098d6a1cbead",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/plan.md": "2fd6a823992d5edad5e095a9d3b6a922de5c6c05e2131c5405d83b9c55ca8f6a"
+  },
+  "shared_route_version": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-GLM/route-v2.json",
+  "integration": "installed zcode-acp0.65.1 GoalLoopDriver",
+  "vendor_backend_target": "NOT_ACTIVATED_OR_CLAIMED",
+  "prior_v1": "preserved root-owned route failure; no v1 control entered; failure-inclusive diagnosis separate",
+  "role": "general",
+  "dispatch_task_sha256": "1abaec13d462a538b227b4bc8da3964dc6544f2653fa2220af304123f67cfdc1"
+}

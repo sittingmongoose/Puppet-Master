@@ -1,0 +1,43 @@
+{
+  "files": {
+    "final.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/final.md",
+      "sha256": "bcf2a81003a387b277b4febfa0599f40b27c60b3599d8bda66b7052cd6f4ea7d",
+      "bytes": 11325
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/sources.json",
+      "sha256": "5306b89570301fc04ba0c48c079b0bcf5f5714ab4ad2bea4572762c125acf386",
+      "bytes": 6567
+    },
+    "timings.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/timings.json",
+      "sha256": "0e11c027af058bc873eb46ae5da215bbd175ff1e0c8bb3467b937d87bf2c89d8",
+      "bytes": 3998
+    },
+    "native_goal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/native_goal_receipt.json",
+      "sha256": "7532bf512d795e2e4f6d19a522e8ca371c8cef363c8bede6ceb5b695e604b7c0",
+      "bytes": 3134
+    },
+    "native_terminal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/native_terminal_receipt.json",
+      "sha256": "1f61b60fd9d66b255f075c5d10959db7b52df4f3a48f3d7aa7488ea3fa0564bf",
+      "bytes": 4553
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-B/treatment/refresh-v1/t3-terminal-observed.json",
+      "sha256": "72d831f143f8b1661ccb8167af1de396cb7c4584541846d4bc8fb03b303199dc",
+      "bytes": 13973
+    }
+  },
+  "dispatch_at": "2026-10-07T18:45:24.481Z",
+  "terminal": "2026-10-07T18:49:20.324Z",
+  "dispatch_to_terminal_seconds": 235.843,
+  "cold_seed_seconds": 162.747,
+  "intervening_seed_queue_seconds": 39.06,
+  "cold_inclusive_seconds": 437.65,
+  "semantic_status": "UNASSESSED",
+  "native_terminal": "completed",
+  "exposure": "Maps advisory, no filesystem firewall"
+}

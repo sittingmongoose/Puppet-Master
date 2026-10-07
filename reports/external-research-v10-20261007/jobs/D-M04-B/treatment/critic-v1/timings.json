@@ -1,0 +1,23 @@
+{
+  "start_observed_utc": "2026-10-07 18:49:11 UTC",
+  "first_useful_finding_observed_utc": "2026-10-07 18:50:40 UTC",
+  "final_authored_at_observed_utc": "2026-10-07 18:55:14 UTC",
+  "elapsed_seconds_to_final_from_start": 363,
+  "arm_deadline_utc": "2026-10-07T18:55:06.683000+00:00",
+  "native_goal_preterminal_observation": {
+    "goal": {
+      "threadId": "01a117b2-94ea-7693-aeb7-1a5451324518",
+      "objective": "D-M04-B treatment critic",
+      "status": "active",
+      "tokensUsed": 65046,
+      "timeUsedSeconds": 344,
+      "createdAt": 1791398970,
+      "updatedAt": 1791399314
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "billing_usd": null,
+  "note": "billing unknown; no tests or proposed fixtures were executed"
+}
+

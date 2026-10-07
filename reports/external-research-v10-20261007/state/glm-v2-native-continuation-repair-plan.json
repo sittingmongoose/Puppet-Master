@@ -1,0 +1,20 @@
+{
+  "reason": "Lifecycle-only ordinary steer interrupted native GoalLoopDriver, actual paused(cancelled) independently observed. Preserve original state and interruption; use only installed supported /goal resume plus same-objective hold attachment, no state edit/engine/global config.",
+  "priorGoalCreatedAt": 1791398664635,
+  "backendSessionId": "sess_5efa7ef2-3062-42d4-bc95-0c6214ef5723",
+  "commands": [
+    {
+      "mode": "queue",
+      "message": "/goal resume",
+      "request": "er10-glm-v2-native-resume-existing"
+    },
+    {
+      "mode": "queue",
+      "message": "/goal Complete the fresh ER10 I-ANCHOR-GLM treatment researcher assignment in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-GLM/treatment/research-v2/assignment.md. Read its exact INPUTS.md and save all required draft/source/timing receipts there. Use current GLM5.3FlashMax binding; no nested Goals, accounts/config changes or external runners. Observe the installed provider integration Goal state honestly; vendor-backend target activation is not claimed.",
+      "request": "er10-glm-v2-native-attach-hold-existing"
+    }
+  ],
+  "invariant": "Resumed state retains SAME createdAt,objective,tickets/rounds/backend session; third command's existing-running registry returns same driver with holdRequest. If invariant fails, label changed/fresh route failure, no claimed original completion. Queue commands do not interrupt current turn, clocks/recovery cost unchanged.",
+  "limitation": "Supported resume subcommand alone returns before background driver settles, so immediately queued same-objective /goal attaches existing live holdRequest. Native receipt required independently before release/comparison. No actual background continuation claimed until observed.",
+  "scope": "Same assignment, no new review round or new candidate answer/allowance. Original v2 activation/paused bytes preserved."
+}

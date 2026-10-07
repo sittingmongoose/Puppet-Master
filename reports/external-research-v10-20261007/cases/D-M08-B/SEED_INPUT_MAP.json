@@ -1,0 +1,37 @@
+{
+  "case_id": "D-M08-B",
+  "producer": "ROOT_BOUND_SAME_FAMILY_CANDIDATE",
+  "status": "SEED_NOT_GENERATED",
+  "generation_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md",
+  "original_sources": [
+    {
+      "source_id": "rasterresample",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727"
+    },
+    {
+      "source_id": "rastermask",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9"
+    },
+    {
+      "source_id": "geotransform",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc"
+    }
+  ],
+  "required_outputs": [
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/seed/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/seed/critique.md"
+  ],
+  "receipt_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/seed/SEED_RECEIPT.json",
+  "critic_stage_for_M08": {
+    "draft": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/seed/draft.md",
+    "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md",
+    "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json",
+    "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/seed/critique.md"
+  },
+  "seed_minutes": 6,
+  "no_expected_answers": true,
+  "not_evaluator_truth": true
+}

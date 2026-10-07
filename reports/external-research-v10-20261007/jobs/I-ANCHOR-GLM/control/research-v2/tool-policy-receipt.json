@@ -1,0 +1,133 @@
+{
+  "observed_at": "2026-10-07T18:50:04.781Z",
+  "selected": [
+    {
+      "providerInstanceId": "zcode",
+      "driverKind": "acpRegistry",
+      "displayName": "ZCode (GLM)",
+      "models": [
+        {
+          "id": "builtin:zai-coding-plan\\GLM-5.3",
+          "label": "GLM-5.3",
+          "options": [
+            {
+              "id": "mode",
+              "label": "Mode",
+              "type": "select",
+              "options": [
+                {
+                  "id": "plan",
+                  "label": "plan"
+                },
+                {
+                  "id": "build",
+                  "label": "build"
+                },
+                {
+                  "id": "edit",
+                  "label": "edit"
+                },
+                {
+                  "id": "yolo",
+                  "label": "yolo"
+                },
+                {
+                  "id": "auto",
+                  "label": "auto"
+                }
+              ],
+              "currentValue": "yolo"
+            },
+            {
+              "id": "thought",
+              "label": "Thought Level",
+              "type": "select",
+              "options": [
+                {
+                  "id": "low",
+                  "label": "low"
+                },
+                {
+                  "id": "high",
+                  "label": "high"
+                },
+                {
+                  "id": "max",
+                  "label": "max"
+                }
+              ],
+              "currentValue": "max"
+            }
+          ]
+        },
+        {
+          "id": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "label": "GLM-5.3-Flash",
+          "options": [
+            {
+              "id": "mode",
+              "label": "Mode",
+              "type": "select",
+              "options": [
+                {
+                  "id": "plan",
+                  "label": "plan"
+                },
+                {
+                  "id": "build",
+                  "label": "build"
+                },
+                {
+                  "id": "edit",
+                  "label": "edit"
+                },
+                {
+                  "id": "yolo",
+                  "label": "yolo"
+                },
+                {
+                  "id": "auto",
+                  "label": "auto"
+                }
+              ],
+              "currentValue": "yolo"
+            },
+            {
+              "id": "thought",
+              "label": "Thought Level",
+              "type": "select",
+              "options": [
+                {
+                  "id": "low",
+                  "label": "low"
+                },
+                {
+                  "id": "high",
+                  "label": "high"
+                },
+                {
+                  "id": "max",
+                  "label": "max"
+                }
+              ],
+              "currentValue": "max"
+            }
+          ]
+        },
+        {
+          "id": "default",
+          "label": "Default",
+          "options": []
+        }
+      ],
+      "canRunChildTask": true,
+      "canRunCrossProviderChildTask": true,
+      "constraints": []
+    }
+  ],
+  "tool": {
+    "name": "mcp__t3_code__delegate_task",
+    "description": "Needs an agent running inside a T3 thread. Delegate one task to a T3-owned child agent/subagent of THIS thread and run it with only the supplied task prompt, without copying parent conversation history. Choose providers and models from orchestrator_capabilities, which uses the same live catalog as the composer. Prefer native subagent tools for same-provider work only when they support the chosen model. Use this for any model missing from the native tool, including same-provider work, for cross-provider work, or for explicitly T3-owned child tasks. For every T3 delegated review round, call delegate_task again with the original brief, prior findings, responses, and unresolved objections in the task prompt. Track each round by its own taskId and use a distinct clientRequestId per round, stable across retries of that round. The childThreadId is backing storage, not the target for starting another delegated review round through t3_thread_send. Provider, model, model options (see orchestrator_capabilities), runtime mode, and interaction mode inherit unless target overrides them. Prefer mode='async' for long work; mode='wait' blocks until completion or timeout. timeoutMs on mode=wait is only the parent's wait budget and does not cancel the child. waitTimedOut on that wait call means the timeout fired; keep that taskId and read status on later task_status. An async child's completion wakes this thread through a notification, steered into active turns where supported or queued otherwise, so end the turn instead of polling or spawning watchers; use task_status only when the result is needed mid-turn.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__t3_code__delegate_task(args: {\n  clientRequestId?: string | null;\n  interactionMode?: \"inherit\" | \"default\" | \"plan\" | null;\n  mode?: \"async\" | \"wait\" | null;\n  role?: \"implementation\" | \"research\" | \"review\" | \"design\" | \"test\" | \"general\" | null;\n  runtimeMode?: \"inherit\" | \"approval-required\" | \"auto-accept-edits\" | \"auto\" | \"full-access\" | null;\n  target?: { driverKind?: string | null; model?: string | null; options?: Array<{ id: string; value: string | boolean; [key: string]: unknown; }> | { [key: string]: string | boolean; } | null; providerInstanceId?: string | null; [key: string]: unknown; } | null;\n  task: string;\n  // Wait budget for mode=wait only. Default 10 minutes. Elapsing it returns waitTimedOut=true on that call and does not cancel the child.\n  timeoutMs?: number | \"Infinity\" | \"-Infinity\" | \"NaN\" | null;\n  title?: string | null;\n  [key: string]: unknown;\n}): Promise<CallToolResult<{\n  childNodeId: string;\n  childRunId: string | null;\n  childThreadId: string;\n  hasPendingChildRuns: boolean;\n  latestTerminalResultContextTransferId: string | null;\n  latestTerminalRunId: string | null;\n  latestTerminalStatus: \"completed\" | \"failed\" | \"cancelled\" | \"interrupted\" | null;\n  latestTerminalSummary: string | null;\n  model: string | null;\n  providerInstanceId: string;\n  resultContextTransferId: string | null;\n  status: \"queued\" | \"running\" | \"waiting\" | \"completed\" | \"failed\" | \"cancelled\" | \"interrupted\";\n  summary: string | null;\n  taskId: string;\n  // True only on that mode=wait call when timeoutMs elapsed. The timeout does not cancel the child. Later task_status reads return false and use status for liveness.\n  waitTimedOut: boolean;\n  workState: \"working\" | \"waiting_for_children\" | \"result_available\";\n  [key: string]: unknown;\n}>>; };\n```"
+  },
+  "route": "general-role literal leading /goal; installed0.65.1 GoalLoopDriver; vendor backend target notclaimed"
+}

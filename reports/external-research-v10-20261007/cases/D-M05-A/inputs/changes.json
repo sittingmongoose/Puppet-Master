@@ -1,0 +1,26 @@
+{
+  "case_id": "D-M05-A",
+  "predeclared_before_seed": true,
+  "changes": {
+    "noop": {
+      "from": "Import bundle",
+      "to": "Import archive",
+      "semantics": "UI/name only; no behavior change"
+    },
+    "material": {
+      "field": "CPython runtime",
+      "from": "3.12.3",
+      "to": "3.14.0",
+      "unchanged": [
+        "untrusted tar inputs",
+        "local Linux worker",
+        "filter argument omitted"
+      ]
+    }
+  },
+  "seed_source_ids": [
+    "tarold",
+    "tardocold"
+  ],
+  "seed_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/prior-brief.md"
+}

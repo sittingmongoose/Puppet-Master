@@ -1,0 +1,33 @@
+{
+  "observed_before_activation_utc": {
+    "current_time": "2026-10-07 18:46:52 UTC"
+  },
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117b0-3788-7a81-9690-3f3abc76087a",
+      "objective": "D-M04-A control critic",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791398812,
+      "updatedAt": 1791398812
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "create_goal_error": null,
+  "get_goal_response": {
+    "goal": {
+      "threadId": "01a117b0-3788-7a81-9690-3f3abc76087a",
+      "objective": "D-M04-A control critic",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791398812,
+      "updatedAt": 1791398812
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal_error": null
+}

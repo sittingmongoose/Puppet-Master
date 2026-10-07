@@ -1,0 +1,43 @@
+{
+  "schema": "er10.integrated.input.v1",
+  "case_id": "I-METHOD-03",
+  "title": "Transit transfer review kiosk",
+  "track": "method_recipe",
+  "domain": "public transit / schedule and realtime data",
+  "status": "ready_inputs",
+  "prepared_at_utc": "2026-10-07T18:33:30.287265+00:00",
+  "input_mode": "brief_led_open_discovery_with_frozen_sandbox_plan",
+  "recipe": null,
+  "control_recipe": null,
+  "treatment_recipe": null,
+  "family_allocation": null,
+  "budget": null,
+  "stage_allowances": null,
+  "execution_binding_status": "UNBOUND",
+  "launch_ready": false,
+  "standard_scope_sizing_minutes": 45,
+  "sizing_note": "Task-size planning reference only; no execution allowance is bound. Speed cases retain full scope.",
+  "research_answers_supplied": false,
+  "evaluator_keys_supplied": false,
+  "public_source_seed_list_supplied": false,
+  "obligation_map": "brief.md#compact-obligation-map-requirements-not-an-answer-key",
+  "files": {
+    "INPUTS.md": {
+      "sha256": "6ac3ca9606f0359ad70ce8dd6c20a581a4da820584b889a692b8ce54bf4fb54d",
+      "bytes": 1927
+    },
+    "brief.md": {
+      "sha256": "18f0d4d44d638932060c0624b6876d21f0e33226971579f66916e8de2816853c",
+      "bytes": 5120
+    },
+    "plan.md": {
+      "sha256": "3451e59740282a558189908d03921dcbff4126105d788b6488ad0def90ff9f6a",
+      "bytes": 1765
+    }
+  },
+  "source_copies": [],
+  "input_freeze_complete": true,
+  "input_frozen_at_utc": "2026-10-07T18:33:30.288740+00:00",
+  "freeze_policy": "Inputs chmod 0444; coordinator execution bindings remain external and prospective.",
+  "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-03"
+}

@@ -1,0 +1,9 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/prior-brief.md",
+  "sources": [
+    {"source_id": "tarold", "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tarold.py", "sha256_observed": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8", "sha256_mapped": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8", "lines_used": ["L69-72 __all__", "L720-837 filters", "L2217-2238 _get_filter_function", "L2240-2358 extract/extractall/error-handling"]},
+    {"source_id": "tardocold", "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M05-A/inputs/sources/tardocold.rst", "sha256_observed": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99", "sha256_mapped": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99", "lines_used": ["L39-44 versionchanged 3.12", "L184-251 exceptions", "L476-549 extract/extractall", "L563-611 errorlevel/extraction_filter", "L940-1116 extraction filters/hints", "L1118-1138 compat"]}
+  ],
+  "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M05-A/common/seed-v1/prior-state.md",
+  "usage": {"counters": null, "billing": null, "note": "unknown counters/billing null; no expected answers or changes refresh; untrusted input not evaluator truth"}
+}

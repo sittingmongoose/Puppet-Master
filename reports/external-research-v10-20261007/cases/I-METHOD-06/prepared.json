@@ -1,0 +1,282 @@
+{
+  "schema": "er10.integrated.input.v1",
+  "case_id": "I-METHOD-06",
+  "title": "Read-only PM snapshot capture and verification review",
+  "track": "method_recipe",
+  "domain": "Puppet Master / recoverable backups",
+  "status": "ready_inputs",
+  "prepared_at_utc": "2026-10-07T18:33:30.332111+00:00",
+  "input_mode": "brief_led_open_discovery_with_frozen_sandbox_plan",
+  "recipe": null,
+  "control_recipe": null,
+  "treatment_recipe": null,
+  "family_allocation": null,
+  "budget": null,
+  "stage_allowances": null,
+  "execution_binding_status": "UNBOUND",
+  "launch_ready": false,
+  "standard_scope_sizing_minutes": 45,
+  "sizing_note": "Task-size planning reference only; no execution allowance is bound. Speed cases retain full scope.",
+  "research_answers_supplied": false,
+  "evaluator_keys_supplied": false,
+  "public_source_seed_list_supplied": false,
+  "obligation_map": "brief.md#compact-obligation-map-requirements-not-an-answer-key",
+  "files": {
+    "INPUTS.md": {
+      "sha256": "726db147e5ae97c03c86169613fa313ac05f5a0a2cbd01cce669f82528404a50",
+      "bytes": 2113
+    },
+    "brief.md": {
+      "sha256": "2c9cded4ef7b6ca1d11bcfbde218bf49e7c493964022d7ed7f7f3e5b5634ffe9",
+      "bytes": 5708
+    },
+    "plan.md": {
+      "sha256": "304ba8e4ba46efc399176e4c68c40af0dc6be0873ab5d59b063889cb154770a9",
+      "bytes": 3228
+    },
+    "source/BRS-001.md": {
+      "sha256": "54475617a61b30a619746ca7f92c0b10501dce5f68007e74be0521419ec0d146",
+      "bytes": 2553
+    },
+    "source/BRS-004.md": {
+      "sha256": "c457a59a843d906e6f1c113800859cc08102788163fc063e45b5ed0e5a57192a",
+      "bytes": 3805
+    },
+    "source/BRS-005.md": {
+      "sha256": "109291ef836880790bd083bf271e2b33ec0f6e5c1641a32af4fb11004a58fff1",
+      "bytes": 3692
+    },
+    "source/BRS-006.md": {
+      "sha256": "234cf930ce4e1b582de298be39587713f164943b259c4c60135366dc43a3735e",
+      "bytes": 3667
+    },
+    "source/BRS-010.md": {
+      "sha256": "721c82c7946398bbd0f7766f67ec7e25eef2d27b94daec120195922886abe8c9",
+      "bytes": 2930
+    },
+    "source/BRS-017.md": {
+      "sha256": "ff9bd102297b484394e57a4e0a203677905fe883ef6d8ebb48c016330dea967e",
+      "bytes": 5453
+    },
+    "source/BRS-019.md": {
+      "sha256": "f47075ec350a87c6f65eafae3061c7c66964d9e6f535f7333f327b793ccf0008",
+      "bytes": 7651
+    },
+    "source/BRS-023.md": {
+      "sha256": "075c17c7ff747ca2e23a401128b10467863db4e0df4d5fe36a09d6fbc7caf1f1",
+      "bytes": 3092
+    },
+    "source/BRS-030.md": {
+      "sha256": "e1d7d0613914a2efa4de7a60f4938e40558c4c89e308085545b1b4e8b00dfa63",
+      "bytes": 7424
+    },
+    "source/non_goals.md": {
+      "sha256": "6b429d189287b99a69adde2d5bf68d9f5f8ec67c31e21e0db1dffb2341ab2dc0",
+      "bytes": 2012
+    },
+    "source/scope_and_owners.md": {
+      "sha256": "a5ccbd08488f10c1d966f5e9f29b07d1274535704b9907942f197637e007906a",
+      "bytes": 7104
+    }
+  },
+  "source_copies": [
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [],
+      "original_lines": {
+        "start": 1,
+        "end": 58
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/scope_and_owners.md",
+      "copy_sha256": "a5ccbd08488f10c1d966f5e9f29b07d1274535704b9907942f197637e007906a",
+      "copy_bytes": 7104,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L1-L58"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [],
+      "original_lines": {
+        "start": 835,
+        "end": 846
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/non_goals.md",
+      "copy_sha256": "6b429d189287b99a69adde2d5bf68d9f5f8ec67c31e21e0db1dffb2341ab2dc0",
+      "copy_bytes": 2012,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L835-L846"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-001"
+      ],
+      "original_lines": {
+        "start": 61,
+        "end": 95
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-001.md",
+      "copy_sha256": "54475617a61b30a619746ca7f92c0b10501dce5f68007e74be0521419ec0d146",
+      "copy_bytes": 2553,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L61-L95"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-004"
+      ],
+      "original_lines": {
+        "start": 181,
+        "end": 225
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-004.md",
+      "copy_sha256": "c457a59a843d906e6f1c113800859cc08102788163fc063e45b5ed0e5a57192a",
+      "copy_bytes": 3805,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L181-L225"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-005"
+      ],
+      "original_lines": {
+        "start": 227,
+        "end": 268
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-005.md",
+      "copy_sha256": "109291ef836880790bd083bf271e2b33ec0f6e5c1641a32af4fb11004a58fff1",
+      "copy_bytes": 3692,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L227-L268"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-006"
+      ],
+      "original_lines": {
+        "start": 270,
+        "end": 311
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-006.md",
+      "copy_sha256": "234cf930ce4e1b582de298be39587713f164943b259c4c60135366dc43a3735e",
+      "copy_bytes": 3667,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L270-L311"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-010"
+      ],
+      "original_lines": {
+        "start": 444,
+        "end": 482
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-010.md",
+      "copy_sha256": "721c82c7946398bbd0f7766f67ec7e25eef2d27b94daec120195922886abe8c9",
+      "copy_bytes": 2930,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L444-L482"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-017"
+      ],
+      "original_lines": {
+        "start": 966,
+        "end": 1007
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-017.md",
+      "copy_sha256": "ff9bd102297b484394e57a4e0a203677905fe883ef6d8ebb48c016330dea967e",
+      "copy_bytes": 5453,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L966-L1007"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-019"
+      ],
+      "original_lines": {
+        "start": 1053,
+        "end": 1104
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-019.md",
+      "copy_sha256": "f47075ec350a87c6f65eafae3061c7c66964d9e6f535f7333f327b793ccf0008",
+      "copy_bytes": 7651,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L1053-L1104"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-023"
+      ],
+      "original_lines": {
+        "start": 1146,
+        "end": 1184
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-023.md",
+      "copy_sha256": "075c17c7ff747ca2e23a401128b10467863db4e0df4d5fe36a09d6fbc7caf1f1",
+      "copy_bytes": 3092,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L1146-L1184"
+    },
+    {
+      "source_commit": "ab121bf69197ebea81fa726d527062fbf13f9ec5",
+      "original_path": "Plans/Backup_Restore_System.md",
+      "original_units": [
+        "BRS-030"
+      ],
+      "original_lines": {
+        "start": 1776,
+        "end": 1831
+      },
+      "original_git_blob": "9c6be27cdcdaae835b26b151dfdb5615b22ef941",
+      "original_file_sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "copy_relative_path": "source/BRS-030.md",
+      "copy_sha256": "e1d7d0613914a2efa4de7a60f4938e40558c4c89e308085545b1b4e8b00dfa63",
+      "copy_bytes": 7424,
+      "copy_method": "exact inclusive original line span",
+      "source_url": "https://github.com/sittingmongoose/Puppet-Master/blob/ab121bf69197ebea81fa726d527062fbf13f9ec5/Plans/Backup_Restore_System.md#L1776-L1831"
+    }
+  ],
+  "input_freeze_complete": true,
+  "input_frozen_at_utc": "2026-10-07T18:33:30.378054+00:00",
+  "freeze_policy": "Inputs chmod 0444; coordinator execution bindings remain external and prospective.",
+  "ready_case_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-06"
+}

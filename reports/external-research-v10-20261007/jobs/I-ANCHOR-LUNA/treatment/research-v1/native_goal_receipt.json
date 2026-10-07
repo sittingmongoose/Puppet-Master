@@ -1,0 +1,32 @@
+{
+  "receipt_type": "native_goal_activation_and_initial_state",
+  "observed_at_utc": "2026-10-07 18:26:49 UTC",
+  "create_goal_call": {
+    "tool": "create_goal",
+    "goal": {
+      "threadId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+      "objective": "Produce a complete, evidence-backed research proposal draft for the ER10 I-ANCHOR-LUNA brief. Use only the exact authorized input map and primary public sources; save draft.md, bounded immutable source evidence with hashes, native Goal activation/state and terminal receipts, and timings.json in the specified output directory. Do not execute downloaded repository/install scripts, alter canon/main/WorkNodes/accounts, use nested delegation, or impersonate the later same-family critic.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791397592,
+      "updatedAt": 1791397592
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal_call": {
+    "tool": "get_goal",
+    "goal": {
+      "threadId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791397592,
+      "updatedAt": 1791397592
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "note": "Receipt records the directly observed native tool responses; tool-native createdAt/updatedAt are Unix seconds."
+}

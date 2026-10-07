@@ -1,0 +1,41 @@
+{
+  "owned_paths": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+      "purpose": "local campaign runtime, packets, isolated task directories and cache"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er10-20261007-5a126dd5",
+      "purpose": "essential raw evidence if needed"
+    },
+    {
+      "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+      "purpose": "T3-owned active root research worktree; safe-binding cleanup exception if necessary"
+    }
+  ],
+  "protected": [
+    "/home/sittingmongoose/src/PuppetMaster",
+    "/mnt/Cursor/PuppetMaster",
+    "shared provider profiles and T3 database",
+    "all ER9 history and originals",
+    "Concepts",
+    "sibling campaign resources"
+  ],
+  "initial_disk": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5": {
+      "total": 524606939136,
+      "used": 278736924672,
+      "free": 223727022080
+    },
+    "/mnt/Cursor/PuppetMaster-Evidence/tests/er10-20261007-5a126dd5": {
+      "total": 463543992320,
+      "used": 187004092416,
+      "free": 276539899904
+    },
+    "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f": {
+      "total": 524606939136,
+      "used": 278736924672,
+      "free": 223727022080
+    }
+  }
+}
