@@ -1,0 +1,6 @@
+{
+  "at": "2026-10-07T23:21:34.065245+00:00",
+  "failure": "Independent root sums compared an excluded empty category to a numeric zero vector. The original observation correctly retains null field sums for categories with no grouped sessions.",
+  "repair": "Compare empty categories to None; retain originals unchanged; no recapture or extra SDK sessions.",
+  "root_validation_receipt_created_before_repair": false
+}

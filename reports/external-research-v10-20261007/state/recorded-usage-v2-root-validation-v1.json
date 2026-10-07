@@ -1,0 +1,75 @@
+{
+  "schema": "ER10_ROLE_SEPARATED_SDK_USAGE_ROOT_NUMERIC_VALIDATION_V2",
+  "at": "2026-10-07T23:22:11.304541+00:00",
+  "immutable_delivery_sha256": "70b266570a2b3a2838c80416314d594cf98973c88150bd8166eb1c678ce1f63f",
+  "immutable_observation_sha256": "9eea80abc27c8de8c0e15389bdeb5e58900a5408b067c47519e4fab34f084f0d",
+  "all_delivered_artifact_identities_verified": true,
+  "same_capture_session_identities_counters_liveness_unchanged": true,
+  "independent_group_category_campaign_sums_verified": true,
+  "grouped_quiet_unique_native_sessions": 228,
+  "category_session_counts": {
+    "candidate": 126,
+    "operational_helper": 20,
+    "coordination": 1,
+    "independent_source_review": 62,
+    "unattributed": 19
+  },
+  "category_reported_final_sdk_fields": {
+    "candidate": {
+      "input_tokens": 314497557,
+      "cached_input_tokens": 297977088,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 4917793,
+      "reasoning_output_tokens": 3162949,
+      "total_tokens": 319415350
+    },
+    "operational_helper": {
+      "input_tokens": 51853928,
+      "cached_input_tokens": 49422208,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 539070,
+      "reasoning_output_tokens": 165240,
+      "total_tokens": 52392998
+    },
+    "coordination": {
+      "input_tokens": 814577,
+      "cached_input_tokens": 724480,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 5527,
+      "reasoning_output_tokens": 497,
+      "total_tokens": 820104
+    },
+    "independent_source_review": {
+      "input_tokens": 140426388,
+      "cached_input_tokens": 131490176,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1989981,
+      "reasoning_output_tokens": 739468,
+      "total_tokens": 142416369
+    },
+    "unattributed": {
+      "input_tokens": 25615673,
+      "cached_input_tokens": 24064512,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 559822,
+      "reasoning_output_tokens": 336505,
+      "total_tokens": 26175495
+    }
+  },
+  "campaign_selected_quiet_final_sdk_fields": {
+    "input_tokens": 533208123,
+    "cached_input_tokens": 503678464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 8012193,
+    "reasoning_output_tokens": 4404659,
+    "total_tokens": 541220316
+  },
+  "common_work_reference_sessions_once": 10,
+  "C02_exact_reproduction": true,
+  "helper_actual_terminal_completed_no_pending_children_and_settled": true,
+  "snapshot_complete_campaign_total": false,
+  "root_partial_live_and_telemetry_holds_not_summed": true,
+  "billing_quota_or_affordability_established": false,
+  "native_Goal_counters_summed": false,
+  "source_correctness_or_comparison_grade_changed": false
+}

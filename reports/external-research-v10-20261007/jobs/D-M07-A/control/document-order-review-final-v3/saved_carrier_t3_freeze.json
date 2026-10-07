@@ -1,0 +1,36 @@
+{
+  "stage": "D-M07-A/control/document-order-review-final-v3",
+  "t3_status": "completed",
+  "quiet": true,
+  "settled": true,
+  "actual_t3_clock": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-A-control-document-order-review-final-v3:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "requestedAt": "2026-10-07T22:47:09.830Z",
+    "startedAt": "2026-10-07T22:47:16.671Z",
+    "completedAt": "2026-10-07T22:59:32.345Z"
+  },
+  "dispatch_to_delivery_seconds": 742.515,
+  "saved_scientific_files": {
+    "final.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/final.md",
+      "bytes": 8022,
+      "sha256": "4938903314c928b37a17b96649cf7f206c388aadad284247ece173f32ad76c9e"
+    },
+    "working-notes.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/working-notes.md",
+      "bytes": 8587,
+      "sha256": "4d05f45f557a4cd6f3df062efe38a8720ba82193d290b4d9f920ba083a26690d"
+    }
+  },
+  "full_final_present": true,
+  "native_activation": "ABSENT_ORIGINAL_HOLD",
+  "native_terminal_disposition": "UNOBSERVED_PENDING_ROOT_EXACT_TERMINAL_NOMINATION",
+  "source_quality": "UNASSESSED",
+  "comparative_eligibility": "HOLD",
+  "billing": null,
+  "frozen_at": "2026-10-07T22:59:55.943872+00:00"
+}

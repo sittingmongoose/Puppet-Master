@@ -1,0 +1,2042 @@
+{
+  "schema": "ER10-batch009-root-exact-canonical-validation-v1",
+  "at": "2026-10-07T23:14:06.737887+00:00",
+  "status": "PASS",
+  "prior_commit": "a7aa5d72e881aa5747f9904c5d482845b2abcf53",
+  "manifest_sha256": "9e7d6dc422e8096cc67d9545f22f403a6a08fa2ff31e80ba30563e9dd26d81d2",
+  "manifest_entries": 1432,
+  "existing_entries_checked": 1028,
+  "canonical_aliases": [],
+  "files": [
+    {
+      "path": "reports/external-research-v10-20261007/BATCH009_ABSENCES_AND_DEFERRALS.json",
+      "sha256": "f9f563bae18a42b1923ef288cc9fa6609cba8b38d181bbb235902b3d13832095",
+      "bytes": 225501
+    },
+    {
+      "path": "reports/external-research-v10-20261007/BATCH009_ADAPTER_REPLAY.json",
+      "sha256": "8b022bc13af4c29ac73794ab05f32922e6a4c64692e5600c31c224fe4b3cc6a4",
+      "bytes": 256982
+    },
+    {
+      "path": "reports/external-research-v10-20261007/BATCH009_COMPARISON_TRANCHE.json",
+      "sha256": "12c3d92d938c82729220e26e0a4ac95c77c3c32da469c7e079df93f9bb3ace51",
+      "bytes": 7095
+    },
+    {
+      "path": "reports/external-research-v10-20261007/BATCH009_MANIFEST.json",
+      "sha256": "9e7d6dc422e8096cc67d9545f22f403a6a08fa2ff31e80ba30563e9dd26d81d2",
+      "bytes": 1439474
+    },
+    {
+      "path": "reports/external-research-v10-20261007/BATCH009_RAW_SOURCE_IDENTITIES.json",
+      "sha256": "f04b3779d26d3ce6e97097e99690232d46267f58c49a8238e397622863d66843",
+      "bytes": 190320
+    },
+    {
+      "path": "reports/external-research-v10-20261007/BATCH009_VERIFICATION.json",
+      "sha256": "26b14978306d03ae86d52496fd131804576154fb1a2c2afa0d5d76cdab839b8f",
+      "bytes": 8710620
+    },
+    {
+      "path": "reports/external-research-v10-20261007/INDEX_BATCH009.md",
+      "sha256": "cfb7246c6ceec24979ccb74377fc4160214d2ace8f47bc2d777a82ffbe9cbbd5",
+      "bytes": 6184
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/helpers/targeted-cohort4/COMPARISONS.json",
+      "sha256": "387c096e199aa7b40e8d19cd346d22d9f33458eb5118741d01648ae78d325766",
+      "bytes": 49609
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/helpers/targeted-cohort4/prepare_reviews_v3.py",
+      "sha256": "7441058deed99d2da87e32ac1be37184ecdf1d947225a0a1304e22c7bb5e5195",
+      "bytes": 7660
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M07-A/common/fresh-untrusted-seed-v3/assignment.md",
+      "sha256": "df062a44bc13cccc83bf01ec5d15a72415abaecaaecf449387ca345fdd54c63c",
+      "bytes": 2811
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M07-A/control/document-order-review-final-v3/assignment.md",
+      "sha256": "ede7fb11f825ed1d8c9fdec51f16a9c695c0fd35d8e9ed975640e052d45b26a1",
+      "bytes": 2795
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+      "sha256": "0fa51dd432e1f8a7695ce7505a18660e4215fb11fba03e6cc00a554e9c64ea73",
+      "bytes": 2960
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M07-B/common/fresh-untrusted-seed-v3/assignment.md",
+      "sha256": "aa90b95f36cb6f1b3a04ab5103a92ee6db07f8541492bf8abe990f4f2b28b6d3",
+      "bytes": 2811
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M07-B/control/document-order-review-final-v3/assignment.md",
+      "sha256": "3c6fce2199577e499cc3ade0edb40a2d32eb8a2807da455c61786a1821eb7817",
+      "bytes": 2795
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M07-B/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+      "sha256": "98d67a0ee68041799f002e9b39fd919555483a8991969984b462ad37a9350ddc",
+      "bytes": 2960
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M09-A/common/fresh-untrusted-proposal-v3/assignment.md",
+      "sha256": "c4322370e1443f04cbc3a838ae93d093335650ad2cf33528ea77c614f9ed40ee",
+      "bytes": 2828
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M09-A/control/single-full-critic-final-v3/assignment.md",
+      "sha256": "0046b9492c570a5f0df51cdca64ba350cdb09c612463c2b65a8f2294c5f24e3d",
+      "bytes": 2652
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M09-A/treatment/fresh-source-reconcile-final-v3/assignment.md",
+      "sha256": "3279c5505a9b0802735135bda4a2da72ce47a5fb8d074cf69b030a05cfec0985",
+      "bytes": 2871
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M09-A/treatment/independent-evidence-critic-v3/assignment.md",
+      "sha256": "9dd36cd2ccffe952dce9960a4e7219d57ae5fa86415b919441f297f77168705f",
+      "bytes": 2699
+    },
+    {
+      "path": "reports/external-research-v10-20261007/batch009-frozen-originals/jobs/D-M09-A/treatment/independent-operations-critic-v3/assignment.md",
+      "sha256": "004ef4477353d5bce3d6784920ea66acbb352837090eba9b5a65364fc2a31e6b",
+      "bytes": 2702
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/CONTEXT_INPUT_IDENTITIES.json",
+      "sha256": "1702e55a909aa89e59824afd292df2cd7dadfcc3b5078a641683624ea7f1dcf8",
+      "bytes": 2255
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/INITIAL_INPUT_IDENTITIES.json",
+      "sha256": "3d84cdf3ec0d6a50182f072b40f2cc40f1720e3e4dbaf5c0c89aad247139e876",
+      "bytes": 2243
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/ORIGINAL_OBJECT_COVERAGE.json",
+      "sha256": "8dee15eb420b6851cc956608836e45ccf99bff98e3df254ae7f8adfcebb77768",
+      "bytes": 335958
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/PROPOSED_FRAGMENT_INDEX.json",
+      "sha256": "6c8962863185f296759df6fde8e6352fc51336b1b631bb2b22f00c981d6f6858",
+      "bytes": 148210
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/README.md",
+      "sha256": "95b024002a3f77ed571b5e98ee6474afbc89654e988535784f4582f9436a4516",
+      "bytes": 6968
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/READ_IDENTITIES.json",
+      "sha256": "749a0d18c7200af57050ac96314fe5f466d137b1bd6ad12b024452148b37dff5",
+      "bytes": 38440
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/RENDERED_EXTRACT_MAPPINGS.json",
+      "sha256": "23613da0755136b58a720ca4dd77106a51f1ef5f5a24e4ac8527adb9a12f9903",
+      "bytes": 131905
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/RESULT.json",
+      "sha256": "8adf268be48b128a686a63a1b6f2efe4364ed21132776099a2ceff689e3e927d",
+      "bytes": 632
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/SELECTED_MINIMAL_WITNESSES.json",
+      "sha256": "a834c2359102e20cc4fbce2b037fb1f2f0d66067cf543ea4fc992f65e927406c",
+      "bytes": 976925
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/SUMMARY.json",
+      "sha256": "df71d6f3f3dd518200c50c2e168abb3db79e7191c645a1a8a5a444044d2df05b",
+      "bytes": 1572
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/VALIDATION.json",
+      "sha256": "674a419c76c8e30a81f1343037ff7eeb46dd0c4685f00b88a149ff912b482a4e",
+      "bytes": 3395
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/config.json",
+      "sha256": "86a857b1bb39d522c1e48f0673db77728511687efa2d53f57ccef6dac7c59237",
+      "bytes": 599
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/select.py",
+      "sha256": "cd68399e271f45c06931ae9ba38dd5a91b05d2fb70988cfad83a45f643471a02",
+      "bytes": 27391
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/essential-witness-selection-v1/validate_bundle.py",
+      "sha256": "4bc29f78bebce4e4d4745d518014772c10109572c75c582122961961012eb158",
+      "bytes": 5559
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/CAPTURE_MANIFEST.json",
+      "sha256": "a1d585875cc11bf341c8f7ce68c868eae75a1647fb31067f0a1d662576e2a4b5",
+      "bytes": 202095
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/CLOSED_SLOT_LEDGER.json",
+      "sha256": "bc352125475e0cda85e621b521b2d9d2755796fde6c2577c98c3d11a7cf11b53",
+      "bytes": 4416988
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/FIELD_MAP.json",
+      "sha256": "7a13495a1af60293d4d09818a9ac718983aa95f66cf7aa680b266ecdf1542d2a",
+      "bytes": 2054698
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/INPUTS.json",
+      "sha256": "339df992724855b1a19ce95906b0fb0a12bbb635c286f63c4cf151ed19e5c7a9",
+      "bytes": 12525
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/INPUT_IDENTITIES.json",
+      "sha256": "8ba972e9584e24189e0bb7ced56e172c9db1cb787a40f649815a9e9d20c4538d",
+      "bytes": 216687
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/README.md",
+      "sha256": "704b80ab48604a067d894560b8daa03ccd44585055c816f3239332d0c9853671",
+      "bytes": 3914
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/REPORTING_NOTES.md",
+      "sha256": "9060a6c871915ff490bc664eea511c142ab596d585b6f65420fc6e33995bb7de",
+      "bytes": 12090
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-fast-01-terminal-economics-v1.json",
+      "sha256": "4af86415a3916bbad02c314df054a9473c4ec048cb73ea65ab349354ae158b0b",
+      "bytes": 6820
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-fast-02-pair-freeze-v1.json",
+      "sha256": "93fc5ba218d58de6d2456fb2161925a33e147fa79d2ee38760414ead4e4863cc",
+      "bytes": 2513
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-fast-02-terminal-economics-v1.json",
+      "sha256": "d8a2499db69750fcf5df6d6a9fc55fa8eb9facc51c21d287f4ef48cc0aad4885",
+      "bytes": 8255
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-fast-03-pair-freeze-v1.json",
+      "sha256": "32b421c1b04bd06c28a9e76f21a4c3cc93d1e5747103e009228db80e2951b36b",
+      "bytes": 2512
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-fast-03-terminal-economics-v1.json",
+      "sha256": "b92e8265fdb21306723547a80ab7e725b3eb55c8f958d41fbad29bfca4491740",
+      "bytes": 8264
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-02-terminal-economics-v1.json",
+      "sha256": "798c459a05a579a904a0b9192776a678e52c0779dbf515a966447b6b14d3bd4a",
+      "bytes": 9462
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-02-terminal-economics-v2.json",
+      "sha256": "e5f1c509b18bfdfb2a2231e2b88590276f94df143fb522392ae62b8501f71d64",
+      "bytes": 8433
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-03-terminal-economics-v1.json",
+      "sha256": "2cdbd2c9a524689a2988a25ff144dee4a43062f8eb228c2cf739a25dd2660ee2",
+      "bytes": 9568
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-04-pair-freeze-v2.json",
+      "sha256": "29f9f6fddaeaaa47f13ba0da1da1760664acabdacbbaf201df00bb4e1ea46b3e",
+      "bytes": 2999
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-04-terminal-economics-v1.json",
+      "sha256": "e8ccd312d9247cc86b4dcc3f3f1a9b41770de0d65477dba5cc9fe05f6c30574b",
+      "bytes": 8131
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-04-terminal-economics-v2.json",
+      "sha256": "047c276bf4acf361bdf4127b715188981256128d6ff80e8c65c47b3f55a50ae6",
+      "bytes": 9765
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-05-pair-freeze-v1.json",
+      "sha256": "a3c41a32f21b5e769e5b3affd157b6a53d8e5cf978d8b586f89726dad27e6e84",
+      "bytes": 2493
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-05-terminal-economics-v1.json",
+      "sha256": "164497d87d6b87b80b87aff015e988996585198372f4ab433fb59a658d446177",
+      "bytes": 13743
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-06-pair-freeze-v1.json",
+      "sha256": "9a1f324be75731d6c51e77ec8330dbc39c5543385b07079a877296229d7d7b63",
+      "bytes": 2493
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/i-method-06-terminal-economics-v1.json",
+      "sha256": "27f14d6eb9ae89fadf85cffd357426c495289ad3b7895af29f90aad3cda5219b",
+      "bytes": 9610
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/method01-pair-freeze.json",
+      "sha256": "f9328c23d39e93ec6701e77ba64468ee4b4cd6440e6608a923811154c4ba0408",
+      "bytes": 19177
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/integrated-execution/method03-pair-freeze.json",
+      "sha256": "6aa7cfeb0b960c00f4a61b29c7a5d96300eec14ae0ac7fa0e91d1e34604c3902",
+      "bytes": 3533
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M11-A/comparison-v1.json",
+      "sha256": "a58c119e9a126d8e69415d1352de54fd02fe0f4c3791be98a29d3396524f5e50",
+      "bytes": 2304
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M12-A/comparison-v3.json",
+      "sha256": "b739da8d1f9cca4a02c92b27e51e788dd4a7887019f634ef6069a778c1958829",
+      "bytes": 9785
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M13-A/comparison-v2.json",
+      "sha256": "c30b0f2b8b0ff464cc909aa283a7977a9d1b028f6df498e13a1182c277ccc914",
+      "bytes": 6011
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M14-A/comparison-v3.json",
+      "sha256": "b83e37fc965a4c010d8cd98f58aee1170fe3410f111c3e2723d5625e10ced276",
+      "bytes": 10689
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json",
+      "sha256": "48d78692918bc04c12b158f3ae71b6a912b117bacd7fce1949839ea7a76afac9",
+      "bytes": 18056
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M14-A/original-v1-final-disposition.json",
+      "sha256": "d76f9147ab10216d0da286d9159d6c9cd4b3a8ea38d8090d8597597f9bb2ca2b",
+      "bytes": 12338
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M14-A/paired-v2-disposition.json",
+      "sha256": "9749a8e61f537efb39ff362a48e855dff8efd4eb09a48a4b5a6ea2c2cb9d2fbc",
+      "bytes": 1599
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M15-A/comparison-v3.json",
+      "sha256": "38974d6834d9a8b0aeed90da1dde910937c23c958eb676ffdd801d083bd3b8fc",
+      "bytes": 12152
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-cohort4/D-M16-A/comparison-v3.json",
+      "sha256": "e1f938e52cae8c1b7a6e6b80269b47c0dd7ea00a6bad11bc3798a4b758780702",
+      "bytes": 66828
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-supervisor/COMPARISONS-full-final-preserved.json",
+      "sha256": "24ffb7a4431a944f96ccb6856bbfe3eabd2f702c6f5a2dca0b38fbb52d717bbe",
+      "bytes": 97281
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/helpers/targeted-supervisor/COMPARISONS-pre-final-preserved.json",
+      "sha256": "b6a6329875cdd6ed3f19cc16274754763bb8c2e922a920be97103a073eed525f",
+      "bytes": 93477
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/jobs/D-M08-A/V3_PAIR_FREEZE.json",
+      "sha256": "98d02c7ac96c6c9b87643225af272a9de27fbffa397852c47082d323b31e982c",
+      "bytes": 3850
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/jobs/D-M08-B/V3_PAIR_FREEZE.json",
+      "sha256": "63a7791a8ae93992e061d8040ff81b45e2e77db1aa99ef40d0257efc21047963",
+      "bytes": 3850
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/jobs/D-M10-A/V3_PAIR_FREEZE.json",
+      "sha256": "3ef8b597fc2d0149bd158aab2bf737419af63463353084b1aade4957358207b2",
+      "bytes": 5237
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-GLM/COMPARISON.json",
+      "sha256": "33a971013bc585e072795c7eda85cbd75a5bd476efdf773c8e9fb368a2cb919e",
+      "bytes": 32827
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/freeze.json",
+      "sha256": "1052535a2ca6bec7f6fd1528468c2093a3bdc14b95e10ba81afc2d4508a4ed99",
+      "bytes": 16485
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-GLM/control/source-review-v2/judgment.json",
+      "sha256": "1354c564478c4e0e6560dacba80203abbd3094439e152f130f12f107f4cf80d1",
+      "bytes": 38578
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-GLM/diagnostic-gate-exception-v2.json",
+      "sha256": "05949746b58575eef9e70f5efb985ee8f39c52a7d16c2a40d6e58a121a373c8e",
+      "bytes": 736
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-GLM/pair-freeze.json",
+      "sha256": "0b751cc3070cb4432429c78781818cd3b3c24ecb8b63d88d216290e3bab59d64",
+      "bytes": 2840
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/freeze.json",
+      "sha256": "11cd0d1a9a1e5314471f5dfdfd24bf8fffa8c3c87ad00ee7840010304a130fb7",
+      "bytes": 10287
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-GLM/treatment/source-review-v2/judgment.json",
+      "sha256": "41c00ec50540f0eaca7f556fbb2f8a350c2d48d1fea5be4d719085494d27f442",
+      "bytes": 123706
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-LUNA/COMPARISON.json",
+      "sha256": "337ef914d77b8682a47e5f887e88d0fd2cb602f5e5b65d962902af01414786c0",
+      "bytes": 27778
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/freeze.json",
+      "sha256": "6d14e0c30408052ba7c1dd7caa4003bdeab8cc21abf065c495e1a12224f82286",
+      "bytes": 8094
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/judgment.json",
+      "sha256": "bbde5421a17afefe2ab193cd5d4f73de6e94acb58662cca44518e6805f8426da",
+      "bytes": 73419
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-LUNA/pair-freeze.json",
+      "sha256": "3634c1c48bd2b62549289bca5df11d6cfcb8a0f77ea672f9a679f09b6b2a9b9d",
+      "bytes": 1920
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/freeze.json",
+      "sha256": "ce2b966365ae95c248c974b3d98cfaa721bba8b872d04d2a199b55ea452ea428",
+      "bytes": 6766
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/judgment.json",
+      "sha256": "754b408761171f8f831bd7b6a27761cc10d3b9fe677830bba04c883912e20b7a",
+      "bytes": 43634
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-MUSE/COMPARISON.json",
+      "sha256": "be973dfa4b61808e5d8609f1517d8c9c9f7e02892393b16a0af48db98e819beb",
+      "bytes": 23722
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-MUSE/control/source-review-v1/judgment.json",
+      "sha256": "bd513c8aaae93b65e264b6f109e3cab92b71ad4a62c9b36e45847a6cb6d6c741",
+      "bytes": 104131
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-MUSE/pair-freeze.json",
+      "sha256": "c8f3a34fafbecebb44b5fc22ef4b3a9c574ed9a5638d3f2084bfb692c5ac4a86",
+      "bytes": 1094
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/partial-status.json",
+      "sha256": "3c877cb352ae5e4c02e5cc5c07296c02886974682f0c30105e4905d13fd030cd",
+      "bytes": 65340
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v1/protocol-deviation-001.json",
+      "sha256": "e3a85714a2be6f7686087491f074eef6834efb9d969598e42e590ea12a130895",
+      "bytes": 3050
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/anchors/I-ANCHOR-MUSE/treatment/source-review-v2/judgment.json",
+      "sha256": "0bd7b14f685cd02fb785685b0dc8c97bfdc4d94d64a05e1b4ddc5e7e954d7b72",
+      "bytes": 120747
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-01/COMPARISON.json",
+      "sha256": "8695081d2f48cd66debe0d314a492834ab74f13931849f58acdde724c4f8a16d",
+      "bytes": 29417
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-01/control/source-review-v1/HOST_INCOMPLETE_REVIEW_FREEZE.json",
+      "sha256": "ceb9bc1a23fdc7de784d9a80d10ed96ff4ec5326593188d444feeea75f0f2e76",
+      "bytes": 11735
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-01/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "sha256": "d4b4a52b299c87ff5776b51b16a1489e5271f647fb909d76753aaa3b99a526a4",
+      "bytes": 21286
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-01/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "sha256": "743141f191d8b140490184fbf20ec771a347a469e2f54cd93022336e0473351e",
+      "bytes": 91715
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-02/COMPARISON.json",
+      "sha256": "3491ff06146f1549089390bf20fd6da91d765f857614fd70211e238dd9f7ee22",
+      "bytes": 32177
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-02/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "sha256": "d5356a9f064360906732dc3f2db292e1483df2164040a0606ad40f0f5607f8bf",
+      "bytes": 19251
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-02/control/source-review-v1/REVIEW_FREEZE.json",
+      "sha256": "4bdead5d7ddd3f6ec8ffaaab2e08fca7c7299752f5a0e002801ed0bade866159",
+      "bytes": 93867
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-02/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "sha256": "28e46537e72056346be337a08e8e02db84336b722668421d4e2bf77d65bb5648",
+      "bytes": 21634
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-02/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "sha256": "8a7534e6e17c9fc7d2f7ca224b417cf8259115311e664766b7f6c8670d5e228e",
+      "bytes": 90470
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-03/COMPARISON.json",
+      "sha256": "2afdd5d000e169e45650ef3bf2451caaccb092e8813e31713cd034c155ee066b",
+      "bytes": 36939
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-03/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "sha256": "26f2ef8b128c5d78e4e415c400130cdc435868cb37ccd02d7c7149be461d026e",
+      "bytes": 12583
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-03/control/source-review-v1/REVIEW_FREEZE.json",
+      "sha256": "ce70bed7e340db8d175f4c2a13419b50537d12d4bdbe0fd221a962375f6dcc70",
+      "bytes": 75994
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-03/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "sha256": "5583d40d106c0ad1575e500b05416dc4482aa18e178f5e3d9de6b6a4a1324479",
+      "bytes": 21309
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-03/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "sha256": "eeba40176438b7034e4955f834f393f03dd1c606732e04e899ae9c5562d065c7",
+      "bytes": 75009
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-04/COMPARISON.json",
+      "sha256": "04529a0e7b1620f735e27763f5fdb092cc632a0fbcee5f64091c7e278beed545",
+      "bytes": 39162
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-04/control/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "sha256": "31bb4a7de8d1f178a06e609dd1380c877b450cadf04191d6be9039f464218b25",
+      "bytes": 19486
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-04/control/source-review-v1/REVIEW_FREEZE.json",
+      "sha256": "24796faa915a8ae8813715dcfe80c4bf9476956c109640b60499445f2a48e214",
+      "bytes": 110803
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-04/treatment/source-review-v1/HOST_REVIEW_FREEZE.json",
+      "sha256": "c48b57554ae5f54167f5255b997d2f7b039aaeba2c50368f4df0a647645112c6",
+      "bytes": 19844
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/confirmation/C-04/treatment/source-review-v1/REVIEW_FREEZE.json",
+      "sha256": "5b49f159b5b265ca44c9a19ced1eb9709440f18ab7ba3c8014b1246dd9932361",
+      "bytes": 86846
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/frozen-standalone-review.json",
+      "sha256": "2a432734e9f2cc2888202f2930f671af98416711e41d3ce3814ea23bf0ef8eeb",
+      "bytes": 28175
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-01/treatment/standalone-diagnostic-v1/sources/coverage.json",
+      "sha256": "763ebe439ca2fa2e140ce7ea289946ffb6347d00086e1b53e9fd32fbbf2195db",
+      "bytes": 145864
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-02/control/review-v1/coverage.json",
+      "sha256": "3f0e2c4eee98455e80cd14940b6edb4d6a824f74b014fef1c971c604421f30ea",
+      "bytes": 16735
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-02/control/review-v1/frozen-review.json",
+      "sha256": "0491aedeadb711b8a206d1bbb0f125fd2042d1ea054086ce51dd9aa8f5c38383",
+      "bytes": 51451
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-02/treatment/review-v1/coverage.json",
+      "sha256": "d78a6690278ce27f41c69e5e610c95459cbcb7bdba4b546fdaf6d264446b7eb4",
+      "bytes": 6298
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-02/treatment/review-v1/frozen-review.json",
+      "sha256": "1c80425aa8c1bb40bc8ac58f2239fb88d1354f3be14a3deeee1e3f54a87fedb6",
+      "bytes": 40627
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-03/control/review-v1/coverage.json",
+      "sha256": "928d5d105404d1354ca40e798bb49dffc64ff7152da2d24d5d1219408e9b9f0f",
+      "bytes": 16943
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-03/control/review-v1/frozen-review.json",
+      "sha256": "3cc3732e571de903d1208c5205d0fc5b835a34e96c8bcddde52706c8ec2c0373",
+      "bytes": 49226
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-03/treatment/review-v1/coverage.json",
+      "sha256": "4a0f39e995b0b2884b981923fc9fd8c03268e028cb5a3e0cd7a4f9838d9708a5",
+      "bytes": 13984
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-FAST-03/treatment/review-v1/frozen-review.json",
+      "sha256": "0de2ea3529a1ca7f1d7e70aa45750d00dc74e5f3a4a69276054e07c47455bf63",
+      "bytes": 46324
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-01/control/review-v1/coverage.json",
+      "sha256": "0d09bccbb3e19438781858b01401d08097bd089acb4fa3bc06c6b9c1430ddd41",
+      "bytes": 6980
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-01/control/review-v1/frozen-review.json",
+      "sha256": "e32bcd0ee063017bf11e5f45025099d4e5d8e6d30585e01c969f9b4bd838caaa",
+      "bytes": 34511
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/coverage.json",
+      "sha256": "02aa6a0b5dec176bc7ddc9fd51fe2260aefe7cbc13b938d27bed25cdea6da03d",
+      "bytes": 5280
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/frozen-review.json",
+      "sha256": "261352845551450dd7e2ded8cba8d82fd750efb54d70e50c24c0a1bf6f43c04c",
+      "bytes": 35113
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/coverage.json",
+      "sha256": "2ce2120b3e91528898c018212a10919f94033ef47fb6f165a94e9ce265f993c2",
+      "bytes": 139987
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-02/treatment/standalone-diagnostic-v2/frozen-standalone-review.json",
+      "sha256": "532f2852bb29106dc95fbdd6958812a33715263284f54ef640736caca052231c",
+      "bytes": 36587
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-03/control/review-v1/coverage.json",
+      "sha256": "99cfe89602fdb48f2dca2c704cbe38db23c24317fac8a5e82e3533f17708397e",
+      "bytes": 16361
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-03/control/review-v1/frozen-review.json",
+      "sha256": "bd2cce25897b1eda9c6599bb2285366fe17f26baab93ee1b3afa50c4cc7f69f7",
+      "bytes": 46687
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/coverage.json",
+      "sha256": "c02ebd729a95b5cfee824deac035bc3220e7b1a967aec1c27f09abb932ce12e9",
+      "bytes": 18382
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-03/treatment/review-v1/frozen-review.json",
+      "sha256": "b186074cdd7bebc7f71cde63de31d8a29964136e275a4c1d2d88178b81fb3089",
+      "bytes": 31848
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-04/control/review-v2/coverage.json",
+      "sha256": "d038885d01bcef967e02891308ead0516c364af3030f0010e6ceb85cf10741d6",
+      "bytes": 18528
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-04/control/review-v2/frozen-review.json",
+      "sha256": "bb85277d0326f365e5e826d5c5b4322a9a7610817a6c9ea8b9e886879847ac72",
+      "bytes": 50884
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/coverage.json",
+      "sha256": "e88d2cca16475b5067c79d370d54ed5d1233411007020e65ef57bd97d535692b",
+      "bytes": 19344
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-04/treatment/review-v2/frozen-review.json",
+      "sha256": "71c454fafedff92da9c38aa2b6275e1daa5da34cf40cb183803049a2fcc351fc",
+      "bytes": 52866
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-05/control/review-v1/coverage.json",
+      "sha256": "c9c1310feccae242ef4e89145f9129d10a8dc12fddaa22b5a123eebdccbe5788",
+      "bytes": 10943
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-05/control/review-v1/frozen-review.json",
+      "sha256": "171394197a5e36f7ffbe205ce28185dcb010aa11d0b75ef45802c5f6e1246dd5",
+      "bytes": 66574
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/coverage.json",
+      "sha256": "7ca68f8c06fdfb43edf8ed3b1964457fed1b7fcec03da051cf288721031fd53a",
+      "bytes": 18136
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-05/treatment/review-v1/frozen-review.json",
+      "sha256": "141bbfec6d322b981802b7589a5176ee9e23b3f26ec847cb02047bc8b7f205f0",
+      "bytes": 42981
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-06/control/review-v1/coverage.json",
+      "sha256": "6a5f7bbef857fd5543f9b5ac8be07b6eb3a61d9b75a087fe36eb9a81bab05574",
+      "bytes": 9430
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-06/control/review-v1/frozen-review.json",
+      "sha256": "3f3225d0256f7f600e7089b82803512bbf1ced5b0015bf752de07c0640b2c32d",
+      "bytes": 51491
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/coverage.json",
+      "sha256": "72411915fc490654498f0842702b4c18b46e958189b95121e95840b8a04cf743",
+      "bytes": 20578
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/integrated-methods/I-METHOD-06/treatment/review-v1/frozen-review.json",
+      "sha256": "fc059c98a1d542e95243132c93e7b5718e718b36f43faffeb20a2f99fbc3fefd",
+      "bytes": 72692
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort3/D-M08-A-v3/J1/freeze_disposition.json",
+      "sha256": "7a37c01cd91afd9b2c234b326f347fe0116a618a126c84f38a7d90bee067ce8d",
+      "bytes": 12659
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort3/D-M08-A-v3/J2/freeze_disposition.json",
+      "sha256": "5021b98983d20f51a46ff1945d66773e6d595b77d45295de8f4efb8f18098b7e",
+      "bytes": 7276
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort3/D-M08-B-v3/J1/freeze_disposition.json",
+      "sha256": "80bc6005b529d5441f4ccfe757dee7779f74fe9e4cf03d4f661bc7820eeb3c98",
+      "bytes": 14824
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort3/D-M08-B-v3/J2/freeze_disposition.json",
+      "sha256": "57f9ddf24a406a304557f60202a3fe8fa488625eb5d309788541e4365687bee2",
+      "bytes": 12446
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort3/D-M10-A-v3/J1/freeze_disposition.json",
+      "sha256": "c50443efc9af3db1fb6d74e4c7ef2f4e4c78a8b8ca2db959adee1b838c81ac0c",
+      "bytes": 11622
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort3/D-M10-A-v3/J2/freeze_disposition.json",
+      "sha256": "809f28479ad862880aa9f941a19acb7b32012d419a19451cb0ffb72871f49985",
+      "bytes": 8703
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M11-A/control-v1/review.json",
+      "sha256": "1443744edd89e5008abebc7bcdd670b9dcb946027a3825c0fb3765284d7260ca",
+      "bytes": 48500
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M11-A/treatment-v1/review.json",
+      "sha256": "2142ac07b0e7caf36da9bc13996ec955b397ad7e6200fc8da62cb0dbb171c6bf",
+      "bytes": 37240
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M12-A/control-v3/freeze.json",
+      "sha256": "05d99c7ee256b3df535011775d16b7d4891ccea8959ba13f4cd583e00ba6a0c9",
+      "bytes": 11908
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M12-A/control-v3/review.json",
+      "sha256": "60cc7f36b72afa52b5c16b5e389863b613b615f43f77b73bfd4b3b4550f61a9b",
+      "bytes": 113649
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M12-A/treatment-v3/freeze.json",
+      "sha256": "5b108dfb5cfb7c9e79df17d1f63e259b7741606b108037dedc0d3101a6f8ed69",
+      "bytes": 5823
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M12-A/treatment-v3/review.json",
+      "sha256": "23e13bc63e0ff7e8a38e27dbb71355ba66e779d86b393ab4779a6fad214ec2f5",
+      "bytes": 88801
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M13-A/control-v2/freeze.json",
+      "sha256": "45a5e706de63a3a15844f5a9e15bd98e5c6add82779112f6ce42556b33e66d1e",
+      "bytes": 2008
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M13-A/control-v2/review.json",
+      "sha256": "b7b30b9a178a921700f70706161e161966da75bd9527d99ea641af80d8b5ec55",
+      "bytes": 50927
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M13-A/treatment-v2/freeze.json",
+      "sha256": "4e1f1fe9e47a0c5913ffc8247477d0e8318bd6c3ec9e518157c9e903ec3d6e8a",
+      "bytes": 1887
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M13-A/treatment-v2/review.json",
+      "sha256": "e301e558d9f64b9b60d0a24c0f4e70a166d80e88515de5222342d1d04f8b888e",
+      "bytes": 99157
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M14-A/control-v3/freeze.json",
+      "sha256": "d73587df83602f6ef4fa2f4b8d19687152fa0fe1d35173d14fdfdadb76ce3bb8",
+      "bytes": 5309
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M14-A/control-v3/review.json",
+      "sha256": "b4200f6f9574cc896a18d531607ee09eaa8c96223f55ae9ed01cf16e83626e9c",
+      "bytes": 75812
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M14-A/treatment-v3/freeze.json",
+      "sha256": "96e586d1510ff3baf4e4aaebee1a0c0a71f65ca644e1f599e9ec09f94baad7ea",
+      "bytes": 4824
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M14-A/treatment-v3/review.json",
+      "sha256": "8f3ecb14ece2ca9158b2d6ef9665f3f1300bc71282e1d769830ff5d35c8b74fa",
+      "bytes": 235073
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M15-A/control-v3/freeze.json",
+      "sha256": "f00c0c490081a933d99b4f5cb5ae6b92d815f29743abeb42d767714d556f1609",
+      "bytes": 7313
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M15-A/control-v3/review.json",
+      "sha256": "7b33ae3f64cde8e9fa6de3c6565238ab48e800ae00d03d3210953709a5466a4e",
+      "bytes": 90338
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M15-A/treatment-v3/freeze.json",
+      "sha256": "d76cfadad528c8fcdc00e1e95929ab4b31b4bfb4558a70be9387fcf9a8cce342",
+      "bytes": 8674
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M15-A/treatment-v3/review.json",
+      "sha256": "88555ddea3763ef7f12d1f3dba49d6108238c1de52a3c001e75c4a37106b1a2e",
+      "bytes": 111541
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/freeze.json",
+      "sha256": "4e5e3341663b232e1ed7ed8f6b48de6027e4e7297eeae29ab52e09f506994e6a",
+      "bytes": 13023
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+      "sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+      "bytes": 123986
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/treatment-v3/freeze.json",
+      "sha256": "fca0c3a9ef981d8e43aca2feeff465c9c37c93a864f3ca3f12e97e1a410cb230",
+      "bytes": 8870
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+      "sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+      "bytes": 112627
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M01-A/source-review-v1/REVIEW.json",
+      "sha256": "8bb5d462a0571b5ab1f20b3e2e4ad7e21a9835e2566e9871543110ab89cfdef6",
+      "bytes": 97631
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M01-B/source-review-v1/REVIEW.json",
+      "sha256": "78e53eba2e989b732aa5ab7e0a3a659db39f20a311ec38e074b83d6568d238cc",
+      "bytes": 97761
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M01-B/source-review-v2-paired/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "sha256": "647c1dd17d46831ef3901924b4fb467fc324feded5c1d4934d2a0d3aaf142165",
+      "bytes": 5829
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M01-B/source-review-v2-paired/REVIEW.json",
+      "sha256": "1f55916d08acb1bce059961dcb3ed4746af42aca308affea117bda223b1048c1",
+      "bytes": 63417
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M02-A/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "sha256": "d8cb815b090cd096a66a91c46cbbf288f6879cd5f05f9812b915a25ba93df102",
+      "bytes": 4133
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M02-A/source-review-v2/REVIEW.json",
+      "sha256": "8d44f5be43fe63d5b8c2481c13f5374ed10cd2245d2393e7df487fc5ab085dae",
+      "bytes": 39097
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M02-A/source-review-v3/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "sha256": "64717e132cd936603ddd3d5938d28cfae2a0e05a121c6c29e91d86dae3b77884",
+      "bytes": 3601
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M02-A/source-review-v3/REVIEW.json",
+      "sha256": "19bc2d1adf621338f6ce9208536f16125b6b756b9c3d6acb17b1158700ccec56",
+      "bytes": 55282
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M02-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "sha256": "cdb79be0493165d1446b9233f44b192ea83e39f29d3cbb58ba78c854718ae944",
+      "bytes": 3601
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M02-B/source-review-v2/REVIEW.json",
+      "sha256": "27e47cf25856d77a7b4aef3cb381368027e751ec6cc6abd488b00aa01f8c1ed1",
+      "bytes": 45483
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M03-A/source-review-v2-X/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "sha256": "e8be320ca936dc01a168126f1b6ab64e70c07deba0191f2f39ed2f253006112c",
+      "bytes": 6719
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M03-A/source-review-v2-X/REVIEW.json",
+      "sha256": "aff82519161b508848a8f3d11a1e221d87dc7a700bd0e358df90b7d526fa99b0",
+      "bytes": 44558
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M03-A/source-review-v2-Y/REVIEW.json",
+      "sha256": "219480ef6fe9a9f3fcdce16a64c62b563db381f6df796bea4ea85759856c4210",
+      "bytes": 44380
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M03-B/source-review-v2/FAILURE_INCLUSIVE_RUN_TIMES.json",
+      "sha256": "712dc57eddff2cd3ac71abcb35e0469fd28c562fa1feed64109ba5f2c2b9863a",
+      "bytes": 5910
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/reviews/targeted/D-M03-B/source-review-v2/REVIEW.json",
+      "sha256": "2a4ba86a1591f122104694ab888ac8066d0941f2b06752a38044145dc1a26dad",
+      "bytes": 51689
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/state/C-03-failed-native-diagnostic-review-gate-exception-v1.json",
+      "sha256": "0a40f04ed1593d108a7806fc228ba3fb8e021744069729a10bedc5af6444b2b7",
+      "bytes": 3492
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/captures/state/I-METHOD-02-v2-treatment-only-diagnostic-gate-exception-v1.json",
+      "sha256": "5069c27af50bdfe75633fb310fafa4a23f6093d4847c78cf33134d5e5b282928",
+      "bytes": 2532
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/config.json",
+      "sha256": "7eed73fa4f57ca7728f8cacbd8df9e418ab2ac75dc595956f998fd2c4406e574",
+      "bytes": 594
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/dispatch.json",
+      "sha256": "0ec37e052143136d24874a368fb9bdc7ddc0093f5188c5095264c3a5be7ccd85",
+      "bytes": 2050
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/final-report/count-and-claim-contract-v1.json",
+      "sha256": "30f8d9774cdd1213e713536b4ea3daa30772af5428d4b4daa0a77a0ae19dc26b",
+      "bytes": 2970
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/COMPARISONS.json",
+      "sha256": "c8a34aec7d8fc1cda77be5e5269b45cecba53ea7b18e2f2e231db404ef52d63b",
+      "bytes": 141743
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/FINAL_TRACK_DISPOSITION.json",
+      "sha256": "0e9973d6e4369585a84c3dd004bad94a70bc83d9fc8037a393792d3bb41a408c",
+      "bytes": 3590
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/fast01-pair-disposition-v1.json",
+      "sha256": "879b07e9704dc70f6c9aa81295730d531416cb1a7e39595a5cbb1feb3560df48",
+      "bytes": 2039
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/fast02-pair-disposition-v1.json",
+      "sha256": "b883c8228ab086f1fafc0e2bbf54070a33374ddb75036362dfd6dc2620e98e3e",
+      "bytes": 5971
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/fast03-pair-disposition-v1.json",
+      "sha256": "f195550a5642ef8e1bbd019d96844b1beb0ee83e422dc8f2d09b4f67c231316e",
+      "bytes": 6611
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "sha256": "8a14d9eecd9e588eba5263ed2dc011a1520c9bf093a02866edf5d68c6f319e87",
+      "bytes": 19719
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method02-pair-disposition-v1.json",
+      "sha256": "eed33f60e3ae8425bd95f91d62aadedbfeba4139cac1f7d15d4868ea6efe6e34",
+      "bytes": 3024
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method02-pair-disposition-v2.json",
+      "sha256": "f4a3e3cdeb3a1a49ebbba361cf5f50caabe0eb4366b735e4a9db3941221002e4",
+      "bytes": 2027
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method03-pair-disposition-v1.json",
+      "sha256": "a75f221f0c8558bf844c9750f5804fbb77b7cbe6bca088c97f3f3a92321cb016",
+      "bytes": 5298
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method04-pair-disposition-v1.json",
+      "sha256": "e1584ec08b35d185c455d9a8539c9ddd59d7a129e7185725dac1fd92a60de95e",
+      "bytes": 2227
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method04-pair-disposition-v2.json",
+      "sha256": "b61c85e40e0457b616ec0139ec2ddfc73b0a93758c32747ae85f16fe0db9242c",
+      "bytes": 7474
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method05-pair-disposition-v1.json",
+      "sha256": "d22eb3bf93218f38023747d614a6fed7e1abe55039655d69794b809948938b37",
+      "bytes": 6254
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/integrated-execution/method06-pair-disposition-v1.json",
+      "sha256": "48eac1feeb0335178083b05a22d53e71ecbc205fc2872d7b678b88027d7c4ed2",
+      "bytes": 7290
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/targeted-cohort2/COMPARISONS.json",
+      "sha256": "8e4341a5a492b70561bace7a2f6b3b95c9901f74473e0cc579b2507163714ff7",
+      "bytes": 86980
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/targeted-cohort4/COMPARISONS.json",
+      "sha256": "387c096e199aa7b40e8d19cd346d22d9f33458eb5118741d01648ae78d325766",
+      "bytes": 49609
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/helpers/targeted-supervisor/COMPARISONS.json",
+      "sha256": "8a6c438a03064073b3af875b636a2462bdde9dae5e0bd7a19ce8bb095f2ed6f9",
+      "bytes": 33467
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/reviews/anchors/COMPARISONS.json",
+      "sha256": "8694786338d3a5b310cbb86d26fe3c38bcd0d9f78c792ba631717ba91d5a4256",
+      "bytes": 6309
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/reviews/confirmation/COMPARISONS.json",
+      "sha256": "5e224b233eb55b3348245a788469636dbb177995cf640e32c13d331f425d79d1",
+      "bytes": 92677
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/reviews/targeted-cohort3/COMPARISONS.json",
+      "sha256": "b5633d8a5faf58b48a0554b631ccf5f030f4726c23c584f0dd3131e01c7b352f",
+      "bytes": 26316
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/inputs/state/logical-slot-index-v1.json",
+      "sha256": "45670c83f4bbc54a8d030ae488acc87de22a946f3113ec6d6a14148745c156a9",
+      "bytes": 14947
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/ledger.py",
+      "sha256": "fc80ccc122eb37dcfc91465755d2323b7fa0dd925dc2330c68c103369956960c",
+      "bytes": 79044
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/task.txt",
+      "sha256": "0736cf5d091c29208538978944789959463d83479aa1574485d5256dae41e284",
+      "bytes": 4311
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/closed-slot-ledger-v1/validation.json",
+      "sha256": "fa4f28158930ab14c42caff12f5b7e3d5d9080567829098cdb0c3f073a2005a9",
+      "bytes": 245763
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/final-report/slint-8877-minimal-witness-root-v1.json",
+      "sha256": "0be4f09c9d421d87b9ce4aaa74903c2f1dda3d184f8b1e4318fd8f139fa33658",
+      "bytes": 4482
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--control--fresh_bundle_join_final-v3--5617bfbd03a63efe.json",
+      "sha256": "5617bfbd03a63efee5f7c15659813f4886d045bf4b120d0155075752db467c59",
+      "bytes": 19976
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--control--topic1_independent-v3--3a45dd2763229cfd.json",
+      "sha256": "3a45dd2763229cfdb30a8303421e7ea1f1bf4aef7d283bbfa8a751dbfdd811eb",
+      "bytes": 17368
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--control--topic1_independent-v3--d38c2f9ad3f21b24.json",
+      "sha256": "d38c2f9ad3f21b2417d50a66f0a2e1db2febb335603946d598d3f67f1a4f4a6d",
+      "bytes": 20723
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--control--topic2_independent-v3--6c7fa0b546c38d1f.json",
+      "sha256": "6c7fa0b546c38d1fffb273b1dad4af40bc89b39469a5530215f905de47947793",
+      "bytes": 19892
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--control--topic2_independent-v3--af6353dc3a1c3806.json",
+      "sha256": "af6353dc3a1c380641fe635bbf23cbb24c1098d8d8ca5deb113ddac592c0cfc9",
+      "bytes": 16806
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_bundle_join_final-v3--a8d200d938af6465.json",
+      "sha256": "a8d200d938af6465b77f3c9f69d0e01dd41f5a4037d9fefc53e3d3eb96196ac2",
+      "bytes": 23081
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_bundle_join_final-v3--ee8d7b93257bf73d.json",
+      "sha256": "ee8d7b93257bf73d6e54f914959361929294c35bd1e20fbdc92d388bb192634e",
+      "bytes": 16898
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_shared_discovery-v3--14aa67d0e9d5379c.json",
+      "sha256": "14aa67d0e9d5379c57e93c0a1ac49200591b58264380a1cef25546048b437e4d",
+      "bytes": 16890
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_shared_discovery-v3--fb29f1a686105bb5.json",
+      "sha256": "fb29f1a686105bb52e83c3b2e9a85288852bd78901657be525b6b556871ada27",
+      "bytes": 19991
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_topic1_comparison-v3--22d9c38234a19939.json",
+      "sha256": "22d9c38234a1993900b37c61fa56c3c99499d3c9c2095e8f7c6fb1a8a0e366fd",
+      "bytes": 16909
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_topic1_comparison-v3--bb66dd0005814b1a.json",
+      "sha256": "bb66dd0005814b1ab45a2360283563560abfd4125ec7fcd2ded196a6954fc789",
+      "bytes": 20010
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/receipts/D-M16-A--treatment--fresh_topic2_comparison-v3--526934246de2234e.json",
+      "sha256": "526934246de2234ec8e9d7ac1d27246c3f77addf37ea590bf58b3dd08e431a0d",
+      "bytes": 20002
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/publication-batch009/config.json",
+      "sha256": "42a37112c4198245f2ad3233d54d26b34aa41e5c256cfc1a3eaeb06871853d31",
+      "bytes": 636
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/publication-batch009/curate.py",
+      "sha256": "e33b4a52ef33923eb00e515a9117f32666f020ae106cd1cf63c4e44913206fc8",
+      "bytes": 47580
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/publication-batch009/generic-reuse.json",
+      "sha256": "ff8db034e4484eef9dab190ffa32b42f68db53515d6f79d91132df9a3baac10a",
+      "bytes": 1221
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/publication-batch009/validate.py",
+      "sha256": "c8c85d30d246c1697e3094f6b03ccdbe5a7581780176fb942b91a59844d36028",
+      "bytes": 4160
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/actual-run-metadata-v3.json",
+      "sha256": "70669aadd4081f8725c83853bc2a3bb07b72988eb6132d80f5e7ee90a831db2d",
+      "bytes": 26314
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/all-seven-candidate-quiet-v3.json",
+      "sha256": "b8b85dbe179bf64216155d925fc6f43030674ca8c64c07128e37d11cf6e9506c",
+      "bytes": 17894
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/both-source-reviews-quiet-v3.json",
+      "sha256": "3cff25b23f264c46ecd680195bce91d1d6cad25c62f4b15c6a9c66dde47210df",
+      "bytes": 4669
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/comparison-v3.json",
+      "sha256": "e1f938e52cae8c1b7a6e6b80269b47c0dd7ea00a6bad11bc3798a4b758780702",
+      "bytes": 66828
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/execution-overlay-v1.json",
+      "sha256": "162ef2b9876c6fa8ca1199539f29ca6c2a6952bc6e4af52fb9ec37dbc241e663",
+      "bytes": 15269
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/execution-overlay-v2.json",
+      "sha256": "1323704ad6a0f15e97fca991c1955d6e25f5bf798507d38c4f5870df4bcfea77",
+      "bytes": 16953
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/execution-overlay-v3.json",
+      "sha256": "9adedc257a5f9c1d1eaf5d651f2d9298840bd46ed5a346d7eb1163ea8fd56aff",
+      "bytes": 15517
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/pair-freeze-v3.json",
+      "sha256": "603457184276192fd5cb69b0dedfb99827555d2ee87716c18d0a454d7cd463f9",
+      "bytes": 5011
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/D-M16-A/treatment-join-prospective-expiry-annotation.json",
+      "sha256": "b5a7e180dc16a9af7308b3e4e5b1d196711c20f965829bc0a7302f71d132e128",
+      "bytes": 3496
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/actual-m13-m14-runs.json",
+      "sha256": "3c4c43ac757fd8a00c06991d6cca1a04f1726c9df96bec59200c259f52b02de3",
+      "bytes": 44533
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/admit.py",
+      "sha256": "2476c693f7662e3022f8370017c7bf66e08037238aaaf5f15459ada2189eb6d1",
+      "bytes": 6264
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/admit_v2.py",
+      "sha256": "f08c9d4f57c402fa4b7bf1a546867569b18ed3df8154df2ac62f88e0405eb72d",
+      "bytes": 7454
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/config.json",
+      "sha256": "7c5c297aae3a3671c61f28cf04444ba9eb531bd5954542ed8a211b797c02ff04",
+      "bytes": 443
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/dispatch.json",
+      "sha256": "6312179f31f2468bda862f324dc087f3b1cecd1850b2bdf0ab244d8a478a66f0",
+      "bytes": 950
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/final-owned-quiet-census.json",
+      "sha256": "d9d21bf249d3c15250a2499e84eba6d6ec5f081a9690038f8ed48531c8ce81a2",
+      "bytes": 370
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/targeted-cohort4/task.txt",
+      "sha256": "78a900b6dccaf1de215f52e56680224ffc74fa859d6dc0619c978661500a97e0",
+      "bytes": 7113
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M07-A/common/fresh-untrusted-seed-v3/INPUT_HASH_BINDING.json",
+      "sha256": "97acdbf36fc5e01ef869bc8074542a446422ea4d34c38f6e9ffb51cc20079679",
+      "bytes": 1059
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M07-A/control/document-order-review-final-v3/INPUT_HASH_BINDING.json",
+      "sha256": "b61f012f7c923a2cd4807d57e84ca20eee7c3417ab67b5b08952cde985b7a2e1",
+      "bytes": 1284
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/INPUT_HASH_BINDING.json",
+      "sha256": "b61f012f7c923a2cd4807d57e84ca20eee7c3417ab67b5b08952cde985b7a2e1",
+      "bytes": 1284
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/dispatch-receipt.json",
+      "sha256": "bc56ffa9691f77bf426b574e05f7a47a517cb3ff7b414eb96c5fe84fb28d2c07",
+      "bytes": 2326
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/dispatch-registration-wrapper-error.json",
+      "sha256": "0432450ca00c3538b7717affb3987cb0534f75bbda257d7bc9b3e0014b9ddb40",
+      "bytes": 3087
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/dispatch.json",
+      "sha256": "2817369b3e6f385de0036df8a2343a274b3f4a2517c09a4ebf13887f5788e198",
+      "bytes": 1516
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/final.md",
+      "sha256": "979e950faf96c22654f19974be20336aebc1c8a2018b0a131a4491c4ab5359e4",
+      "bytes": 10784
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/freeze.json",
+      "sha256": "95fa0a1dc54982e99638022be4dd8cd7f5b6fc9209c6908f217ec77a817cd5fc",
+      "bytes": 7316
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/integration-state-active.json",
+      "sha256": "e1e34b7bbdcd07a9816d950799f20b3d0f98b5409f0469e47f06e5d51d695b4d",
+      "bytes": 6945
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/integration-state-terminal.json",
+      "sha256": "6038504ee9f94f12d2759eaa1142e1e9eb08f69a965432bc64798caca9c30946",
+      "bytes": 6500
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/passive-active-capture-cost.json",
+      "sha256": "135ee6aa4769fc8e47cffdddda7e9e8ac0a10a14f0a0e2e8653f7be28c1f7a40",
+      "bytes": 1342
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/passive-terminal-capture-cost.json",
+      "sha256": "1241eae3bacd3c33dcb1524cc1f586f76d64a953dc905af32a02d0e54487e4dc",
+      "bytes": 1305
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/passive-terminal.json",
+      "sha256": "5617bfbd03a63efee5f7c15659813f4886d045bf4b120d0155075752db467c59",
+      "bytes": 19976
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/sources/index.json",
+      "sha256": "256258b1bfa42e958e011ec09b14df1bb6636b0ac3a039d97e93c3cf996ef6fa",
+      "bytes": 9281
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/task-terminal.json",
+      "sha256": "dd2b57d70f764307b99e94a3d822179f77939fe39a91660ebbdf5d951de9c421",
+      "bytes": 4436
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/fresh_bundle_join_final-v3/timings.json",
+      "sha256": "c531784661cd07b0d5aa42bf3f91411f9265e5ac10a2c2faf6d40effe32b1878",
+      "bytes": 2820
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/dispatch-receipt.json",
+      "sha256": "49a4a874c006095aad002cc34772bc82f88a3e1cc4a51233594c5533c14ce50d",
+      "bytes": 1075
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/dispatch.json",
+      "sha256": "47ea769d33c630c8894f6dd8d4d48116a3fc3b28b55253c78e7a89797504d6ac",
+      "bytes": 1486
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/freeze.json",
+      "sha256": "cda5cece545fc6089c6ecfb01de6e5a0e90133f43f563b4e83f9af6e6e443165",
+      "bytes": 6072
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/integration-state-active.json",
+      "sha256": "1fe128b62cbb7e02c37d2f6ebb4bca41176770a002add31b03b7376320a0c430",
+      "bytes": 6661
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/integration-state-terminal.json",
+      "sha256": "f2fab2ff719e8115c713be75e5d0e2f675db02d47e0a75b0891ce3045e9985b7",
+      "bytes": 5313
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/passive-active-capture-cost.json",
+      "sha256": "bcfb84978089184a70cbc46be2aec42151180edbb8283505a35b0b2f0a0f8dba",
+      "bytes": 1284
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/passive-active.json",
+      "sha256": "3a45dd2763229cfdb30a8303421e7ea1f1bf4aef7d283bbfa8a751dbfdd811eb",
+      "bytes": 17368
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/passive-terminal-capture-cost.json",
+      "sha256": "fe12763f300da1e56dda83f0b7595484f006c27fab540a586fda6f3de02953f6",
+      "bytes": 1285
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/passive-terminal.json",
+      "sha256": "d38c2f9ad3f21b2417d50a66f0a2e1db2febb335603946d598d3f67f1a4f4a6d",
+      "bytes": 20723
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/report.md",
+      "sha256": "ae67b0e85ea7ef7a0775046fc8cf724642940e52f71ba00392ae9d3c4571d230",
+      "bytes": 8058
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/sources/index.json",
+      "sha256": "2931b7baab7992a031c109476fb2bd16e9b0bcb4f10ab7381f6ecaa4a46139f5",
+      "bytes": 4791
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/task-terminal.json",
+      "sha256": "9a43d547a2ec6d1facc12e1bc0ca9c38252cba5120df6b048532002a75a640d9",
+      "bytes": 2109
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic1_independent-v3/timings.json",
+      "sha256": "e8b17c8fcc82ecdf5fdadd683521b8a688ab6803f847e6c4720dd738a19b5a63",
+      "bytes": 2099
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/dispatch-receipt.json",
+      "sha256": "17a99ab936ad8998a6073c4f3b614372d7befbdd2ae7b45176ffc5327579accb",
+      "bytes": 1075
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/dispatch.json",
+      "sha256": "b0fb4197d6601558307b01b2ba28c421b2a8e2a8914a032301ce01ff69742708",
+      "bytes": 1486
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/freeze.json",
+      "sha256": "5e6722ed155363ddc1fdbb797cf02e2d10cef6c6c2662c8cba6db651d0d83559",
+      "bytes": 6905
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/integration-state-active.json",
+      "sha256": "f9f678bd03ac0109a04c7c92204462d0c6b9196ec4a9cb75a4ad3abbbb83dc02",
+      "bytes": 7165
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/integration-state-terminal.json",
+      "sha256": "51782708c9589c67fce8c11a45d3547c1d2c3ba91c2e7249149c1c2a36787360",
+      "bytes": 6712
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/native-active-absence-root-v1.json",
+      "sha256": "190852492c3d763b71d09070a7d9c0ff18515a31656dc00dbacbacea13c46c3f",
+      "bytes": 2240
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/passive-active-capture-cost.json",
+      "sha256": "275318b5dc7c46561d1566dae5c67a37e1d981ef1003deedbcf8573a46e7be87",
+      "bytes": 1283
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/passive-active.json",
+      "sha256": "af6353dc3a1c380641fe635bbf23cbb24c1098d8d8ca5deb113ddac592c0cfc9",
+      "bytes": 16806
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/passive-terminal-capture-cost.json",
+      "sha256": "3ef70e46e8f3e7509db26d3f3b19aa6cec6fccec6dd909482db67bd21484ba89",
+      "bytes": 1286
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/passive-terminal.json",
+      "sha256": "6c7fa0b546c38d1fffb273b1dad4af40bc89b39469a5530215f905de47947793",
+      "bytes": 19892
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/report.md",
+      "sha256": "e5de1b9d4bb25865dd43f945cba941582efcd2c717a3459f9e49f5656518fa54",
+      "bytes": 7992
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json",
+      "sha256": "428542c513bdf0a9f34d6d6d6e2bfb7d68a99c0de3b5b012d745893e8e06685f",
+      "bytes": 6005
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/sources/index.json.sha256",
+      "sha256": "6be64210df88503dd2bf9c869d671f53110299c9855ea7d16642d0fbf7381394",
+      "bytes": 633
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/task-terminal.json",
+      "sha256": "b58347f958670cda9911157473aad43f47affa9431c79f9759f1b7896e42b6c5",
+      "bytes": 4366
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/control/topic2_independent-v3/timings.json",
+      "sha256": "c8f4981068b013d0cef61099cf40ffd3a898e3839e0a063343b6e59d520cad63",
+      "bytes": 2062
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/dispatch-receipt.json",
+      "sha256": "eb85791c9db5eb4e9f6ebeb0b048191a4fca8936ca574b16bbeaf76716c788ba",
+      "bytes": 1103
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/dispatch-tool-response.json",
+      "sha256": "0d5e9dbd34c3b5aca628b615ddbb219c05b5b2aaf9a3f661465d79078128372a",
+      "bytes": 2342
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/dispatch.json",
+      "sha256": "e6f3f2e54f159d618c02c518e61b3e96d322b96cdcb3dcdb73fb9ef2564c54b7",
+      "bytes": 1528
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/expiry-cancel-response.json",
+      "sha256": "0baedde94ab0f7854e2371dc7b81d6921a01af70a03e30a10c1bfeb5a11ec104",
+      "bytes": 506
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/expiry-decision.json",
+      "sha256": "05157f666e9a3b129965af172511c9b3777b3187ea416421994afc1f84f50750",
+      "bytes": 3462
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/final.md",
+      "sha256": "621792100eb67a49b91bcbcad3dda405487862811a7081d4b4a98c4f536bad67",
+      "bytes": 9261
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/freeze.json",
+      "sha256": "9c9820b23f2e3823eb41cdc8c3cab60b7e5f51da793f3740dacc9ace3f1d47d4",
+      "bytes": 7963
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/ingest-notes.md",
+      "sha256": "7844265209c7f1e8604cdebab48f6a0f894b7106b2e9c0afaecfd8069946ca54",
+      "bytes": 10080
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/integration-state-active.json",
+      "sha256": "aadf15364806bb3a7b00077a699c0b289f9365ea160cf921aebb1a5788037681",
+      "bytes": 6456
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/integration-state-expiry-prestop.json",
+      "sha256": "9b7dfe94731eb55672a5aeca8e456574ff343e476c3e4b6d4742b45c4c030d86",
+      "bytes": 6088
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/integration-state-terminal.json",
+      "sha256": "8b16b5a575c9e788af8742a17b0d8e3ab27a4fcb42f696654c7e0bc439434aa6",
+      "bytes": 6136
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/passive-active-capture-cost.json",
+      "sha256": "dadffcf8c27b902bfc461ff95f3c48bab405b2d595d2f4a7d7d69c6bf1b4894d",
+      "bytes": 1311
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/passive-active.json",
+      "sha256": "ee8d7b93257bf73d6e54f914959361929294c35bd1e20fbdc92d388bb192634e",
+      "bytes": 16898
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/passive-terminal-capture-cost.json",
+      "sha256": "8495e13ba4547bcdb1d78eaa7cf92b7c28e379f604e3d033cada2e1bb7b47f4a",
+      "bytes": 1313
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/passive-terminal.json",
+      "sha256": "a8d200d938af6465b77f3c9f69d0e01dd41f5a4037d9fefc53e3d3eb96196ac2",
+      "bytes": 23081
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/index.json",
+      "sha256": "09bd12f8975a2ab3ec3bfcb745bdb1efa72db06c2f3f9d9646b78bd8b5af2aaa",
+      "bytes": 5902
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/sources/index_hashes.txt",
+      "sha256": "44b715501b200bb79d82c7f63a1d98e6c2cc57a63dda28a6f6aa954f4706864c",
+      "bytes": 525
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/spotcheck.md",
+      "sha256": "2eaf87794c5084033ae9ed9e3a5569f54bfd0a7182edb215050bb6aa80cf1f83",
+      "bytes": 4405
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/task-terminal.json",
+      "sha256": "9c86bbc946e7d1e8b31d98b2a3f6af639917bfec2dc9caf47347354bf43a685b",
+      "bytes": 4464
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_bundle_join_final-v3/timings.json",
+      "sha256": "a85bb963b9667ffd72cd59641f1e0480f3e59518fb995750f0043c5c24084578",
+      "bytes": 5037
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/dispatch-receipt.json",
+      "sha256": "a44ecfc32632baa5b8aa0898450328f842d26f53d3c29f6587377b0e640228c2",
+      "bytes": 1099
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/dispatch.json",
+      "sha256": "339cdbc04d54fe8e840773badf71b7e7128f330412affe8021dfd5adc98045ad",
+      "bytes": 1522
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/freeze.json",
+      "sha256": "2cfc8d23312e79c1c43468abee752d0e602b9355a4c20e21f38f611630055af0",
+      "bytes": 7956
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/integration-state-active.json",
+      "sha256": "188b84ac4f70bb17e136e9a55ea783646dc38d9544abb5b99a323f164aef31a7",
+      "bytes": 5953
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/integration-state-terminal.json",
+      "sha256": "b38dd55eab80eef9d2b0ed64120e84930c10715c75451d42655206b5bed687a4",
+      "bytes": 4584
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/passive-active-capture-cost.json",
+      "sha256": "45e89ba11d3e919a98adcefb10590db4f260019b5206c0d5a5e24e41a99d1885",
+      "bytes": 1308
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/passive-active.json",
+      "sha256": "14aa67d0e9d5379c57e93c0a1ac49200591b58264380a1cef25546048b437e4d",
+      "bytes": 16890
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/passive-terminal-capture-cost.json",
+      "sha256": "eb50f1384209927df76e51f69a3ec6e49509234b179fed63b4d49aa73461c6e7",
+      "bytes": 1309
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/passive-terminal.json",
+      "sha256": "fb29f1a686105bb52e83c3b2e9a85288852bd78901657be525b6b556871ada27",
+      "bytes": 19991
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/report.md",
+      "sha256": "13ca35ae8f8287b899d5a5366c9399e10220f11e8341d8530dc83eff54cced64",
+      "bytes": 7874
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/sources/index.json",
+      "sha256": "941a2b92014494aecb42ce3d6c7bf1ea9c5bb664c4ff1e73d3e614f91807b5ad",
+      "bytes": 11852
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/task-terminal.json",
+      "sha256": "ee5bf14f0bae2cf01c80fc511ca3bf72e71703d11d8a17558b480c9fe9a1c757",
+      "bytes": 2151
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_shared_discovery-v3/timings.json",
+      "sha256": "ba18d71d4495711ea93886c499c88f022bdcf7bd5d6b3f9abae7812c06c3d445",
+      "bytes": 2517
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/dispatch-receipt.json",
+      "sha256": "3f0f2c584f52db48f7475c2dce3714149cb9428fc3c23fc8d4685417ba21cfaf",
+      "bytes": 1103
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/dispatch.json",
+      "sha256": "63d01378bd168b7f9b0919047f775b62c253751fb615b570da20aac49c0d2cf1",
+      "bytes": 1528
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/freeze.json",
+      "sha256": "c9f474df9de9dab4c320bf3eb63110d2b9a4367c8e1f41d803d052a78ad74608",
+      "bytes": 5442
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/integration-state-active.json",
+      "sha256": "0a63e833eae5c9879fbb1d622fbb09cfe0497a6ce0bfdde3ac1a9fc62eb28de9",
+      "bytes": 6647
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/integration-state-terminal.json",
+      "sha256": "32733be8e736f5983b895dffcc8fb0188c8866817f01fac31bc9ad9c7e9e5e82",
+      "bytes": 6201
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/passive-active-capture-cost.json",
+      "sha256": "24cb89b49d810a9890f06b00e23c19ce1c7f4defbc7027362f9ad65913767a1c",
+      "bytes": 1311
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/passive-active.json",
+      "sha256": "22d9c38234a1993900b37c61fa56c3c99499d3c9c2095e8f7c6fb1a8a0e366fd",
+      "bytes": 16909
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/passive-terminal-capture-cost.json",
+      "sha256": "b0b5efbecd6fa681d28f273ea2b1bcad4f4116f7bda53cd12239ad6aa3e25380",
+      "bytes": 1314
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/passive-terminal.json",
+      "sha256": "bb66dd0005814b1ab45a2360283563560abfd4125ec7fcd2ded196a6954fc789",
+      "bytes": 20010
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/report.md",
+      "sha256": "9611e009fd85e76e9dfe7a1271d82f3a06d49df9bbb3f0c7fd2406f05e574843",
+      "bytes": 8516
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/sources/index.json",
+      "sha256": "a2ab6afd1c77df1ef0d87369fd42921ff08271ff65749b6df1936e19f02a4972",
+      "bytes": 4262
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/task-terminal.json",
+      "sha256": "103ae7a21d120d3ad9bcfd5c2281eb94c58d3fed63da8c42b7294ec1d9725bfa",
+      "bytes": 4464
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic1_comparison-v3/timings.json",
+      "sha256": "e5018a5079f657b6a4f64bff034cea229c69ffd43376fe120edb90778446264a",
+      "bytes": 4333
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/dispatch-receipt.json",
+      "sha256": "9e548f285622658a250c3e15d67888559565e9b3a9455a268c473daeb9c144be",
+      "bytes": 2342
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/dispatch-registration-wrapper-error.json",
+      "sha256": "3fb3ff025edc645a8c1ff904cf03825589e27795c15042f04a7a668e1ac7443f",
+      "bytes": 3107
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/dispatch.json",
+      "sha256": "4b23d1b33a1a553f3eb6a0ba96b4738587ca36241fa2e12aa8750d0041605c59",
+      "bytes": 1528
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/freeze.json",
+      "sha256": "42cd33f5aa78f8c33c4d5f355400a081f655a4629c7c1b909b67bbd033a0ae8a",
+      "bytes": 7395
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/integration-state-active.json",
+      "sha256": "83664f6f9efa8f1b55691a65b367a70e47bf7e03cd280865c19533929d58daec",
+      "bytes": 7198
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/integration-state-terminal.json",
+      "sha256": "80b5b17e6a44aacac767f4eb04970ea2c2c1f154e1d158215619e1fdcf61698f",
+      "bytes": 6758
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/native-active-absence-root-v1.json",
+      "sha256": "38253ac59f83f6f94c9f6308ac8996ebfb80af6f8dcb2a7793306e89e2c3bea8",
+      "bytes": 3687
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/passive-active-capture-cost.json",
+      "sha256": "bef3576c3c14e0d6bf086f8918785419037143750b7a2eef199481c7a0a1febd",
+      "bytes": 1345
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/passive-terminal-capture-cost.json",
+      "sha256": "4e69b1273edf7acd3f3210213ed8880ab56806f76e3e48bed4118250f7c6ac8b",
+      "bytes": 1314
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/passive-terminal.json",
+      "sha256": "526934246de2234ec8e9d7ac1d27246c3f77addf37ea590bf58b3dd08e431a0d",
+      "bytes": 20002
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/report.md",
+      "sha256": "4a9103edca44f28d2e46d09503ced8120bc6b3b5572cfe7c60afa25f611012fd",
+      "bytes": 8912
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/sources/index.json",
+      "sha256": "f9573c86dd5facb3985efdec9d720234e29c644973c0d08ae121cddc87131ff2",
+      "bytes": 5359
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/task-terminal.json",
+      "sha256": "239e55d79502e026e0810c5e6907070b23f7025f61cad0eb0f1b7114279c8fa0",
+      "bytes": 4464
+    },
+    {
+      "path": "reports/external-research-v10-20261007/jobs/D-M16-A/treatment/fresh_topic2_comparison-v3/timings.json",
+      "sha256": "a86e76ff1f82089a2ca9e3405ae5a4b09b81e48780fd698d9c49adb0bc348443",
+      "bytes": 2301
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/INPUT_MAP.json",
+      "sha256": "eebf54e198898a4cdb2c6464e8c222ab0e5b9b7667d32d23c35f8ae0146ed7b3",
+      "bytes": 25125
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/dispatch-receipt.json",
+      "sha256": "f5848161561647f58d3559fbad7a80a006913862a32ef8964471a1fe1b0e9c14",
+      "bytes": 1034
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/dispatch-request.json",
+      "sha256": "eb9f1d9c82e8b50ca4dc2070e90002b5e1bcdd17f2b18820b6ac640e48bd159c",
+      "bytes": 4174
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/dispatch.json",
+      "sha256": "3da90ef882548e8d4fa04c8629f0033f60d371cace2faf9e122a353d8b7e44d6",
+      "bytes": 1435
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/freeze.json",
+      "sha256": "4e5e3341663b232e1ed7ed8f6b48de6027e4e7297eeae29ab52e09f506994e6a",
+      "bytes": 13023
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/native_counters.json",
+      "sha256": "ed2a2fa2738541ebd5c7ce05f2255b26c41c0a8a1744f842770951ecb92b953c",
+      "bytes": 260
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/prospective-timing.json",
+      "sha256": "2ab80c6fd8dcb6b5cc05c8c92e8a2d269283e36057c0846be6489b622104db31",
+      "bytes": 156
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review-runtime-metadata.json",
+      "sha256": "00d679be1e3abf17206700e51dadd75cecc36acca870662db7dbf4c7c8e4e608",
+      "bytes": 870
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.json",
+      "sha256": "4443b6d137bb443077d769bb4565ee9dbbdddda0550ec1887459107e50f083a3",
+      "bytes": 123986
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/review.md",
+      "sha256": "ec4f40ccb5643e3b4ac9859277a955ad7311822640577e18373b91728f32c768",
+      "bytes": 61000
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/source_operations.json",
+      "sha256": "576e2bbf4312bfa98628131e33ca9d90348e04f3b2841548472359a195fc8bf0",
+      "bytes": 30825
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/sources/exact-locators.json",
+      "sha256": "653d91a5469c27c303282ed22ff5ec38590f8c89e59d3a913e49d42d6b13084c",
+      "bytes": 8024
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/sources/integrity.json",
+      "sha256": "f88b8a6ed90edd2d823e7744e783727593e1861b33058cdcad1f8f8fca79defe",
+      "bytes": 10026
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/sources/lexical-checks.json",
+      "sha256": "8fff7af7df1df7e4a7d28abb1e851dd4c71e49b3e28ff5193789ca67f5077998",
+      "bytes": 8953
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/sources/public-capture-index.json",
+      "sha256": "52e61a14a212cd6a58504c323362cb1cf5f670189c69632fb81631aa611d6b62",
+      "bytes": 25309
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/sources/review-artifact-integrity.json",
+      "sha256": "e6f46dfc915c798ca28d37e58e4c74638b8191b4abf6eb14c5db1fc12bbdff31",
+      "bytes": 908
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/task-terminal.json",
+      "sha256": "576cec59860cf21409e433096f3a573c290fb755210b8d8eedea75b3ef8af24d",
+      "bytes": 6396
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/control-v3/timings.json",
+      "sha256": "2ac629937ab8afc9546e4d2b951fedb61e64e9d10482450ccc920963112df7a4",
+      "bytes": 2923
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/INPUT_MAP.json",
+      "sha256": "bf71fc8f3c57148cdfc9b304233e01ea54f5ad5bbca846c810e24b4d92dc8ce6",
+      "bytes": 33726
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/dispatch-receipt.json",
+      "sha256": "64fd561a346d031c7d83d68b7abd7059e225182ec8bf6dd333feb1dd979fbb09",
+      "bytes": 1042
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/dispatch-request.json",
+      "sha256": "ea198063f0c6b59661ce85d262dc650eaea8e5a9291210d7a4e691b215bb34d3",
+      "bytes": 4184
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/dispatch.json",
+      "sha256": "7f29e34bc866b6ff526413b87f2ad6e867dd5b7bcd65e713dceda5f7ddb6886f",
+      "bytes": 1447
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/freeze.json",
+      "sha256": "fca0c3a9ef981d8e43aca2feeff465c9c37c93a864f3ca3f12e97e1a410cb230",
+      "bytes": 8870
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/prospective-timing.json",
+      "sha256": "ef7d9156e5f798756599591f1b701c9b6429b149046b80e0c7e2881fea7d86c8",
+      "bytes": 156
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.json",
+      "sha256": "f23a55b2df40d3d900236e646578e47607142c3897ef625bb3434863be9afb2e",
+      "bytes": 112627
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/review.md",
+      "sha256": "06154be903814060566fd22054e790ffb5f8fd7bffe0360a46b52b2c5ed9a630",
+      "bytes": 66491
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/input-integrity.json",
+      "sha256": "a2ea1004aa46abb244a368913bfaae42df529251db8e813b4cd8d43bd5071d44",
+      "bytes": 18740
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/leaflet-captured-tree-check.json",
+      "sha256": "3985f52c0616147e1efde98208e6fad1edfd5c6cc87b9c46f4e0939c66a53dbd",
+      "bytes": 868
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/mbtiles-provenance-check.json",
+      "sha256": "9fab2f1363ae6fc953adf80d0f32057bbc3b5c55b807d3246c8ac0ffcaac82bd",
+      "bytes": 933
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-capture-index.json",
+      "sha256": "c574e30d48c69dd80f989e0002dfc536fe78fbbecf0aac00ff895f25795c2299",
+      "bytes": 11006
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/review-validation.json",
+      "sha256": "f25a6dd73a66f0362569b8ac24e70532d902ba0dd00a21c45120124d53329a81",
+      "bytes": 522
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/sources/version-provenance-checks.json",
+      "sha256": "b7fb6be29649f920ac0233393f43406c2493719a8f64634d6739e6551b192d94",
+      "bytes": 10909
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/task-terminal.json",
+      "sha256": "79609781b7f7bfa625a8955c9e83738cec3587076a969224ef287e07c4c25f06",
+      "bytes": 6544
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort4/D-M16-A/treatment-v3/timings.json",
+      "sha256": "b4c205b8eb42e0e0c48a125d21e7bb341d57cd01ef0eb41fa3f115114b9aa8b1",
+      "bytes": 8582
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/D-M07-A-control-native-root-nomination-v1.json",
+      "sha256": "366477a40234be1ddc33a223ce9cf8d0e73fe301b0424d877370daa2b7d1395d",
+      "bytes": 689
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/D-M07-A-control-native-root-terminal-nomination-v1.json",
+      "sha256": "5e7659476b7338b2c7eb5dd2740ba9ad51f6950b4092eba551f1afd53655fe10",
+      "bytes": 4690
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/D-M07-A-seed-native-root-nomination-v1.json",
+      "sha256": "6776ab504cb7d5657bca2a358aea2e1136498decdbbc21bdd2c0e6128597b9dc",
+      "bytes": 4297
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/D-M07-A-treatment-native-root-nomination-v1.json",
+      "sha256": "b1c5ca125e492ee3ab1b5d7be49ef396496d0d3a37ba8bc5da075628a995e096",
+      "bytes": 701
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/D-M07-A-treatment-native-root-terminal-nomination-v1.json",
+      "sha256": "8cd52dbfdeffa958b9b3702cecbee55cc82b604e36b1edce05a1870fdedb9c6d",
+      "bytes": 4937
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/cleanup-publication-batch008-staging-v1.json",
+      "sha256": "42716ae7d2294c92b2fd8a8637f9b3e130452de2f4c74f67bcdfe4056e45485b",
+      "bytes": 927
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/cleanup-verified-staging-B2-B8-total-v1.json",
+      "sha256": "2713795bac37ceb5cdd51fb63e863ed37c699c1625b8e9ebc27e58dd9917c217",
+      "bytes": 312
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/closed-slot-ledger-root-reproduction-v1.json",
+      "sha256": "ac4b78c4e39cf394882398ce9e46e847b1cac9910ec2843ae386915f31f1d8d1",
+      "bytes": 4734
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/closed-slot-ledger-task-terminal-v1.json",
+      "sha256": "e9c6b026c76f3d49843fe420c32225cb5f0658d5cc997888712f827f806e835d",
+      "bytes": 4946
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/essential-witness-selection-root-validation-v1.json",
+      "sha256": "a288439401fcdbbad2e8cad1a1fb2616ec5556b692ae4f06ea88a73a60b85d8e",
+      "bytes": 502
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/essential-witness-selection-task-terminal-v1.json",
+      "sha256": "e23874bf614e3745477a53497af19754a68dc4ccd360d05a5ce0fbb562a8a363",
+      "bytes": 5952
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/m16-root-prospective-expiry-label-clock-annotation-v1.json",
+      "sha256": "193c9d7de0c103c8a47cea25e3482ae9293a2b7375aee446e1f4aff514ee7272",
+      "bytes": 493
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/minimal-witness-root-adjudication-v1.json",
+      "sha256": "8d76db28355645389d5c763ae13e3b56156c668169543ce9366e65dc1221dde0",
+      "bytes": 1157
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/publication-batch008-local-commit-v1.json",
+      "sha256": "41dbb457be237f5a05c570ca91a8626664e2e77a19e961633bdfa0b459096f81",
+      "bytes": 277
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/publication-batch008-root-validated-copy-plan-v1.json",
+      "sha256": "96bb978ba8b081e26a6ca3bc4c6d35abc1a5cea48597d6a3f6448aa964bebe4e",
+      "bytes": 136279
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/publication-batch008-task-terminal-v1.json",
+      "sha256": "2b4bcb94ac0b5b367b3743a48c230fda96d41740d87e7f0ee0e00ce8ccbde6e1",
+      "bytes": 5238
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/publication-batch008.json",
+      "sha256": "86e56e23f086d3cec942f188c2f2551837f3682653878d1c3ae3f48e736191fd",
+      "bytes": 2126
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/targeted-cohort4.json",
+      "sha256": "febb90c80c11a1a36e4e3bd8f8e3b2ed8872de21efc1f85bab2aa2accff61077",
+      "bytes": 180214
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/working-bulk-source-cleanup-candidates-v1.json",
+      "sha256": "ceeced8d9e6aa17162aff3634e53444cf11a221c99efeeb1bbd65c73134e6de3",
+      "bytes": 5994
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/working-raw-retention-inventory-after-B8-v1.json",
+      "sha256": "eb982995cce775a93bfeeafe95e5762573d410be26cbdf9d1105df55fd07f820",
+      "bytes": 5972900
+    },
+    {
+      "path": "reports/external-research-v10-20261007/state/working-retention-mechanical-repair-history-v1.json",
+      "sha256": "363d3a1938d84c3cdcac8b4be95f4e9d4836eda3840ef03266738e6806461a90",
+      "bytes": 647
+    }
+  ],
+  "new_files": 405,
+  "new_bytes": 33672237,
+  "no_overwrites": true,
+  "all_prior_pinned_git_blobs_checked": true,
+  "all_staged_bytes_checked": true
+}

@@ -1,0 +1,21 @@
+# D-M07-A preliminary proposal — SQLite 3.51.3 deployment, two Linux hosts, network-mounted database directory
+
+Label: Legitimate test input — untrusted candidate preliminary proposal
+
+Original question (preserved): two Linux hosts open one SQLite 3.51.3 database on a network-mounted directory; the product requires simultaneous reads, a single active writer, restart recovery, and one optional maintenance improvement.
+
+1. **Deployment assumption — WAL is invalid on this topology.** WAL requires every process accessing the database to share the wal-index held in shared memory; SQLite documents that WAL "does not work over a network filesystem", and the wal-index is an mmap of the `-shm` file created beside the database, so all accessors must be on one host [wal.html §1, §2.2, §7; wal.c wal-index notes]. Uncertainty: the mount technology (NFS/SMB/other) is unrecorded; no network filesystem is documented as supported for WAL, so all are treated as unsupported pending a primary check.
+
+2. **Single writer — native to WAL, but only per host.** WAL enforces one writer at a time through the exclusive WRITER lock; a second writer gets SQLITE_BUSY, or SQLITE_BUSY_SNAPSHOT if another writer committed since its read snapshot [wal.html §2.2; wal.c sqlite3WalBeginWriteTransaction]. Across two hosts there is no shared wal-index, so SQLite enforces nothing cross-host. Uncertainty: none in-corpus; the cross-host enforcement gap follows from the same-host wal-index requirement, not from a documented limitation that might be lifted.
+
+3. **Restart recovery — documented, single-host only.** After a crash, the first new connection rebuilds the wal-index from the WAL file under exclusive recovery locks while other connections receive SQLITE_BUSY [wal.c walIndexRecover; wal.html §9]. This is reliable within one host; the two-host variant depends on coherent mmap'd shared memory over the network mount, which the corpus says cannot be assumed. Uncertainty: whether any specific network mount provides that coherence is untested here.
+
+4. **The no-shared-memory escape hatch does not apply.** WAL without shared memory requires locking_mode=EXCLUSIVE before first access and serves a single connection only; the connection remains in EXCLUSIVE until WAL mode is exited [wal.html §8; pragma.html locking_mode]. Uncertainty: none in-corpus; the single-connection scope is documented, so this cannot repair a two-host recommendation.
+
+5. **Proposed deployment shape.** Keep all SQLite access on the host holding the files, keeping WAL there, and serve the second host through an application-level access path instead of direct SQLite on the mount. Uncertainty: the corpus excludes WAL from network filesystems but does not document rollback-journal (DELETE) behavior over network mounts; whether direct multi-host access in rollback mode is acceptable is unresolved and marked for a later primary-source check.
+
+6. **Version condition.** Remain on 3.51.3 or later: the WAL-reset corruption bug affects 3.7.0–3.51.2 when two or more connections write or checkpoint concurrently, and is fixed in 3.51.3; backports exist for 3.44.6 and 3.50.7 [wal.html §11]. Uncertainty: the documented wild occurrence rate is low (at or below SSD-malfunction/cosmic-ray rates), so this is a precaution rather than an emergency.
+
+7. **Durability condition.** In WAL mode, synchronous=NORMAL is corruption-safe and consistent, but committed transactions may roll back after power loss; synchronous=FULL adds a per-commit WAL sync and is ACID-durable [pragma.html synchronous]. Uncertainty: which level is required depends on the product's power-loss tolerance, which the question does not state.
+
+8. **Optional maintenance lead — bound WAL growth.** Auto-checkpoint defaults to 1000 pages and is PASSIVE; continuously overlapping readers can starve checkpoints so the WAL grows without bound, degrading reads and disk usage [wal.html §3.1, §6; pragma.html wal_autocheckpoint]. Proposed check: schedule wal_checkpoint(RESTART) or (TRUNCATE) during reader gaps and/or set journal_size_limit, and set busy_timeout so BUSY contention retries instead of failing fast [pragma.html wal_checkpoint, journal_size_limit, busy_timeout]. Uncertainty: the actual reader-overlap profile of the workload is unknown; thresholds need measurement before adoption.

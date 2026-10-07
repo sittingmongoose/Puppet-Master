@@ -1,0 +1,6 @@
+{
+  "at": "2026-10-07T22:49:43.165125+00:00",
+  "failure": "root_storage_inventory was a string reference; attempted dict assignment failed before checkpoint write",
+  "repair": "Added a separate named checkpoint field; original value retained",
+  "scientific_results_changed": false
+}

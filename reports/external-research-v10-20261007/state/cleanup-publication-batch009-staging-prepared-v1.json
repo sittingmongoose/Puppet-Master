@@ -1,0 +1,15 @@
+{
+  "schema": "ER10-batch009-owned-staging-cleanup-v1",
+  "at": "2026-10-07T23:20:36.309093+00:00",
+  "commit": "415b8a478a89e7c6e9ac73ca0a6975a211809892",
+  "verification": "state/publication-batch009.json",
+  "owned_payload": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch009/staging/reports/external-research-v10-20261007",
+  "verified_retained_target": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/reports/external-research-v10-20261007",
+  "files_verified": 405,
+  "bytes_verified": 33672237,
+  "allocated_bytes_before": 34578432,
+  "deletion_only_campaign_duplicate_staged_files": true,
+  "original_science_and_raw_sources_untouched": true,
+  "alias_verified": false,
+  "removed_files": 0
+}

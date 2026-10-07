@@ -1,0 +1,43 @@
+{
+  "schema": "ER10_MINIMAL_WITNESS_ROOT_ADJUDICATION_V2",
+  "recorded_at": "2026-10-07T23:11:41.616721+00:00",
+  "supersedes_for_prospective_retention_only": "state/minimal-witness-root-adjudication-v1.json",
+  "original_selection_and_HOLD_records_unchanged": true,
+  "private_proposed_objects_excluded_as_now_verified_immutable": [
+    6,
+    10,
+    25
+  ],
+  "additional_CPython_doc_code_components_verified": [
+    22,
+    38
+  ],
+  "CPython_tag_commit": "f6650f9ad73359051f3e558c2431a109bc016664",
+  "CPython_full_byte_equivalence_verified": true,
+  "other_component_verification_records": [
+    {
+      "path": "state/CPython-v3.12.3-immutable-retention-alternatives-v1.json",
+      "sha256": "f6efa76ab0c7296098db6850802bab26987dd9e028089f46bcbc7acc3a27d8ee",
+      "bytes": 5956
+    },
+    {
+      "path": "state/immutable-code-witness-alternatives-root-v1.json",
+      "sha256": "d5e69ea5819f2f0b0b04b7c93e5d4d120be765beeef98df21f00ce8f726663e6",
+      "bytes": 10283
+    },
+    {
+      "path": "state/GTFS-DAG-and-Slint-old-release-retention-alternatives-v1.json",
+      "sha256": "578b5158862926cea63a789c7e1faba64832e36b64fa3f7c767ea34c81542dd1",
+      "bytes": 1970
+    }
+  ],
+  "other_code_component_scope": "Ten exact source/component SHA matches plus three fixed correction representations; raw API/HTML wrapper reproduction explicitly not claimed. Exact recorded GTFS commit-DAG fields independently verified. Slint old v1.17.0 distinct fixed commit exact source SHA verified.",
+  "CISA_private_alternative": "helpers/retention-root-witnesses-v1/CISA_TRANSFORM_WITNESS.json",
+  "Slint_HTML_private_alternative": "helpers/retention-root-witnesses-v1/slint-HTML-exact-component-range-proposal.json",
+  "archive_created": false,
+  "source_cleanup_performed": false,
+  "all_source_cleanup_requires_actual_final_quiet_and_independent_retention_verification": true,
+  "maximum_private_archives": 1,
+  "source_lookup_verification_not_semantic_regrading": true,
+  "later_closed_and_future_scopes_need_exact_final_supplement": true
+}

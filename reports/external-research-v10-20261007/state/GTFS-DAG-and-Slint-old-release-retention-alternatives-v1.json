@@ -1,0 +1,33 @@
+{
+  "schema": "ER10_ROOT_FIXED_DAG_AND_OLD_RELEASE_ALTERNATIVE_V1",
+  "recorded_at": "2026-10-07T23:11:05.432465+00:00",
+  "DAG": {
+    "url": "https://api.github.com/repos/MobilityData/gtfs-validator/compare/f65221e9908f5db0daa81ab8ce94168a5062151b...d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+    "response_sha256": "66faed224ffa466fa1b60165dae8e75a590a58f9f59a0c66a283847bdb83cb1f",
+    "fixed_base": "f65221e9908f5db0daa81ab8ce94168a5062151b",
+    "fixed_head": "d74d7177f9f7c6bc7adc69508bb939362f2cf770",
+    "actual_ahead_by": 21,
+    "actual_behind_by": 0,
+    "actual_merge_base": "f65221e9908f5db0daa81ab8ce94168a5062151b",
+    "recorded_expected_ahead": 21,
+    "recorded_expected_behind": 0,
+    "recorded_expected_merge_base": "f65221e9908f5db0daa81ab8ce94168a5062151b",
+    "exact_recorded_DAG_fields_match": true,
+    "original_API_wrapper_byte_reconstruction_claimed": false,
+    "original_grade_rewritten": false
+  },
+  "old_release": {
+    "eligible_index": 60,
+    "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-05/control/review-v1/sources/slint-v1.17.0-sharedparley.rs",
+    "original_sha256": "c8e466c99d9292449d7e24208ac9949dcbdd57b8fe6a591087e83cbad29d90dc",
+    "actual_v1_17_0_tag_commit": "fdde7a535305d2ab2d4072dee637bad186a49723",
+    "tag_response_sha256": "76a0939b08627ef1a9d1aa37cb9cd9006cdc373c1b0e4c891300d3c5462c2d99",
+    "immutable_url": "https://raw.githubusercontent.com/slint-ui/slint/fdde7a535305d2ab2d4072dee637bad186a49723/internal/core/textlayout/sharedparley.rs",
+    "observed_sha256": "c8e466c99d9292449d7e24208ac9949dcbdd57b8fe6a591087e83cbad29d90dc",
+    "byte_equivalent_verified": true,
+    "original_old_and_corrected_release_variants_distinct": true,
+    "original_source_body_retained": false
+  },
+  "verification_scope": "Existing frozen locator/DAG/byte equivalence only; no scientific regrade, execution or cleanup",
+  "archive_created": false
+}

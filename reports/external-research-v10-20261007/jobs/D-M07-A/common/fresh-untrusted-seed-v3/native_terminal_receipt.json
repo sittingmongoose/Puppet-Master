@@ -1,0 +1,32 @@
+{
+  "schema": "ER10_GLM_PASSIVE_NATIVE_TERMINAL_V2",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_e24bfd8d-35a0-411a-a99d-e531386ef888/state.json",
+  "createdAt": 1791412601459,
+  "native_status": "complete",
+  "same_identity_objective_verified": true,
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T22:46:29.150517+00:00",
+    "entries": [
+      {
+        "stage": "D-M07-A/common/fresh-untrusted-seed-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M07-A--common--fresh-untrusted-seed-v3--11052698dbe0529c.json",
+        "sha256": "11052698dbe0529ce3d7881b5da5230d3567a9de77b093d3b44441240b8daf00",
+        "bytes": 19091,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "raw_current_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/native_terminal_current_raw.json",
+  "raw_current_sha256": "237e4e4223c5e023b26bd3a4e44c587a1fe8790fce00f6015ec9724a44f9a035",
+  "vendor_backend_activation": false,
+  "ACP_alias_binding": "unknown",
+  "actual_create_get_update_responses": "missing; installed native state carrier only",
+  "host_capture_seconds": null,
+  "billing": null
+}

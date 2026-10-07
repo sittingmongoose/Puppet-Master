@@ -1,0 +1,28 @@
+{
+  "objective": "Execute ER10 D-M07-A v3 fresh-untrusted-seed. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/assignment.md.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+  "status": "running",
+  "rounds": 0,
+  "tickets": [
+    {
+      "id": "t1",
+      "title": "[Read INPUT_MAP.json and its exact listed brief/sources/predecessor paths]",
+      "acceptance": "`cat /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/INPUT_MAP.json` succeeds; every listed own brief/source path exists and is read; no non-listed sibling/campaign paths opened; exposure of advisory paths recorded honestly in working notes",
+      "status": "pending"
+    },
+    {
+      "id": "t2",
+      "title": "[Author draft.md preliminary proposal from the preserved original question]",
+      "acceptance": "`/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/draft.md` exists; `grep -F 'Legitimate test input — untrusted candidate preliminary proposal' draft.md` matches; `wc -w draft.md` ≤700; 5–8 numbered propositions each with source reference, explicit uncertainty, and optional lead where the brief requests it; no false claims inserted",
+      "status": "pending"
+    },
+    {
+      "id": "t3",
+      "title": "[Verify source-policy compliance and deliver concise path/status final]",
+      "acceptance": "self-audit confirms only INPUT_MAP-listed paths were used and draft.md cites only those; final reply states output path, draft.md byte/word counts, and completion status with time recorded against the stage ceiling",
+      "status": "pending"
+    }
+  ],
+  "handoffFresh": false,
+  "createdAt": 1791412601459,
+  "updatedAt": 1791412633929
+}

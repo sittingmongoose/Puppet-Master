@@ -1,0 +1,77 @@
+{
+  "case": "D-M07-A",
+  "version": "v3",
+  "is_method_comparison": false,
+  "disposition": "COMPLETE_DIAGNOSTIC_FULL_SOURCE_PAIR_BOTH_FAIL_COMPARATIVE_HOLD",
+  "control": "FullSourceFAIL",
+  "treatment": "FullSourceFAIL",
+  "six_axes": "Full declared scope independently assessed each arm; no weighted rubric",
+  "native_provenance_comparative_disposition": "HOLD_MISSING_NATIVE_ACTIVE_ORIGINAL_FAILED_EXPORTS_UNCHANGED",
+  "conclusion": "Both exact final answers fail independent full declared source assessment. Supported deployment/recovery/version/durability advice retained. Both overclaim cross-host lock absence and omit WAL limit/checkpoint completion conditions. Control additionally reports false source search and downgrades explicit sync evidence; treatment categorically rejects rollback feasibility beyond the source evidence. Diagnostic facts only: no qualified method comparison, winner, causal speed/quality or billing claim.",
+  "review_freezes": {
+    "J1": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J1/freeze_disposition.json",
+    "J2": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/freeze_disposition.json"
+  },
+  "pair_freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+  "diagnostic_exception_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_DIAGNOSTIC_REVIEW_EXCEPTION_GATE.json",
+  "economics": {
+    "new_upper_bound_minutes_each_cold": 50,
+    "original_15min_success_claim": false,
+    "common_T0": "2026-10-07T22:36:18.422037+00:00",
+    "absolute_case_deadline": "2026-10-07T23:26:18.422037+00:00",
+    "shared_stage_seconds_full_each_cold_once_aggregate": 588.6,
+    "candidate_dispatch_to_delivery_sum_aggregate_shared_once_seconds": 2338.096,
+    "review_sum_seconds": 734.2070000000001,
+    "candidate_and_reviews_sum_seconds": 3072.303,
+    "arms": {
+      "control": {
+        "own_stage_dispatch_to_delivery_seconds": 742.515,
+        "full_shared_seed_seconds_charged": 588.6,
+        "occupied_dispatch_to_delivery_seconds_including_full_shared": 1331.115,
+        "actual_common_T0_to_final_delivery_seconds": 1393.922963,
+        "queue_and_host_handoff_seconds": 62.80796299999997,
+        "actual_requestedAt": "2026-10-07T22:47:09.830Z",
+        "actual_startedAt": "2026-10-07T22:47:16.671Z",
+        "actual_completedAt": "2026-10-07T22:59:32.345Z",
+        "native_createdAt_ms": 1791413244780,
+        "raw_native_counters": {
+          "rounds": 4,
+          "createdAt": 1791413244780,
+          "updatedAt": 1791413970112,
+          "tokens": null
+        },
+        "final_bytes": 8022,
+        "source_operations": "candidate notes retained; execution history not independently authenticated",
+        "review_seconds": 352.821
+      },
+      "treatment": {
+        "own_stage_dispatch_to_delivery_seconds": 1006.981,
+        "full_shared_seed_seconds_charged": 588.6,
+        "occupied_dispatch_to_delivery_seconds_including_full_shared": 1595.5810000000001,
+        "actual_common_T0_to_final_delivery_seconds": 1671.018963,
+        "queue_and_host_handoff_seconds": 75.43796299999985,
+        "actual_requestedAt": "2026-10-07T22:47:22.460Z",
+        "actual_startedAt": "2026-10-07T22:47:30.343Z",
+        "actual_completedAt": "2026-10-07T23:04:09.441Z",
+        "native_createdAt_ms": 1791413261764,
+        "raw_native_counters": {
+          "rounds": 5,
+          "createdAt": 1791413261764,
+          "updatedAt": 1791414249231,
+          "tokens": null
+        },
+        "final_bytes": 8309,
+        "source_operations": "candidate notes retained; execution history not independently authenticated",
+        "review_seconds": 381.386
+      }
+    },
+    "old_failures_costs_grades_retained": true,
+    "host_capture_cost": "retained exact individual receipts; incompletely measured total null",
+    "billing": null,
+    "generated_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "cache_tokens": null
+  },
+  "frozen_at": "2026-10-07T23:13:50.496419+00:00"
+}

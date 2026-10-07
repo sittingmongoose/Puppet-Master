@@ -1,0 +1,35 @@
+{
+  "schema": "ER10_DIAGNOSTIC_FULL_SCIENCE_REVIEW_GATE_V1",
+  "case": "D-M07-A",
+  "verified_at": "2026-10-07T23:05:55.857313+00:00",
+  "authorization": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_DIAGNOSTIC_REVIEW_EXCEPTION_AUTHORIZATION.json",
+  "authorization_sha256": "c27bbebc31200f6500159194c9ba84b3543ee9658188bc2687b7989f16db6cec",
+  "full_pair_native_terminal_and_quiet_gate": true,
+  "stage_freezes": {
+    "D-M07-A/common/fresh-untrusted-seed-v3": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/freeze_disposition.json",
+      "sha256": "a3d3bdc4d258d8574005286f50787e5aef0fc5881a15dfe8ef55cce8928b01de",
+      "native_active_observed": true,
+      "native_status": "complete",
+      "quiet": true
+    },
+    "D-M07-A/control/document-order-review-final-v3": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/freeze_disposition.json",
+      "sha256": "eddf75b4d652866188bb5f301d2ef85c9f93125abcdcc1b7b789b6bd941e7d1d",
+      "native_active_observed": false,
+      "native_status": "complete",
+      "quiet": true
+    },
+    "D-M07-A/treatment/critical-first-protected-breadth-final-v3": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/freeze_disposition.json",
+      "sha256": "ff057ccef8ea81bf2cf103afe2555cbdc66a720965c18a8d8225d375babc3525",
+      "native_active_observed": false,
+      "native_status": "complete",
+      "quiet": true
+    }
+  },
+  "native_provenance_comparative_disposition": "HOLD_MISSING_NATIVE_ACTIVE",
+  "original_activation_absence_failed_exports_immutable": true,
+  "review_scope": "FULL_DECLARED_SOURCE_SCIENCE_DIAGNOSTIC_ONLY",
+  "no_method_credit_or_requalification": true
+}

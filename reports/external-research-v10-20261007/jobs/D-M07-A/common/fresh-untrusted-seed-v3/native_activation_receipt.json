@@ -1,0 +1,38 @@
+{
+  "schema": "ER10_GLM_PASSIVE_NATIVE_ACTIVATION_V2",
+  "active_verified": true,
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_e24bfd8d-35a0-411a-a99d-e531386ef888/state.json",
+  "createdAt": 1791412601459,
+  "createdAt_unit": "milliseconds_since_unix_epoch",
+  "observed_status": "running",
+  "actual_installed_driver_state": true,
+  "vendor_backend_activation": false,
+  "ACP_alias_binding": "unknown",
+  "exact_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/assignment.md",
+  "exact_objective_sha256": "67559b09c2d94c18301f8472d5eaebe91a3e369930b5595a0f6f24ee8df1dc82",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T22:37:48.539785+00:00",
+    "entries": [
+      {
+        "stage": "D-M07-A/common/fresh-untrusted-seed-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M07-A--common--fresh-untrusted-seed-v3--ba3259f1b9750b41.json",
+        "sha256": "ba3259f1b9750b41c36a047bbe0e5594681825e07126ab656078bee35018a185",
+        "bytes": 16279,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "raw_current_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/native_activation_current_raw.json",
+  "raw_current_sha256": "8174b59fec132cf8316d26d62955dc93de551109a0b748bb5fa5ef75b0405851",
+  "root_state_sha256": "8174b59fec132cf8316d26d62955dc93de551109a0b748bb5fa5ef75b0405851",
+  "actual_create_get_update_responses": "missing; installed native state carrier only",
+  "host_capture_seconds": 0.295443185,
+  "observed_at": "2026-10-07T22:37:48.539785+00:00",
+  "billing": null
+}

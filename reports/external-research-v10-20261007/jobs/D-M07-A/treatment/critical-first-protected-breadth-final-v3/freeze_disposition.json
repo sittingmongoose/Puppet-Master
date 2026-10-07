@@ -1,0 +1,45 @@
+{
+  "stage": "D-M07-A/treatment/critical-first-protected-breadth-final-v3",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_02e7a2ad-3bd7-4590-a9bd-2f4eb0e5a3d8/state.json",
+  "native_createdAt": 1791413261764,
+  "native_status": "complete",
+  "native_active_observed": false,
+  "comparative_eligibility": "HOLD_MISSING_NATIVE_ACTIVE_DIAGNOSTIC_ONLY",
+  "t3_status": "completed",
+  "quiet": true,
+  "requestedAt": "2026-10-07T22:47:22.460Z",
+  "startedAt": "2026-10-07T22:47:30.343Z",
+  "completedAt": "2026-10-07T23:04:09.441Z",
+  "dispatch_to_delivery_seconds": 1006.981,
+  "stage_ceiling_seconds": 1800,
+  "absolute_case_deadline": "2026-10-07T23:26:18.422037+00:00",
+  "budget_delivery_eligible": true,
+  "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/final.md",
+  "output_sha256": "e7ac1a889bb1c5c32ace2011fd1868bee6be3207aac3ae56afefd73a0ed240a4",
+  "output_bytes": 8309,
+  "scientific_files": {
+    "notes-reserve.md": {
+      "sha256": "56456041749bfa3e2863a6a379a128dda6df38759f01bb778a267eef40b810d5",
+      "bytes": 8513
+    },
+    "final.md": {
+      "sha256": "e7ac1a889bb1c5c32ace2011fd1868bee6be3207aac3ae56afefd73a0ed240a4",
+      "bytes": 8309
+    },
+    "notes-critical-check.md": {
+      "sha256": "e15ae0c95bd00c986cbb69ca4af0bc2122bb5f41cf30b33495f3fdee6c2ebf08",
+      "bytes": 8886
+    }
+  },
+  "raw_native_goal_counters": {
+    "rounds": 5,
+    "createdAt": 1791413261764,
+    "updatedAt": 1791414249231,
+    "tokens": null
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "source_quality": "UNASSESSED",
+  "scope_audit": "incomplete_unknown; advisory map not firewall",
+  "frozen_at": "2026-10-07T23:05:55.776276+00:00"
+}

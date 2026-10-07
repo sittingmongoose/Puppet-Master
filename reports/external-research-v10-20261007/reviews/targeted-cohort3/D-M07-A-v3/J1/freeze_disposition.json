@@ -1,0 +1,320 @@
+{
+  "review": "J1",
+  "case": "D-M07-A",
+  "quiet": true,
+  "settled": true,
+  "nativeGoalrequired": false,
+  "actual_t3_clock": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-A-v3-review-J1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-07T23:06:07.299Z",
+    "startedAt": "2026-10-07T23:06:08.204Z",
+    "completedAt": "2026-10-07T23:12:00.120Z"
+  },
+  "dispatch_to_delivery_seconds": 352.821,
+  "source_verdict": "FullSourceFAIL",
+  "full_declared_scope_assessed": true,
+  "six_axes_assessed": true,
+  "diagnostic_only": true,
+  "native_provenance_comparative_disposition": "HOLD_MISSING_NATIVE_ACTIVE",
+  "scientific_files": {
+    "judgment.md": {
+      "sha256": "43b4ec57ad722d6dc7d6d50d9698ad7d3b3c696a4f7448a2dedb19444d812773",
+      "bytes": 21361
+    },
+    "checks.json": {
+      "sha256": "30609f5b612f486215624d0e672891f5561ca3d1d1b871f9e25a94f54e4d6b46",
+      "bytes": 10086
+    }
+  },
+  "performed_source_operations": [
+    {
+      "op": "read_input_map",
+      "observed_by_utc": "2026-10-07T23:06:15Z",
+      "timestamp_basis": "clock read immediately after map/capability-metadata read"
+    },
+    {
+      "op": "hash_all_declared_files_and_read_all_declared_scientific_markdown_and_manifest",
+      "at_utc": "2026-10-07T23:06:22.331294+00:00",
+      "result": "all eight digests match"
+    },
+    {
+      "op": "source_locator_searches_and_focused_raw_line_reads",
+      "observed_by_utc": "2026-10-07T23:06:54Z",
+      "timestamp_basis": "clock after batch",
+      "sources": [
+        "W",
+        "P",
+        "C"
+      ],
+      "wal_ranges": [
+        [
+          160,
+          837
+        ]
+      ],
+      "pragma_ranges": [
+        [
+          576,
+          593
+        ],
+        [
+          1208,
+          1338
+        ],
+        [
+          1376,
+          1440
+        ],
+        [
+          1856,
+          2009
+        ],
+        [
+          2260,
+          2360
+        ]
+      ],
+      "code_ranges": [
+        [
+          1,
+          174
+        ],
+        [
+          280,
+          390
+        ],
+        [
+          550,
+          572
+        ],
+        [
+          738,
+          794
+        ],
+        [
+          1040,
+          1128
+        ],
+        [
+          1369,
+          1435
+        ],
+        [
+          3680,
+          3754
+        ],
+        [
+          4440,
+          4510
+        ]
+      ],
+      "note": "initial PRAGMA anchor pattern without pragma_ prefix did not locate sections; corrected search located the seven sections"
+    },
+    {
+      "op": "repeat_case_insensitive_network_search",
+      "observed_by_utc": "2026-10-07T23:06:54Z",
+      "matches": [
+        {
+          "source": "W",
+          "line": 178
+        },
+        {
+          "source": "W",
+          "line": 291
+        },
+        {
+          "source": "C",
+          "line": 132
+        }
+      ],
+      "no_matches": [
+        "P"
+      ],
+      "result": "candidate one-location claim false; matching statements are WAL-specific"
+    },
+    {
+      "op": "read_recovery_checkpoint_header_read_paths",
+      "time_window_utc": [
+        "2026-10-07T23:06:54Z",
+        "2026-10-07T23:07:29.686345+00:00"
+      ],
+      "source": "C",
+      "ranges": [
+        [
+          1434,
+          1602
+        ],
+        [
+          2090,
+          2120
+        ],
+        [
+          2160,
+          2415
+        ],
+        [
+          2640,
+          2770
+        ],
+        [
+          3025,
+          3120
+        ]
+      ]
+    },
+    {
+      "op": "web_open_two_supplementary_release_files",
+      "time_window_utc": [
+        "2026-10-07T23:06:54Z",
+        "2026-10-07T23:07:29.686345+00:00"
+      ],
+      "urls": [
+        "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/os_unix.c",
+        "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/pager.c"
+      ],
+      "result": "both accessible; exact hashes and physical line locators taken from subsequent raw-byte reads"
+    },
+    {
+      "op": "fetch_primary_raw_bytes_in_memory_and_read_locking_locators",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/os_unix.c",
+      "version": "version-3.51.3",
+      "started_utc": "2026-10-07T23:07:29.686345+00:00",
+      "completed_utc": "2026-10-07T23:07:29.761467+00:00",
+      "status": 200,
+      "bytes": 295447,
+      "sha256": "a2cfaf55f801f7e49cbf286346b14842fdf758aba80f9d5c7638b504605776c6",
+      "headers": {
+        "content_type": "text/plain; charset=utf-8",
+        "etag": "\"edc462186c9f452736ede6b7b6701902faef3deaa38fcb7d04b70c4918345027\"",
+        "last_modified": null
+      },
+      "retained_raw_capture": false
+    },
+    {
+      "op": "fetch_primary_raw_bytes_in_memory_and_read_locking_locators",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/pager.c",
+      "version": "version-3.51.3",
+      "started_utc": "2026-10-07T23:07:29.830084+00:00",
+      "completed_utc": "2026-10-07T23:07:30.174316+00:00",
+      "status": 200,
+      "bytes": 302918,
+      "sha256": "5ef7135d2d67ba7f2be6da0197854788ece57bccd2a743f6f1a5f33c94e8ce7b",
+      "headers": {
+        "content_type": "text/plain; charset=utf-8",
+        "etag": "\"9e71e9b2b1528067cc15ef0151dedaef83c5f3f9da37e8ea086e72b5ea42865e\"",
+        "last_modified": null
+      },
+      "retained_raw_capture": false
+    },
+    {
+      "op": "refetch_primary_raw_bytes_in_memory_and_read_focused_followup_ranges",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/os_unix.c",
+      "version": "version-3.51.3",
+      "started_utc": "2026-10-07T23:07:57.606058+00:00",
+      "completed_utc": "2026-10-07T23:07:57.693659+00:00",
+      "status": 200,
+      "bytes": 295447,
+      "lines": 8589,
+      "sha256": "a2cfaf55f801f7e49cbf286346b14842fdf758aba80f9d5c7638b504605776c6",
+      "retained_raw_capture": false
+    },
+    {
+      "op": "refetch_primary_raw_bytes_in_memory_and_read_focused_followup_ranges",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/pager.c",
+      "version": "version-3.51.3",
+      "started_utc": "2026-10-07T23:07:57.700527+00:00",
+      "completed_utc": "2026-10-07T23:07:57.776013+00:00",
+      "status": 200,
+      "bytes": 302918,
+      "lines": 7830,
+      "sha256": "5ef7135d2d67ba7f2be6da0197854788ece57bccd2a743f6f1a5f33c94e8ce7b",
+      "retained_raw_capture": false
+    },
+    {
+      "op": "read_reset_size_commit_sync_and_checkpoint_entry_paths",
+      "time_window_utc": [
+        "2026-10-07T23:07:30.174316+00:00",
+        "2026-10-07T23:07:57.606058+00:00"
+      ],
+      "source": "C",
+      "ranges": [
+        [
+          2391,
+          2412
+        ],
+        [
+          3845,
+          3915
+        ],
+        [
+          4020,
+          4083
+        ],
+        [
+          4150,
+          4248
+        ],
+        [
+          4268,
+          4428
+        ],
+        [
+          1650,
+          1730
+        ]
+      ]
+    },
+    {
+      "op": "rehash_scientific_artifacts_and_crosscheck_bug_mechanics_and_preservation",
+      "at_utc": "2026-10-07T23:08:38.423893+00:00",
+      "sources": [
+        "W",
+        "P",
+        "C",
+        "draft",
+        "notes",
+        "final"
+      ],
+      "extra_code_ranges": [
+        [
+          2120,
+          2161
+        ],
+        [
+          1602,
+          1610
+        ],
+        [
+          1710,
+          1717
+        ]
+      ],
+      "result": "hashes unchanged; notes and final compared across all eight topics"
+    },
+    {
+      "op": "final_size_limit_and_sync_locator_search",
+      "observed_by_utc": "2026-10-07T23:09:29Z",
+      "timestamp_basis": "clock after search",
+      "source": "C",
+      "locators": [
+        4097,
+        4186,
+        4203
+      ],
+      "result": "static flag/commit sync paths confirmed"
+    }
+  ],
+  "output_volume": {
+    "judgment_utf8_bytes": 21361,
+    "judgment_sha256": "43b4ec57ad722d6dc7d6d50d9698ad7d3b3c696a4f7448a2dedb19444d812773",
+    "checks_utf8_bytes": 10086,
+    "model_output_tokens": null
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "frozen_at": "2026-10-07T23:12:37.111358+00:00"
+}

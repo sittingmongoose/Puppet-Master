@@ -1,0 +1,14 @@
+{
+  "schema": "ER10-batch010-curation-core-v1",
+  "fixed_cutoff": "2026-10-07T23:25:57.000Z",
+  "deadline": "2026-10-07T23:50:57.000Z",
+  "selected_exact_originals": 168,
+  "new_exact_copies": 137,
+  "new_exact_copy_bytes": 37713502,
+  "raw_identity_count": 5,
+  "append_only_collisions": 1,
+  "campaign_complete": false,
+  "root_sole_git_writer": true,
+  "extent": "SELECTED_FINITE_CLOSED_TRANCHE",
+  "root_next": "verify exact staging, publish branch, verify GitHub, then root cleanup"
+}

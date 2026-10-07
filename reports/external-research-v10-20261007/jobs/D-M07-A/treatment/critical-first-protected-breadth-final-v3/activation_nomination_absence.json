@@ -1,0 +1,21 @@
+{
+  "nomination": {
+    "schema": "ER10_EXACT_OWNED_GLM_INSTALLED_STATE_NOMINATION_V1",
+    "recorded_at": "2026-10-07T22:48:09.138197+00:00",
+    "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+    "assignment_sha256": "0fa51dd432e1f8a7695ce7505a18660e4215fb11fba03e6cc00a554e9c64ea73",
+    "matching_objectives": 0,
+    "rows": [],
+    "native_active_observed": false,
+    "vendor_backend_Goal_or_ACP_mapping_inferred": false,
+    "lookup_elapsed_seconds": 0.004303961002733558,
+    "task_config_association": "Actual own dispatch/config registered separately; coordinator must verify exact configuration and task association"
+  },
+  "nomination_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M07-A-treatment-native-root-nomination-v1.json",
+  "nomination_sha256": "b1c5ca125e492ee3ab1b5d7be49ef396496d0d3a37ba8bc5da075628a995e096",
+  "actual_registered_taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3",
+  "config_sha256": "4dfeb725cebc25a12b4684b50f168bb9909a7f13457058ee3e97bab6a08577f7",
+  "active_verified": false,
+  "reason": "one root bounded lookup returned zero exact matches; absent actual native identity",
+  "observed_at": "2026-10-07T22:48:22.345488+00:00"
+}

@@ -1,0 +1,318 @@
+{
+  "schema": "COHORT3-finalfinite-v3-prelaunch-freeze",
+  "case": "D-M07-A",
+  "root_schedule": {
+    "owner": "targeted-cohort3",
+    "family": "GLM",
+    "new_version": 3,
+    "common_stages": [
+      {
+        "assignment": "fresh-untrusted-seed",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      }
+    ],
+    "control": [
+      {
+        "assignment": "document-order-review-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          25,
+          5
+        ],
+        "parallel_group": null
+      }
+    ],
+    "treatment": [
+      {
+        "assignment": "critical-first-protected-breadth-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          12,
+          13,
+          5
+        ],
+        "parallel_group": null
+      }
+    ],
+    "cold_work_minutes_per_arm": 50,
+    "common_absolute_pair_wall_minutes": 50,
+    "arm_overlap": true,
+    "original_case_card_sha256": "fb096d7c87a0cfda8fd4cfd37c5a3d01a76005d92bb160e22c6e935711a3f54c",
+    "original_material_obligations_unchanged": true,
+    "original_source_versions_scope_and_method_card_unchanged": true,
+    "arm_order": [
+      "control",
+      "treatment"
+    ],
+    "root_start_authorized_only_under_owner_capacity": true
+  },
+  "root_schedule_sha256": "901e268b7020b26c2253faefdf852e86f642a6b1f4ac8c1ecc97809c16c0580a",
+  "binding": {
+    "providerInstanceId": "zcode",
+    "driverKind": "acpRegistry",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    },
+    "admission": "HELD_GLOBAL_CAPACITY_ZERO"
+  },
+  "carrier": "prospectivepassivev2 actualstate, missingrawAPI explicit",
+  "original_science_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/case-card.json": "fb096d7c87a0cfda8fd4cfd37c5a3d01a76005d92bb160e22c6e935711a3f54c",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/INPUT_MAP.json": "7df8896bcb6203d6077ea0e9031565dd78f24fe4dd82c3288824a2712f36fa7f",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/SEED_INPUT_MAP.json": "b125e3ec8f0ccfcb1db52902aded7b25867f901a38ca40dfae0306f8061e2eef",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwal.html": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwalcode.c": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlpragma.html": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/brief.md": "690f0fe670904705c9599c8ac9b88baee83c80b7986ff7f7ef8ad73c56be30d9",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json": "97953a19aab659de9f94bde418d6deac5b8a604338ca7dc8c4f88af2213bbde2"
+  },
+  "all_stages": [
+    {
+      "stage": "D-M07-A/common/fresh-untrusted-seed-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/assignment.md",
+      "task_sha256": "c187ad40b9e4a3b24f33b638641d8d896e94ac6ce34e6ea545b35b11c51f4ce1",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "sqlwal",
+            "url": "https://www.sqlite.org/wal.html",
+            "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwal.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlwalcode",
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+            "version_or_capture": "SQLite version-3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwalcode.c",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlpragma",
+            "url": "https://www.sqlite.org/pragma.html",
+            "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlpragma.html",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/boundary.json"
+      },
+      "input_map_sha256": "8600bf8679e970c8211609405eb3ec80d8f27192ce8c6c1ba278d3909408643e",
+      "assignment": {
+        "assignment": "fresh-untrusted-seed",
+        "native_goals": 1,
+        "minutes": 20,
+        "logical_phases": [],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/draft.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "HELD_GLOBAL_CAPACITY_ZERO"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/case-card.json": "fb096d7c87a0cfda8fd4cfd37c5a3d01a76005d92bb160e22c6e935711a3f54c",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/INPUT_MAP.json": "7df8896bcb6203d6077ea0e9031565dd78f24fe4dd82c3288824a2712f36fa7f",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/SEED_INPUT_MAP.json": "b125e3ec8f0ccfcb1db52902aded7b25867f901a38ca40dfae0306f8061e2eef",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwal.html": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwalcode.c": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlpragma.html": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/brief.md": "690f0fe670904705c9599c8ac9b88baee83c80b7986ff7f7ef8ad73c56be30d9",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json": "97953a19aab659de9f94bde418d6deac5b8a604338ca7dc8c4f88af2213bbde2"
+      },
+      "objective": "Execute ER10 D-M07-A v3 fresh-untrusted-seed",
+      "clientRequestId": "er10-cohort3-D-M07-A-common-fresh-untrusted-seed-v3"
+    },
+    {
+      "stage": "D-M07-A/control/document-order-review-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/assignment.md",
+      "task_sha256": "cb73d57d86813ba41dc62e7670c026825e99c97dbea4ca124a3c00712c8c683e",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "sqlwal",
+            "url": "https://www.sqlite.org/wal.html",
+            "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwal.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlwalcode",
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+            "version_or_capture": "SQLite version-3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwalcode.c",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlpragma",
+            "url": "https://www.sqlite.org/pragma.html",
+            "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlpragma.html",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "5ad019fd32e1b0cdf761fd04d7005ec6d56c8e0f302fb644345e80155595332b",
+      "assignment": {
+        "assignment": "document-order-review-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          25,
+          5
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "HELD_GLOBAL_CAPACITY_ZERO"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/case-card.json": "fb096d7c87a0cfda8fd4cfd37c5a3d01a76005d92bb160e22c6e935711a3f54c",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/INPUT_MAP.json": "7df8896bcb6203d6077ea0e9031565dd78f24fe4dd82c3288824a2712f36fa7f",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/SEED_INPUT_MAP.json": "b125e3ec8f0ccfcb1db52902aded7b25867f901a38ca40dfae0306f8061e2eef",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwal.html": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwalcode.c": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlpragma.html": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/brief.md": "690f0fe670904705c9599c8ac9b88baee83c80b7986ff7f7ef8ad73c56be30d9",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json": "97953a19aab659de9f94bde418d6deac5b8a604338ca7dc8c4f88af2213bbde2"
+      },
+      "objective": "Execute ER10 D-M07-A v3 document-order-review-final",
+      "clientRequestId": "er10-cohort3-D-M07-A-control-document-order-review-final-v3"
+    },
+    {
+      "stage": "D-M07-A/treatment/critical-first-protected-breadth-final-v3",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3",
+      "task_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+      "task_sha256": "877854dc59d6e6974f6ff09b1a86ce97ed1cda6cb6f2823e28776e6756c343f6",
+      "input_map": {
+        "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/brief.md",
+        "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json",
+        "sources": [
+          {
+            "source_id": "sqlwal",
+            "url": "https://www.sqlite.org/wal.html",
+            "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwal.html",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlwalcode",
+            "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+            "version_or_capture": "SQLite version-3.51.3",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwalcode.c",
+            "kind": "public primary raw bytes"
+          },
+          {
+            "source_id": "sqlpragma",
+            "url": "https://www.sqlite.org/pragma.html",
+            "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+            "capture_date_utc": "2026-10-07",
+            "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+            "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlpragma.html",
+            "kind": "public primary raw bytes"
+          }
+        ],
+        "boundary": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/boundary.json",
+        "draft": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/draft.md",
+          "kind": "fresh common untrusted candidate proposal"
+        }
+      },
+      "input_map_sha256": "dfeacfa5086c43e86a391614a105fac35f4a71bda50e3562226145b06d74f69f",
+      "assignment": {
+        "assignment": "critical-first-protected-breadth-final",
+        "native_goals": 1,
+        "minutes": 30,
+        "logical_phases": [
+          12,
+          13,
+          5
+        ],
+        "parallel_group": null
+      },
+      "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/final.md",
+      "role": "general",
+      "binding": {
+        "providerInstanceId": "zcode",
+        "driverKind": "acpRegistry",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "thought": "max",
+          "mode": "yolo"
+        },
+        "admission": "HELD_GLOBAL_CAPACITY_ZERO"
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "science_hashes": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/case-card.json": "fb096d7c87a0cfda8fd4cfd37c5a3d01a76005d92bb160e22c6e935711a3f54c",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/INPUT_MAP.json": "7df8896bcb6203d6077ea0e9031565dd78f24fe4dd82c3288824a2712f36fa7f",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/SEED_INPUT_MAP.json": "b125e3ec8f0ccfcb1db52902aded7b25867f901a38ca40dfae0306f8061e2eef",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwal.html": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwalcode.c": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlpragma.html": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/brief.md": "690f0fe670904705c9599c8ac9b88baee83c80b7986ff7f7ef8ad73c56be30d9",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json": "97953a19aab659de9f94bde418d6deac5b8a604338ca7dc8c4f88af2213bbde2"
+      },
+      "objective": "Execute ER10 D-M07-A v3 critical-first-protected-breadth-final",
+      "clientRequestId": "er10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3"
+    }
+  ],
+  "attempt_limit": 1,
+  "old_versions": "immutable; costs retained inclusive separate, no priorfailedscience inputs/no bestof",
+  "frozen_at": "2026-10-07T20:27:58.267237+00:00"
+}

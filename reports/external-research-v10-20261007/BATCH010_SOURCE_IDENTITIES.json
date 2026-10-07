@@ -1,0 +1,493 @@
+{
+  "schema": "ER10-batch010-source-identity-and-limits-v1",
+  "fixed_cutoff": "2026-10-07T23:25:57.000Z",
+  "source_bodies_published": false,
+  "source_bodies_refetched": false,
+  "identities": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlpragma.html",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "bytes": 139778,
+      "mtime_ns": 1791397997285437052,
+      "why": "explicit closed M07A v3 scientific/protocol/native engineering evidence or closed role-separated SDK V2 metadata/code",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/INPUT_MAP.json",
+          "pointer": "/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/SEED_INPUT_MAP.json",
+          "pointer": "/original_sources/2",
+          "source_id": "sqlpragma"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json",
+          "pointer": "/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/0/input_map/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/1/input_map/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/2/input_map/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/0/input_map/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/1/input_map/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/2/input_map/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/INPUT_MAP.json",
+          "pointer": "/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/INPUT_MAP.json",
+          "pointer": "/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/INPUT_MAP.json",
+          "pointer": "/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J1/INPUT_MAP.json",
+          "pointer": "/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/INPUT_MAP.json",
+          "pointer": "/sources/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/checks.json",
+          "pointer": "/frozen_primary_identity/2",
+          "source_id": "sqlpragma",
+          "url": "https://www.sqlite.org/pragma.html",
+          "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+          "capture_date_utc": "2026-10-07"
+        }
+      ],
+      "locator_limit": "Original body excluded; exact authored maps/checks retain URL/capture/version/ranges. Mutable URLs and unverified release tags cannot promise frozen-byte replay. Hash/size do not reconstruct bytes; no source refetched."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "mtime_ns": 1791397997284955748,
+      "why": "explicit closed M07A v3 scientific/protocol/native engineering evidence or closed role-separated SDK V2 metadata/code",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/INPUT_MAP.json",
+          "pointer": "/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/SEED_INPUT_MAP.json",
+          "pointer": "/original_sources/0",
+          "source_id": "sqlwal"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json",
+          "pointer": "/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/0/input_map/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/1/input_map/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/2/input_map/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/0/input_map/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/1/input_map/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/2/input_map/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/INPUT_MAP.json",
+          "pointer": "/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/INPUT_MAP.json",
+          "pointer": "/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/INPUT_MAP.json",
+          "pointer": "/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J1/INPUT_MAP.json",
+          "pointer": "/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/INPUT_MAP.json",
+          "pointer": "/sources/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/checks.json",
+          "pointer": "/frozen_primary_identity/0",
+          "source_id": "sqlwal",
+          "url": "https://www.sqlite.org/wal.html",
+          "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+          "capture_date_utc": "2026-10-07"
+        }
+      ],
+      "locator_limit": "Original body excluded; exact authored maps/checks retain URL/capture/version/ranges. Mutable URLs and unverified release tags cannot promise frozen-byte replay. Hash/size do not reconstruct bytes; no source refetched."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources/sqlwalcode.c",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "bytes": 177587,
+      "mtime_ns": 1791397997285227480,
+      "why": "explicit closed M07A v3 scientific/protocol/native engineering evidence or closed role-separated SDK V2 metadata/code",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/INPUT_MAP.json",
+          "pointer": "/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/SEED_INPUT_MAP.json",
+          "pointer": "/original_sources/1",
+          "source_id": "sqlwalcode"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M07-A/inputs/sources.json",
+          "pointer": "/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/0/input_map/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/1/input_map/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort3/D-M07-A/administrative-prebinding-originals/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/2/input_map/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/0/input_map/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/1/input_map/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_ALL_STAGE_PRELAUNCH_FREEZE.json",
+          "pointer": "/all_stages/2/input_map/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/INPUT_MAP.json",
+          "pointer": "/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/INPUT_MAP.json",
+          "pointer": "/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/INPUT_MAP.json",
+          "pointer": "/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J1/INPUT_MAP.json",
+          "pointer": "/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/INPUT_MAP.json",
+          "pointer": "/sources/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/checks.json",
+          "pointer": "/frozen_primary_identity/1",
+          "source_id": "sqlwalcode",
+          "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+          "version_or_capture": "SQLite version-3.51.3",
+          "capture_date_utc": "2026-10-07"
+        }
+      ],
+      "locator_limit": "Original body excluded; exact authored maps/checks retain URL/capture/version/ranges. Mutable URLs and unverified release tags cannot promise frozen-byte replay. Hash/size do not reconstruct bytes; no source refetched."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/additional-captures/lockingv3.html",
+      "sha256": "fa67031159fc0658b6e3fcfa4e446c140838c75cb813ff9fafd47fdae927936f",
+      "bytes": 29892,
+      "mtime_ns": 1791413687674648122,
+      "why": "explicit closed M07A v3 scientific/protocol/native engineering evidence or closed role-separated SDK V2 metadata/code",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/checks.json",
+          "pointer": "/source_ops/additional_primary_fetches/0",
+          "source_id": "lockingv3",
+          "url": "https://www.sqlite.org/lockingv3.html",
+          "version_or_capture": "Mutable SQLite documentation; reviewer capture 2026-10-07, byte-identical to candidate-declared capture; not release-pinned"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/freeze_disposition.json",
+          "pointer": "/performed_source_operations/additional_primary_fetches/0",
+          "source_id": "lockingv3",
+          "url": "https://www.sqlite.org/lockingv3.html",
+          "version_or_capture": "Mutable SQLite documentation; reviewer capture 2026-10-07, byte-identical to candidate-declared capture; not release-pinned"
+        }
+      ],
+      "locator_limit": "Original body excluded; exact authored maps/checks retain URL/capture/version/ranges. Mutable URLs and unverified release tags cannot promise frozen-byte replay. Hash/size do not reconstruct bytes; no source refetched."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/additional-captures/uri.html",
+      "sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7",
+      "bytes": 15559,
+      "mtime_ns": 1791413728069302706,
+      "why": "explicit closed M07A v3 scientific/protocol/native engineering evidence or closed role-separated SDK V2 metadata/code",
+      "kind": "RAW_BODY_EXCLUDED",
+      "github_body_published_in_batch008": false,
+      "archive_verified": false,
+      "private_retention": "UNKNOWN_UNVERIFIED",
+      "source_locators": [
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/checks.json",
+          "pointer": "/source_ops/additional_primary_fetches/1",
+          "source_id": "uri",
+          "url": "https://www.sqlite.org/uri.html",
+          "version_or_capture": "Mutable SQLite documentation; reviewer capture 2026-10-07, byte-identical to candidate-declared capture; not release-pinned"
+        },
+        {
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort3/D-M07-A-v3/J2/freeze_disposition.json",
+          "pointer": "/performed_source_operations/additional_primary_fetches/1",
+          "source_id": "uri",
+          "url": "https://www.sqlite.org/uri.html",
+          "version_or_capture": "Mutable SQLite documentation; reviewer capture 2026-10-07, byte-identical to candidate-declared capture; not release-pinned"
+        }
+      ],
+      "locator_limit": "Original body excluded; exact authored maps/checks retain URL/capture/version/ranges. Mutable URLs and unverified release tags cannot promise frozen-byte replay. Hash/size do not reconstruct bytes; no source refetched."
+    }
+  ],
+  "root_retention_alternative_metadata": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/CPython-v3.12.3-immutable-retention-alternatives-v1.json",
+      "sha256": "f6efa76ab0c7296098db6850802bab26987dd9e028089f46bcbc7acc3a27d8ee",
+      "bytes": 5956,
+      "kind": "RETENTION_ALTERNATIVE_METADATA_ONLY",
+      "source_bodies_opened": false,
+      "semantic_regrade_or_runtime_proof": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/immutable-code-witness-alternatives-root-v1.json",
+      "sha256": "d5e69ea5819f2f0b0b04b7c93e5d4d120be765beeef98df21f00ce8f726663e6",
+      "bytes": 10283,
+      "kind": "RETENTION_ALTERNATIVE_METADATA_ONLY",
+      "source_bodies_opened": false,
+      "semantic_regrade_or_runtime_proof": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/GTFS-DAG-and-Slint-old-release-retention-alternatives-v1.json",
+      "sha256": "578b5158862926cea63a789c7e1faba64832e36b64fa3f7c767ea34c81542dd1",
+      "bytes": 1970,
+      "kind": "RETENTION_ALTERNATIVE_METADATA_ONLY",
+      "source_bodies_opened": false,
+      "semantic_regrade_or_runtime_proof": false
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/minimal-witness-root-adjudication-v2.json",
+      "sha256": "ea5242c561e114481ff229d4b20e2d5fad389550263c2ef9eda594094d48e6e7",
+      "bytes": 2043,
+      "kind": "RETENTION_ALTERNATIVE_METADATA_ONLY",
+      "source_bodies_opened": false,
+      "semantic_regrade_or_runtime_proof": false
+    }
+  ],
+  "approved_prior_quote_only": "already-published B9 171B/22word Slint witness pinned; no new quoted source bodies",
+  "locator_limit": "Exact primary maps/checks preserve original locators and captures; missing frozen source bodies, unverified immutable tag resolution, proposed runtime tests and unknown provenance remain limitations. Source body reconstruction is not claimed."
+}

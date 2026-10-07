@@ -1,0 +1,189 @@
+{
+  "schema": "ER10-batch010-mechanical-locator-supplement-v1",
+  "fixed_cutoff": "2026-10-07T23:25:57.000Z",
+  "exact_published_old_authority_byte_aliases": [
+    {
+      "requested_original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-supervisor.json",
+      "requested_sha256": "e6b0a6c8bd943dde459a45c9f4269066b4306cfe86f64833772990a65e11324e",
+      "requested_bytes": 28684,
+      "published_snapshot_original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/working-input/state/anchor-supervisor.json",
+      "canonical_target_path": "reports/external-research-v10-20261007/helpers/final-report/normalizer-v1/working-input/state/anchor-supervisor.json",
+      "reference_commit": "415b8a478a89e7c6e9ac73ca0a6975a211809892",
+      "prior_manifest": "BATCH008_MANIFEST.json",
+      "status": "EXACT_BYTE_EQUIVALENT_PUBLISHED_ALIAS",
+      "provenance_limit": "Byte equivalence is verified. Snapshot path is distinct provenance; original capture identity record remains unchanged. No source/current-state recapture or scientific regrade."
+    },
+    {
+      "requested_original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2.json",
+      "requested_sha256": "bf085db8938760546aec5235c5252bd0ad4ee616bb790be3813342b6317d9565",
+      "requested_bytes": 284231,
+      "published_snapshot_original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/normalizer-v1/working-input/state/targeted-cohort2.json",
+      "canonical_target_path": "reports/external-research-v10-20261007/helpers/final-report/normalizer-v1/working-input/state/targeted-cohort2.json",
+      "reference_commit": "415b8a478a89e7c6e9ac73ca0a6975a211809892",
+      "prior_manifest": "BATCH008_MANIFEST.json",
+      "status": "EXACT_BYTE_EQUIVALENT_PUBLISHED_ALIAS",
+      "provenance_limit": "Byte equivalence is verified. Snapshot path is distinct provenance; original capture identity record remains unchanged. No source/current-state recapture or scientific regrade."
+    }
+  ],
+  "unresolved_old_authority_exact_identities": [
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/checkpoint.json",
+      "sha256": "7f6f0f137c2b45d94eefe883c0e338a5ab87549507a42c866d11f74cd64948d7",
+      "bytes": 48176,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1.json",
+      "sha256": "2c71e32932194440c2cbeb04ea2ba18221e8e3aaecd87dc0f9966eb10cb4edfd",
+      "bytes": 1960794,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+      "sha256": "9dede05224789b578ba9991b09e42dff557601f1fd7870ca423941608efd0509",
+      "bytes": 132367,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4.json",
+      "sha256": "ef1f59beada7685081ce954851c442664232d80f1e4a367d8185ab11ce02b129",
+      "bytes": 126866,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods.json",
+      "sha256": "b989a2a93b9815364b23bb202a82a2b705cedcc6a741004fc6061c2c1d83f9f9",
+      "bytes": 1264456,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/confirmation-supervisor.json",
+      "sha256": "62cb24b04cf6be7f0cce380a81ce9efd4bb77a4b5d7402842a41eb3eff9e8dd5",
+      "bytes": 120729,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/dispatches.jsonl",
+      "sha256": "34922d63bb33b71158b8411a6ce566f1e55062d30ec26f0c0254c1dbe4963dd0",
+      "bytes": 37534,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-dispatches.jsonl",
+      "sha256": "0f338b983f8437822834d85802f3722bd5af8303958f6d6da9c8e1f4f4c922a4",
+      "bytes": 32972,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-dispatches.jsonl",
+      "sha256": "6d365ea7680ccdf9b30ac8db3a8906671bf6397cfa8eb163cf5e0cd23c33dd68",
+      "bytes": 4596,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1-dispatches.jsonl",
+      "sha256": "d1555a6ad7f4f38ab10cf6bb26d61ff4b62844012a9fc591b1f8b7c9a70cc7d7",
+      "bytes": 632802,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2-dispatches.jsonl",
+      "sha256": "bfedb483e6d0a10faa6f2a7ddf22da4f56def16ad18dbffb3f0d260c75afce12",
+      "bytes": 184249,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3-dispatches.jsonl",
+      "sha256": "b528a37d5687441a73f48b65412bb3f40b867e8c1c66363e7693ae182d269107",
+      "bytes": 227037,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4-dispatches.jsonl",
+      "sha256": "e111ab1731236f18eee2dd8e65c3b66622ed97616404762e60e68055d2d46d43",
+      "bytes": 292231,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods-dispatches.jsonl",
+      "sha256": "604ca191ac14e74838e90a647f4cc5faee524c02c57e5fb6b2a475cbaa74d2a6",
+      "bytes": 235334,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    }
+  ],
+  "resolved_nested_M07A_stage_locators": [
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "identity_pointer": "/stage_freezes/D-M07-A/control/document-order-review-final-v3/scientific_files/final.md",
+      "preflight_inferred_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/final.md",
+      "actual_authored_nested_stage_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/final.md",
+      "sha256": "4938903314c928b37a17b96649cf7f206c388aadad284247ece173f32ad76c9e",
+      "bytes": 8022,
+      "target_path": "reports/external-research-v10-20261007/jobs/D-M07-A/control/document-order-review-final-v3/final.md",
+      "status": "MATCH_AUTHORED_NESTED_STAGE_LOCATOR",
+      "limit": "Preflight generic locator ignored nested stage-map context. Every scientific file was already exact manifested; no scientific absence, original byte repair or grade change."
+    },
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "identity_pointer": "/stage_freezes/D-M07-A/control/document-order-review-final-v3/scientific_files/working-notes.md",
+      "preflight_inferred_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/working-notes.md",
+      "actual_authored_nested_stage_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/working-notes.md",
+      "sha256": "4d05f45f557a4cd6f3df062efe38a8720ba82193d290b4d9f920ba083a26690d",
+      "bytes": 8587,
+      "target_path": "reports/external-research-v10-20261007/jobs/D-M07-A/control/document-order-review-final-v3/working-notes.md",
+      "status": "MATCH_AUTHORED_NESTED_STAGE_LOCATOR",
+      "limit": "Preflight generic locator ignored nested stage-map context. Every scientific file was already exact manifested; no scientific absence, original byte repair or grade change."
+    },
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "identity_pointer": "/stage_freezes/D-M07-A/treatment/critical-first-protected-breadth-final-v3/scientific_files/notes-reserve.md",
+      "preflight_inferred_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/notes-reserve.md",
+      "actual_authored_nested_stage_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/notes-reserve.md",
+      "sha256": "56456041749bfa3e2863a6a379a128dda6df38759f01bb778a267eef40b810d5",
+      "bytes": 8513,
+      "target_path": "reports/external-research-v10-20261007/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/notes-reserve.md",
+      "status": "MATCH_AUTHORED_NESTED_STAGE_LOCATOR",
+      "limit": "Preflight generic locator ignored nested stage-map context. Every scientific file was already exact manifested; no scientific absence, original byte repair or grade change."
+    },
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "identity_pointer": "/stage_freezes/D-M07-A/treatment/critical-first-protected-breadth-final-v3/scientific_files/final.md",
+      "preflight_inferred_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/final.md",
+      "actual_authored_nested_stage_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/final.md",
+      "sha256": "e7ac1a889bb1c5c32ace2011fd1868bee6be3207aac3ae56afefd73a0ed240a4",
+      "bytes": 8309,
+      "target_path": "reports/external-research-v10-20261007/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/final.md",
+      "status": "MATCH_AUTHORED_NESTED_STAGE_LOCATOR",
+      "limit": "Preflight generic locator ignored nested stage-map context. Every scientific file was already exact manifested; no scientific absence, original byte repair or grade change."
+    },
+    {
+      "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/V3_PAIR_FREEZE.json",
+      "identity_pointer": "/stage_freezes/D-M07-A/treatment/critical-first-protected-breadth-final-v3/scientific_files/notes-critical-check.md",
+      "preflight_inferred_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/notes-critical-check.md",
+      "actual_authored_nested_stage_locator": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/notes-critical-check.md",
+      "sha256": "e15ae0c95bd00c986cbb69ca4af0bc2122bb5f41cf30b33495f3fdee6c2ebf08",
+      "bytes": 8886,
+      "target_path": "reports/external-research-v10-20261007/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/notes-critical-check.md",
+      "status": "MATCH_AUTHORED_NESTED_STAGE_LOCATOR",
+      "limit": "Preflight generic locator ignored nested stage-map context. Every scientific file was already exact manifested; no scientific absence, original byte repair or grade change."
+    }
+  ],
+  "initial_preflight_records_preserved": true,
+  "science_or_original_authority_records_rewritten": false,
+  "no_new_source_research_or_recapture": true,
+  "remaining_limit": "Fourteen old raw authority editions lack exact public bytes at their captured identities; original selected metadata authority manifest remains exact. Do not substitute current state or infer perfect old whole-authority replay."
+}

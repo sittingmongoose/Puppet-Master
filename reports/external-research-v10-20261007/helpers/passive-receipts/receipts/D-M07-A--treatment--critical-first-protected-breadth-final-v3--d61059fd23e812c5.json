@@ -1,0 +1,392 @@
+{
+  "schema": "pm.er10.passive-receipts.v1",
+  "stage": "D-M07-A/treatment/critical-first-protected-breadth-final-v3",
+  "observed_at_utc": "2026-10-07T23:05:41.339291+00:00",
+  "thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3",
+  "task_id": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3",
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/dispatch.json",
+    "type": "stage_dispatch",
+    "version": null,
+    "record_id": null,
+    "call_id": null,
+    "time": null,
+    "sha256": "8a7e6a7550f3b379372803bba9b825c6de2c7e2f1d1aae79d9f5a516d6ac34cb"
+  },
+  "authority_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/checkpoint.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "026ff07b9d56f35ce4d5f9da80885020f15da299da2ef08ff16dab5ab70604e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-supervisor.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "e6b0a6c8bd943dde459a45c9f4269066b4306cfe86f64833772990a65e11324e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-supervisor.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "ad6b1c10f84bce1facbfbd102a8cad531ebf42ddf880b6ccc899d0e88f5a35dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "87071226c3e1c6a8be1c6c705a83c8a149ce1da1bb9af57e9209415ecbfffce8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "a1ccf209f77507e3b768f762aa575343993004d6760f9055f49daac6905dd5a8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "b4c1adeb50b52cf234cb9d0acc1bf8c6fe5f8612ef38337b5dd69b51d21881eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "febb90c80c11a1a36e4e3bd8f8e3b2ed8872de21efc1f85bab2aa2accff61077"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods.json",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "eb71a9b2a6db7033be7f8adffb7b44e657154b14835615bcc117022a1ba23ba8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "34922d63bb33b71158b8411a6ce566f1e55062d30ec26f0c0254c1dbe4963dd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "0f338b983f8437822834d85802f3722bd5af8303958f6d6da9c8e1f4f4c922a4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "6d365ea7680ccdf9b30ac8db3a8906671bf6397cfa8eb163cf5e0cd23c33dd68"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "bf4509a1dcf0abbcecc114d2610f3e488124d4a015bd75bbcb0ab1c8d02d6a8d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "bfedb483e6d0a10faa6f2a7ddf22da4f56def16ad18dbffb3f0d260c75afce12"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "d01dfe8629ddf9c071445d3579b9a1cb17e731181698c2bd695144a83e459993"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "eee054185dc513883312185bdd46423fb3a4f265adea100df8b6329b3ed651dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods-dispatches.jsonl",
+      "type": "campaign_authority",
+      "version": null,
+      "record_id": null,
+      "call_id": null,
+      "time": null,
+      "sha256": "f21b11f3fd9df0734f2ea1e7567532a6e37511f8d09b600184e8933611d370a6"
+    }
+  ],
+  "binding": [
+    {
+      "id": "provider-thread:provider:acpRegistry:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A7133e663-26cf-429a-91fd-daa65eb3962f%25253Adelegate-task%25253Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3%3Aordinal%3A1",
+      "driver": "acpRegistry",
+      "providerInstanceId": "zcode",
+      "providerSessionId": "provider-session:provider-instance:zcode:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3:0fadc226-15d4-4a18-a15d-123143709cca",
+      "nativeThreadRef": {
+        "driver": "acpRegistry",
+        "nativeId": "53e7c45b-80d3-49bb-b131-bfe18df03f6b",
+        "strength": "strong"
+      },
+      "status": "idle",
+      "updatedAt": "2026-10-07T23:04:09.395Z",
+      "contextUsage": {
+        "usedTokens": 109052,
+        "maxTokens": 1000000
+      },
+      "source": {
+        "path": "/home/sittingmongoose/.t3/userdata/statev2.sqlite",
+        "type": "t3_provider_thread_projection",
+        "version": "statev2",
+        "record_id": "provider-thread:provider:acpRegistry:native-thread:pending%3Arun%3Athread%3Athread%253Adelegated-task%253Acommand%25253Amcp%25253A7133e663-26cf-429a-91fd-daa65eb3962f%25253Adelegate-task%25253Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3%3Aordinal%3A1",
+        "call_id": null,
+        "time": "2026-10-07T23:04:09.395Z",
+        "sha256": "9477b3bcc1ae337874ca82dee13f615808042c021248357e099d8782cd3edd97"
+      },
+      "provider_session": {
+        "id": "provider-session:provider-instance:zcode:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3:0fadc226-15d4-4a18-a15d-123143709cca",
+        "driver": "acpRegistry",
+        "providerInstanceId": "zcode",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "status": "ready",
+        "createdAt": "2026-10-07T22:47:30.328Z",
+        "updatedAt": "2026-10-07T22:47:30.328Z"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "source": {
+        "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_02e7a2ad-3bd7-4590-a9bd-2f4eb0e5a3d8/state.json",
+        "type": "glm_installed_integration_driver_state",
+        "version": "zcode-acp-0.65.1-GoalLoopDriver",
+        "record_id": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_02e7a2ad-3bd7-4590-a9bd-2f4eb0e5a3d8/state.json",
+        "call_id": null,
+        "time": 1791414249231,
+        "sha256": "69fb176b66dd6e90b76b2be132a5a32cb294756bd3cc0f1656d3a55ba643f81b"
+      },
+      "tool": null,
+      "native_response": {
+        "objective_sha256": "4a834df035130eb30e63400f17f910dd8aac096bf4fc1c6b01bab24581934049",
+        "status": "complete",
+        "rounds": 5,
+        "tickets": [
+          {
+            "id": "t1",
+            "title_sha256": "00964ce0c345e180cea2c2ce40ea4ade451515ce84954a6abd52e698c2ba5661",
+            "acceptance_sha256": "dd79287c8d25393a6215cd90381b13ab64e22ee3a71b4e8122f2cad040f79d2d",
+            "status": "done"
+          },
+          {
+            "id": "t2",
+            "title_sha256": "4a5afafcbf632de2dff59ef6da4a9dd858ce583f8a2acf111f4a8f57b1c3f7ec",
+            "acceptance_sha256": "82bca26d15de21b56bc2b82a11db617c3d33c67ac56d9bc8d1858dc8defb5893",
+            "status": "done"
+          },
+          {
+            "id": "t3",
+            "title_sha256": "e6798fca75b520e432eda2566283b526f0f8819d4bc50cd14da204a80e48c4a4",
+            "acceptance_sha256": "4f744ca981ec9d5d886c1ab695e5353ca373f1df7c62f404977dd37a85bbfa09",
+            "status": "done"
+          },
+          {
+            "id": "t4",
+            "title_sha256": "e72cc24622b2aae49624a79388a73eac1b8cfdf520cd43e332cfd0782ba8d6f2",
+            "acceptance_sha256": "cd971bd1035725a050955c5c751260f5860f9d50bb4df555cd221dd37b7c0091",
+            "status": "done"
+          },
+          {
+            "id": "t5",
+            "title_sha256": "ea4a5683b1524f0673dc249c04f3642d71da99583766d49d4c8465ca7be869aa",
+            "acceptance_sha256": "e106dd071ad76df069a57e4f5a783c3a4381151557cdce7520718e42c0fd5ae9",
+            "status": "done"
+          }
+        ],
+        "handoffFresh": false,
+        "createdAt": 1791413261764,
+        "updatedAt": 1791414249231,
+        "endedReason": "all tickets done"
+      },
+      "response_sha256": "befa8a0d15d0743973a367ed514ebf493efcbe92b17e9075e702187d950a1176",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged",
+      "binding": {
+        "backend_session_directory": "sess_02e7a2ad-3bd7-4590-a9bd-2f4eb0e5a3d8",
+        "exact_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+        "objective_sha256": "4a834df035130eb30e63400f17f910dd8aac096bf4fc1c6b01bab24581934049",
+        "association": "exact unique assignment objective; ACP alias/backend mapping independently unknown",
+        "t3_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3",
+        "acp_refs": [
+          "53e7c45b-80d3-49bb-b131-bfe18df03f6b"
+        ]
+      }
+    },
+    {
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/integration-state-terminal.json",
+        "type": "glm_installed_integration_driver_state",
+        "version": "zcode-acp-0.65.1-GoalLoopDriver",
+        "record_id": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_02e7a2ad-3bd7-4590-a9bd-2f4eb0e5a3d8/state.json",
+        "call_id": null,
+        "time": "2026-10-07T23:05:41.225822+00:00",
+        "sha256": "2d39bae32e36d7d165cfc8cb39b4ba44eb0b5e007c16b163ce106abc83354d30"
+      },
+      "tool": null,
+      "native_response": {
+        "objective_sha256": "4a834df035130eb30e63400f17f910dd8aac096bf4fc1c6b01bab24581934049",
+        "status": "complete",
+        "rounds": 5,
+        "tickets": [
+          {
+            "id": "t1",
+            "title_sha256": "00964ce0c345e180cea2c2ce40ea4ade451515ce84954a6abd52e698c2ba5661",
+            "acceptance_sha256": "dd79287c8d25393a6215cd90381b13ab64e22ee3a71b4e8122f2cad040f79d2d",
+            "status": "done"
+          },
+          {
+            "id": "t2",
+            "title_sha256": "4a5afafcbf632de2dff59ef6da4a9dd858ce583f8a2acf111f4a8f57b1c3f7ec",
+            "acceptance_sha256": "82bca26d15de21b56bc2b82a11db617c3d33c67ac56d9bc8d1858dc8defb5893",
+            "status": "done"
+          },
+          {
+            "id": "t3",
+            "title_sha256": "e6798fca75b520e432eda2566283b526f0f8819d4bc50cd14da204a80e48c4a4",
+            "acceptance_sha256": "4f744ca981ec9d5d886c1ab695e5353ca373f1df7c62f404977dd37a85bbfa09",
+            "status": "done"
+          },
+          {
+            "id": "t4",
+            "title_sha256": "e72cc24622b2aae49624a79388a73eac1b8cfdf520cd43e332cfd0782ba8d6f2",
+            "acceptance_sha256": "cd971bd1035725a050955c5c751260f5860f9d50bb4df555cd221dd37b7c0091",
+            "status": "done"
+          },
+          {
+            "id": "t5",
+            "title_sha256": "ea4a5683b1524f0673dc249c04f3642d71da99583766d49d4c8465ca7be869aa",
+            "acceptance_sha256": "e106dd071ad76df069a57e4f5a783c3a4381151557cdce7520718e42c0fd5ae9",
+            "status": "done"
+          }
+        ],
+        "handoffFresh": false,
+        "createdAt": 1791413261764,
+        "updatedAt": 1791414249231,
+        "endedReason": "all tickets done"
+      },
+      "response_sha256": "befa8a0d15d0743973a367ed514ebf493efcbe92b17e9075e702187d950a1176",
+      "redaction": "Text fields replaced by UTF-8 SHA-256; all observed scalar states/counters/identities unchanged",
+      "binding": {
+        "backend_session_directory": "sess_02e7a2ad-3bd7-4590-a9bd-2f4eb0e5a3d8",
+        "exact_assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/assignment.md",
+        "objective_sha256": "4a834df035130eb30e63400f17f910dd8aac096bf4fc1c6b01bab24581934049",
+        "association": "exact unique assignment objective; ACP alias/backend mapping independently unknown",
+        "t3_thread_id": "thread:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3",
+        "acp_refs": [
+          "53e7c45b-80d3-49bb-b131-bfe18df03f6b"
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Installed integration driver state is not a vendor backend target. No inferred active/terminal state from T3 completed turns. Root owns continuation repair.",
+    "No generated/cached/provider billing fields exposed by selected sources; bounded absence only. No additional quota probes.",
+    "No continuous Goal reasoning certification. Fresh native state plus binding is an observed state, never a replacement create receipt.",
+    "SQLite record hashes identify observed payloads, not immutable whole DB snapshots. Source can change immediately after observation.",
+    "File access names/hashes not harvested on this route; scope audit remains incomplete_unknown."
+  ],
+  "usage": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning_subset": null,
+    "provider_billing": null,
+    "semantics": "Unknown unless explicitly exposed. Native cumulative Goal/context counters remain in their original states; no sums or billing estimates."
+  },
+  "scope_audit": "incomplete_unknown; advisory map is not a filesystem firewall",
+  "thread_metadata": {
+    "modelSelection": {
+      "instanceId": "zcode",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": [
+        {
+          "id": "thought",
+          "value": "max"
+        },
+        {
+          "id": "mode",
+          "value": "yolo"
+        }
+      ]
+    },
+    "providerInstanceId": "zcode",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "lineage": {
+      "parentThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-targeted-cohort3-v1",
+      "relationshipToParent": "subagent",
+      "rootThreadId": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad"
+    }
+  },
+  "parent_in_campaign_authority": true,
+  "native_timestamp_units": {
+    "*_ms": "milliseconds_since_unix_epoch",
+    "createdAt/updatedAt_in_GLM_driver": "milliseconds_since_unix_epoch",
+    "Codex_goal_createdAt/updatedAt": "seconds_since_unix_epoch",
+    "T3_source_times": "ISO-8601; native values preserved"
+  },
+  "lifecycle_observations": {
+    "states_in_source_order": [
+      "complete",
+      "complete"
+    ],
+    "active_get_response": false,
+    "terminal_get_response": false,
+    "meaning": "Observed source fields only; no order adjudication or inferred lifecycle transition."
+  },
+  "capture": {
+    "create_goal": "missing_actual_response",
+    "get_goal": "missing_actual_response",
+    "update_goal": "missing_actual_response"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "objective": "Execute ER10 D-M07-A v3 document-order-review-final. Read and execute the external scientific assignment at /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/assignment.md.\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+  "status": "complete",
+  "rounds": 4,
+  "tickets": [
+    {
+      "id": "t1",
+      "title": "Intake and source-integrity gate",
+      "acceptance": "Read INPUT_MAP.json, brief.md, boundary.json, sources.json only; run sha256sum on the three captured sources (sqlwal.html, sqlwalcode.c, sqlpragma.html) and confirm each digest matches sources.json; any mismatch stops the review before reading the draft",
+      "status": "done"
+    },
+    {
+      "id": "t2",
+      "title": "Document-order critic review of the draft",
+      "acceptance": "Read common/fresh-untrusted-seed-v3/draft.md once through in normal document order, adjudicating every obligation plus the optional lead against wal.html, wal.c 3.51.3, and pragma.html; produce ordered working notes with a verdict (accepted/amended/rejected/unresolved) and source link per obligation, marking proposed versus actually-executed checks",
+      "status": "done"
+    },
+    {
+      "id": "t3",
+      "title": "Write final.md",
+      "acceptance": "Compose the required output at jobs/D-M07-A/control/document-order-review-final-v3/final.md: ~1100 words soft cap, eight material findings, governing conditions never omitted, source links to capture paths/URLs/versions/hashes, uncertainty and limitations recorded; verify with wc -w final.md (<= ~1100) and grep -c for eight distinct findings",
+      "status": "done"
+    },
+    {
+      "id": "t4",
+      "title": "Delivery QA and status report",
+      "acceptance": "Re-read final.md against the boundary and checklist (distinctions present, no forbidden sources, timings/source-operations/output-bytes recorded if easy); confirm the file exists at the exact required path and finish with the concise path/status final inside the 30-minute stage ceiling",
+      "status": "done"
+    }
+  ],
+  "handoffFresh": false,
+  "createdAt": 1791413244780,
+  "updatedAt": 1791413970112,
+  "endedReason": "all tickets done"
+}

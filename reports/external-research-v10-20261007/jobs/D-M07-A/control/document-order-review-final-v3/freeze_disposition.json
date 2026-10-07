@@ -1,0 +1,41 @@
+{
+  "stage": "D-M07-A/control/document-order-review-final-v3",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_3da10ecd-b492-448e-aeb5-058fdcec2f09/state.json",
+  "native_createdAt": 1791413244780,
+  "native_status": "complete",
+  "native_active_observed": false,
+  "comparative_eligibility": "HOLD_MISSING_NATIVE_ACTIVE_DIAGNOSTIC_ONLY",
+  "t3_status": "completed",
+  "quiet": true,
+  "requestedAt": "2026-10-07T22:47:09.830Z",
+  "startedAt": "2026-10-07T22:47:16.671Z",
+  "completedAt": "2026-10-07T22:59:32.345Z",
+  "dispatch_to_delivery_seconds": 742.515,
+  "stage_ceiling_seconds": 1800,
+  "absolute_case_deadline": "2026-10-07T23:26:18.422037+00:00",
+  "budget_delivery_eligible": true,
+  "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/final.md",
+  "output_sha256": "4938903314c928b37a17b96649cf7f206c388aadad284247ece173f32ad76c9e",
+  "output_bytes": 8022,
+  "scientific_files": {
+    "final.md": {
+      "sha256": "4938903314c928b37a17b96649cf7f206c388aadad284247ece173f32ad76c9e",
+      "bytes": 8022
+    },
+    "working-notes.md": {
+      "sha256": "4d05f45f557a4cd6f3df062efe38a8720ba82193d290b4d9f920ba083a26690d",
+      "bytes": 8587
+    }
+  },
+  "raw_native_goal_counters": {
+    "rounds": 4,
+    "createdAt": 1791413244780,
+    "updatedAt": 1791413970112,
+    "tokens": null
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "source_quality": "UNASSESSED",
+  "scope_audit": "incomplete_unknown; advisory map not firewall",
+  "frozen_at": "2026-10-07T23:00:57.932652+00:00"
+}

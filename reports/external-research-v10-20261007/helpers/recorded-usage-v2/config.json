@@ -1,0 +1,26 @@
+{
+  "schema": "ER10_ROLE_SEPARATED_RECORDED_SDK_USAGE_V2",
+  "predispatch_at": "2026-10-07T23:08:25.284699+00:00",
+  "deadline": "2026-10-07T23:38:25.284699+00:00",
+  "writing_reserve_seconds": 300,
+  "target": {
+    "driverKind": "codex",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  },
+  "campaign_root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "root_owner": "5a126dd5-9c71-4cc2-83d6-9ad1985bacad",
+  "role": "general",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "max_sessions": 500,
+  "max_file_bytes": 268435456,
+  "max_total_selected_bytes": 2147483648,
+  "max_line_bytes": 8388608,
+  "live_root_partial_not_arm_or_complete_campaign_total": true
+}

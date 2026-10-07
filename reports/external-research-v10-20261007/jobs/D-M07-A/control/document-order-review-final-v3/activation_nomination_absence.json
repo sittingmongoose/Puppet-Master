@@ -1,0 +1,21 @@
+{
+  "nomination": {
+    "schema": "ER10_EXACT_OWNED_GLM_INSTALLED_STATE_NOMINATION_V1",
+    "recorded_at": "2026-10-07T22:48:09.138197+00:00",
+    "assignment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/control/document-order-review-final-v3/assignment.md",
+    "assignment_sha256": "ede7fb11f825ed1d8c9fdec51f16a9c695c0fd35d8e9ed975640e052d45b26a1",
+    "matching_objectives": 0,
+    "rows": [],
+    "native_active_observed": false,
+    "vendor_backend_Goal_or_ACP_mapping_inferred": false,
+    "lookup_elapsed_seconds": 0.0022461320004367735,
+    "task_config_association": "Actual own dispatch/config registered separately; coordinator must verify exact configuration and task association"
+  },
+  "nomination_file": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/D-M07-A-control-native-root-nomination-v1.json",
+  "nomination_sha256": "366477a40234be1ddc33a223ce9cf8d0e73fe301b0424d877370daa2b7d1395d",
+  "actual_registered_taskId": "node:delegated-task:command%3Amcp%3A7133e663-26cf-429a-91fd-daa65eb3962f%3Adelegate-task%3Aer10-cohort3-D-M07-A-control-document-order-review-final-v3",
+  "config_sha256": "756bae9cacfd64268ec3990cb344113dc260851ecd036c42c89b5c8d310eed22",
+  "active_verified": false,
+  "reason": "one root bounded lookup returned zero exact matches; absent actual native identity",
+  "observed_at": "2026-10-07T22:48:22.343616+00:00"
+}

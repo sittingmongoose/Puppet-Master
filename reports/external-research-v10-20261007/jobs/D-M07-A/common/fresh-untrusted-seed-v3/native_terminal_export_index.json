@@ -1,0 +1,18 @@
+{
+  "schema": "pm.er10.passive-receipts-index.v1",
+  "observed_at_utc": "2026-10-07T22:46:29.150517+00:00",
+  "entries": [
+    {
+      "stage": "D-M07-A/common/fresh-untrusted-seed-v3",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M07-A--common--fresh-untrusted-seed-v3--11052698dbe0529c.json",
+      "sha256": "11052698dbe0529ce3d7881b5da5230d3567a9de77b093d3b44441240b8daf00",
+      "bytes": 19091,
+      "capture": {
+        "create_goal": "missing_actual_response",
+        "get_goal": "missing_actual_response",
+        "update_goal": "missing_actual_response"
+      }
+    }
+  ],
+  "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+}

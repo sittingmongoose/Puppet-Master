@@ -1,0 +1,142 @@
+{
+  "schema": "ER10-batch010-absences-v1",
+  "fixed_cutoff": "2026-10-07T23:25:57.000Z",
+  "omissions": [
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+      "observed_size": 206702,
+      "observed_mtime_ns": 1791415621091123641,
+      "fixed_cutoff": "2026-10-07T23:25:57.000Z",
+      "status": "AFTER_CUTOFF_CURRENT_CHECKPOINT_DEFERRED_SOURCE_OPAQUE",
+      "scientific_body_not_imported": true,
+      "replacement": "pre-cut M07A PAIR_COMPARISON, finite COMPARISONS and five freeze/settle records retain M07A checkpoint facts"
+    }
+  ],
+  "unresolved_old_authority_exact_pins": [
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/checkpoint.json",
+      "sha256": "7f6f0f137c2b45d94eefe883c0e338a5ab87549507a42c866d11f74cd64948d7",
+      "bytes": 48176,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-supervisor.json",
+      "sha256": "e6b0a6c8bd943dde459a45c9f4269066b4306cfe86f64833772990a65e11324e",
+      "bytes": 28684,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1.json",
+      "sha256": "2c71e32932194440c2cbeb04ea2ba18221e8e3aaecd87dc0f9966eb10cb4edfd",
+      "bytes": 1960794,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2.json",
+      "sha256": "bf085db8938760546aec5235c5252bd0ad4ee616bb790be3813342b6317d9565",
+      "bytes": 284231,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3.json",
+      "sha256": "9dede05224789b578ba9991b09e42dff557601f1fd7870ca423941608efd0509",
+      "bytes": 132367,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4.json",
+      "sha256": "ef1f59beada7685081ce954851c442664232d80f1e4a367d8185ab11ce02b129",
+      "bytes": 126866,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods.json",
+      "sha256": "b989a2a93b9815364b23bb202a82a2b705cedcc6a741004fc6061c2c1d83f9f9",
+      "bytes": 1264456,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/confirmation-supervisor.json",
+      "sha256": "62cb24b04cf6be7f0cce380a81ce9efd4bb77a4b5d7402842a41eb3eff9e8dd5",
+      "bytes": 120729,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/dispatches.jsonl",
+      "sha256": "34922d63bb33b71158b8411a6ce566f1e55062d30ec26f0c0254c1dbe4963dd0",
+      "bytes": 37534,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/anchor-dispatches.jsonl",
+      "sha256": "0f338b983f8437822834d85802f3722bd5af8303958f6d6da9c8e1f4f4c922a4",
+      "bytes": 32972,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-dispatches.jsonl",
+      "sha256": "6d365ea7680ccdf9b30ac8db3a8906671bf6397cfa8eb163cf5e0cd23c33dd68",
+      "bytes": 4596,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort1-dispatches.jsonl",
+      "sha256": "d1555a6ad7f4f38ab10cf6bb26d61ff4b62844012a9fc591b1f8b7c9a70cc7d7",
+      "bytes": 632802,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort2-dispatches.jsonl",
+      "sha256": "bfedb483e6d0a10faa6f2a7ddf22da4f56def16ad18dbffb3f0d260c75afce12",
+      "bytes": 184249,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort3-dispatches.jsonl",
+      "sha256": "b528a37d5687441a73f48b65412bb3f40b867e8c1c66363e7693ae182d269107",
+      "bytes": 227037,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/targeted-cohort4-dispatches.jsonl",
+      "sha256": "e111ab1731236f18eee2dd8e65c3b66622ed97616404762e60e68055d2d46d43",
+      "bytes": 292231,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/integrated-methods-dispatches.jsonl",
+      "sha256": "604ca191ac14e74838e90a647f4cc5faee524c02c57e5fb6b2a475cbaa74d2a6",
+      "bytes": 235334,
+      "status": "EXACT_OLD_AUTHORITY_NOT_PUBLISHED_AT_CAPTURED_IDENTITY",
+      "no_current_substitution": true
+    }
+  ],
+  "original_json_parse_limits": [],
+  "limits": [
+    "Both original M07A control/treatment ACTIVE capture absences, failed exports and diagnostic comparative HOLD remain. Completed native Goals cannot repair missing ACTIVE evidence.",
+    "Independent Source reviews assess full declared six axes, six brief obligations, eight draft/final findings and authored intermediates; both fail with different defects. No winner/equalquality/method or native comparative qualification. Candidate operation histories not independently authenticated; runtime and procedural/budget obligations remain distinct.",
+    "M07B/M09A/M06A/B live or held scientific contents not read/imported; no recursive seed/Goal-ticket traversal.",
+    "Current Cohort3 checkpoint changed aftercut; deferred. Pre-cut M07A comparison/freeze/settle records supply exact closed disposition.",
+    "SDK V2 has one capture, distinct initial failed role partition and corrected final metadata partition; no recapture. Holds/rootpartial excluded from completed sums. Final all-quiet root observation is pending.",
+    "Other provider quantities NULL; counters provider-reported final cumulative once with cache/reasoning subsets, not billing/quota/generation or final campaign counts.",
+    "All nine prior malformed/stalehash/coverage editions remain exact pinned references; no repair. Historical35closed/598unknown adapter remains INCOMPLETE.",
+    "B9 actual cleanup removed405/33672237B staging and925/60343176B replay duplicates; B2-9 total5558/142570900B. Original science/source untouched; earlier cleanup failures retained. Unique unpublished failed B9 whole staging/replay corpus not imported.",
+    "Retention alternatives metadata only, independent byte equivalence/component/DAG identities, no Source regrade/runtime proof. Old source-body cleanup/private archive unexecuted; private CISA/Slint fragments/matcher excluded.",
+    "A hash does not reconstruct missing source bodies. Original maps/ranges/locators retained; source provenance/version/replay gaps disclosed."
+  ]
+}

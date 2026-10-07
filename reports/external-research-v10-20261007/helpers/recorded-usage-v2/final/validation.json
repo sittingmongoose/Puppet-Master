@@ -1,0 +1,295 @@
+{
+  "schema": "ER10-recorded-usage-v2-independent-mechanical-validation",
+  "validated_at_utc": "2026-10-07T23:18:39.611291+00:00",
+  "observation": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/final/observation-20261007T231625Z-9eea80abc27c8de8.json",
+    "sha256": "9eea80abc27c8de8c0e15389bdeb5e58900a5408b067c47519e4fab34f084f0d",
+    "bytes": 6762740
+  },
+  "authority_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/final/authority-manifest.json",
+    "sha256": "bbd98aecc90e7cef8e18aba5ffe3dd67d0ee62447c6af162173ec261a79ec9a2"
+  },
+  "reader_sha256": "2284d0a4452677f896108f8ef571c9a4e9c11740387358f8ee95ee62927b66a4",
+  "validator_sha256": "fb09d5c2f226e9393b8529ff7d0ccb8b8461494f6791eb71c94ce8c05deb06e3",
+  "checks": [
+    {
+      "check": "jobs_critic_is_candidate_not_independent_review",
+      "passed": true
+    },
+    {
+      "check": "reviews_source_review_is_separate_category",
+      "passed": true
+    },
+    {
+      "check": "J_neutral_reviewer_remains_paired_not_copied_to_arms",
+      "passed": true
+    },
+    {
+      "check": "X_masked_reviewer_not_invented_candidate_arm",
+      "passed": true
+    },
+    {
+      "check": "common_seed_explicit_once_reference",
+      "passed": true
+    },
+    {
+      "check": "conflicting_path_and_explicit_review_role_HOLD",
+      "passed": true
+    },
+    {
+      "check": "task_name_never_invents_labels_or_ID",
+      "passed": true
+    },
+    {
+      "check": "review_quiet_gate_candidate_reference_does_not_inherit_review_directory",
+      "passed": true
+    },
+    {
+      "check": "mixed_roles_not_combined_even_same_case_arm_version",
+      "passed": true
+    },
+    {
+      "check": "native_session_partition_live_exclusion_seed_not_copied",
+      "passed": true
+    },
+    {
+      "check": "fixed_expected_arithmetic_uses_final_once_not_subsets",
+      "passed": true
+    },
+    {
+      "check": "duplicate_native_session_rejected_before_sums",
+      "passed": true
+    },
+    {
+      "check": "independent_invalid_subset_and_total_vectors_detected",
+      "passed": true
+    },
+    {
+      "check": "missing_usage_field_is_not_zero",
+      "passed": true
+    },
+    {
+      "check": "fixed_30minute_config_accepts_before_reserve",
+      "passed": true
+    },
+    {
+      "check": "future_reserve_and_expired_configs_refused",
+      "passed": true
+    },
+    {
+      "check": "stream_respects_absolute_reading_cutoff",
+      "passed": true
+    },
+    {
+      "check": "whitelist_ignores_messages_tooltext_rate_limits_and_creator",
+      "passed": true
+    },
+    {
+      "check": "actual_syntax_final_cumulative_first_last_one_snapshot",
+      "passed": true
+    },
+    {
+      "check": "repeated_cumulative_snapshots_not_additive",
+      "passed": true
+    },
+    {
+      "check": "counter_reset_nonmonotonic_HOLD_evidence",
+      "passed": true
+    },
+    {
+      "check": "initialcarry_not_assumed_fresh",
+      "passed": true
+    },
+    {
+      "check": "last_event_arithmetic_ambiguity_preserved_HOLD",
+      "passed": true
+    },
+    {
+      "check": "immutable_observation_and_manifest_mode",
+      "passed": true
+    },
+    {
+      "check": "manifest_hash_matches_frozen_observation",
+      "passed": true
+    },
+    {
+      "check": "reader_hash_matches_observation",
+      "passed": true
+    },
+    {
+      "check": "original_reader_pinned_verified_hash",
+      "passed": true
+    },
+    {
+      "check": "session_inventory_unique_native",
+      "passed": true
+    },
+    {
+      "check": "each_native_once_across_all_role_stage_model_groups",
+      "passed": true
+    },
+    {
+      "check": "independent_all_subgroup_numeric_sums",
+      "passed": true
+    },
+    {
+      "check": "live_or_telemetry_HOLD_never_in_completed_sums",
+      "passed": true
+    },
+    {
+      "check": "single_category_stage_case_arm_version_per_group",
+      "passed": true
+    },
+    {
+      "check": "candidate_groups_contain_no_review_directory_sessions",
+      "passed": true
+    },
+    {
+      "check": "paired_neutral_reviews_never_copied_or_split",
+      "passed": true
+    },
+    {
+      "check": "independent_campaign_selected_sum",
+      "passed": true
+    },
+    {
+      "check": "campaign_sum_partition_equals_groups",
+      "passed": true
+    },
+    {
+      "check": "category_sum_candidate",
+      "passed": true
+    },
+    {
+      "check": "category_sum_independent_source_review",
+      "passed": true
+    },
+    {
+      "check": "category_sum_coordination",
+      "passed": true
+    },
+    {
+      "check": "category_sum_operational_helper",
+      "passed": true
+    },
+    {
+      "check": "category_sum_root_partial",
+      "passed": true
+    },
+    {
+      "check": "category_sum_unattributed",
+      "passed": true
+    },
+    {
+      "check": "common_seed_ledger_unique_and_reference_only",
+      "passed": true
+    },
+    {
+      "check": "exact_C02_five_final_events_hashes_counters_and_arm_sums",
+      "passed": true
+    },
+    {
+      "check": "independent_original_C02_numeric_and_snapshot_reproduction",
+      "passed": true
+    },
+    {
+      "check": "original_reader_config_README_observation_and_inputs_unchanged",
+      "passed": true
+    },
+    {
+      "check": "original_comparison_sha_unchanged_no_decode_grade",
+      "passed": true
+    },
+    {
+      "check": "actual_executor_provider_model_effort_priority_verified",
+      "passed": true
+    },
+    {
+      "check": "authority_500_threads_64MiB_bounds",
+      "passed": true
+    },
+    {
+      "check": "session_500_2GiB_bounds",
+      "passed": true
+    },
+    {
+      "check": "deadline_and_reserve_obeyed",
+      "passed": true
+    },
+    {
+      "check": "config_bytes_frozen_through_observation",
+      "passed": true
+    },
+    {
+      "check": "all_body_reads_owned_lineage_and_explicit_parent",
+      "passed": true
+    },
+    {
+      "check": "non_Codex_inventory_only_quantities_null",
+      "passed": true
+    },
+    {
+      "check": "live_non_root_bodies_not_read",
+      "passed": true
+    },
+    {
+      "check": "independent_subset_and_total_arithmetic_all_eligible_sessions",
+      "passed": true
+    },
+    {
+      "check": "actual_first_final_event_ambiguities_held_never_repaired",
+      "passed": true
+    },
+    {
+      "check": "independent_role_directory_binding_no_candidate_review_path_mix",
+      "passed": true
+    },
+    {
+      "check": "metadata_and_telemetry_redaction_no_raw_transcripts_account_or_quota",
+      "passed": true
+    },
+    {
+      "check": "no_native_Goal_usage_or_billing_scientific_total_claim",
+      "passed": true
+    }
+  ],
+  "check_count": 60,
+  "passed_count": 60,
+  "failures": [],
+  "forbidden_paths": [],
+  "coverage": {
+    "authorized_T3_threads": 305,
+    "projection_inventory_threads": 305,
+    "unique_strong_owned_Gmail_native_sessions": 246,
+    "native_session_inventory": 246,
+    "measurement_statuses": {
+      "QUIET_SESSION_OBSERVED": 228,
+      "HOLD_PARTIAL_root_overhead": 1,
+      "HOLD_telemetry_or_binding_ambiguity": 15,
+      "HOLD_missing_or_ambiguous_exact_rollout": 1,
+      "SKIP_live_or_unknown_no_body_read": 1
+    },
+    "inventory_dispositions": {
+      "OWNED_strong_binding_inventory": 246,
+      "INVENTORY_non_Codex_Gmail_SDK_quantities_null": 59
+    },
+    "role_categories": {
+      "candidate": 132,
+      "root_partial": 1,
+      "operational_helper": 21,
+      "coordination": 9,
+      "independent_source_review": 64,
+      "unattributed": 19
+    },
+    "quiet_grouped_native_sessions": 228,
+    "stage_role_model_groups": 201,
+    "binding_rows_deduplicated": 0,
+    "selected_token_count_events": 8043,
+    "partial_observation": true,
+    "bounds_hit": false
+  },
+  "C02_exact_match_count": 5,
+  "root_final_count_report_is_separate": true,
+  "validation_did_not_read_session_files_or_recapture_projections": true
+}

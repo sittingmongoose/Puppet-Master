@@ -1,0 +1,21 @@
+{
+  "schema": "ER10-finite-publication-batch010-run-receipt-v1",
+  "started_at": "2026-10-07T23:26:14+00:00",
+  "predispatch_at": "2026-10-07T23:25:57.000Z",
+  "fixed_cutoff": "2026-10-07T23:25:57.000Z",
+  "deadline": "2026-10-07T23:50:57.000Z",
+  "writing_reserve_seconds": 300,
+  "actual_thread_id": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-publication-batch010-v1",
+  "actual_provider": "codex_gmail",
+  "actual_model": "gpt-6.1-sol",
+  "actual_options": {
+    "reasoningEffort": "high",
+    "serviceTier": "priority"
+  },
+  "actual_runtimeMode": "full-access",
+  "actual_interactionMode": "default",
+  "actual_configuration_read_from_t3": true,
+  "no_deadline_reset": true,
+  "write_scope": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch010",
+  "scope": "finite CLOSED M07A + role-separated SDK V2 + B9 root receipts + retention-alternative metadata; no live science"
+}

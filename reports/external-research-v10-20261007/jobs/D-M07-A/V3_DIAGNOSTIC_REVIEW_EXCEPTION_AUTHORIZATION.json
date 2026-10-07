@@ -1,0 +1,18 @@
+{
+  "schema": "ER10_ROOT_AUTHORIZED_DIAGNOSTIC_REVIEW_EXCEPTION_V1",
+  "recorded_at": "2026-10-07T22:50:35.483361+00:00",
+  "authority": "Root explicit current instruction: full-science diagnostic review allowed after both full scientific carriers/actual terminal dispositions and all children quiet frozen, when active observation absent; original HOLD unchanged",
+  "case": "D-M07-A",
+  "version": 3,
+  "activation_absence_immutable": true,
+  "native_provenance_comparative_disposition": "HOLD_MISSING_NATIVE_ACTIVE",
+  "review_scope": "original full declared science, independent full source judgment each arm, no new rounds/rescue",
+  "pre_review_actual_gate_required": [
+    "both full scientific carriers frozen",
+    "actual native terminal dispositions frozen",
+    "T3 tasks completed terminal acknowledged, no activeRun/pending/descendants",
+    "child settlement receipts retained"
+  ],
+  "actual_gate_currently_verified": false,
+  "no_method_credit_from_diagnostic_review": true
+}

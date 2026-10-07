@@ -1,0 +1,15 @@
+{
+  "schema": "ER10_BATCH009_REPLAY_DUPLICATE_CLEANUP_EXECUTED_V1",
+  "at": "2026-10-07T23:24:08.519833+00:00",
+  "verified_retained_commit": "415b8a478a89e7c6e9ac73ca0a6975a211809892",
+  "prepared_plan": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/cleanup-publication-batch009-replay-prepared-v1.json",
+  "prepared_plan_sha256": "84d1b150c915233f9ca176a814e76bda9477f99c794e6f25f3e5e017c0add00f",
+  "files_removed": 925,
+  "logical_bytes_removed": 60343176,
+  "allocated_bytes_removed": 62312448,
+  "remaining_unique_failure_reproduction_files": 18,
+  "remaining_unique_bytes": 21606558,
+  "all_removals_actual_absent_verified": true,
+  "all_essential_unique_metadata_unchanged_hash_verified": true,
+  "original_science_raw_sources_untouched": true
+}

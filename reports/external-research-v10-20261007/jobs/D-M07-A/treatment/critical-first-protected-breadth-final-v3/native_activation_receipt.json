@@ -1,0 +1,29 @@
+{
+  "schema": "ER10_GLM_PASSIVE_NATIVE_ACTIVATION_V2",
+  "active_verified": false,
+  "native_identity": null,
+  "createdAt": null,
+  "observed_status": null,
+  "reason": "root once bounded exact assignment nomination returned zero matches; passive export contains no nominated installed native state",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T22:48:22.847564+00:00",
+    "entries": [
+      {
+        "stage": "D-M07-A/treatment/critical-first-protected-breadth-final-v3",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M07-A--treatment--critical-first-protected-breadth-final-v3--965dafc4298c5100.json",
+        "sha256": "965dafc4298c5100be09f86f03c8850d65920c6e2371797f19dc605c8d07c9d2",
+        "bytes": 10979,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "vendor_backend_activation": false,
+  "ACP_alias_binding": "unknown",
+  "billing": null
+}

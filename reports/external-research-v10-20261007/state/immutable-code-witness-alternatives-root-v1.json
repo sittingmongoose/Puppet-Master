@@ -1,0 +1,188 @@
+{
+  "schema": "ER10_ROOT_FIXED_CODE_COMPONENT_RETENTION_ALTERNATIVES_V1",
+  "recorded_at": "2026-10-07T23:10:46.625636+00:00",
+  "rows": [
+    {
+      "eligible_index": 21,
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/language/src/buffer.rs",
+      "expected": "5638f1aaa760dafb44a69b43f6a76b97096a5658bbeecb41a2e702645915ccf9",
+      "range": "384-398,429-455,1674-1707,2348-2388,2847-2876,3131-3143",
+      "byte_equivalence_kind": "precise code component; original API/HTML wrapper replay not claimed",
+      "observed_sha256": "5638f1aaa760dafb44a69b43f6a76b97096a5658bbeecb41a2e702645915ccf9",
+      "bytes": 225042,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/zed-industries/zed/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/language/src/buffer.rs",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 21,
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/project/tests/integration/project_tests.rs",
+      "expected": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742",
+      "range": "5690-5757",
+      "byte_equivalence_kind": "precise code component; original API/HTML wrapper replay not claimed",
+      "observed_sha256": "735598d63ff1334a15c30c8a868a616f6314a7a7dabbf32971184d92e2306742",
+      "bytes": 400358,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/zed-industries/zed/50aef1f115493aab506df9d5b33da5435dc36bfc/crates/project/tests/integration/project_tests.rs",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 29,
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/tests/crlf.rs",
+      "expected": "64dd6cc32ef5737502571896012bcceadc21be6fbc02c4d77b691d5c31b1c532",
+      "range": null,
+      "byte_equivalence_kind": "exact original source",
+      "observed_sha256": "64dd6cc32ef5737502571896012bcceadc21be6fbc02c4d77b691d5c31b1c532",
+      "bytes": 2552,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/tests/crlf.rs",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 53,
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/tests/proptest_tests.rs",
+      "expected": "be4d6a148b7f3c3f4fb9c74bb53fc468ec3f9bbbc376ba255904ef98aaee77fb",
+      "range": null,
+      "byte_equivalence_kind": "exact original source",
+      "observed_sha256": "be4d6a148b7f3c3f4fb9c74bb53fc468ec3f9bbbc376ba255904ef98aaee77fb",
+      "bytes": 54876,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/tests/proptest_tests.rs",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 54,
+      "url": "https://github.com/zed-industries/zed/commit/b2dd8d32c3a091b0ee2e5e457800a12dbfdfe87a.patch",
+      "expected": null,
+      "range": [
+        "project.rs:3696-3704",
+        "lsp_store.rs:4187-4190"
+      ],
+      "byte_equivalence_kind": "fixed correction component; original PR patch equality not claimed",
+      "observed_sha256": "2f46f0c4867547417c422903824cbfa4c19d02ba487bf73dae18a1eacad95000",
+      "bytes": 4118,
+      "http_status": 200,
+      "response_url": "https://github.com/zed-industries/zed/commit/b2dd8d32c3a091b0ee2e5e457800a12dbfdfe87a.patch",
+      "expected_exact_sha256_match": null,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 54,
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/7ed49280da799eac87dc962621918284cbf7280f/crates/project/src/project.rs",
+      "expected": null,
+      "range": [
+        "project.rs:3696-3704",
+        "lsp_store.rs:4187-4190"
+      ],
+      "byte_equivalence_kind": "fixed correction component; original PR patch equality not claimed",
+      "observed_sha256": "99f62fd581dc3fd67be8d96dd20d82fdacd5199ba8da91e16d9f0ea5a504debf",
+      "bytes": 221727,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/zed-industries/zed/7ed49280da799eac87dc962621918284cbf7280f/crates/project/src/project.rs",
+      "expected_exact_sha256_match": null,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 54,
+      "url": "https://raw.githubusercontent.com/zed-industries/zed/7ed49280da799eac87dc962621918284cbf7280f/crates/project/src/lsp_store.rs",
+      "expected": null,
+      "range": [
+        "project.rs:3696-3704",
+        "lsp_store.rs:4187-4190"
+      ],
+      "byte_equivalence_kind": "fixed correction component; original PR patch equality not claimed",
+      "observed_sha256": "8932e9fcfbb312af99e76263ebfe9dd787ffba626f19ba1b664226808c9c68d4",
+      "bytes": 600042,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/zed-industries/zed/7ed49280da799eac87dc962621918284cbf7280f/crates/project/src/lsp_store.rs",
+      "expected_exact_sha256_match": null,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 61,
+      "url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/tests/from_reader.rs",
+      "expected": "cbd1d35843cec11fc43170794de9ffbf8404086a136f29632d4f7655ceadfe80",
+      "range": null,
+      "byte_equivalence_kind": "exact original source",
+      "observed_sha256": "cbd1d35843cec11fc43170794de9ffbf8404086a136f29632d4f7655ceadfe80",
+      "bytes": 1364,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/cessen/ropey/d41ee247f2f097c7f9c8e4730b7dd884734f1ee5/tests/from_reader.rs",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 64,
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/core/items/text.rs",
+      "expected": "5603082f0ec16f7d6c68d8f13283e6e32cdf415a922d05c9fd956dcba3277db0",
+      "range": null,
+      "byte_equivalence_kind": "precise code component; original API/HTML wrapper replay not claimed",
+      "observed_sha256": "5603082f0ec16f7d6c68d8f13283e6e32cdf415a922d05c9fd956dcba3277db0",
+      "bytes": 78584,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/core/items/text.rs",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 64,
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/compiler/widgets/material/textedit.slint",
+      "expected": "c1e9fac8f764de40b99072d74b6ae7f2f11a80fb8202e471d214f6e8f3921dd8",
+      "range": null,
+      "byte_equivalence_kind": "precise code component; original API/HTML wrapper replay not claimed",
+      "observed_sha256": "c1e9fac8f764de40b99072d74b6ae7f2f11a80fb8202e471d214f6e8f3921dd8",
+      "bytes": 2960,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/compiler/widgets/material/textedit.slint",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 64,
+      "url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/compiler/widgets/common/textedit-base.slint",
+      "expected": "d9fb982b5dfb72ad737f6f3806bd6b40229717c0b5db2532849620cf0d47bd26",
+      "range": null,
+      "byte_equivalence_kind": "precise code component; original API/HTML wrapper replay not claimed",
+      "observed_sha256": "d9fb982b5dfb72ad737f6f3806bd6b40229717c0b5db2532849620cf0d47bd26",
+      "bytes": 5978,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/slint-ui/slint/37fb91fafced9e117597a9a1825a641a8c3ea541/internal/compiler/widgets/common/textedit-base.slint",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 73,
+      "url": "https://github.com/slint-ui/slint/commit/267f00b9f8496694a0b8edc5d2111c0a76dcd0d9.patch",
+      "expected": "f9c26633ff6ccbab48ebbfe3938d3c5587421f113515bc2fc15827688865d765",
+      "range": null,
+      "byte_equivalence_kind": "immutable commit representation; wrapper equality not assumed",
+      "observed_sha256": "f9c26633ff6ccbab48ebbfe3938d3c5587421f113515bc2fc15827688865d765",
+      "bytes": 7144,
+      "http_status": 200,
+      "response_url": "https://github.com/slint-ui/slint/commit/267f00b9f8496694a0b8edc5d2111c0a76dcd0d9.patch",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    },
+    {
+      "eligible_index": 74,
+      "url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/f65221e9908f5db0daa81ab8ce94168a5062151b/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+      "expected": "415c1663e4b46f45f48209eb1a8effba9b6c5e436d5eb8e43b11a984619675aa",
+      "range": "11-186",
+      "byte_equivalence_kind": "exact frozen fix-file component",
+      "observed_sha256": "415c1663e4b46f45f48209eb1a8effba9b6c5e436d5eb8e43b11a984619675aa",
+      "bytes": 7805,
+      "http_status": 200,
+      "response_url": "https://raw.githubusercontent.com/MobilityData/gtfs-validator/f65221e9908f5db0daa81ab8ce94168a5062151b/main/src/main/java/org/mobilitydata/gtfsvalidator/reportsummary/model/ServiceWindow.java",
+      "expected_exact_sha256_match": true,
+      "source_body_retained": false
+    }
+  ],
+  "scientific_regrade": false,
+  "replay_limit": "Code/file alternatives reconstruct the named code components only. A commit URL does not recreate the original API/PR HTML wrapper; original wrapper hash/locator and comparison remain. Expected mismatch or absent expected hash stays explicit.",
+  "cleanup_performed": false,
+  "private_archive_created": false
+}

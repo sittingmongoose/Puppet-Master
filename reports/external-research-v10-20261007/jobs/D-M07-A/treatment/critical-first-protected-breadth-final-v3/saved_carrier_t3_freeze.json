@@ -1,0 +1,41 @@
+{
+  "stage": "D-M07-A/treatment/critical-first-protected-breadth-final-v3",
+  "t3_status": "completed",
+  "quiet": true,
+  "settled": true,
+  "actual_t3_clock": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A7133e663-26cf-429a-91fd-daa65eb3962f%253Adelegate-task%253Aer10-cohort3-D-M07-A-treatment-critical-first-protected-breadth-final-v3:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "requestedAt": "2026-10-07T22:47:22.460Z",
+    "startedAt": "2026-10-07T22:47:30.343Z",
+    "completedAt": "2026-10-07T23:04:09.441Z"
+  },
+  "dispatch_to_delivery_seconds": 1006.981,
+  "saved_scientific_files": {
+    "notes-reserve.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/notes-reserve.md",
+      "bytes": 8513,
+      "sha256": "56456041749bfa3e2863a6a379a128dda6df38759f01bb778a267eef40b810d5"
+    },
+    "final.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/final.md",
+      "bytes": 8309,
+      "sha256": "e7ac1a889bb1c5c32ace2011fd1868bee6be3207aac3ae56afefd73a0ed240a4"
+    },
+    "notes-critical-check.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/treatment/critical-first-protected-breadth-final-v3/notes-critical-check.md",
+      "bytes": 8886,
+      "sha256": "e15ae0c95bd00c986cbb69ca4af0bc2122bb5f41cf30b33495f3fdee6c2ebf08"
+    }
+  },
+  "full_final_present": true,
+  "native_activation": "ABSENT_ORIGINAL_HOLD",
+  "native_terminal_disposition": "UNOBSERVED_PENDING_ROOT_EXACT_TERMINAL_NOMINATION",
+  "source_quality": "UNASSESSED",
+  "comparative_eligibility": "HOLD",
+  "billing": null,
+  "frozen_at": "2026-10-07T23:04:30.076654+00:00"
+}

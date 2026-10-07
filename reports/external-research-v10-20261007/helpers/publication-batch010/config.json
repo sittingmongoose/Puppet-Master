@@ -1,0 +1,21 @@
+{
+  "schema": "ER10_FINITE_PUBLICATION_BATCH010",
+  "fixed_cutoff": "2026-10-07T23:25:57.000Z",
+  "predispatch_at": "2026-10-07T23:25:57.000Z",
+  "deadline": "2026-10-07T23:50:57.000Z",
+  "writing_reserve_seconds": 300,
+  "root": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5",
+  "target": {
+    "driverKind": "codex",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "high",
+      "serviceTier": "priority"
+    }
+  },
+  "prior_verified_github_commit": "415b8a478a89e7c6e9ac73ca0a6975a211809892",
+  "max_staging_bytes": 100663296,
+  "no_live_scientific_inputs": true,
+  "root_sole_git_writer": true
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "ER10-recorded-usage-v2-delivery",
+  "finished_at_utc": "2026-10-07T23:20:28.088509+00:00",
+  "deadline": "2026-10-07T23:38:25.284699+00:00",
+  "artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/reader.py",
+      "sha256": "2284d0a4452677f896108f8ef571c9a4e9c11740387358f8ee95ee62927b66a4",
+      "bytes": 49338
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/validate.py",
+      "sha256": "fb09d5c2f226e9393b8529ff7d0ccb8b8461494f6791eb71c94ce8c05deb06e3",
+      "bytes": 21351
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/reclassify.py",
+      "sha256": "b3afe127d62daa1bfa9aae4a5b15e1ddefff13517108b62a770b7f634c8e5ef1",
+      "bytes": 5883
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/README.md",
+      "sha256": "dcf6c37960119cc1810d627a7b8e9433e036cafe62948bb757b15c4d872c9a20",
+      "bytes": 6406
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/config.json",
+      "sha256": "567f7abf5c47620fa4d86ae07df006bcf13351784df7420fed6ed9204609118f",
+      "bytes": 835
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/run-receipt.json",
+      "sha256": "0b22bba91b2ee7d7b3472d0efab69986236ff6a18c535738ea525e4a059c7df2",
+      "bytes": 460
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/final/observation-20261007T231625Z-9eea80abc27c8de8.json",
+      "sha256": "9eea80abc27c8de8c0e15389bdeb5e58900a5408b067c47519e4fab34f084f0d",
+      "bytes": 6762740
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/final/authority-manifest.json",
+      "sha256": "bbd98aecc90e7cef8e18aba5ffe3dd67d0ee62447c6af162173ec261a79ec9a2",
+      "bytes": 9406586
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/recorded-usage-v2/final/validation.json",
+      "sha256": "76622cc281f2692cd968e92c7f77327b88ac3fa780a463200ba49f2eb685c971",
+      "bytes": 7889
+    }
+  ],
+  "coverage": {
+    "authorized_T3_threads": 305,
+    "projection_inventory_threads": 305,
+    "unique_strong_owned_Gmail_native_sessions": 246,
+    "native_session_inventory": 246,
+    "measurement_statuses": {
+      "QUIET_SESSION_OBSERVED": 228,
+      "HOLD_PARTIAL_root_overhead": 1,
+      "HOLD_telemetry_or_binding_ambiguity": 15,
+      "HOLD_missing_or_ambiguous_exact_rollout": 1,
+      "SKIP_live_or_unknown_no_body_read": 1
+    },
+    "inventory_dispositions": {
+      "OWNED_strong_binding_inventory": 246,
+      "INVENTORY_non_Codex_Gmail_SDK_quantities_null": 59
+    },
+    "role_categories": {
+      "candidate": 132,
+      "root_partial": 1,
+      "operational_helper": 21,
+      "coordination": 9,
+      "independent_source_review": 64,
+      "unattributed": 19
+    },
+    "quiet_grouped_native_sessions": 228,
+    "stage_role_model_groups": 201,
+    "binding_rows_deduplicated": 0,
+    "selected_token_count_events": 8043,
+    "partial_observation": true,
+    "bounds_hit": false
+  },
+  "C02_exact_match_count": 5,
+  "validation_checks": 60,
+  "validation_passed": 60,
+  "failures": [],
+  "one_local_source_capture_only": true,
+  "metadata_only_partition_repair_from_same_capture": true,
+  "raw_transcripts_retained": false,
+  "old_inputs_unchanged": true,
+  "root_final_count_report_is_separate": true,
+  "limitations": [
+    "Selected quiet SDK coverage only; not a complete campaign or arm total.",
+    "19 quiet sessions have held role/arm attribution and remain unattributed.",
+    "15 telemetry/identity holds, one missing rollout, one live non-root session and held root partial excluded.",
+    "59 non-Gmail-Codex entries are inventory only with SDK quantities null.",
+    "Initial capture and failed mechanical validation retained; final/ is corrected immutable delivery."
+  ]
+}

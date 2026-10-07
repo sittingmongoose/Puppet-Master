@@ -1,0 +1,29 @@
+{
+  "schema": "ER10-batch010-generic-code-reuse-v1",
+  "read_before_reuse": true,
+  "prior_code_never_modified": true,
+  "new_own_version": "helpers/publication-batch010/curate.py",
+  "scope": "exact-byte identity, append-only canonical paths and mechanical validator only; no adapter/source/scientific replay",
+  "sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch009/curate.py",
+      "sha256": "e33b4a52ef33923eb00e515a9117f32666f020ae106cd1cf63c4e44913206fc8",
+      "bytes": 47580
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch009/validate.py",
+      "sha256": "c8c85d30d246c1697e3094f6b03ccdbe5a7581780176fb942b91a59844d36028",
+      "bytes": 4160
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/publication-batch009/validate_scope.py",
+      "sha256": "d0f4c901cd85bbd3e60c4c26f455e4fb41fffe4d02bd00f9cf03fdf70856dfd5",
+      "bytes": 4777
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/final-report/resolve_public_evidence.py",
+      "sha256": "2dde5b614dd4d83cbb32541a97b62bcaa7e8ffa9cbf1e5627e4296219ed32784",
+      "bytes": 3320
+    }
+  ]
+}

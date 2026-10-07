@@ -1,0 +1,35 @@
+{
+  "stage": "D-M07-A/common/fresh-untrusted-seed-v3",
+  "native_identity": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_e24bfd8d-35a0-411a-a99d-e531386ef888/state.json",
+  "native_createdAt": 1791412601459,
+  "native_status": "complete",
+  "t3_status": "completed",
+  "quiet": true,
+  "requestedAt": "2026-10-07T22:36:23.851Z",
+  "startedAt": "2026-10-07T22:36:32.801Z",
+  "completedAt": "2026-10-07T22:46:12.451Z",
+  "dispatch_to_delivery_seconds": 588.6,
+  "stage_ceiling_seconds": 1200,
+  "absolute_case_deadline": "2026-10-07T23:26:18.422037+00:00",
+  "budget_delivery_eligible": true,
+  "required_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M07-A/common/fresh-untrusted-seed-v3/draft.md",
+  "output_sha256": "3d659c058a48530056b572fc3ada12dcbe5db59d667a4929e6e3ccd4776ecacd",
+  "output_bytes": 4352,
+  "scientific_files": {
+    "draft.md": {
+      "sha256": "3d659c058a48530056b572fc3ada12dcbe5db59d667a4929e6e3ccd4776ecacd",
+      "bytes": 4352
+    }
+  },
+  "raw_native_goal_counters": {
+    "rounds": 3,
+    "createdAt": 1791412601459,
+    "updatedAt": 1791413172191,
+    "tokens": null
+  },
+  "generated_tokens": null,
+  "billing": null,
+  "source_quality": "UNASSESSED",
+  "scope_audit": "incomplete_unknown; advisory map not firewall",
+  "frozen_at": "2026-10-07T22:46:54.009849+00:00"
+}

@@ -1,0 +1,19 @@
+{"current_status": "running", "root_status": "running", "current_sha": "8174b59fec132cf8316d26d62955dc93de551109a0b748bb5fa5ef75b0405851", "root_sha": "8174b59fec132cf8316d26d62955dc93de551109a0b748bb5fa5ef75b0405851", "createdAt": 1791412601459, "installed_only": true}
+{
+  "schema": "pm.er10.passive-receipts-index.v1",
+  "observed_at_utc": "2026-10-07T22:37:48.539785+00:00",
+  "entries": [
+    {
+      "stage": "D-M07-A/common/fresh-untrusted-seed-v3",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M07-A--common--fresh-untrusted-seed-v3--ba3259f1b9750b41.json",
+      "sha256": "ba3259f1b9750b41c36a047bbe0e5594681825e07126ab656078bee35018a185",
+      "bytes": 16279,
+      "capture": {
+        "create_goal": "missing_actual_response",
+        "get_goal": "missing_actual_response",
+        "update_goal": "missing_actual_response"
+      }
+    }
+  ],
+  "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+}
