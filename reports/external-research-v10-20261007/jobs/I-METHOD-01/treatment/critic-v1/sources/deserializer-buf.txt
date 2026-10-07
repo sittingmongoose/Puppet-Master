@@ -1,0 +1,7 @@
+    fn deserialize_byte_buf<V: Visitor<'de>>(
+        self,
+        visitor: V,
+    ) -> Result<V::Value, Self::Error> {
+        self.next_field_bytes()
+            .and_then(|f| visitor.visit_byte_buf(f.to_vec()))
+    }

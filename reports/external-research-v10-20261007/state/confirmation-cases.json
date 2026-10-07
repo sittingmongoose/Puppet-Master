@@ -1,0 +1,499 @@
+{
+  "schema": "pm.er10.confirmation-cases.v1",
+  "status": "ALL_FOUR_READY_PREPARED_FROZEN_ONLY",
+  "saved_at_utc": "2026-10-07T19:43:18.266624+00:00",
+  "lock": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/locks/confirmation-selection.json",
+    "sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a",
+    "declared_locked_at": "2026-10-07T19:36:40.769702+00:00",
+    "filesystem_mtime_utc": "2026-10-07T19:36:40.771076+00:00",
+    "hash_observed_at_utc": "2026-10-07T19:41:04.953750+00:00",
+    "verified_again_at_utc": "2026-10-07T19:43:18.035653+00:00",
+    "lock_unchanged": true
+  },
+  "lock_hash_reverified_at_utc": "2026-10-07T19:43:18.266624+00:00",
+  "cases_count": 4,
+  "domain_count": 2,
+  "independent_repetitions_per_domain": 2,
+  "pair_count": 4,
+  "case_files_count": 24,
+  "state_files_count": 1,
+  "case_bytes_total": 174310,
+  "physical_original_input_bytes_total": 40412,
+  "unique_original_input_bytes_total": 20206,
+  "freeze_identity": "Each case file SHA-256/bytes is recorded below; state self-hash is returned separately to root, avoiding a circular self-hash.",
+  "preparation_timing": {
+    "first_exact_clock_observation_utc": "2026-10-07T19:41:04.953750+00:00",
+    "artifact_generation_started_utc": "2026-10-07T19:43:18.035653+00:00",
+    "artifact_generation_finished_utc": "2026-10-07T19:43:18.266624+00:00",
+    "artifact_generation_wall_seconds": 0.23122514099850378,
+    "measured_preparation_elapsed_lower_bound_seconds": 153.536125,
+    "total_task_wall_seconds": null,
+    "reason_total_unknown": "Preparation began before first exact clock observation; no invented earlier start.",
+    "verification_finished_utc": "2026-10-07T19:43:38.489875+00:00"
+  },
+  "preparation_usage_and_cost": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_output_tokens": null,
+    "reasoning_subset": null,
+    "billing_amount": null,
+    "account_attribution": null,
+    "reason": "Not exposed to preparation carrier; unknown, not zero. Root may append actual task cost through its own authorized state outside these frozen cases."
+  },
+  "requested_designer_binding": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high",
+    "account": "sittingmongoose@gmail.com"
+  },
+  "actual_designer_account_proof": null,
+  "recipe_qualification": "DIAGNOSTIC_UNQUALIFIED",
+  "candidate_binding_requested": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "account": "sittingmongoose@gmail.com"
+  },
+  "runtime_authority": "root/eventual supervisor; parentThreadId and exact task/account/Goal/source scope binding required before dispatch",
+  "case_inputs_remain_immutable": true,
+  "all_repetitions_independent_and_order_balanced": true,
+  "read_boundaries": "Instructions, current integrated input/output contracts, prospective carriers and supplied lock only; no actual candidate artifacts/reviews/history/costs or subject research. Lock basis is read only as part of required lock; referenced result files not opened.",
+  "cases": [
+    {
+      "case_id": "C-01",
+      "domain_id": "A",
+      "repetition": 1,
+      "launch_order": "control-first",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01",
+      "original_inputs": {
+        "brief": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/BRIEF.md",
+          "sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f",
+          "bytes": 6458,
+          "filesystem_mtime_utc": "2026-10-07T19:43:18.036359+00:00",
+          "filesystem_birth_utc": "2026-10-07 19:43:18.035438431 +0000"
+        },
+        "plan": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/PLAN.md",
+          "sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f",
+          "bytes": 3507,
+          "filesystem_mtime_utc": "2026-10-07T19:43:18.046754+00:00",
+          "filesystem_birth_utc": "2026-10-07 19:43:18.045438493 +0000"
+        }
+      },
+      "case_card": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/case-card.json",
+        "sha256": "93e37387a3121fb5c0104226733076e4cb7f69b7f84794fa07d139cf216fa085",
+        "bytes": 11449,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.056438+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.055438555 +0000"
+      },
+      "input_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/INPUT_MAP.json",
+        "sha256": "e153360394fdc8e9c218feec429d0f2096e6965a588ad0deee6ef332ba4ccdfb",
+        "bytes": 7748,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.068153+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.066438622 +0000"
+      },
+      "prepared": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/PREPARED.json",
+        "sha256": "55c10b6b73a4353d9814719c990c193ec08aad3055dd30abd1c3620733070c67",
+        "bytes": 12181,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.078797+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.077438690 +0000"
+      },
+      "ready": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/READY.json",
+        "sha256": "df6348e61a7706a96bbee6ee59bde38cc959e7e3c423e437a8cbe9b7d4332b2f",
+        "bytes": 2099,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.088404+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.087438752 +0000"
+      },
+      "output_directories": {
+        "control": {
+          "researcher": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/control/researcher-v1",
+          "critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/control/critic-v1",
+          "reviser": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/control/reviser-v1"
+        },
+        "treatment": {
+          "researcher": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/researcher-v1",
+          "critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-01/treatment/critic-v1"
+        }
+      },
+      "runtime": {
+        "actual_candidate_binding": null,
+        "actual_account_proof": null,
+        "supervisor_parentThreadId": null,
+        "dispatch_taskIds": null,
+        "childThreadIds": null,
+        "native_goalIds": null,
+        "actual_native_active_observations": null,
+        "actual_native_terminal_observations": null,
+        "pair_final_freeze": null,
+        "pair_quiet_proof": null,
+        "review_taskId": null,
+        "actual_review_binding": null,
+        "candidate_time_and_usage": null,
+        "scientific_review": null,
+        "reason": "Prepared inputs only; eventual root/supervisor must assign and prove runtime state before dispatch/scoring."
+      }
+    },
+    {
+      "case_id": "C-02",
+      "domain_id": "A",
+      "repetition": 2,
+      "launch_order": "treatment-first",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02",
+      "original_inputs": {
+        "brief": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/BRIEF.md",
+          "sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f",
+          "bytes": 6458,
+          "filesystem_mtime_utc": "2026-10-07T19:43:18.097161+00:00",
+          "filesystem_birth_utc": "2026-10-07 19:43:18.095438801 +0000"
+        },
+        "plan": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/PLAN.md",
+          "sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f",
+          "bytes": 3507,
+          "filesystem_mtime_utc": "2026-10-07T19:43:18.106403+00:00",
+          "filesystem_birth_utc": "2026-10-07 19:43:18.105438863 +0000"
+        }
+      },
+      "case_card": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/case-card.json",
+        "sha256": "e95378b487c63caf7141644df6999d69fdd624caf09a109e5fb1737a0f15c848",
+        "bytes": 11451,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.116865+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.115438925 +0000"
+      },
+      "input_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/INPUT_MAP.json",
+        "sha256": "ad3d3fb5140b8192b0e5e740ae2f5c52c07a407d4fb25c611a74d9d2412fff36",
+        "bytes": 7748,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.126671+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.125438986 +0000"
+      },
+      "prepared": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/PREPARED.json",
+        "sha256": "a0a04d3f0ecfc7a143646fc84eb6a852748f468d9313046ca3af57e1786e77dd",
+        "bytes": 12183,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.135515+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.134439042 +0000"
+      },
+      "ready": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/READY.json",
+        "sha256": "173de5e6b2dbc03c772f819aef19211308f94317d2d2a44fe9bc49f0c40707f7",
+        "bytes": 2099,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.144801+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.143439097 +0000"
+      },
+      "output_directories": {
+        "control": {
+          "researcher": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/researcher-v1",
+          "critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/critic-v1",
+          "reviser": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/control/reviser-v1"
+        },
+        "treatment": {
+          "researcher": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/researcher-v1",
+          "critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-02/treatment/critic-v1"
+        }
+      },
+      "runtime": {
+        "actual_candidate_binding": null,
+        "actual_account_proof": null,
+        "supervisor_parentThreadId": null,
+        "dispatch_taskIds": null,
+        "childThreadIds": null,
+        "native_goalIds": null,
+        "actual_native_active_observations": null,
+        "actual_native_terminal_observations": null,
+        "pair_final_freeze": null,
+        "pair_quiet_proof": null,
+        "review_taskId": null,
+        "actual_review_binding": null,
+        "candidate_time_and_usage": null,
+        "scientific_review": null,
+        "reason": "Prepared inputs only; eventual root/supervisor must assign and prove runtime state before dispatch/scoring."
+      }
+    },
+    {
+      "case_id": "C-03",
+      "domain_id": "B",
+      "repetition": 1,
+      "launch_order": "control-first",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03",
+      "original_inputs": {
+        "brief": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/BRIEF.md",
+          "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+          "bytes": 6493,
+          "filesystem_mtime_utc": "2026-10-07T19:43:18.153148+00:00",
+          "filesystem_birth_utc": "2026-10-07 19:43:18.151439147 +0000"
+        },
+        "plan": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/PLAN.md",
+          "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+          "bytes": 3748,
+          "filesystem_mtime_utc": "2026-10-07T19:43:18.162927+00:00",
+          "filesystem_birth_utc": "2026-10-07 19:43:18.161439208 +0000"
+        }
+      },
+      "case_card": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/case-card.json",
+        "sha256": "3cefba2858e8430a11c5bcc48a359c96342af67421d09f2ff59ca183dd9af449",
+        "bytes": 11439,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.173402+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.172439276 +0000"
+      },
+      "input_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/INPUT_MAP.json",
+        "sha256": "b59c68fe5f6257b2191761b1df12be6162bcc9f907bf9a084b4af6531e07ad61",
+        "bytes": 7748,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.182501+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.181439332 +0000"
+      },
+      "prepared": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/PREPARED.json",
+        "sha256": "f7e63d406ceca72bd1a164bb9b4c24f1acb66b3c3a21632f1a91c7f3bd072680",
+        "bytes": 12182,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.191439+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.190439387 +0000"
+      },
+      "ready": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/READY.json",
+        "sha256": "9d3b610d3eda70f5b126cd6fc2c02eb717f89a20fd716880984cdb0ae2277ba1",
+        "bytes": 2099,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.202816+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.201439455 +0000"
+      },
+      "output_directories": {
+        "control": {
+          "researcher": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/researcher-v1",
+          "critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/critic-v1",
+          "reviser": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/control/reviser-v1"
+        },
+        "treatment": {
+          "researcher": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/researcher-v1",
+          "critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-03/treatment/critic-v1"
+        }
+      },
+      "runtime": {
+        "actual_candidate_binding": null,
+        "actual_account_proof": null,
+        "supervisor_parentThreadId": null,
+        "dispatch_taskIds": null,
+        "childThreadIds": null,
+        "native_goalIds": null,
+        "actual_native_active_observations": null,
+        "actual_native_terminal_observations": null,
+        "pair_final_freeze": null,
+        "pair_quiet_proof": null,
+        "review_taskId": null,
+        "actual_review_binding": null,
+        "candidate_time_and_usage": null,
+        "scientific_review": null,
+        "reason": "Prepared inputs only; eventual root/supervisor must assign and prove runtime state before dispatch/scoring."
+      }
+    },
+    {
+      "case_id": "C-04",
+      "domain_id": "B",
+      "repetition": 2,
+      "launch_order": "treatment-first",
+      "directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04",
+      "original_inputs": {
+        "brief": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/BRIEF.md",
+          "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+          "bytes": 6493,
+          "filesystem_mtime_utc": "2026-10-07T19:43:18.211980+00:00",
+          "filesystem_birth_utc": "2026-10-07 19:43:18.210439511 +0000"
+        },
+        "plan": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/PLAN.md",
+          "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+          "bytes": 3748,
+          "filesystem_mtime_utc": "2026-10-07T19:43:18.220692+00:00",
+          "filesystem_birth_utc": "2026-10-07 19:43:18.219439566 +0000"
+        }
+      },
+      "case_card": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/case-card.json",
+        "sha256": "3a043b8cb83ebeea68908a0110e229169ba3c27787e6e51b82c55bde4ef84485",
+        "bytes": 11441,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.229832+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.228439622 +0000"
+      },
+      "input_map": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/INPUT_MAP.json",
+        "sha256": "40a1e65208afd7fcbe09dfaeb9c14ae41d255b25cc251ddf9e9f577fa69b2b32",
+        "bytes": 7748,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.238735+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.237439677 +0000"
+      },
+      "prepared": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/PREPARED.json",
+        "sha256": "ea135e9894e17e20ad9d061f92a8269cf11345d2a40f43d08ce3474cc973554c",
+        "bytes": 12184,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.248003+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.246439733 +0000"
+      },
+      "ready": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/READY.json",
+        "sha256": "4b8a9f6a40274cf7a4b714c1899c727e50d30fca0c728df45e07a907cd0b3b36",
+        "bytes": 2099,
+        "filesystem_mtime_utc": "2026-10-07T19:43:18.257068+00:00",
+        "filesystem_birth_utc": "2026-10-07 19:43:18.255439788 +0000"
+      },
+      "output_directories": {
+        "control": {
+          "researcher": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/researcher-v1",
+          "critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/critic-v1",
+          "reviser": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/control/reviser-v1"
+        },
+        "treatment": {
+          "researcher": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/treatment/researcher-v1",
+          "critic": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/C-04/treatment/critic-v1"
+        }
+      },
+      "runtime": {
+        "actual_candidate_binding": null,
+        "actual_account_proof": null,
+        "supervisor_parentThreadId": null,
+        "dispatch_taskIds": null,
+        "childThreadIds": null,
+        "native_goalIds": null,
+        "actual_native_active_observations": null,
+        "actual_native_terminal_observations": null,
+        "pair_final_freeze": null,
+        "pair_quiet_proof": null,
+        "review_taskId": null,
+        "actual_review_binding": null,
+        "candidate_time_and_usage": null,
+        "scientific_review": null,
+        "reason": "Prepared inputs only; eventual root/supervisor must assign and prove runtime state before dispatch/scoring."
+      }
+    }
+  ],
+  "all_case_files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/BRIEF.md": {
+      "sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f",
+      "bytes": 6458
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/PLAN.md": {
+      "sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f",
+      "bytes": 3507
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/case-card.json": {
+      "sha256": "93e37387a3121fb5c0104226733076e4cb7f69b7f84794fa07d139cf216fa085",
+      "bytes": 11449
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/INPUT_MAP.json": {
+      "sha256": "e153360394fdc8e9c218feec429d0f2096e6965a588ad0deee6ef332ba4ccdfb",
+      "bytes": 7748
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/PREPARED.json": {
+      "sha256": "55c10b6b73a4353d9814719c990c193ec08aad3055dd30abd1c3620733070c67",
+      "bytes": 12181
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-01/READY.json": {
+      "sha256": "df6348e61a7706a96bbee6ee59bde38cc959e7e3c423e437a8cbe9b7d4332b2f",
+      "bytes": 2099
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/BRIEF.md": {
+      "sha256": "7943b8d93e04df133363b786fca60039f1e46cc9ee2701c930bb6dc04df9716f",
+      "bytes": 6458
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/PLAN.md": {
+      "sha256": "5d6708c613038dc8e84a07b981e8d81b0215d6f972c8bffbb80521b0509b598f",
+      "bytes": 3507
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/case-card.json": {
+      "sha256": "e95378b487c63caf7141644df6999d69fdd624caf09a109e5fb1737a0f15c848",
+      "bytes": 11451
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/INPUT_MAP.json": {
+      "sha256": "ad3d3fb5140b8192b0e5e740ae2f5c52c07a407d4fb25c611a74d9d2412fff36",
+      "bytes": 7748
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/PREPARED.json": {
+      "sha256": "a0a04d3f0ecfc7a143646fc84eb6a852748f468d9313046ca3af57e1786e77dd",
+      "bytes": 12183
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-02/READY.json": {
+      "sha256": "173de5e6b2dbc03c772f819aef19211308f94317d2d2a44fe9bc49f0c40707f7",
+      "bytes": 2099
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/BRIEF.md": {
+      "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+      "bytes": 6493
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/PLAN.md": {
+      "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+      "bytes": 3748
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/case-card.json": {
+      "sha256": "3cefba2858e8430a11c5bcc48a359c96342af67421d09f2ff59ca183dd9af449",
+      "bytes": 11439
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/INPUT_MAP.json": {
+      "sha256": "b59c68fe5f6257b2191761b1df12be6162bcc9f907bf9a084b4af6531e07ad61",
+      "bytes": 7748
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/PREPARED.json": {
+      "sha256": "f7e63d406ceca72bd1a164bb9b4c24f1acb66b3c3a21632f1a91c7f3bd072680",
+      "bytes": 12182
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/READY.json": {
+      "sha256": "9d3b610d3eda70f5b126cd6fc2c02eb717f89a20fd716880984cdb0ae2277ba1",
+      "bytes": 2099
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/BRIEF.md": {
+      "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+      "bytes": 6493
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/PLAN.md": {
+      "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+      "bytes": 3748
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/case-card.json": {
+      "sha256": "3a043b8cb83ebeea68908a0110e229169ba3c27787e6e51b82c55bde4ef84485",
+      "bytes": 11441
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/INPUT_MAP.json": {
+      "sha256": "40a1e65208afd7fcbe09dfaeb9c14ae41d255b25cc251ddf9e9f577fa69b2b32",
+      "bytes": 7748
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/PREPARED.json": {
+      "sha256": "ea135e9894e17e20ad9d061f92a8269cf11345d2a40f43d08ce3474cc973554c",
+      "bytes": 12184
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-04/READY.json": {
+      "sha256": "4b8a9f6a40274cf7a4b714c1899c727e50d30fca0c728df45e07a907cd0b3b36",
+      "bytes": 2099
+    }
+  },
+  "mechanical_verification": {
+    "completed_at_utc": "2026-10-07T19:43:38.489875+00:00",
+    "checks": [
+      "lock exact hash unchanged",
+      "all 24 case file hashes/byte counts valid and mtimes after lock",
+      "both repeated domain brief/plan byte identities verified",
+      "locked budgets/binding/full obligations/carriers/pending runtime and exact stage outputs consistent",
+      "20 unique prospective stage outputs and balanced launch order"
+    ],
+    "elapsed_seconds": 0.004455053000128828,
+    "scientific_assessment": false,
+    "actual_native_lifecycle_or_account_assessment": false,
+    "case_files_read_only_mode": "0444; hashes are the freeze identity, not isolation proof",
+    "actual_subject_research": false
+  },
+  "files_total": 25,
+  "bytes_total_including_state": 198916
+}

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "S01",
+    "primary_url": "https://www.sqlite.org/lang_transaction.html",
+    "version_identity": "SQLite living transaction documentation; no engine/binding pin",
+    "assessed_locator": "\u00a72.1\u20132.2; normalized lines 67\u2013110, 130\u2013135",
+    "retrieval_id": "S01",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S01.md",
+    "evidence_sha256": "69e9d463429bd2fcbfab91d70feb007ef8573bf546de66d77e60e3d6045d0af0",
+    "assessment": "Concurrent readers, one writer and failed upgrade are supported; device durability is not established."
+  },
+  {
+    "id": "S02",
+    "primary_url": "https://www.postgresql.org/docs/17/sql-insert.html",
+    "version_identity": "PostgreSQL 17 manual; no patch pin",
+    "assessed_locator": "ON CONFLICT clause; normalized lines 133\u2013157",
+    "retrieval_id": "S02",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S02.md",
+    "evidence_sha256": "97469b0d6011c20ca238edf3894902011c31513507c16e29a1ba626def65a97a",
+    "assessment": "The atomic outcome is conditional on no independent error; application hash checks and effect deduplication remain necessary."
+  },
+  {
+    "id": "S03",
+    "primary_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "version_identity": "RFC 9110, June 2022",
+    "assessed_locator": "\u00a79.2.2 and \u00a79.3.4; normalized lines 3243\u20133268, 3419\u20133430",
+    "retrieval_id": "S03",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S03.md",
+    "evidence_sha256": "ccc67c9e3b1248fe346fa65010b07b2657414a83dcd37d74db611b607c8b1241",
+    "assessment": "Idempotence concerns intended effect; identical responses and exactly-once effects do not follow."
+  },
+  {
+    "id": "S04",
+    "primary_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+    "version_identity": "CouchDB 3.5 documentation family; rolling stable alias",
+    "assessed_locator": "\u00a72.3.1, .3, .4, .6, .7; winner, leaves, compaction and history",
+    "retrieval_id": "S04",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S04.md",
+    "evidence_sha256": "d1f7924a32e12c177d6eb22eb3130ea3375ad8d2693edd756e25064a9697c46e",
+    "assessment": "Default winner and conflict-leaf retrieval are supported. Non-leaf bodies can disappear on compaction; revision trees alone are not full audit history."
+  },
+  {
+    "id": "S05",
+    "primary_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+    "version_identity": "CouchDB 3.5 documentation family, protocol version 3; rolling",
+    "assessed_locator": "\u00a72.4.2 checkpoint/change/document/attachment transfer; \u00a72.4.3 robustness; normalized lines 534\u2013579, 1154\u20131156, 1408\u20131415",
+    "retrieval_id": "S05",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S05.md",
+    "evidence_sha256": "1d43f6fb22694fabc2cbc65f2265177656c615747daf0f98f8085ccc1464d6a6",
+    "assessment": "Checkpoints and retry guidance support comparison; protocol SHOULD language is not a guarantee for the proposed API."
+  },
+  {
+    "id": "S06",
+    "primary_url": "https://docs.couchdb.org/en/stable/api/document/attachments.html",
+    "version_identity": "CouchDB 3.5 documentation family; rolling",
+    "assessed_locator": "\u00a71.4.2.1 HTTP Range Requests; normalized lines 251\u2013284",
+    "retrieval_id": "S06",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S06.md",
+    "evidence_sha256": "0461d9a5f0d633ae12003976d464fe2d09891307d3faba44eddbdfedc3f0129a",
+    "assessment": "The documented byte ranges support downloads, without establishing resumable uploads."
+  },
+  {
+    "id": "S07",
+    "primary_url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+    "version_identity": "CouchDB 3.5 documentation family; rolling",
+    "assessed_locator": "/{db}/_security members/admins; normalized lines 77\u2013105",
+    "retrieval_id": "S07",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S07.md",
+    "evidence_sha256": "cc129c7059dc4bb8ef3183c5801f257f54c437121896e450896152b0e0f2d39a",
+    "assessment": "Database membership is broad; object-level crew read isolation does not follow from membership."
+  },
+  {
+    "id": "S08",
+    "primary_url": "https://docs.couchdb.org/en/stable/api/database/misc.html",
+    "version_identity": "CouchDB 3.5 documentation family; rolling",
+    "assessed_locator": "/{db}/_purge ordinary deletion and \u00a7\u00a71.3.20.1\u2013.2; normalized lines 78\u201388, 166\u2013177",
+    "retrieval_id": "S08",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S08.md",
+    "evidence_sha256": "15c7e112349bf5ed1fa93f40167c28e2cb493a901b0e8b17e1c4a7e046b9b4a2",
+    "assessment": "Normal deletion is replicated; purge replicates internally between database replicas but not to external databases."
+  },
+  {
+    "id": "S09",
+    "primary_url": "https://github.com/apache/pouchdb/issues/8525",
+    "version_identity": "GitHub issue #8525, opened 2022-06-22; currently closed",
+    "assessed_locator": "Issue description; web lines 160\u2013180",
+    "retrieval_id": "S09",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S09.md",
+    "evidence_sha256": "aed954d0ac012ffd2e0e2a92d7fb7f347040dbb8763b01613f3d4415bf23da07",
+    "assessment": "The reporter observed compaction delay and 409 writes; neither general rates nor a fix for every 409 are established."
+  },
+  {
+    "id": "S10",
+    "primary_url": "https://raw.githubusercontent.com/apache/pouchdb/34cb69117931d4b520ee8d7a6208eb0f33da8ec7/packages/node_modules/pouchdb-core/src/adapter.js",
+    "version_identity": "PouchDB commit 34cb69117931d4b520ee8d7a6208eb0f33da8ec7",
+    "assessed_locator": "adapter.js lines 917\u2013965; commit diff; paired test P05 lines 510\u2013525",
+    "retrieval_id": "P04",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S10.md",
+    "evidence_sha256": "c20f7fdfd7484f0bf0a5c56978e62bd8c961473ca4d5cbef56a1e0880432ea90",
+    "assessment": "The changed since filter scopes compaction work. The paired test simulates a checkpoint and checks an old revision; remote targets are skipped."
+  },
+  {
+    "id": "S11",
+    "primary_url": "https://github.com/apache/pouchdb/releases/tag/9.0.0",
+    "version_identity": "PouchDB 9.0.0; tag resolves to b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1; published 2024-06-21T16:10:33Z",
+    "assessed_locator": "Release bugfix #8525; public API release body line 86; compare API and built code P11 lines 2393\u20132441",
+    "retrieval_id": "S11",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S11.md",
+    "evidence_sha256": "b08d9d5dfb68cdf8f6cebbcf8065d56cb5e85c0e6147b23c537b5bc71ded128d",
+    "assessment": "Release notes, ancestry and built output establish inclusion; this does not establish mobile-stack compatibility."
+  },
+  {
+    "id": "S12",
+    "primary_url": "https://raw.githubusercontent.com/craftzdog/pouchdb-adapter-react-native-sqlite/e269c4300926c16662560ccc1eb68be4f6bfc76b/README.md",
+    "version_identity": "Adapter README at e269c4300926c16662560ccc1eb68be4f6bfc76b; package.json at this commit reports 4.4.2; README refers to changes as of 4.0.0",
+    "assessed_locator": "README lines 6\u20137, 54\u201385, 119\u2013166; package.json line 3",
+    "retrieval_id": "P08",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S12.md",
+    "evidence_sha256": "4d7714d7e6f29d6c72b5970fab8b0988ee903f03559fe459b4ea0bf90272930f",
+    "assessment": "The Metro attachment caveat is authored guidance, not a reproduced result. Hermes view-function guidance is another conditional lead."
+  },
+  {
+    "id": "S13",
+    "primary_url": "https://automerge.org/automerge/api-docs/js/functions/getConflicts.html",
+    "version_identity": "Official JavaScript API page identifies @automerge/automerge v3.5.0; live URL",
+    "assessed_locator": "getConflicts opening and example; normalized lines 6\u201314, 26\u201345",
+    "retrieval_id": "S13",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S13.md",
+    "evidence_sha256": "f1591379bc79cd3dde02d6e048908ab004d9828e104534186eb45c0758d5d71e",
+    "assessment": "Concurrent property assignments expose alternatives behind a deterministic displayed value; domain resolution still needs policy."
+  },
+  {
+    "id": "S14",
+    "primary_url": "https://automerge.org/automerge/automerge/sync/index.html",
+    "version_identity": "Official generated Rust sync module; exact crate version not displayed",
+    "assessed_locator": "Sync Protocol opening; normalized lines 10\u201327",
+    "retrieval_id": "S14",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S14.md",
+    "evidence_sha256": "434d3dd3f401b2205678a18004b594be09be76e7aa78df638baf9bcf3db272c5",
+    "assessment": "Reliable ordered stream is a stated transport assumption; it is not evidence of a JavaScript deployment failure."
+  },
+  {
+    "id": "S15",
+    "primary_url": "https://docs.getodk.org/guide-end-of-form/",
+    "version_identity": "Live ODK Collect workflow documentation; note about pre-2024.1; explicit configurable edit exception",
+    "assessed_locator": "Form states in Collect: Draft, Finalized, Sent; normalized lines 126\u2013145",
+    "retrieval_id": "S15a",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S15.md",
+    "evidence_sha256": "4cc09a1b049e72c49a57a3ed5b702b9112dc0fba9ca7721b7e77eab389fa6009",
+    "assessment": "State separation is supported. Finalized and sent forms may be editable when explicitly enabled; the final does not claim universal immutability."
+  },
+  {
+    "id": "S16",
+    "primary_url": "https://docs.getodk.org/central-submissions/",
+    "version_identity": "Live ODK Central documentation; review introduced in 1.2 and diff display noted in 1.3",
+    "assessed_locator": "Accessing Submissions, Submission Review States, Viewing Submission Details; normalized lines 154\u2013159, 218\u2013249",
+    "retrieval_id": "S16a",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S16.md",
+    "evidence_sha256": "c3eb84e075a1ebc625584e66bf62e8546cfa1f3f94193fdc1b4f499bdf57b982",
+    "assessment": "Missing-media warnings, review states and activity history support the workflow analogy; review labels alone do not enforce export filtering."
+  },
+  {
+    "id": "S17",
+    "primary_url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+    "version_identity": "Live official OWASP Authorization Cheat Sheet; no release pin",
+    "assessed_locator": "Least privilege, deny by default, every-request checks, ABAC/ReBAC, object/static resources, server-side; normalized lines 185\u2013250",
+    "retrieval_id": "S17",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S17.md",
+    "evidence_sha256": "52248cd228b87b67c088b01c1bef566c19f38fad4fdb9a6df839abafa8680859",
+    "assessment": "The final correctly applies the guidance to each protected operation; no component provides the utility permission policy automatically."
+  },
+  {
+    "id": "S18",
+    "primary_url": "https://www.sqlite.org/copyright.html",
+    "version_identity": "SQLite official public-domain page; last updated 2026-01-12",
+    "assessed_locator": "SQLite Is Public Domain and Warranty of Title; normalized lines 20\u201343, 61\u201383",
+    "retrieval_id": "S18",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S18.md",
+    "evidence_sha256": "f57d52b72f1636fc6a5aa87b0b0622c0c105c565ec142bb20b671638cafe2dfb",
+    "assessment": "Core use has no required software licence fee; bindings, operations and jurisdictional proof remain separate."
+  },
+  {
+    "id": "S19",
+    "primary_url": "https://www.postgresql.org/about/licence/",
+    "version_identity": "Official PostgreSQL license, live page",
+    "assessed_locator": "License grant; normalized lines 29\u201348",
+    "retrieval_id": "S19",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S19.md",
+    "evidence_sha256": "f72e30126dc2976fb84606b20f9ed7eed203271de84873bffc7797a762b4efc8",
+    "assessment": "The grant permits use without fee subject to its notices; it does not zero operations cost."
+  },
+  {
+    "id": "S20",
+    "primary_url": "https://www.postgresql.org/docs/17/datatype-binary.html",
+    "version_identity": "PostgreSQL 17 manual; no patch selection",
+    "assessed_locator": "\u00a78.4 Binary Data Types; normalized lines 75\u201385",
+    "retrieval_id": "S20",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S20.md",
+    "evidence_sha256": "14b9e8256fdab47b93621679e83593be9eeee55eb92ba7ebd4e9c9a95368c2bb",
+    "assessment": "bytea supports binary strings. Photo-scale performance, backup and restore are not shown by type documentation."
+  },
+  {
+    "id": "S21",
+    "primary_url": "https://datatracker.ietf.org/doc/html/rfc8252",
+    "version_identity": "RFC 8252 / BCP 212, October 2017",
+    "assessed_locator": "\u00a76, \u00a78.1, \u00a78.5; normalized lines 321\u2013338, 465\u2013478, 539\u2013554",
+    "retrieval_id": "S21",
+    "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/treatment/source-review-v1/sources/S21.md",
+    "evidence_sha256": "c14a26a330b4eeb9ce107580dd0845e38673f0c683093d75d34123cf45c8d732",
+    "assessment": "External user-agent and PKCE requirements for public native clients are supported; no offline authorization lifetime follows."
+  }
+]

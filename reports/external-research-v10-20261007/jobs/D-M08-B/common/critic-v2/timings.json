@@ -1,0 +1,32 @@
+{
+  "stage": "D-M08-B/common/critic-v2",
+  "requested_at_utc": "2026-10-07T19:32:37.736Z",
+  "absolute_case_deadline_utc": "2026-10-07T19:41:21.835Z",
+  "stage_ceiling_seconds": 240,
+  "scientific_output": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/critic-v2/critique.md",
+    "saved_at_utc": "2026-10-07T19:34:41.396226221Z",
+    "elapsed_since_requested_seconds": 123.660,
+    "bytes": 5502
+  },
+  "source_operations": {
+    "file_reads_total": 8,
+    "input_map_reads": 1,
+    "mapped_brief_manifest_draft_frozen_sources_and_boundary_reads": 7,
+    "retries": 0
+  },
+  "usage_unknown": {
+    "billing_usd": null,
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null
+  },
+  "raw_native_goal_counters": {
+    "captured_at_utc": "2026-10-07T19:34:46Z",
+    "goal_thread_id": "01a117da-7fa8-7f80-84fc-acdf206a2978",
+    "tokensUsed": 28374,
+    "timeUsedSeconds": 109,
+    "status": "active",
+    "counter_scope": "native goal counters, measured from native goal creation"
+  }
+}

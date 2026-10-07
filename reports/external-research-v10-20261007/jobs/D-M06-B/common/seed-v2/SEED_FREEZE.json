@@ -1,0 +1,58 @@
+{
+  "files": {
+    "draft.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/draft.md",
+      "sha256": "350cad31ba640e12019adae1dc970a9dda09848d3b139002267612d936da37fe",
+      "bytes": 5935,
+      "mtime_utc": "2026-10-07T20:00:14.887888+00:00"
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/sources.json",
+      "sha256": "64cd2a42d75c901aa12b5c12b9c04610ffd6757dba4096241d5e69cad50aac11",
+      "bytes": 2780,
+      "mtime_utc": "2026-10-07T19:57:57.394067+00:00"
+    },
+    "integration-state-active-v2.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/integration-state-active-v2.json",
+      "sha256": "2dab692563246a4cb004ecec53345394163190ab7e66438e0dce2ce2b230d09b",
+      "bytes": 4910,
+      "mtime_utc": "2026-10-07T20:01:51.077460+00:00"
+    },
+    "integration-state-terminal-v2.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/integration-state-terminal-v2.json",
+      "sha256": "95caf88b1fb91cbcb796bc387b97f8b9843bb60a9b2d91c11db48f3db72013a9",
+      "bytes": 4792,
+      "mtime_utc": "2026-10-07T20:02:16.945632+00:00"
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/t3-terminal-observed.json",
+      "sha256": "9d2e11bca35000ace6bbef83638f9cd34fe51dc27d277f4543f5a7cfc9bec4fc",
+      "bytes": 2694,
+      "mtime_utc": "2026-10-07T20:02:16.945140+00:00"
+    },
+    "cancel-receipt-v1.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/cancel-receipt-v1.json",
+      "sha256": "e9048c07a9f9c24b6fcb11308d853d7eb649452e68e1ce7a2732afbfa8d0f809",
+      "bytes": 630,
+      "mtime_utc": "2026-10-07T20:01:59.863862+00:00"
+    }
+  },
+  "absences": {
+    "fixtures.json": "Absent at quiet interruption freeze; not inferred complete",
+    "timings.json": "Absent at quiet interruption freeze; not inferred complete"
+  },
+  "seed_dispatch_to_terminal_seconds": 386.488,
+  "seed_budget_seconds": 360,
+  "overrun_seconds": 26.488,
+  "t3_terminal": "interrupted",
+  "native_terminal": "paused",
+  "native_rounds": 2,
+  "native_active_observed": true,
+  "quiet_no_descendants": true,
+  "per_arm_cold_seed_charge_seconds": 386.488,
+  "physical_shared_seed_seconds": 386.488,
+  "half_seed_amortized_seconds": 193.244,
+  "provider_billing": null,
+  "scientific_seed_truth": "UNASSESSED incomplete candidate seed; no source comparison",
+  "root_authorized_cancellation": "At most60s grace after original seed expiry; no ordinary in-flight steer/no restart"
+}

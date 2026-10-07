@@ -1,0 +1,30 @@
+{
+  "carrier": "PASSIVE_NATIVE_STATE_V2_NOT_RAW_API",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T19:36:06.383598+00:00",
+    "entries": [
+      {
+        "stage": "D-M08-B/common/critic-v2",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M08-B--common--critic-v2--2bea54cf7ece3269.json",
+        "sha256": "2bea54cf7ece3269e45e7624ac77b8e3ab7a67f2ccaeb97f3e4f16d11db7db33",
+        "bytes": 10850,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "native_identity": "01a117da-7fa8-7f80-84fc-acdf206a2978",
+  "raw_api_bodies": null,
+  "createdAt": null,
+  "host_capture_wall_seconds": 0.011849034,
+  "native_state": "complete",
+  "dispatch_to_delivery_seconds": 172.891,
+  "critique_sha256": "3eca01d2755e87986ffca388a1e2338137d9d267639631b1d422db3b27d12a8f",
+  "critique_bytes": 5502,
+  "source_quality": "UNASSESSED"
+}

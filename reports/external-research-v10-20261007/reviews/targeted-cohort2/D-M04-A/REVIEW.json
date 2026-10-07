@@ -1,0 +1,1999 @@
+{
+  "schema": "dm04-independent-primary-review.v1",
+  "case_id": "D-M04-A",
+  "objective": "D-M04-A independent source review",
+  "reviewer": {
+    "role": "independent review sub-agent",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "service_tier": "priority",
+    "runtime_identity_basis": "Injected runtime and user instruction; account not independently authenticated",
+    "requested_provider": "codex_gmail",
+    "requested_account": "sittingmongoose@gmail.com"
+  },
+  "timing": {
+    "started_at_utc": "2026-10-07T19:12:38Z",
+    "review_authored_at_utc": "2026-10-07T19:18:59.548438+00:00",
+    "elapsed_seconds_through_authorship": 381.548438,
+    "budget_seconds": 900,
+    "budget_includes": "rules, native activation, source inspection, bounded reviewer checks, authored review and terminal receipts",
+    "terminal_receipts_saved_at_utc": "2026-10-07T19:19:36.484776+00:00",
+    "elapsed_seconds_total": 418.484776,
+    "within_budget": true
+  },
+  "rules": {
+    "read": [
+      {
+        "path": "/home/sittingmongoose/.codex/AGENTS.md",
+        "sha256": "2f99262d51ee86f0f956db7846f40bdeeae7f6d119df23e515b99e5a8ee495f9"
+      },
+      {
+        "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+        "sha256": "d827d8ff1e53bd4c49d3f6814c9937aabe8aea0580f2c31d3b3ee089244c01b8"
+      },
+      {
+        "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.append.md",
+        "sha256": "8cd378a5b92351883d1e60d387e052ddbb5a72991b23961b10b95cfe738f8f11"
+      }
+    ],
+    "applied": "User's exact review boundary controls. No repo/canon/governance edits or landings; T3 mailbox/extra-worker sections skipped; no children, installers, credentials or external mutations. No planning skill is invoked for this SQLite review.",
+    "rule_discovery": "Checked exact ancestors for AGENTS.md/AGENTS.append.md for cwd, mapped inputs and output directory; only the three recorded rule files existed."
+  },
+  "scope": [
+    "Distinguish deferred and immediate acquisition behavior.",
+    "State where reader-to-writer transition matters.",
+    "Bind WAL assumptions and busy/locked conditions.",
+    "Separate application retry policy from database guarantees.",
+    "Address transaction cleanup after failure.",
+    "Retain one useful alternative and a discriminating test proposal."
+  ],
+  "assessment_basis": {
+    "materiality": "MATERIAL means an unsafe/missing mandatory policy disposition affecting a declared obligation. NONMATERIAL means source precision whose correction does not alter the candidate's retained safe action. Materiality is independent of comparison outcomes.",
+    "source_quality_states": {
+      "PASS": "Every declared obligation assessed and satisfied; no material source error or required policy omission.",
+      "PARTIAL": "Full inspection completed, useful supported core remains, but a material declared-scope branch is incomplete.",
+      "FAIL": "Decisive materially incorrect primary-source claim or policy contradicted by primary evidence."
+    },
+    "no_economic_ranking": true,
+    "no_target_grades": true,
+    "no_unenumerated_rubric": true
+  },
+  "source_registry": [
+    {
+      "source_id": "sqltransaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_capture": "SQLite transaction documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqltransaction.html",
+      "kind": "public primary raw bytes",
+      "sha256_independently_verified": true,
+      "reviewer_lines_inspected": [
+        [
+          248,
+          443
+        ]
+      ]
+    },
+    {
+      "source_id": "sqlwal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwal.html",
+      "kind": "public primary raw bytes",
+      "sha256_independently_verified": true,
+      "reviewer_lines_inspected": [
+        [
+          140,
+          205
+        ],
+        [
+          228,
+          345
+        ],
+        [
+          548,
+          590
+        ],
+        [
+          672,
+          711
+        ]
+      ]
+    },
+    {
+      "source_id": "sqlpragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlpragma.html",
+      "kind": "public primary raw bytes",
+      "sha256_independently_verified": true,
+      "reviewer_lines_inspected": [
+        [
+          569,
+          599
+        ],
+        [
+          1208,
+          1303
+        ]
+      ]
+    },
+    {
+      "source_id": "sqlwalcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+      "version_or_capture": "SQLite version-3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwalcode.c",
+      "kind": "public primary raw bytes",
+      "sha256_independently_verified": true,
+      "reviewer_lines_inspected": [
+        [
+          2070,
+          2125
+        ],
+        [
+          3680,
+          3765
+        ]
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/rescode.html",
+      "url": "https://www.sqlite.org/rescode.html",
+      "version": "Mutable official docs, review capture; not release-pinned",
+      "captured_at_utc": "2026-10-07T19:13:19.017587+00:00",
+      "bytes": 73030,
+      "sha256": "05ce13c1b04b1c7ea074f2155e979482512946634590dfe86f99af5e36e93b23",
+      "executed": false,
+      "source_id": "review-rescode",
+      "ranges": [
+        [
+          399,
+          453
+        ],
+        [
+          915,
+          939
+        ]
+      ],
+      "reviewer_lines_inspected": [
+        [
+          399,
+          453
+        ],
+        [
+          915,
+          939
+        ]
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/btree-3.51.3.c",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/btree.c",
+      "version": "version-3.51.3",
+      "captured_at_utc": "2026-10-07T19:13:19.407377+00:00",
+      "bytes": 403255,
+      "sha256": "ab4135be6b5e19f1766b1f4022fa6843fe8dd447504d39c49f22598366de8d61",
+      "executed": false,
+      "source_id": "review-btree-3.51.3",
+      "ranges": [
+        [
+          3563,
+          3594
+        ],
+        [
+          3645,
+          3720
+        ],
+        [
+          4280,
+          4310
+        ]
+      ],
+      "reviewer_lines_inspected": [
+        [
+          3563,
+          3594
+        ],
+        [
+          3645,
+          3720
+        ],
+        [
+          4280,
+          4310
+        ]
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/pager-3.51.3.c",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/pager.c",
+      "version": "version-3.51.3",
+      "captured_at_utc": "2026-10-07T19:13:19.535922+00:00",
+      "bytes": 302918,
+      "sha256": "5ef7135d2d67ba7f2be6da0197854788ece57bccd2a743f6f1a5f33c94e8ce7b",
+      "executed": false,
+      "source_id": "review-pager-3.51.3",
+      "ranges": [
+        [
+          3940,
+          3962
+        ],
+        [
+          4275,
+          4305
+        ],
+        [
+          5860,
+          5966
+        ],
+        [
+          6407,
+          6441
+        ],
+        [
+          6461,
+          6533
+        ],
+        [
+          6540,
+          6590
+        ],
+        [
+          6590,
+          6622
+        ]
+      ],
+      "reviewer_lines_inspected": [
+        [
+          3940,
+          3962
+        ],
+        [
+          4275,
+          4305
+        ],
+        [
+          5860,
+          5966
+        ],
+        [
+          6407,
+          6441
+        ],
+        [
+          6461,
+          6533
+        ],
+        [
+          6540,
+          6590
+        ],
+        [
+          6590,
+          6622
+        ]
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/vdbe-3.51.3.c",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/vdbe.c",
+      "version": "version-3.51.3",
+      "captured_at_utc": "2026-10-07T19:13:19.698357+00:00",
+      "bytes": 317126,
+      "sha256": "4b48c880d07fe4e181100e7989f534cd0e834651d2204bb663d782d1140bc09d",
+      "executed": false,
+      "source_id": "review-vdbe-3.51.3",
+      "ranges": [
+        [
+          4000,
+          4058
+        ]
+      ],
+      "reviewer_lines_inspected": [
+        [
+          4000,
+          4058
+        ]
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/get_autocommit.html",
+      "url": "https://www.sqlite.org/c3ref/get_autocommit.html",
+      "version": "Mutable official docs, review capture; not release-pinned",
+      "captured_at_utc": "2026-10-07T19:17:47.973784+00:00",
+      "bytes": 5077,
+      "sha256": "07a24bb37b41ac779fdb8d0b9523b632b6810f28e5f963c3d83dd3689c6fbce9",
+      "executed": false,
+      "source_id": "review-autocommit",
+      "reviewer_lines_inspected": [
+        [
+          118,
+          140
+        ]
+      ],
+      "purpose": "Independent supplementary confirmation of state inspection after failure; mutable API docs, not release-specific execution evidence."
+    }
+  ],
+  "integrity": {
+    "checks": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqltransaction.html",
+        "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+        "expected_sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+        "matches": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwal.html",
+        "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "expected_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "matches": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlpragma.html",
+        "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+        "expected_sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+        "matches": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwalcode.c",
+        "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+        "expected_sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+        "matches": true
+      },
+      {
+        "label": "Output1",
+        "artifact": "final.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/frozen-inputs/Output1/final.md",
+        "sha256": "c0da97f90126abfaf63a8eab002e8ce2a0c2dfbf8ecf15ea6ce70d13db434d08",
+        "expected_sha256": "c0da97f90126abfaf63a8eab002e8ce2a0c2dfbf8ecf15ea6ce70d13db434d08",
+        "matches": true
+      },
+      {
+        "label": "Output1",
+        "artifact": "sources.json",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/frozen-inputs/Output1/sources.json",
+        "sha256": "9f6fb822654480dc5c906efe9977b16963be76bc6da00448b8af039cae13fe0b",
+        "expected_sha256": "9f6fb822654480dc5c906efe9977b16963be76bc6da00448b8af039cae13fe0b",
+        "matches": true
+      },
+      {
+        "label": "Output2",
+        "artifact": "final.md",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/frozen-inputs/Output2/final.md",
+        "sha256": "7ac437336bc9c472c075177d46b1577f3735c12c50c75cf3ebe4cf78d4185993",
+        "expected_sha256": "7ac437336bc9c472c075177d46b1577f3735c12c50c75cf3ebe4cf78d4185993",
+        "matches": true
+      },
+      {
+        "label": "Output2",
+        "artifact": "sources.json",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/frozen-inputs/Output2/sources.json",
+        "sha256": "efcb5f4a9b1316963445689ed066528127200c41c20e0adb40986ea6deb111b2",
+        "expected_sha256": "efcb5f4a9b1316963445689ed066528127200c41c20e0adb40986ea6deb111b2",
+        "matches": true
+      }
+    ],
+    "all_matched": true,
+    "purpose": "Identity and freeze verification only; truth decisions use inspected source text/control flow and bounded observations."
+  },
+  "outputs": [
+    {
+      "label": "Output1",
+      "complete_scope_assessed": true,
+      "obligation_dispositions": [
+        {
+          "obligation_id": "O1",
+          "obligation": "Distinguish deferred and immediate acquisition behavior.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            7
+          ],
+          "reason": "First database access controls DEFERRED; known write IMMEDIATE acquires writer position up front.",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                290,
+                304
+              ],
+              "claim": "Multiple readers; one writer; existing read must be upgraded."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                330,
+                349
+              ],
+              "claim": "DEFERRED first database access and first-read versus first-write; IMMEDIATE starts write up front and may be BUSY."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O2",
+          "obligation": "State where reader-to-writer transition matters.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            7,
+            9,
+            23
+          ],
+          "reason": "SELECT-first promotion, historic snapshot and rollback/full safe replay boundary are explicit.",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                308,
+                316
+              ],
+              "claim": "Read snapshot remains unchanged until transaction ends."
+            },
+            {
+              "source_id": "sqlwalcode",
+              "lines": [
+                3712,
+                3736
+              ],
+              "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O3",
+          "obligation": "Bind WAL assumptions and busy/locked conditions.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            5,
+            9,
+            13,
+            17,
+            29
+          ],
+          "reason": "Actual WAL mode, same-host requirement, single writer, busy subcases and LOCKED uncertainty are retained.",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                1214,
+                1224
+              ],
+              "claim": "Actual/returned journal mode governs; failed change returns original mode."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                166,
+                180
+              ],
+              "claim": "Reader/writer concurrency and same-host/network-filesystem boundary."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                269,
+                318
+              ],
+              "claim": "Read end mark; one writer; reader limits checkpoint progress."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                681,
+                704
+              ],
+              "claim": "Exclusive locking, last-connection cleanup and crash recovery can produce BUSY."
+            },
+            {
+              "source_id": "sqlwalcode",
+              "lines": [
+                3712,
+                3736
+              ],
+              "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O4",
+          "obligation": "Separate application retry policy from database guarantees.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            11
+          ],
+          "reason": "Application finite cap/deadline/backoff, shared wait budget and safe replay are separated from SQLite concurrency guarantees.",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                576,
+                588
+              ],
+              "claim": "busy_timeout configures the connection's single busy handler and may overwrite an earlier one."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O5",
+          "obligation": "Address transaction cleanup after failure.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            17
+          ],
+          "reason": "State inspection and rollback before reuse apply generally; failed begin skips body; active COMMIT retries only commit; uncertain state retires connection.",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                410,
+                440
+              ],
+              "claim": "Some failures roll back one statement or whole transaction; inspect state; explicit rollback normalizes state."
+            },
+            {
+              "source_id": "review-vdbe-3.51.3",
+              "lines": [
+                4022,
+                4044
+              ],
+              "claim": "Active writing statements make COMMIT BUSY; BUSY halt restores autocommit flag to prior state."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O6",
+          "obligation": "Retain one useful alternative and a discriminating test proposal.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            19,
+            21,
+            23,
+            24,
+            25
+          ],
+          "reason": "Bounded queue and optional DEFERRED alternative retained; discriminating phase/snapshot/checkpoint tests explicitly proposed.",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                330,
+                349
+              ],
+              "claim": "DEFERRED avoids starting database access/write transaction up front; IMMEDIATE pays acquisition early."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                293,
+                311
+              ],
+              "claim": "Only one writer; checkpoint delay is separate from reader/writer concurrency."
+            }
+          ]
+        }
+      ],
+      "supported_claims_and_conditions": [
+        {
+          "claim": "Query actual journal mode and limit WAL assumptions to wal; same-host condition.",
+          "final_lines": [
+            5,
+            5
+          ],
+          "disposition": "SUPPORTED",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                1214,
+                1224
+              ],
+              "claim": "Actual/returned journal mode governs; failed change returns original mode."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                166,
+                180
+              ],
+              "claim": "Reader/writer concurrency and same-host/network-filesystem boundary."
+            }
+          ]
+        },
+        {
+          "claim": "IMMEDIATE for known writes; DEFERRED for read-only/optional writes; first SELECT needs later upgrade.",
+          "final_lines": [
+            7,
+            7
+          ],
+          "disposition": "SUPPORTED",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                290,
+                304
+              ],
+              "claim": "Multiple readers; one writer; existing read must be upgraded."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                330,
+                349
+              ],
+              "claim": "DEFERRED first database access and first-read versus first-write; IMMEDIATE starts write up front and may be BUSY."
+            }
+          ]
+        },
+        {
+          "claim": "BUSY_SNAPSHOT follows successful writer acquisition plus changed WAL header; old-snapshot write retry cannot refresh view.",
+          "final_lines": [
+            9,
+            9
+          ],
+          "disposition": "SUPPORTED_WITH_EXACT_RELEASE_EVIDENCE",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                308,
+                316
+              ],
+              "claim": "Read snapshot remains unchanged until transaction ends."
+            },
+            {
+              "source_id": "sqlwalcode",
+              "lines": [
+                3712,
+                3736
+              ],
+              "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+            }
+          ]
+        },
+        {
+          "claim": "Deadline/cap/backoff/replay safety and external-effect handling are application choices; database serialization is not eventual success.",
+          "final_lines": [
+            11,
+            11
+          ],
+          "disposition": "SUPPORTED_POLICY_DISTINCTION",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                576,
+                588
+              ],
+              "claim": "busy_timeout configures the connection's single busy handler and may overwrite an earlier one."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                290,
+                304
+              ],
+              "claim": "Multiple readers; one writer; existing read must be upgraded."
+            }
+          ],
+          "note": "No numeric parameters supplied; recommendation requires the application to set finite values. No mandatory numeric bound appears in the brief."
+        },
+        {
+          "claim": "WAL permits concurrency but retains listed BUSY cases; long readers impede checkpoint progress and allow growth.",
+          "final_lines": [
+            13,
+            13
+          ],
+          "disposition": "SUPPORTED",
+          "evidence": [
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                269,
+                318
+              ],
+              "claim": "Read end mark; one writer; reader limits checkpoint progress."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                681,
+                704
+              ],
+              "claim": "Exclusive locking, last-connection cleanup and crash recovery can produce BUSY."
+            }
+          ]
+        },
+        {
+          "claim": "Mapped corpus does not establish a LOCKED retry policy; keep exact code and diagnose separately.",
+          "final_lines": [
+            13,
+            13
+          ],
+          "disposition": "SUPPORTED_UNCERTAINTY",
+          "evidence": [
+            {
+              "source_id": "review-rescode",
+              "lines": [
+                428,
+                453
+              ],
+              "claim": "Independent supplemental source confirms distinct same-connection/shared-cache LOCKED meaning."
+            }
+          ],
+          "note": "Reviewer exact-token searches found no SQLITE_LOCKED in the four mapped objects. No claim of exhaustive unknown-answer recall. Lack of a mapped retry rule is not a false rejection."
+        },
+        {
+          "claim": "Do not execute body after failed begin; check transaction state, roll back active connection before reuse, retire uncertain connection.",
+          "final_lines": [
+            17,
+            17
+          ],
+          "disposition": "SUPPORTED",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                410,
+                440
+              ],
+              "claim": "Some failures roll back one statement or whole transaction; inspect state; explicit rollback normalizes state."
+            },
+            {
+              "source_id": "review-autocommit",
+              "lines": [
+                127,
+                138
+              ],
+              "claim": "Autocommit state inspection detects automatic rollback; BEGIN disables autocommit."
+            }
+          ]
+        },
+        {
+          "claim": "Active reader-blocked COMMIT retries COMMIT, not body; do not assume WAL readers cause that failure.",
+          "final_lines": [
+            17,
+            17
+          ],
+          "disposition": "SUPPORTED",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                166,
+                168
+              ],
+              "claim": "Ordinary WAL readers and writers do not block each other."
+            }
+          ]
+        },
+        {
+          "claim": "BEGIN transactions do not nest; SAVEPOINT/ROLLBACK TO/RELEASE are nested-work mechanisms.",
+          "final_lines": [
+            17,
+            17
+          ],
+          "disposition": "SUPPORTED",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                277,
+                286
+              ],
+              "claim": "Nested BEGIN fails; SAVEPOINT and RELEASE define nested transactions."
+            }
+          ]
+        },
+        {
+          "claim": "A bounded write queue is a useful alternative for competing write intents, with latency/head-of-line tradeoff.",
+          "final_lines": [
+            19,
+            19
+          ],
+          "disposition": "REASONABLE_APPLICATION_INFERENCE",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                290,
+                292
+              ],
+              "claim": "One writer constrains competing write attempts."
+            }
+          ],
+          "note": "Queue effect is conditional application reasoning, not a measured SQLite guarantee; the brief already has one writer."
+        },
+        {
+          "claim": "Snapshot/acquisition, long-reader/checkpoint, deadline and LOCKED checks are proposals, not performed witnesses.",
+          "final_lines": [
+            21,
+            25
+          ],
+          "disposition": "CORRECTLY_PROPOSED",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                308,
+                316
+              ],
+              "claim": "Read snapshot remains unchanged until transaction ends."
+            },
+            {
+              "source_id": "sqlwalcode",
+              "lines": [
+                3712,
+                3736
+              ],
+              "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                269,
+                318
+              ],
+              "claim": "Read end mark; one writer; reader limits checkpoint progress."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                681,
+                704
+              ],
+              "claim": "Exclusive locking, last-connection cleanup and crash recovery can produce BUSY."
+            }
+          ]
+        }
+      ],
+      "defects": [],
+      "material_correctness": "No material contradiction or required scope omission found in the inspected frozen final.",
+      "optional_supported_discoveries": [
+        {
+          "id": "O1-L1",
+          "status": "OPTIONAL_SUPPORTED_DISCOVERY",
+          "discovery": "The official result-code page provides a concrete LOCKED distinction and same-connection cursor case. Output1's limited-corpus uncertainty is legitimate, but a bounded additional primary check can resolve this much.",
+          "evidence": [
+            {
+              "source_id": "review-rescode",
+              "lines": [
+                428,
+                453
+              ],
+              "claim": "Same-connection/shared-cache conflict; DROP TABLE while reading."
+            }
+          ],
+          "reviewer_case": "C5-same-connection-locked",
+          "not_candidate_work": true
+        },
+        {
+          "id": "O1-L2",
+          "status": "OPTIONAL_SUPPORTED_DISCOVERY",
+          "discovery": "Explicitly distinguish pending-write COMMIT BUSY from external-reader COMMIT BUSY; waiting does not finish an outstanding write statement.",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "Two COMMIT BUSY cases."
+            },
+            {
+              "source_id": "review-vdbe-3.51.3",
+              "lines": [
+                4027,
+                4034
+              ],
+              "claim": "Active writing VM rejects COMMIT."
+            }
+          ],
+          "reviewer_case": "C4-pending-write-commit-busy",
+          "not_candidate_work": true
+        },
+        {
+          "id": "O1-L3",
+          "status": "OPTIONAL_POLICY_SPECIFICATION",
+          "discovery": "Finite numeric caps/deadline can make the recommended policy immediately implementable, but the brief does not require specific values and no particular schedule is established by sources.",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                576,
+                588
+              ],
+              "claim": "busy_timeout configures the connection's single busy handler and may overwrite an earlier one."
+            }
+          ]
+        }
+      ],
+      "incorrect_rejections": {
+        "found": [],
+        "assessment": "LOCKED uncertainty is limited to mapped sources and still preserves separate diagnosis. This is supported uncertainty, not blanket abstention. No frozen prior draft was provided, so no historical false rejection is inferred."
+      },
+      "final_preservation": {
+        "retained_dispositions": [
+          "Known writes use IMMEDIATE; optional/read-only use DEFERRED.",
+          "Stale-snapshot promotion restarts whole safe logical unit.",
+          "WAL assumptions depend on actual mode/host; do not fold every BUSY/LOCKED code together.",
+          "Finite application retry budget; external side effects outside atomic replay.",
+          "Failed begin has no body; active COMMIT retry never reruns body; cleanup before active connection reuse.",
+          "Bounded queue alternative and explicitly proposed checks."
+        ],
+        "retained_dependencies": [
+          "SQLite 3.51.3 assumed, actual loaded version unverified.",
+          "Actual journal mode, local single host and binding codes.",
+          "Atomic and safe logical replay.",
+          "Mutable doc capture identity versus versioned wal.c."
+        ],
+        "prior_preservation_assessed": false,
+        "reason": "No common prior_state/changes or authorized prior candidate draft supplied; assess final dispositions only."
+      },
+      "proposed_vs_performed": {
+        "candidate_proposed_checks": [
+          "WAL stale deferred promotion versus IMMEDIATE acquisition.",
+          "Long reader versus checkpoint progress/WAL growth.",
+          "Writer contention versus request deadline/busy handler and separate LOCKED path."
+        ],
+        "candidate_execution_claim": "Explicitly not run.",
+        "candidate_executions_independently_verified": [],
+        "candidate_source_method_claims": "Local cold-source operations are self-reported in frozen sources.json, not independently audited; frozen bytes and identities are verified.",
+        "reviewer_checks": "C1-C6 in counterexamples.json are independent reviewer boundary checks, not candidate execution or retest of a candidate implementation."
+      },
+      "discovery_yield_and_coverage": {
+        "finding": "Useful bounded coverage of all six obligations using all four mapped sources; meaningful distinctions include stale snapshot versus writer lock and checkpoint delay versus writer progress.",
+        "optional_yield": "LOCKED semantics and pending-write COMMIT condition could be sharpened with the independently inspected supplemental primary sources.",
+        "uncertainty": "Loaded library/binding and real performance remain unverified; uncertainty is scoped and does not reject the module."
+      },
+      "unassessed_remainder": {
+        "declared_scope": [],
+        "limitations": [
+          "No production/deployed 3.51.3 runtime or binding executed.",
+          "No independent audit of candidate prior-stage/source-acquisition history.",
+          "No complete taxonomy of every SQLite/VFS error, crash behavior or application architecture claimed."
+        ]
+      },
+      "source_quality": "PASS",
+      "useful_deliverable": {
+        "useful": true,
+        "disposition": "YES",
+        "reason": "A usable conditional bounded recommendation with cleanup and useful proposed checks; numeric retry parameters remain application choices."
+      },
+      "blinding_limits": [
+        "Neutral frozen files expose method/arm names in headings and embedded job paths. These paths were treated as blinding leakage, never as read authority.",
+        "Read only mapped brief, neutral frozen finals/manifests, mapped primary bytes, actual applicable rules, reviewer-authored artifacts and publicly reacquired primary sources. changes and prior_state are null.",
+        "Initial rule discovery enumerated filenames under .codex/.t3 and the mapped review directory; no unrelated contents, jobs sources/prompts, campaign state, parent analysis, costs, grades, targets or other-case data were read.",
+        "Frozen source manifests contain self-reported acquisition operations; they are not independent proof of what a candidate actually read, fetched, tested or preserved from an earlier draft.",
+        "The requested account is user-declared codex_gmail sittingmongoose@gmail.com. No credential/account inspection or change was performed; this review does not authenticate account selection."
+      ]
+    },
+    {
+      "label": "Output2",
+      "complete_scope_assessed": true,
+      "obligation_dispositions": [
+        {
+          "obligation_id": "O1",
+          "obligation": "Distinguish deferred and immediate acquisition behavior.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            3,
+            5
+          ],
+          "reason": "Acquisition order and first SELECT versus known write paths distinguished.",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                290,
+                304
+              ],
+              "claim": "Multiple readers; one writer; existing read must be upgraded."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                330,
+                349
+              ],
+              "claim": "DEFERRED first database access and first-read versus first-write; IMMEDIATE starts write up front and may be BUSY."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O2",
+          "obligation": "State where reader-to-writer transition matters.",
+          "disposition": "SATISFIED_WITH_NONMATERIAL_PRECISION_DEFECT",
+          "candidate_lines": [
+            5,
+            13,
+            15
+          ],
+          "reason": "Restart after promotion failure is sound; exact BUSY_SNAPSHOT wording omits writer-acquisition precondition.",
+          "defect_ids": [
+            "O2-D1"
+          ],
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                308,
+                316
+              ],
+              "claim": "Read snapshot remains unchanged until transaction ends."
+            },
+            {
+              "source_id": "sqlwalcode",
+              "lines": [
+                3712,
+                3736
+              ],
+              "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O3",
+          "obligation": "Bind WAL assumptions and busy/locked conditions.",
+          "disposition": "SATISFIED_WITH_NONMATERIAL_PRECISION_DEFECT",
+          "candidate_lines": [
+            7,
+            11,
+            17
+          ],
+          "reason": "Mode/host/checkpoint/BUSY/LOCKED conditions covered, including independently verified supplemental LOCKED source.",
+          "defect_ids": [
+            "O2-D1"
+          ],
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                1214,
+                1224
+              ],
+              "claim": "Actual/returned journal mode governs; failed change returns original mode."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                166,
+                180
+              ],
+              "claim": "Reader/writer concurrency and same-host/network-filesystem boundary."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                269,
+                318
+              ],
+              "claim": "Read end mark; one writer; reader limits checkpoint progress."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                681,
+                704
+              ],
+              "claim": "Exclusive locking, last-connection cleanup and crash recovery can produce BUSY."
+            },
+            {
+              "source_id": "review-rescode",
+              "lines": [
+                428,
+                453
+              ],
+              "claim": "LOCKED is distinct from cross-connection BUSY."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O4",
+          "obligation": "Separate application retry policy from database guarantees.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            9,
+            17
+          ],
+          "reason": "Finite concrete envelope presented as initial application values, not SQLite guarantees.",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                576,
+                588
+              ],
+              "claim": "busy_timeout configures the connection's single busy handler and may overwrite an earlier one."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O5",
+          "obligation": "Address transaction cleanup after failure.",
+          "disposition": "PARTIAL_MATERIAL_OMISSION",
+          "candidate_lines": [
+            9,
+            11,
+            13
+          ],
+          "reason": "Body/promotion cleanup is supplied; active transaction disposition after exhausted COMMIT retries is unspecified.",
+          "defect_ids": [
+            "O2-D2"
+          ],
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                410,
+                440
+              ],
+              "claim": "Some failures roll back one statement or whole transaction; inspect state; explicit rollback normalizes state."
+            },
+            {
+              "source_id": "review-vdbe-3.51.3",
+              "lines": [
+                4022,
+                4044
+              ],
+              "claim": "Active writing statements make COMMIT BUSY; BUSY halt restores autocommit flag to prior state."
+            }
+          ]
+        },
+        {
+          "obligation_id": "O6",
+          "obligation": "Retain one useful alternative and a discriminating test proposal.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            3,
+            15
+          ],
+          "reason": "DEFERRED for read-mostly paths is useful; proposed checks discriminate acquisition, promotion, checkpoint and fallback mode.",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                330,
+                349
+              ],
+              "claim": "DEFERRED avoids starting database access/write transaction up front; IMMEDIATE pays acquisition early."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                293,
+                311
+              ],
+              "claim": "Only one writer; checkpoint delay is separate from reader/writer concurrency."
+            }
+          ]
+        }
+      ],
+      "supported_claims_and_conditions": [
+        {
+          "claim": "Prefer short IMMEDIATE for known writes; DEFERRED for potentially read-only paths; only one writer.",
+          "final_lines": [
+            3,
+            3
+          ],
+          "disposition": "SUPPORTED",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                290,
+                304
+              ],
+              "claim": "Multiple readers; one writer; existing read must be upgraded."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                330,
+                349
+              ],
+              "claim": "DEFERRED first database access and first-read versus first-write; IMMEDIATE starts write up front and may be BUSY."
+            }
+          ]
+        },
+        {
+          "claim": "A deferred SELECT holds snapshot; successful stale-snapshot promotion fails and requires rollback/re-read/safe replay.",
+          "final_lines": [
+            5,
+            5
+          ],
+          "disposition": "SUPPORTED_CORE_WITH_NONMATERIAL_QUALIFICATION_DEFECT",
+          "defect_ids": [
+            "O2-D1"
+          ],
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                308,
+                316
+              ],
+              "claim": "Read snapshot remains unchanged until transaction ends."
+            },
+            {
+              "source_id": "sqlwalcode",
+              "lines": [
+                3712,
+                3736
+              ],
+              "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+            }
+          ]
+        },
+        {
+          "claim": "Check actual mode; same-host WAL; one writer; long readers impede checkpoints; BUSY during recovery/exclusive/cleanup; rollback-reader COMMIT contention.",
+          "final_lines": [
+            7,
+            7
+          ],
+          "disposition": "SUPPORTED_WITH_DOMAIN_CONDITIONS",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                1214,
+                1224
+              ],
+              "claim": "Actual/returned journal mode governs; failed change returns original mode."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                166,
+                180
+              ],
+              "claim": "Reader/writer concurrency and same-host/network-filesystem boundary."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                269,
+                318
+              ],
+              "claim": "Read end mark; one writer; reader limits checkpoint progress."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                681,
+                704
+              ],
+              "claim": "Exclusive locking, last-connection cleanup and crash recovery can produce BUSY."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+            }
+          ]
+        },
+        {
+          "claim": "100ms timeout, at most four acquisition/COMMIT calls, capped pauses and 1s deadline are a tuneable application policy, not guarantees.",
+          "final_lines": [
+            9,
+            9
+          ],
+          "disposition": "SUPPORTED_AS_PROPOSED_POLICY",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                576,
+                588
+              ],
+              "claim": "busy_timeout configures the connection's single busy handler and may overwrite an earlier one."
+            }
+          ],
+          "note": "No measurement establishes chosen values or a hard wall-clock bound on database execution/I/O. Commit-budget terminal cleanup is a separate material omission O2-D2."
+        },
+        {
+          "claim": "Failed IMMEDIATE begins have no body work; active reader-blocked COMMIT should retry commit without replay.",
+          "final_lines": [
+            11,
+            11
+          ],
+          "disposition": "SUPPORTED",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                290,
+                304
+              ],
+              "claim": "Multiple readers; one writer; existing read must be upgraded."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                330,
+                349
+              ],
+              "claim": "DEFERRED first database access and first-read versus first-write; IMMEDIATE starts write up front and may be BUSY."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+            }
+          ]
+        },
+        {
+          "claim": "Supplemental mutable result-code documentation has broad successful-IMMEDIATE/no-later-BUSY wording; scope is unresolved by that unpinned page.",
+          "final_lines": [
+            11,
+            11
+          ],
+          "disposition": "SUPPORTED_UNCERTAINTY_NOT_FALSE_CORRECTION",
+          "evidence": [
+            {
+              "source_id": "review-rescode",
+              "lines": [
+                416,
+                424
+              ],
+              "claim": "Documentation asserts broad no-later-BUSY wording."
+            },
+            {
+              "source_id": "review-vdbe-3.51.3",
+              "lines": [
+                4027,
+                4044
+              ],
+              "claim": "Selected release permits BUSY with pending write statement and preserves active transaction."
+            },
+            {
+              "source_id": "review-pager-3.51.3",
+              "lines": [
+                5918,
+                5955
+              ],
+              "claim": "Rollback-mode begin may hold RESERVED without EXCLUSIVE."
+            },
+            {
+              "source_id": "review-pager-3.51.3",
+              "lines": [
+                4282,
+                4292
+              ],
+              "claim": "Rollback syncJournal obtains exclusive lock and returns acquisition error."
+            },
+            {
+              "source_id": "review-pager-3.51.3",
+              "lines": [
+                6408,
+                6432
+              ],
+              "claim": "Rollback exclusive acquisition may be BUSY; WAL branch is a no-op."
+            },
+            {
+              "source_id": "review-pager-3.51.3",
+              "lines": [
+                6597,
+                6609
+              ],
+              "claim": "Rollback commit phase calls syncJournal and propagates errors."
+            }
+          ],
+          "note": "The reviewer source checks resolve these ordinary counterexamples for 3.51.3; the candidate remains frozen with its stated uncertainty."
+        },
+        {
+          "claim": "LOCKED means same-connection/shared-cache conflict; do not send it through ordinary BUSY retry loop.",
+          "final_lines": [
+            11,
+            11
+          ],
+          "disposition": "SUPPORTED_ADDITIONAL_PRIMARY_DISCOVERY",
+          "evidence": [
+            {
+              "source_id": "review-rescode",
+              "lines": [
+                428,
+                453
+              ],
+              "claim": "BUSY/LOCKED distinction and cursor-dependent DROP TABLE example."
+            },
+            {
+              "source_id": "review-btree-3.51.3",
+              "lines": [
+                3647,
+                3650
+              ],
+              "claim": "Shared-cache blocker returns LOCKED_SHAREDCACHE."
+            }
+          ],
+          "note": "Closing/resetting a conflicting cursor can help the documented local-statement case; shared-cache resolution can additionally depend on another connection. Candidate says resolve conflict, not that closing this connection's cursor always suffices."
+        },
+        {
+          "claim": "After body error or failed promotion, finalize/reset, roll back if active and reopen uncertain connection; do not assume automatic rollback.",
+          "final_lines": [
+            13,
+            13
+          ],
+          "disposition": "SUPPORTED_BUT_REQUIRED_TERMINAL_BRANCH_OMITTED",
+          "defect_ids": [
+            "O2-D2"
+          ],
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                410,
+                440
+              ],
+              "claim": "Some failures roll back one statement or whole transaction; inspect state; explicit rollback normalizes state."
+            },
+            {
+              "source_id": "review-vdbe-3.51.3",
+              "lines": [
+                4022,
+                4044
+              ],
+              "claim": "Active writing statements make COMMIT BUSY; BUSY halt restores autocommit flag to prior state."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                363,
+                374
+              ],
+              "claim": "Reset/finalize closes statement lifetime."
+            }
+          ]
+        },
+        {
+          "claim": "DEFERRED remains useful for read-mostly paths; proposed acquisition, stale promotion, long-reader/checkpoint and fallback cases discriminate behavior.",
+          "final_lines": [
+            15,
+            15
+          ],
+          "disposition": "SUPPORTED_PROPOSALS_NOT_EXECUTED",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                330,
+                349
+              ],
+              "claim": "DEFERRED avoids starting database access/write transaction up front; IMMEDIATE pays acquisition early."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                293,
+                311
+              ],
+              "claim": "Only one writer; checkpoint delay is separate from reader/writer concurrency."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                308,
+                316
+              ],
+              "claim": "Read snapshot remains unchanged until transaction ends."
+            },
+            {
+              "source_id": "sqlwalcode",
+              "lines": [
+                3712,
+                3736
+              ],
+              "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+            }
+          ]
+        },
+        {
+          "claim": "Require actual 3.51.3 library, mode, process placement and error-code mapping; no atomicity claim for external effects.",
+          "final_lines": [
+            17,
+            17
+          ],
+          "disposition": "APPROPRIATE_DEPENDENCIES_RETAINED",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                1214,
+                1224
+              ],
+              "claim": "Actual/returned journal mode governs; failed change returns original mode."
+            },
+            {
+              "source_id": "sqlwal",
+              "lines": [
+                166,
+                180
+              ],
+              "claim": "Reader/writer concurrency and same-host/network-filesystem boundary."
+            }
+          ],
+          "note": "Deployed runtime version and bindings are not evidenced by either frozen final."
+        }
+      ],
+      "defects": [
+        {
+          "id": "O2-D1",
+          "kind": "source_condition_imprecision",
+          "materiality": "NONMATERIAL",
+          "candidate_locator": {
+            "artifact": "Output2/final.md",
+            "lines": [
+              5,
+              5
+            ]
+          },
+          "description": "The sentence presents a commit since the snapshot as sufficient to return BUSY_SNAPSHOT. In the selected implementation a currently held writer lock can return ordinary BUSY before the stale-header check is reached.",
+          "consequence": "Exact error classification statement is overbroad. The final nevertheless rolls back after any failed promotion, so the omitted acquisition qualification does not change its safe restart action.",
+          "primary_evidence": [
+            {
+              "source_id": "sqlwalcode",
+              "lines": [
+                3712,
+                3736
+              ],
+              "claim": "Writer-lock acquisition precedes WAL-header comparison; header mismatch after successful acquisition returns BUSY_SNAPSHOT and releases write lock."
+            }
+          ],
+          "counterexample": {
+            "artifact": "counterexamples.json",
+            "case": "C1-stale-snapshot-and-writer-lock-order",
+            "observed": "With stale snapshot and writer slot held: BUSY (5); after slot released, same snapshot: BUSY_SNAPSHOT (517).",
+            "runtime": "3.46.1",
+            "limitation": "Runtime is illustrative; selected-release conclusion rests on frozen 3.51.3 wal.c control flow."
+          },
+          "affects_obligations": [
+            "O2",
+            "O3"
+          ],
+          "disposition": "Record precision defect; do not treat entire recommendation as materially incorrect."
+        },
+        {
+          "id": "O2-D2",
+          "kind": "declared_scope_omission",
+          "materiality": "MATERIAL",
+          "candidate_locator": {
+            "artifact": "Output2/final.md",
+            "lines": [
+              9,
+              13
+            ]
+          },
+          "description": "Budget expiry returns retryable/requeue, and COMMIT may be retried on an active transaction, but the terminal disposition of that transaction when COMMIT attempts/deadline expire is never stated. The cleanup paragraph explicitly covers body errors and failed deferred promotion.",
+          "consequence": "A bounded retry policy can return with uncommitted effects and the writer slot still held. Returning/requeueing or handing the connection back requires an explicit known transaction disposition; SQLite does not clean it up merely because the application stopped retrying.",
+          "primary_evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                385,
+                389
+              ],
+              "claim": "Reader-blocked COMMIT leaves transaction active."
+            },
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                435,
+                440
+              ],
+              "claim": "Explicit rollback normalizes state after relevant errors."
+            },
+            {
+              "source_id": "review-vdbe-3.51.3",
+              "lines": [
+                4040,
+                4044
+              ],
+              "claim": "BUSY commit halt restores prior non-autocommit state."
+            }
+          ],
+          "counterexample": {
+            "artifact": "counterexamples.json",
+            "case": "C3-rollback-journal-commit-exhaustion",
+            "observed": "After four BUSY commits, transaction remained active and another writer got BUSY; explicit rollback cleared the slot and left only original rows.",
+            "runtime": "3.46.1",
+            "limitation": "State-boundary counterexample uses timeout zero, not the candidate's proposed 100ms/1s policy. Exact-release persistence is independently supported by manual plus 3.51.3 VM source."
+          },
+          "affects_obligations": [
+            "O5"
+          ],
+          "disposition": "Material missing cleanup branch; not a claim that the candidate explicitly mandates leaking a transaction. No repair applied."
+        }
+      ],
+      "material_correctness": "Supported core; material incompleteness is the exhausted-COMMIT cleanup branch, not false LOCKED diagnosis or false documentation-tension discovery.",
+      "optional_supported_discoveries": [
+        {
+          "id": "O2-L1",
+          "status": "OPTIONAL_SUPPORTED_DISCOVERY",
+          "discovery": "The noticed documentation tension has concrete selected-release counterexamples: rollback-mode RESERVED-to-EXCLUSIVE commit acquisition and an active writing VM even in WAL.",
+          "evidence": [
+            {
+              "source_id": "review-rescode",
+              "lines": [
+                416,
+                424
+              ],
+              "claim": "Documentation asserts broad no-later-BUSY wording."
+            },
+            {
+              "source_id": "review-vdbe-3.51.3",
+              "lines": [
+                4027,
+                4044
+              ],
+              "claim": "Selected release permits BUSY with pending write statement and preserves active transaction."
+            },
+            {
+              "source_id": "review-pager-3.51.3",
+              "lines": [
+                5918,
+                5955
+              ],
+              "claim": "Rollback-mode begin may hold RESERVED without EXCLUSIVE."
+            },
+            {
+              "source_id": "review-pager-3.51.3",
+              "lines": [
+                4282,
+                4292
+              ],
+              "claim": "Rollback syncJournal obtains exclusive lock and returns acquisition error."
+            },
+            {
+              "source_id": "review-pager-3.51.3",
+              "lines": [
+                6408,
+                6432
+              ],
+              "claim": "Rollback exclusive acquisition may be BUSY; WAL branch is a no-op."
+            },
+            {
+              "source_id": "review-pager-3.51.3",
+              "lines": [
+                6597,
+                6609
+              ],
+              "claim": "Rollback commit phase calls syncJournal and propagates errors."
+            }
+          ],
+          "reviewer_cases": [
+            "C3-rollback-journal-commit-exhaustion",
+            "C4-pending-write-commit-busy"
+          ],
+          "not_candidate_work": true
+        },
+        {
+          "id": "O2-L2",
+          "status": "OPTIONAL_TEST_CLARIFICATION",
+          "discovery": "For the fallback COMMIT test, retain an external read transaction through the writer's COMMIT; add a separate unfinished RETURNING statement case. Acquisition contention alone does not discriminate COMMIT behavior.",
+          "evidence": [
+            {
+              "source_id": "sqltransaction",
+              "lines": [
+                378,
+                389
+              ],
+              "claim": "COMMIT may be BUSY, including pending writes or external reader; reader-blocked COMMIT leaves transaction active."
+            },
+            {
+              "source_id": "review-vdbe-3.51.3",
+              "lines": [
+                4027,
+                4034
+              ],
+              "claim": "Active statement COMMIT case."
+            }
+          ],
+          "not_candidate_work": true
+        },
+        {
+          "id": "O2-L3",
+          "status": "OPTIONAL_POLICY_MEASUREMENT",
+          "discovery": "The chosen envelope needs measurement. A monotonic admission/retry deadline plus busy timeout does not itself measure or bound all database work and filesystem latency.",
+          "evidence": [
+            {
+              "source_id": "sqlpragma",
+              "lines": [
+                576,
+                588
+              ],
+              "claim": "busy_timeout configures the connection's single busy handler and may overwrite an earlier one."
+            }
+          ],
+          "limitation": "Application policy analysis, not a claim of a measured overrun or a defect in SQLite."
+        }
+      ],
+      "incorrect_rejections": {
+        "found": [],
+        "assessment": "The broad mutable result-code wording really conflicts with ordinary 3.51.3 BUSY paths. Candidate correctly avoids adopting it as an unconditional guarantee; its uncertainty is not a false rejection of IMMEDIATE. No authorized prior draft was supplied to evaluate historical corrections."
+      },
+      "final_preservation": {
+        "retained_dispositions": [
+          "Known writes prefer IMMEDIATE; read-mostly paths retain DEFERRED.",
+          "Failed promotion rolls back, rereads and safely replays.",
+          "Actual mode/host and code mapping remain prerequisites.",
+          "Concrete finite proposed retry envelope is application policy.",
+          "Reader-related active COMMIT retries only commit; LOCKED remains separate.",
+          "Body-error/failed-promotion cleanup and alternative/tests remain."
+        ],
+        "missing_dependency": "Retryable/requeue return after an exhausted active COMMIT lacks an explicit known transaction disposition; see O2-D2.",
+        "retained_dependencies": [
+          "Actual deployed SQLite 3.51.3, local single host, actual mode and binding mapping.",
+          "Safe/idempotent database-only replay, no external-effect retries.",
+          "Retry values require measurement; source claims distinguish mutable docs from exact-release WAL code."
+        ],
+        "prior_preservation_assessed": false,
+        "reason": "No common prior_state/changes or authorized prior candidate draft supplied; assess final dispositions only."
+      },
+      "proposed_vs_performed": {
+        "candidate_proposed_checks": [
+          "Writer-held acquisition with bounded attempts/no partial insert.",
+          "Read then intervening commit then failed promotion/safe reread with stable event ID.",
+          "WAL long-reader/checkpoint delay with writer commits proceeding.",
+          "Actual-mode/fallback contention to explore COMMIT documentation tension."
+        ],
+        "candidate_execution_claim": "Explicitly not run.",
+        "candidate_executions_independently_verified": [],
+        "candidate_source_method_claims": "Warm-source acquisitions and a live result-code fetch are self-reported. Reviewer independently reacquired the public result-code page and obtained the same SHA-256; no arm cache/receipt/history was read.",
+        "reviewer_checks": "C1-C6 are independent boundary checks on 3.46.1; no candidate code was present or executed."
+      },
+      "discovery_yield_and_coverage": {
+        "finding": "Useful bounded coverage of the six topics, including an additional supported LOCKED distinction and a real broad-documentation-wording tension.",
+        "coverage_limit": "Cleanup discussion reaches body/promotion failure, but misses the active COMMIT transaction at terminal retry-budget exit.",
+        "uncertainty": "Version/mode/binding prerequisites remain explicit; chosen numerical envelope is unmeasured."
+      },
+      "unassessed_remainder": {
+        "declared_scope": [],
+        "limitations": [
+          "Missing O5 branch has been assessed and is a finding, not an unassessed remainder.",
+          "No production/deployed 3.51.3 runtime or binding executed.",
+          "No independent audit of prior draft corrections/source-acquisition history.",
+          "No measurement of the exact 100ms/four-call/1s schedule."
+        ]
+      },
+      "source_quality": "PARTIAL",
+      "useful_deliverable": {
+        "useful": true,
+        "disposition": "YES_WITH_MATERIAL_INCOMPLETENESS",
+        "reason": "The source-linked recommendation and alternative/tests are useful, but terminal COMMIT cleanup is not complete enough for a full pass."
+      },
+      "blinding_limits": [
+        "Neutral frozen files expose method/arm names in headings and embedded job paths. These paths were treated as blinding leakage, never as read authority.",
+        "Read only mapped brief, neutral frozen finals/manifests, mapped primary bytes, actual applicable rules, reviewer-authored artifacts and publicly reacquired primary sources. changes and prior_state are null.",
+        "Initial rule discovery enumerated filenames under .codex/.t3 and the mapped review directory; no unrelated contents, jobs sources/prompts, campaign state, parent analysis, costs, grades, targets or other-case data were read.",
+        "Frozen source manifests contain self-reported acquisition operations; they are not independent proof of what a candidate actually read, fetched, tested or preserved from an earlier draft.",
+        "The requested account is user-declared codex_gmail sittingmongoose@gmail.com. No credential/account inspection or change was performed; this review does not authenticate account selection."
+      ]
+    }
+  ],
+  "reviewer_execution": {
+    "artifact_paths": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/review-counterexamples.py",
+        "sha256": "e7a92d2ca9c79545b07c936343f61db46d295a279fd01427f21b71f560ad61fd"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/counterexamples.json",
+        "sha256": "c6cf141ffef99aa62b3f2820f3e7069e11dd77cabf059b15f85a987be3f87e56"
+      }
+    ],
+    "results": {
+      "runtime": "3.46.1",
+      "selected_release": "3.51.3",
+      "runtime_matches_selected": false,
+      "started_at_utc": "2026-10-07T19:14:15.459747+00:00",
+      "purpose": "Reviewer-only bounded boundary checks; no candidate program or proposed policy executed.",
+      "cases": [
+        {
+          "id": "C1-stale-snapshot-and-writer-lock-order",
+          "mode": "wal",
+          "committed_since_read_and_writer_active": {
+            "error": "database is locked",
+            "code": 5,
+            "name": "SQLITE_BUSY"
+          },
+          "read_transaction_remains_after_busy": true,
+          "same_snapshot_after_writer_releases": {
+            "error": "database is locked",
+            "code": 517,
+            "name": "SQLITE_BUSY_SNAPSHOT"
+          },
+          "read_transaction_remains_after_snapshot_busy": true,
+          "rows_after_rollback_and_fresh_read": 4
+        },
+        {
+          "id": "C2-immediate-acquisition",
+          "mode": "wal",
+          "begin": {
+            "error": "database is locked",
+            "code": 5,
+            "name": "SQLITE_BUSY"
+          },
+          "losing_connection_in_transaction": false,
+          "body_executed": false,
+          "body_execution_note": "Harness deliberately skips body after failed begin."
+        },
+        {
+          "id": "C3-rollback-journal-commit-exhaustion",
+          "mode": "delete",
+          "successful_begin_immediate": true,
+          "commit_attempts": [
+            {
+              "error": "database is locked",
+              "code": 5,
+              "name": "SQLITE_BUSY"
+            },
+            {
+              "error": "database is locked",
+              "code": 5,
+              "name": "SQLITE_BUSY"
+            },
+            {
+              "error": "database is locked",
+              "code": 5,
+              "name": "SQLITE_BUSY"
+            },
+            {
+              "error": "database is locked",
+              "code": 5,
+              "name": "SQLITE_BUSY"
+            }
+          ],
+          "transaction_active_after_exhaustion": true,
+          "other_writer_before_cleanup": {
+            "error": "database is locked",
+            "code": 5,
+            "name": "SQLITE_BUSY"
+          },
+          "other_writer_after_explicit_rollback": {
+            "error": null
+          },
+          "rows_after_cleanup": 3,
+          "limitation": "Four immediate attempts, timeout zero; not the candidate's 100ms/1s schedule."
+        },
+        {
+          "id": "C4-pending-write-commit-busy",
+          "mode": "wal",
+          "first_returned_id": 4,
+          "successful_begin_immediate": true,
+          "commit_with_pending_statement": {
+            "error": "cannot commit transaction - SQL statements in progress",
+            "code": 5,
+            "name": "SQLITE_BUSY"
+          },
+          "active_after_failed_commit": true,
+          "commit_after_cursor_close": {
+            "error": null
+          },
+          "rows": 5
+        },
+        {
+          "id": "C5-same-connection-locked",
+          "mode": "wal",
+          "drop_with_cursor": {
+            "error": "database table is locked",
+            "code": 6,
+            "name": "SQLITE_LOCKED"
+          },
+          "drop_after_cursor_close": {
+            "error": null
+          }
+        },
+        {
+          "id": "C6-long-reader-checkpoint",
+          "mode": "wal",
+          "writer_commit": {
+            "error": null
+          },
+          "checkpoint_with_reader": [
+            0,
+            6,
+            5
+          ],
+          "checkpoint_after_reader": [
+            0,
+            6,
+            6
+          ],
+          "tuple_order": [
+            "busy",
+            "wal_frames",
+            "checkpointed_frames"
+          ],
+          "limitation": "PASSIVE checkpoint progress only; no assertion that file shrinks."
+        }
+      ],
+      "finished_at_utc": "2026-10-07T19:14:15.663329+00:00",
+      "elapsed_seconds": 0.20357906500066747
+    },
+    "selected_release_claim_boundary": "Existing Python runtime is 3.46.1, not 3.51.3. Runtime observations illustrate boundaries only. Claims about 3.51.3 rest on independently inspected tagged implementation and mapped exact-source bytes.",
+    "execution_scope": "One authored bounded harness; six boundary cases; temporary databases under output scope removed by TemporaryDirectory; no candidate edits, downloaded code execution, installations or repeated best-of testing."
+  },
+  "comparison": {
+    "quality_differences": [
+      "Output1 explicitly qualifies stale-snapshot detection on obtaining the writer lock; Output2's exact-code sentence omits that qualification.",
+      "Output1's cleanup before reuse is general; Output2 does not state cleanup when active COMMIT retry budget expires.",
+      "Output2 adds supported LOCKED semantics and explicit initial retry values; Output1 retains appropriate mapped-corpus LOCKED uncertainty and a bounded queue alternative."
+    ],
+    "basis": "Evidence-backed source/coverage comparison only; no economic or winner ranking."
+  },
+  "blinding_limits": [
+    "Neutral frozen files expose method/arm names in headings and embedded job paths. These paths were treated as blinding leakage, never as read authority.",
+    "Read only mapped brief, neutral frozen finals/manifests, mapped primary bytes, actual applicable rules, reviewer-authored artifacts and publicly reacquired primary sources. changes and prior_state are null.",
+    "Initial rule discovery enumerated filenames under .codex/.t3 and the mapped review directory; no unrelated contents, jobs sources/prompts, campaign state, parent analysis, costs, grades, targets or other-case data were read.",
+    "Frozen source manifests contain self-reported acquisition operations; they are not independent proof of what a candidate actually read, fetched, tested or preserved from an earlier draft.",
+    "The requested account is user-declared codex_gmail sittingmongoose@gmail.com. No credential/account inspection or change was performed; this review does not authenticate account selection."
+  ],
+  "receipts": {
+    "active": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/goal-active-receipt.json",
+    "terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/goal-terminal-receipts.json",
+    "active_receipt_saved_before_subject_assessment": true,
+    "terminal_status": "complete, confirmed by fresh native get_goal",
+    "native_goal_time_used_seconds": 408,
+    "terminal_receipt_sha256": "a407cacf13522be11248d19329165429b023617a224a4d02aa1a9c559b0445e9",
+    "terminal_receipts_saved_after_review_authorship": true
+  },
+  "candidate_edits": false,
+  "final_verification": {
+    "all_six_obligations_assessed_per_output": true,
+    "all_frozen_output_hashes_unchanged": true,
+    "all_primary_identity_hashes_matched": true,
+    "all_primary_locators_resolved": true,
+    "temporary_database_directories_removed": true
+  }
+}

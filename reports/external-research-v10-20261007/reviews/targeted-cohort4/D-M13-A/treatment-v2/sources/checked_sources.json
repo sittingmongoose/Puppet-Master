@@ -1,0 +1,167 @@
+[
+  {
+    "source_id": "pep706",
+    "url": "https://peps.python.org/pep-0706/",
+    "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+    "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+    "reviewed_locators": [
+      "raw HTML lines 338-349 and 401-402, #filters",
+      "raw HTML lines 404-427, #defaults-and-their-configuration",
+      "raw HTML lines 423-427, #defaults-and-their-configuration",
+      "raw HTML lines 435-441, #filtererror",
+      "raw HTML lines 486-518, #hints-for-further-verification",
+      "raw HTML lines 662-665, #reference-implementation",
+      "whole-file SHA-256 identity; specific claim locators in C01-C25"
+    ],
+    "limitations": "Frozen supplied primary bytes; hash verified; static source inspection; no execution. Capture identity is supplied by mapped manifest and not an independent live recapture."
+  },
+  {
+    "source_id": "tarissue",
+    "url": "https://api.github.com/repos/python/cpython/issues/102950",
+    "version_or_capture": "CPython issue 102950 captured 2026-10-07",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarissue.json",
+    "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+    "reviewed_locators": [
+      "JSON pointer /body, Linked PRs and Unofficial backport sections",
+      "JSON pointers /number, /title, /created_at, /state, /closed_at, /body",
+      "whole-file SHA-256 identity; specific claim locators in C01-C25"
+    ],
+    "limitations": "Frozen supplied primary bytes; hash verified; static source inspection; no execution. Capture identity is supplied by mapped manifest and not an independent live recapture."
+  },
+  {
+    "source_id": "tarpr",
+    "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+    "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarpr.json",
+    "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+    "reviewed_locators": [
+      "JSON pointers /base/ref, /merged_at, /merge_commit_sha",
+      "JSON pointers /number, /title, /body, /created_at, /base/ref, /merged, /merged_at, /merge_commit_sha",
+      "whole-file SHA-256 identity; specific claim locators in C01-C25"
+    ],
+    "limitations": "Frozen supplied primary bytes; hash verified; static source inspection; no execution. Capture identity is supplied by mapped manifest and not an independent live recapture."
+  },
+  {
+    "source_id": "tarold",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+    "version_or_capture": "CPython 3.12.3",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+    "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+    "reviewed_locators": [
+      "lines 1625-1627, 1694-1697, 2304-2357",
+      "lines 1639, 2217-2234",
+      "lines 2217-2238, 833-837",
+      "lines 2217-2302, 833-837",
+      "lines 2217-2357",
+      "lines 2240-2241, 2285-2286",
+      "lines 2240-2338, 827-831",
+      "lines 723-753, 1625-1627, 2304-2357, 2260-2270",
+      "lines 755-770",
+      "lines 755-770, 818-819, 2260-2270, 2347-2357",
+      "lines 755-831, 2260-2270",
+      "lines 755-837 and 2217-2357",
+      "lines 771-801, 821-831, 2530-2571",
+      "lines 802-815, 1585-1591, 2505-2528",
+      "lines 818-837, 2217-2238, 2240-2241, 2285-2286",
+      "lines 818-837, 2240-2241, 2285-2286",
+      "lines 827-831, 2219, 2313-2317",
+      "whole-file SHA-256 identity; specific claim locators in C01-C25"
+    ],
+    "limitations": "Frozen supplied primary bytes; hash verified; static source inspection; no execution. Capture identity is supplied by mapped manifest and not an independent live recapture."
+  },
+  {
+    "source_id": "tardocold",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+    "version_or_capture": "CPython 3.12.3",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+    "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+    "reviewed_locators": [
+      "lines 1003-1006",
+      "lines 1003-1006, 1086-1115",
+      "lines 1020-1035, 1113-1115",
+      "lines 1032-1068",
+      "lines 1042-1049",
+      "lines 490-494",
+      "lines 490-504, 976-978, 1142-1149",
+      "lines 512-513, 516-525, 584-586, 940-945",
+      "lines 563-582 and 1076-1080",
+      "lines 581-582, 1003-1006",
+      "lines 584-603, 980-987",
+      "lines 592-611",
+      "lines 602-603, 1118-1124",
+      "lines 605-611",
+      "lines 605-611 and 1148-1149",
+      "whole-file SHA-256 identity; specific claim locators in C01-C25"
+    ],
+    "limitations": "Frozen supplied primary bytes; hash verified; static source inspection; no execution. Capture identity is supplied by mapped manifest and not an independent live recapture."
+  },
+  {
+    "source_id": "taroldtest",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+    "version_or_capture": "CPython 3.12.3",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+    "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+    "reviewed_locators": [
+      "lines 3391-3401, 3443-3454, 3806-3873, 3908-4038",
+      "lines 3391-3401, 3491-3514, 3654-3699, 3701-3754, 3908-3913",
+      "lines 3404-3482, 3491-3514, 3655-3699, 3908-4038",
+      "lines 3406-3427, 3491-3514",
+      "lines 3491-3514",
+      "lines 3491-3514, 3957-3967, 4040-4110",
+      "lines 3654-3699, 3756-3778",
+      "lines 3806-3906",
+      "lines 3946-3979",
+      "lines 3946-3985",
+      "lines 4010-4038",
+      "lines 4040-4110, especially 4055-4064, 4074-4081, 4091-4098",
+      "lines 4055-4064, 4074-4081",
+      "whole-file SHA-256 identity; specific claim locators in C01-C25"
+    ],
+    "limitations": "Frozen supplied primary bytes; hash verified; static source inspection; no execution. Capture identity is supplied by mapped manifest and not an independent live recapture."
+  },
+  {
+    "source_id": "tarfix",
+    "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+    "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+    "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+    "reviewed_locators": [
+      "/files/3/patch: _unpack_tarfile hunk and unpack_archive filter_kwargs/dispatch hunks",
+      "/files/4/patch: +def _get_filtered_attrs (splitlines 72-127), +def data_filter (137-141), +def _get_filter_function (277-298), +def _get_extract_tarinfo (377-398); /files/6/patch: +class TestExtractionFilters (570 onward), +def test_absolute (654-678), +def test_change_default_filter_on_class (961-971); /files/3/patch: _unpack_tarfile and unpack_archive changes",
+      "/files/5/patch splitlines 51-82: tar filter coverage and ZIP TypeError assertion",
+      "/files/6/patch splitlines 654-678 and 759-786",
+      "/files/6/patch splitlines 912-1043",
+      "/files/6/patch splitlines 961-983",
+      "/files/6/patch; search for test_absolute_hardlink returned no occurrence",
+      "JSON pointers /files/0/filename through /files/7/filename",
+      "JSON pointers /sha, /commit/message",
+      "whole-file SHA-256 identity; specific claim locators in C01-C25"
+    ],
+    "limitations": "Frozen supplied primary bytes; hash verified; static source inspection; no execution. Capture identity is supplied by mapped manifest and not an independent live recapture."
+  },
+  {
+    "source_id": "shutil-3.12.3.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+    "version_or_capture": "CPython v3.12.3 tag",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.py",
+    "sha256": "819e518cb7a539d09b2526138015541b34d2646afb9c2f6ae4ffd476d6a0fcf4",
+    "reviewed_locators": [
+      "lines 1271-1274, 1301-1390",
+      "lines 1301-1313, 1344-1390"
+    ],
+    "limitations": "Direct upstream primary file pinned to release tag; static inspection only, no downloaded code executed; independent supplementary reviewer capture, not candidate capture."
+  },
+  {
+    "source_id": "shutil-3.12.3.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+    "version_or_capture": "CPython v3.12.3 tag",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.rst",
+    "sha256": "51c991b2a28b8cc00de14b6cb71dcfbe64c78f28a8a24b5af7b43e0eb74bff67",
+    "reviewed_locators": [
+      "lines 682-702, 719-733, 750-760",
+      "lines 696-700"
+    ],
+    "limitations": "Direct upstream primary file pinned to release tag; static inspection only, no downloaded code executed; independent supplementary reviewer capture, not candidate capture."
+  }
+]

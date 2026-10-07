@@ -1,0 +1,109 @@
+{
+  "purpose": "Candidate-authored input-only test inputs for the D-M06-A JCS review; carries no answers, no anticipated results, and no grading information. The later authorized witness, if any, supplies its own outcomes.",
+  "mode": "input-only",
+  "input_convention": "Each fixture's 'input' is raw JSON text exactly as a candidate implementation would receive it, so text-level cases (escapes, duplicate names) are representable alongside structural ones.",
+  "fixtures": [
+    {
+      "id": "ord-01",
+      "category": "ordinary",
+      "note": "Flat object with ASCII keys out of alphabetical order.",
+      "input": "{\"zebra\":1,\"apple\":2,\"mango\":3}"
+    },
+    {
+      "id": "ord-02",
+      "category": "ordinary",
+      "note": "Array of mixed scalar types.",
+      "input": "[1,2.5,true,false,null,\"hello world\"]"
+    },
+    {
+      "id": "ord-03",
+      "category": "ordinary",
+      "note": "Nested object inside array inside object.",
+      "input": "{\"outer\":{\"inner\":{\"c\":1,\"a\":2},\"list\":[{\"y\":1,\"x\":2}]}}"
+    },
+    {
+      "id": "ord-04",
+      "category": "ordinary",
+      "note": "Ordinary string values with spaces, punctuation, and digits.",
+      "input": "{\"title\":\"Quarterly report #12 (draft)\",\"tags\":[\"a\",\"b\"]}"
+    },
+    {
+      "id": "edge-01",
+      "category": "boundary",
+      "note": "Empty containers and empty string.",
+      "input": "{\"e\":{},\"f\":[],\"s\":\"\"}"
+    },
+    {
+      "id": "edge-02",
+      "category": "boundary",
+      "note": "Key order: escaped-accent key vs plain key that sorts before it in raw form.",
+      "input": "{\"\u00e9\":1,\"z\":2}"
+    },
+    {
+      "id": "edge-03",
+      "category": "boundary",
+      "note": "Key order: supplementary-plane key (U+1D400) vs U+FFFF key; UTF-16 code-unit order and code-point order disagree on this pair.",
+      "input": "{\"\ud835\udc00\":1,\"￿\":2}"
+    },
+    {
+      "id": "edge-04",
+      "category": "boundary",
+      "note": "Text-level \\u escapes that denote the same parsed strings as literal spellings, given as array elements so no object-name collision is implied.",
+      "input": "[\"\\u0049\",\"I\",\"\\u00e9\"]"
+    },
+    {
+      "id": "edge-05",
+      "category": "boundary",
+      "note": "Composed vs decomposed accents: canonically equivalent, visually identical, distinct code-point sequences.",
+      "input": "{\"k\":\"\u00e9\",\"j\":\"e\u0301\"}"
+    },
+    {
+      "id": "edge-06",
+      "category": "boundary",
+      "note": "C0 control characters via JSON short escapes and the \\u00xx range, plus quote and backslash.",
+      "input": "{\"c\":\"\\b\\t\\n\\f\\r\",\"d\":\"\\u0001\\u001f\",\"q\":\"a\\\"b\\\\c\"}"
+    },
+    {
+      "id": "edge-07",
+      "category": "boundary",
+      "note": "Non-ASCII characters emitted verbatim: CJK, emoji (supplementary plane), Nordic letters.",
+      "input": "{\"ja\":\"\u65e5\u672c\u8a9e\",\"smile\":\"\ud83d\ude42\",\"sv\":\"\u00e5\u00e4\u00f6\"}"
+    },
+    {
+      "id": "edge-08",
+      "category": "boundary",
+      "note": "Number edges: zero and negative zero, plain decimal, smallest subnormal, near-max double.",
+      "input": "[-0,0,0.5,5e-324,1e308]"
+    },
+    {
+      "id": "edge-09",
+      "category": "boundary",
+      "note": "Number edges at exponent and precision thresholds cited in the draft: 1e21 boundary, 1e-6 and 1e-7, 2^53-1, 2^53, 2^53+1.",
+      "input": "[1e21,1e-6,1e-7,9007199254740991,9007199254740992,9007199254740993]"
+    },
+    {
+      "id": "edge-10",
+      "category": "boundary",
+      "note": "Long integer literal with more significant digits than a double holds.",
+      "input": "123456789012345678901234567890"
+    },
+    {
+      "id": "edge-11",
+      "category": "boundary",
+      "note": "Text-level duplicate property names: the draft proposes the domain bound rejects this input.",
+      "input": "{\"a\":1,\"a\":2}"
+    },
+    {
+      "id": "edge-12",
+      "category": "boundary",
+      "note": "Text-level lone surrogate escape (\\\\udead): the draft proposes the domain bound terminates on this input.",
+      "input": "\"\\udead\""
+    },
+    {
+      "id": "edge-13",
+      "category": "boundary",
+      "note": "Sorting stress: keys that collide after unescaping share one parsed name; plus 1-character and multi-character shared-prefix keys.",
+      "input": "{\"\u0041\":1,\"b\":2,\"ba\":3,\"ab\":4,\"\\u0041\":5}"
+    }
+  ]
+}

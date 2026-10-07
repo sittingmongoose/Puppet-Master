@@ -1,0 +1,31 @@
+                    self.dfa_state = s;
+                    (res, 0, 0, 0)
+                }
+            };
+        }
+        if output.is_empty() {
+            return (ReadRecordResult::OutputFull, 0, 0, 0);
+        }
+        if ends.is_empty() {
+            return (ReadRecordResult::OutputEndsFull, 0, 0, 0);
+        }
+        let (mut nin, mut nout, mut nend) = (0, 0, 0);
+        let mut state = self.dfa_state;
+        while nin < input.len() && nout < output.len() && nend < ends.len() {
+            let (s, has_out) = self.dfa.get_output(state, input[nin]);
+            self.line += (input[nin] == b'\n') as u64;
+            state = s;
+            if has_out {
+                output[nout] = input[nin];
+                nout += 1;
+            }
+            nin += 1;
+            if state >= self.dfa.final_field {
+                ends[nend] = self.output_pos + nout;
+                nend += 1;
+                if state > self.dfa.final_field {
+                    break;
+                }
+            }
+            if state == self.dfa.in_field || state == self.dfa.in_quoted {
+                self.dfa

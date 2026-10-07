@@ -1,0 +1,81 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/brief.md",
+  "changes": null,
+  "prior_state": null,
+  "primary_sources": [
+    {
+      "source_id": "rasterresample",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rasterresample.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rastermask",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rastermask.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterio",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rasterio.pyx",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "outputs": [
+    {
+      "label": "Output1",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/frozen-inputs/Output1/final.md",
+          "sha256": "c42b6e48bc60a1b8f7052990603adc16c19b40556511f49ef850cea8a7c2027d"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/frozen-inputs/Output1/sources.json",
+          "sha256": "322acc9a0f492483009676704328ed3c80831fb5959dfb114e1aaf72b8e7cc71"
+        }
+      }
+    },
+    {
+      "label": "Output2",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/frozen-inputs/Output2/final.md",
+          "sha256": "dbc6e6d57fc6fbfe19fbb00c2c62d6cb815773be3e52ef93d29d6939b991f3a7"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/frozen-inputs/Output2/sources.json",
+          "sha256": "c77bca7e8eb66d8986ee89d8182a79cd6a04dc80c3c88dddc44010432ae876e5"
+        }
+      }
+    }
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B",
+  "scope": [
+    "State per-band interpolation choices as conditional recommendations.",
+    "Preserve class-label meaning in categorical output.",
+    "Address validity/nodata treatment during resampling.",
+    "Bind output transform and resolution changes.",
+    "State what the documentation does not prove about a specific tile.",
+    "Propose fixtures and retain any supported optional improvement."
+  ],
+  "blinding": "Neutral byte-exact output copies omit arm names in paths. Content may expose method; disclose. Do not read source sibling paths, task prompts, economics, state, other reviews or grades."
+}

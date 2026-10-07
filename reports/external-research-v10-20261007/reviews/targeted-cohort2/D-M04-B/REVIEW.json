@@ -1,0 +1,1064 @@
+{
+  "schema": "independent-primary-source-review.v1",
+  "case_id": "D-M04-B",
+  "reviewer": {
+    "runtime_model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "requested_service_tier": "priority",
+    "requested_account": "codex_gmail sittingmongoose@gmail.com",
+    "account_verification": "Identity supplied by the user; no credentials/account inspection or changes performed.",
+    "independent_authorship": true
+  },
+  "timing": {
+    "budget_seconds": 900,
+    "started_utc": "2026-10-07 19:15:22 UTC",
+    "authored_utc": "2026-10-07 19:20:39 UTC",
+    "elapsed_actual_seconds_through_authored_review": 317,
+    "terminal_elapsed_receipt": "goal-terminal-get.json: goal.timeUsedSeconds; review-lifecycle.json also records final wall clock."
+  },
+  "authority_and_boundaries": {
+    "input_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/INPUT_MAP.json",
+      "sha256": "da5b6c0fc5f19a2f16835d85412cc0b15d4d8e82f5937fb99bc51f63b4eb3b60"
+    },
+    "applicable_rules_read": [
+      {
+        "path": "/home/sittingmongoose/.codex/AGENTS.md",
+        "sha256": "2f99262d51ee86f0f956db7846f40bdeeae7f6d119df23e515b99e5a8ee495f9"
+      },
+      {
+        "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/AGENTS.md",
+        "sha256": "d827d8ff1e53bd4c49d3f6814c9937aabe8aea0580f2c31d3b3ee089244c01b8"
+      }
+    ],
+    "experiment_ancestor_rules": "Only AGENTS.md was checked at the mapped case/review ancestor directories; none was present.",
+    "no_changes_or_prior_supplied": true,
+    "brief": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/brief.md",
+      "sha256": "25ba9294cd6a38e6e5d52d94dff88a242e02a04d1b43d12c3bf6c065a9afc554"
+    },
+    "public_source_text_treated_as_data": true,
+    "candidates_edited": false,
+    "candidate_native_terminals_read": false,
+    "children_created": false,
+    "credentials_account_installs_canon_repo_main_worknodes_external_writes": false,
+    "boundary_note": "No parent analysis, economics, targets, grades, campaign state, other cases, source-arm jobs, stage prompts or source-cache siblings were read. No repository or canonical Plans actions were required by this bounded review."
+  },
+  "declared_scope": [
+    "State per-band interpolation choices as conditional recommendations.",
+    "Preserve class-label meaning in categorical output.",
+    "Address validity/nodata treatment during resampling.",
+    "Bind output transform and resolution changes.",
+    "State what the documentation does not prove about a specific tile.",
+    "Propose fixtures and retain any supported optional improvement."
+  ],
+  "assessment_axes": [
+    "All six brief obligations",
+    "Consequential source claims, governing conditions, exact release and API domain",
+    "Bounded useful discovery yield, coverage, supported optional leads and uncertainty",
+    "Incorrect rejection or false correction",
+    "Preserved final dispositions and dependencies",
+    "Proposed versus actually performed tests"
+  ],
+  "verdict_interpretation": "PASS here means all declared scope and consequential material claims were inspected and the bounded conditional recommendation is supported. It does not certify a tile, every API branch, or performed runtime fixtures. Nonmaterial precision findings are disclosed, not silently patched.",
+  "primary_sources": [
+    {
+      "source_id": "rasterresample",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rasterresample.rst",
+      "kind": "public primary raw bytes",
+      "hash_verified": true,
+      "inspection_ranges": [
+        "1-68"
+      ],
+      "line_numbers": "One-based lines in the mapped raw file; web-rendered numbering is not used."
+    },
+    {
+      "source_id": "rastermask",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rastermask.rst",
+      "kind": "public primary raw bytes",
+      "hash_verified": true,
+      "inspection_ranges": [
+        "1-250"
+      ],
+      "line_numbers": "One-based lines in the mapped raw file; web-rendered numbering is not used."
+    },
+    {
+      "source_id": "rasterio",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rasterio.pyx",
+      "kind": "public primary raw bytes",
+      "hash_verified": true,
+      "inspection_ranges": [
+        "1-290",
+        "435-739",
+        "742-1077",
+        "1676-1745",
+        "1925-2007"
+      ],
+      "line_numbers": "One-based lines in the mapped raw file; web-rendered numbering is not used."
+    },
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes",
+      "hash_verified": true,
+      "inspection_ranges": [
+        "1-38"
+      ],
+      "line_numbers": "One-based lines in the mapped raw file; web-rendered numbering is not used."
+    }
+  ],
+  "additional_primary_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/primary-checks/rasterio-1.3.10-enums.py",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+      "version": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07T19:16:24.209521+00:00",
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "bytes": 5550,
+      "executed": false,
+      "source_id": "rasterio_enums",
+      "inspection_ranges": [
+        "48-112"
+      ],
+      "limitations": "Additional reviewer evidence only, not evidence acquired by either frozen candidate. Released public text was not executed. GDAL 3.9.0 is not presumed to be the tile's linked runtime."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/primary-checks/gdal-3.9.0-gdalwarp.rst",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/programs/gdalwarp.rst",
+      "version": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07T19:16:24.312284+00:00",
+      "sha256": "a7dae5e7338ab3f4132bccf4ceeedf2429af21f215026c0c59a4d0ba24d05ef5",
+      "bytes": 29362,
+      "executed": false,
+      "source_id": "gdalwarp",
+      "inspection_ranges": [
+        "261-270",
+        "284-343",
+        "495-522"
+      ],
+      "limitations": "Additional reviewer evidence only, not evidence acquired by either frozen candidate. Released public text was not executed. GDAL 3.9.0 is not presumed to be the tile's linked runtime."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/primary-checks/gdal-3.9.0-rasterio.cpp",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/rasterio.cpp",
+      "version": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07T19:16:24.492449+00:00",
+      "sha256": "6bb105dcecaf3a8de20adef837e3e6fedebd92cb79f9b25f3691b2db861839ce",
+      "bytes": 233509,
+      "executed": false,
+      "source_id": "gdal_rasterio_cpp",
+      "inspection_ranges": [
+        "340-402",
+        "1058-1125",
+        "1260-1480",
+        "3580-3650",
+        "3720-3788",
+        "4090-4130"
+      ],
+      "limitations": "Additional reviewer evidence only, not evidence acquired by either frozen candidate. Released public text was not executed. GDAL 3.9.0 is not presumed to be the tile's linked runtime."
+    }
+  ],
+  "outputs": [
+    {
+      "label": "Output1",
+      "frozen_artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/frozen-inputs/Output1/final.md",
+          "sha256": "c42b6e48bc60a1b8f7052990603adc16c19b40556511f49ef850cea8a7c2027d"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/frozen-inputs/Output1/sources.json",
+          "sha256": "322acc9a0f492483009676704328ed3c80831fb5959dfb114e1aaf72b8e7cc71"
+        }
+      },
+      "complete_scope_assessed": true,
+      "source_quality": "PASS",
+      "material_correctness": "No material false claim, incorrect rejection, or unsatisfied declared obligation established. One nonmaterial source-domain overgeneralization is recorded without silently repairing the final.",
+      "useful_deliverable": {
+        "value": true,
+        "reason": "A bounded, actionable conditional per-band contract with explicit validity decisions, grid binding, uncertainty, and proposed fixtures."
+      },
+      "obligation_dispositions": [
+        {
+          "id": 1,
+          "obligation": "State per-band interpolation choices as conditional recommendations.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            3,
+            5,
+            7
+          ],
+          "assessment": "Nearest inherits a categorical label; bilinear/cubic or average depend on elevation measurement meaning and acceptable edges/range. Mode remains a conditional lead, not a guarantee.",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "56-68",
+              "note": "No universal method; continuous-data guidance and average caveat."
+            },
+            {
+              "source_id": "rasterio_enums",
+              "lines": "53-66,92-107",
+              "note": "Nearest, average and mode definitions; mode is sampled frequency, not an unconditional area-majority guarantee."
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "obligation": "Preserve class-label meaning in categorical output.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            5,
+            17
+          ],
+          "assessment": "Avoids class-ID arithmetic, recognizes minority-class loss, and proposes asserting that valid results remain source labels. Legend inspection precedes final policy.",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "56-68",
+              "note": "Method choice is conditional."
+            },
+            {
+              "source_id": "rasterio_enums",
+              "lines": "53-66",
+              "note": "Nearest and mode preserve selected sampled identifiers; categorical meaning is a design inference, not a tile observation."
+            }
+          ],
+          "reviewer_evidence": [
+            "arithmetic-checks.json:class-arithmetic"
+          ]
+        },
+        {
+          "id": 3,
+          "obligation": "Address validity/nodata treatment during resampling.",
+          "disposition": "SATISFIED_WITH_NONMATERIAL_QUALIFICATION",
+          "candidate_lines": [
+            9,
+            11,
+            15,
+            17,
+            19
+          ],
+          "assessment": "Correctly separates masks and interpolation, distinguishes mask polarity and per-band/per-dataset validity, warns about Boolean coverage loss, and requires sentinel/partial-support checks. The general read-path description has defect Output1-P01.",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "7-15,85-92,94-124,219-236",
+              "note": "Mask polarity, valid-zero collision, dataset mask precedence and OR fallback."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "631-673,910-982,1935-1996",
+              "note": "Values/masks read separately; write_mask operates with per_dataset mask flags."
+            }
+          ],
+          "reviewer_evidence": [
+            "arithmetic-checks.json:dataset-or-loss",
+            "arithmetic-checks.json:mask-boolean-loss"
+          ]
+        },
+        {
+          "id": 4,
+          "obligation": "Bind output transform and resolution changes.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            13,
+            17
+          ],
+          "assessment": "Binds actual output dimensions to affine scaling under same extent/CRS, uses a window origin for crops, and requires explicit grid changes otherwise. Both affine basis vectors and outer corners are checked. For a window, source dimensions must mean the actual selected window dimensions.",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "34-48",
+              "note": "Dimension ratios in the supplied resampling example."
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "13-38",
+              "note": "Affine equations, corner coordinates, rotation, north-up y sign."
+            }
+          ],
+          "reviewer_evidence": [
+            "arithmetic-checks.json:affine-outer-corners",
+            "arithmetic-checks.json:affine-center",
+            "arithmetic-checks.json:window-corners"
+          ]
+        },
+        {
+          "id": 5,
+          "obligation": "State what the documentation does not prove about a specific tile.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            3,
+            7,
+            11,
+            15
+          ],
+          "assessment": "Clearly leaves tile-specific semantics, driver/kernel behavior, masks, nodata collisions and runtime results unresolved. Does not equate a GDAL 3.9.0 tutorial with this tile's runtime version.",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "85-92,242-250",
+              "note": "Validity/storage depend on source data, format and configuration."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "101-115,208-213,631-673",
+              "note": "Wrapper dispatch is not proof of every downstream kernel or driver result."
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "obligation": "Propose fixtures and retain any supported optional improvement.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            17,
+            19
+          ],
+          "assessment": "Proposes categorical/tie/coverage, sentinel/valid-zero/partial/all-invalid, odd-dimension/window/grid fixtures. Retains explicit validity masks conditionally on preserving the needed per-band representation.",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "85-92,111-124,182-183,219-250",
+              "note": "Supports avoiding nodata-code collision and checking representation."
+            },
+            {
+              "source_id": "rasterresample",
+              "lines": "34-48",
+              "note": "Grid binding motivates geometry fixtures."
+            }
+          ]
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "O1-C01",
+          "claim": "Continuous interpolation choice depends on point versus footprint intent.",
+          "status": "SUPPORTED_CONDITIONAL_RECOMMENDATION",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "56-68",
+              "note": "Documentation supports method families, not this tile's measurement intent."
+            }
+          ]
+        },
+        {
+          "claim_id": "O1-C02",
+          "claim": "GDAL mask polarity is opposite to NumPy masked-array mask polarity.",
+          "status": "DIRECTLY_SUPPORTED",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "7-15,203-216",
+              "note": "Explicit definitions and inverse-mask example."
+            }
+          ]
+        },
+        {
+          "claim_id": "O1-C03",
+          "claim": "A .msk can override nodata metadata; write_mask is shared; dataset_mask can OR distinct band masks.",
+          "status": "DIRECTLY_SUPPORTED_WITH_STATED_PRECEDENCE",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "94-124,219-236",
+              "note": "Explicit documented scope and precedence."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "1061-1076,1961-1965",
+              "note": "Released dataset-mask and mask-writing implementation."
+            }
+          ]
+        },
+        {
+          "claim_id": "O1-C04",
+          "claim": "The ordinary masked-read Boolean result is not a specified application coverage threshold.",
+          "status": "DIRECTLY_SUPPORTED_IMPLEMENTATION_PLUS_LIMIT",
+          "primary_locators": [
+            {
+              "source_id": "rasterio",
+              "lines": "648-673",
+              "note": "uint8 mask read is converted to Boolean; exception in Output1-P01."
+            }
+          ]
+        },
+        {
+          "claim_id": "O1-C05",
+          "claim": "Dimension-ratio affine scaling preserves the full-raster extent under the declared grid case.",
+          "status": "SUPPORTED_BY_PRIMARY_EXAMPLE_AND_EXACT_ALGEBRA",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "34-48",
+              "note": "Transform example."
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "27-32",
+              "note": "Affine equations."
+            }
+          ]
+        },
+        {
+          "claim_id": "O1-C06",
+          "claim": "Explicit masks may distinguish valid zero from a colliding nodata code.",
+          "status": "SUPPORTED_OPTIONAL_IMPROVEMENT",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "85-92,111-124,182-183",
+              "note": "Valid-zero collision and mask override illustration."
+            }
+          ]
+        }
+      ],
+      "defects": [
+        {
+          "defect_id": "Output1-P01",
+          "category": "source_claim_domain_qualification",
+          "materiality": "NONMATERIAL",
+          "candidate_locator": {
+            "artifact": "final.md",
+            "lines": [
+              11
+            ]
+          },
+          "claim": "read(masked=True) reads/resamples values and masks with the same resampling choice.",
+          "finding": "This is true for an ordinary read with non-all-valid masks, not universally. All-valid reads skip the mask read; boundless reads with a window use a different mask branch.",
+          "evidence": [
+            {
+              "source_id": "rasterio",
+              "lines": "631-673",
+              "note": "The ordinary branch forwards resampling to both reads; all_valid selects np.ma.nomask at 656-657."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "678-721",
+              "note": "The boundless-window value read forwards resampling at 696-698; the mask reads at 715-716 and 720-721 omit it."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "910",
+              "note": "The omitted _read argument defaults to Resampling.nearest."
+            }
+          ],
+          "counterexample": {
+            "kind": "STATIC_CALL_PATH_NOT_EXECUTED",
+            "scenario": "read(masked=True, boundless=True, window=<out-of-bounds window>, resampling=bilinear) routes values with bilinear but mask _read with its default nearest.",
+            "limitation": "No numerical tile result is asserted."
+          },
+          "consequence": "The generalized API description should be qualified. The brief concerns downsampling the raster and neither final prescribes boundless=True; both already require independent validity policy and runtime checks. This does not invalidate their scoped full-tile recommendation.",
+          "scope_omission": false,
+          "unassessed_remainder": "Boundless numerical behavior was not executed; the rest of the six declared obligations was fully inspected."
+        }
+      ],
+      "optional_supported_discoveries": [
+        {
+          "id": "O1-OPT01",
+          "origin": "FROZEN_FINAL_RETAINED",
+          "discovery": "Prefer explicit validity to a colliding 8-bit nodata code when the output representation preserves required per-band masks.",
+          "disposition": "RETAIN; supported and conditioned.",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "85-92,111-124,182-183,242-250",
+              "note": "No universal safe 8-bit sentinel; mask storage depends on format/configuration."
+            }
+          ]
+        },
+        {
+          "id": "O1-OPT02",
+          "origin": "FROZEN_FINAL_RETAINED",
+          "discovery": "Mode may be useful for dominant-class intent.",
+          "disposition": "RETAIN conditionally. Additional enum inspection shows sampled-frequency mode; do not silently promote it to geometric area majority for fractional footprints.",
+          "primary_locators": [
+            {
+              "source_id": "rasterio_enums",
+              "lines": "65-66,92-107",
+              "note": "Mode exists in the release and selects the most frequent sampled code."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "57-68",
+              "note": "mode=6 is not rejected by the read resampling validator."
+            }
+          ]
+        }
+      ],
+      "incorrect_rejections": {
+        "found": false,
+        "assessed": [
+          "Rejecting arithmetic interpolation of class identifiers is justified.",
+          "Not treating dataset_mask as independent per-band validity is justified.",
+          "Withholding a tile/kernel guarantee from wrapper evidence is justified.",
+          "Mode and explicit masks remain conditional options rather than blanket rejections."
+        ]
+      },
+      "final_preservation": {
+        "within_final": "Per-band intent, class identity, independent validity, mask storage dependency, same-grid transform condition, tile uncertainty, fixtures and explicit-mask optional improvement remain present.",
+        "dependencies": [
+          "Tile legend and measurement meaning",
+          "Coverage policy",
+          "Selected runtime/kernel/driver",
+          "Output format capable of desired mask representation",
+          "Exact target grid"
+        ],
+        "prior_to_final_assessed": false,
+        "limitation": "No common prior or changes were supplied; forbidden stage drafts were not read."
+      },
+      "proposed_vs_performed": {
+        "candidate": "Final line 17 explicitly says proposed fixtures, not executed. No candidate tile test is credited.",
+        "reviewer": "Hash and source-body inspection plus six self-authored arithmetic/Boolean checks performed. Neither candidate fixtures nor a Rasterio/GDAL export was executed.",
+        "reviewer_runtime_limit": "Selected python3 lacks rasterio; ctypes cannot locate GDAL. No installation or environment change attempted."
+      },
+      "discovery_yield_coverage": "Useful mask-polarity, shared-mask/OR, Boolean-threshold, valid-zero and exact-grid findings across all mapped source families. Additional reviewer leads are kept separate from candidate content; no exhaustive discovery claim.",
+      "unassessed_remainder": [
+        "Actual tile bytes, class legend, source/target CRS and dimensions, per-band mask provenance, nodata collisions, overview provenance, and desired coverage/measurement semantics: no tile was mapped or inspected.",
+        "Actual Rasterio/GDAL/driver results, modal ties in the selected read path, sentinel exclusion, and output mask round trips: runtime fixtures were not executed.",
+        "Prior draft-to-final or critic-history preservation: changes and prior_state are null; job paths embedded in candidates were not authorized and were not read.",
+        "All source material outside relevant methods and stated claims, every possible algorithm/driver, and exhaustive unknown-answer recall are not claimed."
+      ],
+      "blinding_limits": [
+        "Its frozen sources.json exposes arm/stage names, job/draft/cache paths and acquisition-method metadata. They were seen as supplied candidate data, not used as read authority or evidence of source truth."
+      ]
+    },
+    {
+      "label": "Output2",
+      "frozen_artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/frozen-inputs/Output2/final.md",
+          "sha256": "dbc6e6d57fc6fbfe19fbb00c2c62d6cb815773be3e52ef93d29d6939b991f3a7"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/frozen-inputs/Output2/sources.json",
+          "sha256": "c77bca7e8eb66d8986ee89d8182a79cd6a04dc80c3c88dddc44010432ae876e5"
+        }
+      },
+      "complete_scope_assessed": true,
+      "source_quality": "PASS",
+      "material_correctness": "No material false claim, incorrect rejection, or unsatisfied declared obligation established. One nonmaterial source-domain overgeneralization is recorded without silently repairing the final.",
+      "useful_deliverable": {
+        "value": true,
+        "reason": "A bounded conditional contract with codebook/dtype preservation, validity policy, mask round-trip requirements, target-grid binding and explicit final dispositions."
+      },
+      "obligation_dispositions": [
+        {
+          "id": 1,
+          "obligation": "State per-band interpolation choices as conditional recommendations.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            7,
+            9
+          ],
+          "assessment": "Nearest is conditional on class-coded storage; average/bilinear/cubic depend on measurement intent and edge/range checks. Modal use depends on runtime and tie policy.",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "56-68",
+              "note": "Conditional method guidance."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "438-485",
+              "note": "Read resampling and dtype interface."
+            },
+            {
+              "source_id": "rasterio_enums",
+              "lines": "53-66,92-107",
+              "note": "Released method definitions and availability."
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "obligation": "Preserve class-label meaning in categorical output.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            7,
+            17
+          ],
+          "assessment": "Preserves codebook and representable dtype, requires selected labels and validity to agree, and proposes rare-label/checkerboard/tie assertions.",
+          "primary_locators": [
+            {
+              "source_id": "rasterio",
+              "lines": "75-78,462-464",
+              "note": "Dtype conversion is possible and out_dtype is explicit."
+            },
+            {
+              "source_id": "rasterio_enums",
+              "lines": "53-66",
+              "note": "Nearest/mode select sampled labels; this is not evidence about a particular codebook."
+            }
+          ],
+          "reviewer_evidence": [
+            "arithmetic-checks.json:class-arithmetic"
+          ]
+        },
+        {
+          "id": 3,
+          "obligation": "Address validity/nodata treatment during resampling.",
+          "disposition": "SATISFIED_WITH_NONMATERIAL_QUALIFICATION",
+          "candidate_lines": [
+            11,
+            13,
+            17,
+            21
+          ],
+          "assessment": "Correctly treats validity as distinct from values, specifies invalid exclusion/normalization/coverage policy, protects categorical validity pairing, and requires a deliberate representation or combination policy for differing masks. General masked-read routing has defect Output2-P01.",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "4-15,85-92,111-124,219-250",
+              "note": "Polarity, collision, storage/precedence."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "631-673,836-861,910-1076,1716-1725,1935-1996",
+              "note": "Read/mask and masked-write paths; per_dataset write_mask."
+            }
+          ],
+          "reviewer_evidence": [
+            "arithmetic-checks.json:dataset-or-loss",
+            "arithmetic-checks.json:mask-boolean-loss"
+          ]
+        },
+        {
+          "id": 4,
+          "obligation": "Bind output transform and resolution changes.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            15,
+            17
+          ],
+          "assessment": "Gives the full-raster transform formula with actual dimensions, notes rotation, distinguishes crops and target-grid changes, and checks bounds/centers. Crop scaling must use the selected window dimensions.",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "34-48",
+              "note": "Actual output dimension ratios."
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "9-38",
+              "note": "Affine coefficients, corner mapping and first center."
+            }
+          ],
+          "reviewer_evidence": [
+            "arithmetic-checks.json:affine-outer-corners",
+            "arithmetic-checks.json:affine-center",
+            "arithmetic-checks.json:window-corners"
+          ]
+        },
+        {
+          "id": 5,
+          "obligation": "State what the documentation does not prove about a specific tile.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            3,
+            9,
+            13,
+            17,
+            21
+          ],
+          "assessment": "Explicitly says no tile inspected; leaves codebook, semantics, grid, mask provenance, runtime mode/ties and edge behavior unproved. Does not claim the frozen GDAL tutorial identifies the linked runtime.",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "56-68",
+              "note": "No universal method."
+            },
+            {
+              "source_id": "rastermask",
+              "lines": "242-250",
+              "note": "Representation depends on format and configuration."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "631-673,910-982",
+              "note": "Wrapper routing is insufficient to establish selected tile behavior."
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "obligation": "Propose fixtures and retain any supported optional improvement.",
+          "disposition": "SATISFIED",
+          "candidate_lines": [
+            17
+          ],
+          "assessment": "Proposes class, sentinel-independence, partial-support, independent-mask round-trip, valid-zero/precedence, odd-dimension/crop/rotated-affine fixtures. Retains a valid-contributor fraction as an application-computed diagnostic, not an existing proven feature.",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "7-15,85-92,111-124,219-250",
+              "note": "Validity and representation motivate tests."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "659-662",
+              "note": "Boolean mask discards support magnitude, motivating an explicitly computed diagnostic."
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "13-32",
+              "note": "Rotation and centers motivate geometry tests."
+            }
+          ]
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim_id": "O2-C01",
+          "claim": "Nearest with a preserved codebook and representable dtype avoids numerical class-ID interpolation.",
+          "status": "SUPPORTED_CONDITIONAL_DESIGN_INFERENCE",
+          "primary_locators": [
+            {
+              "source_id": "rasterio",
+              "lines": "75-78,462-464",
+              "note": "Possible dtype conversion requires an explicit representability condition."
+            },
+            {
+              "source_id": "rasterio_enums",
+              "lines": "53-66",
+              "note": "Definitions of nearest and mode."
+            }
+          ]
+        },
+        {
+          "claim_id": "O2-C02",
+          "claim": "Continuous method depends on point/footprint intent; cubic requires checking range and edges.",
+          "status": "SUPPORTED_CONDITIONAL_RECOMMENDATION",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "56-68",
+              "note": "Continuous-data and statistical-method guidance, not a tile guarantee."
+            }
+          ]
+        },
+        {
+          "claim_id": "O2-C03",
+          "claim": "Mask polarity, .msk/nodata precedence and valid-zero collision matter.",
+          "status": "DIRECTLY_SUPPORTED",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "4-15,85-92,111-124,247-250",
+              "note": "Explicit definitions and storage caveats."
+            }
+          ]
+        },
+        {
+          "claim_id": "O2-C04",
+          "claim": "A masked read is not proof of the chosen valid-coverage or every invalid-contributor policy.",
+          "status": "SUPPORTED_IMPLEMENTATION_LIMIT",
+          "primary_locators": [
+            {
+              "source_id": "rasterio",
+              "lines": "648-673,910-982",
+              "note": "Separate dispatch and Boolean mask creation; exception in Output2-P01."
+            }
+          ]
+        },
+        {
+          "claim_id": "O2-C05",
+          "claim": "write_mask cannot be assumed to preserve distinct band masks; write(masked=True) reaches it.",
+          "status": "DIRECTLY_SUPPORTED",
+          "primary_locators": [
+            {
+              "source_id": "rasterio",
+              "lines": "1716-1725,1961-1965",
+              "note": "Masked write routes to write_mask; per_dataset flag used."
+            },
+            {
+              "source_id": "rastermask",
+              "lines": "97-124",
+              "note": "Shared mask documented."
+            }
+          ]
+        },
+        {
+          "claim_id": "O2-C06",
+          "claim": "Affine scaling binds shape to grid, including rotations and corner/center distinctions.",
+          "status": "SUPPORTED_BY_PRIMARY_EXAMPLE_AND_EXACT_ALGEBRA",
+          "primary_locators": [
+            {
+              "source_id": "rasterresample",
+              "lines": "34-48",
+              "note": "Formula example."
+            },
+            {
+              "source_id": "geotransform",
+              "lines": "13-32",
+              "note": "Coefficients and coordinate interpretation."
+            }
+          ]
+        },
+        {
+          "claim_id": "O2-C07",
+          "claim": "A contributor-fraction diagnostic may be computed by the application; the corpus does not establish a built-in fraction output.",
+          "status": "SUPPORTED_OPTIONAL_DESIGN_INFERENCE",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "7-15",
+              "note": "Validity input semantics."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "659-662",
+              "note": "Boolean conversion does not retain quantitative support."
+            }
+          ]
+        }
+      ],
+      "defects": [
+        {
+          "defect_id": "Output2-P01",
+          "category": "source_claim_domain_qualification",
+          "materiality": "NONMATERIAL",
+          "candidate_locator": {
+            "artifact": "final.md",
+            "lines": [
+              13
+            ]
+          },
+          "claim": "read(masked=True) reads/resamples values and masks with the same resampling choice.",
+          "finding": "This is true for an ordinary read with non-all-valid masks, not universally. All-valid reads skip the mask read; boundless reads with a window use a different mask branch.",
+          "evidence": [
+            {
+              "source_id": "rasterio",
+              "lines": "631-673",
+              "note": "The ordinary branch forwards resampling to both reads; all_valid selects np.ma.nomask at 656-657."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "678-721",
+              "note": "The boundless-window value read forwards resampling at 696-698; the mask reads at 715-716 and 720-721 omit it."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "910",
+              "note": "The omitted _read argument defaults to Resampling.nearest."
+            }
+          ],
+          "counterexample": {
+            "kind": "STATIC_CALL_PATH_NOT_EXECUTED",
+            "scenario": "read(masked=True, boundless=True, window=<out-of-bounds window>, resampling=bilinear) routes values with bilinear but mask _read with its default nearest.",
+            "limitation": "No numerical tile result is asserted."
+          },
+          "consequence": "The generalized API description should be qualified. The brief concerns downsampling the raster and neither final prescribes boundless=True; both already require independent validity policy and runtime checks. This does not invalidate their scoped full-tile recommendation.",
+          "scope_omission": false,
+          "unassessed_remainder": "Boundless numerical behavior was not executed; the rest of the six declared obligations was fully inspected."
+        }
+      ],
+      "optional_supported_discoveries": [
+        {
+          "id": "O2-OPT01",
+          "origin": "FROZEN_FINAL_RETAINED",
+          "discovery": "Store per-band valid-contributor fraction with an explicit threshold.",
+          "disposition": "RETAIN as an application-computed optional diagnostic; denominator, weighting and threshold must be defined. No built-in API or performed implementation is credited.",
+          "primary_locators": [
+            {
+              "source_id": "rastermask",
+              "lines": "7-15",
+              "note": "Masks identify valid support."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "659-662",
+              "note": "The ordinary masked result is Boolean, not a fraction."
+            }
+          ]
+        },
+        {
+          "id": "O2-OPT02",
+          "origin": "FROZEN_FINAL_RETAINED",
+          "discovery": "Conditional mode and output-mask round trips are useful leads.",
+          "disposition": "RETAIN. Mode support in the release is supported by the extra enum check, while driver/tie behavior still needs the chosen stack; round trips verify representation rather than presume it.",
+          "primary_locators": [
+            {
+              "source_id": "rasterio_enums",
+              "lines": "65-66,92-107",
+              "note": "Mode is present."
+            },
+            {
+              "source_id": "rasterio",
+              "lines": "57-68,1961-1965",
+              "note": "Validator accepts mode; shared mask explains the round-trip concern."
+            }
+          ]
+        }
+      ],
+      "incorrect_rejections": {
+        "found": false,
+        "assessed": [
+          "Rejecting an implicit universal guarantee that masked=True excludes invalid contributors is justified; the final does not claim GDAL never honors masks.",
+          "Rejecting one write_mask as a guarantee of distinct per-band preservation is directly supported.",
+          "Modal resampling and coverage diagnostics remain supported conditional options.",
+          "The accepted/amended/rejected/unresolved summary matches the surviving frozen contract."
+        ]
+      },
+      "final_preservation": {
+        "within_final": "Explicit dispositions retain all per-band choices, grid conditions, uncertainty and fixtures; mask and modal amendments are present in the contract, with the coverage-fraction optional improvement intact.",
+        "dispositions": {
+          "accepted": [
+            "Conditional nearest and continuous methods",
+            "Transform scaling in the stated grid case",
+            "Uncertainty and fixtures"
+          ],
+          "amended": [
+            "Modal alternative with ties/runtime conditions",
+            "Validity-aware resampling",
+            "Output mask preservation"
+          ],
+          "rejected": [
+            "Implicit universal invalid-contributor guarantee from masked reads",
+            "One shared write_mask as preservation of distinct band masks"
+          ],
+          "unresolved": [
+            "Tile properties",
+            "Selected-stack mode behavior/ties",
+            "Desired measurement and coverage semantics"
+          ]
+        },
+        "dependencies": [
+          "Tile codebook and dtype",
+          "Measurement meaning",
+          "Coverage/normalization policy",
+          "Runtime/driver and ties",
+          "Output validity representation",
+          "Target grid"
+        ],
+        "prior_to_final_assessed": false,
+        "limitation": "No common prior or changes were supplied; forbidden stage drafts were not read."
+      },
+      "proposed_vs_performed": {
+        "candidate": "Final lines 3 and 17 explicitly say checks were not run. No tile inspection or runtime fixture is credited.",
+        "reviewer": "Hash and primary-body inspection plus the same six arithmetic/Boolean checks used for both outputs. No candidate code or candidate fixtures executed.",
+        "reviewer_runtime_limit": "Selected python3 lacks rasterio and no GDAL shared library was found; no installation or environment mutation."
+      },
+      "discovery_yield_coverage": "Useful codebook/dtype, per-dataset mask routing, mask round-trip and coverage-diagnostic findings across all mapped source families. Frozen operation metadata is not credited as proof of source truth or runtime testing.",
+      "unassessed_remainder": [
+        "Actual tile bytes, class legend, source/target CRS and dimensions, per-band mask provenance, nodata collisions, overview provenance, and desired coverage/measurement semantics: no tile was mapped or inspected.",
+        "Actual Rasterio/GDAL/driver results, modal ties in the selected read path, sentinel exclusion, and output mask round trips: runtime fixtures were not executed.",
+        "Prior draft-to-final or critic-history preservation: changes and prior_state are null; job paths embedded in candidates were not authorized and were not read.",
+        "All source material outside relevant methods and stated claims, every possible algorithm/driver, and exhaustive unknown-answer recall are not claimed."
+      ],
+      "blinding_limits": [
+        "Its frozen sources.json exposes arm/stage names, draft/cache paths and acquisition-method metadata. They were seen as candidate data, not followed or used to infer correctness."
+      ]
+    }
+  ],
+  "additional_supported_discoveries": [
+    {
+      "id": "R-OPT01",
+      "discovery": "Inspect overview provenance when relying on nearest for original class-code preservation.",
+      "materiality": "OPTIONAL_SUPPORTED_LEAD; no tile-specific defect established",
+      "primary_locators": [
+        {
+          "source_id": "gdal_rasterio_cpp",
+          "lines": "370-388,3753-3780,4102-4111",
+          "note": "Released read paths can select a prebuilt overview."
+        },
+        {
+          "source_id": "gdalwarp",
+          "lines": "261-270,316-326",
+          "note": "Warp has overview controls and warns that overview creation can use a different method."
+        }
+      ],
+      "assessment": "The nearest operator selects an input label; it does not undo an earlier arithmetic overview. Neither candidate proves tile overview safety, and neither claims a tile was validated. A prebuilt-overview fixture would be useful. This lead is not treated as an omitted explicit brief obligation or credited as a candidate discovery.",
+      "witness": "Arithmetic check shows that averaging codes 1 and 3 can create 2. Overview selection is established statically; no GDAL overview witness was executed."
+    },
+    {
+      "id": "R-OPT02",
+      "discovery": "The selected release exposes mode; sampled-frequency mode should not be assumed to equal area-weighted majority for fractional footprints.",
+      "materiality": "OPTIONAL_SUPPORTED_QUALIFICATION",
+      "primary_locators": [
+        {
+          "source_id": "rasterio_enums",
+          "lines": "65-66,92-107",
+          "note": "Mode definition and availability."
+        },
+        {
+          "source_id": "rasterio",
+          "lines": "57-68",
+          "note": "Released read validator does not reject mode=6."
+        }
+      ],
+      "assessment": "Both outputs retain mode conditionally. Output1's area wording requires checking footprint weighting; Output2 does not promise area weighting. This is not a reason to reject mode or overwrite either final."
+    },
+    {
+      "id": "R-OPT03",
+      "discovery": "Warp documentation gives kernel-dependent validity rules.",
+      "materiality": "OPTIONAL_SUPPORTED_DOMAIN_CLARIFICATION",
+      "primary_locators": [
+        {
+          "source_id": "gdalwarp",
+          "lines": "500-522",
+          "note": "Recognized invalid contributors and kernel-dependent treatment described."
+        }
+      ],
+      "assessment": "Supports Output1's possible nodata-aware warp fallback, but is not a universal proof about DatasetReader.read or an arbitrary selected stack. Neither frozen warning is a false correction."
+    }
+  ],
+  "comparison_without_ranking": [
+    "Output1 explicitly includes all-invalid footprints, unequal x/y downsampling and the explicit-mask/nodata-collision optional improvement.",
+    "Output2 explicitly retains codebook/dtype requirements, distinct-mask round trips, a rotated affine fixture, a contributor-fraction diagnostic and a disposition list.",
+    "Both cover all six obligations; both have the same nonmaterial generic masked-read-path qualification."
+  ],
+  "evidence_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/arithmetic-checks.py",
+      "sha256": "7992684a5dea90fe0d86ed66ce2dd63f32c69ab1b55eca6fd4d9a6a69c5c289c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/arithmetic-checks.json",
+      "sha256": "85e71295e8c8af88c802434214bf33f84cb5baeb92789f3e29e4659e4594950b"
+    }
+  ],
+  "performed_checks": {
+    "frozen_hash_checks": "Both final.md/sources.json pairs and all four primary files matched their INPUT_MAP hashes.",
+    "primary_inspection": "Actual raw bytes and relevant released implementation paths were read; citations, manifests, acquisition labels and process exit status were not treated as truth.",
+    "arithmetic_checks": {
+      "performed": 6,
+      "passed": 6,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/arithmetic-checks.json",
+      "kind": "Reviewer-authored stdlib arithmetic/Boolean checks; not candidate or raster-runtime tests."
+    },
+    "runtime_probe": "No Rasterio module in selected python3; ctypes.util.find_library('gdal') returned None.",
+    "candidate_fixture_execution": false,
+    "downloaded_source_execution": false
+  },
+  "complete_declared_scope_for_pair": true,
+  "blinding_limits": [
+    "Neutral file paths were maintained, but both supplied source manifests revealed arm/stage names, cache/draft paths and method metadata.",
+    "Source manifests were read because they were explicitly mapped frozen candidate artifacts. Embedded paths were not followed.",
+    "A new comparison is based on source evidence and frozen content only. No economic ranking, winner selection or target grades were consulted or produced.",
+    "Prior-stage preservation and operation histories cannot be independently verified from the allowed frozen artifacts."
+  ],
+  "receipts": {
+    "active": "goal-active.json",
+    "terminal_update": "goal-terminal-update.json",
+    "terminal_get": "goal-terminal-get.json",
+    "lifecycle": "review-lifecycle.json"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "carrier": "PASSIVE_NATIVE_STATE_V2_NOT_RAW_API",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T19:27:24.166325+00:00",
+    "entries": [
+      {
+        "stage": "D-M08-B/common/research-v2",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M08-B--common--research-v2--52a05e4a4480a1d4.json",
+        "sha256": "52a05e4a4480a1d40cbfc5d65f3755dbd0b7f9d8e0b40d45b48eb52c3eb30504",
+        "bytes": 10861,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "native_identity": "01a117d4-c31c-7bd2-8917-5c62f90d0e64",
+  "observed_status": "active",
+  "active_verified": true,
+  "binding_verified": true,
+  "createdAt": null,
+  "raw_api_bodies": null,
+  "scope_audit": "incomplete_unknown; advisorymap notfirewall"
+}

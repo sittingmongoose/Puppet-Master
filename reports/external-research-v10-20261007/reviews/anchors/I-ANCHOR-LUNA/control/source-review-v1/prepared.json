@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-07T19:16:19.798430+00:00",
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/pair-freeze.json",
+  "inputs": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/brief.md": "0600bd0661196df8f728a2d861530f352251dc42008e9fd71ce532a6e30a0874",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/plan.md": "ac49eea7607c8db0cc0664cb0921100ee651c6d4cf3887dc8bd1b05e2e0d93fd",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/final.md": "419a2d6e04d55280d2e48fa82b79638be966a976214d2584d1542724e5957a32",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/SOURCES.md": "77ec6d47729f746d3bb97ef4aa4952c35face70b294eab49d0add5b0d2a4004a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/critique-dispositions.md": "7122daaf1289cd7f016f6ddd4724dba182249637d5a46016fa71a333bbbc9b6b",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/critique.md": "d879af83bace626b1b8518b12280e8316c16e2951d019e6c47173c772f504e83",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md": "82753da0b590c80111c71abbccc6f3241e8353ae7c73c01ba389a7cb5d663b05",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/README.md": "92f4f57f9e0732069532dc5a5510ce517b8a9a2dfb39c6d0a6b4d73bca80642a",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/upstream-fetch-manifest.json": "33559a1e56ba447d846f07c57b5bb9be5d284ac5a5711fa2cd2689e4f2a54e56"
+  },
+  "task_sha256": "5b108d9bb28f341d80147e5b4873cb130a8dff76996d2166312cfc373dd2dff7",
+  "config": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  }
+}

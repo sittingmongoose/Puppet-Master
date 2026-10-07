@@ -1,0 +1,27 @@
+{
+  "carrier": "PASSIVE_NATIVE_STATE_V2_NOT_RAW_API",
+  "event": "activation_notice",
+  "notice_goal_identity": "01a117c7-eefb-7881-9408-a1828966aec3",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T19:13:00.270068+00:00",
+    "entries": [
+      {
+        "stage": "D-M08-A/common/research-v2",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M08-A--common--research-v2--d6bddfe4eecb1d81.json",
+        "sha256": "d6bddfe4eecb1d816c108600682a5f0eb851b44fc6b4f4ea0f3587a735349076",
+        "bytes": 10860,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "raw_create_response": null,
+  "raw_get_response": null,
+  "createdAt": null,
+  "limitations": "Codex exporter exposes state projection with strong nativeThreadRef binding; raw tool bodies and native createdAt absent. No inference or fabricated fields."
+}

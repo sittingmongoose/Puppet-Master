@@ -1,0 +1,88 @@
+{
+  "stage": "D-M14-A/treatment/semantic_findings-v2",
+  "observed_stage_start_utc": "2026-10-07T19:25:44Z",
+  "native_goal_created_at_utc": "2026-10-07T19:25:50Z",
+  "stage_deadline_utc": "2026-10-07T19:35:08.656289Z",
+  "whole_arm_deadline_utc": "2026-10-07T19:40:08.656289Z",
+  "scientific_output_and_source_work_complete_observed_utc": "2026-10-07T19:29:52Z",
+  "operations": [
+    {
+      "operation": "Read INPUT_MAP, original brief, source manifest; locate generic renderer README",
+      "wall_seconds": 10.2,
+      "basis": "observed tool call wall time"
+    },
+    {
+      "operation": "Read four frozen source captures and compute SHA-256 checks",
+      "wall_seconds": 0.1,
+      "basis": "observed tool call wall time"
+    },
+    {
+      "operation": "Read generic m14-renderer README format contract",
+      "wall_seconds": 0.1,
+      "basis": "observed tool call wall time"
+    },
+    {
+      "operation": "Capture Rasterio 1.3.10 enums.py; compute SHA-256 and inspect resampling loci",
+      "wall_seconds": 0.2,
+      "basis": "observed tool call wall time"
+    },
+    {
+      "operation": "Author six-finding JSON semantic set",
+      "wall_seconds": 0.2,
+      "basis": "observed tool call wall time"
+    },
+    {
+      "operation": "Tighten to soft narrative word limit; parse JSON and check required fields/unique IDs",
+      "wall_seconds": 0.2,
+      "basis": "observed tool call wall time"
+    }
+  ],
+  "source_operations": [
+    {
+      "source_id": "rastermask",
+      "operation": "read pinned frozen primary capture and SHA-256 verify",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9"
+    },
+    {
+      "source_id": "rasterresample",
+      "operation": "read pinned frozen primary capture and SHA-256 verify",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727"
+    },
+    {
+      "source_id": "rasterwindow",
+      "operation": "read pinned frozen primary capture and SHA-256 verify",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1"
+    },
+    {
+      "source_id": "geotransform",
+      "operation": "read pinned frozen primary capture and SHA-256 verify",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc"
+    },
+    {
+      "source_id": "rasterio_enums",
+      "operation": "download one released primary source file; hash and inspect only, not execute",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v2/sources/rasterio_enums.py"
+    }
+  ],
+  "delivered_artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v2/semantic_findings.md",
+    "sha256": "89a4b0802adab69cb3d475f74117f76d8f25d8574f6943e8d309921ac228e661",
+    "format": "UTF-8 JSON; six findings; 966 authored narrative words"
+  },
+  "usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_tokens": null,
+    "billing_usd": null,
+    "note": "Unknown; not estimated. Native Goal counters are separately recorded below."
+  },
+  "native_goal_sample_before_terminal_update": {
+    "thread_id": "01a117d3-f036-77c0-a83d-b1215a51e377",
+    "sampled_at_utc": "2026-10-07T19:29:52Z",
+    "status": "active",
+    "tokens_used": 63796,
+    "time_used_seconds": 241
+  }
+}

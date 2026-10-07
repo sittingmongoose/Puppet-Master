@@ -1,0 +1,33 @@
+{
+  "event": "terminal",
+  "stage": "D-M13-A/control/finalize-v2",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M13-A/control/finalize-v2"
+  ],
+  "start": "2026-10-07T19:30:22.560807+00:00",
+  "end": "2026-10-07T19:30:22.740034+00:00",
+  "elapsed_seconds": 0.17922771600024134,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T19:30:22.666680+00:00",
+    "entries": [
+      {
+        "stage": "D-M13-A/control/finalize-v2",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M13-A--control--finalize-v2--79454f6528340ce6.json",
+        "sha256": "79454f6528340ce66f2891a0a2e12751960af1532ceb7766c013e3ffbc732a42",
+        "bytes": 23642,
+        "capture": {
+          "create_goal": "observed_actual_response",
+          "get_goal": "observed_actual_response",
+          "update_goal": "observed_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

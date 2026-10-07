@@ -1,0 +1,49 @@
+{
+  "final_get_observed_at_utc": "2026-10-07 18:46:42 UTC",
+  "final_get_receipt": {
+    "goal": {
+      "threadId": "01a117a8-2516-7cc1-87cb-542826c7a220",
+      "objective": "Complete ER10 case D-M01-B treatment research stage: inspect only the supplied brief and primary Rasterio 1.3.10 captures, produce a bounded evidence-based draft at the declared stage output, record observed timings and native Goal receipts, then terminalize the Goal.",
+      "status": "active",
+      "tokensUsed": 116787,
+      "timeUsedSeconds": 521,
+      "createdAt": 1791398280,
+      "updatedAt": 1791398802
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "update_attempted": true,
+  "update_receipt": {
+    "goal": {
+      "threadId": "01a117a8-2516-7cc1-87cb-542826c7a220",
+      "objective": "Complete ER10 case D-M01-B treatment research stage: inspect only the supplied brief and primary Rasterio 1.3.10 captures, produce a bounded evidence-based draft at the declared stage output, record observed timings and native Goal receipts, then terminalize the Goal.",
+      "status": "blocked",
+      "tokensUsed": 116787,
+      "timeUsedSeconds": 521,
+      "createdAt": 1791398280,
+      "updatedAt": 1791398802
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "update_completed_at_utc": "2026-10-07 18:46:42 UTC",
+  "terminal_status": "blocked",
+  "lifecycle_note": "Blocked after the same activation-receipt capture failure persisted across three consecutive goal turns. The draft exists, but the exact native create_goal receipt is missing; no replacement Goal was created, and completion is not claimed. This lifecycle update occurred after the hard stage deadline.",
+  "t3_activity_lookup_note": "A read-only activity lookup using the exact native Goal threadId returned target_not_found; no sibling thread history was inspected.",
+  "latest_lifecycle_get_observed_at_utc": "2026-10-07 18:48:20 UTC",
+  "latest_lifecycle_get_completed_at_utc": "2026-10-07 18:48:20 UTC",
+  "latest_lifecycle_get_receipt": {
+    "goal": {
+      "threadId": "01a117a8-2516-7cc1-87cb-542826c7a220",
+      "objective": "Complete ER10 case D-M01-B treatment research stage: inspect only the supplied brief and primary Rasterio 1.3.10 captures, produce a bounded evidence-based draft at the declared stage output, record observed timings and native Goal receipts, then terminalize the Goal.",
+      "status": "blocked",
+      "tokensUsed": 116787,
+      "timeUsedSeconds": 521,
+      "createdAt": 1791398280,
+      "updatedAt": 1791398802
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "case_id": "D-M01-B",
+  "arm": "control",
+  "stage": "revision-v1",
+  "deadline_utc": "2026-10-07T19:08:40.979833+00:00",
+  "dispatch_timestamp_supplied_utc": "2026-10-07T19:05:07.489932+00:00",
+  "observed_clock_events": [
+    {
+      "at_utc": "2026-10-07 19:05:33 UTC",
+      "operation": "native get_goal completed; active Goal identity captured"
+    },
+    {
+      "at_utc": "2026-10-07 19:06:05 UTC",
+      "operation": "clock observed after reading brief, manifest, predecessor draft/critique, source guide and implementation excerpts, and computing four SHA-256 checks"
+    },
+    {
+      "at_utc": "2026-10-07 19:06:33 UTC",
+      "operation": "deliverables persisted; final output and stage report contain identical complete authored answer"
+    },
+    {
+      "at_utc": "2026-10-07 19:06:44 UTC",
+      "operation": "native update_goal complete and terminal get_goal observed; terminal receipt persisted"
+    }
+  ],
+  "operations": [
+    {
+      "operation": "create_goal",
+      "status": "succeeded",
+      "createdAt_epoch_seconds": 1791399920
+    },
+    {
+      "operation": "get_goal",
+      "status": "succeeded",
+      "observed_status": "active"
+    },
+    {
+      "operation": "read_allowed_inputs_and_primary_captures",
+      "status": "succeeded"
+    },
+    {
+      "operation": "compare_source_and_predecessor_hashes_to_manifest",
+      "status": "succeeded",
+      "verified_count": 4
+    },
+    {
+      "operation": "write_final_md_and_report_md",
+      "status": "succeeded"
+    },
+    {
+      "operation": "behavioral_raster_fixtures",
+      "status": "not_run; proposed only"
+    },
+    {
+      "operation": "update_goal_and_terminal_get_goal",
+      "status": "succeeded",
+      "observed_terminal_status": "complete"
+    }
+  ],
+  "usage": {
+    "native_goal_tokens_used_observed": 30143,
+    "model_input_tokens": null,
+    "model_output_tokens": null,
+    "total_stage_tokens": null
+  },
+  "current_observation_utc": "2026-10-07 19:06:44 UTC"
+}

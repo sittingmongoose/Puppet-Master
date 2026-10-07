@@ -1,0 +1,8 @@
+import pathlib,json,sys,hashlib,datetime
+r=pathlib.Path('/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5');id,arm=sys.argv[1:3];data=json.loads(sys.argv[3]);d=r/'jobs'/id/arm/'research-v1';assert data['status']['status']=='completed' and not data['status']['hasPendingChildRuns'];(d/'t3-terminal-observed.json').write_text(json.dumps(data,indent=2));files={}
+for p in d.iterdir():
+ if p.is_file() and p.name not in ['INPUT_MAP.json','dispatch-config.json','dispatch-receipt.json','task.txt']:files[p.name]={'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size};p.chmod(0o444)
+assert all(n in files for n in ['draft.md','sources.json','native_goal_receipt.json','native_terminal_receipt.json']);disp=json.loads((d/'dispatch-receipt.json').read_text());elapsed=(datetime.datetime.fromisoformat(data['runs'][0]['completedAt'].replace('Z','+00:00'))-datetime.datetime.fromisoformat(disp['dispatch_at'].replace('Z','+00:00'))).total_seconds();cache=[]
+if arm=='treatment':
+ for p in (r/'jobs'/id/'treatment/source-cache-v1').iterdir():assert p.name==hashlib.sha256(p.read_bytes()).hexdigest();p.chmod(0o444);cache.append({'sha256':p.name,'bytes':p.stat().st_size})
+f={'arm':arm,'files':files,'cache':cache,'stage_seconds':elapsed,'stage_within360':elapsed<=360,'stage_overrun_seconds':max(0,elapsed-360),'source_grade':'UNASSESSED'};(d/'FREEZE.json').write_text(json.dumps(f,indent=2));s=json.loads((r/'state/targeted-cohort2.json').read_text());s['jobs'][id].setdefault('research_freezes',{})[arm]=f;(r/'state/targeted-cohort2.json').write_text(json.dumps(s,indent=2));print('Research_seconds',elapsed)

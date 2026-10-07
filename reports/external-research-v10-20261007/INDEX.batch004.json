@@ -1,0 +1,326 @@
+{
+  "schema": "er10.publication.batch004.index.v1",
+  "status": "POINT_IN_TIME_IN_PROGRESS_BATCH004",
+  "cutoff": "2026-10-07T20:04:57+00:00",
+  "reference_commit": "8f2e9a3a36497783c4a14bde7c7765f412fc94b1",
+  "repository_url": "https://github.com/sittingmongoose/Puppet-Master",
+  "curator_binding_requested": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high"
+  },
+  "curator_binding_limit": "Requested binding from task/config; no independent account proof inspected.",
+  "manifest": "BATCH004_MANIFEST.json",
+  "verification": "BATCH004_VERIFICATION.json",
+  "raw_identities": "BATCH004_RAW_SOURCE_IDENTITIES.json",
+  "absences": "BATCH004_ABSENCES_AND_DEFERRALS.json",
+  "original_summary_records": [
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/COMPARISON.json",
+      "sha256": "337ef914d77b8682a47e5f887e88d0fd2cb602f5e5b65d962902af01414786c0",
+      "original_counts": null,
+      "original_status": "BOTH_ARMS_FULL_DECLARED_SCOPE_ASSESSED",
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort2/COMPARISONS.json",
+      "sha256": "8e4341a5a492b70561bace7a2f6b3b95c9901f74473e0cc579b2507163714ff7",
+      "original_counts": {
+        "fully_assessed_pairs": 4,
+        "fully_assessed_arms": 8,
+        "source_pass_arms": 3,
+        "terminal_dispositions": 6,
+        "noncomparable_seed_overrun_slots": 2,
+        "held_route_slots": 0,
+        "queued_capacity_slots": 0
+      },
+      "original_status": "TERMINAL_OWNED_SIX",
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-supervisor/COMPARISONS.json",
+      "sha256": "1b67d5a18a528b372018770f36d82889954df433e8e6737d78823b4276ad651b",
+      "original_counts": {
+        "planned_slots": 6,
+        "terminal_slots": 3,
+        "assessable_comparisons": 0,
+        "source_assessed_pairs": 3,
+        "structured_source_assessment_partial_delivery_pairs": 0,
+        "source_unassessed_pairs": 0,
+        "original_partial_delivery_attempts": 1,
+        "qualified_method_comparisons": 0,
+        "science_paired_assessments_including_diagnostic": 3
+      },
+      "original_status": null,
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/COMPARISONS.json",
+      "sha256": "ee713bda9c95ca9cb40bb48a1c949d43ade69de53d697903c7d5e2d4c3ac0f48",
+      "original_counts": {
+        "cases": 6,
+        "full_pairs": 2,
+        "reviewed_pairs": 2,
+        "terminal_case_dispositions": 3
+      },
+      "original_status": "IN_PROGRESS",
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/integrated-execution/method01-pair-disposition-v1.json",
+      "sha256": "8a14d9eecd9e588eba5263ed2dc011a1520c9bf093a02866edf5d68c6f319e87",
+      "original_counts": null,
+      "original_status": "both_original_arms_terminal_and_full_independent_assessments_frozen",
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/paired-v2-disposition.json",
+      "sha256": "9749a8e61f537efb39ff362a48e855dff8efd4eb09a48a4b5a6ea2c2cb9d2fbc",
+      "original_counts": null,
+      "original_status": "FINITE_INCOMPLETE_NO_METHOD_COMPARISON",
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/original-v1-final-disposition.json",
+      "sha256": "d76f9147ab10216d0da286d9159d6c9cd4b3a8ea38d8090d8597597f9bb2ca2b",
+      "original_counts": null,
+      "original_status": "FINITE_ORIGINAL_INCOMPLETE: treatment missing preservation/final/native terminal; control final saved but terminal missing/expired; control author native blocked/create lost; v1 unassessed no review temporalgate",
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/SEED_FREEZE.json",
+      "sha256": "af80a23199d28943100d3a1b2457437d070e19635c865fdded2b58ba4b34523d",
+      "original_counts": null,
+      "original_status": null,
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/SEED_FREEZE.json",
+      "sha256": "663ea82b735911b6b3c6bcd7a8ef10e6ef160a0f598690dca2b147c5536f64fc",
+      "original_counts": null,
+      "original_status": null,
+      "original_scientific_classification": null,
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-A/V2_FAILURE_DISPOSITION.json",
+      "sha256": "8381f1c9cc6ccd2ecd3511698cd0e8571fcdfc62bfdd0376ae2955d1d5e4322a",
+      "original_counts": null,
+      "original_status": "HOLD_VERSION_AFTER_ACTUAL_FAILURE_NO_IDENTICAL_RETRY",
+      "original_scientific_classification": "INFRASTRUCTURE_COMMON_SEED_FAILURE_NOT_METHOD_COMPARISON",
+      "note": "Authored dimensions retained separately; overlapping summaries are not summed."
+    }
+  ],
+  "selected_case_census": [
+    {
+      "case_id": "I-ANCHOR-LUNA",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M04-A",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M04-B",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M01-A",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": true,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M01-B",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": true,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M03-A",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": true,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M11-A",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M13-A",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "I-METHOD-01",
+      "source_assessed_original_review_bundle": true,
+      "both_final_authored_arms_delivered": true,
+      "final_authored_arms_present": [
+        "control",
+        "treatment"
+      ],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": false,
+      "source_unassessed_bundle": false,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M06-A",
+      "source_assessed_original_review_bundle": false,
+      "both_final_authored_arms_delivered": false,
+      "final_authored_arms_present": [],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": true,
+      "source_unassessed_bundle": true,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M06-B",
+      "source_assessed_original_review_bundle": false,
+      "both_final_authored_arms_delivered": false,
+      "final_authored_arms_present": [],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": true,
+      "source_unassessed_bundle": true,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M08-A",
+      "source_assessed_original_review_bundle": false,
+      "both_final_authored_arms_delivered": false,
+      "final_authored_arms_present": [],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": true,
+      "source_unassessed_bundle": true,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M08-B",
+      "source_assessed_original_review_bundle": false,
+      "both_final_authored_arms_delivered": false,
+      "final_authored_arms_present": [
+        "control"
+      ],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": true,
+      "source_unassessed_bundle": true,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    },
+    {
+      "case_id": "D-M14-A",
+      "source_assessed_original_review_bundle": false,
+      "both_final_authored_arms_delivered": false,
+      "final_authored_arms_present": [
+        "control"
+      ],
+      "diagnostic_gate_or_successor_review": false,
+      "infrastructure_failed_stage_or_seed_bundle": true,
+      "source_unassessed_bundle": true,
+      "limitation": "Artifact presence is not full delivery/lifecycle/deadline qualification; original scope/grade/comparison governs. Dimensions overlap; M05 previous publication excluded from new census."
+    }
+  ],
+  "selected_case_census_counts": {
+    "selected_case_slots": 14,
+    "source_assessed_case_bundles": 9,
+    "both_final_authored_arms_present_case_bundles": 9,
+    "diagnostic_gate_or_successor_review_case_bundles": 3,
+    "infrastructure_failed_stage_or_seed_case_bundles": 5,
+    "source_unassessed_case_bundles": 5,
+    "heldout_prepared_input_cases_only": 4,
+    "previously_published_M05_review_references_only": 2,
+    "fully_delivered_within_all_original_bounds_case_count": null,
+    "fully_delivered_within_all_original_bounds_note": "Not inferred from artifact presence. Original native/T3 lifecycle, deadline and review delivery limits retained per case; no new eligibility judgment."
+  },
+  "count_dimensions": {
+    "source_assessment": "Original scientific review scope/coverage and grades, independent of lifecycle/time qualification",
+    "fully_delivered": "Required authored deliverables present in exact frozen records; does not imply within deadline",
+    "diagnostic": "Original gate-exception or successor review; original missing/incomplete review retained separately",
+    "infrastructure": "Failed common seeds/stages and paused/missing counterparts; never SOURCE-assessed comparison by default",
+    "unassessed": "Original source UNASSESSED and missing reviews retained, never promoted to FAIL or PASS"
+  },
+  "usage": {
+    "billing": null,
+    "generated_tokens": null,
+    "cached_input_tokens": null,
+    "native_cumulative_counters": "Original separately attributed cumulative samples retained; not summed into usage or billing."
+  },
+  "claims": {
+    "qualified_twofold_speedup": false,
+    "quota_savings": false,
+    "campaign_complete": false,
+    "new_scientific_verdicts": false
+  }
+}

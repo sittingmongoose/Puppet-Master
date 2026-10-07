@@ -1,0 +1,30 @@
+{
+  "arm": "control",
+  "version": "v2",
+  "native_status": "complete",
+  "quiet": true,
+  "settled": true,
+  "requestedAt": "2026-10-07T19:38:32.139Z",
+  "startedAt": "2026-10-07T19:38:32.891Z",
+  "completedAt": "2026-10-07T19:41:19.107Z",
+  "dispatch_to_delivery_seconds": 166.968,
+  "cold_seed_to_delivery_seconds": 897.272,
+  "absolute_deadline_margin_seconds": 2.728,
+  "source_quality": "UNASSESSED",
+  "native_goal_tokens_raw": 34128,
+  "generated_tokens": null,
+  "billing": null,
+  "timing_file": "MISSING: optionalcandidatewritefailed; host timingcarrier records actualT3states",
+  "hashes": {
+    "native_terminal_receipt.json": "1af614244d8d515e2aef962e38fe8fc1f9b8861e7a5eb6b6addc7a1f1d4558ca",
+    "quiet_task_receipt.json": "ca7a6bf240bc27a8f8f2953000fc258988bea78042baf64d2a721f28173e1d5c",
+    "dispatch.json": "107d00dc8e1a89d9935d90b627e92b371e0eba914d6cebb353700244476ab53b",
+    "INPUT_MAP.json": "ca7183a24c5ffcb258c3b5e3c7ff654be4719d1fc43da9a9b9fd698763a19072",
+    "boundary.json": "b1dca159e7731642e7bde5c4c98a5ff787690cdd706ae0656e04c81c45d910d1",
+    "t3_terminal_clock_receipt.json": "e816a389ca6226245c21c9f0ed940645a5c023916ef9fc21a8309b7d737219bd",
+    "task.txt": "59febf1ff7f08326f941fb5205c2a117754562fa96636e2c6a4e9ee2928f57f9",
+    "native_activation_receipt.json": "a22b17598ad1f24cd80f3b5fbaf04cb0b5806606965c6432a39ef8d0833a9202",
+    "final.md": "f340a75df9cd9e204a4eedbb778f33555904f1987edc431d42d6ae62fcd2e304",
+    "rewrite.md": "f340a75df9cd9e204a4eedbb778f33555904f1987edc431d42d6ae62fcd2e304"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "identity": {
+    "task": "D-M14-A/control/author",
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "actualStart": {
+    "value": "2026-10-07T19:06:38Z",
+    "basis": "native Goal active-get createdAt=1791399998 (Unix seconds); original pre-create clock response could not be persisted"
+  },
+  "firstSavedUsefulOutput": {
+    "value": "2026-10-07 19:06:49 UTC",
+    "item": "native_activation.json and initial timings.json; exact active-get response captured, create response unavailable"
+  },
+  "reportWritten": {
+    "observedAt": "2026-10-07 19:08:53 UTC",
+    "basis": "clock sampled immediately before successful report.md write"
+  },
+  "terminalObservedAt": "2026-10-07 19:16:04 UTC",
+  "sourceOperations": [
+    {
+      "operation": "Read task input map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/INPUT_MAP.json",
+      "observedWindow": "after 2026-10-07 19:06:49 UTC and before 2026-10-07 19:07:35 UTC"
+    },
+    {
+      "operation": "Read exact brief, source manifest, and four listed frozen source byte files; compute SHA-256",
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst"
+      ],
+      "observedCompletedBy": "2026-10-07 19:07:35 UTC",
+      "hashesMatchedManifest": true
+    },
+    {
+      "operation": "Locate source section headings for report citations",
+      "observedAt": "2026-10-07 19:07:35 UTC"
+    },
+    {
+      "operation": "Re-read current INPUT_MAP.json and confirmed six obligations plus four source identities",
+      "observedAt": "2026-10-07 19:14:04 UTC"
+    },
+    {
+      "operation": "Read saved report for completion audit and re-located cited source headings",
+      "observedCompletedBy": "2026-10-07 19:14:42 UTC",
+      "observedAfter": "2026-10-07 19:14:04 UTC"
+    }
+  ],
+  "nativeAccounting": {
+    "goalTokensUsedAtActivationRecovery": 0,
+    "goalTimeUsedSecondsAtActivationRecovery": 10,
+    "finalGoalTokensUsed": 35690,
+    "finalGoalTimeUsedSeconds": 255,
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "billing": null
+  },
+  "notes": [
+    "Fresh Goal creation succeeded and active status was observed; the exact create response could not be persisted because btoa was unavailable in the first serialization attempt.",
+    "No duplicate Goal was created.",
+    "No tests were executed. Validation items in report.md are proposals only.",
+    "Native terminal status is active; terminal receipt is unknown because no terminal update was issued."
+  ],
+  "lastGoalObservationAt": "2026-10-07 19:14:04 UTC",
+  "latestGoalTokensUsed": 78794,
+  "latestGoalTimeUsedSeconds": 445,
+  "latestGoalStatus": "active",
+  "exactCreateReceiptRecovery": "Unavailable through exposed native Goal tools; no second Goal created.",
+  "terminalStatus": "blocked",
+  "terminalTokensUsed": 105077,
+  "terminalTimeUsedSeconds": 565,
+  "exactTerminalUpdateCaptured": true,
+  "exactPostUpdateGetCaptured": true
+}

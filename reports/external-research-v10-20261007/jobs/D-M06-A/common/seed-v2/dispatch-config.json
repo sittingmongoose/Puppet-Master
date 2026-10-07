@@ -1,0 +1,17 @@
+{
+  "clientRequestId": "er10-cohort2-D-M06-A-common-seed-v2",
+  "title": "ER10 D-M06-A prospective common seed v2",
+  "role": "general",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    }
+  },
+  "task": "/goal Complete /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/assignment.md scientific files"
+}

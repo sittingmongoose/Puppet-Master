@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-07T20:01:59.775Z",
+  "response": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-common-seed-v2\",\"status\":\"cancel_requested\"}"
+      }
+    ],
+    "structuredContent": {
+      "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M06-B-common-seed-v2",
+      "status": "cancel_requested"
+    },
+    "isError": false
+  },
+  "clientRequestId": "er10-cohort2-D-M06-B-common-seed-v2-expiry-cancel-v1"
+}

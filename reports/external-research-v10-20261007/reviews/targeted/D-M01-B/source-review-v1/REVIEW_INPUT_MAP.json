@@ -1,0 +1,66 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "rastermask",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/sources/rastermask.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterio",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/sources/rasterio.pyx",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "additional_candidate_public_sources": [],
+  "candidates": [
+    {
+      "label": "X",
+      "final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/X/final.md",
+        "sha256": "9c2765752bcb98f35a5e2c9ddca531ced5a064f4e97f7495dc196427aeb6e1a0"
+      },
+      "method_required_intermediates": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/X/intermediate-1.md",
+          "sha256": "76be70f9fdbbc84b6f86f85768a3d4c7c86ba5afba4b3835b309423718020c50"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/X/intermediate-2.md",
+          "sha256": "0294f5851537ea90d5a6bfe5ee425c6773bd11cec5acc2ec3f3de2bf578b0629"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/X/intermediate-3.md",
+          "sha256": "9c2765752bcb98f35a5e2c9ddca531ced5a064f4e97f7495dc196427aeb6e1a0"
+        }
+      ]
+    },
+    {
+      "label": "Y",
+      "final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/Y/final.md",
+        "sha256": "b3e9dd4b36bd3b6cfa918db0813599bb17c165e08aa7ee685ece5b22eb567729"
+      },
+      "method_required_intermediates": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/Y/intermediate-1.md",
+          "sha256": "9aec1bfc002af2283c726309d6fd2b065ef4f395cb4a753ac21fac12565582d8"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/frozen/Y/intermediate-2.md",
+          "sha256": "88f8c2974ecea2c687f836b4d57d7021d72ca00335b75a797be0dbcaf13eb442"
+        }
+      ]
+    }
+  ],
+  "writable_review_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1"
+}

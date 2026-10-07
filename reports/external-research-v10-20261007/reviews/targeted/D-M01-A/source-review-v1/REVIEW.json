@@ -1,0 +1,2265 @@
+{
+  "schema": "pm.er10.semantic-source-review.v1",
+  "case_id": "D-M01-A",
+  "review_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1",
+  "author": {
+    "role": "independent review sub-agent",
+    "runtime": "Codex gpt-6.1-sol, xhigh",
+    "account_identity": "User-declared codex_gmail sittingmongoose@gmail.com; not independently checked"
+  },
+  "scope": {
+    "mode": "independent diagnostic semantic source assessment",
+    "brief_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/brief.md",
+    "first_review_clock_receipt_utc": "2026-10-07 19:11:08 UTC",
+    "authored_utc": "2026-10-07T19:18:04.328609+00:00",
+    "time_limit_seconds": 1200,
+    "full_declared_semantic_scope_assessed": true,
+    "native_goal_created": false,
+    "delegation_used": false,
+    "candidate_rescue_or_rewrite": false,
+    "review_finalized_utc": "2026-10-07T19:19:48.797608+00:00",
+    "elapsed_seconds_from_first_clock_receipt": 520.797648
+  },
+  "access_boundary": {
+    "local_reads": "Only exact declared brief, manifest, three frozen source paths and seven candidate artifact paths. No repository canon was needed or accessed.",
+    "public_reads": "Only independent unauthenticated public primary-source URLs listed below.",
+    "excluded_not_accessed": [
+      "IDENTITY_MAP_PRIVATE.json",
+      "case cards",
+      "supervisor state",
+      "timing/lifecycle files",
+      "any other reviews",
+      "candidate workspaces or unlisted artifacts",
+      "host credentials or authenticated services"
+    ],
+    "mutations": "Only authored REVIEW.json and REVIEW.md in assigned directory; candidates untouched."
+  },
+  "blinding_limits": [
+    "X visibly labels its preliminary research proposal as control and exposes stage criticism/revision headings plus critique dispositions.",
+    "Y exposes research-stage draft and critic_and_final headings and references a predecessor.",
+    "The differing numbers of declared intermediate artifacts are visible.",
+    "The user supplied a global root failed-terminal exception and stated one terminal is absent. No label mapping is supplied or inferred.",
+    "No method identities, private maps, prices, target grades, parent analysis or other reviews were accessed."
+  ],
+  "lifecycle_delivery_provenance_separation": {
+    "native_lifecycle": "Not assessed. The supplied infrastructure exception does not change the original prerequisite or establish lifecycle success. No absent-terminal label is inferred.",
+    "delivery": "All seven declared candidate artifact files exist at exact paths and match exact declared hashes. This is artifact presence, not native completion.",
+    "provenance": "Source bytes and declared artifact identities independently checked. Actual authorship, historical source reads/commands, account and predecessor-delivery assertions remain unauthenticated.",
+    "method_credit": "Not assessed or qualified by this diagnostic review.",
+    "scientific_source_assessment": "Independent full bounded semantic review completed for each label against the same brief."
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/brief.md",
+      "kind": "brief",
+      "sha256": "5f321952222a56987af91ed0b1901927f6a21aefb59f451b907765aafcb6c8a5",
+      "declared_sha256": null,
+      "match": null,
+      "bytes": 1833,
+      "lines": 16,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources.json",
+      "kind": "manifest",
+      "sha256": "188b0ad473cd74922e95c5b3c297fedc9c7f80b034bb0e683aaf65122e2de7f3",
+      "declared_sha256": null,
+      "match": null,
+      "bytes": 1623,
+      "lines": 35,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackup.html",
+      "kind": "frozen_primary_source",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "declared_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "match": true,
+      "bytes": 28195,
+      "lines": 510,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackupapi.html",
+      "kind": "frozen_primary_source",
+      "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+      "declared_sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+      "match": true,
+      "bytes": 15852,
+      "lines": 337,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackupcode.c",
+      "kind": "frozen_primary_source",
+      "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+      "declared_sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+      "match": true,
+      "bytes": 27099,
+      "lines": 767,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/X/final.md",
+      "kind": "candidate_artifact",
+      "sha256": "1ba83a41171dbc26c3ba7852878a2768547b94205949574b85026da7d16f665c",
+      "declared_sha256": "1ba83a41171dbc26c3ba7852878a2768547b94205949574b85026da7d16f665c",
+      "match": true,
+      "bytes": 6678,
+      "lines": 30,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/X/intermediate-1.md",
+      "kind": "candidate_artifact",
+      "sha256": "1aeba1f55d4a9bc56968e3c680bbc45a3fafcfbb543a1681b0c7c76391d9da23",
+      "declared_sha256": "1aeba1f55d4a9bc56968e3c680bbc45a3fafcfbb543a1681b0c7c76391d9da23",
+      "match": true,
+      "bytes": 6787,
+      "lines": 41,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/X/intermediate-2.md",
+      "kind": "candidate_artifact",
+      "sha256": "5c5db68e00a0f29c598b3a1c23b3a3dd5ddd187152d726324fcde880067e2822",
+      "declared_sha256": "5c5db68e00a0f29c598b3a1c23b3a3dd5ddd187152d726324fcde880067e2822",
+      "match": true,
+      "bytes": 5539,
+      "lines": 23,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/X/intermediate-3.md",
+      "kind": "candidate_artifact",
+      "sha256": "840fad94cbfcdaf79f4650e5529dd349014e2dfad8492938a68c3fe235e8efbd",
+      "declared_sha256": "840fad94cbfcdaf79f4650e5529dd349014e2dfad8492938a68c3fe235e8efbd",
+      "match": true,
+      "bytes": 2260,
+      "lines": 19,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/Y/final.md",
+      "kind": "candidate_artifact",
+      "sha256": "04ff9d2e7143fbf94d15951548c69d192adaf81beecde8b70f65efded16cbade",
+      "declared_sha256": "04ff9d2e7143fbf94d15951548c69d192adaf81beecde8b70f65efded16cbade",
+      "match": true,
+      "bytes": 7114,
+      "lines": 36,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/Y/intermediate-1.md",
+      "kind": "candidate_artifact",
+      "sha256": "02d4a0a4f70bf7dbb5b15c9ebe8c1411418b98bca98623a4c629bafb82cfa663",
+      "declared_sha256": "02d4a0a4f70bf7dbb5b15c9ebe8c1411418b98bca98623a4c629bafb82cfa663",
+      "match": true,
+      "bytes": 8014,
+      "lines": 32,
+      "read_coverage": "entire declared file"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/Y/intermediate-2.md",
+      "kind": "candidate_artifact",
+      "sha256": "f2f62c9a313dcbdb69ca44d2d611dd6a6f7b2c885e38e9825c3a83758f66ec88",
+      "declared_sha256": "f2f62c9a313dcbdb69ca44d2d611dd6a6f7b2c885e38e9825c3a83758f66ec88",
+      "match": true,
+      "bytes": 4873,
+      "lines": 34,
+      "read_coverage": "entire declared file"
+    }
+  ],
+  "frozen_sources": [
+    {
+      "source_id": "sqlbackup",
+      "url": "https://www.sqlite.org/backup.html",
+      "version_or_capture": "SQLite documentation captured 2026-10-07; reconcile behavior to SQLite 3.51.3 code",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackup.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlbackupapi",
+      "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "version_or_capture": "SQLite C API documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackupapi.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlbackupcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+      "version_or_capture": "SQLite version-3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackupcode.c",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "public_source_checks": [
+    {
+      "source_id": "sqlbackupcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/backup.c",
+      "version_or_capture": "version-3.51.3 raw released source",
+      "capture_utc": "2026-10-07T19:12:00.240425+00:00",
+      "sha256": "ee4cbfc7d8afb311d12cc106d645764a3e18266694f003438b410bfa33764ef7",
+      "bytes": 27099,
+      "frozen_byte_equal": true,
+      "coverage": "entire file read from frozen bytes; independent public re-fetch compared byte for byte"
+    },
+    {
+      "source_id": "sqlbackupapi",
+      "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "version_or_capture": "mutable C API documentation, independently captured during review",
+      "capture_utc": "2026-10-07T19:12:00.410068+00:00",
+      "sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+      "bytes": 15852,
+      "frozen_byte_equal": true,
+      "coverage": "entire frozen HTML; independent public re-fetch compared byte for byte"
+    },
+    {
+      "source_id": "sqlbackup",
+      "url": "https://www.sqlite.org/backup.html",
+      "version_or_capture": "mutable documentation, independently captured during review; page update 2025-11-13",
+      "capture_utc": "2026-10-07T19:12:00.555457+00:00",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "bytes": 28195,
+      "frozen_byte_equal": true,
+      "coverage": "entire frozen HTML; independent public re-fetch compared byte for byte"
+    },
+    {
+      "source_id": "transaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_capture": "mutable primary documentation captured during review; web rendering reports update 2026-02-18",
+      "capture_utc": "2026-10-07T19:12:16.276050+00:00",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "bytes": 27068,
+      "coverage": "raw bytes hashed; relevant raw-line excerpts 285-399 read; supports, rather than supersedes, the release-code branch"
+    },
+    {
+      "source_id": "rsync",
+      "url": "https://www.sqlite.org/rsync.html",
+      "version_or_capture": "mutable primary documentation captured during review",
+      "capture_utc": "2026-10-07T19:12:40.199499+00:00",
+      "sha256": "30b70362b95ddb9293b98757f87a3d3d9552f0e2ee45a96578af1578e17fc73d",
+      "bytes": 13237,
+      "coverage": "raw bytes hashed; selected local/remote and usage excerpts read, especially 159-174"
+    },
+    {
+      "source_id": "rsynccode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/tool/sqlite3_rsync.c",
+      "version_or_capture": "version-3.51.3 raw released source",
+      "capture_utc": "2026-10-07T19:12:49.225969+00:00",
+      "sha256": "8e97d8a96cd6f3a023d569d6cded0fc7cf910a1d8ea4f6f67dfd5bb7f4985af8",
+      "bytes": 75642,
+      "coverage": "raw bytes hashed twice; selected search hits and exact 2185-2355 read; only local-to-local capability assessed"
+    },
+    {
+      "source_id": "pragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_or_capture": "mutable primary documentation captured during review",
+      "capture_utc": "2026-10-07T19:13:44.337832+00:00",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "bytes": 139778,
+      "coverage": "raw bytes hashed; exact integrity-check subsection 1167-1204 read"
+    },
+    {
+      "source_id": "pagercode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/pager.c",
+      "version_or_capture": "version-3.51.3 raw released source",
+      "capture_utc": "2026-10-07T19:18:53.814706+00:00",
+      "sha256": "5ef7135d2d67ba7f2be6da0197854788ece57bccd2a743f6f1a5f33c94e8ce7b",
+      "bytes": 302918,
+      "coverage": "raw bytes hashed; exact 5918-6067 read; only transaction lock acquisition at 5928-5955 assessed"
+    },
+    {
+      "source_id": "btreecode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/btree.c",
+      "version_or_capture": "version-3.51.3 raw released source",
+      "capture_utc": "2026-10-07T19:18:53.933393+00:00",
+      "sha256": "ab4135be6b5e19f1766b1f4022fa6843fe8dd447504d39c49f22598366de8d61",
+      "bytes": 403255,
+      "coverage": "raw bytes hashed on repeated reads; exact 3777-3828 and selected 3628-3650,3679-3701,3731-3753 read; only backup-to-pager call chain assessed"
+    },
+    {
+      "source_id": "wal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_capture": "mutable primary documentation captured during review",
+      "capture_utc": "2026-10-07T19:19:01.972801+00:00",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "coverage": "raw bytes hashed; raw excerpts 164-174,272-282,291-301,673-682 read; web rendering used only as initial pointer"
+    }
+  ],
+  "primary_evidence": {
+    "E01": {
+      "source_id": "sqlbackupapi",
+      "ranges": [
+        "150-160",
+        "165-192"
+      ],
+      "corroboration": "sqlbackupcode:124-129,166-205",
+      "finding": "Distinct source/destination roles; destination transaction prevents init; NULL and destination error on init failure; one finish per successful init."
+    },
+    "E02": {
+      "source_id": "sqlbackupapi",
+      "ranges": [
+        "301-322"
+      ],
+      "corroboration": "sqlbackupcode:155-161,43-71",
+      "finding": "Destination API exclusion, destination shared-cache exclusion, and counter concurrency restrictions."
+    },
+    "E03": {
+      "source_id": "sqlbackupapi",
+      "ranges": [
+        "295-299"
+      ],
+      "corroboration": "sqlbackupcode:323-327",
+      "finding": "Source connection may be used otherwise; concurrent use requires configured threadsafe connections."
+    },
+    "E04": {
+      "source_id": "sqlbackupcode",
+      "ranges": [
+        "337-353",
+        "543-553"
+      ],
+      "corroboration": "transaction:295-316,332-340,384-389",
+      "finding": "A source write transaction gives immediate BUSY. A pre-existing source read transaction is not closed by step: bCloseTrans stays false."
+    },
+    "E05": {
+      "source_id": "sqlbackup",
+      "ranges": [
+        "451-482"
+      ],
+      "corroboration": "sqlbackupcode:690-706; sqlbackupapi:240-250",
+      "finding": "Normal inter-step writes, restart behavior, same file-backed handle exception, and repeated-restart nontermination."
+    },
+    "E06": {
+      "source_id": "sqlbackupcode",
+      "ranges": [
+        "650-683"
+      ],
+      "corroboration": "sqlbackup:460-465",
+      "finding": "Copied pages are updated through the source pager; an update failure can change p->rc between step calls."
+    },
+    "E07": {
+      "source_id": "sqlbackupapi",
+      "ranges": [
+        "197-234"
+      ],
+      "corroboration": "sqlbackupcode:212-218,329-343,390-410,534-558",
+      "finding": "OK versus DONE; retryable BUSY/LOCKED; fatal error handling; stored status."
+    },
+    "E08": {
+      "source_id": "sqlbackupapi",
+      "ranges": [
+        "255-274"
+      ],
+      "corroboration": "sqlbackupcode:558,599-618,669-682",
+      "finding": "Finish cleanup and incomplete-OK behavior; captured prose says contention does not affect finish, while release code returns current p->rc with DONE mapped to OK."
+    },
+    "E09": {
+      "source_id": "sqlbackupapi",
+      "ranges": [
+        "178-180",
+        "210-216",
+        "236-241"
+      ],
+      "corroboration": "sqlbackupcode:355-383; sqlbackup:337-354",
+      "finding": "Destination transactions, write locking, page-size changes, and WAL/in-memory mismatch restrictions."
+    },
+    "E10": {
+      "source_id": "sqlbackupapi",
+      "ranges": [
+        "281-291",
+        "317-322"
+      ],
+      "corroboration": "sqlbackupcode:60-65,402-409,621-646; sqlbackup:499-505",
+      "finding": "Progress reports stored prior-step values; changes can leave them stale; concurrent stepping/counter reads can be invalid."
+    },
+    "E11": {
+      "source_id": "sqlbackup",
+      "ranges": [
+        "202-207",
+        "468-482",
+        "509"
+      ],
+      "corroboration": "sqlbackupapi:326-332",
+      "finding": "Completed-copy consistency, VACUUM INTO and rsync leads, and the documentation update date."
+    },
+    "E12": {
+      "source_id": "transaction",
+      "ranges": [
+        "295-316",
+        "332-340",
+        "384-389"
+      ],
+      "corroboration": "sqlbackupcode:346-353,543-553",
+      "finding": "An explicit source read transaction persists and sees an older snapshot; another connection may fail its COMMIT while the reader remains open."
+    },
+    "E13": {
+      "source_id": "rsync",
+      "ranges": [
+        "159-174"
+      ],
+      "corroboration": "rsynccode:2326-2350",
+      "finding": "sqlite3_rsync permits both origin and replica to be local; the release contains a local-to-local branch."
+    },
+    "E14": {
+      "source_id": "pragma",
+      "ranges": [
+        "1167-1204"
+      ],
+      "corroboration": null,
+      "finding": "integrity_check is an appropriate structural check; foreign-key errors require a separate check. Neither candidate says integrity_check alone proves all application invariants."
+    },
+    "E15": {
+      "source_id": "pagercode",
+      "ranges": [
+        "5928-5955"
+      ],
+      "corroboration": "sqlbackupcode:365-370; btreecode:3685-3696; wal:166-168,293-297",
+      "finding": "Backup requests an exclusive write transaction, but ordinary WAL mode acquires a WAL write lock rather than the database-file EXCLUSIVE lock. Database-file exclusivity in that branch additionally depends on exclusive locking mode."
+    }
+  },
+  "findings": [
+    {
+      "id": "C-F1",
+      "labels": [
+        "X",
+        "Y"
+      ],
+      "severity": "material missing condition",
+      "candidate_locations": [
+        "X/final.md:7",
+        "Y/final.md:9"
+      ],
+      "evidence": [
+        "E04",
+        "E12"
+      ],
+      "detail": "The claim that each step holds the source read lock only for that call needs the condition that the backup owns the source read transaction. If S already has an explicit read transaction, the code does not set bCloseTrans and leaves it open between steps. In rollback-journal operation that reader can block the active writer at commit; under a pinned read snapshot, later committed external changes are not necessarily visible to this S. Distinct handles and a prohibition on source write transactions do not exclude this legal state. X recommends a dedicated S, but does not explicitly require a fresh transaction-free S; Y allows existing-handle use. Completed-copy consistency is not refuted; the unconditional concurrency/freshness description is incomplete.",
+      "counterexample": "CE2"
+    },
+    {
+      "id": "X-F1",
+      "labels": [
+        "X"
+      ],
+      "severity": "decisive local policy contradiction",
+      "candidate_locations": [
+        "X/final.md:3",
+        "X/final.md:9",
+        "X/final.md:17"
+      ],
+      "evidence": [
+        "E08"
+      ],
+      "detail": "The success-path instruction says to finish, close both handles, then remove the unique staging database and sidecars after success or abandonment. The publication gate instead requires the closed staging copy to be reopened and validated before publication. Literal execution of the cleanup sequence removes a successful candidate before that gate. Reading success as already-published success does not establish the missing ordering: finish and close are themselves prerequisites of publication. A safe implementation requires resolving the text, which this review does not do. This regression is absent from the draft, where deletion was on exhaustion or fatal error.",
+      "counterexample": "CE1"
+    },
+    {
+      "id": "X-F2",
+      "labels": [
+        "X"
+      ],
+      "severity": "conditional technical overstatement",
+      "candidate_locations": [
+        "X/final.md:11"
+      ],
+      "evidence": [
+        "E06",
+        "E08"
+      ],
+      "detail": "The release-code correction about finish preserving a current BUSY/LOCKED status is valid. Calling p->rc the last stored step result is too narrow: backupUpdate can set a fatal p->rc between step calls when a same-handle copied-page update fails. Finish then returns that status rather than the last step result. The DONE-plus-finish-OK publication gate remains conservative.",
+      "counterexample": "CE3"
+    },
+    {
+      "id": "Y-F1",
+      "labels": [
+        "Y"
+      ],
+      "severity": "material omitted progress-use condition",
+      "candidate_locations": [
+        "Y/final.md:17",
+        "Y/final.md:19"
+      ],
+      "evidence": [
+        "E02",
+        "E10"
+      ],
+      "detail": "The final covers stale progress and denies completion/restart-count proofs, but omits the documented condition that counters must not be read concurrently with step; the C file also warns about finish. Thread-safe source-connection use does not make these counter functions thread-safe. This is a missing legal-use condition, not a claim that ordinary serialized progress samples are wrong.",
+      "counterexample": null
+    },
+    {
+      "id": "Y-F2",
+      "labels": [
+        "Y"
+      ],
+      "severity": "unsupported contextual correction",
+      "candidate_locations": [
+        "Y/intermediate-1.md:6",
+        "Y/intermediate-2.md:29",
+        "Y/final.md:25"
+      ],
+      "evidence": [],
+      "detail": "The research-stage draft says that no predecessor was supplied to that research stage and explicitly says its statuses refer to its own recommendation. The next stage has that draft as a predecessor and rejects the earlier sentence on that basis. Availability of the draft to a later stage does not contradict the earlier stage having no predecessor. The declared artifacts do not support this rejection; it is a stage-context mistake. Actual prior input delivery is not independently audited and remains outside the allowed artifact set. The final preserves the unsupported correction.",
+      "counterexample": null
+    },
+    {
+      "id": "Y-F3",
+      "labels": [
+        "Y"
+      ],
+      "severity": "false exclusion rationale for an optional lead",
+      "candidate_locations": [
+        "Y/intermediate-1.md:24",
+        "Y/intermediate-2.md:29",
+        "Y/final.md:27"
+      ],
+      "evidence": [
+        "E11",
+        "E13"
+      ],
+      "detail": "The draft excludes sqlite3_rsync for local-only copying and the critique says it is only relevant with a remote target. Primary documentation explicitly permits two local paths, and the 3.51.3 implementation has that branch. The final softer wording, not indicated for this local-only destination, still carries the local-only rationale without other fit evidence. Choosing the Backup API remains reasonable; a remote requirement is not a valid capability-based reason to reject this lead. No comparative performance finding or replacement recommendation is made.",
+      "counterexample": "CE4"
+    },
+    {
+      "id": "Y-F4",
+      "labels": [
+        "Y"
+      ],
+      "severity": "conditional cleanup ownership gap",
+      "candidate_locations": [
+        "Y/final.md:7",
+        "Y/final.md:13",
+        "Y/final.md:26"
+      ],
+      "evidence": [
+        "E03"
+      ],
+      "detail": "The final allows use of the existing writer source handle, but on failure instructs closing handles without distinguishing a job-owned S from an application-owned writer S. Under the unresolved same-writer-handle configuration, that cleanup can close the still-needed writer connection. This condition matters to the brief that a writer remains active. A job-owned separate source has no such ownership issue; that restriction is not made explicit.",
+      "counterexample": null
+    },
+    {
+      "id": "Y-F5",
+      "labels": [
+        "Y"
+      ],
+      "severity": "release-specific destination-lock overstatement",
+      "candidate_locations": [
+        "Y/final.md:15"
+      ],
+      "evidence": [
+        "E09",
+        "E15"
+      ],
+      "detail": "The final repeats the captured API statement that the first step obtains an exclusive lock on the destination file, without a journal/locking-mode condition, while explicitly allowing WAL staging. The released call chain requests wrflag=2, then pagerBegin takes the WAL write lock in normal WAL mode; it acquires a database-file EXCLUSIVE lock only for exclusive locking mode in that branch. An ordinary WAL destination therefore does not support the unconditional database-file-exclusive claim. Destination API/shared-cache isolation remains required by the separate API contract; this finding does not license other destination-handle use.",
+      "counterexample": "CE5"
+    }
+  ],
+  "counterexamples": [
+    {
+      "id": "CE1",
+      "labels": [
+        "X"
+      ],
+      "type": "artifact control-flow counterexample; not executed",
+      "preconditions": "A valid step returns DONE; finish returns OK; private staging database is intact.",
+      "trace": [
+        "X final line 9 directs finish then close then removal even after success.",
+        "Removal of the staging database leaves no candidate at that path for the reopen/integrity gate in lines 3 and 17."
+      ],
+      "receipt": "Logical ordering conflict in the hash-pinned final, not an SQLite run.",
+      "evidence": [
+        "X/final.md:3,9,17",
+        "E08"
+      ],
+      "limitation": "No implementation exists here; no claim that every possible implementation must fail. Resolving/interposing a different order would be candidate rescue and was not performed."
+    },
+    {
+      "id": "CE2",
+      "labels": [
+        "X",
+        "Y"
+      ],
+      "type": "release-source branch counterexample; not executed",
+      "preconditions": "S has BEGIN followed by a SELECT, leaving an explicit read transaction; D is a distinct writable private disk database with no transaction; backup needs multiple steps.",
+      "trace": [
+        "sqlbackupcode:350 bypasses BeginTrans because source state is not NONE; bCloseTrans remains zero.",
+        "sqlbackupcode:548 bypasses source read-transaction close. S retains its transaction between steps.",
+        "The independent transaction primary source explains the retained historical read view and reader-related COMMIT contention."
+      ],
+      "receipt": "Static branch analysis from exact frozen source; no database opened.",
+      "evidence": [
+        "E04",
+        "E12"
+      ],
+      "limitation": "Rollback-journal writer blocking and WAL/historical snapshot consequences depend on source mode and transaction state. A fresh transaction-free S does not exercise this counterexample."
+    },
+    {
+      "id": "CE3",
+      "labels": [
+        "X"
+      ],
+      "type": "release-source status counterexample; not executed",
+      "preconditions": "Last backup step was OK; a permitted same-handle write updates a previously copied page and its destination copy encounters an error.",
+      "trace": [
+        "backupUpdate records its error in p->rc at sqlbackupcode:680-681.",
+        "finish maps only DONE to OK and otherwise returns current p->rc at 603 and 618.",
+        "Thus the return need not equal the last step result."
+      ],
+      "receipt": "Exact static status-assignment paths; no injected fault or execution.",
+      "evidence": [
+        "E06",
+        "E08"
+      ],
+      "limitation": "No frequency/probability or target fault behavior asserted. Dedicated S with no same-handle writes avoids this specific update path."
+    },
+    {
+      "id": "CE4",
+      "labels": [
+        "Y"
+      ],
+      "type": "independent primary-source capability counterexample; not executed",
+      "preconditions": "Both sqlite3_rsync operands are ordinary local paths.",
+      "trace": [
+        "Primary rsync documentation lines 170-172 expressly permits both paths to be local.",
+        "The version-3.51.3 CLI branches at 2326-2350 to Local ORIGIN and REPLICA without the remote SSH branch."
+      ],
+      "receipt": "Public raw-byte hashes and line-range reads recorded in public_source_checks.",
+      "evidence": [
+        "E13"
+      ],
+      "limitation": "No rsync binary run, no alternative selection, no deployment suitability or economics inferred."
+    },
+    {
+      "id": "CE5",
+      "labels": [
+        "Y"
+      ],
+      "type": "released lock-acquisition source counterexample; not executed",
+      "preconditions": "D is a writable WAL staging database in normal locking mode, with source/destination matching page sizes; init and lock acquisition succeed.",
+      "trace": [
+        "Backup requests sqlite3BtreeBeginTrans(D,2,...) at backup.c:366-370.",
+        "btree.c:3689 forwards exFlag=true to sqlite3PagerBegin.",
+        "pager.c:5928-5945 chooses WAL; with exclusiveMode=false it skips the database-file EXCLUSIVE lock and obtains the WAL write lock instead."
+      ],
+      "receipt": "Static released call-chain trace with raw public source hashes; no SQLite execution.",
+      "evidence": [
+        "E09",
+        "E15"
+      ],
+      "limitation": "A rollback-journal destination or a WAL destination configured for exclusive locking is not this counterexample. Actual target locking mode remains unknown."
+    }
+  ],
+  "executed_counterexample_receipts": [],
+  "reviewer_executed_checks": [
+    "Read/hash all 12 declared local files.",
+    "Read all seven candidate artifacts, all substantive source bytes and cited ranges.",
+    "Unauthenticated public re-fetch/hash/byte equality for each of the three frozen source URLs.",
+    "Bounded primary-source excerpts for transaction persistence, local rsync and integrity-check semantics.",
+    "Static source branch/control-flow counterexamples CE1-CE4 only.",
+    "Check final word counts and cross-stage carried content.",
+    "Bounded release-source backup/btree/pager lock-acquisition chain check and static CE5; no execution."
+  ],
+  "runtime_limitation": "No supported isolated no-credentials/no-network runtime sandbox was established or used. No downloaded project code, installer, SQLite database job, arbitrary source installer, or candidate validation was executed. Source/logic reads suffice for these diagnostics; static examples are not runtime receipts.",
+  "coverage_census": {
+    "labels": 2,
+    "declared_brief_material_obligations_per_label": 6,
+    "assessed_obligation_dispositions": 12,
+    "candidate_claim_condition_units": 76,
+    "assessed_claim_condition_units": 76,
+    "unassessed_claim_condition_units": 0,
+    "candidate_artifacts_entirely_read": 7,
+    "declared_local_files_hashed_and_read": 12,
+    "material_obligation_unassessed_remainder": [],
+    "note": "Full coverage does not mean every claim is correct or that tests were executed. Runtime feasibility and historical provenance are separately unassessed."
+  },
+  "candidates": [
+    {
+      "label": "X",
+      "final_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/X/final.md",
+      "final_sha256": "1ba83a41171dbc26c3ba7852878a2768547b94205949574b85026da7d16f665c",
+      "semantic_only_conclusion": "Full declared semantic scope assessed. Most core API facts and proposed checks are supported, including a useful release-code/prose discrepancy. The success-path staging-deletion contradiction is a decisive local diagnostic defect; the missing source-read transaction condition and current-status overstatement also remain. The frozen recommendation is not internally complete enough for an unqualified semantic pass. No full numeric grade, ranking, or method/lifecycle credit is issued.",
+      "numeric_grade": null,
+      "rank": null,
+      "obligation_coverage": [
+        {
+          "id": "B1",
+          "obligation": "State source/destination connection roles and legal usage.",
+          "disposition": "addressed with a missing source-read condition",
+          "claim_ids": [
+            "X05",
+            "X06",
+            "X07",
+            "X08",
+            "X09",
+            "X10",
+            "X25"
+          ],
+          "assessment": "Roles, D exclusion, thread safety and finish ownership are correct. Source transaction state is incompletely specified."
+        },
+        {
+          "id": "B2",
+          "obligation": "Explain snapshot consistency when source changes during a multi-step backup.",
+          "disposition": "partially correct; material governing condition missing",
+          "claim_ids": [
+            "X10",
+            "X11",
+            "X12",
+            "X13",
+            "X14"
+          ],
+          "assessment": "Write-path and restart explanation is sound for ordinary transaction-free S. C-F1 remains."
+        },
+        {
+          "id": "B3",
+          "obligation": "Distinguish completion, retryable contention, and terminal failures; specify bounded retry/failure/cleanup.",
+          "disposition": "addressed but success cleanup internally contradicted",
+          "claim_ids": [
+            "X15",
+            "X16",
+            "X17",
+            "X18",
+            "X19",
+            "X20",
+            "X21"
+          ],
+          "assessment": "Result classification and finite policy are sound; X-F1 defeats a clear success-path publication policy. X-F2 narrows the release correction."
+        },
+        {
+          "id": "B4",
+          "obligation": "Address destination transaction/page-size restrictions relevant to this setup.",
+          "disposition": "addressed",
+          "claim_ids": [
+            "X06",
+            "X22",
+            "X23"
+          ],
+          "assessment": "Disk choice, no destination transaction, and conditional WAL mismatch are relevant and source-supported."
+        },
+        {
+          "id": "B5",
+          "obligation": "State what progress counts can and cannot establish.",
+          "disposition": "addressed",
+          "claim_ids": [
+            "X24",
+            "X25"
+          ],
+          "assessment": "Prior-step/staleness, non-proof limits and serialized access all retained."
+        },
+        {
+          "id": "B6",
+          "obligation": "Propose minimal validation and one justified alternative or uncertainty.",
+          "disposition": "addressed as proposals",
+          "claim_ids": [
+            "X26",
+            "X27",
+            "X28",
+            "X29",
+            "X30",
+            "X31"
+          ],
+          "assessment": "Useful minimal tests and VACUUM INTO lead plus deployment unknowns; no runtime validation claimed. Exact restart measurement and policy consistency remain unresolved."
+        }
+      ],
+      "claim_coverage_census": {
+        "units": 36,
+        "assessed_units": 36,
+        "unassessed_units": 0,
+        "counts_by_disposition": {
+          "supported": 10,
+          "supported policy": 3,
+          "supported policy with internal conflict": 1,
+          "missing governing condition": 1,
+          "supported with source-transaction qualification": 1,
+          "supported with normal transaction assumption": 1,
+          "supported useful discovery": 1,
+          "supported; setup cleanup underspecified": 1,
+          "proposed policy": 1,
+          "internally contradicted": 1,
+          "accurate attribution": 1,
+          "partly supported; too narrow": 1,
+          "supported proposed check": 1,
+          "supported useful condition": 1,
+          "useful proposed checks": 3,
+          "proposed application policy; ordering conflict": 1,
+          "supported optional yield": 1,
+          "appropriate uncertainty": 1,
+          "hashes verified; historical actions unassessed": 1,
+          "partly preserved; new regression": 1,
+          "not contradicted by supplied artifacts; historical delivery unassessed": 1,
+          "valid correction carried to final": 1,
+          "scope/length met; semantic completeness impaired": 1
+        },
+        "note": "A unit may group inseparable conditions; this is a coverage census, not a numeric quality grade."
+      },
+      "claim_assessments": [
+        {
+          "id": "X01",
+          "claim_or_condition": "Online Backup API suitability is conditional on source workload and target-build validation.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:3",
+            "final.md:19"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E07"
+          ],
+          "assessment": "A reasonable bounded recommendation; does not guarantee every nightly run completes."
+        },
+        {
+          "id": "X02",
+          "claim_or_condition": "Use a writable private unique disk staging destination.",
+          "disposition": "supported policy",
+          "candidate_locations": [
+            "final.md:3",
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E01",
+            "E02",
+            "E09"
+          ],
+          "assessment": "Avoids overwriting the last good snapshot and avoids in-memory destination mismatch in this chosen setup."
+        },
+        {
+          "id": "X03",
+          "claim_or_condition": "Publication requires observed DONE, finish OK, closed handles, reopen and integrity checks.",
+          "disposition": "supported policy with internal conflict",
+          "candidate_locations": [
+            "final.md:3",
+            "final.md:17"
+          ],
+          "evidence_ids": [
+            "E07",
+            "E08",
+            "E14"
+          ],
+          "assessment": "The gates are sound in isolation; X-F1 undermines their executable ordering."
+        },
+        {
+          "id": "X04",
+          "claim_or_condition": "Failure or unfinished runs preserve the previous snapshot.",
+          "disposition": "supported policy",
+          "candidate_locations": [
+            "final.md:3",
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E07",
+            "E08"
+          ],
+          "assessment": "The API does not itself manage retention; this is an application policy."
+        },
+        {
+          "id": "X05",
+          "claim_or_condition": "D is destination, S is source, main/main names the main databases, and connection handles differ.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:5"
+          ],
+          "evidence_ids": [
+            "E01"
+          ],
+          "assessment": "Arguments and handle roles match the captured API and implementation."
+        },
+        {
+          "id": "X06",
+          "claim_or_condition": "D must have no open read or read-write transaction at init.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:5",
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E01",
+            "E09"
+          ],
+          "assessment": "Checked against the transaction-state test and captured prose."
+        },
+        {
+          "id": "X07",
+          "claim_or_condition": "Finish once after each successful init, including abandonment; a failed init has no successful backup object.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:5",
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E01",
+            "E08"
+          ],
+          "assessment": "The successful-init qualifier controls the generic finish instruction."
+        },
+        {
+          "id": "X08",
+          "claim_or_condition": "Exclude all other D APIs from init through finish, including other same-process destination-file access in shared-cache mode.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:5"
+          ],
+          "evidence_ids": [
+            "E02"
+          ],
+          "assessment": "The shared-cache condition is correctly preserved."
+        },
+        {
+          "id": "X09",
+          "claim_or_condition": "Dedicated S is prudent rather than mandatory; concurrent S use requires a configured threadsafe connection.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:5",
+            "intermediate-2.md:7"
+          ],
+          "evidence_ids": [
+            "E03"
+          ],
+          "assessment": "A separate writer handle has the restart consequence discussed in X12."
+        },
+        {
+          "id": "X10",
+          "claim_or_condition": "Source read locking lasts only for each step, so writes may proceed between steps.",
+          "disposition": "missing governing condition",
+          "candidate_locations": [
+            "final.md:7",
+            "intermediate-1.md:13",
+            "intermediate-2.md:9"
+          ],
+          "evidence_ids": [
+            "E04",
+            "E12"
+          ],
+          "assessment": "C-F1: false as an unconditional description when a source read transaction already exists."
+        },
+        {
+          "id": "X11",
+          "claim_or_condition": "Completed backup is consistent/up to date and is not guaranteed to represent the scheduled-start instant.",
+          "disposition": "supported with source-transaction qualification",
+          "candidate_locations": [
+            "final.md:7"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E11",
+            "E12"
+          ],
+          "assessment": "Consistency is supported. Freshness is relative to the source transaction being read; C-F1 limits an unconditional up-to-date claim."
+        },
+        {
+          "id": "X12",
+          "claim_or_condition": "External/other-handle writes usually restart; a dedicated S with a different writer handle takes that path; repeated restarts may prevent completion.",
+          "disposition": "supported with normal transaction assumption",
+          "candidate_locations": [
+            "final.md:7",
+            "final.md:19"
+          ],
+          "evidence_ids": [
+            "E05"
+          ],
+          "assessment": "No exact-start promise; the pre-existing read transaction exception is not stated."
+        },
+        {
+          "id": "X13",
+          "claim_or_condition": "Same file-backed source-handle writes update previously copied pages.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:7"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E06"
+          ],
+          "assessment": "Correct local-file condition; an update can also store an error, as X-F2 notes."
+        },
+        {
+          "id": "X14",
+          "claim_or_condition": "Release returns immediate BUSY for an existing source write transaction; a busy timeout cannot wait through this branch.",
+          "disposition": "supported useful discovery",
+          "candidate_locations": [
+            "final.md:7",
+            "intermediate-2.md:11"
+          ],
+          "evidence_ids": [
+            "E04"
+          ],
+          "assessment": "This is a direct branch with no busy-handler invocation before that return path."
+        },
+        {
+          "id": "X15",
+          "claim_or_condition": "On init NULL, record D error and fail setup.",
+          "disposition": "supported; setup cleanup underspecified",
+          "candidate_locations": [
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E01"
+          ],
+          "assessment": "Correct classification; the text does not expressly enumerate handle/file cleanup on failed init."
+        },
+        {
+          "id": "X16",
+          "claim_or_condition": "OK means continue, DONE means complete, BUSY/LOCKED permit same-object retry, other step errors terminate the run.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E07"
+          ],
+          "assessment": "Matches release isFatalError and the API categories."
+        },
+        {
+          "id": "X17",
+          "claim_or_condition": "128 pages, 250 ms busy timeout, about 100 ms pacing/backoff, 60 seconds or eight consecutive contention returns.",
+          "disposition": "proposed policy",
+          "candidate_locations": [
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E07"
+          ],
+          "assessment": "Finite retry scheduling values are explicitly not SQLite mandates. No elapsed-time witness exists; per-call I/O and waits are not a proven hard 60-second wall bound, and start/check placement is unspecified."
+        },
+        {
+          "id": "X18",
+          "claim_or_condition": "After success or abandonment, finish/close then remove staging database and sidecars.",
+          "disposition": "internally contradicted",
+          "candidate_locations": [
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E08"
+          ],
+          "assessment": "X-F1: the unconditional success deletion conflicts with reopen/validate/publish."
+        },
+        {
+          "id": "X19",
+          "claim_or_condition": "Delete only owned files, log step/finish statuses, report cleanup failures, never reuse a failed staging path.",
+          "disposition": "supported policy",
+          "candidate_locations": [
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E02",
+            "E08"
+          ],
+          "assessment": "Good failure isolation in itself; successful-copy deletion is assessed separately in X18."
+        },
+        {
+          "id": "X20",
+          "claim_or_condition": "Captured finish prose permits incomplete OK and says BUSY/LOCKED do not affect finish result.",
+          "disposition": "accurate attribution",
+          "candidate_locations": [
+            "final.md:11",
+            "intermediate-1.md:21"
+          ],
+          "evidence_ids": [
+            "E08"
+          ],
+          "assessment": "Checked exact captured prose at 265-274; not accepted as the governing release behavior."
+        },
+        {
+          "id": "X21",
+          "claim_or_condition": "Release finish maps DONE to OK and otherwise returns the last stored step result, including last BUSY/LOCKED.",
+          "disposition": "partly supported; too narrow",
+          "candidate_locations": [
+            "final.md:11",
+            "intermediate-2.md:11"
+          ],
+          "evidence_ids": [
+            "E06",
+            "E08"
+          ],
+          "assessment": "The current-status mapping and contention discrepancy are correct; last step alone excludes backupUpdate errors, X-F2."
+        },
+        {
+          "id": "X22",
+          "claim_or_condition": "Disk destination page size normally changes; WAL mismatch may yield READONLY; avoid WAL or match sizes.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E09"
+          ],
+          "assessment": "Writable disk selection avoids the separately documented in-memory limitation without denying it."
+        },
+        {
+          "id": "X23",
+          "claim_or_condition": "Check target journal mode and page sizes before relying on staging configuration.",
+          "disposition": "supported proposed check",
+          "candidate_locations": [
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E09"
+          ],
+          "assessment": "Consistent with the no-other-D-API rule: do configuration/readback before init."
+        },
+        {
+          "id": "X24",
+          "claim_or_condition": "Progress describes prior step and may lag source-size changes; cannot establish stable totals, completion or a snapshot cut.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:15"
+          ],
+          "evidence_ids": [
+            "E10"
+          ],
+          "assessment": "The stronger DONE success criterion is retained."
+        },
+        {
+          "id": "X25",
+          "claim_or_condition": "Read counters via a serialized owner, never concurrently with step/finish.",
+          "disposition": "supported useful condition",
+          "candidate_locations": [
+            "final.md:15"
+          ],
+          "evidence_ids": [
+            "E02",
+            "E10"
+          ],
+          "assessment": "C source explicitly includes both step and finish."
+        },
+        {
+          "id": "X26",
+          "claim_or_condition": "Propose multi-page same-S and second-handle write tests, reopen, integrity_check, transaction markers, restart/duration measurements.",
+          "disposition": "useful proposed checks",
+          "candidate_locations": [
+            "final.md:17"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E14"
+          ],
+          "assessment": "Discriminates write paths and structural/application consistency. Exact restart measurement needs instrumentation not specified in X; no executed witness is claimed."
+        },
+        {
+          "id": "X27",
+          "claim_or_condition": "Propose transient and sustained contention, same-handle retry, finish logging, deadline, cleanup and previous-snapshot checks.",
+          "disposition": "useful proposed checks",
+          "candidate_locations": [
+            "final.md:17"
+          ],
+          "evidence_ids": [
+            "E07",
+            "E08"
+          ],
+          "assessment": "No execution; tests would need to cover the success cleanup conflict as well."
+        },
+        {
+          "id": "X28",
+          "claim_or_condition": "Propose destination transaction-at-init and WAL page mismatch failures and non-publication.",
+          "disposition": "useful proposed checks",
+          "candidate_locations": [
+            "final.md:17"
+          ],
+          "evidence_ids": [
+            "E01",
+            "E09"
+          ],
+          "assessment": "These are discriminating governing restrictions."
+        },
+        {
+          "id": "X29",
+          "claim_or_condition": "Validate before same-filesystem atomic publication.",
+          "disposition": "proposed application policy; ordering conflict",
+          "candidate_locations": [
+            "final.md:17"
+          ],
+          "evidence_ids": [
+            "E08"
+          ],
+          "assessment": "No tested publication mechanism or crash-durability guarantee is supplied; X-F1 conflicts with the intended gate."
+        },
+        {
+          "id": "X30",
+          "claim_or_condition": "VACUUM INTO retained for a vacuumed/compacted copy; comparative contention/timing not established.",
+          "disposition": "supported optional yield",
+          "candidate_locations": [
+            "final.md:17"
+          ],
+          "evidence_ids": [
+            "E11"
+          ],
+          "assessment": "The frozen overview explicitly describes a vacuumed live copy. The tradeoff remains unknown."
+        },
+        {
+          "id": "X31",
+          "claim_or_condition": "Writer/source sharing, long transactions, churn, thread safety, destination mode/size and suitable run budget remain deployment unknowns.",
+          "disposition": "appropriate uncertainty",
+          "candidate_locations": [
+            "final.md:19"
+          ],
+          "evidence_ids": [
+            "E03",
+            "E05",
+            "E09"
+          ],
+          "assessment": "All are consequential to the conditional recommendation; pre-existing source read transactions should also have been included."
+        },
+        {
+          "id": "X32",
+          "claim_or_condition": "Source hashes match, and static source checks rather than runtime validation are reported.",
+          "disposition": "hashes verified; historical actions unassessed",
+          "candidate_locations": [
+            "final.md:23",
+            "intermediate-3.md:18"
+          ],
+          "evidence_ids": [
+            "E01"
+          ],
+          "assessment": "Review independently confirms present bytes. Past tool use and claimed absence of execution cannot be authenticated from these text artifacts."
+        },
+        {
+          "id": "X33",
+          "claim_or_condition": "All material critique dispositions are preserved into a complete final.",
+          "disposition": "partly preserved; new regression",
+          "candidate_locations": [
+            "final.md:29",
+            "intermediate-3.md:5",
+            "intermediate-3.md:9-14"
+          ],
+          "evidence_ids": [],
+          "assessment": "The final retains the critique conditions and release distinction, but introduces success deletion; the all-complete assertion overstates consistency."
+        },
+        {
+          "id": "X34",
+          "claim_or_condition": "Research stage says no predecessor draft or critique was supplied.",
+          "disposition": "not contradicted by supplied artifacts; historical delivery unassessed",
+          "candidate_locations": [
+            "intermediate-1.md:41"
+          ],
+          "evidence_ids": [],
+          "assessment": "No earlier input is in the allowed map. A later stage having this draft would not refute the earlier-stage statement."
+        },
+        {
+          "id": "X35",
+          "claim_or_condition": "The draft doc-based BUSY/LOCKED finish statement needed release-code reconciliation.",
+          "disposition": "valid correction carried to final",
+          "candidate_locations": [
+            "intermediate-1.md:21",
+            "intermediate-2.md:11",
+            "final.md:11"
+          ],
+          "evidence_ids": [
+            "E08"
+          ],
+          "assessment": "Useful correction, not false rejection; the success rule was already conservative before the correction."
+        },
+        {
+          "id": "X36",
+          "claim_or_condition": "Bounded diagnostic, complete source-linked recommendation within soft word/finding ceiling.",
+          "disposition": "scope/length met; semantic completeness impaired",
+          "candidate_locations": [
+            "final.md:1-29"
+          ],
+          "evidence_ids": [],
+          "assessment": "923 whitespace-separated words, six numbered findings plus uncertainties. No full application plan. Governing-condition and cleanup defects prevent an unqualified complete recommendation."
+        }
+      ],
+      "finding_ids": [
+        "C-F1",
+        "X-F1",
+        "X-F2"
+      ],
+      "carried_content_preservation": [
+        {
+          "item": "Conditional API recommendation/private staging/prior-good retention",
+          "from": [
+            "intermediate-1.md:5"
+          ],
+          "to": [
+            "final.md:3"
+          ],
+          "disposition": "preserved in stated intent"
+        },
+        {
+          "item": "Connection roles/D exclusion/thread safety",
+          "from": [
+            "intermediate-2.md:7"
+          ],
+          "to": [
+            "final.md:5"
+          ],
+          "disposition": "preserved, dedicated S relaxed from recommendation requirement to prudent choice"
+        },
+        {
+          "item": "Separate live-writer handle restart consequence and source-write BUSY timeout branch",
+          "from": [
+            "intermediate-2.md:9",
+            "intermediate-2.md:11"
+          ],
+          "to": [
+            "final.md:7"
+          ],
+          "disposition": "preserved"
+        },
+        {
+          "item": "Captured finish prose versus released current-status return",
+          "from": [
+            "intermediate-2.md:11"
+          ],
+          "to": [
+            "final.md:11"
+          ],
+          "disposition": "preserved, with X-F2 over-narrow last-step wording"
+        },
+        {
+          "item": "Failure-only staging deletion",
+          "from": [
+            "intermediate-1.md:19"
+          ],
+          "to": [
+            "final.md:9"
+          ],
+          "disposition": "regressed: success was added to the deletion path, X-F1"
+        },
+        {
+          "item": "Runtime destination mode/size and progress serialization",
+          "from": [
+            "intermediate-2.md:13",
+            "intermediate-2.md:15"
+          ],
+          "to": [
+            "final.md:13",
+            "final.md:15"
+          ],
+          "disposition": "preserved"
+        },
+        {
+          "item": "Both write paths, integrity/invariants, contention/deadline, destination failure, alternate and explicit proposed-only status",
+          "from": [
+            "intermediate-2.md:9",
+            "intermediate-2.md:11",
+            "intermediate-2.md:13",
+            "intermediate-2.md:17"
+          ],
+          "to": [
+            "final.md:17",
+            "final.md:19"
+          ],
+          "disposition": "preserved as unexecuted checks"
+        },
+        {
+          "item": "Revision report claims complete coverage and no rejected critique claim",
+          "from": [
+            "intermediate-3.md:5",
+            "intermediate-3.md:9-18"
+          ],
+          "to": [
+            "final.md:29"
+          ],
+          "disposition": "disposition list present; does not resolve regression or missing source-read condition"
+        }
+      ],
+      "brief_delivery_constraints": [
+        {
+          "id": "D1",
+          "requirement": "One complete source-linked bounded recommendation with conditions, uncertainty and proposed checks.",
+          "disposition": "all components present; governing completeness limited by listed findings"
+        },
+        {
+          "id": "D2",
+          "requirement": "One bounded diagnostic; no full application plan.",
+          "disposition": "met"
+        },
+        {
+          "id": "D3",
+          "requirement": "Soft 1100 words/eight material findings without omitting governing conditions.",
+          "disposition": "923 whitespace words in final; below ceiling. Missing conditions assessed independently, not excused by length."
+        },
+        {
+          "id": "D4",
+          "requirement": "Use same frozen public primary bytes; released implementation governs release claims; extra checks capture-pinned.",
+          "disposition": "declared source identities match. Release-specific claims checked; omissions and optional-source exclusion noted."
+        },
+        {
+          "id": "D5",
+          "requirement": "No downloaded project code/installers or designer runtime witness execution.",
+          "disposition": "candidate text reports source-only work. Actual historical execution not authenticated from frozen artifacts; no eligibility credit assigned."
+        }
+      ],
+      "source_id_integrity": {
+        "manifest_hashes_match": true,
+        "source_identity_substitution_found": false,
+        "assessment": "X final shorthand [API] and [3.51.3 code] is human-resolvable to its source list but is not formally defined link-reference notation.",
+        "cited_range_check": "Every explicit C range in the declared artifacts was checked against actual frozen source line numbers; no false line range found."
+      },
+      "executed_vs_proposed": {
+        "candidate_claimed_executed": [
+          "local source/predecessor hash checks",
+          "static source/predecessor reads"
+        ],
+        "reviewer_verified": [
+          "present frozen artifact and source hashes",
+          "primary-source claim/range comparisons"
+        ],
+        "candidate_runtime_checks": "explicitly proposed, not executed according to candidate text",
+        "actual_runtime_execution_receipts_available": false,
+        "historical_tool_execution": "unassessed; excluded logs were not accessed",
+        "remaining_empirical_unknowns": [
+          "real workload completion, restart rate and writer impact",
+          "target connection ownership/transaction state/thread configuration",
+          "target destination mode/page sizes",
+          "I/O/fault/cleanup/publication results and adequate retry/deadline values"
+        ]
+      },
+      "unassessed_semantic_remainder": [],
+      "unassessed_runtime_or_provenance_remainder": [
+        "No deployed-build database test, fault injection or benchmark was executed by this reviewer.",
+        "No historical candidate tool-call, account identity, native terminal or task-tree eligibility was inspected."
+      ]
+    },
+    {
+      "label": "Y",
+      "final_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/frozen/Y/final.md",
+      "final_sha256": "04ff9d2e7143fbf94d15951548c69d192adaf81beecde8b70f65efded16cbade",
+      "semantic_only_conclusion": "Full declared semantic scope assessed. The conditional recommendation, result gates, destination page-size restrictions and proposed tests are substantially source-supported. Existing source-read transaction, counter-concurrency and source-cleanup ownership conditions remain incomplete; the destination-file-exclusive lock statement is too broad for normal WAL mode; the predecessor-context correction is unsupported and the optional rsync exclusion rationale is refuted by primary sources. These are semantic findings on the existing artifacts, not a lifecycle determination or a comparative rank. No unqualified semantic pass or numeric grade is issued.",
+      "numeric_grade": null,
+      "rank": null,
+      "obligation_coverage": [
+        {
+          "id": "B1",
+          "obligation": "State source/destination connection roles and legal usage.",
+          "disposition": "addressed with governing-use gaps",
+          "claim_ids": [
+            "Y04",
+            "Y05",
+            "Y06",
+            "Y07",
+            "Y08",
+            "Y09",
+            "Y19",
+            "Y24"
+          ],
+          "assessment": "Core roles and D constraints correct; source read state, progress concurrency and borrowed-source cleanup require conditions."
+        },
+        {
+          "id": "B2",
+          "obligation": "Explain snapshot consistency when source changes during a multi-step backup.",
+          "disposition": "partially correct; material governing condition missing",
+          "claim_ids": [
+            "Y09",
+            "Y10",
+            "Y11",
+            "Y12"
+          ],
+          "assessment": "Same/external write behavior and consistency are supported for normal S transaction state; C-F1 remains."
+        },
+        {
+          "id": "B3",
+          "obligation": "Distinguish completion, retryable contention, and terminal failures; specify bounded retry/failure/cleanup.",
+          "disposition": "addressed with cleanup conditions missing",
+          "claim_ids": [
+            "Y13",
+            "Y14",
+            "Y15",
+            "Y16",
+            "Y17",
+            "Y18",
+            "Y19",
+            "Y20"
+          ],
+          "assessment": "Finite scheduling policy and result gates correct. Borrowed-writer handle ownership and failed-init cleanup are not fully specified."
+        },
+        {
+          "id": "B4",
+          "obligation": "Address destination transaction/page-size restrictions relevant to this setup.",
+          "disposition": "page/transaction restrictions addressed; destination lock condition missing",
+          "claim_ids": [
+            "Y05",
+            "Y21",
+            "Y22"
+          ],
+          "assessment": "Destination transaction, WAL/in-memory mismatch and file-page-size behavior are correct. The unconditional destination-file-exclusive lock statement is too broad for normal WAL mode, Y-F5."
+        },
+        {
+          "id": "B5",
+          "obligation": "State what progress counts can and cannot establish.",
+          "disposition": "partially addressed; concurrency condition omitted",
+          "claim_ids": [
+            "Y23",
+            "Y24",
+            "Y27"
+          ],
+          "assessment": "Good telemetry/proof/restart limits; documented concurrent counter-read condition is absent."
+        },
+        {
+          "id": "B6",
+          "obligation": "Propose minimal validation and one justified alternative or uncertainty.",
+          "disposition": "addressed as proposals with optional-source error",
+          "claim_ids": [
+            "Y25",
+            "Y26",
+            "Y27",
+            "Y30",
+            "Y31",
+            "Y32",
+            "Y36"
+          ],
+          "assessment": "Minimal writer/contended/page-mismatch tests and justified uncertainty/VACUUM lead are present. Remote-only exclusion of rsync is not justified."
+        }
+      ],
+      "claim_coverage_census": {
+        "units": 40,
+        "assessed_units": 40,
+        "unassessed_units": 0,
+        "counts_by_disposition": {
+          "supported": 9,
+          "supported policy": 1,
+          "accurate limitation": 1,
+          "supported but source-read state omitted": 1,
+          "missing governing condition": 1,
+          "supported with normal transaction assumption": 1,
+          "supported for this file-based setup": 1,
+          "supported with source-transaction qualification": 1,
+          "proposed policy": 1,
+          "proposed bounded scheduling policy": 1,
+          "supported release correction; logging timing needs condition": 1,
+          "supported conservative gate": 1,
+          "supported failure policy with ownership gap": 1,
+          "supported; setup cleanup underspecified": 1,
+          "accurate captured-doc attribution; release condition missing": 1,
+          "omitted": 1,
+          "useful proposed checks": 2,
+          "supported useful refinement": 1,
+          "largely preserved; incomplete completeness assertion": 1,
+          "unsupported contextual correction": 1,
+          "appropriate uncertainty": 1,
+          "supported optional yield": 1,
+          "false categorical exclusion in intermediates; unsupported final rationale": 1,
+          "verified source identity and ranges": 1,
+          "current hashes verified; historical actions unassessed": 1,
+          "changed policy; no required-content loss": 1,
+          "optional discriminating check lost": 1,
+          "supported semantic rejection; no external draft established": 1,
+          "valid correction preserved": 1,
+          "scope/length met; governing completeness impaired": 1,
+          "present frozen identity verified; original delivery unassessed": 1
+        },
+        "note": "A unit may group inseparable conditions; this is a coverage census, not a numeric quality grade."
+      },
+      "claim_assessments": [
+        {
+          "id": "Y01",
+          "claim_or_condition": "Conditionally use Backup API; fixed-window completion depends on workload.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:5"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E07"
+          ],
+          "assessment": "A suitable recommendation without an unconditional completion promise."
+        },
+        {
+          "id": "Y02",
+          "claim_or_condition": "Private disposable staging and preserve the last good snapshot through failure and validation.",
+          "disposition": "supported policy",
+          "candidate_locations": [
+            "final.md:5",
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E02",
+            "E08"
+          ],
+          "assessment": "Application retention policy is distinguished from the SQLite guarantee."
+        },
+        {
+          "id": "Y03",
+          "claim_or_condition": "Publication/retention implementation is an application choice not specified by captures.",
+          "disposition": "accurate limitation",
+          "candidate_locations": [
+            "final.md:5"
+          ],
+          "evidence_ids": [
+            "E01",
+            "E08"
+          ],
+          "assessment": "The proposal does not claim that SQLite implements atomic replacement or retention."
+        },
+        {
+          "id": "Y04",
+          "claim_or_condition": "Initialize distinct D/S handles for main-to-main source-to-destination copy.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:7"
+          ],
+          "evidence_ids": [
+            "E01"
+          ],
+          "assessment": "Parameter roles and names are correct."
+        },
+        {
+          "id": "Y05",
+          "claim_or_condition": "No destination read or write transaction at init.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:7"
+          ],
+          "evidence_ids": [
+            "E01",
+            "E09"
+          ],
+          "assessment": "Directly checked against captured prose and release transaction-state test."
+        },
+        {
+          "id": "Y06",
+          "claim_or_condition": "Exclude other destination APIs until finish and exclude its shared cache while running.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:7"
+          ],
+          "evidence_ids": [
+            "E02"
+          ],
+          "assessment": "Shared-cache restriction is correctly conditional."
+        },
+        {
+          "id": "Y07",
+          "claim_or_condition": "Source can otherwise be used under thread-safety rules; avoid step during its write transaction.",
+          "disposition": "supported but source-read state omitted",
+          "candidate_locations": [
+            "final.md:7"
+          ],
+          "evidence_ids": [
+            "E03",
+            "E04"
+          ],
+          "assessment": "Write-state guidance is safe. A pre-existing read transaction remains a distinct material condition."
+        },
+        {
+          "id": "Y08",
+          "claim_or_condition": "Each successful init has exactly one finish.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:7",
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E01",
+            "E08"
+          ],
+          "assessment": "NULL init is distinguished in Y20."
+        },
+        {
+          "id": "Y09",
+          "claim_or_condition": "Source read lock is held only while each step runs.",
+          "disposition": "missing governing condition",
+          "candidate_locations": [
+            "final.md:9",
+            "intermediate-1.md:14"
+          ],
+          "evidence_ids": [
+            "E04",
+            "E12"
+          ],
+          "assessment": "C-F1: existing source read transactions persist between calls."
+        },
+        {
+          "id": "Y10",
+          "claim_or_condition": "Other connection/process changes restart at the next step and repeated restarts can prevent completion.",
+          "disposition": "supported with normal transaction assumption",
+          "candidate_locations": [
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E12"
+          ],
+          "assessment": "The persistent source-read case is not excluded; it can continue reading an older transaction instead."
+        },
+        {
+          "id": "Y11",
+          "claim_or_condition": "Same-source-handle changes propagate copied pages and avoid restart.",
+          "disposition": "supported for this file-based setup",
+          "candidate_locations": [
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E06"
+          ],
+          "assessment": "The draft says file-backed explicitly; the final relies on the brief local-disk scope."
+        },
+        {
+          "id": "Y12",
+          "claim_or_condition": "Completed result is consistent/up to date; no API timestamp and no fixed-window guarantee.",
+          "disposition": "supported with source-transaction qualification",
+          "candidate_locations": [
+            "final.md:9"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E11",
+            "E12"
+          ],
+          "assessment": "No exact cut timestamp is claimed. Freshness depends on the source read view; consistency itself is supported."
+        },
+        {
+          "id": "Y13",
+          "claim_or_condition": "64 pages and about 50 ms yield after OK.",
+          "disposition": "proposed policy",
+          "candidate_locations": [
+            "final.md:11"
+          ],
+          "evidence_ids": [
+            "E07"
+          ],
+          "assessment": "Initial tuning values, not source-prescribed or measured."
+        },
+        {
+          "id": "Y14",
+          "claim_or_condition": "OK is partial, DONE is complete, BUSY/LOCKED are retried on the same object, other errors terminate.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:11"
+          ],
+          "evidence_ids": [
+            "E07"
+          ],
+          "assessment": "Includes appropriate READONLY/NOMEM/IOERR examples."
+        },
+        {
+          "id": "Y15",
+          "claim_or_condition": "100 ms exponential delays capped at 1 second; five-minute monotonic deadline before init; cap busy waits to remaining time.",
+          "disposition": "proposed bounded scheduling policy",
+          "candidate_locations": [
+            "final.md:11"
+          ],
+          "evidence_ids": [
+            "E07"
+          ],
+          "assessment": "More explicit deadline accounting is useful. Between-call checks do not establish cancellation of a blocked I/O call or a hard wall duration; no runtime witness is supplied."
+        },
+        {
+          "id": "Y16",
+          "claim_or_condition": "Captured docs say LOCKED for source-write state while release code gives BUSY; log actual code and D error details.",
+          "disposition": "supported release correction; logging timing needs condition",
+          "candidate_locations": [
+            "final.md:11"
+          ],
+          "evidence_ids": [
+            "E04",
+            "E07"
+          ],
+          "assessment": "The direct return code is reliable. Destination-error API calls must be deferred until finish or made on failed init, as Y06 already requires; the text does not expressly locate that logging. This is an ambiguity, not proof of an illegal executed API call."
+        },
+        {
+          "id": "Y17",
+          "claim_or_condition": "After DONE, finish exactly once and require OK before validation/publication.",
+          "disposition": "supported conservative gate",
+          "candidate_locations": [
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E07",
+            "E08"
+          ],
+          "assessment": "Correct even though it does not discover/report the finish BUSY documentation discrepancy."
+        },
+        {
+          "id": "Y18",
+          "claim_or_condition": "Finish rolls back unfinished destination work; incomplete finish OK alone does not prove success.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E08"
+          ],
+          "assessment": "Release permits OK without DONE; no false finish-only gate."
+        },
+        {
+          "id": "Y19",
+          "claim_or_condition": "On deadline or terminal step error, finish, close handles, discard incomplete staging and preserve previous snapshot.",
+          "disposition": "supported failure policy with ownership gap",
+          "candidate_locations": [
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E03",
+            "E08"
+          ],
+          "assessment": "Y-F4: closing a borrowed writer S is not distinguished from closing a job-owned S. Failed-init cleanup is also not enumerated."
+        },
+        {
+          "id": "Y20",
+          "claim_or_condition": "If init returns no backup object, do not finish it.",
+          "disposition": "supported; setup cleanup underspecified",
+          "candidate_locations": [
+            "final.md:13"
+          ],
+          "evidence_ids": [
+            "E01"
+          ],
+          "assessment": "Correct no-object handling; explicit error collection and cleanup after failed setup remain unspecified."
+        },
+        {
+          "id": "Y21",
+          "claim_or_condition": "Destination gets an exclusive lock on the first step, held until finish or DONE.",
+          "disposition": "accurate captured-doc attribution; release condition missing",
+          "candidate_locations": [
+            "final.md:15"
+          ],
+          "evidence_ids": [
+            "E09",
+            "E15"
+          ],
+          "assessment": "Y-F5: backup requests an exclusive write transaction, but a normal WAL destination takes a WAL write lock rather than an exclusive lock on the database file. Initial calls can also fail before acquisition. The final allows WAL and does not supply the locking-mode qualification."
+        },
+        {
+          "id": "Y22",
+          "claim_or_condition": "WAL and in-memory page-size mismatch can yield READONLY; inspect mode/size; matching helps; rollback file destination may change size.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:15"
+          ],
+          "evidence_ids": [
+            "E09"
+          ],
+          "assessment": "All relevant destination branches are stated, including the in-memory conditional alternative."
+        },
+        {
+          "id": "Y23",
+          "claim_or_condition": "Counts are stale-able prior-step telemetry, may change under restarts, and establish neither completion, validity nor exact restart counts.",
+          "disposition": "supported",
+          "candidate_locations": [
+            "final.md:17"
+          ],
+          "evidence_ids": [
+            "E10"
+          ],
+          "assessment": "Correct telemetry limits, separate from concurrency omission Y24."
+        },
+        {
+          "id": "Y24",
+          "claim_or_condition": "Governing condition for legal progress reads: avoid concurrent step/finish.",
+          "disposition": "omitted",
+          "candidate_locations": [
+            "final.md:17",
+            "final.md:19"
+          ],
+          "evidence_ids": [
+            "E02",
+            "E10"
+          ],
+          "assessment": "Y-F1: the final provides no corresponding serialized-counter constraint."
+        },
+        {
+          "id": "Y25",
+          "claim_or_condition": "Propose representative same-handle and second-handle writes; duration/results/progress; DONE/finish OK; integrity_check and row/foreign-key invariants.",
+          "disposition": "useful proposed checks",
+          "candidate_locations": [
+            "final.md:19"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E07",
+            "E08",
+            "E14"
+          ],
+          "assessment": "Separate application/foreign-key invariant checks are appropriate; does not misattribute them to integrity_check."
+        },
+        {
+          "id": "Y26",
+          "claim_or_condition": "Propose source/destination contention and WAL mismatch, verify classification, cleanup and prior snapshot preservation.",
+          "disposition": "useful proposed checks",
+          "candidate_locations": [
+            "final.md:19"
+          ],
+          "evidence_ids": [
+            "E04",
+            "E07",
+            "E09"
+          ],
+          "assessment": "Transient-clear and sustained-deadline pass criteria are less explicit than policy text, but a minimal discriminating plan is present. No execution claimed."
+        },
+        {
+          "id": "Y27",
+          "claim_or_condition": "If exact restart counts matter, instrument the test instead of inferring them from progress.",
+          "disposition": "supported useful refinement",
+          "candidate_locations": [
+            "final.md:19",
+            "intermediate-2.md:27"
+          ],
+          "evidence_ids": [
+            "E10"
+          ],
+          "assessment": "A valid narrowing of predecessor measurement language."
+        },
+        {
+          "id": "Y28",
+          "claim_or_condition": "Acceptance/amendment list preserves the main recommendation, legal-use rules, write paths, step codes, finish gate and page-size conditions.",
+          "disposition": "largely preserved; incomplete completeness assertion",
+          "candidate_locations": [
+            "final.md:23-24",
+            "intermediate-2.md:7-27"
+          ],
+          "evidence_ids": [],
+          "assessment": "Main supported content is carried; C-F1 and Y-F1 remain absent and other defects are assessed separately."
+        },
+        {
+          "id": "Y29",
+          "claim_or_condition": "Reject predecessor statement that no predecessor was supplied because the next stage has that predecessor.",
+          "disposition": "unsupported contextual correction",
+          "candidate_locations": [
+            "final.md:25",
+            "intermediate-2.md:29",
+            "intermediate-1.md:6"
+          ],
+          "evidence_ids": [],
+          "assessment": "Y-F2: later-stage possession does not disprove the earlier research-stage statement. Earlier actual inputs remain unassessed."
+        },
+        {
+          "id": "Y30",
+          "claim_or_condition": "Writer-handle scheduling and completion within five minutes are empirical unknowns.",
+          "disposition": "appropriate uncertainty",
+          "candidate_locations": [
+            "final.md:26"
+          ],
+          "evidence_ids": [
+            "E03",
+            "E05"
+          ],
+          "assessment": "Requires measurements; source read-state and source cleanup ownership also govern the recommendation."
+        },
+        {
+          "id": "Y31",
+          "claim_or_condition": "VACUUM INTO is another consistent-copy lead; no latency/concurrency comparison established.",
+          "disposition": "supported optional yield",
+          "candidate_locations": [
+            "final.md:27"
+          ],
+          "evidence_ids": [
+            "E11"
+          ],
+          "assessment": "Supported by both supplied primary documentation pages."
+        },
+        {
+          "id": "Y32",
+          "claim_or_condition": "sqlite3_rsync is remote-oriented and excluded as irrelevant/not indicated for a local-only destination.",
+          "disposition": "false categorical exclusion in intermediates; unsupported final rationale",
+          "candidate_locations": [
+            "final.md:27",
+            "intermediate-1.md:24",
+            "intermediate-2.md:29"
+          ],
+          "evidence_ids": [
+            "E11",
+            "E13"
+          ],
+          "assessment": "Y-F3: remote is not required. No alternative performance ranking is inferred."
+        },
+        {
+          "id": "Y33",
+          "claim_or_condition": "Source IDs S1/S2/S3 map to exact declared URLs/hashes/version; overview updated 2025-11-13; cited C ranges apply.",
+          "disposition": "verified source identity and ranges",
+          "candidate_locations": [
+            "final.md:31-33",
+            "intermediate-1.md:28-30",
+            "intermediate-2.md:33"
+          ],
+          "evidence_ids": [
+            "E01",
+            "E04",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "E11"
+          ],
+          "assessment": "All listed raw C ranges were checked against frozen actual line numbers, including 215-218,337-342,373-383,402-409,571-618,621-646."
+        },
+        {
+          "id": "Y34",
+          "claim_or_condition": "Hash checks/static reads occurred; no SQLite/runtime test executed.",
+          "disposition": "current hashes verified; historical actions unassessed",
+          "candidate_locations": [
+            "final.md:35",
+            "intermediate-1.md:32",
+            "intermediate-2.md:34"
+          ],
+          "evidence_ids": [],
+          "assessment": "The evidence types are honestly distinguished in text; frozen reports alone cannot prove historical execution/non-execution."
+        },
+        {
+          "id": "Y35",
+          "claim_or_condition": "Draft stops after 10 contention returns or five minutes; final keeps only the deadline.",
+          "disposition": "changed policy; no required-content loss",
+          "candidate_locations": [
+            "intermediate-1.md:16",
+            "final.md:11"
+          ],
+          "evidence_ids": [],
+          "assessment": "The brief requires bounded retries, not a specific ten-return cap. The remaining deadline meets a scheduling bound conditionally; no hidden claim of executed tuning."
+        },
+        {
+          "id": "Y36",
+          "claim_or_condition": "Draft proposes injected disk/IO failure; final validation drops that explicit test.",
+          "disposition": "optional discriminating check lost",
+          "candidate_locations": [
+            "intermediate-1.md:24",
+            "final.md:19"
+          ],
+          "evidence_ids": [
+            "E07"
+          ],
+          "assessment": "Terminal-error classification and READONLY mismatch remain; minimum validation obligation is still addressed, but this specific fault scenario is not preserved."
+        },
+        {
+          "id": "Y37",
+          "claim_or_condition": "Research draft rejects finish-only success, progress validity proof and unlimited-retry guarantee as hypothetical bad assumptions.",
+          "disposition": "supported semantic rejection; no external draft established",
+          "candidate_locations": [
+            "intermediate-1.md:8"
+          ],
+          "evidence_ids": [
+            "E05",
+            "E07",
+            "E08",
+            "E10"
+          ],
+          "assessment": "These statements are incorrect assumptions; the draft says statuses are its own. Do not award discovery of an actually supplied bad draft from this text."
+        },
+        {
+          "id": "Y38",
+          "claim_or_condition": "Critique narrows restart measurement and carries this distinction into final.",
+          "disposition": "valid correction preserved",
+          "candidate_locations": [
+            "intermediate-2.md:27",
+            "final.md:17",
+            "final.md:19"
+          ],
+          "evidence_ids": [
+            "E10"
+          ],
+          "assessment": "No built-in exact restart counter is supplied by these progress APIs."
+        },
+        {
+          "id": "Y39",
+          "claim_or_condition": "Bounded diagnostic within soft word/finding ceiling with recommendation, conditions, uncertainty and source links.",
+          "disposition": "scope/length met; governing completeness impaired",
+          "candidate_locations": [
+            "final.md:1-35"
+          ],
+          "evidence_ids": [],
+          "assessment": "986 whitespace-separated words, five numbered findings and separate uncertainties/checks. No full application design; missing conditions prevent an unqualified complete recommendation."
+        },
+        {
+          "id": "Y40",
+          "claim_or_condition": "Critic reports predecessor hash matched.",
+          "disposition": "present frozen identity verified; original delivery unassessed",
+          "candidate_locations": [
+            "intermediate-2.md:5",
+            "final.md:35"
+          ],
+          "evidence_ids": [],
+          "assessment": "The exact frozen Y draft hash is verified. No original stage-input hash receipt or lifecycle record was accessed."
+        }
+      ],
+      "finding_ids": [
+        "C-F1",
+        "Y-F1",
+        "Y-F2",
+        "Y-F3",
+        "Y-F4",
+        "Y-F5"
+      ],
+      "carried_content_preservation": [
+        {
+          "item": "Private staging, last-good retention and conservative DONE/finish gate",
+          "from": [
+            "intermediate-1.md:4",
+            "intermediate-1.md:18"
+          ],
+          "to": [
+            "final.md:5",
+            "final.md:13"
+          ],
+          "disposition": "preserved"
+        },
+        {
+          "item": "Prefer serialized use of writer S if architecture permits; otherwise measure separate-handle restarts",
+          "from": [
+            "intermediate-1.md:14"
+          ],
+          "to": [
+            "final.md:7",
+            "final.md:9",
+            "final.md:26"
+          ],
+          "disposition": "capability/uncertainty retained; explicit preference softened, source cleanup ownership unresolved"
+        },
+        {
+          "item": "BUSY versus documented LOCKED release reconciliation",
+          "from": [
+            "intermediate-2.md:17"
+          ],
+          "to": [
+            "final.md:11"
+          ],
+          "disposition": "preserved"
+        },
+        {
+          "item": "Ten-contention cap plus five-minute deadline",
+          "from": [
+            "intermediate-1.md:16"
+          ],
+          "to": [
+            "final.md:11"
+          ],
+          "disposition": "ten cap dropped; bounded deadline retained with improved accounting"
+        },
+        {
+          "item": "Destination conditional page sizes and no-object finish handling",
+          "from": [
+            "intermediate-2.md:19",
+            "intermediate-2.md:21"
+          ],
+          "to": [
+            "final.md:13",
+            "final.md:15"
+          ],
+          "disposition": "preserved"
+        },
+        {
+          "item": "Do not infer exact restarts from progress; instrument if needed",
+          "from": [
+            "intermediate-2.md:27"
+          ],
+          "to": [
+            "final.md:17",
+            "final.md:19"
+          ],
+          "disposition": "valid refinement preserved"
+        },
+        {
+          "item": "Injected disk/IO test",
+          "from": [
+            "intermediate-1.md:24"
+          ],
+          "to": [
+            "final.md:19"
+          ],
+          "disposition": "explicit scenario dropped; other terminal-case validation remains"
+        },
+        {
+          "item": "Rejection of earlier-stage no-predecessor statement",
+          "from": [
+            "intermediate-2.md:29"
+          ],
+          "to": [
+            "final.md:25"
+          ],
+          "disposition": "unsupported contextual correction carried, Y-F2"
+        },
+        {
+          "item": "VACUUM lead and unknown comparison; remote-only rsync rationale",
+          "from": [
+            "intermediate-1.md:24",
+            "intermediate-2.md:29"
+          ],
+          "to": [
+            "final.md:27"
+          ],
+          "disposition": "VACUUM and uncertainty preserved; unjustified rsync exclusion softened but carried, Y-F3"
+        },
+        {
+          "item": "Proposals distinguished from source/hash witnesses",
+          "from": [
+            "intermediate-1.md:32",
+            "intermediate-2.md:34"
+          ],
+          "to": [
+            "final.md:35"
+          ],
+          "disposition": "preserved; actual historical execution remains outside this review"
+        },
+        {
+          "item": "Destination exclusive-file-lock assertion added in final",
+          "from": [
+            "intermediate-1.md:20"
+          ],
+          "to": [
+            "final.md:15"
+          ],
+          "disposition": "Draft write-lock claim was valid; final stronger file-exclusivity claim lacks the release WAL/locking-mode condition, Y-F5"
+        }
+      ],
+      "brief_delivery_constraints": [
+        {
+          "id": "D1",
+          "requirement": "One complete source-linked bounded recommendation with conditions, uncertainty and proposed checks.",
+          "disposition": "all components present; governing completeness limited by listed findings"
+        },
+        {
+          "id": "D2",
+          "requirement": "One bounded diagnostic; no full application plan.",
+          "disposition": "met"
+        },
+        {
+          "id": "D3",
+          "requirement": "Soft 1100 words/eight material findings without omitting governing conditions.",
+          "disposition": "986 whitespace words in final; below ceiling. Missing conditions assessed independently, not excused by length."
+        },
+        {
+          "id": "D4",
+          "requirement": "Use same frozen public primary bytes; released implementation governs release claims; extra checks capture-pinned.",
+          "disposition": "declared source identities match. Release-specific claims checked; omissions and optional-source exclusion noted."
+        },
+        {
+          "id": "D5",
+          "requirement": "No downloaded project code/installers or designer runtime witness execution.",
+          "disposition": "candidate text reports source-only work. Actual historical execution not authenticated from frozen artifacts; no eligibility credit assigned."
+        }
+      ],
+      "source_id_integrity": {
+        "manifest_hashes_match": true,
+        "source_identity_substitution_found": false,
+        "assessment": "S1/S2/S3 explicitly map to the exact sources. Intermediate sqlbackup/sqlbackupapi/sqlbackupcode names resolve to the same manifest IDs.",
+        "cited_range_check": "Every explicit C range in the declared artifacts was checked against actual frozen source line numbers; no false line range found."
+      },
+      "executed_vs_proposed": {
+        "candidate_claimed_executed": [
+          "local source/predecessor hash checks",
+          "static source/predecessor reads"
+        ],
+        "reviewer_verified": [
+          "present frozen artifact and source hashes",
+          "primary-source claim/range comparisons"
+        ],
+        "candidate_runtime_checks": "explicitly proposed, not executed according to candidate text",
+        "actual_runtime_execution_receipts_available": false,
+        "historical_tool_execution": "unassessed; excluded logs were not accessed",
+        "remaining_empirical_unknowns": [
+          "real workload completion, restart rate and writer impact",
+          "target connection ownership/transaction state/thread configuration",
+          "target destination mode/page sizes",
+          "I/O/fault/cleanup/publication results and adequate retry/deadline values"
+        ]
+      },
+      "unassessed_semantic_remainder": [],
+      "unassessed_runtime_or_provenance_remainder": [
+        "No deployed-build database test, fault injection or benchmark was executed by this reviewer.",
+        "No historical candidate tool-call, account identity, native terminal or task-tree eligibility was inspected."
+      ]
+    }
+  ],
+  "remaining_unknowns": [
+    "Real source/destination configuration and operational timing, all proposed tests and workload results.",
+    "Hard wall-clock duration of calls/cleanup/publication is not established by either text policy.",
+    "Historical candidate tool actions, predecessor input delivery, account/author authentication, native terminal and eligibility.",
+    "Additional public mutable documentation was hash-pinned for this review; only the selected relevant ranges were assessed. No broader rsync/VACUUM implementation or performance audit was performed. Additional btree/pager checks assessed only the lock-acquisition call chain, not the whole modules."
+  ],
+  "semantic_only_conclusion": "Each label was assessed independently over the full bounded declared scope. The reports identify supported API guidance, consequential missing conditions, local policy/correction defects and preserved/dropped content. There is no winner, economic inference, invented full numeric grade, partial PASS, or lifecycle/method qualification. The root infrastructure exception remains external to these scientific findings."
+}

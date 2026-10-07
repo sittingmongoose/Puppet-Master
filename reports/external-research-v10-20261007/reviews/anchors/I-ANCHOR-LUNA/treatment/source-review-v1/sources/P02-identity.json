@@ -1,0 +1,13 @@
+{
+  "retrieval_id": "P02",
+  "url": "https://api.github.com/repos/apache/pouchdb/releases/tags/9.0.0",
+  "response_body_sha256": "6450658af61340461e22ddb300d034757c6b654c7e4acb0cdc54b461bfc52a19",
+  "selected_primary_response_fields": {
+    "id": 161701446,
+    "tag_name": "9.0.0",
+    "published_at": "2024-06-21T16:10:33Z",
+    "target_commitish": "master",
+    "immutable": false,
+    "matching_changelog_entry": "* [34cb6911](https://github.com/pouchdb/pouchdb/commit/34cb69117931d4b520ee8d7a6208eb0f33da8ec7) (#8525) - Fix compaction from the last `last_seq`"
+  }
+}

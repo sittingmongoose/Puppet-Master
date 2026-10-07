@@ -1,0 +1,32 @@
+{
+  "status": {
+    "taskId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-control-critic-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-control-critic-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-critic-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Ae851f801-dd6a-431a-81ff-6b13ab52c939%3Adelegate-task%3Aer10-cohort2-D-M04-B-control-critic-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-critic-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "## Delivered\n\n- [Bounded critique](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/critique.md>) \u2014 432 words, with accepted, amended, unresolved, and rejected dispositions.\n- [Corrected final](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/final.md>) \u2014 689 words; covers all six obligations and proposes fixtures without claiming they were run.\n- [Source identities, ranges, operations, and cold receipts](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/sources.json>). All four mapped originals were cold-acquired into the critic cache; receipts report zero network requests.\n- [Timings and observed counters](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/timings.json>).\n- [Native Goal creation receipt](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/native_goal_receipt.json>) and [terminal receipt](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/native_terminal_receipt.json>), containing the actual tool responses.\n\nThe Goal for \u201cD-M04-B control critic\u201d has thread ID `01a117c3-e992-73c0-9329-761185acec7d` and terminal status **complete** (42,916 tokens; 185 seconds). Its final status was recorded at 19:11:53 UTC. The hard deadline was missed: the output was verified at 19:11:17 UTC, and a final wording correction to the critique was saved at 19:12:40 UTC. The first-useful-finding time was not separately clocked and is recorded as unknown.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:39f5e4a8-4eed-48e1-b725-f7d668e9b55f",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "summary": "## Delivered\n\n- [Bounded critique](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/critique.md>) \u2014 432 words, with accepted, amended, unresolved, and rejected dispositions.\n- [Corrected final](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/final.md>) \u2014 689 words; covers all six obligations and proposes fixtures without claiming they were run.\n- [Source identities, ranges, operations, and cold receipts](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/sources.json>). All four mapped originals were cold-acquired into the critic cache; receipts report zero network requests.\n- [Timings and observed counters](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/timings.json>).\n- [Native Goal creation receipt](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/native_goal_receipt.json>) and [terminal receipt](</home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/native_terminal_receipt.json>), containing the actual tool responses.\n\nThe Goal for \u201cD-M04-B control critic\u201d has thread ID `01a117c3-e992-73c0-9329-761185acec7d` and terminal status **complete** (42,916 tokens; 185 seconds). Its final status was recorded at 19:11:53 UTC. The hard deadline was missed: the output was verified at 19:11:17 UTC, and a final wording correction to the critique was saved at 19:12:40 UTC. The first-useful-finding time was not separately clocked and is recorded as unknown.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort2-v1:39f5e4a8-4eed-48e1-b725-f7d668e9b55f",
+    "waitTimedOut": false
+  },
+  "runs": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ae851f801-dd6a-431a-81ff-6b13ab52c939%253Adelegate-task%253Aer10-cohort2-D-M04-B-control-critic-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "codex_gmail",
+      "model": "gpt-6-luna",
+      "requestedAt": "2026-10-07T19:07:57.001Z",
+      "startedAt": "2026-10-07T19:07:58.093Z",
+      "completedAt": "2026-10-07T19:13:31.317Z"
+    }
+  ]
+}

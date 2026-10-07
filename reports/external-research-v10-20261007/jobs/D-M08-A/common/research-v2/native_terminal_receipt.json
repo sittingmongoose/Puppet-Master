@@ -1,0 +1,28 @@
+{
+  "carrier": "PASSIVE_NATIVE_STATE_V2_NOT_RAW_API",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T19:17:16.760040+00:00",
+    "entries": [
+      {
+        "stage": "D-M08-A/common/research-v2",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M08-A--common--research-v2--d1dd33b8afaa4fc8.json",
+        "sha256": "d1dd33b8afaa4fc8e90c0241ca764a116fb95990a55f9c4af0d4c7c5d3acdd2d",
+        "bytes": 10864,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "native_state": "complete",
+  "native_identity": "01a117c7-eefb-7881-9408-a1828966aec3",
+  "dispatch_to_delivery_seconds": 268.438,
+  "draft_sha256": "258ff5ca4b7d4a39c727e980de96a51a2814f1892dbe34f0787c2971a31ec166",
+  "draft_bytes": 4269,
+  "source_quality": "UNASSESSED",
+  "raw_api_responses": null
+}

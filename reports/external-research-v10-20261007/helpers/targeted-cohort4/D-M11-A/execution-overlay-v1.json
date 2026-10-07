@@ -1,0 +1,249 @@
+{
+  "case_id": "D-M11-A",
+  "target": {
+    "providerInstanceId": "muse",
+    "driverKind": "acpRegistry",
+    "model": "muse-spark-1.3-contributor",
+    "options": {
+      "reasoning_effort": "max",
+      "mode": "default",
+      "approval_mode": "allowAll",
+      "auto_review": "off"
+    }
+  },
+  "account": "explicit provider instance; provider authentication not independently inferred",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "hashes": {
+    "case-card.json": "57133cbd0802ec337bb00f55e75b20eccca9ce61b3757a5ab4ebf02d7e709f3f",
+    "CASE_CARD.md": "3caece3b6f3263b8b8429ef7c038c8607bdb9161f2e4ccce26629be6da769788",
+    "INPUT_MAP.json": "ae6d7f6ee5a483e8699fb0d42d92b42e67d11d947fe29fe431dacdd22ec12004",
+    "READY.json": "b6af358b8c52dc96fdb5c162986c4b0644cd85cb4d894690591a741298ba853e"
+  },
+  "input_hashes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/case-card.json",
+      "sha256": "57133cbd0802ec337bb00f55e75b20eccca9ce61b3757a5ab4ebf02d7e709f3f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/CASE_CARD.md",
+      "sha256": "3caece3b6f3263b8b8429ef7c038c8607bdb9161f2e4ccce26629be6da769788"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/INPUT_MAP.json",
+      "sha256": "ae6d7f6ee5a483e8699fb0d42d92b42e67d11d947fe29fe431dacdd22ec12004"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/brief.md",
+      "sha256": "8ff2c3095c6505c45fd4d48e19f07f1edd0f81251e00838215d5f41a64c12eef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources.json",
+      "sha256": "7319f42c6303bc9b7920905120f59a7ba2f74f5de76a17825564af91bd26ccb8"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "pep706",
+      "url": "https://peps.python.org/pep-0706/",
+      "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/pep706.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/102950",
+      "version_or_capture": "CPython issue 102950 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarissue.json",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarpr",
+      "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+      "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarpr.json",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardefaultissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/121999",
+      "version_or_capture": "CPython issue 121999 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "e88ab5fad57a96ff4cb0d25148ff5c1535027d2482fe616d4ee0e2a0a3b70bce",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardefaultissue.json",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarold.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarnew.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardocnew.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tartest",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/test/test_tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5149edfc9376f6d45cb95f7c914cd6b6dd205e5ef404298e655aa685a5527831",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tartest.py",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "stages": {
+    "control": [
+      {
+        "stage": "normal_research",
+        "candidate_minutes": 12,
+        "procedure": "Competent source-grounded investigation; resolve release, default/API, path/type domains as work proceeds.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/control/normal_research.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/normal_research-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/normal_research-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/normal_research-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/normal_research-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/normal_research-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/normal_research-v1/sources"
+      },
+      {
+        "stage": "finalize",
+        "candidate_minutes": 3,
+        "procedure": "Deliver a bounded policy with exact applicability and source lineage.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/control/finalize.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/final.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/sources"
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "bind_first",
+        "candidate_minutes": 3,
+        "procedure": "Before dependent derivations, write a compact binding of target release, API/default, path/type/unit domains, and applicability; mark unknowns.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/treatment/bind_first.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/bind_first-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/bind_first-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/bind_first-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/bind_first-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/bind_first-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/bind_first-v1/sources"
+      },
+      {
+        "stage": "dependent_research",
+        "candidate_minutes": 9,
+        "procedure": "Investigate the policy conditional on bindings; trace old issue, implementation and chosen release without universal safety assumptions.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/treatment/dependent_research.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/dependent_research-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/dependent_research-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/dependent_research-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/dependent_research-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/dependent_research-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/dependent_research-v1/sources"
+      },
+      {
+        "stage": "finalize",
+        "candidate_minutes": 3,
+        "procedure": "Deliver identical policy scope and uncertainties.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/treatment/finalize.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/final.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/sources"
+      }
+    ]
+  },
+  "original_budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "normal_research",
+          "candidate_minutes": 12,
+          "procedure": "Competent source-grounded investigation; resolve release, default/API, path/type domains as work proceeds.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/control/normal_research.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 3,
+          "procedure": "Deliver a bounded policy with exact applicability and source lineage.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/control/finalize.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "bind_first",
+          "candidate_minutes": 3,
+          "procedure": "Before dependent derivations, write a compact binding of target release, API/default, path/type/unit domains, and applicability; mark unknowns.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/treatment/bind_first.md"
+        },
+        {
+          "stage": "dependent_research",
+          "candidate_minutes": 9,
+          "procedure": "Investigate the policy conditional on bindings; trace old issue, implementation and chosen release without universal safety assumptions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/treatment/dependent_research.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 3,
+          "procedure": "Deliver identical policy scope and uncertainties.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/outputs/treatment/finalize.md"
+        }
+      ]
+    }
+  },
+  "arm_order": [
+    "control",
+    "treatment"
+  ],
+  "access": "Only brief, input map/source manifest and listed sources; own predecessors only; no sibling arms/cases, reviews, campaign history or helper corpus. Advisory scope is not a filesystem firewall.",
+  "native_goal": "Fresh actual create_goal/get_goal activation and update_goal/get_goal terminal per substantive stage; objective <=4000 chars; no inherited goals or nested agents.",
+  "final_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/final.md",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/final.md"
+  }
+}

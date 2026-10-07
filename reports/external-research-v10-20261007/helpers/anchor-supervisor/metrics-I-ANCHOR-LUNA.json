@@ -1,0 +1,1116 @@
+{
+  "collected_at": "2026-10-07T19:19:44.143191+00:00",
+  "slot": "I-ANCHOR-LUNA",
+  "stages": [
+    {
+      "arm": "control",
+      "stage": "critic-v1",
+      "receipts": {
+        "dispatch-tool-receipt.json": {
+          "sha256": "bba9e62126429ebef3ddc46cbaf057dc023f60a4f986a0056666b78906f19929",
+          "bytes": 2128,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "latestTerminalSummary": null,
+              "latestTerminalResultContextTransferId": null,
+              "providerInstanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "summary": null,
+              "resultContextTransferId": null,
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "0fa4d1fa381b0620c43e5fe42d34ee71bf4047cbabdb113559ba52db4efa03fd",
+          "bytes": 1607,
+          "value": {
+            "create_goal": {
+              "goal": {
+                "threadId": "01a117af-41b3-7d11-abe5-2ddd26ba4e22",
+                "objective": "ER10 Luna control critic: full brief critique using exact INPUTS.md; save required files and terminalize",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791398735,
+                "updatedAt": 1791398735
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "get_goal": {
+              "goal": {
+                "threadId": "01a117af-41b3-7d11-abe5-2ddd26ba4e22",
+                "objective": "ER10 Luna control critic: full brief critique using exact INPUTS.md; save required files and terminalize",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791398735,
+                "updatedAt": 1791398735
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "thread_configuration": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+              "modelSelection": {
+                "instanceId": "codex_gmail",
+                "model": "gpt-6-luna",
+                "options": [
+                  {
+                    "id": "reasoningEffort",
+                    "value": "max"
+                  },
+                  {
+                    "id": "serviceTier",
+                    "value": "priority"
+                  }
+                ]
+              },
+              "runtimeMode": "full-access",
+              "interactionMode": "default"
+            },
+            "capture_note": "create_goal and immediate get_goal both succeeded; the JSON values above preserve their actual returned fields. No failed capture occurred. The native Goal identity is goal.threadId; thread_configuration separately identifies the T3 wrapper thread."
+          }
+        },
+        "native_terminal_receipt.json": {
+          "sha256": "d9df63ba3c04183ac60611fa8cffb656b795b9080a0a2f9be2049474d95e4079",
+          "bytes": 1461,
+          "value": {
+            "update_goal": {
+              "goal": {
+                "threadId": "01a117af-41b3-7d11-abe5-2ddd26ba4e22",
+                "objective": "ER10 Luna control critic: full brief critique using exact INPUTS.md; save required files and terminalize",
+                "status": "complete",
+                "tokensUsed": 180328,
+                "timeUsedSeconds": 678,
+                "createdAt": 1791398735,
+                "updatedAt": 1791399414
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+            },
+            "get_goal": {
+              "goal": {
+                "threadId": "01a117af-41b3-7d11-abe5-2ddd26ba4e22",
+                "objective": "ER10 Luna control critic: full brief critique using exact INPUTS.md; save required files and terminalize",
+                "status": "complete",
+                "tokensUsed": 180328,
+                "timeUsedSeconds": 678,
+                "createdAt": 1791398735,
+                "updatedAt": 1791399414
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "native_goal_identity": "01a117af-41b3-7d11-abe5-2ddd26ba4e22",
+            "t3_wrapper_thread_identity": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+            "descendants_created": 0
+          }
+        },
+        "prepared.json": {
+          "sha256": "9270da8cbd420c655bd022483fb56e83e0a83dacee36a11bf9c0d41a205a918d",
+          "bytes": 1149,
+          "value": {
+            "at": "2026-10-07T18:45:23.524235+00:00",
+            "original_dispatch": "2026-10-07T18:26:52.851649+00:00",
+            "deadline": "2026-10-07T19:11:52.851649+00:00",
+            "critic_deadline": "2026-10-07T18:56:52.851649+00:00",
+            "input_hashes": {
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/brief.md": "0600bd0661196df8f728a2d861530f352251dc42008e9fd71ce532a6e30a0874",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/plan.md": "ac49eea7607c8db0cc0664cb0921100ee651c6d4cf3887dc8bd1b05e2e0d93fd",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/draft.md": "30f387257559ea22a0e661405c5c79973585a4b504cf1b6cd10284b557839d96",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/README.md": "92f4f57f9e0732069532dc5a5510ce517b8a9a2dfb39c6d0a6b4d73bca80642a",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/upstream-fetch-manifest.json": "33559a1e56ba447d846f07c57b5bb9be5d284ac5a5711fa2cd2689e4f2a54e56"
+            }
+          }
+        },
+        "task-terminal-tool-receipt.json": {
+          "sha256": "d60698accca6248f588a89b2117b900bfd025d41ad0a271cac3c7089b60130c2",
+          "bytes": 8384,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1\",\"status\":\"completed\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:ordinal:1\",\"latestTerminalStatus\":\"completed\",\"latestTerminalSummary\":\"The critique and required receipts are saved:\\n\\n- [critique.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/critique.md)\\n- [SOURCES.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md)\\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/native_goal_receipt.json)\\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/native_terminal_receipt.json)\\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/timings.json)\\n\\nNative Goal `01a117af-41b3-7d11-abe5-2ddd26ba4e22` is **complete**; no descendants were created. The required `codex_gmail` / `gpt-6-luna` / max / priority configuration was confirmed. Terminalization completed about two seconds past the critic deadline; the timing file records that and the available usage fields. No `final.md` was authored.\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:f5ded9b3-9c1f-4c9f-b9f3-5528639e2106\",\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":\"The critique and required receipts are saved:\\n\\n- [critique.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/critique.md)\\n- [SOURCES.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md)\\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/native_goal_receipt.json)\\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/native_terminal_receipt.json)\\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/timings.json)\\n\\nNative Goal `01a117af-41b3-7d11-abe5-2ddd26ba4e22` is **complete**; no descendants were created. The required `codex_gmail` / `gpt-6-luna` / max / priority configuration was confirmed. Terminalization completed about two seconds past the critic deadline; the timing file records that and the available usage fields. No `final.md` was authored.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:f5ded9b3-9c1f-4c9f-b9f3-5528639e2106\",\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-critic-v1",
+              "status": "completed",
+              "workState": "result_available",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:ordinal:1",
+              "latestTerminalStatus": "completed",
+              "latestTerminalSummary": "The critique and required receipts are saved:\n\n- [critique.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/critique.md)\n- [SOURCES.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/native_terminal_receipt.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/timings.json)\n\nNative Goal `01a117af-41b3-7d11-abe5-2ddd26ba4e22` is **complete**; no descendants were created. The required `codex_gmail` / `gpt-6-luna` / max / priority configuration was confirmed. Terminalization completed about two seconds past the critic deadline; the timing file records that and the available usage fields. No `final.md` was authored.",
+              "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:f5ded9b3-9c1f-4c9f-b9f3-5528639e2106",
+              "providerInstanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "summary": "The critique and required receipts are saved:\n\n- [critique.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/critique.md)\n- [SOURCES.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/native_terminal_receipt.json)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/timings.json)\n\nNative Goal `01a117af-41b3-7d11-abe5-2ddd26ba4e22` is **complete**; no descendants were created. The required `codex_gmail` / `gpt-6-luna` / max / priority configuration was confirmed. Terminalization completed about two seconds past the critic deadline; the timing file records that and the available usage fields. No `final.md` was authored.",
+              "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:f5ded9b3-9c1f-4c9f-b9f3-5528639e2106",
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "timings.json": {
+          "sha256": "7efd81b91c1938d37bdc2595a65642872f06318a7362b3635d492013f03ed12e",
+          "bytes": 1335,
+          "value": {
+            "original_arm_dispatch_utc": "2026-10-07T18:26:52.851649Z",
+            "absolute_whole_arm_deadline_utc": "2026-10-07T19:11:52.851649Z",
+            "critic_deadline_utc": "2026-10-07T18:56:52.851649Z",
+            "researcher_allocated_seconds": 1200,
+            "critic_allocated_seconds": 600,
+            "final_reviser_reserved_seconds": 900,
+            "remaining_critic_seconds_at_input_prep": 689.327414,
+            "critic_start_utc": "2026-10-07T18:45:23.524235Z",
+            "critic_start_basis": "INPUTS.md critic deadline minus its remaining-at-prep value; native Goal createdAt independently corresponds to 2026-10-07T18:45:35Z.",
+            "first_useful_saved_finding_utc": "2026-10-07T18:54:23Z",
+            "critique_ready_utc": "2026-10-07T18:56:49Z",
+            "native_terminal_utc": "2026-10-07T18:56:54Z",
+            "native_terminal_time_basis": "Exact native updatedAt epoch 1791399414 from update_goal/get_goal; this is about 2 seconds after the critic deadline in INPUTS.md. Critique files were ready before terminalization.",
+            "usage": {
+              "input_tokens": null,
+              "cache_tokens": null,
+              "output_tokens": null,
+              "reasoning_tokens": null,
+              "native_goal_tokens_used": 180328,
+              "billing": "unknown"
+            },
+            "usage_note": "The available native Goal response exposes aggregate token/time fields only; input/cache/output/reasoning breakdown and billing are not exposed. Do not sum enclosing snapshots."
+          }
+        }
+      },
+      "authored_output_files": {
+        "critique.md": {
+          "bytes": 8871,
+          "sha256": "d879af83bace626b1b8518b12280e8316c16e2951d019e6c47173c772f504e83"
+        }
+      },
+      "source_evidence_file_count": 1
+    },
+    {
+      "arm": "control",
+      "stage": "research-v1",
+      "receipts": {
+        "dispatch.json": {
+          "sha256": "83d48fcc91600f6773dddf4cef4b8bc0271c399c701bd76a56e259408837c3cf",
+          "bytes": 1225,
+          "value": {
+            "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-research-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-research-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-research-v1:ordinal:1",
+            "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-research-v1",
+            "status": "running",
+            "workState": "working",
+            "hasPendingChildRuns": false,
+            "latestTerminalRunId": null,
+            "latestTerminalStatus": null,
+            "latestTerminalSummary": null,
+            "latestTerminalResultContextTransferId": null,
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "summary": null,
+            "resultContextTransferId": null,
+            "waitTimedOut": false,
+            "kind": "candidate",
+            "slot_id": "I-ANCHOR-LUNA",
+            "arm": "control",
+            "stage": "research",
+            "version": 1,
+            "request": "er10-I-ANCHOR-LUNA-control-research-v1",
+            "recorded_at": "2026-10-07T18:26:52.851649+00:00"
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "05daafb1062e3e7e13b05237b623331b369a565bfd27eab494f2bd051eac9f17",
+          "bytes": 2772,
+          "value": {
+            "activation_observed_at": "2026-10-07T18:27:19Z",
+            "create_goal_result": {
+              "goal": {
+                "threadId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+                "objective": "Research a complete evidence-backed proposal draft for the ER10 candidate brief specified by /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/INPUTS.md. Admit only legitimate case inputs from that map and primary public sources; exclude parent context, other arms, evaluation material, and historical answers. Preserve bounded source evidence with immutable identities, exact URL/version/retrieval metadata, small lawful excerpts or precise locators, and mechanical hashes. Save draft.md, sources/, timings.json, native_goal_receipt.json, and a terminal receipt in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1. Do not execute downloaded repository/install scripts on host or alter canon/main/WorkNodes/accounts. Distinguish proposal from any execution, do not delegate, and complete this Goal after saving outputs.",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791397622,
+                "updatedAt": 1791397622
+              }
+            },
+            "get_goal_result": {
+              "goal": {
+                "threadId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+                "objective": "Research a complete evidence-backed proposal draft for the ER10 candidate brief specified by /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/INPUTS.md. Admit only legitimate case inputs from that map and primary public sources; exclude parent context, other arms, evaluation material, and historical answers. Preserve bounded source evidence with immutable identities, exact URL/version/retrieval metadata, small lawful excerpts or precise locators, and mechanical hashes. Save draft.md, sources/, timings.json, native_goal_receipt.json, and a terminal receipt in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1. Do not execute downloaded repository/install scripts on host or alter canon/main/WorkNodes/accounts. Distinguish proposal from any execution, do not delegate, and complete this Goal after saving outputs.",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791397622,
+                "updatedAt": 1791397622
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "actual_usage": {
+              "tokens": "initial tool-reported native usage was 0; no per-operation usage telemetry available here",
+              "time": "initial tool-reported native elapsed time was 0 seconds; wall-clock timestamps are recorded separately",
+              "billing": "not exposed"
+            }
+          }
+        },
+        "terminal_receipt.json": {
+          "sha256": "c0bb59bf7da2cc375b4271be3680c9d7d8fd7d0e1693c878cdbde88f2e533602",
+          "bytes": 3425,
+          "value": {
+            "observed_at": "2026-10-07T18:42:55Z",
+            "native_goal": {
+              "threadId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+              "objective": "Research a complete evidence-backed proposal draft for the ER10 candidate brief specified by /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/INPUTS.md. Admit only legitimate case inputs from that map and primary public sources; exclude parent context, other arms, evaluation material, and historical answers. Preserve bounded source evidence with immutable identities, exact URL/version/retrieval metadata, small lawful excerpts or precise locators, and mechanical hashes. Save draft.md, sources/, timings.json, native_goal_receipt.json, and a terminal receipt in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1. Do not execute downloaded repository/install scripts on host or alter canon/main/WorkNodes/accounts. Distinguish proposal from any execution, do not delegate, and complete this Goal after saving outputs.",
+              "status": "complete",
+              "tokensUsed": 280226,
+              "timeUsedSeconds": 953,
+              "createdAt": 1791397622,
+              "updatedAt": 1791398575
+            },
+            "get_goal_result": {
+              "goal": {
+                "threadId": "01a1179e-4cc0-70f2-87c0-0b2dbd5fa24c",
+                "objective": "Research a complete evidence-backed proposal draft for the ER10 candidate brief specified by /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/INPUTS.md. Admit only legitimate case inputs from that map and primary public sources; exclude parent context, other arms, evaluation material, and historical answers. Preserve bounded source evidence with immutable identities, exact URL/version/retrieval metadata, small lawful excerpts or precise locators, and mechanical hashes. Save draft.md, sources/, timings.json, native_goal_receipt.json, and a terminal receipt in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1. Do not execute downloaded repository/install scripts on host or alter canon/main/WorkNodes/accounts. Distinguish proposal from any execution, do not delegate, and complete this Goal after saving outputs.",
+                "status": "complete",
+                "tokensUsed": 280226,
+                "timeUsedSeconds": 953,
+                "createdAt": 1791397622,
+                "updatedAt": 1791398575
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "actual_usage": {
+              "native_goal_tokensUsed": 280226,
+              "native_goal_timeUsedSeconds": 953,
+              "elapsed_human": "15 minutes 53 seconds",
+              "token_budget": null,
+              "remainingTokens": null,
+              "billing": "not exposed; unknown"
+            },
+            "scope_exception": "A final recursive hash command read bytes of two pre-existing output-directory files named dispatch.json and task.txt. Their contents were not displayed, interpreted, or incorporated, and their hashes were not retained in deliverables. No further recursive reads were made.",
+            "deliverables": {
+              "draft_sha256": "30f387257559ea22a0e661405c5c79973585a4b504cf1b6cd10284b557839d96",
+              "source_register_sha256": "92f4f57f9e0732069532dc5a5510ce517b8a9a2dfb39c6d0a6b4d73bca80642a",
+              "source_fetch_manifest_sha256": "33559a1e56ba447d846f07c57b5bb9be5d284ac5a5711fa2cd2689e4f2a54e56",
+              "timings_file": "timings.json; final native status, terminal time, and reported usage are recorded there."
+            }
+          }
+        },
+        "timings.json": {
+          "sha256": "06892f98ebeb93f710e9e7f7cd9c0fdbdd905c3fcdf387cf75f2853193917596",
+          "bytes": 1752,
+          "value": {
+            "dispatch_at": null,
+            "dispatch_at_note": "Not independently instrumented; assignment arrived at turn start.",
+            "start_at": "2026-10-07T18:27:02Z",
+            "start_at_note": "Native Goal createdAt=1791397622 (Unix seconds); local wall-clock capture immediately after activation was 2026-10-07T18:27:19Z. Request-start time was not separately exposed.",
+            "first_useful_saved_finding_at": "2026-10-07T18:29:31Z",
+            "first_useful_saved_finding": "Preliminary draft.md saved a concrete diagnosis of mutable timestamp/LWW and loss of concurrent history, based on the two authorized case inputs.",
+            "draft_saved_at": "2026-10-07T18:42:43Z",
+            "native_terminal_at": "2026-10-07T18:42:55Z",
+            "observed_usage": {
+              "initial_native_goal_tokensUsed": 0,
+              "initial_native_goal_timeUsedSeconds": 0,
+              "final_tokensUsed": 280226,
+              "final_timeUsedSeconds": 953,
+              "token_budget": null,
+              "remainingTokens": null,
+              "billing": "not exposed; unknown",
+              "elapsed_human": "15 minutes 53 seconds"
+            },
+            "draft_sha256_at_save": "30f387257559ea22a0e661405c5c79973585a4b504cf1b6cd10284b557839d96",
+            "last_active_native_observation": {
+              "observed_at": "2026-10-07T18:42:43Z",
+              "status": "active",
+              "tokensUsed": 276569,
+              "timeUsedSeconds": 940,
+              "remainingTokens": null,
+              "billing": "not exposed"
+            },
+            "scope_exception": "A final recursive hash command read bytes of two pre-existing output-directory files named dispatch.json and task.txt. Their contents were not displayed, interpreted, or incorporated, and their hashes were not retained in deliverables. No further recursive reads were made.",
+            "final_native_status": "complete",
+            "terminal_receipt_sha256": "c0bb59bf7da2cc375b4271be3680c9d7d8fd7d0e1693c878cdbde88f2e533602"
+          }
+        }
+      },
+      "authored_output_files": {
+        "draft.md": {
+          "bytes": 23869,
+          "sha256": "30f387257559ea22a0e661405c5c79973585a4b504cf1b6cd10284b557839d96"
+        }
+      },
+      "source_evidence_file_count": 3
+    },
+    {
+      "arm": "control",
+      "stage": "reviser-v1",
+      "receipts": {
+        "dispatch-tool-receipt.json": {
+          "sha256": "b5d739d7ea402556053cdafadf1c0288e0dc3f6137527452939274da5668fafc",
+          "bytes": 2136,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "latestTerminalSummary": null,
+              "latestTerminalResultContextTransferId": null,
+              "providerInstanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "summary": null,
+              "resultContextTransferId": null,
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "d3aa4055504bb822d1e1a2e5c8199db7c44034801e27747d3a7d0eb5bbed897b",
+          "bytes": 1849,
+          "value": {
+            "create_goal_response": {
+              "goal": {
+                "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA control final revision using only the materials and constraints declared in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/INPUTS.md. Produce the complete final.md, critique-dispositions.md, sources/SOURCES.md, bounded evidence, timings, and exact native Goal receipts in this reviser-v1 directory; preserve predecessor artifacts and the original absolute deadline.",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791399494,
+                "updatedAt": 1791399494
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "get_goal_response": {
+              "goal": {
+                "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA control final revision using only the materials and constraints declared in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/INPUTS.md. Produce the complete final.md, critique-dispositions.md, sources/SOURCES.md, bounded evidence, timings, and exact native Goal receipts in this reviser-v1 directory; preserve predecessor artifacts and the original absolute deadline.",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791399494,
+                "updatedAt": 1791399494
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "active_identity": {
+              "provider_route": "codex_gmail",
+              "model": "gpt-6-luna",
+              "reasoningEffort": "max",
+              "serviceTier": "priority",
+              "basis": "Explicit task/runtime identity supplied for this run; tool responses above are preserved verbatim as returned."
+            }
+          }
+        },
+        "native_terminal_receipt.json": {
+          "sha256": "a43fda9c11ea7d7c125e53f9742d5ce6e5d55ce2e7faf621dc5249f36526b0bb",
+          "bytes": 2187,
+          "value": {
+            "update_goal_response": {
+              "goal": {
+                "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA control final revision using only the materials and constraints declared in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/INPUTS.md. Produce the complete final.md, critique-dispositions.md, sources/SOURCES.md, bounded evidence, timings, and exact native Goal receipts in this reviser-v1 directory; preserve predecessor artifacts and the original absolute deadline.",
+                "status": "complete",
+                "tokensUsed": 170309,
+                "timeUsedSeconds": 923,
+                "createdAt": 1791399494,
+                "updatedAt": 1791400417
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+            },
+            "get_goal_response": {
+              "goal": {
+                "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA control final revision using only the materials and constraints declared in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/INPUTS.md. Produce the complete final.md, critique-dispositions.md, sources/SOURCES.md, bounded evidence, timings, and exact native Goal receipts in this reviser-v1 directory; preserve predecessor artifacts and the original absolute deadline.",
+                "status": "complete",
+                "tokensUsed": 170309,
+                "timeUsedSeconds": 923,
+                "createdAt": 1791399494,
+                "updatedAt": 1791400417
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "active_identity": {
+              "provider_route": "codex_gmail",
+              "model": "gpt-6-luna",
+              "reasoningEffort": "max",
+              "serviceTier": "priority",
+              "basis": "Explicit task/runtime identity supplied for this run; tool responses above are preserved verbatim as returned."
+            }
+          }
+        },
+        "prepared.json": {
+          "sha256": "af5c51c7f5999f3106e7ccdb3d7f5def745b10c394d6bf4617f969de926c57a5",
+          "bytes": 1649,
+          "value": {
+            "at": "2026-10-07T18:57:58.773397+00:00",
+            "original_actual_dispatch": "2026-10-07T18:26:52.563000+00:00",
+            "deadline": "2026-10-07T19:11:52.563000+00:00",
+            "remaining_seconds": 833.789603,
+            "input_hashes": {
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/brief.md": "0600bd0661196df8f728a2d861530f352251dc42008e9fd71ce532a6e30a0874",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/plan.md": "ac49eea7607c8db0cc0664cb0921100ee651c6d4cf3887dc8bd1b05e2e0d93fd",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/draft.md": "30f387257559ea22a0e661405c5c79973585a4b504cf1b6cd10284b557839d96",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/README.md": "92f4f57f9e0732069532dc5a5510ce517b8a9a2dfb39c6d0a6b4d73bca80642a",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/research-v1/sources/upstream-fetch-manifest.json": "33559a1e56ba447d846f07c57b5bb9be5d284ac5a5711fa2cd2689e4f2a54e56",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/critique.md": "d879af83bace626b1b8518b12280e8316c16e2951d019e6c47173c772f504e83",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/sources/SOURCES.md": "82753da0b590c80111c71abbccc6f3241e8353ae7c73c01ba389a7cb5d663b05"
+            },
+            "required_critic_frozen": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/critic-v1/freeze.json"
+          }
+        },
+        "task-terminal-tool-receipt.json": {
+          "sha256": "55d37f4a072dfb95433db0f28b0df443d372e610c1a257eb2b8b1aa132d5c153",
+          "bytes": 4846,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1\",\"status\":\"interrupted\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:ordinal:1\",\"latestTerminalStatus\":\"interrupted\",\"latestTerminalSummary\":\"The post-write clock sample is 19:12:03 UTC, 10.437 seconds past the absolute 19:11:52.563 deadline. I won\u2019t reset the clock or hide that overrun; I\u2019m recording it with the native terminal receipt now.\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:8d60f24a-ad10-46c9-817b-e471ba374fb7\",\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":\"The post-write clock sample is 19:12:03 UTC, 10.437 seconds past the absolute 19:11:52.563 deadline. I won\u2019t reset the clock or hide that overrun; I\u2019m recording it with the native terminal receipt now.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:8d60f24a-ad10-46c9-817b-e471ba374fb7\",\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-control-reviser-v1",
+              "status": "interrupted",
+              "workState": "result_available",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:ordinal:1",
+              "latestTerminalStatus": "interrupted",
+              "latestTerminalSummary": "The post-write clock sample is 19:12:03 UTC, 10.437 seconds past the absolute 19:11:52.563 deadline. I won\u2019t reset the clock or hide that overrun; I\u2019m recording it with the native terminal receipt now.",
+              "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:8d60f24a-ad10-46c9-817b-e471ba374fb7",
+              "providerInstanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "summary": "The post-write clock sample is 19:12:03 UTC, 10.437 seconds past the absolute 19:11:52.563 deadline. I won\u2019t reset the clock or hide that overrun; I\u2019m recording it with the native terminal receipt now.",
+              "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-control-reviser-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:8d60f24a-ad10-46c9-817b-e471ba374fb7",
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "timings.json": {
+          "sha256": "1be7e31de6d016fff384a4532b1da0faf407a78d0ce475e79d5caa5c45728ce5",
+          "bytes": 1641,
+          "value": {
+            "task": "I-ANCHOR-LUNA control final reviser-v1",
+            "clock_basis": "UTC",
+            "original_arm": {
+              "researcher_requested_at": "2026-10-07T18:26:52.563000+00:00",
+              "absolute_deadline": "2026-10-07T19:11:52.563000+00:00",
+              "remaining_seconds_at_reviser_prep": 833.789603,
+              "budget_rule": "Whole-arm 2700 seconds includes startup, source setup, queue/retries/delivery. No reset or added time."
+            },
+            "native_goal": {
+              "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+              "native_start_createdAt_epoch_seconds": 1791399494,
+              "native_start_at_utc": "2026-10-07T18:58:14Z",
+              "first_useful_saved_finding_at_utc": "2026-10-07T19:03:54.426Z",
+              "first_useful_saved_finding": "F01 CouchDB conflict excerpt saved to sources/evidence/f01.txt.",
+              "final_ready_at_utc": "2026-10-07T19:12:03Z",
+              "final_ready_time_method": "First clock sample immediately after the successful artifact write; the file tool did not return a filesystem save timestamp.",
+              "native_terminal_at_utc": "2026-10-07T19:13:37.000Z",
+              "terminal_time_basis": "Native update_goal updatedAt when exposed; otherwise unavailable.",
+              "overrun_seconds_after_absolute_deadline": 104.437
+            },
+            "usage": {
+              "native_cumulative_tokensUsed": 170309,
+              "native_cumulative_timeUsedSeconds": 923,
+              "native_remainingTokens": null,
+              "native_completionBudgetReport": null,
+              "input_tokens": null,
+              "cache_tokens": null,
+              "output_tokens": null,
+              "reasoning_tokens": null,
+              "usage_exposure": "Native get_goal may expose only cumulative goal tokens/time; input/cache/output/reasoning counters are not exposed. Billing is unknown."
+            }
+          }
+        }
+      },
+      "authored_output_files": {
+        "final.md": {
+          "bytes": 17137,
+          "sha256": "419a2d6e04d55280d2e48fa82b79638be966a976214d2584d1542724e5957a32"
+        },
+        "critique-dispositions.md": {
+          "bytes": 5549,
+          "sha256": "7122daaf1289cd7f016f6ddd4724dba182249637d5a46016fa71a333bbbc9b6b"
+        }
+      },
+      "source_evidence_file_count": 17
+    },
+    {
+      "arm": "treatment",
+      "stage": "critic-finalizer-v1",
+      "receipts": {
+        "clock-annotation-001.json": {
+          "sha256": "5cb2b25ec49c4a85702d4f15cf1584987ed450d51dde7dc5ed01ce405bd590bb",
+          "bytes": 461,
+          "value": {
+            "at": "2026-10-07T18:48:19.192073+00:00",
+            "initial_recorded_at": "2026-10-07T18:26:52.851605+00:00",
+            "actual_original_T3_requestedAt": "2026-10-07T18:26:21.980Z",
+            "wholearm_seconds": 2700,
+            "stricter_deadline": "2026-10-07T19:11:21.980Z",
+            "source": "Exact root-owned researcher thread t3_thread_read recentRuns",
+            "change": "Steered live candidate to earlier observed deadline; original task/input/preparation retained",
+            "scope": "Timing only"
+          }
+        },
+        "dispatch-tool-receipt.json": {
+          "sha256": "a2197cccc6c1311f0a93edb5b672b3645563bd87aadb20408bb6c66639724ed4",
+          "bytes": 2224,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "latestTerminalSummary": null,
+              "latestTerminalResultContextTransferId": null,
+              "providerInstanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "summary": null,
+              "resultContextTransferId": null,
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "e246a9c08802e8b31fb799be7551b559507af2559fa8cc66d33dd760222811cf",
+          "bytes": 4014,
+          "value": {
+            "create_goal_response": {
+              "goal": {
+                "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791398894,
+                "updatedAt": 1791398894
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "initial_get_goal_response": {
+              "goal": {
+                "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791398894,
+                "updatedAt": 1791398894
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "observed_active_get_goal_response": {
+              "goal": {
+                "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+                "status": "active",
+                "tokensUsed": 184661,
+                "timeUsedSeconds": 582,
+                "createdAt": 1791398894,
+                "updatedAt": 1791399477
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "observed_active_get_at_utc": "2026-10-07 18:58:34 UTC",
+            "observed_active_identity_response": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1\",\"modelSelection\":{\"instanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"options\":[{\"id\":\"reasoningEffort\",\"value\":\"max\"},{\"id\":\"serviceTier\",\"value\":\"priority\"}]},\"runtimeMode\":\"full-access\",\"interactionMode\":\"default\"}"
+                }
+              ],
+              "structuredContent": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+                "modelSelection": {
+                  "instanceId": "codex_gmail",
+                  "model": "gpt-6-luna",
+                  "options": [
+                    {
+                      "id": "reasoningEffort",
+                      "value": "max"
+                    },
+                    {
+                      "id": "serviceTier",
+                      "value": "priority"
+                    }
+                  ]
+                },
+                "runtimeMode": "full-access",
+                "interactionMode": "default"
+              },
+              "isError": false
+            },
+            "active_identity_observed_at_utc": "2026-10-07 18:58:34 UTC",
+            "latest_active_get_goal_response": {
+              "goal": {
+                "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+                "status": "active",
+                "tokensUsed": 230027,
+                "timeUsedSeconds": 760,
+                "createdAt": 1791398894,
+                "updatedAt": 1791399655
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "latest_active_get_at_utc": "2026-10-07 19:01:26 UTC"
+          }
+        },
+        "native_terminal_receipt.json": {
+          "sha256": "e06bbeae9f54a1a8ac9bcb688bbcf597e2e6bfc3c8b4a50e1529bec0433012a8",
+          "bytes": 1859,
+          "value": {
+            "native_goal_id": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+            "native_goal_thread_id": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+            "update_goal_response": {
+              "goal": {
+                "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+                "status": "complete",
+                "tokensUsed": 235039,
+                "timeUsedSeconds": 810,
+                "createdAt": 1791398894,
+                "updatedAt": 1791399704
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+            },
+            "terminal_get_goal_response": {
+              "goal": {
+                "threadId": "01a117b1-a740-73f3-a0c8-71816b2cbbfe",
+                "objective": "Complete the ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1 stage using its exact INPUTS.md contract: independently research only the permitted inputs, write complete critique.md, final.md, sources/SOURCES.md, timing and native Goal receipts in the specified stage directory, and terminalize the native Goal after delivery.",
+                "status": "complete",
+                "tokensUsed": 235039,
+                "timeUsedSeconds": 810,
+                "createdAt": 1791398894,
+                "updatedAt": 1791399704
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "terminal_get_observed_at_utc": "2026-10-07 19:01:44 UTC"
+          }
+        },
+        "prepared.json": {
+          "sha256": "f35d937431a95b2bb62afc63b671ea7b679342a784ed7b23c98392c1017e12a6",
+          "bytes": 1083,
+          "value": {
+            "at": "2026-10-07T18:48:00.687796+00:00",
+            "original_dispatch": "2026-10-07T18:26:52.851605+00:00",
+            "deadline": "2026-10-07T19:11:52.851605+00:00",
+            "input_hashes": {
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/brief.md": "0600bd0661196df8f728a2d861530f352251dc42008e9fd71ce532a6e30a0874",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/plan.md": "ac49eea7607c8db0cc0664cb0921100ee651c6d4cf3887dc8bd1b05e2e0d93fd",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/research-v1/draft.md": "164651a50b1a8ee6b5e95db3e0d1a59f7dfdac4ff5aaf35856e81196c88e54f8",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/research-v1/sources/README.md": "a52be1549f7ffa153c153bb5fa0e5cb6f070f1f44328476e463fa2006095cb3d",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/research-v1/sources/manifest.json": "91ccdc5daec2d6139f38e9c8897ba3c8304f6634b801a22a1f77db3ae7ff9703"
+            }
+          }
+        },
+        "task-terminal-tool-receipt.json": {
+          "sha256": "7b2958dce10eb2f7357dca39ff23b903dee25da3ea3ede9c5ce0f132a552186c",
+          "bytes": 9494,
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1\",\"status\":\"completed\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:ordinal:1\",\"latestTerminalStatus\":\"completed\",\"latestTerminalSummary\":\"Completed both deliverables and the required receipts:\\n\\n- [critique.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md)\\n- [final.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md)\\n- [sources/SOURCES.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md)\\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/timings.json)\\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_goal_receipt.json)\\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_terminal_receipt.json)\\n\\nNative Goal `01a117b1-a740-73f3-a0c8-71816b2cbbfe` is **complete**. The observed binding was `codex_gmail` / `gpt-6-luna`, reasoning max, priority tier. Terminal usage was 235,039 tokens and 810 seconds. The stricter 19:11:21.980 UTC deadline is recorded. No descendants were spawned. No implementation or component tests were run; proposed checks are labeled as such.\",\"latestTerminalResultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:780036b0-4ada-4b6c-8d84-7590b7a4d023\",\"providerInstanceId\":\"codex_gmail\",\"model\":\"gpt-6-luna\",\"summary\":\"Completed both deliverables and the required receipts:\\n\\n- [critique.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md)\\n- [final.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md)\\n- [sources/SOURCES.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md)\\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/timings.json)\\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_goal_receipt.json)\\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_terminal_receipt.json)\\n\\nNative Goal `01a117b1-a740-73f3-a0c8-71816b2cbbfe` is **complete**. The observed binding was `codex_gmail` / `gpt-6-luna`, reasoning max, priority tier. Terminal usage was 235,039 tokens and 810 seconds. The stricter 19:11:21.980 UTC deadline is recorded. No descendants were spawned. No implementation or component tests were run; proposed checks are labeled as such.\",\"resultContextTransferId\":\"context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:780036b0-4ada-4b6c-8d84-7590b7a4d023\",\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+              "childThreadId": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+              "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:ordinal:1",
+              "childNodeId": "node:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+              "status": "completed",
+              "workState": "result_available",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:ordinal:1",
+              "latestTerminalStatus": "completed",
+              "latestTerminalSummary": "Completed both deliverables and the required receipts:\n\n- [critique.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md)\n- [final.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md)\n- [sources/SOURCES.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_terminal_receipt.json)\n\nNative Goal `01a117b1-a740-73f3-a0c8-71816b2cbbfe` is **complete**. The observed binding was `codex_gmail` / `gpt-6-luna`, reasoning max, priority tier. Terminal usage was 235,039 tokens and 810 seconds. The stricter 19:11:21.980 UTC deadline is recorded. No descendants were spawned. No implementation or component tests were run; proposed checks are labeled as such.",
+              "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:780036b0-4ada-4b6c-8d84-7590b7a4d023",
+              "providerInstanceId": "codex_gmail",
+              "model": "gpt-6-luna",
+              "summary": "Completed both deliverables and the required receipts:\n\n- [critique.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md)\n- [final.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md)\n- [sources/SOURCES.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md)\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/timings.json)\n- [native_goal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_goal_receipt.json)\n- [native_terminal_receipt.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_terminal_receipt.json)\n\nNative Goal `01a117b1-a740-73f3-a0c8-71816b2cbbfe` is **complete**. The observed binding was `codex_gmail` / `gpt-6-luna`, reasoning max, priority tier. Terminal usage was 235,039 tokens and 810 seconds. The stricter 19:11:21.980 UTC deadline is recorded. No descendants were spawned. No implementation or component tests were run; proposed checks are labeled as such.",
+              "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-anchor-supervisor-v1:780036b0-4ada-4b6c-8d84-7590b7a4d023",
+              "waitTimedOut": false
+            },
+            "isError": false
+          }
+        },
+        "timings.json": {
+          "sha256": "e2d1ad44df1cf59baada4d2b7aa9ff7d1fa7f983c31df5b37d8bfb83bec40736",
+          "bytes": 5503,
+          "value": {
+            "stage": "ER10 I-ANCHOR-LUNA treatment critic-finalizer-v1",
+            "timing_basis": {
+              "wholearm_ceiling_seconds": 2700,
+              "stage_allocations_seconds": {
+                "research": 1500,
+                "critic_finalizer": 1200
+              },
+              "unused_prior_stage_time_may_carry": true,
+              "prepared_inputs_original_dispatch_at": "2026-10-07T18:26:52.851605+00:00",
+              "prepared_inputs_deadline_as_recorded": "2026-10-07T19:11:52.851605+00:00",
+              "stricter_user_timing_correction": {
+                "root_researcher_recentRuns_requestedAt": "2026-10-07T18:26:21.980Z",
+                "source": "User supplied correction reporting the exact observed root researcher thread timestamp; no clock reset.",
+                "strict_wholearm_deadline": "2026-10-07T19:11:21.980Z",
+                "earlier_than_prepared_deadline_seconds": 30.871605,
+                "prepared_remaining_seconds_at_preparation": 1432.163809,
+                "revised_remaining_seconds_at_same_preparation_instant": 1401.292204,
+                "original_INPUTS_map_and_timing_receipt_preserved": true
+              }
+            },
+            "native_start": {
+              "wholearm_root_researcher_run_requestedAt": "2026-10-07T18:26:21.980Z",
+              "stage_goal_created_at_epoch_seconds": 1791398894,
+              "stage_goal_created_at_utc": "2026-10-07T18:48:14.000Z",
+              "stage_goal_id": "01a117b1-a740-73f3-a0c8-71816b2cbbfe"
+            },
+            "active_native_binding": {
+              "observed_at_utc": "2026-10-07T18:58:34Z",
+              "t3_thread_id": "thread:delegated-task:command%3Amcp%3A78fa83af-4fdf-4f73-a01a-f4d131cc5f60%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-critic-finalizer-v1",
+              "provider_instance_id": "codex_gmail",
+              "model": "gpt-6-luna",
+              "options": {
+                "reasoningEffort": "max",
+                "serviceTier": "priority"
+              },
+              "runtime_mode": "full-access",
+              "evidence": "Exact t3_thread_configuration tool response is stored in native_goal_receipt.json."
+            },
+            "milestones": {
+              "native_start": "2026-10-07T18:26:21.980Z (wholearm root researcher run requestedAt, user supplied observation)",
+              "first_useful_saved_finding": "2026-10-07T18:53:20.354576165Z (critique.md file creation time)",
+              "complete_content_output_ready": "2026-10-07T19:00:32.388085511Z (latest final/critique/SOURCES.md content mtime; later of the three content deliverables)",
+              "native_terminal": {
+                "goal_updatedAt_epoch_seconds": 1791399704,
+                "goal_updatedAt_utc": "2026-10-07T19:01:44.000Z",
+                "terminal_get_observed_at_utc": "2026-10-07 19:01:44 UTC",
+                "status": "complete",
+                "native_goal_id": "01a117b1-a740-73f3-a0c8-71816b2cbbfe"
+              },
+              "terminal_note": "Will be filled only from the actual update_goal and subsequent get_goal responses."
+            },
+            "clock_snapshot_at_preterminal_record": {
+              "observed_at_utc": "2026-10-07T18:58:34Z",
+              "remaining_seconds_to_strict_deadline": 767.98
+            },
+            "native_goal_usage_snapshots": [
+              {
+                "point": "initial get_goal after create_goal",
+                "observed_at_utc": null,
+                "goal_status": "active",
+                "tokens_used": 0,
+                "time_used_seconds": 0,
+                "remaining_tokens": null,
+                "completion_budget_report": null,
+                "timestamp_basis": "get_goal was called immediately after create_goal in the same execution; no separate clock sample was taken. The response itself reports goal createdAt/updatedAt epoch 1791398894, equivalent to 2026-10-07T18:48:14Z."
+              },
+              {
+                "point": "active get_goal before terminalization",
+                "observed_at_utc": "2026-10-07T18:58:34Z",
+                "goal_status": "active",
+                "tokens_used": 184661,
+                "time_used_seconds": 582,
+                "remaining_tokens": null,
+                "completion_budget_report": null
+              },
+              {
+                "point": "latest active get_goal before terminalization",
+                "observed_at_utc": "2026-10-07 19:01:26 UTC",
+                "goal_status": "active",
+                "tokens_used": 230027,
+                "time_used_seconds": 760,
+                "remaining_tokens": null,
+                "completion_budget_report": null
+              },
+              {
+                "point": "terminal get_goal after update_goal complete",
+                "observed_at_utc": "2026-10-07 19:01:44 UTC",
+                "goal_status": "complete",
+                "tokens_used": 235039,
+                "time_used_seconds": 810,
+                "remaining_tokens": null,
+                "completion_budget_report": null
+              }
+            ],
+            "detailed_token_metrics": {
+              "input_tokens": null,
+              "cached_input_tokens": null,
+              "output_tokens": null,
+              "reasoning_tokens": null,
+              "status": "Not exposed by available native Goal responses."
+            },
+            "billing": {
+              "amount": null,
+              "status": "Unknown; no billing metric exposed."
+            },
+            "aggregation_rule": "Goal token/time values are recorded as independent cumulative snapshots; snapshots are not summed.",
+            "artifacts": [
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_goal_receipt.json",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/timings.json",
+              "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/native_terminal_receipt.json (created after terminal get_goal)"
+            ],
+            "native_terminal_receipt_saved": true
+          }
+        }
+      },
+      "authored_output_files": {
+        "final.md": {
+          "bytes": 26943,
+          "sha256": "1d8420a0752e0b2bda7d8b3eeca666ecf23e801b829c03e2dc7f8d1b0880f3a8"
+        },
+        "critique.md": {
+          "bytes": 18462,
+          "sha256": "4bad17250d07377899f36a97e49a21a8847059a82c6cad5ad594782fd6148a84"
+        }
+      },
+      "source_evidence_file_count": 1
+    },
+    {
+      "arm": "treatment",
+      "stage": "research-v1",
+      "receipts": {
+        "dispatch.json": {
+          "sha256": "a2094481c12b79520cbc34c42d1e4eae3d4091a4de961a80abd4f38eef98013e",
+          "bytes": 1237,
+          "value": {
+            "taskId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-research-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-research-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-I-ANCHOR-LUNA-treatment-research-v1:ordinal:1",
+            "childNodeId": "node:delegated-task:command%3Amcp%3A05aa57ba-4ce9-4719-bb0a-647eab764051%3Adelegate-task%3Aer10-I-ANCHOR-LUNA-treatment-research-v1",
+            "status": "running",
+            "workState": "working",
+            "hasPendingChildRuns": false,
+            "latestTerminalRunId": null,
+            "latestTerminalStatus": null,
+            "latestTerminalSummary": null,
+            "latestTerminalResultContextTransferId": null,
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "summary": null,
+            "resultContextTransferId": null,
+            "waitTimedOut": false,
+            "kind": "candidate",
+            "slot_id": "I-ANCHOR-LUNA",
+            "arm": "treatment",
+            "stage": "research",
+            "version": 1,
+            "request": "er10-I-ANCHOR-LUNA-treatment-research-v1",
+            "recorded_at": "2026-10-07T18:26:52.851605+00:00"
+          }
+        },
+        "native_goal_receipt.json": {
+          "sha256": "062f414ccf664b611738026ca7d8cdc047e05ae6c884cc20c5676fea3d67f0c3",
+          "bytes": 1414,
+          "value": {
+            "receipt_type": "native_goal_activation_and_initial_state",
+            "observed_at_utc": "2026-10-07 18:26:49 UTC",
+            "create_goal_call": {
+              "tool": "create_goal",
+              "goal": {
+                "threadId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+                "objective": "Produce a complete, evidence-backed research proposal draft for the ER10 I-ANCHOR-LUNA brief. Use only the exact authorized input map and primary public sources; save draft.md, bounded immutable source evidence with hashes, native Goal activation/state and terminal receipts, and timings.json in the specified output directory. Do not execute downloaded repository/install scripts, alter canon/main/WorkNodes/accounts, use nested delegation, or impersonate the later same-family critic.",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791397592,
+                "updatedAt": 1791397592
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "get_goal_call": {
+              "tool": "get_goal",
+              "goal": {
+                "threadId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0,
+                "createdAt": 1791397592,
+                "updatedAt": 1791397592
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "note": "Receipt records the directly observed native tool responses; tool-native createdAt/updatedAt are Unix seconds."
+          }
+        },
+        "native_goal_terminal_receipt.json": {
+          "sha256": "c3e8c98349e8c5773e7d02d56bec08cab63a1e7f9691715d4260c3cc798534f9",
+          "bytes": 2568,
+          "value": {
+            "receipt_type": "native_goal_terminal_receipt",
+            "thread_id": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+            "terminal_state_observed_at_utc": "2026-10-07 18:44:09 UTC",
+            "terminal_goal_updated_at_unix_seconds": 1791398649,
+            "completion_call": {
+              "ok": true,
+              "result": {
+                "goal": {
+                  "threadId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+                  "objective": "Produce a complete, evidence-backed research proposal draft for the ER10 I-ANCHOR-LUNA brief. Use only the exact authorized input map and primary public sources; save draft.md, bounded immutable source evidence with hashes, native Goal activation/state and terminal receipts, and timings.json in the specified output directory. Do not execute downloaded repository/install scripts, alter canon/main/WorkNodes/accounts, use nested delegation, or impersonate the later same-family critic.",
+                  "status": "complete",
+                  "tokensUsed": 333443,
+                  "timeUsedSeconds": 841,
+                  "createdAt": 1791397592,
+                  "updatedAt": 1791398649
+                },
+                "remainingTokens": null,
+                "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+              }
+            },
+            "terminal_get_goal_call": {
+              "goal": {
+                "threadId": "01a1179d-d516-7553-9f79-2e7a4c68f476",
+                "objective": "Produce a complete, evidence-backed research proposal draft for the ER10 I-ANCHOR-LUNA brief. Use only the exact authorized input map and primary public sources; save draft.md, bounded immutable source evidence with hashes, native Goal activation/state and terminal receipts, and timings.json in the specified output directory. Do not execute downloaded repository/install scripts, alter canon/main/WorkNodes/accounts, use nested delegation, or impersonate the later same-family critic.",
+                "status": "complete",
+                "tokensUsed": 333443,
+                "timeUsedSeconds": 841,
+                "createdAt": 1791397592,
+                "updatedAt": 1791398649
+              },
+              "remainingTokens": null,
+              "completionBudgetReport": null
+            },
+            "note": "The first completion call terminalized the Goal, but its response was not captured because the orchestration cell failed while building its save payload. This receipt preserves the subsequent terminal get_goal response and a separately captured idempotent completion call when available."
+          }
+        },
+        "timings.json": {
+          "sha256": "4b12c8a7c513ccc4f3f86dbce5d743202d47ad4a9c85661fd9edacef6531fc36",
+          "bytes": 1698,
+          "value": {
+            "task": "ER10 I-ANCHOR-LUNA treatment/research-v1",
+            "timezone": "UTC",
+            "dispatch_at_utc": null,
+            "dispatch_at_note": "Dispatch timestamp is not separately exposed by the runtime; no timestamp inferred.",
+            "start_at_utc": "2026-10-07 18:26:32 UTC",
+            "start_at_source": "Native create_goal observed createdAt=1791397592 Unix seconds.",
+            "first_useful_saved_finding_at_utc": "2026-10-07 18:29:40 UTC",
+            "draft_saved_at_utc": "2026-10-07 18:38:43 UTC",
+            "native_goal_terminal_at_utc": "2026-10-07 18:44:09 UTC",
+            "native_goal_usage_observations": [
+              {
+                "observed_at_utc": "2026-10-07 18:26:49 UTC",
+                "source": "activation get_goal",
+                "status": "active",
+                "tokensUsed": 0,
+                "timeUsedSeconds": 0
+              },
+              {
+                "observed_at_utc": "2026-10-07 18:38:04 UTC",
+                "source": "get_goal",
+                "status": "active",
+                "tokensUsed": 277999,
+                "timeUsedSeconds": 692
+              },
+              {
+                "observed_at_utc": "2026-10-07 18:39:56 UTC",
+                "source": "get_goal",
+                "status": "active",
+                "tokensUsed": 326140,
+                "timeUsedSeconds": 796
+              },
+              {
+                "observed_at_utc": "2026-10-07 18:44:09 UTC",
+                "source": "terminal get_goal",
+                "status": "complete",
+                "tokensUsed": 333443,
+                "timeUsedSeconds": 841
+              }
+            ],
+            "external_provider_tokens": null,
+            "external_provider_billing": null,
+            "external_usage_note": "Provider/model token and billing usage are not exposed by the native Goal tools; unknown. Native Goal counters above are reported separately and are not treated as provider billing.",
+            "terminal_receipt_status": "saved",
+            "status": "complete",
+            "native_goal_terminal_observed_at_utc": "2026-10-07 18:44:09 UTC"
+          }
+        }
+      },
+      "authored_output_files": {
+        "draft.md": {
+          "bytes": 24432,
+          "sha256": "164651a50b1a8ee6b5e95db3e0d1a59f7dfdac4ff5aaf35856e81196c88e54f8"
+        }
+      },
+      "source_evidence_file_count": 24
+    }
+  ],
+  "measurement_policy": {
+    "billing": "UNKNOWN unless actual exposed billing record; no dollar estimates",
+    "native_counters": "Retain separate cumulative snapshots; never add enclosing samples or call them generated tokens. Stage aggregates require proven semantics.",
+    "source_operations": "UNKNOWN where no actual operation log; evidence file counts are not source operations",
+    "occupancy": "T3/native interval observations have distinct meanings; samearm sequential intervals may be accumulated only without overlap and only as labeled occupied durations",
+    "resource_release": "Only actual settled/no-pending evidence; freeze timestamp is not automatically release time",
+    "speedup": "No 2x or quality-preserving claim without both arms assessed and eligible"
+  }
+}

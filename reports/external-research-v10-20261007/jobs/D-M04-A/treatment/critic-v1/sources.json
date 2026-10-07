@@ -1,0 +1,130 @@
+{
+  "schema": "pm.er10.critic-source-usage.v1",
+  "case_id": "D-M04-A",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/INPUT_MAP.json",
+  "own_inputs": {
+    "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/brief.md",
+    "draft": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/draft.md",
+      "sha256": "b2dc47eee1889e246b1c954adf4c82d895d61291da792c3c0df0033f7cc611ec"
+    },
+    "research_source_identity_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/research-v1/sources.json"
+  },
+  "native_goal": {
+    "threadId": "01a117be-40a1-7f42-bf67-e54fc04ba440",
+    "objective": "D-M04-A treatment critic",
+    "createdAt": 1791399752,
+    "created_at_utc": "2026-10-07T19:02:32Z",
+    "initial_status": "active"
+  },
+  "acquisition_boundary": "The four listed frozen originals were warmed from local exact bytes. This is not an Internet download or Internet-savings measurement.",
+  "sources": [
+    {
+      "source_id": "sqltransaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "capture": "SQLite transaction documentation capture 2026-10-07",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "bytes": 27068,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "warm_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/warm-sqltransaction.json",
+      "operations": [
+        {
+          "operation": "warm",
+          "network_requests": 0,
+          "elapsed_seconds": 0.0008546729986846913
+        },
+        {
+          "operation": "read",
+          "tool": "nl/sed over warmed raw bytes",
+          "ranges": "288–357; 378–395"
+        }
+      ]
+    },
+    {
+      "source_id": "sqlwal",
+      "url": "https://www.sqlite.org/wal.html",
+      "capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "warm_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/warm-sqlwal.json",
+      "operations": [
+        {
+          "operation": "warm",
+          "network_requests": 0,
+          "elapsed_seconds": 0.00126226999964274
+        },
+        {
+          "operation": "read",
+          "tool": "nl/sed over warmed raw bytes",
+          "ranges": "160–205; 270–318; 555–579; 672–711"
+        }
+      ]
+    },
+    {
+      "source_id": "sqlpragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "capture": "SQLite PRAGMA documentation capture 2026-10-07",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "bytes": 139778,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "warm_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/warm-sqlpragma.json",
+      "operations": [
+        {
+          "operation": "warm",
+          "network_requests": 0,
+          "elapsed_seconds": 0.001752299998770468
+        },
+        {
+          "operation": "read",
+          "tool": "nl/sed over warmed raw bytes",
+          "ranges": "576–588; 1208–1287"
+        }
+      ]
+    },
+    {
+      "source_id": "sqlwalcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+      "capture": "SQLite version-3.51.3 source",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "bytes": 177587,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "warm_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/warm-sqlwalcode.json",
+      "operations": [
+        {
+          "operation": "warm",
+          "network_requests": 0,
+          "elapsed_seconds": 0.0020013189987366786
+        },
+        {
+          "operation": "read",
+          "tool": "nl/sed over warmed raw bytes",
+          "ranges": "2101–2118; 3681–3747"
+        }
+      ]
+    },
+    {
+      "source_id": "sqlresultcodes-live",
+      "url": "https://www.sqlite.org/rescode.html",
+      "capture": "Official SQLite result-code page fetched 2026-10-07; mutable docs, not version-pinned to 3.51.3",
+      "sha256": "05ce13c1b04b1c7ea074f2155e979482512946634590dfe86f99af5e36e93b23",
+      "bytes": 73030,
+      "cache_object": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/source-cache-v1/sqlresultcodes-live-20261007.html",
+      "limitations": "Live official documentation check; identity is the captured-byte hash, not a release tag. Used only to distinguish BUSY/LOCKED and flag the BEGIN IMMEDIATE/COMMIT wording tension.",
+      "operations": [
+        {
+          "operation": "fetch",
+          "tool": "curl -fsSL",
+          "network_requests": 1,
+          "captured_at": "2026-10-07T19:04:20Z"
+        },
+        {
+          "operation": "read",
+          "tool": "rg",
+          "ranges": "171–184; 399–453; 915–935"
+        }
+      ]
+    }
+  ],
+  "excluded": "No sibling, othercase, evaluator, campaign analysis, ER9, or test witness was accessed."
+}

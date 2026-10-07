@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-07T19:10:09.505387+00:00",
+  "arms": {
+    "control": {
+      "final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/final.md",
+      "final_sha256": "de5938d402ee8138f44591fa06185a4ea77a4637cdeb1b875237371f5876bba8",
+      "native_terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/native_terminal_receipt.json",
+      "native_terminal_sha256": "3f2d484389d4197f5908a1e05e08162ea44b1f63d8af7cfe7b9a52cb03ad1062"
+    },
+    "treatment": {
+      "final": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/final.md",
+      "final_sha256": "ffcfa6e55b0ffb782642d8c3c284dccac70bb9fc89eb55b8a46b3524cee32129",
+      "native_terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1/native_terminal_receipt.json",
+      "native_terminal_sha256": "e128e1dc84eb7ed9e86910f9f12f7508f88f4ca4cfbac9e3fc2eb6261b083816"
+    }
+  },
+  "all_candidate_children_quiet": true,
+  "independent_review_admission_allowed": true
+}

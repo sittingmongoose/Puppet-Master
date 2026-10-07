@@ -1,0 +1,33 @@
+{
+  "case_id": "D-M14-A",
+  "original_candidate_arm_ceiling_seconds": 900,
+  "original_contract_unchanged": true,
+  "generic_helper_development_experiment_cost": {
+    "requestedAt": "2026-10-07T18:37:40.052Z",
+    "startedAt": "2026-10-07T18:37:40.550Z",
+    "completedAt": "2026-10-07T18:45:14.108Z",
+    "dispatch_to_terminal_seconds": 454.056,
+    "metadata_receipt": "state/m14-renderer-timing.json"
+  },
+  "root_independent_qualification": {
+    "focused_checks": 4,
+    "reported_test_seconds": 0.316,
+    "invocation_wall_seconds": null,
+    "receipt": "state/m14-renderer-root-qualification.json"
+  },
+  "routine_per_run_rendering_seconds": 0.11695404800047982,
+  "candidate_authoring_seconds": null,
+  "candidate_preservation_seconds": null,
+  "input": null,
+  "cached_input": null,
+  "generated": null,
+  "reasoning": null,
+  "billing": null,
+  "cold_full_setup": "Charge full454.056 seconds observed development plus qualification and all treatment authoring/render/preservation/startup/delivery costs. Qualification wall unexposed: known lower bound only; no false exact total.",
+  "amortized": "Show generic development separately, disclose assumed reuse count before allocating; routine per-run rendering never removed. No reuse count or favorable allocation assumed.",
+  "eligibility": "Cold full timing may fail independently of semantic quality; no budget extension, grade rewrite, or changed current pair contract.",
+  "future_contract": "Passive host receipt simplification cannot be used here; wait root readiness and freeze only for future pair.",
+  "semantic_author_native_time_used_seconds": 215,
+  "semantic_author_native_tokens_used": 52979,
+  "semantic_author_usage_interpretation": "Native Goal total tokens counter only; input/cache/generated/billing remain distinct unknown."
+}

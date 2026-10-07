@@ -1,0 +1,30 @@
+{
+  "carrier": "PASSIVE_NATIVE_STATE_V2_NOT_RAW_API",
+  "export": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T19:23:29.379306+00:00",
+    "entries": [
+      {
+        "stage": "D-M08-A/common/critic-v2",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M08-A--common--critic-v2--5d4d784da92ac1bb.json",
+        "sha256": "5d4d784da92ac1bb029643eaa1ef05719c3c436c8fe24cf522411fa0e41c40e1",
+        "bytes": 10850,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  },
+  "native_state": "complete",
+  "native_identity": "01a117ce-58ac-7ec0-8dde-81f1eb4ead33",
+  "active_state": "MISSING_HOST_OBSERVATION: notice processed after terminal; selfreported active is not hostverified",
+  "raw_api_bodies": null,
+  "createdAt": null,
+  "dispatch_to_delivery_seconds": 241.001,
+  "stage_overrun_seconds": 1.0010000000000048,
+  "critique_sha256": "2f36554b143736b6465b3818cdcbd5e35a8ac156319c3d87641479f970209bbc",
+  "quiet": true
+}

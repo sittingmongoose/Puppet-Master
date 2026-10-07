@@ -1,0 +1,84 @@
+{
+  "case_id": "D-M01-A",
+  "arm": "control",
+  "stage": "criticism-v1",
+  "dispatch_timestamp_utc": "2026-10-07T18:43:16.399319+00:00",
+  "hard_stage_deadline_utc": "2026-10-07T18:47:16.399319+00:00",
+  "whole_arm_deadline_utc": "2026-10-07T18:52:16.763061+00:00",
+  "time_observations": [
+    {
+      "event": "direct create_goal/get_goal completed and clock read",
+      "utc": "2026-10-07 18:43:31 UTC"
+    },
+    {
+      "event": "critique write started after clock read",
+      "utc": "2026-10-07 18:46:05 UTC"
+    },
+    {
+      "event": "critique write completed and clock read",
+      "utc": "2026-10-07 18:46:05 UTC"
+    },
+    {
+      "event": "native Goal update/get terminal receipt observed",
+      "utc": "2026-10-07 18:46:13 UTC"
+    }
+  ],
+  "operations": [
+    {
+      "operation": "enumerated direct native Goal tools",
+      "result": "success"
+    },
+    {
+      "operation": "created fresh native Goal and got observed state",
+      "result": "success",
+      "identity": "01a117ad-50ee-7e61-841d-5dc9ed1ac6e0",
+      "state": "active"
+    },
+    {
+      "operation": "read brief",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/brief.md",
+      "sha256": "5f321952222a56987af91ed0b1901927f6a21aefb59f451b907765aafcb6c8a5"
+    },
+    {
+      "operation": "incorrect initial source manifest filename attempt",
+      "result": "failed: not found; corrected to mapped path"
+    },
+    {
+      "operation": "read source manifest",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources.json",
+      "sha256": "188b0ad473cd74922e95c5b3c297fedc9c7f80b034bb0e683aaf65122e2de7f3"
+    },
+    {
+      "operation": "read frozen primary captures and recomputed hashes",
+      "result": "success; all three matched manifest"
+    },
+    {
+      "operation": "read predecessor draft and recomputed hash",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-A/control/research-v1/draft.md",
+      "sha256": "1aeba1f55d4a9bc56968e3c680bbc45a3fafcfbb543a1681b0c7c76391d9da23"
+    },
+    {
+      "operation": "saved critique",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-A/control/criticism-v1/critique.md",
+      "result": "success",
+      "bytes": 5505
+    },
+    {
+      "operation": "updated native Goal to complete and obtained final native get_goal receipt",
+      "result": "success",
+      "state": "complete",
+      "identity": "01a117ad-50ee-7e61-841d-5dc9ed1ac6e0"
+    }
+  ],
+  "usage": {
+    "native_goal_tokens_used_initial": 0,
+    "native_goal_tokens_used_final": 46522,
+    "assistant_model_tokens": null,
+    "source_review_shell_seconds_reported": 0.2,
+    "initial_manifest_attempt_shell_seconds_reported": 0.075598,
+    "critique_write_shell_seconds_reported": 4.6499e-05,
+    "unknowns": null,
+    "native_goal_time_used_seconds": 161
+  },
+  "verification": "Write command confirmed output byte count. No tests or downloaded code execution."
+}

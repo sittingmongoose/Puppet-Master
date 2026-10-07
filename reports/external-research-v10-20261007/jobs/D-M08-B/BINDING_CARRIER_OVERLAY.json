@@ -1,0 +1,124 @@
+{
+  "version": "carrier-v1",
+  "case_id": "D-M08-B",
+  "binding": {
+    "providerInstanceId": "codex_gmail",
+    "account": "sittingmongoose@gmail.com",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "original_hashes": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/case-card.json": "63fa67dccfbbb823b2fb17956d33e2c54812f2f35e651ace240236a07282b1d3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/INPUT_MAP.json": "6567e7f6133453ccfba7296cd0e2511cde29fc70155705f63712e5f4936d35ca",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/SEED_INPUT_MAP.json": "8602073384f07ada9316c08dbb711e788e8ce2cba15c20c29f147c11acc42405",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/brief.md": "80845872fa053e425c1cc24ccdaa6e3559b34b181ece657dae757e1257c8fe97",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources.json": "47356c93d872337b9a70a2e002a29eecc4b9d9d4099153a9aa335f0950c83d07",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/PREDECESSOR.md": "4b68ec2dd3e68c66f35043081b798fe76a9165f5bf7448922c63d5ed5138a453"
+  },
+  "seed_path_mapping": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/seed/draft.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/research-v1/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/seed/critique.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/common/critic-v1/critique.md"
+  },
+  "original_card": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/case-card.json",
+  "original_input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/INPUT_MAP.json",
+  "original_seed_input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/SEED_INPUT_MAP.json",
+  "budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "common_draft",
+          "candidate_minutes": 3,
+          "procedure": "Common same-family predecessor researcher authors an untrusted preliminary proposal.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/control/common_draft.md"
+        },
+        {
+          "stage": "common_critique",
+          "candidate_minutes": 3,
+          "procedure": "A separate root-bound same-family candidate critic checks the draft and saves concrete critique, source refs, and unresolved findings; both arms receive identical bytes.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/control/common_critique.md"
+        },
+        {
+          "stage": "rewrite",
+          "candidate_minutes": 7,
+          "procedure": "Competent author makes a coherent final rewrite from the same draft and critique.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/control/rewrite.md"
+        },
+        {
+          "stage": "final_check_and_delivery",
+          "candidate_minutes": 2,
+          "procedure": "Normal final checking and complete delivery; no extra critic stage.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/control/final_check_and_delivery.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "common_draft",
+          "candidate_minutes": 3,
+          "procedure": "Identical common draft and seed charge.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/treatment/common_draft.md"
+        },
+        {
+          "stage": "common_critique",
+          "candidate_minutes": 3,
+          "procedure": "Identical common critique and seed charge.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/treatment/common_critique.md"
+        },
+        {
+          "stage": "local_amendment",
+          "candidate_minutes": 3,
+          "procedure": "Amend candidate-authored finding records locally with explicit supported critique dispositions; false upstream claims may be rejected.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/treatment/local_amendment.md"
+        },
+        {
+          "stage": "change_dependency_check",
+          "candidate_minutes": 4,
+          "procedure": "Verify every changed consequential claim and its affected dependencies against primary sources.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/treatment/change_dependency_check.md"
+        },
+        {
+          "stage": "render",
+          "candidate_minutes": 2,
+          "procedure": "Render the complete final from amended findings; no fourth full review.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/treatment/render.md"
+        }
+      ]
+    }
+  },
+  "output_scope": {
+    "final_path_by_arm": {
+      "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/control/final.md",
+      "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/outputs/treatment/final.md"
+    },
+    "carrier": "Complete authored native final or exact file export to declared final path; root verifies full byte identity/readability. Native terminal status is separate.",
+    "max_material_findings": 8,
+    "soft_word_ceiling": 1100,
+    "deliverable": "One complete bounded answer/recommendation with source conditions, full obligation dispositions, justified uncertainty, retained optional leads where requested, and discriminating proposed checks. Any carried draft/critique remains a legitimate input, not source truth.",
+    "intermediate_scope": "Only method-required bounded stage outputs. Do not impose four synchronized catalogs or an integrated application plan.",
+    "preservation": "Final must distinguish accepted, amended, rejected and unresolved claims; executed witnesses and proposed tests remain distinct."
+  },
+  "carrier": "jobs/<case>/<arm>/<role>-v1/{draft.md,critique.md,final.md,native_activation_receipt.json,native_terminal_receipt.json,timings.json}; exact original meaning unchanged"
+}

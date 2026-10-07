@@ -1,0 +1,120 @@
+{
+  "case_id": "D-M01-B",
+  "arm": "treatment",
+  "stage": "research",
+  "timestamps": {
+    "dispatch_input_utc": "2026-10-07T18:37:37.458234+00:00",
+    "hard_stage_deadline_input_utc": "2026-10-07T18:43:37.458234+00:00",
+    "whole_arm_deadline_input_utc": "2026-10-07T18:52:37.458234+00:00",
+    "recovered_native_get_observed_at_utc": "2026-10-07 18:38:37 UTC",
+    "final_get_observed_at_utc": "2026-10-07 18:41:46 UTC",
+    "final_get_completed_at_utc": "2026-10-07 18:41:46 UTC",
+    "exact_create_goal_call_time_utc": null,
+    "exact_source_read_completion_time_utc": null,
+    "exact_draft_write_completion_time_utc": null,
+    "artifact_review_observed_by_utc": "2026-10-07 18:41:46 UTC",
+    "terminal_get_observed_at_utc": "2026-10-07 18:46:42 UTC",
+    "terminal_update_completed_at_utc": "2026-10-07 18:46:42 UTC",
+    "hard_stage_deadline_exceeded_at_terminalization": true,
+    "lifecycle_repair_observed_at_utc": "2026-10-07 18:49:00 UTC",
+    "latest_lifecycle_get_observed_at_utc": "2026-10-07 18:48:20 UTC",
+    "latest_lifecycle_get_completed_at_utc": "2026-10-07 18:48:20 UTC",
+    "draft_write_completed_at_exact_utc": null,
+    "draft_write_completed_by_observation_utc": "2026-10-07 18:41:02 UTC",
+    "goal_blocked_update_observed_at_utc": "2026-10-07 18:46:42 UTC",
+    "final_delivery_exact_utc": null,
+    "delivery_clock_observed_at_closeout_utc": "2026-10-07 18:49:00 UTC"
+  },
+  "operations": [
+    {
+      "operation": "create_goal",
+      "attempts": 1,
+      "result": "native call completed; returned activation object was not persisted after a subsequent serialization error",
+      "observed_start_utc": null,
+      "observed_end_utc": null
+    },
+    {
+      "operation": "get_goal",
+      "attempts": 4,
+      "result": "latest direct receipt is preserved in native_goal_terminal.json; active identity observed",
+      "observed_start_utc": null,
+      "observed_end_utc": "2026-10-07 18:41:46 UTC"
+    },
+    {
+      "operation": "read supplied brief and source manifest",
+      "attempts": 1,
+      "result": "completed from exact allowed paths",
+      "observed_start_utc": null,
+      "observed_end_utc": null
+    },
+    {
+      "operation": "read supplied source captures and verify SHA-256",
+      "attempts": 1,
+      "result": "both local hashes matched manifest",
+      "observed_start_utc": null,
+      "observed_end_utc": "2026-10-07 18:41:46 UTC"
+    },
+    {
+      "operation": "author and save draft.md",
+      "attempts": 1,
+      "result": "saved and readable; 859 words; no raster code executed",
+      "observed_start_utc": null,
+      "observed_end_utc": null
+    },
+    {
+      "operation": "update_goal",
+      "attempts": 0,
+      "result": "not performed because required activation receipt artifact is incomplete"
+    },
+    {
+      "operation": "read-only T3 activity lookup for exact native Goal thread id",
+      "attempts": 1,
+      "result": "target_not_found; no sibling history inspected",
+      "observed_at_utc": "2026-10-07T18:45:37.754Z"
+    },
+    {
+      "operation": "update_goal blocked",
+      "attempts": 1,
+      "result": "blocked",
+      "observed_at_utc": "2026-10-07 18:46:42 UTC"
+    },
+    {
+      "operation": "lifecycle closeout and timings JSON repair",
+      "attempts": 1,
+      "result": "trailing serialization escape removed; stage overrun recorded; JSON re-read validated",
+      "observed_at_utc": "2026-10-07 18:49:00 UTC"
+    }
+  ],
+  "usage": {
+    "native_goal_tokens_used": 116787,
+    "native_goal_time_used_seconds": 521,
+    "native_goal_token_budget": null,
+    "native_goal_remaining_tokens": null,
+    "model_tokens_used": null,
+    "external_search_requests": 0,
+    "external_source_retrievals": 0,
+    "native_goal_status_at_closeout": "blocked"
+  },
+  "outputs": {
+    "draft_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-B/treatment/research-v1/draft.md",
+    "draft_word_count": 859,
+    "draft_sha256": "9aec1bfc002af2283c726309d6fd2b065ef4f395cb4a753ac21fac12565582d8",
+    "activation_receipt_captured": false,
+    "native_goal_status_at_last_get": "active",
+    "native_goal_status_after_update": "blocked",
+    "native_goal_status_at_closeout": "blocked"
+  },
+  "overrun": {
+    "hard_stage_deadline_elapsed": true,
+    "draft_write_exact_time_unknown": true,
+    "draft_was_readable_by_utc": "2026-10-07 18:41:02 UTC",
+    "draft_write_observed_before_deadline": true,
+    "blocked_lifecycle_update_after_deadline": true,
+    "final_closeout_delivery_after_deadline": true,
+    "final_delivery_exact_timestamp_utc": null,
+    "closeout_clock_observed_at_utc": "2026-10-07 18:49:00 UTC",
+    "seconds_after_hard_deadline_at_closeout_clock_observation": 322.541766,
+    "malformed_trailing_escape_repaired": true,
+    "reason": "The frozen stage deadline was not reset. Research draft was present before cutoff; blocked lifecycle and closeout delivery were recorded afterward."
+  }
+}

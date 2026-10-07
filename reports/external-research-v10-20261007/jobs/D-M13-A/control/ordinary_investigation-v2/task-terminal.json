@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-control-ordinary_investigation-v2",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-control-ordinary_investigation-v2",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M13-A-control-ordinary_investigation-v2:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-control-ordinary_investigation-v2",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M13-A-control-ordinary_investigation-v2:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Done. Native Goal `goal-01a117d4-5f12-7681-b8d8-3113a80561f0` is actually `complete` (100%, verified via post-terminal get).\n\nArtifacts:\n- [report.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/ordinary_investigation-v2/report.md) — 1086 words, 6 findings covering all six obligations; recommends explicit `filter='data'` on 3.12.3 with `FilterError`-fatal handling and caller cleanup\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/ordinary_investigation-v2/timings.json) — scientific timings/source ops; billing/cache/input/generated null\n- `.../ordinary_investigation-v2/sources/` — empty; no additional primary captures\n\nFinished ~10 min before the 19:37:28Z stage deadline. No code executed, no extra sources, no second goal.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M13-A-control-ordinary_investigation-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:4c787ada-724a-4e10-bb4e-3fb7337ec842",
+  "providerInstanceId": "muse",
+  "model": "muse-spark-1.3-contributor",
+  "summary": "Done. Native Goal `goal-01a117d4-5f12-7681-b8d8-3113a80561f0` is actually `complete` (100%, verified via post-terminal get).\n\nArtifacts:\n- [report.md](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/ordinary_investigation-v2/report.md) — 1086 words, 6 findings covering all six obligations; recommends explicit `filter='data'` on 3.12.3 with `FilterError`-fatal handling and caller cleanup\n- [timings.json](/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/ordinary_investigation-v2/timings.json) — scientific timings/source ops; billing/cache/input/generated null\n- `.../ordinary_investigation-v2/sources/` — empty; no additional primary captures\n\nFinished ~10 min before the 19:37:28Z stage deadline. No code executed, no extra sources, no second goal.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M13-A-control-ordinary_investigation-v2:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:4c787ada-724a-4e10-bb4e-3fb7337ec842",
+  "waitTimedOut": false
+}

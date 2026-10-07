@@ -1,0 +1,23 @@
+{
+  "review_started_utc": null,
+  "first_available_instrumented_timestamp_utc": "2026-10-07T19:17:04+00:00",
+  "completed_utc": "2026-10-07T19:23:49.047284+00:00",
+  "instrumented_elapsed_seconds": 405.047,
+  "total_elapsed_seconds": null,
+  "timing_precision": "Initial authorized input/instruction reads preceded the first available timestamp and were not separately timed. Instrumented elapsed is a lower bound, not a fabricated full-turn duration. Each retained public request has exact independent start/end timestamps.",
+  "evaluation_allowance_seconds": 1800,
+  "allowance_scope": "Independent review experiment; not charged against any candidate research allowance.",
+  "billing": "unknown",
+  "candidate_costs_timings_or_native_counters_read": false,
+  "retrieval_start_utc": "2026-10-07T19:17:28.337470+00:00",
+  "retrieval_finish_utc": "2026-10-07T19:18:41.776278+00:00",
+  "check_results": {
+    "json_parse": "pass",
+    "18_obligation_map": "pass",
+    "9_critique_dispositions": "pass",
+    "independent_source_note_hashes": "pass",
+    "authorized_input_hashes_still_match": "pass",
+    "temporary_download_cache_removed": "pass"
+  },
+  "product_tests_executed": false
+}

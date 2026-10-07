@@ -1,0 +1,70 @@
+{
+  "stage": "D-M13-A/control/ordinary_investigation-v2",
+  "at": "2026-10-07T19:28:39.173572+00:00",
+  "native_disposition": "complete",
+  "T3_status": "completed",
+  "T3_children_quiet": true,
+  "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/ordinary_investigation-v2/report.md",
+  "files": {
+    "prospective-timing.json": {
+      "sha256": "e26c8649598cdf1f660922e2373a90273a91fb5b3ae1b3db8ecebace9d08fac7",
+      "bytes": 279,
+      "mtime_utc": "2026-10-07T19:25:28.185497+00:00"
+    },
+    "dispatch-receipt.json": {
+      "sha256": "24cfded7d9e9fcb36c27de5c3ccde7f141261313bdef63bdfbff522996081d25",
+      "bytes": 1078,
+      "mtime_utc": "2026-10-07T19:25:46.395468+00:00"
+    },
+    "passive-active.json": {
+      "sha256": "f24eb59a7f7c388fc9fd09be88caf422fc85d4ca2572f821d64263854851241e",
+      "bytes": 17885,
+      "mtime_utc": "2026-10-07T19:26:14.440858+00:00"
+    },
+    "task-terminal.json": {
+      "sha256": "8c19c8cfc785463009baf1792ab2df0ad20d88fe4a3173b67bf086fc14135c35",
+      "bytes": 3712,
+      "mtime_utc": "2026-10-07T19:28:22.620509+00:00"
+    },
+    "passive-terminal-capture-cost.json": {
+      "sha256": "49056e5de3c8d8d72f932d8aaf8d6484a20d687d60d0311a8d07ea0dba240622",
+      "bytes": 1305,
+      "mtime_utc": "2026-10-07T19:28:22.939015+00:00"
+    },
+    "passive-active-capture-cost.json": {
+      "sha256": "5ddb6afb9fc6805a818aa60a9d14d6a9f6698fc2422fb7b6dc178b87f9143999",
+      "bytes": 1306,
+      "mtime_utc": "2026-10-07T19:26:14.441757+00:00"
+    },
+    "report.md": {
+      "sha256": "2f25c315a16f95ec7ed25a9be2d11e171b80223ea7c3209ba4efbf5d363023d8",
+      "bytes": 9290,
+      "mtime_utc": "2026-10-07T19:27:30.234171+00:00"
+    },
+    "dispatch.json": {
+      "sha256": "bb5154c36e520814d39da957cb1b4810c9e88858985c1b05eb0c156b08a8b896",
+      "bytes": 1559,
+      "mtime_utc": "2026-10-07T19:25:46.464644+00:00"
+    },
+    "INPUT_MAP.json": {
+      "sha256": "b05f0b1d79ae8a61b6c77db7b76574d373f084051cf39643732ee10192337996",
+      "bytes": 4990,
+      "mtime_utc": "2026-10-07T19:25:28.184898+00:00"
+    },
+    "dispatch-request.json": {
+      "sha256": "d59ccc5c76a9d03ac77bf2bf2435fdc448619947b67367b9b4ba7011c07f0603",
+      "bytes": 5649,
+      "mtime_utc": "2026-10-07T19:25:28.185279+00:00"
+    },
+    "timings.json": {
+      "sha256": "8c31f9ae6d27143536656a797cfc369aef82185b3dd46ab71b2d534f898d4ca4",
+      "bytes": 1875,
+      "mtime_utc": "2026-10-07T19:27:42.227245+00:00"
+    },
+    "passive-terminal.json": {
+      "sha256": "cb7475fd4681844c305b7edfd0810123ce837d3ccf2a8679c459359625d71617",
+      "bytes": 23759,
+      "mtime_utc": "2026-10-07T19:28:22.938346+00:00"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "update_response": {
+    "goal": {
+      "threadId": "01a117c1-5229-78c1-bc3d-b14febc4f7f4",
+      "objective": "Complete the scored ER10 D-M01-B control-arm revision: read only the declared brief, primary source files, and predecessor draft/critique; preserve critique dispositions; author the complete bounded final and stage report in the declared stage directory; record observed lifecycle receipts and timings; finish within the supplied deadline.",
+      "status": "complete",
+      "tokensUsed": 30143,
+      "timeUsedSeconds": 83,
+      "createdAt": 1791399920,
+      "updatedAt": 1791400004
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "get_response": {
+    "goal": {
+      "threadId": "01a117c1-5229-78c1-bc3d-b14febc4f7f4",
+      "objective": "Complete the scored ER10 D-M01-B control-arm revision: read only the declared brief, primary source files, and predecessor draft/critique; preserve critique dispositions; author the complete bounded final and stage report in the declared stage directory; record observed lifecycle receipts and timings; finish within the supplied deadline.",
+      "status": "complete",
+      "tokensUsed": 30143,
+      "timeUsedSeconds": 83,
+      "createdAt": 1791399920,
+      "updatedAt": 1791400004
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "observed_identity_terminal_state": {
+    "threadId": "01a117c1-5229-78c1-bc3d-b14febc4f7f4",
+    "objective": "Complete the scored ER10 D-M01-B control-arm revision: read only the declared brief, primary source files, and predecessor draft/critique; preserve critique dispositions; author the complete bounded final and stage report in the declared stage directory; record observed lifecycle receipts and timings; finish within the supplied deadline.",
+    "status": "complete",
+    "createdAt": 1791399920,
+    "updatedAt": 1791400004
+  },
+  "terminal_call_started_at_utc": "2026-10-07 19:06:44 UTC",
+  "terminal_get_observed_at_utc": "2026-10-07 19:06:44 UTC"
+}

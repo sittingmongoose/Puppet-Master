@@ -1,0 +1,129 @@
+{
+  "runtime": "3.46.1",
+  "selected_release": "3.51.3",
+  "runtime_matches_selected": false,
+  "started_at_utc": "2026-10-07T19:14:15.459747+00:00",
+  "purpose": "Reviewer-only bounded boundary checks; no candidate program or proposed policy executed.",
+  "cases": [
+    {
+      "id": "C1-stale-snapshot-and-writer-lock-order",
+      "mode": "wal",
+      "committed_since_read_and_writer_active": {
+        "error": "database is locked",
+        "code": 5,
+        "name": "SQLITE_BUSY"
+      },
+      "read_transaction_remains_after_busy": true,
+      "same_snapshot_after_writer_releases": {
+        "error": "database is locked",
+        "code": 517,
+        "name": "SQLITE_BUSY_SNAPSHOT"
+      },
+      "read_transaction_remains_after_snapshot_busy": true,
+      "rows_after_rollback_and_fresh_read": 4
+    },
+    {
+      "id": "C2-immediate-acquisition",
+      "mode": "wal",
+      "begin": {
+        "error": "database is locked",
+        "code": 5,
+        "name": "SQLITE_BUSY"
+      },
+      "losing_connection_in_transaction": false,
+      "body_executed": false,
+      "body_execution_note": "Harness deliberately skips body after failed begin."
+    },
+    {
+      "id": "C3-rollback-journal-commit-exhaustion",
+      "mode": "delete",
+      "successful_begin_immediate": true,
+      "commit_attempts": [
+        {
+          "error": "database is locked",
+          "code": 5,
+          "name": "SQLITE_BUSY"
+        },
+        {
+          "error": "database is locked",
+          "code": 5,
+          "name": "SQLITE_BUSY"
+        },
+        {
+          "error": "database is locked",
+          "code": 5,
+          "name": "SQLITE_BUSY"
+        },
+        {
+          "error": "database is locked",
+          "code": 5,
+          "name": "SQLITE_BUSY"
+        }
+      ],
+      "transaction_active_after_exhaustion": true,
+      "other_writer_before_cleanup": {
+        "error": "database is locked",
+        "code": 5,
+        "name": "SQLITE_BUSY"
+      },
+      "other_writer_after_explicit_rollback": {
+        "error": null
+      },
+      "rows_after_cleanup": 3,
+      "limitation": "Four immediate attempts, timeout zero; not the candidate's 100ms/1s schedule."
+    },
+    {
+      "id": "C4-pending-write-commit-busy",
+      "mode": "wal",
+      "first_returned_id": 4,
+      "successful_begin_immediate": true,
+      "commit_with_pending_statement": {
+        "error": "cannot commit transaction - SQL statements in progress",
+        "code": 5,
+        "name": "SQLITE_BUSY"
+      },
+      "active_after_failed_commit": true,
+      "commit_after_cursor_close": {
+        "error": null
+      },
+      "rows": 5
+    },
+    {
+      "id": "C5-same-connection-locked",
+      "mode": "wal",
+      "drop_with_cursor": {
+        "error": "database table is locked",
+        "code": 6,
+        "name": "SQLITE_LOCKED"
+      },
+      "drop_after_cursor_close": {
+        "error": null
+      }
+    },
+    {
+      "id": "C6-long-reader-checkpoint",
+      "mode": "wal",
+      "writer_commit": {
+        "error": null
+      },
+      "checkpoint_with_reader": [
+        0,
+        6,
+        5
+      ],
+      "checkpoint_after_reader": [
+        0,
+        6,
+        6
+      ],
+      "tuple_order": [
+        "busy",
+        "wal_frames",
+        "checkpointed_frames"
+      ],
+      "limitation": "PASSIVE checkpoint progress only; no assertion that file shrinks."
+    }
+  ],
+  "finished_at_utc": "2026-10-07T19:14:15.663329+00:00",
+  "elapsed_seconds": 0.20357906500066747
+}

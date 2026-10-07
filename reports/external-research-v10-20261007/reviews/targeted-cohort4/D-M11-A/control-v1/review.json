@@ -1,0 +1,1098 @@
+{
+  "schema": "independent-source-review.v1",
+  "overall_grade": "FAIL",
+  "source_pass": false,
+  "assessment_extent": "FULL_SCOPE_STATIC_SOURCE_REVIEW",
+  "full_declared_scope_checked": true,
+  "partial": false,
+  "unassessed_remainder": [],
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1/INPUT_MAP.json",
+    "sha256": "9086cee5b368fe5475d42fc78f4c258ee59d49ca7d663887c9125f9131f55ab1"
+  },
+  "brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/brief.md",
+    "sha256": "8ff2c3095c6505c45fd4d48e19f07f1edd0f81251e00838215d5f41a64c12eef"
+  },
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources.json",
+    "sha256": "7319f42c6303bc9b7920905120f59a7ba2f74f5de76a17825564af91bd26ccb8"
+  },
+  "frozen_output": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/final.md",
+    "expected_sha256": "de5938d402ee8138f44591fa06185a4ea77a4637cdeb1b875237371f5876bba8",
+    "observed_sha256": "de5938d402ee8138f44591fa06185a4ea77a4637cdeb1b875237371f5876bba8",
+    "verified_before_assessment": true,
+    "preserved_unmodified": true,
+    "word_count_whitespace": 916
+  },
+  "summary": "The explicit data/errorlevel=1/fresh-directory extractall policy is supported. Four material release/path/comparison/phase defects prevent a full PASS; all consequential final claims and six obligations have been independently checked against primary facts.",
+  "axes": [
+    {
+      "axis": 1,
+      "label": "all required brief obligations",
+      "disposition": "PARTIAL",
+      "reason": "All six are addressed and the brief remains bounded (916 whitespace-delimited words, seven findings), but obligations 2/3/5/6 contain material errors.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ]
+    },
+    {
+      "axis": 2,
+      "label": "consequential claims and full governing release/default/type/path conditions",
+      "disposition": "FAIL",
+      "reason": "Full primary-source claim checking completed; release, Linux path, historical suppression and refilter-phase defects prevent SourcePASS. Nonfatal API/type qualifications are retained.",
+      "defect_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ]
+    },
+    {
+      "axis": 3,
+      "label": "bounded useful discovery/negative/optional yield",
+      "disposition": "PARTIAL",
+      "reason": "Useful no-write/built-in-None/compatibility/stateful-filter leads; the no-errorlevel-change negative is false. Optional design remains bounded.",
+      "defect_ids": [
+        "D03"
+      ]
+    },
+    {
+      "axis": 4,
+      "label": "wrong rejection/correction or unjustified universal abstention",
+      "disposition": "FAIL",
+      "reason": "False Linux refusal expectation and omitted-CLI classification constitute wrong rejection/correction risks. No unjustified universal abstention: a usable conditional policy is supplied.",
+      "defect_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "axis": 5,
+      "label": "preservation/traceability/retained uncertainties and optional content",
+      "disposition": "PASS_WITH_LIMITATIONS",
+      "reason": "Final retains release/destination/concurrency/vendor/corpus limits and optional content with traceable source IDs; predecessor comparison is unavailable and was not attempted. Minor locator and hypothetical-example qualifications are recorded.",
+      "defect_ids": []
+    },
+    {
+      "axis": 6,
+      "label": "proposed versus actually executed checks",
+      "disposition": "PASS_WITH_LIMITATIONS",
+      "reason": "Runtime regressions are explicitly proposed only; no runtime success is claimed. Reviewer reproduced hashes/static facts. Candidate execution provenance cannot be authenticated without excluded history/logs.",
+      "defect_ids": []
+    }
+  ],
+  "obligations": [
+    {
+      "obligation_id": "O1",
+      "text": "Identify the old concern, implementation/fix lineage, and released default relevant to 3.14.0.",
+      "disposition": "PASS",
+      "output_locators": [
+        "final.md:9"
+      ],
+      "claim_ids": [
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "evidence": [
+        "pep706:#motivation,#reference-implementation",
+        "tarissue:$.body",
+        "tarpr:$.merged_at,$.merge_commit_sha",
+        "tardefaultissue:$.body",
+        "tarnew:2370-2374",
+        "tartest:742-757"
+      ],
+      "reason": "Historical concern, PEP/PR and default switch are correctly linked; released bytes take priority."
+    },
+    {
+      "obligation_id": "O2",
+      "text": "Bind omitted versus explicit filter and errorlevel behavior.",
+      "disposition": "PARTIAL",
+      "output_locators": [
+        "final.md:11,19,23"
+      ],
+      "claim_ids": [
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C27"
+      ],
+      "defect_ids": [
+        "D03",
+        "D04"
+      ],
+      "reason": "Main 3.14 argument/attribute/default/threshold rules are sound; historical suppressed-error behavior and directory-fixup exception phase are wrong or unbound."
+    },
+    {
+      "obligation_id": "O3",
+      "text": "Separate file/link/path domains and destination assumptions.",
+      "disposition": "PARTIAL",
+      "output_locators": [
+        "final.md:13,15,21,23"
+      ],
+      "claim_ids": [
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C22"
+      ],
+      "defect_ids": [
+        "D02",
+        "D04"
+      ],
+      "reason": "Strong link bases, containment and destination conditions; Linux absolute-member test and C:/ platform qualifier are deficient. Single-extract copy fallback also needs qualification."
+    },
+    {
+      "obligation_id": "O4",
+      "text": "State residual security and resource-exhaustion limits.",
+      "disposition": "PASS",
+      "output_locators": [
+        "final.md:5,15,19,23"
+      ],
+      "claim_ids": [
+        "C02",
+        "C09",
+        "C17",
+        "C24"
+      ],
+      "evidence": [
+        "tardocnew:1167-1198",
+        "tarnew:781-868"
+      ],
+      "reason": "DoS/resources/names/repeats/live-data limits and caller-owned controls are preserved; no claim of complete safety."
+    },
+    {
+      "obligation_id": "O5",
+      "text": "Avoid projecting an older issue onto every current code path.",
+      "disposition": "PARTIAL",
+      "output_locators": [
+        "final.md:17"
+      ],
+      "claim_ids": [
+        "C18",
+        "C19",
+        "C20",
+        "C21",
+        "C22"
+      ],
+      "defect_ids": [
+        "D01"
+      ],
+      "reason": "Read/write and archive-format separation are useful, but omitted 3.14 CLI is wrongly categorized as unfiltered."
+    },
+    {
+      "obligation_id": "O6",
+      "text": "Propose version-discriminating regression checks and conditional compatibility policy.",
+      "disposition": "PARTIAL",
+      "output_locators": [
+        "final.md:19,21,23"
+      ],
+      "claim_ids": [
+        "C23",
+        "C24",
+        "C25",
+        "C27"
+      ],
+      "defect_ids": [
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "reason": "Explicit data, feature detection and opt-in/fail-closed choices are appropriate; wrong absolute-path expectation and missed old/new suppression distinction undermine the matrix."
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "claim_id": "C01",
+      "output_locator": "final.md:3,27",
+      "claim": "Release/platform/API binding and eight source hashes",
+      "checked_source_fact": "The mapped files have the declared hashes; v3.14.0 exports extract/extractall with filter=None.",
+      "governing_conditions": "Stock CPython v3.14.0 on Linux; custom subclasses/vendor changes are outside the pinned implementation.",
+      "primary_locators": [
+        "tarnew:2388-2400,2461-2479",
+        "INPUT_MAP.json:required_sources"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C02",
+      "output_locator": "final.md:5,19",
+      "claim": "Explicit data/errorlevel=1/fresh destination plus limits is a bounded policy",
+      "checked_source_fact": "Default errorlevel is 1; data_filter is a named/public function; documentation recommends fresh temporary directories, external limits and additional inspection.",
+      "governing_conditions": "Recommendation is sound for standard extractall and attacker-inert destination; limits and cleanup must be implemented by the caller, not provided by data_filter.",
+      "primary_locators": [
+        "tarnew:858-868,1710-1712,2370-2386",
+        "tardocnew:1167-1198"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C03",
+      "output_locator": "final.md:9",
+      "claim": "Old concern and CVE-2007-4559 motivation",
+      "checked_source_fact": "PEP motivation describes unclear/incorrect prior inspection and malicious archive metadata; fully_trusted returns the member unchanged.",
+      "governing_conditions": "Historical unfiltered extraction; this does not establish vulnerability in every current API.",
+      "primary_locators": [
+        "pep706:#motivation (HTML lines 170-205)",
+        "tarnew:849-850",
+        "tardocnew:1006-1016"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C04",
+      "output_locator": "final.md:9",
+      "claim": "PEP/issue/PR/default-change lineage",
+      "checked_source_fact": "PEP metadata is Final/Python-Version 3.12. Issue 102950 tracks PEP 706 and links PR 102953; PR merged 2023-04-24T08:58:06Z at af530469954e8ad49f1e071ef31c844b9bfda414. Issue 121999 closed 2024-07-26T14:34:48Z and links PR 122002.",
+      "governing_conditions": "JSON metadata/body establish implementation lineage, not all later fixes or comment discussions.",
+      "primary_locators": [
+        "pep706:PEP metadata, #reference-implementation",
+        "tarissue:$.number,$.title,$.body",
+        "tarpr:$.merged_at,$.merge_commit_sha,$.body",
+        "tardefaultissue:$.title,$.closed_at,$.body"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C05",
+      "output_locator": "final.md:9,11,21",
+      "claim": "Omitted filter transitions from fully_trusted+warning to data",
+      "checked_source_fact": "3.12.3 returns fully_trusted_filter after a DeprecationWarning; 3.14.0 returns data_filter without warning. PEP describes the 3.12-3.13 transition; the 3.14 test asserts the data mock was called.",
+      "governing_conditions": "Both argument and extraction_filter must be None; non-None instance/class/subclass settings override omission. 3.13 history is checked against PEP, not a separately captured 3.13 runtime.",
+      "primary_locators": [
+        "tarold:2217-2238",
+        "tarnew:2370-2386",
+        "pep706:417-427",
+        "tardocnew:637-666,1045-1053",
+        "tartest:742-757"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C06",
+      "output_locator": "final.md:9,11,19,21",
+      "claim": "Named/callable filters and extraction_filter strings",
+      "checked_source_fact": "Both release entry points have keyword-only filter. Explicit callables are returned directly; named strings index _NAMED_FILTERS; unknown hashable names raise ValueError; attribute strings raise TypeError when used.",
+      "governing_conditions": "Type errors/unhashable non-callable arguments are not covered by the unknown-string ValueError rule. Merely assigning a string does not raise until filter resolution.",
+      "primary_locators": [
+        "tarnew:864-868,2370-2389,2461-2462",
+        "tarold:2217-2241",
+        "tartest:4443-4447,4466-4470"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C07",
+      "output_locator": "final.md:11,19,21",
+      "claim": "FilterError fatal/default abort; errorlevel=0 skip and 2 raises ExtractError",
+      "checked_source_fact": "The primary member-filter phase leaves filtered=None on suppressed exceptions in 3.14 and skips. Fatal/nonfatal handlers raise above 0/1 respectively. Directory-fixup refilter catches _FILTER_ERRORS and continues regardless of errorlevel.",
+      "governing_conditions": "The advertised fatal/abort rule needs the phase qualifier; custom/base FilterError does not necessarily carry tarinfo, unlike refusal subclasses.",
+      "primary_locators": [
+        "tarnew:737-779,2426-2439,2493-2503,2531-2548",
+        "tardocnew:616-635,1155-1159",
+        "tartest:4502-4566"
+      ],
+      "disposition": "CONTRADICTED_IN_PART",
+      "defect_ids": [
+        "D04"
+      ],
+      "qualification_ids": [
+        "Q01"
+      ]
+    },
+    {
+      "claim_id": "C08",
+      "output_locator": "final.md:11,23",
+      "claim": "UnicodeEncodeError is newly handled as fatal",
+      "checked_source_fact": "3.14 catches UnicodeEncodeError in initial filtering and _extract_one; 3.12.3 catches OSError/FilterError in filtering and OSError in extraction.",
+      "governing_conditions": "Debug output is conditional on debug>=1; errorlevel does not suppress arbitrary exceptions/data-corruption errors.",
+      "primary_locators": [
+        "tarnew:2497-2498,2526-2548,2989-2993",
+        "tarold:2314-2317,2335-2357",
+        "tartest:4387-4406",
+        "tardocnew:627-628"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C09",
+      "output_locator": "final.md:5,11,19",
+      "claim": "Partial extraction and caller cleanup",
+      "checked_source_fact": "extractall writes members as it proceeds and does not roll back; docs explicitly place cleanup on the caller.",
+      "governing_conditions": "Earlier text correctly requires cleanup on any abort; the abbreviated catch list in finding 6 should not be implemented as the sole cleanup boundary (e.g. ReadError also propagates).",
+      "primary_locators": [
+        "tarnew:2408-2420,2653-2667,2835-2857",
+        "tardocnew:634-635,1071-1072"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [],
+      "qualification_ids": [
+        "Q02"
+      ]
+    },
+    {
+      "claim_id": "C10",
+      "output_locator": "final.md:13,21",
+      "claim": "tar/data absolute member paths and containment",
+      "checked_source_fact": "Filters strip leading slash/os.sep before isabs and realpath/commonpath checks. Linux /tmp/x becomes a relative member; the C:/foo surviving-absolute example is explicitly Windows-only. The released test expects stripped extraction on slash-based systems.",
+      "governing_conditions": "After stripping, escape may still be rejected; not every originally absolute Linux name is refused. Member names and link targets have different rules.",
+      "primary_locators": [
+        "tarnew:781-797",
+        "tardocnew:1090-1097",
+        "tartest:3714-3737"
+      ],
+      "disposition": "CONTRADICTED_IN_PART",
+      "defect_ids": [
+        "D02"
+      ],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C11",
+      "output_locator": "final.md:13,21",
+      "claim": "tar file/link domains",
+      "checked_source_fact": "tar calls _get_filtered_attrs(...,False), so it checks member output paths but does not apply data's link-target checks.",
+      "governing_conditions": "tar can create an outside-pointing link; a later member writing through it is rejected. 'tar ... blocks escapes' needs the write-path qualifier.",
+      "primary_locators": [
+        "tarnew:781-797,819-846,852-853",
+        "tartest:3952-3979,4142-4153"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [],
+      "qualification_ids": [
+        "Q03"
+      ]
+    },
+    {
+      "claim_id": "C12",
+      "output_locator": "final.md:13,21",
+      "claim": "data link rejection, normpath, relative bases",
+      "checked_source_fact": "data refuses absolute/outside symlink and hardlink targets; symlinks are based at dest/dirname(name), hardlinks at dest. It sets normalized linkname while containment uses the original linkname during checking.",
+      "governing_conditions": "normpath can change semantics when internal .. crosses symlinks; the docs explicitly warn. Inside-target links remain allowed, even when link creation is unsupported and copy fallback is used.",
+      "primary_locators": [
+        "tarnew:829-846,858-862",
+        "tardocnew:1108-1121,1145-1147",
+        "tartest:4053-4075,4155-4176"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C13",
+      "output_locator": "final.md:13,21",
+      "claim": "data file-type refusal",
+      "checked_source_fact": "For ordinary parsed archives, numeric mode is assigned and data's type branch accepts regular/hardlink/directory/symlink; FIFO/device/other nonaccepted types are refused.",
+      "governing_conditions": "Special-file rejection is inside if mode is not None. A supplied or modified TarInfo with mode=None bypasses this type branch; raw archive headers cannot encode None mode.",
+      "primary_locators": [
+        "tarnew:798-818,1278-1305",
+        "tartest:4324-4336,3338-3352"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [],
+      "qualification_ids": [
+        "Q04"
+      ]
+    },
+    {
+      "claim_id": "C14",
+      "output_locator": "final.md:13,21",
+      "claim": "Mode and ownership sanitization",
+      "checked_source_fact": "tar masks integer mode with 0755; data adds owner read/write, drops all execute bits without user execute, sets directory/symlink mode=None, and clears uid/gid/uname/gname.",
+      "governing_conditions": "None metadata is intentionally preserved. Clearing ownership prevents archive-directed ownership changes; root may still call chown/lchown with -1 IDs, so 'skip chown' is a semantic shorthand, not no-syscall proof.",
+      "primary_locators": [
+        "tarnew:798-828,2756-2788,2790-2798",
+        "tardocnew:1127-1138",
+        "tartest:4286-4304"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [],
+      "qualification_ids": [
+        "Q05"
+      ]
+    },
+    {
+      "claim_id": "C15",
+      "output_locator": "final.md:13,23",
+      "claim": "Live realpath, per-member filtering, directory refilter",
+      "checked_source_fact": "3.14 uses realpath(...,strict=os.path.ALLOW_MISSING), checks containment at each initial member, then re-filters unfiltered directories and lstat-checks them before metadata changes.",
+      "governing_conditions": "Missing paths are allowed during realpath; realpath/encoding errors can still propagate. Directory re-filter refusals are logged/skipped, not primary-member abort semantics.",
+      "primary_locators": [
+        "tarnew:781-797,2408-2420,2426-2455",
+        "tartest:2719-2742,4178-4208"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [
+        "D04"
+      ],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C16",
+      "output_locator": "final.md:13,23",
+      "claim": "Entry point/destination assumptions",
+      "checked_source_fact": "extractall(path='.') and extract(path='') have different default spellings, both denoting the current directory; docs recommend a new temporary destination.",
+      "governing_conditions": "A fresh directory does not replace exclusion of concurrent mutation; final retains attacker-inert/single-thread/no-concurrent-mutation conditions.",
+      "primary_locators": [
+        "tarnew:2388-2389,2461-2462",
+        "tardocnew:1174-1179,1196-1198"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C17",
+      "output_locator": "final.md:15",
+      "claim": "Residual DoS, names/sizes/counts, repeats/races/case shadowing",
+      "checked_source_fact": "data_filter contains no such quotas/allowlists; the documentation lists these resource/name risks, duplicate overwrite semantics and live-data races.",
+      "governing_conditions": "The list is expressly incomplete; OS limits remain necessary for work outside/preceding callbacks. Inside-target links are allowed.",
+      "primary_locators": [
+        "tarnew:781-868,2653-2667",
+        "tardocnew:1018-1022,1167-1198"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C18",
+      "output_locator": "final.md:17",
+      "claim": "--filter-less CLI is an unfiltered old-warning path",
+      "checked_source_fact": "3.14 CLI forwards args.filter to extractall; without --filter it is None and the stock API resolves it to data_filter. PEP specifies this 3.14 CLI transition.",
+      "governing_conditions": "Only an older default or explicit fully_trusted/custom override yields that unfiltered classification; omitted CLI option is not such an override.",
+      "primary_locators": [
+        "tarnew:3041-3043,3081-3092,2370-2374",
+        "pep706:533-540"
+      ],
+      "disposition": "CONTRADICTED",
+      "defect_ids": [
+        "D01"
+      ],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C19",
+      "output_locator": "final.md:17,23",
+      "claim": "Read APIs are not filesystem extraction writes",
+      "checked_source_fact": "extractfile builds a buffered archive reader or recursively resolves archive link targets; getmembers scans metadata, list prints, is_tarfile opens for reading.",
+      "governing_conditions": "Unsupported member types are also treated as regular by extractfile; links on nonseekable streams raise StreamError. Read-only does not mean immune to resource exhaustion.",
+      "primary_locators": [
+        "tarnew:724-729,2126-2134,2248-2280,2550-2580,3013-3029"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [],
+      "qualification_ids": [
+        "Q06"
+      ]
+    },
+    {
+      "claim_id": "C20",
+      "output_locator": "final.md:17",
+      "claim": "TarFile.add filter is a separate API",
+      "checked_source_fact": "add uses a one-argument TarInfo filter while producing the archive; extraction filters take member and destination.",
+      "governing_conditions": "A creation filter does not automatically validate later extraction.",
+      "primary_locators": [
+        "tarnew:2298-2336",
+        "tardocnew:668-679"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C21",
+      "output_locator": "final.md:17,21,23",
+      "claim": "shutil tar defaults and ZIP filter failure",
+      "checked_source_fact": "Released shutil tar unpack delegates filter=None to tar.extractall, hence stock 3.14 data default. Non-None filter is passed to built-in ZIP unpacker, whose signature has no filter; ZIP extract/extractall also have no filter parameter.",
+      "governing_conditions": "Built-in registered formats only; user-registered unpackers may implement other contracts. Candidate correctly records missing released shutil companion in its own corpus; this review supplements it.",
+      "primary_locators": [
+        "shutil_v3.14.0:1309-1335,1339-1361,1386-1432",
+        "zipfile_v3.14.0:1824-1854",
+        "pep706:553-562"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C22",
+      "output_locator": "final.md:17",
+      "claim": "3.14 LinkFallbackError and copy refilter",
+      "checked_source_fact": "3.14 defines LinkFallbackError and raises it when a fallback target filter raises _FILTER_ERRORS. extractall passes filter_function; extract does not forward it to _extract_one, so its copy fallback takes filtered=unfiltered.",
+      "governing_conditions": "Guard is conditional on API forwarding/filter presence and fallback needing an archive target. None-return skips the fallback copy. This qualifies a generic feature mention; final recommends extractall explicitly, so no separate categorical wrong claim is forced.",
+      "primary_locators": [
+        "tarnew:769-779,2418-2420,2475-2479,2511-2525,2706-2754",
+        "tartest:4104-4153"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [],
+      "qualification_ids": [
+        "Q07"
+      ]
+    },
+    {
+      "claim_id": "C23",
+      "output_locator": "final.md:19",
+      "claim": "Feature detection, conditional compatibility, global setting",
+      "checked_source_fact": "PEP/docs support hasattr(data_filter), fail-closed or explicitly acknowledged legacy fallback, callable extraction_filter, and restricting global changes to app/site with staticmethod.",
+      "governing_conditions": "Feature detection establishes API availability, not equivalence of older patched filtering implementations to v3.14.0. An absent API cannot receive filter='fully_trusted'; opting into old behavior means invoking that older API deliberately.",
+      "primary_locators": [
+        "pep706:596-644",
+        "tardocnew:645-658,1201-1241",
+        "tartest:4408-4447"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C24",
+      "output_locator": "final.md:19,23",
+      "claim": "Stateful wrapper and optional context-manager opportunity",
+      "checked_source_fact": "Docs show a stateful callback/context manager; tests demonstrate delegation to data_filter. Extending this to quotas/name rules is a proposed design.",
+      "governing_conditions": "Callback may be invoked again for directory fixup and fallback; counters must define accounting/idempotence. Docs illustration itself only counts callbacks, not a complete byte/name cap implementation.",
+      "primary_locators": [
+        "tardocnew:1244-1268",
+        "tartest:4472-4500",
+        "tarnew:2432,2748"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [],
+      "qualification_ids": [
+        "Q08"
+      ]
+    },
+    {
+      "claim_id": "C25",
+      "output_locator": "final.md:21",
+      "claim": "Regression matrix is proposed and version discriminating",
+      "checked_source_fact": "Omitted-filter/explicit-filter/name/attribute/errorlevel/link/type/mode/default cases correspond to released branches and tests; Linux absolute-member refusal expectation contradicts those branches.",
+      "governing_conditions": "Future device creation requires OS support/privilege; hardlink success needs a resolvable target; tar write containment differs from link-target acceptance. Checks must cover phases and releases rather than infer that all suppressed errors are equivalent.",
+      "primary_locators": [
+        "tarnew:781-868,2370-2548,2677-2754,3090-3092",
+        "tarold:2217-2238,2304-2325",
+        "tartest:3714-3737,3952-3995,4324-4336,4502-4566"
+      ],
+      "disposition": "CONTRADICTED_IN_PART",
+      "defect_ids": [
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "qualification_ids": [
+        "Q03",
+        "Q07"
+      ]
+    },
+    {
+      "claim_id": "C26",
+      "output_locator": "final.md:23",
+      "claim": "Built-in filters never return None",
+      "checked_source_fact": "fully_trusted returns member; tar/data return original or member.replace; all may raise instead.",
+      "governing_conditions": "Custom filters may return None; machinery may skip on suppressed errors without a built-in None return.",
+      "primary_locators": [
+        "tarnew:849-862"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C27",
+      "output_locator": "final.md:23",
+      "claim": "No errorlevel semantics change from 3.12.3 beyond UnicodeEncodeError and directory refilter",
+      "checked_source_fact": "3.12.3 initializes tarinfo to the original member, then a failed filter assignment leaves it unchanged if the error is suppressed; 3.14 initializes filtered=None and skips. Suppressed ExtractError at errorlevel=1 likewise differs.",
+      "governing_conditions": "This difference concerns initial member-filter exceptions, not just handler threshold code. At errorlevel=1 FilterError aborts both releases, so the core recommendation still benefits.",
+      "primary_locators": [
+        "tarold:2304-2325,2340-2357",
+        "tarnew:2481-2509,2531-2548",
+        "tartest:4517-4554"
+      ],
+      "disposition": "CONTRADICTED",
+      "defect_ids": [
+        "D03"
+      ],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C28",
+      "output_locator": "final.md:23",
+      "claim": "Retained source/vendor uncertainties",
+      "checked_source_fact": "Captured issue/PR JSON contains bodies/metadata but no comment-thread collection; PEP permits redistributor changes. Shutil file is not in required input list.",
+      "governing_conditions": "No inference about all vendor releases, actual deployed sandbox, comments or candidate history is made.",
+      "primary_locators": [
+        "tarissue:JSON object/body",
+        "tarpr:JSON object/body",
+        "tardefaultissue:JSON object/body",
+        "pep706:285-294",
+        "INPUT_MAP.json:required_sources"
+      ],
+      "disposition": "SUPPORTED",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C29",
+      "output_locator": "final.md:25",
+      "claim": "Executed static checks versus proposed runtime checks",
+      "checked_source_fact": "Final explicitly labels regression checks proposed/not executed and reports hash/static inspection only. This review reproduced frozen/source hashes and independently read the relevant primary facts.",
+      "governing_conditions": "Candidate historical command/read execution is not independently authenticated because logs/history are excluded. No claim of passed runtime regressions or archive extraction is present.",
+      "primary_locators": [
+        "final.md:21,25",
+        "INPUT_MAP.json:frozen_output_sha256,required_sources"
+      ],
+      "disposition": "SUPPORTED_WITH_PROVENANCE_LIMIT",
+      "defect_ids": [],
+      "qualification_ids": []
+    },
+    {
+      "claim_id": "C30",
+      "output_locator": "final.md:27",
+      "claim": "Traceability and source identities",
+      "checked_source_fact": "All eight source IDs, versions and abbreviated hashes correspond to the input map; primary locators permit inspection.",
+      "governing_conditions": "Default-filter assertions are at tartest.py:755-757, beyond the candidate's 742-754 locator. The referenced sources/SOURCES_USED.md is outside permitted inputs and was not read; enough source identity remains inside final.",
+      "primary_locators": [
+        "INPUT_MAP.json:required_sources",
+        "tartest:742-757",
+        "final.md:9,27"
+      ],
+      "disposition": "SUPPORTED_WITH_QUALIFICATION",
+      "defect_ids": [],
+      "qualification_ids": [
+        "Q09"
+      ]
+    }
+  ],
+  "defects": [
+    {
+      "defect_id": "D01",
+      "kind": "wrong_release_path_classification",
+      "materiality": "material",
+      "severity": "medium",
+      "output_locator": "final.md:17 (finding 5)",
+      "description": "Unqualified classification of a --filter-less CLI as unfiltered is false within the declared stock 3.14.0 scope.",
+      "evidence": [
+        "tarnew:3041-3043,3090-3092 -> 2370-2374",
+        "pep706:533-540"
+      ],
+      "impact": "Can reject or diagnose a current data-filtered entry point on the basis of an older default.",
+      "required_correction": "Bind the CLI default to release and extraction_filter configuration; stock 3.14 omitted --filter uses data.",
+      "claim_ids": [
+        "C18"
+      ]
+    },
+    {
+      "defect_id": "D02",
+      "kind": "wrong_platform_path_rejection_and_regression_expectation",
+      "materiality": "material",
+      "severity": "medium",
+      "output_locator": "final.md:13,21 (findings 3 and 7)",
+      "description": "The Linux-scoped text omits the Windows condition for C:/ absolute-path refusal and proposes unconditional absolute member-path rejection under data.",
+      "evidence": [
+        "tarnew:785-797 explicitly strips leading / before checking isabs; C:/ comment says Windows",
+        "tartest:3723-3737 expects stripped names on slash-based systems",
+        "tardocnew:1090-1097"
+      ],
+      "impact": "A regression expecting refusal for Linux /tmp/x would fail correct stock behavior; wrong rejection conflates member names with absolute link targets.",
+      "required_correction": "Test stripped/contained Linux absolute member names separately from escaping names and absolute links; label surviving drive-absolute cases Windows-specific.",
+      "claim_ids": [
+        "C10",
+        "C25"
+      ]
+    },
+    {
+      "defect_id": "D03",
+      "kind": "false_negative_release_comparison",
+      "materiality": "material",
+      "severity": "high",
+      "output_locator": "final.md:23 (negative leads),21 (version tests)",
+      "description": "The no-errorlevel-semantics-change negative is contradicted by the old/new initial member-filter control flow.",
+      "evidence": [
+        "tarold:2306-2325 keeps original tarinfo after a filter raises; 2347-2357 suppresses at errorlevel=0",
+        "tarnew:2494-2503 initializes filtered=None and skips after suppression",
+        "tartest:4517-4554 corroborates 3.14 suppressed FilterError/OSError/ExtractError behavior"
+      ],
+      "impact": "Erases a consequential security difference: a rejected member may proceed unfiltered at 3.12.3/errorlevel=0 but is skipped at 3.14.0. Suppressed custom ExtractError at level 1 also differs.",
+      "required_correction": "Restrict invariant claims to handler thresholds and add old/new regression expectations for a raising filter under errorlevel=0 and custom ExtractError under 1.",
+      "claim_ids": [
+        "C27",
+        "C25"
+      ]
+    },
+    {
+      "defect_id": "D04",
+      "kind": "missing_filter_phase_condition",
+      "materiality": "material",
+      "severity": "medium",
+      "output_locator": "final.md:11,13,19 (findings 2,3,6)",
+      "description": "The all-FilterError/default-abort language is not conditioned on the initial member-filter phase, although the output also discusses directory refiltering.",
+      "evidence": [
+        "tarnew:776-779 defines _FILTER_ERRORS=(FilterError,OSError,ExtractError)",
+        "tarnew:2431-2439 catches those errors during directory fixup, logs and continues without consulting errorlevel",
+        "tarnew:2493-2503 has distinct initial member handling"
+      ],
+      "impact": "A caller or stateful wrapper could incorrectly rely on any post-extraction FilterError reaching its abort-and-wipe handler.",
+      "required_correction": "State that directory-fixup refusal suppresses metadata update and is not a primary-member abort; design stateful cap/error accounting and checks around callback phase.",
+      "claim_ids": [
+        "C07",
+        "C15",
+        "C25"
+      ]
+    }
+  ],
+  "qualifications": [
+    {
+      "qualification_id": "Q01",
+      "materiality": "minor",
+      "fact": "Built-in refusal subclasses carry tarinfo; base/custom FilterError need not.",
+      "primary_locators": [
+        "tarnew:737-774",
+        "tartest:4505-4506"
+      ]
+    },
+    {
+      "qualification_id": "Q02",
+      "materiality": "implementation caveat",
+      "fact": "Keep cleanup on any extraction failure, including corruption exceptions, rather than only two named exception classes.",
+      "primary_locators": [
+        "tardocnew:627-635",
+        "tarnew:2835-2857"
+      ]
+    },
+    {
+      "qualification_id": "Q03",
+      "materiality": "governing path condition",
+      "fact": "tar can permit links pointing outside; later write paths are checked. fully_trusted accepts metadata but does not guarantee OS link/device creation.",
+      "primary_locators": [
+        "tarnew:852-853,829-846,2677-2754",
+        "tartest:3952-3995"
+      ]
+    },
+    {
+      "qualification_id": "Q04",
+      "materiality": "custom-metadata caveat",
+      "fact": "Type rejection is conditional on non-None mode; ordinary on-disk header mode is integer.",
+      "primary_locators": [
+        "tarnew:800-816,1293-1301"
+      ]
+    },
+    {
+      "qualification_id": "Q05",
+      "materiality": "minor",
+      "fact": "Ignored ownership does not prove absence of chown calls under root; the IDs become -1.",
+      "primary_locators": [
+        "tarnew:2756-2788"
+      ]
+    },
+    {
+      "qualification_id": "Q06",
+      "materiality": "minor",
+      "fact": "extractfile also returns an archive reader for unsupported types; nonseekable link reads can raise.",
+      "primary_locators": [
+        "tarnew:2564-2576"
+      ]
+    },
+    {
+      "qualification_id": "Q07",
+      "materiality": "governing API condition",
+      "fact": "Copy fallback re-filtering is conditional on forwarding the filter; extractall does so but stock extract does not. Core policy explicitly chooses extractall, so this is not graded as a false guarantee it explicitly made.",
+      "primary_locators": [
+        "tarnew:2418-2420,2475-2479,2740-2754"
+      ]
+    },
+    {
+      "qualification_id": "Q08",
+      "materiality": "optional implementation caveat",
+      "fact": "Stateful caps must account for repeated directory/fallback callbacks; the docs' example counts callbacks and is not a ready-made quota implementation.",
+      "primary_locators": [
+        "tarnew:2432,2748",
+        "tardocnew:1244-1268"
+      ]
+    },
+    {
+      "qualification_id": "Q09",
+      "materiality": "minor traceability",
+      "fact": "Default-filter mock assertions are at test_tarfile.py:755-757, outside the candidate's cited 742-754 range; external SOURCES_USED.md was not inspected.",
+      "primary_locators": [
+        "tartest:742-757",
+        "final.md:27"
+      ]
+    }
+  ],
+  "blinding_and_scope_limits": {
+    "method_or_arm_visible": true,
+    "visible_labels": [
+      "control-v1 in input/review path",
+      "control/finalize-v1 in frozen output path"
+    ],
+    "other_arms_cases_reviews_helpers_campaign_history_read": false,
+    "candidate_draft_history_read": false,
+    "prior_findings_received": false,
+    "parent_analysis_received": false,
+    "delegation": false,
+    "predecessor_comparison_available": false,
+    "candidate_execution_provenance_available": false,
+    "t3_requested_at_available": false,
+    "limits": [
+      "Not identity/method-blind: allowed paths expose control labels.",
+      "Only mapped original inputs, exact frozen final and two same-scope released public primary companions were read.",
+      "Issue/PR captures contain body/metadata, not comments or the complete PR diff.",
+      "No downloaded code execution, archive extraction, software install or runtime regression testing.",
+      "No comparison to predecessors, other arms or evaluator answer corpus; no cost/winner judgment.",
+      "PEP's 3.13/backport statements are historical design/source claims; stock 3.12.3 and 3.14.0 code control the concrete release comparison."
+    ]
+  },
+  "executed_by_reviewer": [
+    "Native create_goal/get_goal activation recorded before source assessment.",
+    "Verified frozen final hash before reading it for assessment.",
+    "Recomputed SHA-256 of all eight original sources; all match.",
+    "Read original brief/map/manifest/final plus relevant primary source implementations, docs, tests and JSON lineage fields.",
+    "Captured released v3.14.0 shutil.py and zipfile/__init__.py for same-scope companion claims; recorded exact bytes/hashes/URLs and locators."
+  ],
+  "not_executed": [
+    "Candidate runtime regression matrix",
+    "Any archive extraction or downloaded source execution",
+    "Any candidate historical command-provenance authentication"
+  ],
+  "delivery_deadline_utc": "2026-10-07T19:22:09.503121+00:00",
+  "assessment_checkpoint_utc": "2026-10-07 19:13:27 UTC",
+  "timings_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1/timings.json",
+  "native_activation_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1/native_activation.json",
+  "native_terminal_receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1/native_terminal_receipt.json",
+  "assessment_completed_at_utc": "2026-10-07T19:15:41.454987+00:00",
+  "required_sources_checked": [
+    {
+      "source_id": "pep706",
+      "url": "https://peps.python.org/pep-0706/",
+      "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/pep706.html",
+      "kind": "public primary raw bytes",
+      "observed_sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "hash_matches": true,
+      "checked_claim_ids": [
+        "C03",
+        "C04",
+        "C05",
+        "C18",
+        "C21",
+        "C23",
+        "C28"
+      ]
+    },
+    {
+      "source_id": "tarissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/102950",
+      "version_or_capture": "CPython issue 102950 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarissue.json",
+      "kind": "public primary raw bytes",
+      "observed_sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "hash_matches": true,
+      "checked_claim_ids": [
+        "C04",
+        "C28"
+      ]
+    },
+    {
+      "source_id": "tarpr",
+      "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+      "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarpr.json",
+      "kind": "public primary raw bytes",
+      "observed_sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "hash_matches": true,
+      "checked_claim_ids": [
+        "C04",
+        "C28"
+      ]
+    },
+    {
+      "source_id": "tardefaultissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/121999",
+      "version_or_capture": "CPython issue 121999 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "e88ab5fad57a96ff4cb0d25148ff5c1535027d2482fe616d4ee0e2a0a3b70bce",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardefaultissue.json",
+      "kind": "public primary raw bytes",
+      "observed_sha256": "e88ab5fad57a96ff4cb0d25148ff5c1535027d2482fe616d4ee0e2a0a3b70bce",
+      "hash_matches": true,
+      "checked_claim_ids": [
+        "C04",
+        "C28"
+      ]
+    },
+    {
+      "source_id": "tarold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarold.py",
+      "kind": "public primary raw bytes",
+      "observed_sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "hash_matches": true,
+      "checked_claim_ids": [
+        "C05",
+        "C06",
+        "C08",
+        "C25",
+        "C27"
+      ]
+    },
+    {
+      "source_id": "tarnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarnew.py",
+      "kind": "public primary raw bytes",
+      "observed_sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "hash_matches": true,
+      "checked_claim_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C22",
+        "C24",
+        "C25",
+        "C26",
+        "C27"
+      ]
+    },
+    {
+      "source_id": "tardocnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardocnew.rst",
+      "kind": "public primary raw bytes",
+      "observed_sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+      "hash_matches": true,
+      "checked_claim_ids": [
+        "C02",
+        "C03",
+        "C05",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C12",
+        "C14",
+        "C16",
+        "C17",
+        "C20",
+        "C23",
+        "C24"
+      ]
+    },
+    {
+      "source_id": "tartest",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/test/test_tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5149edfc9376f6d45cb95f7c914cd6b6dd205e5ef404298e655aa685a5527831",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tartest.py",
+      "kind": "public primary raw bytes",
+      "observed_sha256": "5149edfc9376f6d45cb95f7c914cd6b6dd205e5ef404298e655aa685a5527831",
+      "hash_matches": true,
+      "checked_claim_ids": [
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C27",
+        "C30"
+      ]
+    }
+  ],
+  "additional_sources_checked": [
+    {
+      "source_id": "shutil_v3.14.0",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/shutil.py",
+      "version": "CPython v3.14.0",
+      "capture_started_at_utc": "2026-10-07T19:11:52.362937+00:00",
+      "capture_completed_at_utc": "2026-10-07T19:11:52.511652+00:00",
+      "sha256": "ab36f39f04e349020cdd13cf41b50905fc399150fb5e6a7cf73d69b22dd949cd",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1/additional_sources/shutil_v3.14.0.py",
+      "bytes": 60568,
+      "http_status": 200,
+      "execution": "not executed",
+      "checked_claim_ids": [
+        "C21"
+      ]
+    },
+    {
+      "source_id": "zipfile_v3.14.0",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/zipfile/__init__.py",
+      "version": "CPython v3.14.0",
+      "capture_started_at_utc": "2026-10-07T19:11:52.513821+00:00",
+      "capture_completed_at_utc": "2026-10-07T19:11:52.636028+00:00",
+      "sha256": "896a7b3216ec8656e73a3774786a8b4e4777ef045e05449345de591d6baa4154",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1/additional_sources/zipfile_v3.14.0.py",
+      "bytes": 91588,
+      "http_status": 200,
+      "execution": "not executed",
+      "checked_claim_ids": [
+        "C21"
+      ]
+    }
+  ]
+}

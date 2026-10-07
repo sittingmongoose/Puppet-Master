@@ -1,0 +1,80 @@
+{
+  "schema": "er10-stage-timings.v1",
+  "case_id": "D-M14-A",
+  "stage_id": "control/author-v2",
+  "deadline_utc": "2026-10-07T19:47:57.072294Z",
+  "work_window_start_utc": "2026-10-07T19:38:40Z",
+  "scientific_artifacts_complete_at_utc": "2026-10-07T19:45:14Z",
+  "measured_work_window_seconds": 394,
+  "timing_note": "Elapsed is measured between actual clock readings after Goal activation and at scientific artifact completion. Individual source operations were not timed separately.",
+  "source_operations": [
+    {
+      "operation": "Read INPUT_MAP.json and follow its case brief, source manifest, and four listed frozen source captures; no predecessors were listed.",
+      "elapsed_seconds": null,
+      "result": "Complete. SHA-256 values for the four frozen source captures match the source manifest."
+    },
+    {
+      "operation": "Inspect Rasterio 1.3.10 released implementation and enum primary sources, retrieved from the official raw GitHub tag and retained in the permitted sources directory.",
+      "elapsed_seconds": null,
+      "captures": [
+        {
+          "source_id": "R5",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/_io.pyx",
+          "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/sources/rasterio-1.3.10-_io.pyx",
+          "version": "Rasterio 1.3.10",
+          "sha256": "1d06b63aff8f2dbc961ec8c431998d11beb3d1ce805018296177248aaa7ff190",
+          "bytes": 86415,
+          "locator": "read_masks around lines 742-770; dataset_mask around lines 984-1077"
+        },
+        {
+          "source_id": "R6",
+          "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/rasterio/enums.py",
+          "local_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/sources/rasterio-1.3.10-enums.py",
+          "version": "Rasterio 1.3.10",
+          "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+          "bytes": 5550,
+          "locator": "Resampling definitions around lines 44-108"
+        }
+      ]
+    },
+    {
+      "operation": "Author source-linked decision proposal, source capture index, conditions, alternatives, limitations, optional continuous-band lead, proposed validation, and open choices.",
+      "elapsed_seconds": null,
+      "result": "Complete; report is 1041 words and labels validation as proposed, not executed."
+    }
+  ],
+  "artifacts": {
+    "report": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/report.md",
+      "bytes": 9479,
+      "words": 1041
+    },
+    "additional_source_index": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/sources/index.json",
+    "additional_captures_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/sources"
+  },
+  "execution": {
+    "tests_or_validation_run": false,
+    "code_or_fixture_run": false,
+    "downloaded_code_executed": false,
+    "installers_run": false,
+    "proposed_validation": "Recorded in report.md; not executed."
+  },
+  "provider_usage": {
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_tokens": null,
+    "billing_amount": null,
+    "reason": "Provider usage and billing telemetry were not exposed."
+  },
+  "native_goal": {
+    "activation_snapshot": {
+      "thread_id": "01a117df-9899-7e31-8639-9b6091a457d8",
+      "objective": "Execute D-M14-A/control/author-v2, deliver report.md and timings.json by 2026-10-07T19:47:57.072294+00:00.",
+      "status": "active",
+      "tokens_used": 0,
+      "time_used_seconds": 0,
+      "created_at_epoch_seconds": 1791401913
+    },
+    "terminal_snapshot": "Required same-goal update/get will be returned by the native tools and reported separately in the final response; it is not mixed with provider usage above."
+  }
+}

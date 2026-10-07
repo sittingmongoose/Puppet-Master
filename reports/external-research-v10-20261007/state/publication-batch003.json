@@ -1,0 +1,40 @@
+{
+  "verified_at": "2026-10-07T20:01:20.549180+00:00",
+  "branch": "t3/research/er10-research-efficiency-campaign",
+  "commit": "8f2e9a3a36497783c4a14bde7c7765f412fc94b1",
+  "actual_github_branch_verified": true,
+  "selected_files": [
+    {
+      "path": "reports/external-research-v10-20261007/reviews/anchors/I-ANCHOR-MUSE/COMPARISON.batch003.json",
+      "bytes": 23722,
+      "sha256": "be973dfa4b61808e5d8609f1517d8c9c9f7e02892393b16a0af48db98e819beb",
+      "github_blob_sha": "57d7b7224cb2c5f37bb44dbe7dab9ceb909b9192"
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort2/D-M05-A/REVIEW.json",
+      "bytes": 81330,
+      "sha256": "5d6f2257577842ee8f5f4066d30bf80c1ebf6d84afab40d648657a433bca67d4",
+      "github_blob_sha": "4097f98e9cf4931f4838bdded44402f8e6098525"
+    },
+    {
+      "path": "reports/external-research-v10-20261007/reviews/targeted-cohort2/D-M05-B/REVIEW.json",
+      "bytes": 49191,
+      "sha256": "21ec4b4467f5d40f5611759c806f6c62d2b3a1ba8987c2d1bbd7ea4adbe48c11",
+      "github_blob_sha": "ca17e4b8df84aed68410138b0d8f5d3fa60a5521"
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/export.py",
+      "bytes": 16133,
+      "sha256": "5658c9500600b256f79d46b2522d9d2092d466cc44fc2ae1695fa787527774e8",
+      "github_blob_sha": "19fad43dd72e2e5f9390169104338d014c5eb50f"
+    },
+    {
+      "path": "reports/external-research-v10-20261007/helpers/passive-receipts/ROOT_ADMISSION_V2.json",
+      "bytes": 2576,
+      "sha256": "6f0be4322b0292d7bef25b92f728435c89b29d650ca4c66a5e3f7b8ae700f4bb",
+      "github_blob_sha": "0d849d287446090bfa59a4d4e59cca5aace7de9b"
+    }
+  ],
+  "manifest_sha256": "3ea59b1665bbd0ce728eac28ff78c8bb762a49e726e565232f9977275a09edb9",
+  "earlier_verification_failure": "Wrong unversioned target path; did not alter candidate/reviewer artifacts."
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "source_id": "shutil-3.12.3.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+    "version": "CPython v3.12.3 tag",
+    "captured_at_utc": "2026-10-07T19:42:08.745546+00:00",
+    "started_at_utc": "2026-10-07T19:42:08.579503+00:00",
+    "duration_seconds": 0.16602875500029768,
+    "http_status": 200,
+    "resolved_url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+    "bytes": 58120,
+    "sha256": "819e518cb7a539d09b2526138015541b34d2646afb9c2f6ae4ffd476d6a0fcf4",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.py",
+    "limitations": "Direct upstream primary file pinned to release tag; static inspection only, no downloaded code executed; independent supplementary reviewer capture, not candidate capture.",
+    "reviewed_locators": [
+      "lines 1271-1274, 1301-1390",
+      "lines 1301-1313, 1344-1390"
+    ]
+  },
+  {
+    "source_id": "shutil-3.12.3.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+    "version": "CPython v3.12.3 tag",
+    "captured_at_utc": "2026-10-07T19:42:08.858801+00:00",
+    "started_at_utc": "2026-10-07T19:42:08.746288+00:00",
+    "duration_seconds": 0.11253331700027047,
+    "http_status": 200,
+    "resolved_url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+    "bytes": 34464,
+    "sha256": "51c991b2a28b8cc00de14b6cb71dcfbe64c78f28a8a24b5af7b43e0eb74bff67",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.rst",
+    "limitations": "Direct upstream primary file pinned to release tag; static inspection only, no downloaded code executed; independent supplementary reviewer capture, not candidate capture.",
+    "reviewed_locators": [
+      "lines 682-702, 719-733, 750-760",
+      "lines 696-700"
+    ]
+  }
+]

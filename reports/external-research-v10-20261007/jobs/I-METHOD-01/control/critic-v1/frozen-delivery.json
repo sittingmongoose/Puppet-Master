@@ -1,0 +1,158 @@
+{
+  "record_at": "2026-10-07T19:29:10.124814+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/artifact.md": {
+      "sha256": "59eaf08c72c8d8f780a936588d714e6a7c5066663702ad1e96d9819ccfe8a03d",
+      "bytes": 13336
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/source-map.json": {
+      "sha256": "8ad6e51261663a21f7fd8793f803065f2dfe92688151b6fba8bf050f83ac0a05",
+      "bytes": 6479
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-all_qc_checks-150717eba097ccd771920181b13ce957950a8a59.py": {
+      "sha256": "374cb5b4ffe1b5d8d1d9108d3d461f7e57e4329a5955172101a3b940738350b2",
+      "bytes": 3172
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-gauge_checks-150717eba097ccd771920181b13ce957950a8a59.py": {
+      "sha256": "5468587f530369ff6d6f30cbf7a954f6a4c200f2a4a45debf6fe684276f2b7b9",
+      "bytes": 9684
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-issue-120.json": {
+      "sha256": "19b5a7620a98e72d2a71c341367ac0afddd2b70f2bccbf4984a347a156a871b9",
+      "bytes": 4458
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-pr-123-files.json": {
+      "sha256": "089eec8032cdc9dce0f4654d3ff17bd9652aaeddfae2e6eee2a6f63b0cfa5028",
+      "bytes": 12810
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-pr-123.json": {
+      "sha256": "3bcb956695a92a7d013ece52a1219144a6d8983198bf811509b489c8191cba85",
+      "bytes": 19873
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-release-v1.0.2.json": {
+      "sha256": "426b02de6199e06c89caec8bb258c1f67967e9f2868c55ba100be10390f7495c",
+      "bytes": 2443
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/Rust-csv-1.4.0-Reader.html": {
+      "sha256": "43648959a0b102711ac4b073d93b81873282c8fe8fbb68721dbba89c80956418",
+      "bytes": 105953
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/SQLite-transactional.html": {
+      "sha256": "3d6a66c925d32e66fb28872c0e0c32b1936d46f996995c1a30fe591173bc6266",
+      "bytes": 4609
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-01-control-critic-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T19:17:59.811Z",
+    "startedAt": "2026-10-07T19:18:00.333Z",
+    "completedAt": "2026-10-07T19:27:43.915Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "actual_native_responses": [
+    {
+      "goal": {
+        "threadId": "01a117cd-19fe-7b20-8483-a075301cec63",
+        "objective": "Complete one independent, full-scope critique of the researcher draft for I-METHOD-01. Use only the exact inputs listed in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/input-map.json: original brief and frozen plan, researcher artifact and source map/captured sources. Independently verify consequential claims against primary public sources. Critique all O1-O6 and P1-P6 for discovery, mechanism and alternatives, dispositions, constraints, source identity, uncertainty, and concrete validation proposals versus executed claims. Preserve supported content, identify evidence-backed corrections, disagreements, unresolved objections, and omissions. Save one coherent complete critique plus newly captured public-source bytes and source map only in critic-v1. Do not rewrite the final artifact or modify inputs. Record useful-finding and completion times, observable operations, distinct native counters, and unknown fields as null; keep Goal token counters separate.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791400690,
+        "updatedAt": 1791400690
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    {
+      "goal": {
+        "threadId": "01a117cd-19fe-7b20-8483-a075301cec63",
+        "objective": "Complete one independent, full-scope critique of the researcher draft for I-METHOD-01. Use only the exact inputs listed in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/input-map.json: original brief and frozen plan, researcher artifact and source map/captured sources. Independently verify consequential claims against primary public sources. Critique all O1-O6 and P1-P6 for discovery, mechanism and alternatives, dispositions, constraints, source identity, uncertainty, and concrete validation proposals versus executed claims. Preserve supported content, identify evidence-backed corrections, disagreements, unresolved objections, and omissions. Save one coherent complete critique plus newly captured public-source bytes and source map only in critic-v1. Do not rewrite the final artifact or modify inputs. Record useful-finding and completion times, observable operations, distinct native counters, and unknown fields as null; keep Goal token counters separate.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791400690,
+        "updatedAt": 1791400690
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    {
+      "goal": {
+        "threadId": "01a117cd-19fe-7b20-8483-a075301cec63",
+        "objective": "Complete one independent, full-scope critique of the researcher draft for I-METHOD-01. Use only the exact inputs listed in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/input-map.json: original brief and frozen plan, researcher artifact and source map/captured sources. Independently verify consequential claims against primary public sources. Critique all O1-O6 and P1-P6 for discovery, mechanism and alternatives, dispositions, constraints, source identity, uncertainty, and concrete validation proposals versus executed claims. Preserve supported content, identify evidence-backed corrections, disagreements, unresolved objections, and omissions. Save one coherent complete critique plus newly captured public-source bytes and source map only in critic-v1. Do not rewrite the final artifact or modify inputs. Record useful-finding and completion times, observable operations, distinct native counters, and unknown fields as null; keep Goal token counters separate.",
+        "status": "complete",
+        "tokensUsed": 136075,
+        "timeUsedSeconds": 533,
+        "createdAt": 1791400690,
+        "updatedAt": 1791401224
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+    },
+    {
+      "goal": {
+        "threadId": "01a117cd-19fe-7b20-8483-a075301cec63",
+        "objective": "Complete one independent, full-scope critique of the researcher draft for I-METHOD-01. Use only the exact inputs listed in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/input-map.json: original brief and frozen plan, researcher artifact and source map/captured sources. Independently verify consequential claims against primary public sources. Critique all O1-O6 and P1-P6 for discovery, mechanism and alternatives, dispositions, constraints, source identity, uncertainty, and concrete validation proposals versus executed claims. Preserve supported content, identify evidence-backed corrections, disagreements, unresolved objections, and omissions. Save one coherent complete critique plus newly captured public-source bytes and source map only in critic-v1. Do not rewrite the final artifact or modify inputs. Record useful-finding and completion times, observable operations, distinct native counters, and unknown fields as null; keep Goal token counters separate.",
+        "status": "complete",
+        "tokensUsed": 136075,
+        "timeUsedSeconds": 533,
+        "createdAt": 1791400690,
+        "updatedAt": 1791401224
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    }
+  ],
+  "native_identity": "01a117cd-19fe-7b20-8483-a075301cec63",
+  "native_terminal": "complete",
+  "native_terminal_unix_seconds": 1791401224,
+  "same_identity": true,
+  "raw_response_count": 4,
+  "native_goal_aggregate_tokens": 136075,
+  "native_elapsed_seconds": 533,
+  "native_start_unix_seconds": 1791400690,
+  "native_active_observed": true,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-METHOD-01-control-critic-v1",
+    "record_at": "2026-10-07T19:17:28.584093+00:00",
+    "prospective_stage_deadline": "2026-10-07T19:26:45.843757+00:00",
+    "prospective_arm_deadline": "2026-10-07T19:41:45.843757+00:00",
+    "stage_max_seconds": 600,
+    "remaining_final_reserve_seconds": 900,
+    "contract": "original v1 raw native receipts; no v2 retrofit"
+  },
+  "t3_delivery_in_prefrozen_deadline": false,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

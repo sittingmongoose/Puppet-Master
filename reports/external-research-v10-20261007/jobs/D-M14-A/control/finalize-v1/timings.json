@@ -1,0 +1,47 @@
+{
+  "stage_id": "D-M14-A/control/finalize",
+  "started_at_utc": "2026-10-07 19:17:11 UTC",
+  "first_useful_output_at_utc": "2026-10-07 19:17:32 UTC",
+  "terminal_at_utc": null,
+  "source_operations": [
+    {
+      "operation": "read exact INPUT_MAP.json, listed brief, source manifest, four listed public primary captures, and own listed predecessor report",
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/INPUT_MAP.json",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/report.md"
+      ]
+    },
+    {
+      "operation": "sha256sum integrity check of four supplied captures",
+      "result": "all hashes match INPUT_MAP.json and sources.json"
+    },
+    {
+      "operation": "write final narrative",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/final.md"
+    }
+  ],
+  "native_input_tokens": null,
+  "native_cache_tokens": null,
+  "native_generated_tokens": null,
+  "native_billing": null,
+  "native_status_at_activation": {
+    "goal": {
+      "threadId": "01a117cc-10f0-7973-bcfe-08c4855a5997",
+      "objective": "Execute D-M14-A control finalize from /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/INPUT_MAP.json; write /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/final.md; bounded stage deadline 2026-10-07T19:19:37.802854+00:00, fresh native Goal and exact activation/terminal receipts.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791400631,
+      "updatedAt": 1791400631
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "delivery_overrun_seconds": null
+}\n

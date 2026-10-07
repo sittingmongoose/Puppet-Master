@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-07T19:40:13.923989+00:00",
+  "case_id": "D-M13-A",
+  "version": "v2",
+  "stages": {
+    "control/ordinary_investigation": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/ordinary_investigation-v2/freeze.json",
+      "sha256": "61bb0ece917d70107be99b7719535e27194a6da1022897309b696640582f01a5",
+      "actual_native_terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/ordinary_investigation-v2/passive-terminal.json",
+      "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-control-ordinary_investigation-v2",
+      "children_quiet": true
+    },
+    "control/finalize": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/finalize-v2/freeze.json",
+      "sha256": "24c318c6acb977ffddbe82346986545e64ca0f39f6d4530d1c2886d1dc189dea",
+      "actual_native_terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/finalize-v2/passive-terminal.json",
+      "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-control-finalize-v2",
+      "children_quiet": true
+    },
+    "treatment/lead": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/lead-v2/freeze.json",
+      "sha256": "b21a259248e449b9fa683facb1fcf42c0612fb06f651d55da31dd469c577e428",
+      "actual_native_terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/lead-v2/passive-terminal.json",
+      "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-treatment-lead-v2",
+      "children_quiet": true
+    },
+    "treatment/trace": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/trace-v2/freeze.json",
+      "sha256": "a59e7282f508b4e5c48d9927d654382079183e58f7d7340696114c9afdb6a6f0",
+      "actual_native_terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/trace-v2/passive-terminal.json",
+      "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-treatment-trace-v2",
+      "children_quiet": true
+    },
+    "treatment/decision_stop": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/decision_stop-v2/freeze.json",
+      "sha256": "60a91a271a768864d92e9ed83d1280e3257a720aca23e54f1a876a9ba4254a24",
+      "actual_native_terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/decision_stop-v2/passive-terminal.json",
+      "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-treatment-decision_stop-v2",
+      "children_quiet": true
+    },
+    "treatment/finalize": {
+      "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/finalize-v2/freeze.json",
+      "sha256": "7a054b7b37dfa15704ce196c768be9c8c7ae492f32e88c92e97b297952c3549d",
+      "actual_native_terminal": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/finalize-v2/passive-terminal.json",
+      "task_id": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M13-A-treatment-finalize-v2",
+      "children_quiet": true
+    }
+  },
+  "finals": {
+    "control": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/finalize-v2/final.md",
+      "sha256": "8e287967731d0cfd393b747281371d9e51afb7c3aa2ec72597fd335c6708b34e",
+      "bytes": 8512
+    },
+    "treatment": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/treatment/finalize-v2/final.md",
+      "sha256": "50c07c0b421faad8c844d7cdb4cf1b808f0903e5b13fc67758bb81f2f1e7222a",
+      "bytes": 8195
+    }
+  }
+}

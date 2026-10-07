@@ -1,0 +1,70 @@
+{
+  "version": "M06-prospective-v2",
+  "authority": "ROOT capacity/consolidation grant 2026-10-07 after anchors quiet",
+  "originals": {
+    "case-card.json": "21824ba1d3b0aa714ac5f285f397de742eb01f90fc964c94359efa5afc384bc3",
+    "INPUT_MAP.json": "b534999b92d9296c31b63502394f7be1f054547e8b6e123480907df3ba97c440",
+    "SEED_INPUT_MAP.json": "22955537933806062e43441967dbb3e43aebcbbb813717bfc9a8ff47959610e7"
+  },
+  "sources": [
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "gdaltransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "binding": {
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    },
+    "account": "unchanged root-qualified installed ZCode account; account alias not independently exposed"
+  },
+  "carrier": "Exact owned scientific files plus passive installed GoalLoopDriver active/terminal state; no vendor backend claim",
+  "stages": {
+    "common": "seed-v2 fresh Goal maximum360s",
+    "control": "candidate-v2 one fresh Goal ordinary-check+final maximum540s",
+    "treatment": "candidate-v2 one fresh Goal oracle-selection+bounded-witness+reconcile+full-final maximum540s"
+  },
+  "whole_per_arm_seconds": 900,
+  "absolute_deadline": "common seed dispatch+900s, seed/startup/queue/failures/output/native terminal included; no reset",
+  "shared_seed_charge": "whole actual seed per cold arm; physical seed once and half-seed amortized separately",
+  "ordering": [
+    "treatment",
+    "control"
+  ],
+  "overlap_policy": "prefer declared sequential order, admit second arm while first still live only if original absolute deadline requires; save actual contention",
+  "sandbox": "qualified offline isolated single-process Python only; operations/oracles/expected outputs candidate-authored, not supplied by Sol",
+  "obligations": [
+    "Bind coefficient order, coordinate units, and pixel-origin convention.",
+    "Separate pixel corners from centers.",
+    "Address rotation/shear rather than assuming north-up.",
+    "State invertibility and numerical tolerance conditions.",
+    "Use independent derivation or trusted-operation controls, not only mutually paired forward/inverse functions.",
+    "Preserve witnessed versus proposed checks and applicability."
+  ],
+  "final_carrier": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/control/candidate-v2/final.md",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/treatment/candidate-v2/final.md",
+    "required": "full final, sources.json, timings.json; method substeps report.md; candidate witness/fixtures/receipt when executed"
+  },
+  "review": "fresh ordinary Sol6.1 xhigh priority codex_gmail after paired exact finals and native terminal frozen/tasks quiet, no evaluator while counterpart live",
+  "provenance": "Pathmaps advisory, no firewall claim",
+  "failed_prior_attempts": [],
+  "at": "2026-10-07T19:41:34.267731+00:00"
+}

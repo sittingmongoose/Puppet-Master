@@ -1,0 +1,135 @@
+{
+  "frozen_at": "2026-10-07T19:14:49.730640+00:00",
+  "required": [
+    "final.md",
+    "critique-dispositions.md",
+    "sources/SOURCES.md",
+    "timings.json",
+    "native_goal_receipt.json",
+    "native_terminal_receipt.json",
+    "expiry-pre-stop-observation-001.json"
+  ],
+  "files": {
+    "INPUTS.md": {
+      "sha256": "9f3100a07b494273166a4b605b457bfa9b700f64e3a231ca5ccb2270e3b68131",
+      "bytes": 1664
+    },
+    "config.json": {
+      "sha256": "4fd26e71fd7dc464128c805a4ae6b82cc3e0b1a221f1891945f1f78771370202",
+      "bytes": 146
+    },
+    "critique-dispositions.md": {
+      "sha256": "7122daaf1289cd7f016f6ddd4724dba182249637d5a46016fa71a333bbbc9b6b",
+      "bytes": 5549
+    },
+    "dispatch-tool-receipt.json": {
+      "sha256": "b5d739d7ea402556053cdafadf1c0288e0dc3f6137527452939274da5668fafc",
+      "bytes": 2136
+    },
+    "expiry-pre-stop-observation-001.json": {
+      "sha256": "1d05e6cb69bccd6dda6283a45088b80c74ab1f0cb32718541c036567375811b3",
+      "bytes": 3690
+    },
+    "final.md": {
+      "sha256": "419a2d6e04d55280d2e48fa82b79638be966a976214d2584d1542724e5957a32",
+      "bytes": 17137
+    },
+    "native_goal_receipt.json": {
+      "sha256": "d3aa4055504bb822d1e1a2e5c8199db7c44034801e27747d3a7d0eb5bbed897b",
+      "bytes": 1849
+    },
+    "native_terminal_receipt.json": {
+      "sha256": "a43fda9c11ea7d7c125e53f9742d5ce6e5d55ce2e7faf621dc5249f36526b0bb",
+      "bytes": 2187
+    },
+    "prepared.json": {
+      "sha256": "af5c51c7f5999f3106e7ccdb3d7f5def745b10c394d6bf4617f969de926c57a5",
+      "bytes": 1649
+    },
+    "sources/SOURCES.md": {
+      "sha256": "77ec6d47729f746d3bb97ef4aa4952c35face70b294eab49d0add5b0d2a4004a",
+      "bytes": 11847
+    },
+    "sources/evidence/capture-manifest.json": {
+      "sha256": "f167370ef02fa700520febdf1f0ce07e887fb897657279f8f4a0710004353904",
+      "bytes": 13156
+    },
+    "sources/evidence/f01.txt": {
+      "sha256": "cb94c61cd950928f1afcf42149592ff0ccf7f4ed298a95d1577531c8300b97a5",
+      "bytes": 802
+    },
+    "sources/evidence/f02.txt": {
+      "sha256": "045d560bbf4460f1b2b59745a8a9c840cb2dd1401725a5308359f8776a970e92",
+      "bytes": 272
+    },
+    "sources/evidence/f03.txt": {
+      "sha256": "e417f7756cb25bec48c397f671a38d9a2f94bac73915f0617d09892838dcadc3",
+      "bytes": 2638
+    },
+    "sources/evidence/f04.txt": {
+      "sha256": "43031a281f460252a36ece3dcfc253ad5c44bc445ba7c8b3ab50a8c7510d9aca",
+      "bytes": 640
+    },
+    "sources/evidence/f05.txt": {
+      "sha256": "038f6d22c1e93cab8b1f7d1ce8d6949f093a1efc9d6d082d136e9e34e7bbebce",
+      "bytes": 1086
+    },
+    "sources/evidence/f06.txt": {
+      "sha256": "3dcc7242d91ee93d4fc31fd8d553d1705b05b44939a260916ec7bd80aafa1c38",
+      "bytes": 544
+    },
+    "sources/evidence/f07.txt": {
+      "sha256": "9e38ca37bec1940186d8fe247d7b2ae84ed1c99702eba3a147fb93154016c934",
+      "bytes": 281
+    },
+    "sources/evidence/f08.txt": {
+      "sha256": "77975b0ab461f0a35e0b660f7812e56d608a4fbd21222b8c6e5e53d4506694e2",
+      "bytes": 3564
+    },
+    "sources/evidence/f09.txt": {
+      "sha256": "abbda4e3168db2167e1eee120ec7fce72d5b0df25f011bf95ae041751c849df9",
+      "bytes": 4899
+    },
+    "sources/evidence/f10.txt": {
+      "sha256": "6d51d22221c14a3ac5e9017b95d6cf57b2e5947c8bc053da8c99b87178474109",
+      "bytes": 5560
+    },
+    "sources/evidence/f11.txt": {
+      "sha256": "10809417ef73c70ca5ffb75a31d3ad51aed633519b19bd8eb54fab8f8f25991e",
+      "bytes": 4646
+    },
+    "sources/evidence/f12.txt": {
+      "sha256": "9677588df7a55a2f5518fa3ba4c07ca674f9caefa807784c66492523af6073dd",
+      "bytes": 16341
+    },
+    "sources/evidence/f13.txt": {
+      "sha256": "bc44d563db5429668fa07b9627b2ac8c1006beaa800e84506d5c9b260ef586f6",
+      "bytes": 584
+    },
+    "sources/evidence/f14.txt": {
+      "sha256": "f297f62a5959ed8d3b32ced654012b389df6ce2cf0f8d08c192a39132be11df1",
+      "bytes": 17543
+    },
+    "sources/evidence/f15.txt": {
+      "sha256": "adcd2bb2942409fe732caca20f36a593c0e0d9c44c8d28b9883d937e5bbbc1fc",
+      "bytes": 2494
+    },
+    "task-terminal-tool-receipt.json": {
+      "sha256": "55d37f4a072dfb95433db0f28b0df443d372e610c1a257eb2b8b1aa132d5c153",
+      "bytes": 4846
+    },
+    "task.txt": {
+      "sha256": "f2e9e70e49843da32fe1a17d1766b17c19c28396106ca323d33ee3c417b54664",
+      "bytes": 3154
+    },
+    "timings.json": {
+      "sha256": "1be7e31de6d016fff384a4532b1da0faf407a78d0ce475e79d5caa5c45728ce5",
+      "bytes": 1641
+    },
+    "tool-policy-receipt.json": {
+      "sha256": "a5815c27ea039a018e91da549522a4e5e74c3aa92d08a2bf439913df3fe00566",
+      "bytes": 390
+    }
+  },
+  "mechanical_delivery": "all required files present/nonempty; no semantic source judgment"
+}

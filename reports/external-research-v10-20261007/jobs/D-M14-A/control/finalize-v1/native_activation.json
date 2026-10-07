@@ -1,0 +1,28 @@
+{
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117cc-10f0-7973-bcfe-08c4855a5997",
+      "objective": "Execute D-M14-A control finalize from /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/INPUT_MAP.json; write /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/final.md; bounded stage deadline 2026-10-07T19:19:37.802854+00:00, fresh native Goal and exact activation/terminal receipts.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791400631,
+      "updatedAt": 1791400631
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "active_get_goal_response": {
+    "goal": {
+      "threadId": "01a117cc-10f0-7973-bcfe-08c4855a5997",
+      "objective": "Execute D-M14-A control finalize from /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/INPUT_MAP.json; write /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/final.md; bounded stage deadline 2026-10-07T19:19:37.802854+00:00, fresh native Goal and exact activation/terminal receipts.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791400631,
+      "updatedAt": 1791400631
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

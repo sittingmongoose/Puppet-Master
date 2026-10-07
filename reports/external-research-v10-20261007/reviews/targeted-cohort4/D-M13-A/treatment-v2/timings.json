@@ -1,0 +1,124 @@
+{
+  "schema": "pm.independent-source-review.timings.v1",
+  "reviewer_role": "ordinary fresh independent T3 reviewer; not scored candidate",
+  "requested_at_utc": "2026-10-07T19:40:41.557Z",
+  "native_started_at_utc": "2026-10-07T19:40:45.854Z",
+  "first_observed_tool_time_utc": "2026-10-07T19:40:53Z",
+  "supplied_deadline_utc": "2026-10-07T19:52:13.923989+00:00",
+  "requested_at_plus_12_minutes_utc": "2026-10-07T19:52:41.557Z",
+  "effective_substance_deadline_utc": "2026-10-07T19:52:13.923989+00:00",
+  "deadline_rule": "Earliest of supplied deadline and own T3 requestedAt + 12 minutes; no reset. Native startup/tool/service/retry/writing/delivery time included.",
+  "native_startup_seconds": 4.297,
+  "own_t3_metadata_lookup": {
+    "operation": "orchestrator_capabilities, then t3_thread_read on calling reviewer thread afterPosition=2147483647, runLimit=1",
+    "timeline_items_returned": 0,
+    "purpose": "Own requestedAt/start metadata only; no candidate/parent history read"
+  },
+  "source_operations": [
+    {
+      "id": "S01",
+      "operation": "Read INPUT_MAP.json; get UTC clock",
+      "observed_at_utc": "2026-10-07T19:40:53Z",
+      "duration_seconds": null,
+      "timing_precision": "Clock response observation; individual operation start not instrumented"
+    },
+    {
+      "id": "S02",
+      "operation": "Hash frozen final before assessment; read original brief, source manifest, exact final; hash all seven required primary sources",
+      "result": "Frozen final and all seven source hashes match; manifest identity equality also confirmed",
+      "duration_seconds": null,
+      "timing_precision": "Completed between first observed clock and 19:41:48 clock; no per-operation wall time asserted"
+    },
+    {
+      "id": "S03",
+      "operation": "Parse issue and PR JSON fields/body; merge commit identity/files; substantively read tarfile/shutil/test_shutil changed patches",
+      "duration_seconds": null,
+      "result": "Issue/merge chronology and merge implementation/caller/test content read"
+    },
+    {
+      "id": "S04",
+      "operation": "Numbered released tarfile.py filter/helper/default/extraction/error/disk-effect reads; released test helper and filter-suite reads; tarfile.rst focused searches and numbered relevant sections",
+      "duration_seconds": null,
+      "result": "Some broad output truncated; affected relevant regions reissued in bounded reads"
+    },
+    {
+      "id": "S05",
+      "operation": "Released test_errorlevel read, PEP HTML/text sections and merge regression patch reads",
+      "observed_at_utc": "2026-10-07T19:41:48Z",
+      "duration_seconds": null,
+      "result": "Unfiltered continuation, staticmethod, path normalization, proposed/executed distinction checked"
+    },
+    {
+      "id": "S06",
+      "operation": "web.run open of official CPython v3.12.3 Lib/shutil.py and Doc/library/shutil.rst; supplementary byte captures through Python stdlib HTTPS GET",
+      "duration_seconds": null,
+      "result": "Two primary captures, HTTP 200; exact fetch start/end/durations and hashes in sources/additional_manifest.json; no execution"
+    },
+    {
+      "id": "S07",
+      "operation": "Read numbered supplementary shutil dispatch/docs and raw PEP filters/defaults/FilterError/residual/shutil/reference implementation sections; exact final line locators",
+      "observed_at_utc": "2026-10-07T19:42:08.858801+00:00",
+      "duration_seconds": null,
+      "timing_precision": "Capture-end observation; subsequent local read timestamps not instrumented"
+    },
+    {
+      "id": "S08",
+      "operation": "Compare merge tarfile helper/default/caller additions and actual added tests with released implementation/tests; check manifest equality and final word count",
+      "observed_at_utc": "2026-10-07T19:42:49Z",
+      "duration_seconds": null,
+      "result": "Merge-to-implementation-to-regression-to-selected-release chain checked; no claim of byte-identical unchanged implementations"
+    },
+    {
+      "id": "S09",
+      "operation": "Read selected-release type predicates, errorlevel override, disk extraction, link fallback, metadata setters, all final-named regression tests and supplemental shutil policy docs",
+      "observed_at_utc": "2026-10-07T19:43:03Z",
+      "duration_seconds": null,
+      "result": "Final governing type/path/default/caller conditions checked statically"
+    },
+    {
+      "id": "S10",
+      "operation": "Write review.md/review.json and source locator manifests; validate output JSON/schema-like invariants, markdown presence, cross-references, frozen final immutability and all nine primary hashes",
+      "validation_started_at_utc": "2026-10-07T19:47:13.618854+00:00",
+      "validation_completed_at_utc": "2026-10-07T19:47:13.625038+00:00",
+      "validation_duration_seconds": 0.006309929998678854,
+      "result": "PASS: outputs consistent, all mandatory sections present, primary bytes and frozen candidate immutable",
+      "runtime_test_execution": false
+    }
+  ],
+  "assessment_writing_started_at_utc": "2026-10-07T19:43:51.394852+00:00",
+  "source_checking_completed_at_utc": "2026-10-07T19:43:51.394852+00:00",
+  "completed_at_utc": "2026-10-07T19:47:13.625038+00:00",
+  "elapsed_seconds_from_requested_at": 392.068038,
+  "usage": {
+    "unknowninput": null,
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "billing": null
+  },
+  "native_counters": {
+    "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M13-A-treatment-source-review-v2:ordinal:1",
+    "ordinal": 1,
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "output_tokens": null,
+    "availability": "Own T3 run identity/start timestamps available; token/cache/generated/billing counters unavailable. Never substitute word count or local tools for native token counters."
+  },
+  "execution_limits": {
+    "downloaded_code_executed": false,
+    "installers_executed": false,
+    "test_suites_executed": false,
+    "delegations": 0,
+    "goals_created": 0,
+    "candidate_bytes_modified": false,
+    "third_party_writes": false
+  },
+  "pending_children": 0,
+  "original_bound_start_utc_derived_from_supplied_deadline": "2026-10-07T19:40:13.923989+00:00",
+  "original_bound_start_provenance": "Derived from the user-supplied original deadline minus 12 minutes; not presented as an independently retrieved parent/campaign requestedAt. This earlier bound is honored; own native run requestedAt did not reset it.",
+  "elapsed_seconds_from_original_bound_start": 419.701049,
+  "seconds_remaining_until_original_deadline_at_save": 300.298951,
+  "delivered_before_original_deadline": true,
+  "delivery_status": "All requested artifacts saved and locally validated; concise paths/status returned in the same reviewer turn.",
+  "delivery_timing_note": "Save/validation time recorded; the final response is the immediately subsequent delivery. Exact host receipt timestamp is not available to this reviewer."
+}

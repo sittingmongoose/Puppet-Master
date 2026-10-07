@@ -1,0 +1,265 @@
+{
+  "status": "IN_PROGRESS",
+  "counts": {
+    "cases": 6,
+    "full_pairs": 2,
+    "reviewed_pairs": 2,
+    "terminal_case_dispositions": 3
+  },
+  "cases": {
+    "D-M11-A": {
+      "status": "ASSESSED_NO_QUALITY_PRESERVING_WIN",
+      "review_status": "BOTH_SCIENCE_FROZEN_TREATMENT_LIFECYCLE_INCOMPLETE",
+      "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M11-A/comparison-v1.json",
+      "disposition": null,
+      "economics": null
+    },
+    "D-M12-A": {
+      "status": "HELD_ROOT_GLM_CAPACITY",
+      "review_status": "NOT_ADMITTED",
+      "comparison": null,
+      "disposition": null,
+      "economics": null
+    },
+    "D-M13-A": {
+      "status": "ASSESSED_NO_QUALITY_PRESERVING_WIN",
+      "review_status": "BOTH_SCIENCE_FROZEN_CONTROL_REVIEW_OUT_OF_BOUND",
+      "comparison": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M13-A/comparison-v2.json",
+      "disposition": null,
+      "economics": null
+    },
+    "D-M14-A": {
+      "status": "FINITE_INCOMPLETE_NO_METHOD_COMPARISON",
+      "review_status": "UNASSESSED_PAIR_GATE_NOT_SATISFIED",
+      "comparison": null,
+      "disposition": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/paired-v2-disposition.json",
+      "economics": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json"
+    },
+    "D-M15-A": {
+      "status": "HELD_ROOT_GLM_CAPACITY",
+      "review_status": "NOT_ADMITTED",
+      "comparison": null,
+      "disposition": null,
+      "economics": null
+    },
+    "D-M16-A": {
+      "status": "HELD_ROOT_GLM_CAPACITY",
+      "review_status": "NOT_ADMITTED",
+      "comparison": null,
+      "disposition": null,
+      "economics": null
+    }
+  },
+  "completed_assessment": [
+    {
+      "case_id": "D-M11-A",
+      "matched_pair_version": 1,
+      "arms": {
+        "control": {
+          "candidate_T3_request_to_final_delivery_seconds": 357.118,
+          "candidate_aggregate_occupied_seconds": 326.496,
+          "candidate_queue_seconds": 3.838,
+          "parent_handoff_gaps_seconds": 26.784000000000013,
+          "candidate_stages": 2,
+          "source_grade": "FAIL",
+          "material_defects": 4,
+          "defects_different_between_arms": true,
+          "review_occupied_seconds": 450.897,
+          "review_delivery_status": "completed",
+          "input": null,
+          "cached_input": null,
+          "generated_output": null,
+          "billing": null
+        },
+        "treatment": {
+          "candidate_T3_request_to_final_delivery_seconds": 423.407,
+          "candidate_aggregate_occupied_seconds": 350.534,
+          "candidate_queue_seconds": 10.465,
+          "parent_handoff_gaps_seconds": 62.40799999999999,
+          "candidate_stages": 3,
+          "source_grade": "FAIL",
+          "material_defects": 4,
+          "defects_different_between_arms": true,
+          "review_occupied_seconds": 825.46,
+          "review_delivery_status": "interrupted",
+          "input": null,
+          "cached_input": null,
+          "generated_output": null,
+          "billing": null
+        }
+      },
+      "assessment": {
+        "control": "Fullscope FAIL 30claimchecks4defects",
+        "treatment": "Saved fullscope FAIL25claimgroups4differentdefects; reviewer interrupted after overrun, no native terminal receipt",
+        "equal_quality_established": false,
+        "quality_preserving_speedup_established": false,
+        "conclusion": "No quality-preserving win: both arms have material source defects. Equal FAIL counts are not equal quality. Treatment candidate latency is slower in this one pair; descriptive only."
+      },
+      "source_reviews": {
+        "control": "reviews/targeted-cohort4/D-M11-A/control-v1/review.json",
+        "treatment": "reviews/targeted-cohort4/D-M11-A/treatment-v1/review.json"
+      },
+      "lifecycle": {
+        "all_candidate_stages_native_complete": true,
+        "all_candidates_and_reviewers_T3_quiet": true,
+        "treatment_reviewer_native_terminal": "UNKNOWN_MISSING",
+        "treatment_reviewer_expired": true
+      },
+      "usage_interpretation": "Native Goal cumulative counters retained in exact receipts; not generated tokens or billing; no overlapping enclosing totals summed.",
+      "single_pair_only": true
+    },
+    {
+      "case_id": "D-M13-A",
+      "matched_pair_version": 2,
+      "arms": {
+        "control": {
+          "actual_T3_requestedAt": "2026-10-07T19:25:46.266Z",
+          "actual_T3_terminalAt": "2026-10-07T19:30:09.225Z",
+          "request_to_terminal_seconds": 262.959,
+          "aggregate_occupied_seconds": 219.95,
+          "queue_seconds": 4.537,
+          "parent_interstage_gaps_seconds": 38.472000000000016,
+          "stages": 2,
+          "native_start_firstfinding_output_terminal_release": "Exact lifecycle receipts/artifact timestamps preserved; first finding time unknown where not exposed",
+          "source_operations": "Candidate authored timings/source manifests retained; no unexposed calls inferred",
+          "native_input_cache_generated_billing": {
+            "input": null,
+            "cached_input": null,
+            "generated": null,
+            "billing": null
+          },
+          "native_goal_counters": "Exact observed counters retained, distinct from generated/billing; repeated snapshots not summed",
+          "prospective_first_dispatch_to_terminal_seconds": 281.040446,
+          "source_grade": "FAIL"
+        },
+        "treatment": {
+          "actual_T3_requestedAt": "2026-10-07T19:30:38.930Z",
+          "actual_T3_terminalAt": "2026-10-07T19:39:26.416Z",
+          "request_to_terminal_seconds": 527.486,
+          "aggregate_occupied_seconds": 389.382,
+          "queue_seconds": 6.8309999999999995,
+          "parent_interstage_gaps_seconds": 131.273,
+          "stages": 4,
+          "native_start_firstfinding_output_terminal_release": "Exact lifecycle receipts/artifact timestamps preserved; first finding time unknown where not exposed",
+          "source_operations": "Candidate authored timings/source manifests retained; no unexposed calls inferred",
+          "native_input_cache_generated_billing": {
+            "input": null,
+            "cached_input": null,
+            "generated": null,
+            "billing": null
+          },
+          "native_goal_counters": "Exact observed counters retained, distinct from generated/billing; repeated snapshots not summed",
+          "prospective_first_dispatch_to_terminal_seconds": 543.217677,
+          "source_grade": "FAIL"
+        }
+      },
+      "reviews": {
+        "treatment": {
+          "version": "v2",
+          "grade": "FAIL",
+          "full_scope": true,
+          "assessment_extent": {
+            "label": "FULL_DECLARED_SCOPE_STATIC_PRIMARY_SOURCE_REVIEW",
+            "product_claims_checked": "Every material finding (final lines 9,11,13,15,17,19), source identity, optional/uncertainty statement and proposed-versus-executed distinction; actual implementation and assertion bodies, not citations/manifest/exits alone.",
+            "chain": "Issue -> PR merge SHA -> substantive implementation/filter/caller patch -> actual added regression assertions -> matching selected-release implementation/docs/tests, supplemented by selected-release shutil caller bytes. Later differing code is governed by released source; no invented exact follow-up release mapping.",
+            "all_six_axes_assessed": true,
+            "all_six_obligations_assessed": true,
+            "runtime_execution": "None; neither CPython nor importer test execution required/claimed for this source review.",
+            "predecessor_comparison": "Unavailable and deliberately not performed: only frozen exact final authorized.",
+            "prohibited_provenance_check": "Historical candidate sourceoperations/no-capture claims cannot be independently verified; content-level distinction assessed, not certified activity."
+          },
+          "unassessed_remainder": [],
+          "material_defects": 4,
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/review.json",
+          "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/freeze.json",
+          "immutable": true,
+          "lifecycle": "COMPLETED_QUIET_SETTLED",
+          "actual_T3_timing": {
+            "requestedAt": "2026-10-07T19:40:41.557Z",
+            "startedAt": "2026-10-07T19:40:45.854Z",
+            "completedAt": "2026-10-07T19:47:19.070Z",
+            "occupied_seconds": 393.216,
+            "queue_seconds": 4.297
+          }
+        },
+        "control": {
+          "version": "v2",
+          "grade": "FAIL",
+          "assessment_extent": "FULL_DECLARED_SCOPE_PRIMARY_SOURCE_REVIEW",
+          "unassessed_remainder": [],
+          "declared_defects": 6,
+          "record": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/review.json",
+          "freeze": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/freeze.json",
+          "immutable": true,
+          "delivery_status": "LATE_OUT_OF_BOUND",
+          "deadline_compliance": "FAILED",
+          "valid_within_requested_bound": false,
+          "assessment_extent_at_deadline": "Primary-source inspections were completed before the deadline, but assessment/report writing was unfinished at expiry. Artifacts were finalized outside both the original deadline and 60-second grace; no reset.",
+          "unassessed_remainder_at_deadline": [
+            "Assessment/report finalization and required delivery were incomplete."
+          ],
+          "lifecycle": "COMPLETED_QUIET_SETTLED_OUT_OF_BOUND",
+          "actual_T3_timing": {
+            "requestedAt": "2026-10-07T19:40:30.890Z",
+            "startedAt": "2026-10-07T19:40:31.627Z",
+            "completedAt": "2026-10-07T19:57:26.101Z",
+            "occupied_seconds": 1014.474,
+            "queue_seconds": 0.737
+          }
+        }
+      },
+      "assessment": {
+        "quality_preserving_speedup_established": false,
+        "equal_quality_established": false,
+        "conclusion": "No quality-preserving win: both source reviews FAIL with differing defect identities/conditions. Control review delivered out of bound; late fullscope grade and partial deadlineextent both retained immutable. Treatment slower in observed onepair candidate latency; descriptive only."
+      },
+      "all_candidates_and_reviewers_quiet": true,
+      "candidate_all_native_complete": true,
+      "single_pair_only": true,
+      "reviews_are_advisory_maps_not_filesystem_firewall": true
+    }
+  ],
+  "incomplete_pair_dispositions": [
+    {
+      "case_id": "D-M14-A",
+      "version": "v2",
+      "at": "2026-10-07T19:51:20.773394+00:00",
+      "status": "FINITE_INCOMPLETE_NO_METHOD_COMPARISON",
+      "control_final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v2/final.md",
+        "sha256": "f4bb6bd78bc84933a089a06b40bd9e06244ff9744cfaf64df8e9edbd2246cda4",
+        "native_status": "complete",
+        "source_grade": "UNASSESSED"
+      },
+      "treatment": {
+        "semantic_set": "jobs/D-M14-A/treatment/semantic_findings-v2/semantic_findings.md",
+        "author_native": "complete",
+        "host_render": "exactset structural only",
+        "preservation_native_projection": "paused",
+        "preservation_check": "ABSENT",
+        "final": "ABSENT",
+        "stage_expired": true,
+        "T3_status": "interrupted",
+        "source_grade": "UNASSESSED"
+      },
+      "review_gate": "NOT_SATISFIED_BOTH_FULL_FINALS_AND_COMPLETE_NATIVE_TERMINALS",
+      "retry": "NONE_FURTHER",
+      "original_v1": "Immutable original-v1-final-disposition.json",
+      "economics": {
+        "generic_helper_cold_prep_seconds": 454.056,
+        "qualification_reported_test_seconds": 0.316,
+        "qualification_invocation_wall_seconds": null,
+        "full_setup_lower_bound_seconds": 454.372,
+        "routine_v2_render_seconds": 0.111228384,
+        "failed_v1_and_v2_costs": "Inclusive; actual full stage accounting retained in native/T3 receipts; no favorable omission",
+        "amortized": "Separate from cold; no assumed zero prep or free ceiling extension",
+        "input": null,
+        "cached_input": null,
+        "generated": null,
+        "billing": null
+      },
+      "all_v2_candidates_quiet": true
+    }
+  ],
+  "m14_inclusive_economics": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/economics-inclusive.json"
+}

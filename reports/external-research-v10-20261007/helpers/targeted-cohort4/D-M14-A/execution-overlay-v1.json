@@ -1,0 +1,218 @@
+{
+  "case_id": "D-M14-A",
+  "target": {
+    "providerInstanceId": "codex_gmail",
+    "driverKind": "codex",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "account": "sittingmongoose@gmail.com",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "hashes": {
+    "case-card.json": "67bc9697bc4abc6bc6b0169e5fee607444d326646eaccf308b7c9ce2587084e3",
+    "CASE_CARD.md": "a4c7a5767df339bc079c1d5d2426cb141a20a597a27d4dd846e11fa9ad33e3dd",
+    "INPUT_MAP.json": "d4d2d080347e39a13a63ea50aed387fae0cb2aeb74f2ec295155c6062292cfd9",
+    "READY.json": "b7a14a11a4d03183c32b046c826a7cf95adb3dadb5341a772824541c2e72a2f9"
+  },
+  "input_hashes": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/case-card.json",
+      "sha256": "67bc9697bc4abc6bc6b0169e5fee607444d326646eaccf308b7c9ce2587084e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/CASE_CARD.md",
+      "sha256": "a4c7a5767df339bc079c1d5d2426cb141a20a597a27d4dd846e11fa9ad33e3dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/INPUT_MAP.json",
+      "sha256": "d4d2d080347e39a13a63ea50aed387fae0cb2aeb74f2ec295155c6062292cfd9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/brief.md",
+      "sha256": "d10480e11e371410f596396f8c8562696b41277991e3e3297b9b122bac051f0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources.json",
+      "sha256": "c4cd37441e9285345615faa390d283d0284003fec14639b99e9ac3627b70e6f0"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "rastermask",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/masks.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "27e0deec311306bf071bf5e15fb23281103f61646727cd1e98b2e89edda51bb9",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterresample",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/resampling.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "2a92fec75d5d0629227f5b47b73529981e3204eb1a3bb6c2fa86a3c99df2e727",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "rasterwindow",
+      "url": "https://raw.githubusercontent.com/rasterio/rasterio/1.3.10/docs/topics/windowed-rw.rst",
+      "version_or_capture": "Rasterio 1.3.10",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "4056fb30d030bf9df614ec8bc927cf83ffb2d4abe33471cf1622ad0d913ca0d1",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "stages": {
+    "control": [
+      {
+        "stage": "author",
+        "candidate_minutes": 12,
+        "procedure": "Author one competent narrative proposal with normal source references and all declared conditions/alternatives/leads.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/control/author.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/report.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/sources"
+      },
+      {
+        "stage": "finalize",
+        "candidate_minutes": 3,
+        "procedure": "Check full-scope preservation and deliver narrative.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/control/finalize.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/final.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/sources"
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "semantic_findings",
+        "candidate_minutes": 9,
+        "procedure": "Candidate authors one authoritative semantic finding set, including decision, alternatives, evidence, conditions, leads, validation, unknowns.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/treatment/semantic_findings.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1/semantic_findings.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1/sources"
+      },
+      {
+        "stage": "mechanical_projection",
+        "candidate_minutes": 3,
+        "procedure": "Qualified generic host renderer assigns IDs and projects a concise decision view plus complete evidence/condition/lead views from exact authored fields; host supplies no substantive conclusions.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/treatment/mechanical_projection.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/mechanical_projection-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/mechanical_projection-v1/mechanical_projection.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/mechanical_projection-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/mechanical_projection-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/mechanical_projection-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/mechanical_projection-v1/sources"
+      },
+      {
+        "stage": "preservation_check",
+        "candidate_minutes": 3,
+        "procedure": "Candidate verifies projections preserve meaning and source lookup and delivers the semantic set plus views.",
+        "parallel_group": null,
+        "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/treatment/preservation_check.md",
+        "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1",
+        "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1/preservation_check.md",
+        "native_activation": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1/native_activation.json",
+        "native_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1/native_terminal_receipt.json",
+        "timings": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1/timings.json",
+        "sources_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1/sources"
+      }
+    ]
+  },
+  "original_budget": {
+    "cold_equivalent_candidate_minutes_per_arm": 15,
+    "arm_latency_ceiling_minutes": 15,
+    "all_stages_inside_envelope": true,
+    "common_seed_charge": "If required, generate common seed once; conservatively include its entire actual allowance in each 15-minute cold-equivalent arm. Campaign actual aggregate records shared seed once; report per-arm cold and half-seed amortized costs separately. No uncharged model-produced prior state.",
+    "latency_boundary": "For direct cases: dispatch through complete native output/terminal delivery. For predecessor cases: common seed dispatch-to-freeze plus each arm's dispatch-to-terminal; combined cold-equivalent latency must fit 15 minutes. Record intervening queue delay; it cannot become a hidden extension. Parallel stages reduce critical path only; aggregate stage minutes still sum to 15.",
+    "overrun": "Retrieval, native startup, tool latency, retries, writing and required handoffs consume their stage and whole-arm allowances. No reset after failure; no free premium rescue. A missing/overrun seed holds both arms. Root may prospectively revise both arms under a new version before either dispatch, preserving old design.",
+    "stages": {
+      "control": [
+        {
+          "stage": "author",
+          "candidate_minutes": 12,
+          "procedure": "Author one competent narrative proposal with normal source references and all declared conditions/alternatives/leads.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/control/author.md"
+        },
+        {
+          "stage": "finalize",
+          "candidate_minutes": 3,
+          "procedure": "Check full-scope preservation and deliver narrative.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/control/finalize.md"
+        }
+      ],
+      "treatment": [
+        {
+          "stage": "semantic_findings",
+          "candidate_minutes": 9,
+          "procedure": "Candidate authors one authoritative semantic finding set, including decision, alternatives, evidence, conditions, leads, validation, unknowns.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/treatment/semantic_findings.md"
+        },
+        {
+          "stage": "mechanical_projection",
+          "candidate_minutes": 3,
+          "procedure": "Qualified generic host renderer assigns IDs and projects a concise decision view plus complete evidence/condition/lead views from exact authored fields; host supplies no substantive conclusions.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/treatment/mechanical_projection.md"
+        },
+        {
+          "stage": "preservation_check",
+          "candidate_minutes": 3,
+          "procedure": "Candidate verifies projections preserve meaning and source lookup and delivers the semantic set plus views.",
+          "parallel_group": null,
+          "output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/outputs/treatment/preservation_check.md"
+        }
+      ]
+    }
+  },
+  "arm_order": [
+    "treatment",
+    "control"
+  ],
+  "access": "Only brief, input map/source manifest and listed sources; own predecessors only; no sibling arms/cases, reviews, campaign history or helper corpus. Advisory scope is not a filesystem firewall.",
+  "native_goal": "Fresh actual create_goal/get_goal activation and update_goal/get_goal terminal per substantive stage; objective <=4000 chars; no inherited goals or nested agents.",
+  "final_by_arm": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1/final.md",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1/final.md"
+  },
+  "renderer": {
+    "version": "m14-renderer-1.0.0",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/m14-renderer/render.py",
+    "sha256": "80e925fe69e7ccc2d58297fd48ab857795545d6d94572b653bffc5803ace9ef0",
+    "readme_sha256": "a314a3833f638b216c2250e0d8eb597d7da63a2247efdc62abaf61b57e694994",
+    "prerequisite": "Root actual four PASS qualification already completed; preparation costs linked to root renderer task, never free. Cold full setup and amortized costs separate; unavailable measures null."
+  }
+}

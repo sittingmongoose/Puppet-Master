@@ -1,0 +1,23 @@
+{
+  "case": "D-M06-A",
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/brief.md",
+  "sources": [
+    {
+      "source_id": "jcs",
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.txt",
+      "version_or_capture": "RFC 8785 June 2020; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2",
+  "outputs": {
+    "draft.md": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/draft.md",
+    "fixtures.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/fixtures.json",
+    "sources.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/sources.json",
+    "timings.json": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/timings.json"
+  },
+  "scope": "Common legitimate untrusted algorithm seed, no expected outputs/key; no execution"
+}

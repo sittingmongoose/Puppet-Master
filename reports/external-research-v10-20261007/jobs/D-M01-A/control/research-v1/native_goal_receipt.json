@@ -1,0 +1,16 @@
+{
+  "activation_receipt_status": "Unavailable: create_goal returned before a subsequent runtime helper error interrupted persistence; no replacement Goal was created.",
+  "get_goal_receipt": {
+    "goal": {
+      "threadId": "01a117a7-d38c-7030-a585-4d1e70f0c353",
+      "objective": "Research Stage D-M01-A control: produce one complete bounded preliminary proposal grounded in the provided brief and listed SQLite primary sources, preserve source conditions and uncertainty, and save the required intermediate and native lifecycle receipts under the authorized stage directory.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 14,
+      "createdAt": 1791398289,
+      "updatedAt": 1791398304
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

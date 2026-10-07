@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-10-07 19:16:04 UTC",
+  "terminalization": "blocked",
+  "currentGoalStatus": "blocked",
+  "preUpdateGetResponse": {
+    "goal": {
+      "threadId": "01a117c2-70e0-7471-957f-3ec80e706e29",
+      "objective": "Execute D-M14-A control author from /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/INPUT_MAP.json; write /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/report.md; bounded stage deadline 2026-10-07T19:18:09.395451+00:00; fresh native Goal and exact activation/terminal receipts.",
+      "status": "active",
+      "tokensUsed": 105077,
+      "timeUsedSeconds": 544,
+      "createdAt": 1791399998,
+      "updatedAt": 1791400542
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "terminalUpdateResponse": {
+    "goal": {
+      "threadId": "01a117c2-70e0-7471-957f-3ec80e706e29",
+      "objective": "Execute D-M14-A control author from /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/INPUT_MAP.json; write /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/report.md; bounded stage deadline 2026-10-07T19:18:09.395451+00:00; fresh native Goal and exact activation/terminal receipts.",
+      "status": "blocked",
+      "tokensUsed": 105077,
+      "timeUsedSeconds": 565,
+      "createdAt": 1791399998,
+      "updatedAt": 1791400564
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "subsequentGetResponse": {
+    "goal": {
+      "threadId": "01a117c2-70e0-7471-957f-3ec80e706e29",
+      "objective": "Execute D-M14-A control author from /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/INPUT_MAP.json; write /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/report.md; bounded stage deadline 2026-10-07T19:18:09.395451+00:00; fresh native Goal and exact activation/terminal receipts.",
+      "status": "blocked",
+      "tokensUsed": 105077,
+      "timeUsedSeconds": 565,
+      "createdAt": 1791399998,
+      "updatedAt": 1791400564
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "note": "The report is complete, but the exact create response was lost during the original serialization failure and cannot be recovered through the exposed native Goal tools. A second Goal is prohibited. The same blocker persisted across three consecutive Goal turns; the Goal was marked blocked under the blocked-audit rule. No completion is claimed."
+}

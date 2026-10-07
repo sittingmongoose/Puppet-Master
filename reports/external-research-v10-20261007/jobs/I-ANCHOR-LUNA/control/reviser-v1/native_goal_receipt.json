@@ -1,0 +1,35 @@
+{
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+      "objective": "Complete the ER10 I-ANCHOR-LUNA control final revision using only the materials and constraints declared in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/INPUTS.md. Produce the complete final.md, critique-dispositions.md, sources/SOURCES.md, bounded evidence, timings, and exact native Goal receipts in this reviser-v1 directory; preserve predecessor artifacts and the original absolute deadline.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399494,
+      "updatedAt": 1791399494
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal_response": {
+    "goal": {
+      "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+      "objective": "Complete the ER10 I-ANCHOR-LUNA control final revision using only the materials and constraints declared in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/INPUTS.md. Produce the complete final.md, critique-dispositions.md, sources/SOURCES.md, bounded evidence, timings, and exact native Goal receipts in this reviser-v1 directory; preserve predecessor artifacts and the original absolute deadline.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399494,
+      "updatedAt": 1791399494
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "active_identity": {
+    "provider_route": "codex_gmail",
+    "model": "gpt-6-luna",
+    "reasoningEffort": "max",
+    "serviceTier": "priority",
+    "basis": "Explicit task/runtime identity supplied for this run; tool responses above are preserved verbatim as returned."
+  }
+}

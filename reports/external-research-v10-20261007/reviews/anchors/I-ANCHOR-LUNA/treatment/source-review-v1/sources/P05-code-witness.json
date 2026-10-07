@@ -1,0 +1,36 @@
+{
+  "retrieval_id": "P05",
+  "url": "https://raw.githubusercontent.com/apache/pouchdb/34cb69117931d4b520ee8d7a6208eb0f33da8ec7/tests/integration/test.compaction.js",
+  "version_identity": "34cb69117931d4b520ee8d7a6208eb0f33da8ec7",
+  "response_body_sha256": "53c4f5e494d2dacdfd956f1143e49aed9169b31fca2978f193810b6454cba5f2",
+  "snippets": [
+    {
+      "original_lines": [
+        511,
+        511
+      ],
+      "excerpt": "511:       if (dbs.name.slice(0,4) === 'http') {  // Check for remote target"
+    },
+    {
+      "original_lines": [
+        513,
+        513
+      ],
+      "excerpt": "513:         return this.skip();"
+    },
+    {
+      "original_lines": [
+        521,
+        521
+      ],
+      "excerpt": "521:       await db.put({_id: '_local/compaction', last_seq: 2});"
+    },
+    {
+      "original_lines": [
+        524,
+        524
+      ],
+      "excerpt": "524:       await db.get('foo', {rev});"
+    }
+  ]
+}

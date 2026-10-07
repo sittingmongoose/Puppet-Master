@@ -1,0 +1,182 @@
+{
+  "record_at": "2026-10-07T19:24:50.377360+00:00",
+  "scope": "mechanical delivery triage only, not SourcePASS",
+  "files": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/artifact.md": {
+      "sha256": "4fa4fe30323ffe02de863093fb93e5cd3c74fa3dc176093d8f9b9755f13e9d34",
+      "bytes": 14544
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/source-map.json": {
+      "sha256": "3cd7b43dc4d346071d567d8b8b8d20f82eb5523044af5e933e8ee64bb5427f5e",
+      "bytes": 10797
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/core-line-counter.txt": {
+      "sha256": "b3a8c53b2ff26fb532069e37fe780e2daceb44150a91217a09b1fbfc5926cd02",
+      "bytes": 1111
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/csv-core-manifest.txt": {
+      "sha256": "569f0930c8c0dd5772f07601faa19d7aaa440e3670365dc339c70837cb23b738",
+      "bytes": 677
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/deserializer-buf.txt": {
+      "sha256": "ebc4ddae4e884db886dd2373ea796a73a55cb3130141c53dde5567743d0cc254",
+      "bytes": 221
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/deserializer-test.txt": {
+      "sha256": "813371dff17017e478d17c465eb0f889a39f03aac40cbca3646a29d42458c5bb",
+      "bytes": 683
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/fix-commit.json": {
+      "sha256": "f3f36887de8291a55da0596deeb9a91371076270931f50248b100e01dfb3b3fb",
+      "bytes": 8264
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/issue-395.json": {
+      "sha256": "1f4aeb9d001847961544741e4c09d5bca25a88b1014d5a772a9a8db66b65513a",
+      "bytes": 3532
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/issue-422.json": {
+      "sha256": "5dd6024beb5b2bc1cf0c05816d254141f36d15c151c0f92ee8d994d1af353ba4",
+      "bytes": 1010
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/reader-call.txt": {
+      "sha256": "2fcc710d9d01f1a82499fba8304bff8e6b9e738f1743e6e5ec9892c534e06cdb",
+      "bytes": 834
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/reader-flex.txt": {
+      "sha256": "7439ffd29dcd073f1e435e260cc10d3bee2381877b6ebf8968483484026a250b",
+      "bytes": 2897
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/reader-state.txt": {
+      "sha256": "35d69f5c4885414d279cef82aa2227146b3222532b16448a457fc17879bc6a74",
+      "bytes": 795
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/reader-tests.txt": {
+      "sha256": "46c115cf3697e3d80a377af5ed1d9b77e3c05e9af12a601af7f01c828915bab4",
+      "bytes": 2608
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/root-manifest.txt": {
+      "sha256": "3d5b1b1bfd196823a17bef67d04a5808a0300df2e2b82b5868c4b2476e9c9a20",
+      "bytes": 730
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/wrapper-position-update.txt": {
+      "sha256": "9096b0243bb887a71ca2588b9cf083618635ad8aff6092fdcb6e056e86045517",
+      "bytes": 2060
+    },
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/wrapper-unequal-tests.txt": {
+      "sha256": "4ce6e7d64b48deab01e6d3bbe70033057b9021e6d1319584d8520e76eeb16403",
+      "bytes": 2741
+    }
+  },
+  "t3_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Ac9c0b5ef-3bfe-4afd-a6cf-7a86dc50438f%253Adelegate-task%253Aer10-I-METHOD-01-treatment-critic-v1:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "requestedAt": "2026-10-07T19:14:37.303Z",
+    "startedAt": "2026-10-07T19:14:37.792Z",
+    "completedAt": "2026-10-07T19:23:18.582Z"
+  },
+  "descendants_quiet": true,
+  "settled": true,
+  "source_quality": null,
+  "actual_native_responses": [
+    {
+      "goal": {
+        "threadId": "01a117ca-02e9-7b32-99c0-aba445cfcede",
+        "objective": "Complete one independent full-scope critique of the researcher draft for I-METHOD-01 using the exact input map /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/input-map.json. Read the mapped original brief, frozen plan, draft, source map, and captured public sources; independently verify consequential claims against primary sources and relevant pinned component/governing context. Assess O1\u2013O6 and P1\u2013P6 comprehensively, including useful discovery, mechanisms and alternatives, change/retain/already-covered/reject/uncertain dispositions, product constraints, source identity, uncertainty, and proposed versus executed validation. Produce one coherent evidence-linked critique for a fresh final reviser; do not rewrite the final artifact. Work only within the critic-v1 directory and preserve lifecycle receipts as instructed.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791400489,
+        "updatedAt": 1791400489
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    {
+      "goal": {
+        "threadId": "01a117ca-02e9-7b32-99c0-aba445cfcede",
+        "objective": "Complete one independent full-scope critique of the researcher draft for I-METHOD-01 using the exact input map /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/input-map.json. Read the mapped original brief, frozen plan, draft, source map, and captured public sources; independently verify consequential claims against primary sources and relevant pinned component/governing context. Assess O1\u2013O6 and P1\u2013P6 comprehensively, including useful discovery, mechanisms and alternatives, change/retain/already-covered/reject/uncertain dispositions, product constraints, source identity, uncertainty, and proposed versus executed validation. Produce one coherent evidence-linked critique for a fresh final reviser; do not rewrite the final artifact. Work only within the critic-v1 directory and preserve lifecycle receipts as instructed.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791400489,
+        "updatedAt": 1791400489
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    {
+      "goal": {
+        "threadId": "01a117ca-02e9-7b32-99c0-aba445cfcede",
+        "objective": "Complete one independent full-scope critique of the researcher draft for I-METHOD-01 using the exact input map /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/input-map.json. Read the mapped original brief, frozen plan, draft, source map, and captured public sources; independently verify consequential claims against primary sources and relevant pinned component/governing context. Assess O1\u2013O6 and P1\u2013P6 comprehensively, including useful discovery, mechanisms and alternatives, change/retain/already-covered/reject/uncertain dispositions, product constraints, source identity, uncertainty, and proposed versus executed validation. Produce one coherent evidence-linked critique for a fresh final reviser; do not rewrite the final artifact. Work only within the critic-v1 directory and preserve lifecycle receipts as instructed.",
+        "status": "complete",
+        "tokensUsed": 141698,
+        "timeUsedSeconds": 449,
+        "createdAt": 1791400489,
+        "updatedAt": 1791400939
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+    },
+    {
+      "goal": {
+        "threadId": "01a117ca-02e9-7b32-99c0-aba445cfcede",
+        "objective": "Complete one independent full-scope critique of the researcher draft for I-METHOD-01 using the exact input map /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/input-map.json. Read the mapped original brief, frozen plan, draft, source map, and captured public sources; independently verify consequential claims against primary sources and relevant pinned component/governing context. Assess O1\u2013O6 and P1\u2013P6 comprehensively, including useful discovery, mechanisms and alternatives, change/retain/already-covered/reject/uncertain dispositions, product constraints, source identity, uncertainty, and proposed versus executed validation. Produce one coherent evidence-linked critique for a fresh final reviser; do not rewrite the final artifact. Work only within the critic-v1 directory and preserve lifecycle receipts as instructed.",
+        "status": "complete",
+        "tokensUsed": 141698,
+        "timeUsedSeconds": 449,
+        "createdAt": 1791400489,
+        "updatedAt": 1791400939
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    }
+  ],
+  "native_identity": "01a117ca-02e9-7b32-99c0-aba445cfcede",
+  "native_terminal": "complete",
+  "native_terminal_unix_seconds": 1791400939,
+  "same_identity": true,
+  "raw_response_count": 4,
+  "native_goal_aggregate_tokens": 141698,
+  "native_elapsed_seconds": 449,
+  "native_start_unix_seconds": 1791400489,
+  "native_active_observed": true,
+  "stage_envelope": {
+    "target": {
+      "providerInstanceId": "codex_gmail",
+      "driverKind": "codex",
+      "model": "gpt-6-luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "max"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "mode": "async",
+    "role": "general",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "clientRequestId": "er10-I-METHOD-01-treatment-critic-v1",
+    "record_at": "2026-10-07T19:13:21.652733+00:00",
+    "prospective_stage_deadline": "2026-10-07T19:23:21.652733+00:00",
+    "prospective_arm_deadline": "2026-10-07T19:41:45.844115+00:00",
+    "stage_max_seconds": 600,
+    "remaining_final_reserve_seconds": 900,
+    "contract": "original v1 raw native receipts; no v2 retrofit"
+  },
+  "t3_delivery_in_prefrozen_deadline": true,
+  "distinct_counters": {
+    "input": null,
+    "cached_input": null,
+    "generated_output": null,
+    "reasoning": null,
+    "billing": null
+  }
+}

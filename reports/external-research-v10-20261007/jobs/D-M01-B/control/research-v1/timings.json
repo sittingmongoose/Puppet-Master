@@ -1,0 +1,87 @@
+{
+  "case_id": "D-M01-B",
+  "arm": "control",
+  "stage": "research",
+  "dispatch_timestamp_utc": "2026-10-07T18:53:40.979833+00:00",
+  "hard_stage_deadline_utc": "2026-10-07T18:59:40.979833+00:00",
+  "whole_arm_deadline_utc": "2026-10-07T19:08:40.979833+00:00",
+  "last_preparation_clock_observation_utc": "2026-10-07 18:58:06 UTC",
+  "operations": [
+    {
+      "operation": "native create_goal",
+      "result": "success; fresh goal active",
+      "native_createdAt_epoch_seconds": 1791399237
+    },
+    {
+      "operation": "native get_goal",
+      "result": "success; same identity observed active; exact response persisted in native_goal_receipt.json",
+      "observed_no_later_than_utc": "2026-10-07 18:54:45 UTC"
+    },
+    {
+      "operation": "read brief, source manifest, verify supplied source hashes",
+      "result": "success",
+      "observed_by_utc": "2026-10-07 18:54:45 UTC"
+    },
+    {
+      "operation": "read R1 mask guide",
+      "result": "success",
+      "observed_by_utc": "2026-10-07 18:54:54 UTC"
+    },
+    {
+      "operation": "inspect R2 relevant implementation lines",
+      "result": "success",
+      "observed_by_utc": "2026-10-07 18:55:08 UTC"
+    },
+    {
+      "operation": "author and save draft.md",
+      "result": "success; subsequently checked readable, 698 words, SHA-256 76be70f9fdbbc84b6f86f85768a3d4c7c86ba5afba4b3835b309423718020c50",
+      "saved_no_later_than_utc": "2026-10-07 18:57:22 UTC"
+    },
+    {
+      "operation": "validate native_goal_receipt.json and review artifact word count/hash",
+      "result": "success",
+      "observed_utc": "2026-10-07 18:57:22 UTC"
+    },
+    {
+      "operation": "native update_goal complete",
+      "result": "success; exact response saved in native_goal_terminal.json",
+      "observed_no_later_than_utc": "2026-10-07 18:58:06 UTC",
+      "native_tokens_used": 56694,
+      "native_time_used_seconds": 230
+    },
+    {
+      "operation": "native final get_goal",
+      "result": "success; same identity observed complete; exact response saved in native_goal_terminal.json",
+      "observed_no_later_than_utc": "2026-10-07 18:58:06 UTC",
+      "native_tokens_used": 56694,
+      "native_time_used_seconds": 230
+    }
+  ],
+  "clock_observations_utc": [
+    "2026-10-07 18:54:45 UTC",
+    "2026-10-07 18:54:54 UTC",
+    "2026-10-07 18:55:08 UTC",
+    "2026-10-07 18:56:08 UTC",
+    "2026-10-07 18:57:02 UTC",
+    "2026-10-07 18:57:22 UTC",
+    "2026-10-07 18:58:06 UTC"
+  ],
+  "usage": {
+    "native_goal_tokens_used_last_observed": 0,
+    "native_goal_time_used_seconds_last_observed": 0,
+    "model_input_tokens": null,
+    "model_output_tokens": null,
+    "model_total_tokens": null,
+    "supplied_source_files_read": 2,
+    "supplied_source_sha256_checks": 2,
+    "external_source_fetches": 0,
+    "raster_files_opened": 0,
+    "project_code_executed": 0,
+    "fixture_executions": 0,
+    "additional_worker_count": 0,
+    "native_goal_tokens_used_final": 56694,
+    "native_goal_time_used_seconds_final": 230,
+    "native_goal_terminal_status": "complete"
+  },
+  "notes": "Goal token/time values are from the active get receipt, not a full-turn usage meter. Unknown model-token usage is null. Stage timestamps use the supplied dispatch/deadline and clock tool observations; operation times are bounds where no start/end clock sample was taken. Final native update/get receipts report 56,694 tokens and 230 seconds; these are separate from unknown model-token usage."
+}

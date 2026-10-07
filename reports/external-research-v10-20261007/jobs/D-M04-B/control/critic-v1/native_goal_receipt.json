@@ -1,0 +1,36 @@
+{
+  "observed_before": {
+    "current_time": "2026-10-07 19:08:47 UTC"
+  },
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117c3-e992-73c0-9329-761185acec7d",
+      "objective": "D-M04-B control critic",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791400127,
+      "updatedAt": 1791400127
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "create_goal_error": null,
+  "get_goal_response": {
+    "goal": {
+      "threadId": "01a117c3-e992-73c0-9329-761185acec7d",
+      "objective": "D-M04-B control critic",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791400127,
+      "updatedAt": 1791400127
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal_error": null,
+  "observed_after": {
+    "current_time": "2026-10-07 19:08:47 UTC"
+  }
+}

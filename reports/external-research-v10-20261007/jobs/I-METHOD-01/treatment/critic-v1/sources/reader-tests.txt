@@ -1,0 +1,80 @@
+    fn read_record_unequal_fails() {
+        let data = b("foo\nbar,baz");
+        let mut rdr =
+            ReaderBuilder::new().has_headers(false).from_reader(data);
+        let mut rec = ByteRecord::new();
+
+        assert!(rdr.read_byte_record(&mut rec).unwrap());
+        assert_eq!(1, rec.len());
+        assert_eq!("foo", s(&rec[0]));
+
+        match rdr.read_byte_record(&mut rec) {
+            Err(err) => match *err.kind() {
+                ErrorKind::UnequalLengths {
+                    expected_len: 1,
+                    ref pos,
+                    len: 2,
+                } => {
+                    assert_eq!(pos, &Some(newpos(4, 2, 1)));
+                }
+                ref wrong => panic!("match failed, got {:?}", wrong),
+            },
+            wrong => panic!("match failed, got {:?}", wrong),
+        }
+    }
+
+    #[test]
+    fn read_record_unequal_ok() {
+        let data = b("foo\nbar,baz");
+        let mut rdr = ReaderBuilder::new()
+            .has_headers(false)
+            .flexible(true)
+            .from_reader(data);
+        let mut rec = ByteRecord::new();
+
+        assert!(rdr.read_byte_record(&mut rec).unwrap());
+        assert_eq!(1, rec.len());
+        assert_eq!("foo", s(&rec[0]));
+
+        assert!(rdr.read_byte_record(&mut rec).unwrap());
+        assert_eq!(2, rec.len());
+        assert_eq!("bar", s(&rec[0]));
+        assert_eq!("baz", s(&rec[1]));
+
+        assert!(!rdr.read_byte_record(&mut rec).unwrap());
+    }
+
+    // This tests that even if we get a CSV error, we can continue reading
+    // if we want.
+    #[test]
+    fn read_record_unequal_continue() {
+        let data = b("foo\nbar,baz\nquux");
+        let mut rdr =
+            ReaderBuilder::new().has_headers(false).from_reader(data);
+        let mut rec = ByteRecord::new();
+
+        assert!(rdr.read_byte_record(&mut rec).unwrap());
+        assert_eq!(1, rec.len());
+        assert_eq!("foo", s(&rec[0]));
+
+        match rdr.read_byte_record(&mut rec) {
+            Err(err) => match err.kind() {
+                &ErrorKind::UnequalLengths {
+                    expected_len: 1,
+                    ref pos,
+                    len: 2,
+                } => {
+                    assert_eq!(pos, &Some(newpos(4, 2, 1)));
+                }
+                wrong => panic!("match failed, got {:?}", wrong),
+            },
+            wrong => panic!("match failed, got {:?}", wrong),
+        }
+
+        assert!(rdr.read_byte_record(&mut rec).unwrap());
+        assert_eq!(1, rec.len());
+        assert_eq!("quux", s(&rec[0]));
+
+        assert!(!rdr.read_byte_record(&mut rec).unwrap());
+    }
+

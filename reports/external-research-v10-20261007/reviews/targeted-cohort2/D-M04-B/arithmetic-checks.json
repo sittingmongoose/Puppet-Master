@@ -1,0 +1,78 @@
+{
+  "kind": "reviewer_common_arithmetic_checks",
+  "captured_utc": "2026-10-07T19:17:18.358711+00:00",
+  "checks": [
+    {
+      "id": "class-arithmetic",
+      "expected": 2,
+      "actual": 2,
+      "passed": true,
+      "limitation": "Arithmetic only. Does not execute Rasterio/GDAL or prove overview behavior on a tile."
+    },
+    {
+      "id": "dataset-or-loss",
+      "expected": [
+        true,
+        true
+      ],
+      "actual": [
+        true,
+        true
+      ],
+      "passed": true,
+      "limitation": "Boolean counterexample to equating a shared OR mask with either band mask."
+    },
+    {
+      "id": "mask-boolean-loss",
+      "expected": [
+        false,
+        true,
+        true
+      ],
+      "actual": [
+        false,
+        true,
+        true
+      ],
+      "passed": true,
+      "limitation": "Python Boolean semantics match the cited nonzero-to-bool idea; no GDAL interpolation was run."
+    },
+    {
+      "id": "affine-outer-corners",
+      "expected": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "actual": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true,
+      "limitation": "Exact algebra, not a raster export test."
+    },
+    {
+      "id": "affine-center",
+      "expected": true,
+      "actual": true,
+      "passed": true,
+      "limitation": "New pixel center is mapped coherently; it need not equal an original pixel center."
+    },
+    {
+      "id": "window-corners",
+      "expected": true,
+      "actual": true,
+      "passed": true,
+      "limitation": "Exact algebra for an in-bounds source window; no boundless read test."
+    }
+  ],
+  "candidate_tests_executed": false,
+  "runtime_probe": {
+    "rasterio": "ModuleNotFoundError in selected python3",
+    "gdal_shared_library": "ctypes.util.find_library('gdal') returned None",
+    "installed_or_changed_environment": false
+  }
+}

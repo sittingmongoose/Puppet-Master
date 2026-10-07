@@ -1,0 +1,88 @@
+{
+  "original_brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/brief.md",
+  "required_sources": [
+    {
+      "source_id": "pep706",
+      "url": "https://peps.python.org/pep-0706/",
+      "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/pep706.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/102950",
+      "version_or_capture": "CPython issue 102950 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarissue.json",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarpr",
+      "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+      "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarpr.json",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardefaultissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/121999",
+      "version_or_capture": "CPython issue 121999 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "e88ab5fad57a96ff4cb0d25148ff5c1535027d2482fe616d4ee0e2a0a3b70bce",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardefaultissue.json",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarold.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarnew.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocnew",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "901ab69790214a595355d7e29a4b11a68fdfa8c45032dd3bd84822de01280d9f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardocnew.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tartest",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/test/test_tarfile.py",
+      "version_or_capture": "CPython 3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5149edfc9376f6d45cb95f7c914cd6b6dd205e5ef404298e655aa685a5527831",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tartest.py",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources.json",
+  "frozen_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/final.md",
+  "frozen_output_sha256": "de5938d402ee8138f44591fa06185a4ea77a4637cdeb1b875237371f5876bba8",
+  "obligations": [
+    "Identify the old concern, implementation/fix lineage, and released default relevant to 3.14.0.",
+    "Bind omitted versus explicit filter and errorlevel behavior.",
+    "Separate file/link/path domains and destination assumptions.",
+    "State residual security and resource-exhaustion limits.",
+    "Avoid projecting an older issue onto every current code path.",
+    "Propose version-discriminating regression checks and conditional compatibility policy."
+  ]
+}

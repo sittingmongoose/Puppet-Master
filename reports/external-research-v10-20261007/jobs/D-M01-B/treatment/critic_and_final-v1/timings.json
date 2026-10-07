@@ -1,0 +1,62 @@
+{
+  "case_id": "D-M01-B",
+  "arm": "treatment",
+  "stage": "critic_and_final",
+  "timestamps_utc": {
+    "dispatch_provided": "2026-10-07T18:49:52.232898+00:00",
+    "hard_deadline_provided": "2026-10-07T18:52:37.458234+00:00",
+    "create_goal_observed_epoch_seconds": 1791399004,
+    "get_goal_observed_epoch_seconds": 1791399024,
+    "clock_read_observed": "2026-10-07 18:52:04 UTC"
+  },
+  "operations": [
+    {
+      "operation": "native create_goal",
+      "timestamp_utc": "2026-10-07 18:50:04 UTC (from returned createdAt)",
+      "result": "active"
+    },
+    {
+      "operation": "persist activation response",
+      "timestamp_utc": "before native get_goal; within 18:50:04–18:50:24 UTC",
+      "result": "saved to native_goal_receipt.json"
+    },
+    {
+      "operation": "native get_goal",
+      "timestamp_utc": "2026-10-07 18:50:24 UTC (from returned updatedAt)",
+      "result": "active; tokensUsed=2629; timeUsedSeconds=20"
+    },
+    {
+      "operation": "read brief, sources.json, predecessor draft; inspect relevant source passages; sha256sum both captures",
+      "timestamp_utc": "2026-10-07 18:52:04 UTC",
+      "result": "read completed; both computed SHA-256 values matched manifest"
+    },
+    {
+      "operation": "write final.md, report.md, timings.json",
+      "timestamp_utc": "2026-10-07 18:52:04 UTC",
+      "result": "saved; apply_patch returned success for all three"
+    },
+    {
+      "operation": "final native get_goal",
+      "timestamp_utc": "2026-10-07 18:52:23 UTC (from returned updatedAt)",
+      "result": "active immediately before terminal update; tokensUsed=27377; timeUsedSeconds=138"
+    },
+    {
+      "operation": "native update_goal complete and terminal receipt persistence",
+      "timestamp_utc": "2026-10-07 18:52:23 UTC (from returned updatedAt)",
+      "result": "complete; tokensUsed=34303; timeUsedSeconds=138; native_goal_terminal.json saved"
+    }
+  ],
+  "usage": {
+    "native_goal_tokens_used_at_initial_get": 2629,
+    "native_goal_time_used_seconds_at_initial_get": 20,
+    "native_goal_tokens_used_at_terminal_get": 27377,
+    "native_goal_tokens_used_at_update": 34303,
+    "native_goal_time_used_seconds_at_terminal_get": 138,
+    "native_goal_time_used_seconds_at_update": 138,
+    "assistant_model_token_usage": null,
+    "external_source_fetch_count": 0,
+    "raster_execution_count": 0,
+    "proposed_fixture_count": 4
+  },
+  "limitations": "Command batch completion time is recorded at the observed clock read; per-file read timestamps were not separately sampled. Terminal Goal usage/state will be recorded separately in native_goal_terminal.json."
+}

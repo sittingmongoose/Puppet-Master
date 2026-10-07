@@ -1,0 +1,20 @@
+{
+  "url": "https://api.github.com/repos/apache/pouchdb/git/trees/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1?recursive=1",
+  "retrieval_id": "P10",
+  "response_body_sha256": "424722f7db7aaaf62c8e2759640178aed226eb29775c8f9867c231805fcc2674",
+  "selected_primary_response_fields": {
+    "sha": "b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1",
+    "truncated": false,
+    "selected_tree_entries": [
+      {
+        "path": "lib/index.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "71ef6abfc7bb99aef03fd35a32f2458c1132beea",
+        "size": 300458,
+        "url": "https://api.github.com/repos/apache/pouchdb/git/blobs/71ef6abfc7bb99aef03fd35a32f2458c1132beea"
+      }
+    ],
+    "source_test_paths_present": false
+  }
+}

@@ -1,0 +1,81 @@
+    /// Whether the number of fields in records is allowed to change or not.
+    ///
+    /// When disabled (which is the default), parsing CSV data will return an
+    /// error if a record is found with a number of fields different from the
+    /// number of fields in a previous record.
+    ///
+    /// When enabled, this error checking is turned off.
+    ///
+    /// # Example: flexible records enabled
+    ///
+    /// ```
+    /// use std::error::Error;
+    /// use csv::ReaderBuilder;
+    ///
+    /// # fn main() { example().unwrap(); }
+    /// fn example() -> Result<(), Box<dyn Error>> {
+    ///     // Notice that the first row is missing the population count.
+    ///     let data = "\
+    /// city,country,pop
+    /// Boston,United States
+    /// ";
+    ///     let mut rdr = ReaderBuilder::new()
+    ///         .flexible(true)
+    ///         .from_reader(data.as_bytes());
+    ///
+    ///     if let Some(result) = rdr.records().next() {
+    ///         let record = result?;
+    ///         assert_eq!(record, vec!["Boston", "United States"]);
+    ///         Ok(())
+    ///     } else {
+    ///         Err(From::from("expected at least one record but got none"))
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// # Example: flexible records disabled
+    ///
+    /// This shows the error that appears when records of unequal length
+    /// are found and flexible records have been disabled (which is the
+    /// default).
+    ///
+    /// ```
+    /// use std::error::Error;
+    /// use csv::{ErrorKind, ReaderBuilder};
+    ///
+    /// # fn main() { example().unwrap(); }
+    /// fn example() -> Result<(), Box<dyn Error>> {
+    ///     // Notice that the first row is missing the population count.
+    ///     let data = "\
+    /// city,country,pop
+    /// Boston,United States
+    /// ";
+    ///     let mut rdr = ReaderBuilder::new()
+    ///         .flexible(false)
+    ///         .from_reader(data.as_bytes());
+    ///
+    ///     if let Some(Err(err)) = rdr.records().next() {
+    ///         match *err.kind() {
+    ///             ErrorKind::UnequalLengths { expected_len, len, .. } => {
+    ///                 // The header row has 3 fields...
+    ///                 assert_eq!(expected_len, 3);
+    ///                 // ... but the first row has only 2 fields.
+    ///                 assert_eq!(len, 2);
+    ///                 Ok(())
+    ///             }
+    ///             ref wrong => {
+    ///                 Err(From::from(format!(
+    ///                     "expected UnequalLengths error but got {:?}",
+    ///                     wrong)))
+    ///             }
+    ///         }
+    ///     } else {
+    ///         Err(From::from(
+    ///             "expected at least one errored record but got none"))
+    ///     }
+    /// }
+    /// ```
+    pub fn flexible(&mut self, yes: bool) -> &mut ReaderBuilder {
+        self.flexible = yes;
+        self
+    }

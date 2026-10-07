@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-07T19:16:19.805051+00:00",
+  "pair_gate": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/pair-freeze.json",
+  "inputs": {
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/brief.md": "0600bd0661196df8f728a2d861530f352251dc42008e9fd71ce532a6e30a0874",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/plan.md": "ac49eea7607c8db0cc0664cb0921100ee651c6d4cf3887dc8bd1b05e2e0d93fd",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/final.md": "1d8420a0752e0b2bda7d8b3eeca666ecf23e801b829c03e2dc7f8d1b0880f3a8",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/sources/SOURCES.md": "9053587fea1284aba04972b11180d4c7ff9709670beb7325abe2190e21652530",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/critic-finalizer-v1/critique.md": "4bad17250d07377899f36a97e49a21a8847059a82c6cad5ad594782fd6148a84",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/research-v1/sources/README.md": "a52be1549f7ffa153c153bb5fa0e5cb6f070f1f44328476e463fa2006095cb3d",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/treatment/research-v1/sources/manifest.json": "91ccdc5daec2d6139f38e9c8897ba3c8304f6634b801a22a1f77db3ae7ff9703"
+  },
+  "task_sha256": "b4bae574333b4c4dc80b94e35e4ba569af13a13cfabf3b4971331d0909cba4de",
+  "config": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  }
+}

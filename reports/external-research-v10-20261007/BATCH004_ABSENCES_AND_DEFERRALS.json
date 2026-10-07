@@ -1,0 +1,1767 @@
+{
+  "cutoff": "2026-10-07T20:04:57+00:00",
+  "absences": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/change_dependency_check.md",
+      "reason": "explicit frozen absence; current output not checked",
+      "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/final.md",
+      "reason": "explicit frozen absence; current output not checked",
+      "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2/timings.json",
+      "reason": "explicit frozen absence; current output not checked",
+      "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M08-B/treatment/finalizer-v2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v2/preservation_check.md",
+      "reason": "explicit frozen absence; current output not checked",
+      "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v2/final.md",
+      "reason": "explicit frozen absence; current output not checked",
+      "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v2/timings.json",
+      "reason": "explicit frozen absence; current output not checked",
+      "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/REVIEW.json",
+      "reason": "original absent review delivery retained; successor records separate",
+      "carrier": "original completed/interrupted task record"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/review.md",
+      "reason": "original absent review delivery retained; successor records separate",
+      "carrier": "original completed/interrupted task record"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/review.md",
+      "reason": "original absent review delivery retained; successor records separate",
+      "carrier": "original completed/interrupted task record"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/original-v1-final-disposition.json",
+      "reason": "original authored missing-final/preservation/native-terminal disposition; no live output chase",
+      "original_absence": {
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/mechanical_projection-v1": [
+          "native_activation.json",
+          "native_terminal_receipt.json",
+          "final.md",
+          "preservation_check.md"
+        ],
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v1": [
+          "final.md",
+          "preservation_check.md"
+        ],
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/preservation_check-v1": [
+          "native_terminal_receipt.json",
+          "final.md",
+          "preservation_check.md"
+        ],
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1": [
+          "final.md",
+          "preservation_check.md"
+        ],
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/finalize-v1": [
+          "native_terminal_receipt.json",
+          "preservation_check.md"
+        ]
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/targeted-cohort4/D-M14-A/paired-v2-disposition.json",
+      "reason": "original authored missing-final/preservation/native-terminal disposition; no live output chase",
+      "original_absence": {
+        "semantic_set": "jobs/D-M14-A/treatment/semantic_findings-v2/semantic_findings.md",
+        "author_native": "complete",
+        "host_render": "exactset structural only",
+        "preservation_native_projection": "paused",
+        "preservation_check": "ABSENT",
+        "final": "ABSENT",
+        "stage_expired": true,
+        "T3_status": "interrupted",
+        "source_grade": "UNASSESSED"
+      }
+    }
+  ],
+  "excluded_paths": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackup.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackupapi.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-A/inputs/sources/sqlbackupcode.c",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/sources/rasterio.pyx",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M01-B/inputs/sources/rastermask.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathcode.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathdoc.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathscan.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlpragma.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqltransaction.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwal.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwalcode.c",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/geotransform.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rasterio.pyx",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rastermask.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-B/inputs/sources/rasterresample.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/brief.md",
+      "why": "freeze identity mismatch; original preserved, no live replacement"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpcache.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-A/inputs/sources/httpsem.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/geotransform.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rastermask.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M08-B/inputs/sources/rasterresample.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/pep706.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardefaultissue.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tardocnew.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarissue.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarnew.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarold.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tarpr.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M11-A/inputs/sources/tartest.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarissue.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarpr.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/geotransform.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rastermask.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterresample.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M14-A/inputs/sources/rasterwindow.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/expand-v1/sources/fnmatch-3.12.3.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/expand-v1/sources/os-3.12.3.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1/sources/SOURCES_USED.md",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/sources/rasterio-1.3.10-_io.pyx",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v2/sources/rasterio-1.3.10-enums.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v2/sources/rasterio_enums.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f01.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f02.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f03.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f04.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f05.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f06.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f07.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f08.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f09.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f10.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f11.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f12.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f13.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f14.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f15.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-all_qc_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-gauge_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-issue-120.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-pr-123-files.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-pr-123.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-release-v1.0.2.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/Rust-csv-1.4.0-Reader.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/SQLite-transactional.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/CoCoRaHS-QA-QC-April-2019.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/CoCoRaHS-observation-time-editing.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/OGC-STAplus-1.0.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/OGC-SensorThings-1.1.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/PyPI-rainfallqc-1.0.2.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/PyPI-rainfallqc-1.0.2.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/PyPI-rainfallqc-project.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/PyPI-rainfallqc-project.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-issue-120.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-pr-123-files.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-pr-123.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-release-v1.0.2.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-apply_qc_framework.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-gauge_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-inbuilt_qc_frameworks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-pyproject.toml",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-qc_frameworks-contents.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-test_gauge_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/Rust-csv-1.4.0-byte_record-source.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/Rust-csv-1.4.0-docs.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/Rust-csv-1.4.0-reader-source.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/SQLite-transactional.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/USGS-time-series-workflow-memo.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/critic-v1/RainfallQC-all_qc_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/critic-v1/RainfallQC-gauge_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/critic-v1/RainfallQC-issue-120.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/critic-v1/RainfallQC-pr-123-files.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/critic-v1/RainfallQC-pr-123.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/critic-v1/RainfallQC-release-v1.0.2.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/critic-v1/Rust-csv-1.4.0-Reader.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/critic-v1/SQLite-transactional.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/CoCoRaHS-QA-QC-April-2019.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/CoCoRaHS-observation-time-editing.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/OGC-STAplus-1.0.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/OGC-SensorThings-1.1.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/PyPI-rainfallqc-1.0.2.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/PyPI-rainfallqc-1.0.2.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-issue-120.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-pr-123-files.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-pr-123.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-release-v1.0.2.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-v1.0.2-apply_qc_framework.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-v1.0.2-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-v1.0.2-gauge_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-v1.0.2-inbuilt_qc_frameworks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-v1.0.2-pyproject.toml",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-v1.0.2-qc_frameworks-contents.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/RainfallQC-v1.0.2-test_gauge_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/Rust-csv-1.4.0-byte_record-source.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/Rust-csv-1.4.0-docs.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/Rust-csv-1.4.0-reader-source.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/SQLite-transactional.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/sources/research-v1/USGS-time-series-workflow-memo.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/fix-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/issue-395.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/issue-422.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/wrapper-position-update.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/wrapper-unequal-tests.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/cocorahs-qa-qc-2019.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/hydroshare-time-series-metadata.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/hydroshare-time-series.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/odm2-tables.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/prov-o.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-deserializer-1.4.0.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-deserializer-fix-9e644e6.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-docs-1.4.0.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-fix-1.4.0-compare.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-fix-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-reader-1.4.0.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-release-1.4.0-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/sqlite-atomiccommit.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/sqlite-foreignkeys.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/sqlite-whentouse.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-precip-approval.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-precip-process.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-stage-approval.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-stage-process.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-time-series-guidance.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/w3c-tabular-data-model.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/cocorahs-qa-qc-2019.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/first-verified-finding.md",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/fix-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/hydroshare-time-series-metadata.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/hydroshare-time-series.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/issue-395.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/issue-422.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/odm2-tables.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/prov-o.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-deserializer-1.4.0.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-deserializer-fix-9e644e6.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-docs-1.4.0.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-fix-1.4.0-compare.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-fix-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-reader-1.4.0.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-release-1.4.0-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/sqlite-atomiccommit.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/sqlite-foreignkeys.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/sqlite-whentouse.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-precip-approval.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-precip-process.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-stage-approval.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-stage-process.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-time-series-guidance.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/w3c-tabular-data-model.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/wrapper-position-update.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/wrapper-unequal-tests.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R01.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R02.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R03.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R04.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R05.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R06.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R07.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R08.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R09.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R10.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R11.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R12.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R13.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R14.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R15.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R16.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R17.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R18.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R19.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R20.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R21.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R22.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R23.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R24.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R25.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R26.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R27.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R28.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R31.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R32.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R33.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R34.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R35.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R36.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R37.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R40.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R41.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R42.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/anchors/I-ANCHOR-LUNA/control/source-review-v1/sources/R43.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/RainfallQC-all_qc_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/RainfallQC-gauge_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/RainfallQC-issue-120.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/RainfallQC-pr-123-files.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/RainfallQC-pr-123.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/RainfallQC-release-v1.0.2.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/Rust-csv-1.4.0-Reader.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/Rust-csv-1.4.0-Reader.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/SQLite-transactional.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/critic-v1/SQLite-transactional.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/CoCoRaHS-QA-QC-April-2019.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/CoCoRaHS-QA-QC-April-2019.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/CoCoRaHS-observation-time-editing.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/CoCoRaHS-observation-time-editing.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/OGC-STAplus-1.0.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/OGC-STAplus-1.0.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/OGC-SensorThings-1.1.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/OGC-SensorThings-1.1.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/PyPI-rainfallqc-1.0.2.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/PyPI-rainfallqc-1.0.2.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/PyPI-rainfallqc-1.0.2.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-issue-120.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-pr-123-files.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-pr-123.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-release-v1.0.2.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-release-v1.0.2.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-v1.0.2-apply_qc_framework.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-v1.0.2-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-v1.0.2-gauge_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-v1.0.2-inbuilt_qc_frameworks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-v1.0.2-pyproject.toml",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-v1.0.2-qc_frameworks-contents.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/RainfallQC-v1.0.2-test_gauge_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/Rust-csv-1.4.0-byte_record-source.code.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/Rust-csv-1.4.0-byte_record-source.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/Rust-csv-1.4.0-byte_record-source.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/Rust-csv-1.4.0-docs.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/Rust-csv-1.4.0-docs.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/Rust-csv-1.4.0-reader-source.code.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/Rust-csv-1.4.0-reader-source.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/Rust-csv-1.4.0-reader-source.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/SQLite-transactional.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/SQLite-transactional.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/USGS-time-series-workflow-memo.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/admitted/research-v1/USGS-time-series-workflow-memo.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/DuckDB-lts-concurrency.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/DuckDB-lts-concurrency.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/DuckDB-stable-appender.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/DuckDB-stable-appender.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/HEC-DSSVue-CSV.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/HEC-DSSVue-CSV.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/HEC-DSSVue-display.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/HEC-DSSVue-display.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/HEC-DSSVue-product.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/HEC-DSSVue-product.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/PyPI-rainfallqc-1.0.2.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-LICENSE",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-all_qc_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-data_utils.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-fixtures.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-framework.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-gauge_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-issue120.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-pr123-files.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-pr123.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-release102.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-runner.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-tag101.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-tag102.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-test-listing.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-tests.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/RainfallQC-v101-gauge_checks.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/SQLite-atomiccommit.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/SQLite-atomiccommit.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/SQLite-pragma.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/SQLite-pragma.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/SQLite-transactional.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/SQLite-transactional.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/csv-1.4.0-Reader.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/csv-1.4.0-Reader.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/egui_plot-0.37.0-Plot.extracted.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/control/review-v1/sources/independent/egui_plot-0.37.0-Plot.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/cocorahs-qa-qc-2019.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/fix-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/hydroshare-time-series-metadata.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/hydroshare-time-series.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/issue-395.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/issue-422.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/odm2-tables.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/prov-o.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-deserializer-1.4.0.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-deserializer-fix-9e644e6.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-docs-1.4.0.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-fix-1.4.0-compare.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-fix-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-reader-1.4.0.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-release-1.4.0-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-atomiccommit.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-foreignkeys.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-whentouse.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-precip-approval.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-precip-process.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-stage-approval.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-stage-process.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-time-series-guidance.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/w3c-tabular-data-model.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/wrapper-position-update.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/wrapper-unequal-tests.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/cocorahs-qa-qc-2019.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/cz-qaqc.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/hydroshare-time-series-metadata.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/hydroshare-time-series.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/odm2-tables.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/pdf-metadata.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/prov-o.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/rust-csv-docs-1.4.0.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/snippet-locations.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/sqlite-atomiccommit.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/sqlite-foreignkeys.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/sqlite-whentouse.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-precip-approval.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-precip-process.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-stage-approval.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-stage-process.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/usgs-time-series-guidance.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/derived/w3c-tabular-data-model.txt",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/Cargo.toml",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/byte_record.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/cocorahs-qa-qc-2019.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/compare.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/core-Cargo.toml",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/core-reader.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/csv-1.4.0.crate",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/cz-qaqc.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/deserializer.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/fix-report.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/fix.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/hydroshare-time-series-metadata.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/hydroshare-time-series.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/issue-395-comments.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/issue-395.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/issue-422-comments.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/issue-422.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/odm2-tables.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/odmtools-README.md",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/odmtools-commit.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/prov-o.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-.cargo_vcs_info.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-Cargo.lock",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-Cargo.toml",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-src-deserializer.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/published-src-reader.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/reader.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/release.json",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/rust-csv-docs-1.4.0.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/sqlite-atomiccommit.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/sqlite-foreignkeys.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/sqlite-whentouse.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/string_record.rs",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-precip-approval.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-precip-process.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-stage-approval.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-stage-process.pdf",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/usgs-time-series-guidance.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/public/w3c-tabular-data-model.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/btree-3.51.3.c",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/get_autocommit.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/pager-3.51.3.c",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/rescode.html",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/reviewer-primary/vdbe-3.51.3.c",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/primary-checks/gdal-3.9.0-gdalwarp.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/primary-checks/gdal-3.9.0-rasterio.cpp",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-B/primary-checks/rasterio-1.3.10-enums.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1/additional_sources/shutil_v3.14.0.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1/additional_sources/zipfile_v3.14.0.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/sources/shutil-v3.12.3.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/sources/shutil-v3.12.3.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/sources/tarfile-v3.14.0.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/treatment-v2/sources/shutil-3.12.3.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-A/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "why": "private map, symlink or compiled cache excluded"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "why": "private map, symlink or compiled cache excluded"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/primary-source-checks/gdal-v3.8.5-rfc15.rst",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/primary-source-checks/numpy-v1.26.4-_add_newdocs.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M01-B/source-review-v1/primary-source-checks/numpy-v1.26.4-fromnumeric.py",
+      "why": "raw vendor source/article/corpus excluded; identity only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/IDENTITY_MAP_PRIVATE.json",
+      "why": "private map, symlink or compiled cache excluded"
+    }
+  ],
+  "deferred_scope": [
+    "later live GLM anchor diagnostic reviews",
+    "M02/M03B live candidate/review outputs",
+    "M12 current source/candidate outputs",
+    "other integrated methods live outputs/reviews",
+    "C01-C04 candidate outputs/reviews",
+    "new future allowance proposals/admissions",
+    "anything modified after initial cutoff"
+  ],
+  "scientific_target_collisions": [
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/input-map.json",
+      "earlier_target_path": "reports/external-research-v10-20261007/jobs/I-METHOD-01/control/critic-v1/input-map.json",
+      "target_path": "reports/external-research-v10-20261007/batch004-frozen-originals/jobs/I-METHOD-01/control/critic-v1/input-map.json",
+      "existing_sha256": "9b5384f7d72656d984a9715bec930830066588b05e4d57f35b2eccdb4b9d4552",
+      "selected_sha256": "ae6fd3fbfc9493a2e2bc23ec7f25a58d3d5f0a502b3df76b483151707a1c6226",
+      "disposition": "DISTINCT_IMMUTABLE_FROZEN_ORIGINAL_NO_OVERWRITE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/input-map.json",
+      "earlier_target_path": "reports/external-research-v10-20261007/jobs/I-METHOD-01/control/reviser-v1/input-map.json",
+      "target_path": "reports/external-research-v10-20261007/batch004-frozen-originals/jobs/I-METHOD-01/control/reviser-v1/input-map.json",
+      "existing_sha256": "be0e811e712f6c4dbb9808e736372e9694cd26812c724ee165bfc156dda48a77",
+      "selected_sha256": "da5795ee1bebc3d10e6d26c2a832b28df8b5a8d64b43ab1f1078123ae6308333",
+      "disposition": "DISTINCT_IMMUTABLE_FROZEN_ORIGINAL_NO_OVERWRITE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/input-map.json",
+      "earlier_target_path": "reports/external-research-v10-20261007/jobs/I-METHOD-01/treatment/critic-v1/input-map.json",
+      "target_path": "reports/external-research-v10-20261007/batch004-frozen-originals/jobs/I-METHOD-01/treatment/critic-v1/input-map.json",
+      "existing_sha256": "d864d86d54edd40fac455c303625654af5c9dc73b99b37bda36c639ea1c2d481",
+      "selected_sha256": "84948e49ebcb75d639bd23d338fee6a3193b9f7a7dba9507fa06d99972cb0e14",
+      "disposition": "DISTINCT_IMMUTABLE_FROZEN_ORIGINAL_NO_OVERWRITE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/input-map.json",
+      "earlier_target_path": "reports/external-research-v10-20261007/jobs/I-METHOD-01/treatment/reviser-v1/input-map.json",
+      "target_path": "reports/external-research-v10-20261007/batch004-frozen-originals/jobs/I-METHOD-01/treatment/reviser-v1/input-map.json",
+      "existing_sha256": "b3b5356f96a827d13b4890db732284d5f5141a4cb973c76a8916b35f62fa3226",
+      "selected_sha256": "b9e0d4c5a68d75cf0501b3afa39042b6d46e816e5b398976bbf699c9701271cc",
+      "disposition": "DISTINCT_IMMUTABLE_FROZEN_ORIGINAL_NO_OVERWRITE"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/locks/confirmation-selection.json",
+      "earlier_target_path": "reports/external-research-v10-20261007/locks/confirmation-selection.json",
+      "target_path": "reports/external-research-v10-20261007/batch004-frozen-originals/locks/confirmation-selection.json",
+      "existing_sha256": "44bab8d2bce289b79227459d194f251e65f00d9f1b9be59c761ed278c0e7210a",
+      "selected_sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a",
+      "disposition": "DISTINCT_IMMUTABLE_FROZEN_ORIGINAL_NO_OVERWRITE"
+    }
+  ]
+}

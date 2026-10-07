@@ -1,0 +1,55 @@
+{
+  "observed_at": "2026-10-07T19:14:11.194515+00:00",
+  "wholearm_deadline": "2026-10-07T19:11:52.563Z",
+  "T3_task_still_running_after_deadline": true,
+  "native_terminal_receipt_observed": {
+    "update_goal_response": {
+      "goal": {
+        "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+        "objective": "Complete the ER10 I-ANCHOR-LUNA control final revision using only the materials and constraints declared in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/INPUTS.md. Produce the complete final.md, critique-dispositions.md, sources/SOURCES.md, bounded evidence, timings, and exact native Goal receipts in this reviser-v1 directory; preserve predecessor artifacts and the original absolute deadline.",
+        "status": "complete",
+        "tokensUsed": 170309,
+        "timeUsedSeconds": 923,
+        "createdAt": 1791399494,
+        "updatedAt": 1791400417
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+    },
+    "get_goal_response": {
+      "goal": {
+        "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+        "objective": "Complete the ER10 I-ANCHOR-LUNA control final revision using only the materials and constraints declared in /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/INPUTS.md. Produce the complete final.md, critique-dispositions.md, sources/SOURCES.md, bounded evidence, timings, and exact native Goal receipts in this reviser-v1 directory; preserve predecessor artifacts and the original absolute deadline.",
+        "status": "complete",
+        "tokensUsed": 170309,
+        "timeUsedSeconds": 923,
+        "createdAt": 1791399494,
+        "updatedAt": 1791400417
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "active_identity": {
+      "provider_route": "codex_gmail",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
+      "serviceTier": "priority",
+      "basis": "Explicit task/runtime identity supplied for this run; tool responses above are preserved verbatim as returned."
+    }
+  },
+  "pre_stop_file_hashes": {
+    "config.json": "4fd26e71fd7dc464128c805a4ae6b82cc3e0b1a221f1891945f1f78771370202",
+    "native_terminal_receipt.json": "a43fda9c11ea7d7c125e53f9742d5ce6e5d55ce2e7faf621dc5249f36526b0bb",
+    "dispatch-tool-receipt.json": "b5d739d7ea402556053cdafadf1c0288e0dc3f6137527452939274da5668fafc",
+    "tool-policy-receipt.json": "a5815c27ea039a018e91da549522a4e5e74c3aa92d08a2bf439913df3fe00566",
+    "task.txt": "f2e9e70e49843da32fe1a17d1766b17c19c28396106ca323d33ee3c417b54664",
+    "prepared.json": "af5c51c7f5999f3106e7ccdb3d7f5def745b10c394d6bf4617f969de926c57a5",
+    "native_goal_receipt.json": "d3aa4055504bb822d1e1a2e5c8199db7c44034801e27747d3a7d0eb5bbed897b",
+    "INPUTS.md": "9f3100a07b494273166a4b605b457bfa9b700f64e3a231ca5ccb2270e3b68131",
+    "timings.json": "1be7e31de6d016fff384a4532b1da0faf407a78d0ce475e79d5caa5c45728ce5",
+    "final.md": "419a2d6e04d55280d2e48fa82b79638be966a976214d2584d1542724e5957a32",
+    "critique-dispositions.md": "7122daaf1289cd7f016f6ddd4724dba182249637d5a46016fa71a333bbbc9b6b"
+  },
+  "action": "Intentional owned task_cancel after capture; preserve all files/overrun, no freshbudget",
+  "timing_eligibility": "HOLD pending actual elapsed/required delivery accounting"
+}

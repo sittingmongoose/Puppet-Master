@@ -1,0 +1,42 @@
+{
+  "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f/.zcode/scratch/goals/sess_b24487a4-0056-421c-b683-3d94ce7fa140/state.json",
+  "actual_state": {
+    "objective": "Complete /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/assignment.md scientific files\n<runtime_info>In case you're asked: you are running in T3 Code through the acpRegistry harness, as builtin:zai-coding-plan\\GLM-5.3-Flash. No need to mention this otherwise. You can embed images and videos in your response using Markdown with absolute file paths.</runtime_info>\n\n<pull_request_linking>\nWhen the t3-code MCP server exposes link_pull_request, you must use it to register every pull request you create or work on for this thread. Call link_pull_request with the full PR URL immediately after creating a PR or starting work on an existing PR. For a stack, call it for every layer, not just the current branch or the top PR. This applies when creating or updating PRs through gh, gh stack, another CLI, or the host API: those operations do not register the PRs with this thread. Linking an already-linked PR is safe. Before finishing PR work, call list_thread_pull_requests and link any PR from your work that is missing. Do not link unrelated PRs mentioned only as background. If a linking call fails, report that failure instead of claiming the PR is linked. When asked to monitor, watch, or babysit a PR and watch_pull_request is available, call it and end your turn: T3 Code wakes you when checks finish, someone else comments, or the branch conflicts, so do not poll or run your own watcher. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.\n</pull_request_linking>",
+    "status": "paused",
+    "rounds": 2,
+    "tickets": [
+      {
+        "id": "t1",
+        "title": "[Ingest mapped brief + both listed public sources into sources.json]",
+        "acceptance": "Read INPUT_MAP.json, cases/D-M06-B/inputs/brief.md and the two source files it lists; write /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/sources.json recording exact identities/locators (source_id, url, sha256, capture date). Verify: `python3 -c \"import json;d=json.load(open('/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/sources.json'));assert {'geotransform','gdaltransform'} <= {s['source_id'] for s in d['sources']}\"` and `sha256sum <each listed path>` matches the sha256 recorded.",
+        "status": "done"
+      },
+      {
+        "id": "t2",
+        "title": "[Draft preliminary algorithm, pseudocode and 5-8 material claims in draft.md]",
+        "acceptance": "Write seed-v2/draft.md for the mapped geotransform brief: good-faith pseudocode plus 5-8 numbered claims, explicitly labeled untrusted proposed algorithm with conditions and uncertainty stated; no executed results. Verify: `grep -c '^## ' draft.md >= sections for algorithm+claims` and `grep -cE '^[-*]? ?\\*?Claim' draft.md` returns 5-8, and file lives under seed-v2.",
+        "status": "done"
+      },
+      {
+        "id": "t3",
+        "title": "[Author input-only fixtures.json with ordinary and boundary inputs]",
+        "acceptance": "Write seed-v2/fixtures.json containing ordinary and boundary input cases derived from the brief, with no expected outputs, pass/fail labels or evaluator key, and no code executed. Verify: `python3 -c \"import json;f=json.load(open('.../seed-v2/fixtures.json'));s=json.dumps(f).lower();assert not any(k in s for k in ['expected','pass','fail','evaluator_key'])\"` and case count >= 2 kinds (ordinary + boundary) present.",
+        "status": "pending"
+      },
+      {
+        "id": "t4",
+        "title": "[Save timings.json and confirm all four scientific files complete]",
+        "acceptance": "Write seed-v2/timings.json with actual observed times (startup, source retrieval, writing) and unknown usage marked unknown. Verify: `python3 -c \"import json;json.load(open('.../seed-v2/timings.json'))\"` succeeds and `ls /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/{draft.md,fixtures.json,sources.json,timings.json}` lists all four files, completed within the dispatch-time budget.",
+        "status": "pending"
+      }
+    ],
+    "handoffFresh": false,
+    "createdAt": 1791402940924,
+    "updatedAt": 1791403319801,
+    "endedReason": "cancelled"
+  },
+  "native_file_sha256": "e4ea189186b218ed3bf8c4c1160cb8190498e05fabeea4bffada2f918535ec94",
+  "observed_at": "2026-10-07T20:02:16.945424+00:00",
+  "association": "unique nominated exact objective/path only; no ACP/vendorbackend claim",
+  "meaning": "Actual postcancel native state; not complete unless actual status complete"
+}

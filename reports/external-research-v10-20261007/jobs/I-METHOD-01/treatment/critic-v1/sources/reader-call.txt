@@ -1,0 +1,28 @@
+                .cur_pos
+                .set_byte(byte + nin as u64)
+                .set_line(self.core.line());
+            outlen += nout;
+            endlen += nend;
+            match res {
+                InputEmpty => continue,
+                OutputFull => {
+                    record.expand_fields();
+                    continue;
+                }
+                OutputEndsFull => {
+                    record.expand_ends();
+                    continue;
+                }
+                Record => {
+                    record.set_len(endlen);
+                    self.state.add_record(record)?;
+                    return Ok(true);
+                }
+                End => {
+                    self.state.eof = ReaderEofState::Eof;
+                    return Ok(false);
+                }
+            }
+        }
+    }
+

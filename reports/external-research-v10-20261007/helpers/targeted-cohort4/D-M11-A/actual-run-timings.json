@@ -1,0 +1,170 @@
+[
+  {
+    "case_id": "D-M11-A",
+    "arm": "control",
+    "stage": "normal_research",
+    "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/normal_research-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-control-normal_research-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-control-normal_research-v1",
+    "runs": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-control-normal_research-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T18:55:34.243Z",
+        "startedAt": "2026-10-07T18:55:36.331Z",
+        "completedAt": "2026-10-07T18:59:04.519Z"
+      }
+    ],
+    "t3_status": "completed",
+    "pendingRequestCount": 0,
+    "native_status_recorded": "complete",
+    "source_grade": null
+  },
+  {
+    "case_id": "D-M11-A",
+    "arm": "control",
+    "stage": "finalize",
+    "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/control/finalize-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-control-finalize-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-control-finalize-v1",
+    "runs": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-control-finalize-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T18:59:31.303Z",
+        "startedAt": "2026-10-07T18:59:33.053Z",
+        "completedAt": "2026-10-07T19:01:31.361Z"
+      }
+    ],
+    "t3_status": "completed",
+    "pendingRequestCount": 0,
+    "native_status_recorded": "complete",
+    "source_grade": null
+  },
+  {
+    "case_id": "D-M11-A",
+    "arm": "treatment",
+    "stage": "bind_first",
+    "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/bind_first-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-bind_first-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-bind_first-v1",
+    "runs": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-treatment-bind_first-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T19:02:29.303Z",
+        "startedAt": "2026-10-07T19:02:31.896Z",
+        "completedAt": "2026-10-07T19:04:56.235Z"
+      }
+    ],
+    "t3_status": "completed",
+    "pendingRequestCount": 0,
+    "native_status_recorded": "complete",
+    "source_grade": null
+  },
+  {
+    "case_id": "D-M11-A",
+    "arm": "treatment",
+    "stage": "dependent_research",
+    "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/dependent_research-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-dependent_research-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-dependent_research-v1",
+    "runs": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-treatment-dependent_research-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T19:05:31.080Z",
+        "startedAt": "2026-10-07T19:05:32.953Z",
+        "completedAt": "2026-10-07T19:07:29.115Z"
+      }
+    ],
+    "t3_status": "completed",
+    "pendingRequestCount": 0,
+    "native_status_recorded": "complete",
+    "source_grade": null
+  },
+  {
+    "case_id": "D-M11-A",
+    "arm": "treatment",
+    "stage": "finalize",
+    "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M11-A/treatment/finalize-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-finalize-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-finalize-v1",
+    "runs": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-treatment-finalize-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "muse",
+        "model": "muse-spark-1.3-contributor",
+        "requestedAt": "2026-10-07T19:07:56.678Z",
+        "startedAt": "2026-10-07T19:08:02.677Z",
+        "completedAt": "2026-10-07T19:09:32.710Z"
+      }
+    ],
+    "t3_status": "completed",
+    "pendingRequestCount": 0,
+    "native_status_recorded": "complete",
+    "source_grade": null
+  },
+  {
+    "case_id": "D-M11-A",
+    "arm": "control",
+    "stage": "source-review",
+    "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/control-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-control-source-review-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-control-source-review-v1",
+    "runs": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-control-source-review-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T19:10:15.891Z",
+        "startedAt": "2026-10-07T19:10:16.560Z",
+        "completedAt": "2026-10-07T19:17:47.457Z"
+      }
+    ],
+    "t3_status": "completed",
+    "pendingRequestCount": 0,
+    "native_status_recorded": "complete",
+    "source_grade": "FAIL"
+  },
+  {
+    "case_id": "D-M11-A",
+    "arm": "treatment",
+    "stage": "source-review",
+    "job": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M11-A/treatment-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-source-review-v1",
+    "threadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-source-review-v1",
+    "runs": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-treatment-source-review-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "interrupted",
+        "providerInstanceId": "codex_gmail",
+        "model": "gpt-6.1-sol",
+        "requestedAt": "2026-10-07T19:10:26.297Z",
+        "startedAt": "2026-10-07T19:10:27.122Z",
+        "completedAt": "2026-10-07T19:24:12.582Z"
+      }
+    ],
+    "t3_status": "interrupted",
+    "pendingRequestCount": 0,
+    "native_status_recorded": "UNKNOWN_MISSING_RECEIPT",
+    "source_grade": null
+  }
+]

@@ -1,0 +1,719 @@
+{
+  "review_started_utc": "2026-10-07T19:40:44.958744254Z",
+  "deadline_utc": "2026-10-07T19:52:13.923989+00:00",
+  "earlier_t3_requested_at": null,
+  "earlier_t3_requested_at_limitation": "No earlier app requestedAt provided in authorized inputs; no thread history inspected. Absolute supplied deadline used, no reset.",
+  "operations": [
+    {
+      "operation": "read_input_map",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/INPUT_MAP.json",
+      "sha256": "4fa3380d05429dced581acb329e3e6479a74d6325c8a161e620d1c192be5307a",
+      "checked_at_utc": "2026-10-07T19:41:28.048350+00:00"
+    },
+    {
+      "operation": "verify_frozen_final_sha256",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/finalize-v2/final.md",
+      "expected_sha256": "8e287967731d0cfd393b747281371d9e51afb7c3aa2ec72597fd335c6708b34e",
+      "actual_sha256": "8e287967731d0cfd393b747281371d9e51afb7c3aa2ec72597fd335c6708b34e",
+      "match": true,
+      "bytes": 8512,
+      "checked_at_utc": "2026-10-07T19:41:28.048499+00:00"
+    },
+    {
+      "operation": "read_authorized_input",
+      "input_kind": "original_brief",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/brief.md",
+      "sha256": "131eabdbf18fdd5b0e0062c86a1da89228de8b0bb86578446cc00bf06e886298",
+      "bytes": 1747,
+      "checked_at_utc": "2026-10-07T19:41:28.048582+00:00"
+    },
+    {
+      "operation": "read_authorized_input",
+      "input_kind": "source_manifest",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources.json",
+      "sha256": "1a391d5935258af184ed242389c8a218531772621588aba320c3127a6573d952",
+      "bytes": 3627,
+      "checked_at_utc": "2026-10-07T19:41:28.048655+00:00"
+    },
+    {
+      "operation": "read_authorized_input",
+      "input_kind": "frozen_output",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M13-A/control/finalize-v2/final.md",
+      "sha256": "8e287967731d0cfd393b747281371d9e51afb7c3aa2ec72597fd335c6708b34e",
+      "bytes": 8512,
+      "checked_at_utc": "2026-10-07T19:41:28.048793+00:00"
+    },
+    {
+      "operation": "verify_required_primary_bytes",
+      "source_id": "pep706",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+      "url": "https://peps.python.org/pep-0706/",
+      "version": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior",
+      "bytes": 71774,
+      "actual_sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "expected_sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "match": true,
+      "checked_at_utc": "2026-10-07T19:41:28.049247+00:00"
+    },
+    {
+      "operation": "verify_required_primary_bytes",
+      "source_id": "tarissue",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarissue.json",
+      "url": "https://api.github.com/repos/python/cpython/issues/102950",
+      "version": "CPython issue 102950 captured 2026-10-07",
+      "bytes": 7009,
+      "actual_sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "expected_sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "match": true,
+      "checked_at_utc": "2026-10-07T19:41:28.049345+00:00"
+    },
+    {
+      "operation": "verify_required_primary_bytes",
+      "source_id": "tarpr",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarpr.json",
+      "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+      "version": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source",
+      "bytes": 20346,
+      "actual_sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "expected_sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "match": true,
+      "checked_at_utc": "2026-10-07T19:41:28.049486+00:00"
+    },
+    {
+      "operation": "verify_required_primary_bytes",
+      "source_id": "tarold",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version": "CPython 3.12.3",
+      "bytes": 106883,
+      "actual_sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "expected_sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "match": true,
+      "checked_at_utc": "2026-10-07T19:41:28.050036+00:00"
+    },
+    {
+      "operation": "verify_required_primary_bytes",
+      "source_id": "tardocold",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+      "version": "CPython 3.12.3",
+      "bytes": 49758,
+      "actual_sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+      "expected_sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+      "match": true,
+      "checked_at_utc": "2026-10-07T19:41:28.050321+00:00"
+    },
+    {
+      "operation": "verify_required_primary_bytes",
+      "source_id": "taroldtest",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+      "version": "CPython 3.12.3",
+      "bytes": 163497,
+      "actual_sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+      "expected_sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+      "match": true,
+      "checked_at_utc": "2026-10-07T19:41:28.051246+00:00"
+    },
+    {
+      "operation": "verify_required_primary_bytes",
+      "source_id": "tarfix",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+      "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+      "version": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches",
+      "bytes": 119836,
+      "actual_sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+      "expected_sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+      "match": true,
+      "checked_at_utc": "2026-10-07T19:41:28.051912+00:00"
+    },
+    {
+      "operation": "inspect_primary_json_fields_and_selected_patches",
+      "source_id": "tarissue",
+      "fields": [
+        "number",
+        "title",
+        "state",
+        "created_at",
+        "closed_at",
+        "merged_at",
+        "merged",
+        "merge_commit_sha",
+        "body",
+        "base.ref"
+      ],
+      "checked_at_utc": "2026-10-07T19:42:21.505177+00:00"
+    },
+    {
+      "operation": "inspect_primary_json_fields_and_selected_patches",
+      "source_id": "tarpr",
+      "fields": [
+        "number",
+        "title",
+        "state",
+        "created_at",
+        "closed_at",
+        "merged_at",
+        "merged",
+        "merge_commit_sha",
+        "body",
+        "base.ref"
+      ],
+      "checked_at_utc": "2026-10-07T19:42:21.505727+00:00"
+    },
+    {
+      "operation": "inspect_primary_json_fields_and_selected_patches",
+      "source_id": "tarfix",
+      "fields": [
+        "sha",
+        "node_id",
+        "commit",
+        "url",
+        "html_url",
+        "comments_url",
+        "author",
+        "committer",
+        "parents",
+        "stats",
+        "files"
+      ],
+      "checked_at_utc": "2026-10-07T19:42:21.507236+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tarold",
+      "lines": [
+        720,
+        840
+      ],
+      "checked_at_utc": "2026-10-07T19:42:47.846173+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tarold",
+      "lines": [
+        1618,
+        1642
+      ],
+      "checked_at_utc": "2026-10-07T19:42:47.846297+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tarold",
+      "lines": [
+        2217,
+        2358
+      ],
+      "checked_at_utc": "2026-10-07T19:42:47.846422+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tarold",
+      "lines": [
+        2391,
+        2432
+      ],
+      "checked_at_utc": "2026-10-07T19:42:47.846455+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tarold",
+      "lines": [
+        2470,
+        2530
+      ],
+      "checked_at_utc": "2026-10-07T19:42:47.846514+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tarold",
+      "lines": [
+        2804,
+        2873
+      ],
+      "checked_at_utc": "2026-10-07T19:42:47.846565+00:00"
+    },
+    {
+      "operation": "rg_discovery",
+      "source_ids": [
+        "tarold",
+        "taroldtest",
+        "tardocold"
+      ],
+      "patterns": "filter definitions/callers/errorlevel; TestExtractionFilters/ArchiveMaker tests; warning,cleanup,limitations,staticmethod,feature detection",
+      "time_precision": "Exact timestamp unavailable for prior rg tool; operation observed before subsequent logged range reads."
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tardocold",
+      "lines": [
+        475,
+        533
+      ],
+      "checked_at_utc": "2026-10-07T19:43:13.195813+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tardocold",
+      "lines": [
+        563,
+        618
+      ],
+      "checked_at_utc": "2026-10-07T19:43:13.195931+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tardocold",
+      "lines": [
+        923,
+        1168
+      ],
+      "checked_at_utc": "2026-10-07T19:43:13.196166+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "taroldtest",
+      "lines": [
+        3338,
+        3516
+      ],
+      "checked_at_utc": "2026-10-07T19:43:13.197511+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "taroldtest",
+      "lines": [
+        3650,
+        3684
+      ],
+      "checked_at_utc": "2026-10-07T19:43:13.197573+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "taroldtest",
+      "lines": [
+        3838,
+        3936
+      ],
+      "checked_at_utc": "2026-10-07T19:43:13.197658+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "taroldtest",
+      "lines": [
+        3937,
+        4010
+      ],
+      "checked_at_utc": "2026-10-07T19:43:13.197737+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "taroldtest",
+      "lines": [
+        4040,
+        4116
+      ],
+      "checked_at_utc": "2026-10-07T19:43:13.197804+00:00"
+    },
+    {
+      "operation": "inspect_primary_json_metadata_and_small_patches",
+      "source_id": "tarissue",
+      "checked_at_utc": "2026-10-07T19:43:51.467611+00:00"
+    },
+    {
+      "operation": "inspect_primary_json_metadata_and_small_patches",
+      "source_id": "tarpr",
+      "checked_at_utc": "2026-10-07T19:43:51.468054+00:00"
+    },
+    {
+      "operation": "inspect_primary_json_metadata_and_small_patches",
+      "source_id": "tarfix",
+      "checked_at_utc": "2026-10-07T19:43:51.469287+00:00"
+    },
+    {
+      "operation": "read_primary_html_line_range_strip_markup",
+      "source_id": "pep706",
+      "lines": [
+        97,
+        107
+      ],
+      "checked_at_utc": "2026-10-07T19:44:54.222617+00:00"
+    },
+    {
+      "operation": "read_primary_html_line_range_strip_markup",
+      "source_id": "pep706",
+      "lines": [
+        330,
+        442
+      ],
+      "checked_at_utc": "2026-10-07T19:44:54.223153+00:00"
+    },
+    {
+      "operation": "read_primary_html_line_range_strip_markup",
+      "source_id": "pep706",
+      "lines": [
+        475,
+        502
+      ],
+      "checked_at_utc": "2026-10-07T19:44:54.223271+00:00"
+    },
+    {
+      "operation": "read_primary_html_line_range_strip_markup",
+      "source_id": "pep706",
+      "lines": [
+        553,
+        564
+      ],
+      "checked_at_utc": "2026-10-07T19:44:54.223345+00:00"
+    },
+    {
+      "operation": "read_primary_html_line_range_strip_markup",
+      "source_id": "pep706",
+      "lines": [
+        596,
+        654
+      ],
+      "checked_at_utc": "2026-10-07T19:44:54.223628+00:00"
+    },
+    {
+      "operation": "read_primary_html_line_range_strip_markup",
+      "source_id": "pep706",
+      "lines": [
+        661,
+        665
+      ],
+      "checked_at_utc": "2026-10-07T19:44:54.223649+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        505,
+        540
+      ],
+      "anchor": "class ArchiveMaker",
+      "checked_at_utc": "2026-10-07T19:44:54.225198+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        569,
+        604
+      ],
+      "anchor": "class TestExtractionFilters",
+      "checked_at_utc": "2026-10-07T19:44:54.225372+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        580,
+        615
+      ],
+      "anchor": "def check_context",
+      "checked_at_utc": "2026-10-07T19:44:54.225488+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        646,
+        681
+      ],
+      "anchor": "def test_benign_file",
+      "checked_at_utc": "2026-10-07T19:44:54.225624+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        653,
+        688
+      ],
+      "anchor": "def test_absolute(",
+      "checked_at_utc": "2026-10-07T19:44:54.225728+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        878,
+        913
+      ],
+      "anchor": "def test_pipe",
+      "checked_at_utc": "2026-10-07T19:44:54.225936+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        896,
+        931
+      ],
+      "anchor": "def test_special_files",
+      "checked_at_utc": "2026-10-07T19:44:54.226082+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        940,
+        975
+      ],
+      "anchor": "def test_default_filter_warns",
+      "checked_at_utc": "2026-10-07T19:44:54.226277+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/6/patch",
+      "filename": "Lib/test/test_tarfile.py",
+      "patch_lines": [
+        1043,
+        1091
+      ],
+      "anchor": "def test_errorlevel",
+      "checked_at_utc": "2026-10-07T19:44:54.226479+00:00"
+    },
+    {
+      "operation": "additional_public_primary_capture",
+      "source_id": "shutil3123",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+      "version": "CPython v3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/sources/shutil-v3.12.3.py",
+      "sha256": "819e518cb7a539d09b2526138015541b34d2646afb9c2f6ae4ffd476d6a0fcf4",
+      "bytes": 58120,
+      "http_status": 200,
+      "headers": {
+        "etag": "\"fb8f1428593ee3dc047c57302207719766fc5b61c43e0748d71a28be584fcc33\"",
+        "last-modified": null
+      },
+      "started_at_utc": "2026-10-07T19:45:46.997760+00:00",
+      "completed_at_utc": "2026-10-07T19:45:47.464133+00:00",
+      "elapsed_seconds": 0.4663349590009602,
+      "limitations": [
+        "Tag URL identifies release; captured bytes hash pinned; no downloaded source executed."
+      ]
+    },
+    {
+      "operation": "additional_public_primary_capture",
+      "source_id": "shutildoc3123",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/shutil.rst",
+      "version": "CPython v3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/sources/shutil-v3.12.3.rst",
+      "sha256": "51c991b2a28b8cc00de14b6cb71dcfbe64c78f28a8a24b5af7b43e0eb74bff67",
+      "bytes": 34464,
+      "http_status": 200,
+      "headers": {
+        "etag": "\"c0c2df003553489023f9d1983498fecea2f620343fa6217d58bea70e82ced06e\"",
+        "last-modified": null
+      },
+      "started_at_utc": "2026-10-07T19:45:46.999252+00:00",
+      "completed_at_utc": "2026-10-07T19:45:47.076391+00:00",
+      "elapsed_seconds": 0.07710986799975217,
+      "limitations": [
+        "Tag URL identifies release; captured bytes hash pinned; no downloaded source executed."
+      ]
+    },
+    {
+      "operation": "additional_public_primary_capture",
+      "source_id": "tar3140",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py",
+      "version": "CPython v3.14.0",
+      "capture_date_utc": "2026-10-07",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/sources/tarfile-v3.14.0.py",
+      "sha256": "07e226f1b76043516d16c7185baf6ab3d37aac915373a0194b773dab0bf2330d",
+      "bytes": 117029,
+      "http_status": 200,
+      "headers": {
+        "etag": "\"1b5f0925e01c643c2238abbb1bd11687cdd304df52e60bc6b379f47cb49905e7\"",
+        "last-modified": null
+      },
+      "started_at_utc": "2026-10-07T19:45:47.000832+00:00",
+      "completed_at_utc": "2026-10-07T19:45:47.150552+00:00",
+      "elapsed_seconds": 0.14974048099975334,
+      "limitations": [
+        "Tag URL identifies release; captured bytes hash pinned; no downloaded source executed."
+      ]
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "taroldtest",
+      "lines": [
+        3517,
+        3653
+      ],
+      "checked_at_utc": "2026-10-07T19:46:46.271693+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "taroldtest",
+      "lines": [
+        3684,
+        3837
+      ],
+      "checked_at_utc": "2026-10-07T19:46:46.271899+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "taroldtest",
+      "lines": [
+        2748,
+        2804
+      ],
+      "checked_at_utc": "2026-10-07T19:46:46.271976+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "shutil3123",
+      "lines": [
+        1271,
+        1299
+      ],
+      "checked_at_utc": "2026-10-07T19:46:46.273058+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "shutil3123",
+      "lines": [
+        1301,
+        1329
+      ],
+      "checked_at_utc": "2026-10-07T19:46:46.273097+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "shutil3123",
+      "lines": [
+        1344,
+        1414
+      ],
+      "checked_at_utc": "2026-10-07T19:46:46.273166+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "shutildoc3123",
+      "lines": [
+        682,
+        722
+      ],
+      "checked_at_utc": "2026-10-07T19:46:46.273674+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tar3140",
+      "lines": [
+        2370,
+        2389
+      ],
+      "checked_at_utc": "2026-10-07T19:46:46.274573+00:00"
+    },
+    {
+      "operation": "web_open_public_primary",
+      "urls": [
+        "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/shutil.py",
+        "https://raw.githubusercontent.com/python/cpython/v3.14.0/Lib/tarfile.py"
+      ],
+      "checked_at_utc": "2026-10-07T19:45:46Z",
+      "limitations": "web text used for discovery; exact independently saved HTTPS captures govern line/hash locators"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/4/patch",
+      "filename": "Lib/tarfile.py",
+      "patch_lines": [
+        39,
+        159
+      ],
+      "anchor": "class FilterError",
+      "checked_at_utc": "2026-10-07T19:47:39.289245+00:00"
+    },
+    {
+      "operation": "read_primary_commit_patch_region",
+      "source_id": "tarfix",
+      "json_pointer": "/files/4/patch",
+      "filename": "Lib/tarfile.py",
+      "patch_lines": [
+        376,
+        441
+      ],
+      "anchor": "def _get_extract_tarinfo",
+      "checked_at_utc": "2026-10-07T19:47:39.289447+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tardocold",
+      "lines": [
+        813,
+        836
+      ],
+      "checked_at_utc": "2026-10-07T19:47:39.290069+00:00"
+    },
+    {
+      "operation": "read_primary_line_range",
+      "source_id": "tardocold",
+      "lines": [
+        760,
+        773
+      ],
+      "checked_at_utc": "2026-10-07T19:48:32.361034+00:00"
+    },
+    {
+      "operation": "write_independent_review_artifacts",
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/review.md",
+        "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort4/D-M13-A/control-v2/review.json"
+      ],
+      "completed_at_utc": "2026-10-07T19:56:21.453712+00:00",
+      "claim_groups": 27,
+      "six_axes": 6,
+      "obligations": 6,
+      "substance_grade": "FAIL",
+      "extent": "FULL_DECLARED_SCOPE"
+    },
+    {
+      "operation": "record_deadline_failure_and_save_delivery_status",
+      "completed_at_utc": "2026-10-07T19:57:08.823911+00:00",
+      "no_new_source_checks": true
+    }
+  ],
+  "usage": {
+    "input": null,
+    "cache": null,
+    "generated": null,
+    "billing": null
+  },
+  "native_counters": null,
+  "no_downloaded_code_executed": true,
+  "review_completed_utc": "2026-10-07T19:56:21.451742+00:00",
+  "wall_seconds_from_first_native_tool_observation": 936.492998,
+  "bound_note": "Fixed absolute original deadline used; no reset. Earlier T3 requestedAt not available in authorized inputs. Initial native startup overhead before first tool observation is unknown.",
+  "substance_stopped_before_deadline": false,
+  "pending_children": 0,
+  "deadline_compliance": "FAILED",
+  "delivery_status": "LATE_OUT_OF_BOUND",
+  "late_lifecycle_save_utc": "2026-10-07T19:57:08.823911+00:00"
+}

@@ -1,0 +1,33 @@
+{
+  "event": "active",
+  "stage": "D-M14-A/treatment/preservation_check-v2",
+  "command": [
+    "python3",
+    "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/export.py",
+    "--stage",
+    "D-M14-A/treatment/preservation_check-v2"
+  ],
+  "start": "2026-10-07T19:32:47.621572+00:00",
+  "end": "2026-10-07T19:32:47.803283+00:00",
+  "elapsed_seconds": 0.18171242000062193,
+  "exit_code": 0,
+  "stderr": "",
+  "index": {
+    "schema": "pm.er10.passive-receipts-index.v1",
+    "observed_at_utc": "2026-10-07T19:32:47.728263+00:00",
+    "entries": [
+      {
+        "stage": "D-M14-A/treatment/preservation_check-v2",
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/receipts/D-M14-A--treatment--preservation_check-v2--56988cc1d6cd694c.json",
+        "sha256": "56988cc1d6cd694cb6f400dd4240746e75139db4fef5d8d0e942eb346fa3e7af",
+        "bytes": 10952,
+        "capture": {
+          "create_goal": "missing_actual_response",
+          "get_goal": "missing_actual_response",
+          "update_goal": "missing_actual_response"
+        }
+      }
+    ],
+    "policy": "Engineering observations only; prospective admissions owned by root; no retrospective rescue, SourcePASS, comparison or speed claim."
+  }
+}

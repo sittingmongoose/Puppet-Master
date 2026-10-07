@@ -1,0 +1,61 @@
+{
+  "files": {
+    "draft.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/draft.md",
+      "sha256": "8ddb4e06565103dd6ff06c1785835c40ac6c183c1e207e7a6c782ba3b1a70e90",
+      "bytes": 7653,
+      "mtime_utc": "2026-10-07T19:46:38.589490+00:00"
+    },
+    "fixtures.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/fixtures.json",
+      "sha256": "ab7d8ba49ec2d9d5b20a6ac67cb0c120bac11140acfd9817ad385b1b56f60a29",
+      "bytes": 4398,
+      "mtime_utc": "2026-10-07T19:51:00.239717+00:00"
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/sources.json",
+      "sha256": "8b134c393820f3eefab088a96434210c33b57421ca08591077bb7a462acccd57",
+      "bytes": 1508,
+      "mtime_utc": "2026-10-07T19:43:30.565516+00:00"
+    },
+    "timings.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/timings.json",
+      "sha256": "2b812dad50234667e0bd625633a818a71201150c8c3c0fb38a0e72081b710a3f",
+      "bytes": 1536,
+      "mtime_utc": "2026-10-07T19:53:30.257537+00:00"
+    },
+    "integration-state-active-v2.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/integration-state-active-v2.json",
+      "sha256": "47cfce0fbbaba0ba88250d59552b571ffa95a1adb81ef2910fb0248a612cc630",
+      "bytes": 4747,
+      "mtime_utc": "2026-10-07T19:52:58.767181+00:00"
+    },
+    "integration-state-terminal-v2.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/integration-state-terminal-v2.json",
+      "sha256": "c958f53ffe0f6878eb2f2e7762f14ad281c21bab04b350ab9944895905c45a5c",
+      "bytes": 4536,
+      "mtime_utc": "2026-10-07T19:54:56.693064+00:00"
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/t3-terminal-observed.json",
+      "sha256": "a007ee5eccd855c2a2a122385be36a0ff7d1b297d805c52ad19f4c430ef2328d",
+      "bytes": 2555,
+      "mtime_utc": "2026-10-07T19:55:26.611701+00:00"
+    }
+  },
+  "seed_dispatch_to_terminal_seconds": 784.161,
+  "seed_budget_seconds": 360,
+  "overrun_seconds": 424.16099999999994,
+  "native_active_observed": true,
+  "native_terminal": "complete",
+  "t3_quiet": true,
+  "actual_rounds": 4,
+  "mechanical_readability": true,
+  "claims_count": 7,
+  "scientific_seed_truth": "UNASSESSED untrusted candidate input, not comparison/evaluator answer",
+  "per_arm_cold_seed_charge_seconds": 784.161,
+  "physical_shared_seed_seconds": 784.161,
+  "half_seed_amortized_seconds": 392.0805,
+  "usage_billing": null,
+  "carrier": "installed integration driver state, not vendorbackend, unique objective association; ACP transport mapping unclaimed"
+}

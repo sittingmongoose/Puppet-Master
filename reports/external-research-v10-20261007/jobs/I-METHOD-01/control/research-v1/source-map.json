@@ -1,0 +1,387 @@
+{
+  "case_id": "I-METHOD-01",
+  "stage": "research-v1",
+  "capture_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources",
+  "source_scope": "Admitted case inputs plus self-discovered public primary sources.",
+  "hash_policy": "Host computes SHA-256 for captured files; researcher left capture hashes null.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "CoCoRaHS observer guidance: editing observations and observation time",
+      "url": "https://www.cocorahs.org/Content.aspx?page=Hilbergstips",
+      "accessed_at": "2026-10-07T18:57:59Z",
+      "capture_window_start": "2026-10-07T18:59:28Z",
+      "version_or_date": "Current public page; Hilberg tips series includes 2019 material",
+      "captured_files": [
+        {
+          "path": "CoCoRaHS-observation-time-editing.html",
+          "sha256": null
+        }
+      ],
+      "source_locator": "Sections Editing Your Observations, Back to Basics - Observation Time, and Please Don’t Ignore Email About Your Observation; observation time vs entry time and interval since previous observation.",
+      "use": "Time semantics, editable reports, follow-up, and valid local outlier may be confirmed rather than discarded."
+    },
+    {
+      "id": "S02",
+      "title": "CoCoRaHS Data Quality Assurance and Quality Control",
+      "url": "https://media.cocorahs.org/docs/CoCoRaHS_QA_QC_April_2019.pdf",
+      "accessed_at": "2026-10-07T18:57:59Z",
+      "capture_window_start": "2026-10-07T18:59:28Z",
+      "version_or_date": "April 2019",
+      "captured_files": [
+        {
+          "path": "CoCoRaHS-QA-QC-April-2019.pdf",
+          "sha256": null
+        }
+      ],
+      "source_locator": "PDF pages 2–4: common reporting errors, multi-day totals/snow fields, overflow comments, sequenced QA checks and flags. Page 4 describes NCEI/GHCN-D checks, used only as review-pattern examples.",
+      "use": "Volunteer reporting issues and flag-not-correction design."
+    },
+    {
+      "id": "S03",
+      "title": "USGS procedures for processing, approving, publishing, and auditing time-series records",
+      "url": "https://water.usgs.gov/water-resources/memos/memo.php?id=1367",
+      "accessed_at": "2026-10-07T18:57:59Z",
+      "capture_window_start": "2026-10-07T18:59:28Z",
+      "version_or_date": "USGS joint groundwater/surface-water/water-quality memorandum, 2017",
+      "captured_files": [
+        {
+          "path": "USGS-time-series-workflow-memo.html",
+          "sha256": null
+        }
+      ],
+      "source_locator": "HTML lines 12–26: analyze/approve/audit policy, Operator/Analyst/Approver roles, working/analyzed/approved states, routine/non-routine audits."
+    },
+    {
+      "id": "S04",
+      "title": "OGC SensorThings API Part 1: Sensing",
+      "url": "https://docs.ogc.org/is/18-088/18-088.pdf",
+      "accessed_at": "2026-10-07T18:57:59Z",
+      "capture_window_start": "2026-10-07T18:59:28Z",
+      "version_or_date": "Version 1.1, OGC document 18-088",
+      "captured_files": [
+        {
+          "path": "OGC-SensorThings-1.1.pdf",
+          "sha256": null
+        }
+      ],
+      "source_locator": "PDF page 26, section 7.3, parsed lines 609–627: Observation, result, phenomenonTime/resultTime, FeatureOfInterest, ObservedProperty, Sensor, Thing and Datastream; entity relations in chapter 8."
+    },
+    {
+      "id": "S05",
+      "title": "OGC SensorThings API Extension: STAplus",
+      "url": "https://docs.ogc.org/is/22-022r1/22-022r1.pdf",
+      "accessed_at": "2026-10-07T19:03:44Z",
+      "capture_window_start": "2026-10-07T19:03:58Z",
+      "version_or_date": "STAplus 1.0, OGC document 22-022r1",
+      "captured_files": [
+        {
+          "path": "OGC-STAplus-1.0.pdf",
+          "sha256": null
+        }
+      ],
+      "source_locator": "PDF pages 8–9 and 14–15: citizen-science multi-owner data, ownership/licensing/relations/groups; pages 32–35, section 6: Party, licensing, ObservationGroup and relations. Only vocabulary is considered; its multi-user API is out of scope."
+    },
+    {
+      "id": "S06",
+      "title": "RainfallQC v1.0.2 source and regression test",
+      "url": "https://github.com/NERC-CEH/RainfallQC/tree/150717eba097ccd771920181b13ce957950a8a59",
+      "accessed_at": "2026-10-07T18:59:07Z",
+      "capture_window_start": "2026-10-07T18:59:28Z",
+      "version_or_date": "Release tag v1.0.2, immutable commit 150717eba097ccd771920181b13ce957950a8a59; full SHA resolved from GitHub API",
+      "captured_files": [
+        {
+          "path": "RainfallQC-v1.0.2-gauge_checks.py",
+          "source_path": "src/rainfallqc/checks/gauge_checks.py",
+          "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/src/rainfallqc/checks/gauge_checks.py",
+          "symbol_range": "check_temporal_bias, lines 71–134",
+          "sha256": null
+        },
+        {
+          "path": "RainfallQC-v1.0.2-inbuilt_qc_frameworks.py",
+          "source_path": "src/rainfallqc/qc_frameworks/inbuilt_qc_frameworks.py",
+          "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/src/rainfallqc/qc_frameworks/inbuilt_qc_frameworks.py",
+          "symbol_range": "INTENSE_QC QC3/QC4 mapping, lines 6–10",
+          "sha256": null
+        },
+        {
+          "path": "RainfallQC-v1.0.2-apply_qc_framework.py",
+          "source_path": "src/rainfallqc/qc_frameworks/apply_qc_framework.py",
+          "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/src/rainfallqc/qc_frameworks/apply_qc_framework.py",
+          "symbol_range": "run_qc_framework, lines 11–70",
+          "sha256": null
+        },
+        {
+          "path": "RainfallQC-v1.0.2-test_gauge_checks.py",
+          "source_path": "tests/unit/test_gauge_checks.py",
+          "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/tests/unit/test_gauge_checks.py",
+          "symbol_range": "test_check_day_of_week_bias and adjacent temporal-bias tests, lines 38–55",
+          "sha256": null
+        },
+        {
+          "path": "RainfallQC-v1.0.2-pyproject.toml",
+          "source_path": "pyproject.toml",
+          "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/pyproject.toml",
+          "symbol_range": "GPLv3/Python/Polars/version metadata, lines 17–31 and 90–112",
+          "sha256": null
+        },
+        {
+          "path": "RainfallQC-v1.0.2-commit.json",
+          "source_path": "GitHub API commit response",
+          "url": "https://api.github.com/repos/NERC-CEH/RainfallQC/commits/150717eba097ccd771920181b13ce957950a8a59",
+          "symbol_range": "sha, message, signature verification, and file patches",
+          "sha256": null
+        },
+        {
+          "path": "RainfallQC-v1.0.2-qc_frameworks-contents.json",
+          "source_path": "GitHub API directory listing",
+          "url": "https://api.github.com/repos/NERC-CEH/RainfallQC/contents/src/rainfallqc/qc_frameworks?ref=150717eba097ccd771920181b13ce957950a8a59",
+          "symbol_range": "Pinned framework file paths and blob identifiers",
+          "sha256": null
+        }
+      ],
+      "source_locator": "Pinned path/symbol ranges above."
+    },
+    {
+      "id": "S07",
+      "title": "RainfallQC issue #120: QC3/4 temporal bias with t-test",
+      "url": "https://github.com/NERC-CEH/RainfallQC/issues/120",
+      "accessed_at": "2026-10-07T18:58:54Z",
+      "capture_window_start": "2026-10-07T18:59:28Z",
+      "version_or_date": "Opened 2026-06-29; closed",
+      "captured_files": [
+        {
+          "path": "RainfallQC-issue-120.json",
+          "sha256": null
+        }
+      ],
+      "source_locator": "Issue title/body fields describe grouped means compared against the overall mean and a weekday-only-rain false-negative case."
+    },
+    {
+      "id": "S08",
+      "title": "RainfallQC pull request #123: temporal-bias fix",
+      "url": "https://github.com/NERC-CEH/RainfallQC/pull/123",
+      "accessed_at": "2026-10-07T18:58:49Z",
+      "capture_window_start": "2026-10-07T19:05:38Z",
+      "version_or_date": "Merged 2026-06-29 into dev; links issue #120",
+      "captured_files": [
+        {
+          "path": "RainfallQC-pr-123.json",
+          "sha256": null
+        },
+        {
+          "path": "RainfallQC-pr-123-files.json",
+          "sha256": null
+        }
+      ],
+      "source_locator": "Conversation says To fix #120; files patch replaces aggregate-means test with per-group tests and changes weekday fixture expectation 0→1; PR API has merge metadata."
+    },
+    {
+      "id": "S09",
+      "title": "RainfallQC GitHub release v1.0.2",
+      "url": "https://github.com/NERC-CEH/RainfallQC/releases/tag/v1.0.2",
+      "accessed_at": "2026-10-07T18:58:38Z",
+      "capture_window_start": "2026-10-07T18:59:28Z",
+      "version_or_date": "Released 2026-06-29; tag resolves to commit 150717eba097ccd771920181b13ce957950a8a59",
+      "captured_files": [
+        {
+          "path": "RainfallQC-release-v1.0.2.html",
+          "sha256": null
+        }
+      ],
+      "source_locator": "Release lines 150–175: signed tag commit, notes explicitly say QC3/QC4 temporal-bias fix and PR #123; commit metadata in S06."
+    },
+    {
+      "id": "S10",
+      "title": "RainfallQC v1.0.2 PyPI release metadata",
+      "url": "https://pypi.org/project/rainfallqc/1.0.2/",
+      "accessed_at": "2026-10-07T19:08:55Z",
+      "capture_window_start": "2026-10-07T19:08:55Z",
+      "version_or_date": "PyPI v1.0.2 file upload 2026-06-29; JSON API was also read at 19:06:50Z",
+      "captured_files": [
+        {
+          "path": "PyPI-rainfallqc-1.0.2.html",
+          "sha256": null
+        },
+        {
+          "path": "PyPI-rainfallqc-1.0.2.json",
+          "source_url": "https://pypi.org/pypi/rainfallqc/1.0.2/json",
+          "sha256": null
+        }
+      ],
+      "source_locator": "Release files; PyPI JSON info.version=1.0.2; wheel and source tar upload_time 2026-06-29T11:08:28/29; source tar SHA-256 reported upstream as 527beae0213e7b1f38e37a7cee66ba404c8af56fa02df287ef6298de5faaa468. Upstream digest is distinct from host hash of the local capture."
+    },
+    {
+      "id": "S11",
+      "title": "SQLite is Transactional",
+      "url": "https://sqlite.org/transactional.html",
+      "accessed_at": "2026-10-07T19:03:44Z",
+      "capture_window_start": "2026-10-07T19:03:58Z",
+      "version_or_date": "Official SQLite documentation page, captured 2026-10-07",
+      "captured_files": [
+        {
+          "path": "SQLite-transactional.html",
+          "sha256": null
+        }
+      ],
+      "source_locator": "Page lines 20–28: transaction changes are atomic/all-or-nothing across interruption; SQLite says behavior is tested by its regression harness."
+    },
+    {
+      "id": "S12",
+      "title": "csv crate for Rust",
+      "url": "https://docs.rs/csv/1.4.0/csv/",
+      "accessed_at": "2026-10-07T19:03:44Z",
+      "capture_window_start": "2026-10-07T19:03:58Z",
+      "version_or_date": "csv 1.4.0",
+      "captured_files": [
+        {
+          "path": "Rust-csv-1.4.0-docs.html",
+          "sha256": null
+        },
+        {
+          "path": "Rust-csv-1.4.0-reader-source.html",
+          "source_url": "https://docs.rs/crate/csv/1.4.0/source/src/reader.rs",
+          "sha256": null
+        },
+        {
+          "path": "Rust-csv-1.4.0-byte_record-source.html",
+          "source_url": "https://docs.rs/crate/csv/1.4.0/source/src/byte_record.rs",
+          "sha256": null
+        }
+      ],
+      "source_locator": "Docs page lines 28–42, 123–149: Reader/Writer, ReaderBuilder, StringRecord/ByteRecord, Error and record positions."
+    }
+  ],
+  "source_operations": [
+    {
+      "at": "2026-10-07T18:57:28Z",
+      "operation": "web search",
+      "queries": [
+        "USGS provisional/approved water time-series data",
+        "CoCoRaHS volunteer rain gauge QC",
+        "OGC SensorThings observations/datastreams",
+        "hydrology rainfall time-series QC software"
+      ]
+    },
+    {
+      "at": "2026-10-07T18:57:59Z",
+      "operation": "web open",
+      "sources": [
+        "USGS memo 1367",
+        "CoCoRaHS QA/QC 2019 PDF",
+        "CoCoRaHS observation-time/editing page",
+        "RainfallQC docs",
+        "OGC SensorThings 1.1"
+      ]
+    },
+    {
+      "at": "2026-10-07T18:58:31Z",
+      "operation": "web search",
+      "queries": [
+        "RainfallQC GitHub issue/PR fixes",
+        "CoCoRaHS data quality and observation editing",
+        "USGS stage review/revision procedures"
+      ]
+    },
+    {
+      "at": "2026-10-07T18:58:38Z",
+      "operation": "web open",
+      "sources": [
+        "RainfallQC GitHub releases; issue/commit navigation initially returned restricted-URL fetch errors"
+      ]
+    },
+    {
+      "at": "2026-10-07T18:58:49Z",
+      "operation": "web click/open",
+      "sources": [
+        "RainfallQC PR #123",
+        "GitHub release tag v1.0.2"
+      ]
+    },
+    {
+      "at": "2026-10-07T18:58:54Z",
+      "operation": "web click/open",
+      "sources": [
+        "RainfallQC issue #120",
+        "PR #123 files view"
+      ]
+    },
+    {
+      "at": "2026-10-07T18:59:07Z",
+      "operation": "public GitHub API read",
+      "source": "Commit short hash 150717e resolved to full SHA and signed commit metadata."
+    },
+    {
+      "at": "2026-10-07T18:59:28Z",
+      "operation": "HTTP GET capture",
+      "sources": [
+        "Pinned RainfallQC code/test/metadata",
+        "issue/PR/release metadata",
+        "USGS memo",
+        "CoCoRaHS sources",
+        "OGC SensorThings PDF"
+      ]
+    },
+    {
+      "at": "2026-10-07T18:59:48Z",
+      "operation": "HTTP GET capture",
+      "sources": [
+        "Pinned RainfallQC framework map and runner caller"
+      ]
+    },
+    {
+      "at": "2026-10-07T19:03:24Z",
+      "operation": "web search",
+      "queries": [
+        "SQLite atomic transactions",
+        "STAplus citizen science ownership",
+        "Rust csv ReaderBuilder",
+        "rusqlite transaction API"
+      ]
+    },
+    {
+      "at": "2026-10-07T19:03:44Z",
+      "operation": "web open",
+      "sources": [
+        "OGC STAplus 1.0",
+        "SQLite transactional documentation",
+        "csv crate 1.4.0 docs"
+      ]
+    },
+    {
+      "at": "2026-10-07T19:03:58Z",
+      "operation": "HTTP GET capture",
+      "sources": [
+        "STAplus PDF",
+        "SQLite documentation",
+        "csv 1.4.0 docs and source HTML"
+      ]
+    },
+    {
+      "at": "2026-10-07T19:06:37Z",
+      "operation": "web search",
+      "queries": [
+        "PyPI RainfallQC 1.0.2 release"
+      ]
+    },
+    {
+      "at": "2026-10-07T19:06:50Z",
+      "operation": "HTTP GET capture",
+      "sources": [
+        "PyPI project JSON",
+        "PyPI v1.0.2 JSON API returned HTTP 200; exact version and file metadata inspected"
+      ]
+    },
+    {
+      "at": "2026-10-07T19:08:55Z",
+      "operation": "web open and HTTP GET",
+      "sources": [
+        "PyPI RainfallQC v1.0.2 release page"
+      ]
+    }
+  ],
+  "validation": {
+    "executed": "Public source reading and file capture only. No application code or downloaded code was run; no tests, imports, performance checks, or acceptance checks were executed.",
+    "proposed": "See artifact.md section Proposed validation (not executed)."
+  }
+}

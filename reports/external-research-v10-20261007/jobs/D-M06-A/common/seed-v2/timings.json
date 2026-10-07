@@ -1,0 +1,20 @@
+{
+  "note": "Actual observed times in UTC, recorded per the assignment's actual-times/unknown allowance. This seed ran as separate goal-loop rounds; the driver owns the dispatch clock, which this seed may not read, so dispatch and per-round boundaries are recorded as unknown. Observed values are filesystem mtimes of the artifacts this seed wrote, read with stat at 2026-10-07T19:53Z.",
+  "timezone": "UTC",
+  "phases": {
+    "task_dispatch": "unknown",
+    "startup_and_input_map_read": "unknown",
+    "brief_and_source_read": "unknown (completed before sources.json below; the reads were not separately timestamped)",
+    "sources_json_written": "2026-10-07T19:43:30Z",
+    "draft_md_written": "2026-10-07T19:46:38Z",
+    "fixtures_json_written": "2026-10-07T19:51:00Z",
+    "timings_json_written": "2026-10-07T19:53:20Z",
+    "completion": "2026-10-07T19:53:20Z (immediately after this file was saved, per the assignment's finish-once-saved rule)"
+  },
+  "observed_intervals_seconds": {
+    "sources_json_to_draft_md": 188,
+    "draft_md_to_fixtures_json": 262,
+    "note": "Intervals between observed artifact mtimes. Total wall time from dispatch is unknown to this seed because the dispatch timestamp is driver-owned; the assignment's 6-minute budget is evaluated by the driver, not self-certified here."
+  },
+  "unknown_usage": "Unknown values above are genuinely unobserved by this seed: no dispatch, per-round, or cumulative clock was readable within the allowed read set. Nothing was estimated in place of an observation."
+}

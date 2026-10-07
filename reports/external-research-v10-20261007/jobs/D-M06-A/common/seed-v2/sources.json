@@ -1,0 +1,28 @@
+{
+  "case": "D-M06-A",
+  "sources_mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+  "mapped_brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/brief.md",
+    "sha256": "e24e73f5c3c7c4e8ad65ea2894e8786d73b98bce407c967ee70da5a73bf8d229",
+    "bytes": 2273
+  },
+  "sources": [
+    {
+      "source_id": "jcs",
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.txt",
+      "version_or_capture": "RFC 8785 June 2020; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256_declared_in_input_map": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240",
+      "sha256_observed": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240",
+      "bytes_observed": 41879,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/common/seed-v2/INPUT_MAP.json",
+    "sha256_observed": "98abf3ad2322cc039c6a9dd0599097720f4431eeda669b274a9d2c4fa5e76194"
+  },
+  "additional_primary_source_checks": [],
+  "limitations": "Review bounded to the mapped brief and the single listed frozen primary source; no sibling, other-case, evaluator, or campaign state was read. Local byte hashes were computed with sha256sum and matched against INPUT_MAP.json declared identity; the remote URL itself was not fetched during this seed run."
+}

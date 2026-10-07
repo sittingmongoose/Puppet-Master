@@ -1,0 +1,316 @@
+{
+  "retrieval_method": "Python urllib GET only; no fetched code executed",
+  "items": [
+    {
+      "id": "F01",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/replication/conflicts.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/replication/conflicts.rst",
+      "retrieval_start_utc": "2026-10-07T19:03:54.310Z",
+      "retrieval_end_utc": "2026-10-07T19:03:54.426Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "captured_source_sha256": "46bc10a9ccd9ad1f4314f333e993dc96bcf869768470756bd72a9d355e053cae",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f01.txt",
+      "evidence_bytes": 802,
+      "evidence_sha256": "cb94c61cd950928f1afcf42149592ff0ccf7f4ed298a95d1577531c8300b97a5",
+      "ranges": [
+        [
+          42,
+          49
+        ],
+        [
+          182,
+          189
+        ]
+      ]
+    },
+    {
+      "id": "F02",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/intro/security.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/intro/security.rst",
+      "retrieval_start_utc": "2026-10-07T19:03:54.429Z",
+      "retrieval_end_utc": "2026-10-07T19:03:54.520Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "captured_source_sha256": "59b6fe67b84d9022b1a667e2d920726dc89a25c948331f9dc2df71f0b83ac18d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f02.txt",
+      "evidence_bytes": 272,
+      "evidence_sha256": "045d560bbf4460f1b2b59745a8a9c840cb2dd1401725a5308359f8776a970e92",
+      "ranges": [
+        [
+          589,
+          592
+        ]
+      ]
+    },
+    {
+      "id": "F03",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/ddocs/ddocs.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/ddocs/ddocs.rst",
+      "retrieval_start_utc": "2026-10-07T19:03:54.522Z",
+      "retrieval_end_utc": "2026-10-07T19:03:54.648Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "captured_source_sha256": "1830d25f8ea2d24b9246fbf29e6083863572d6d08a7593b10ba381d6ebb53b8a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f03.txt",
+      "evidence_bytes": 2638,
+      "evidence_sha256": "e417f7756cb25bec48c397f671a38d9a2f94bac73915f0617d09892838dcadc3",
+      "ranges": [
+        [
+          28,
+          35
+        ],
+        [
+          63,
+          70
+        ],
+        [
+          612,
+          619
+        ],
+        [
+          683,
+          690
+        ],
+        [
+          759,
+          777
+        ],
+        [
+          805,
+          812
+        ]
+      ]
+    },
+    {
+      "id": "F04",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/api/document/attachments.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/api/document/attachments.rst",
+      "retrieval_start_utc": "2026-10-07T19:03:54.650Z",
+      "retrieval_end_utc": "2026-10-07T19:03:54.770Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "captured_source_sha256": "59e95e0d42d6740d3f18ba3727bb1b1e2c954e4c0047098fe46a264c337a0d49",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f04.txt",
+      "evidence_bytes": 640,
+      "evidence_sha256": "43031a281f460252a36ece3dcfc253ad5c44bc445ba7c8b3ab50a8c7510d9aca",
+      "ranges": [
+        [
+          259,
+          266
+        ],
+        [
+          313,
+          319
+        ]
+      ]
+    },
+    {
+      "id": "F05",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/maintenance/compaction.rst",
+      "final_url": "https://raw.githubusercontent.com/apache/couchdb/5b4d92103e5088d0e23794ddb9c09a6b683f985d/src/docs/src/maintenance/compaction.rst",
+      "retrieval_start_utc": "2026-10-07T19:03:54.771Z",
+      "retrieval_end_utc": "2026-10-07T19:03:54.867Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "captured_source_sha256": "662b4cdcead33569b2281ad4cee5a45ad29071a16803dc17ce81a26e745c069e",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f05.txt",
+      "evidence_bytes": 1086,
+      "evidence_sha256": "038f6d22c1e93cab8b1f7d1ce8d6949f093a1efc9d6d082d136e9e34e7bbebce",
+      "ranges": [
+        [
+          13,
+          38
+        ]
+      ]
+    },
+    {
+      "id": "F06",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/dist/pouchdb.indexeddb.js",
+      "final_url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/dist/pouchdb.indexeddb.js",
+      "retrieval_start_utc": "2026-10-07T19:03:54.868Z",
+      "retrieval_end_utc": "2026-10-07T19:03:55.017Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "captured_source_sha256": "41d5fad6ba0d96922d8794aec0869cd59323b0772a2b1f9009f772afec7b80b9",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f06.txt",
+      "evidence_bytes": 544,
+      "evidence_sha256": "3dcc7242d91ee93d4fc31fd8d553d1705b05b44939a260916ec7bd80aafa1c38",
+      "ranges": [
+        [
+          3919,
+          3926
+        ],
+        [
+          4113,
+          4120
+        ]
+      ]
+    },
+    {
+      "id": "F07",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/705b17bd761e06f3cb823616ce974dc2a863aff6/tests/integration/test.attachments.js",
+      "final_url": "https://raw.githubusercontent.com/apache/pouchdb/705b17bd761e06f3cb823616ce974dc2a863aff6/tests/integration/test.attachments.js",
+      "retrieval_start_utc": "2026-10-07T19:03:55.031Z",
+      "retrieval_end_utc": "2026-10-07T19:03:55.166Z",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "captured_source_sha256": "696848045d5622891179d4e04d8fd56f3263f4ebfa5141d59434e10834c164fe",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f07.txt",
+      "evidence_bytes": 281,
+      "evidence_sha256": "9e38ca37bec1940186d8fe247d7b2ae84ed1c99702eba3a147fb93154016c934",
+      "ranges": [
+        [
+          3896,
+          3903
+        ]
+      ]
+    },
+    {
+      "id": "F08",
+      "url": "https://pouchdb.com/adapters.html",
+      "final_url": "https://pouchdb.com/adapters.html",
+      "retrieval_start_utc": "2026-10-07T19:03:55.177Z",
+      "retrieval_end_utc": "2026-10-07T19:03:55.308Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "captured_source_sha256": "f9d0412f01a9c88da79ed42fc891ef6ec440eea56a2e77647a669264180f1bf1",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f08.txt",
+      "evidence_bytes": 3564,
+      "evidence_sha256": "77975b0ab461f0a35e0b660f7812e56d608a4fbd21222b8c6e5e53d4506694e2",
+      "ranges": [
+        [
+          142,
+          149
+        ],
+        [
+          161,
+          168
+        ],
+        [
+          175,
+          187
+        ],
+        [
+          200,
+          207
+        ],
+        [
+          310,
+          317
+        ]
+      ]
+    },
+    {
+      "id": "F09",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "final_url": "https://pouchdb.com/guides/replication.html",
+      "retrieval_start_utc": "2026-10-07T19:03:55.310Z",
+      "retrieval_end_utc": "2026-10-07T19:03:55.466Z",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "captured_source_sha256": "c70b775396e48e21d7028a05dfaf170ef4e7c054dd6ffb322b54c1c4670ff59f",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f09.txt",
+      "evidence_bytes": 4899,
+      "evidence_sha256": "abbda4e3168db2167e1eee120ec7fce72d5b0df25f011bf95ae041751c849df9",
+      "ranges": [
+        [
+          164,
+          171
+        ],
+        [
+          305,
+          320
+        ],
+        [
+          326,
+          333
+        ],
+        [
+          338,
+          345
+        ]
+      ]
+    },
+    {
+      "id": "F10",
+      "url": "https://api.github.com/repos/apache/couchdb/issues/5422",
+      "final_url": "https://api.github.com/repos/apache/couchdb/issues/5422",
+      "retrieval_start_utc": "2026-10-07T19:03:55.469Z",
+      "retrieval_end_utc": "2026-10-07T19:03:55.666Z",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "captured_source_sha256": "8e2fcfdf65267d3f686b5429a28cdfc76be1932e8de8786b63e8f1fc65fd662d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f10.txt",
+      "evidence_bytes": 5560,
+      "evidence_sha256": "6d51d22221c14a3ac5e9017b95d6cf57b2e5947c8bc053da8c99b87178474109",
+      "ranges": [
+        "selected JSON fields"
+      ]
+    },
+    {
+      "id": "F11",
+      "url": "https://api.github.com/repos/apache/pouchdb/issues/8456",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/issues/8456",
+      "retrieval_start_utc": "2026-10-07T19:03:55.667Z",
+      "retrieval_end_utc": "2026-10-07T19:03:55.897Z",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "captured_source_sha256": "c5cfe7d877dafc4a24a3567807deb6572616e0d5769fc7f69f5c131f8a72d3d9",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f11.txt",
+      "evidence_bytes": 4646,
+      "evidence_sha256": "10809417ef73c70ca5ffb75a31d3ad51aed633519b19bd8eb54fab8f8f25991e",
+      "ranges": [
+        "selected JSON fields"
+      ]
+    },
+    {
+      "id": "F12",
+      "url": "https://api.github.com/repos/apache/pouchdb/pulls/8460",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/pulls/8460",
+      "retrieval_start_utc": "2026-10-07T19:03:55.898Z",
+      "retrieval_end_utc": "2026-10-07T19:03:56.257Z",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "captured_source_sha256": "06ba5075b4974e66e26aea2298327a64576c2a380d22f70f0d22d08b4423fb9c",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f12.txt",
+      "evidence_bytes": 16341,
+      "evidence_sha256": "9677588df7a55a2f5518fa3ba4c07ca674f9caefa807784c66492523af6073dd",
+      "ranges": [
+        "selected JSON fields"
+      ]
+    },
+    {
+      "id": "F13",
+      "url": "https://api.github.com/repos/apache/pouchdb/pulls/8460/commits",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/pulls/8460/commits",
+      "retrieval_start_utc": "2026-10-07T19:03:56.258Z",
+      "retrieval_end_utc": "2026-10-07T19:03:57.333Z",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "captured_source_sha256": "b9d00430ec58eb5b61d752e39d777fe8d293030d7cccec1cc4d3089629abd167",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f13.txt",
+      "evidence_bytes": 584,
+      "evidence_sha256": "bc44d563db5429668fa07b9627b2ac8c1006beaa800e84506d5c9b260ef586f6",
+      "ranges": [
+        "selected JSON fields"
+      ]
+    },
+    {
+      "id": "F14",
+      "url": "https://api.github.com/repos/apache/pouchdb/releases/tags/8.0.0",
+      "final_url": "https://api.github.com/repos/apache/pouchdb/releases/tags/8.0.0",
+      "retrieval_start_utc": "2026-10-07T19:03:57.334Z",
+      "retrieval_end_utc": "2026-10-07T19:03:57.518Z",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "captured_source_sha256": "94e0488a406f0f21b94f8816508ab564b5684aeeb212f5d575262af43ea3798d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-ANCHOR-LUNA/control/reviser-v1/sources/evidence/f14.txt",
+      "evidence_bytes": 17543,
+      "evidence_sha256": "f297f62a5959ed8d3b32ced654012b389df6ce2cf0f8d08c192a39132be11df1",
+      "ranges": [
+        "selected JSON fields"
+      ]
+    }
+  ]
+}

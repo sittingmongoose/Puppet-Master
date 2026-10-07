@@ -1,0 +1,68 @@
+{
+  "case_id": "D-M01-A",
+  "arm": "treatment",
+  "stage": "research-v1",
+  "dispatch_at_utc": "2026-10-07T18:57:08.209063+00:00",
+  "hard_stage_deadline_utc": "2026-10-07T19:03:08.209063+00:00",
+  "whole_arm_deadline_utc": "2026-10-07T19:12:08.209063+00:00",
+  "assembled_at_utc": "2026-10-07 19:02:09 UTC",
+  "observed_operations": [
+    {
+      "at_utc": "2026-10-07 18:57:42 UTC",
+      "operation": "Created fresh native Goal; create response persisted immediately in native_goal_receipt.json."
+    },
+    {
+      "at_utc": "2026-10-07 18:57:57 UTC",
+      "operation": "Called native get_goal; active identity/state persisted in native_goal_receipt.json."
+    },
+    {
+      "at_utc": "2026-10-07 18:58:10 UTC",
+      "operation": "Read only brief and source manifest; computed SHA-256 for the three supplied primary source captures; all matched."
+    },
+    {
+      "at_utc": "2026-10-07 18:58:41 UTC",
+      "operation": "Read captured SQLite backup documentation and SQLite version-3.51.3 backup.c sections relevant to all six obligations."
+    },
+    {
+      "at_utc": "2026-10-07 19:00:37 UTC",
+      "operation": "Re-read native Goal receipt; verified draft readability, SHA-256 and word count; observed Goal remained active."
+    },
+    {
+      "at_utc": "2026-10-07 19:01:12 UTC",
+      "operation": "Final native get observed active Goal, then update_goal completed it; both exact responses saved in native_goal_terminal.json."
+    },
+    {
+      "at_utc": "2026-10-07 19:02:09 UTC",
+      "operation": "Added explicit rejected-claim disposition; refreshed draft hash and word count."
+    }
+  ],
+  "outputs": {
+    "stage_output": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-A/treatment/research-v1/draft.md",
+    "stage_output_sha256": "02d4a0a4f70bf7dbb5b15c9ebe8c1411418b98bca98623a4c629bafb82cfa663",
+    "stage_output_word_count": 1093,
+    "logical_final_output": null
+  },
+  "native_goal_usage_observed": {
+    "first_get_tokens_used": 1894,
+    "first_get_time_used_seconds": 0,
+    "preterminal_get_tokens_used": 38097,
+    "preterminal_get_time_used_seconds": 175,
+    "remaining_tokens_reported": null,
+    "final_get_tokens_used": 53440,
+    "final_get_time_used_seconds": 210,
+    "completion_update_tokens_used": 56344,
+    "completion_update_time_used_seconds": 210
+  },
+  "other_usage": {
+    "stage_total_input_tokens": null,
+    "stage_total_output_tokens": null,
+    "source_bytes_read_total": null
+  },
+  "limitations": [
+    "Clock operations report UTC to whole seconds except the dispatch timestamp supplied by the user.",
+    "No SQLite database execution or proposed validation test was performed in this research stage.",
+    "Only supplied primary source captures were used; no additional source capture was required."
+  ],
+  "native_goal_terminal_receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-A/treatment/research-v1/native_goal_terminal.json",
+  "stage_elapsed_seconds_at_completion": 243.791
+}

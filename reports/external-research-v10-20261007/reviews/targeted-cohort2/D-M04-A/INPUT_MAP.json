@@ -1,0 +1,81 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/brief.md",
+  "changes": null,
+  "prior_state": null,
+  "primary_sources": [
+    {
+      "source_id": "sqltransaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_capture": "SQLite transaction documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqltransaction.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlwal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_capture": "SQLite WAL documentation capture 2026-10-07; selected runtime 3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwal.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlpragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_or_capture": "SQLite PRAGMA documentation capture 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlpragma.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "sqlwalcode",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.51.3/src/wal.c",
+      "version_or_capture": "SQLite version-3.51.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "100980ad092bcd2b722902b4b2f9927975cfa953d57eef521d7aed42918a39be",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M04-A/inputs/sources/sqlwalcode.c",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "outputs": [
+    {
+      "label": "Output1",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/frozen-inputs/Output1/final.md",
+          "sha256": "c0da97f90126abfaf63a8eab002e8ce2a0c2dfbf8ecf15ea6ce70d13db434d08"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/frozen-inputs/Output1/sources.json",
+          "sha256": "9f6fb822654480dc5c906efe9977b16963be76bc6da00448b8af039cae13fe0b"
+        }
+      }
+    },
+    {
+      "label": "Output2",
+      "artifacts": {
+        "final.md": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/frozen-inputs/Output2/final.md",
+          "sha256": "7ac437336bc9c472c075177d46b1577f3735c12c50c75cf3ebe4cf78d4185993"
+        },
+        "sources.json": {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A/frozen-inputs/Output2/sources.json",
+          "sha256": "efcb5f4a9b1316963445689ed066528127200c41c20e0adb40986ea6deb111b2"
+        }
+      }
+    }
+  ],
+  "output_dir": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted-cohort2/D-M04-A",
+  "scope": [
+    "Distinguish deferred and immediate acquisition behavior.",
+    "State where reader-to-writer transition matters.",
+    "Bind WAL assumptions and busy/locked conditions.",
+    "Separate application retry policy from database guarantees.",
+    "Address transaction cleanup after failure.",
+    "Retain one useful alternative and a discriminating test proposal."
+  ],
+  "blinding": "Neutral byte-exact output copies omit arm names in paths. Content may expose method; disclose. Do not read source sibling paths, task prompts, economics, state, other reviews or grades."
+}

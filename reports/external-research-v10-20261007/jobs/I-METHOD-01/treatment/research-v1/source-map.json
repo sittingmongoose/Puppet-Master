@@ -1,0 +1,269 @@
+{
+  "case_id": "I-METHOD-01",
+  "output_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1",
+  "first_saved_useful_finding_at_utc": "2026-10-07T18:58:37Z",
+  "complete_draft_saved_at_utc": "2026-10-07 19:10:32 UTC",
+  "clock_and_deadline": {
+    "dispatch_record_at": "2026-10-07T18:56:45.844115+00:00",
+    "prospective_stage_deadline": "2026-10-07T19:16:45.844115+00:00",
+    "prospective_arm_deadline": "2026-10-07T19:41:45.844115+00:00",
+    "actual_requested_at_correction": null,
+    "note": "No corrected actual requestedAt was present in the admitted dispatch-config.json; elapsed time was conservatively measured from the recorded dispatch anchor."
+  },
+  "native_goal": {
+    "thread_id": "01a117ba-2598-7ed2-b2fe-9ec875c2ff26",
+    "activation_status": "active",
+    "activation_tokens_used": 0,
+    "activation_time_used_seconds": 0,
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_output_tokens": null,
+    "reasoning_tokens": null,
+    "billing_amount": null,
+    "billing_currency": null,
+    "counter_note": "Terminal aggregate values are copied from actual update_goal/get_goal responses. Separate input, cached-input, generated-output, reasoning, and billing counters were not exposed and remain null.",
+    "terminal_status": "complete",
+    "terminal_tokens_used": 233336,
+    "terminal_time_used_seconds": 823,
+    "terminal_identity": "01a117ba-2598-7ed2-b2fe-9ec875c2ff26"
+  },
+  "source_operations": [
+    {
+      "operation": "Public search and navigation for brief-led environmental data discovery, CSV component, and code history",
+      "observed_window_utc": "2026-10-07T18:57:52Z/2026-10-07T19:00:25Z",
+      "observed_calls": 8,
+      "details": "15 search queries across four search batches, plus open, click, and find operations. Source pages opened before the frozen plan."
+    },
+    {
+      "operation": "Frozen plan read",
+      "at_utc": "2026-10-07T19:00:52Z",
+      "details": "Read the complete admitted plan.md after initial public-source discovery."
+    },
+    {
+      "operation": "Post-plan source comparison and SQLite/CSVW discovery",
+      "observed_window_utc": "2026-10-07T19:00:52Z/2026-10-07T19:07:56Z",
+      "observed_calls": 3,
+      "details": "SQLite and W3C tabular-data search/find plus the Rust csv published-version check."
+    },
+    {
+      "operation": "Public byte capture",
+      "at_utc": "2026-10-07T18:59:44Z",
+      "count": 3,
+      "details": "GitHub API release commit, defect-fix commit, and fix-to-1.3.1 comparison. 1.3.1 was an initial candidate and was superseded after checking the published 1.4.0 release."
+    },
+    {
+      "operation": "Public byte capture",
+      "at_utc": "2026-10-07T19:00:13Z",
+      "count": 13,
+      "details": "HydroShare pages, USGS guidance pages/PDFs, CoCoRaHS PDF, W3C PROV-O, ODM2 table index, and Rust csv 1.3.1 code."
+    },
+    {
+      "operation": "Public byte capture",
+      "at_utc": "2026-10-07T19:04:24Z",
+      "count": 4,
+      "details": "SQLite appropriate-use, foreign-key, atomic-commit docs and W3C tabular-data model."
+    },
+    {
+      "operation": "Public byte capture",
+      "at_utc": "2026-10-07T19:07:56Z",
+      "count": 1,
+      "details": "GitHub API record resolving the csv 1.4.0 release tag to its immutable commit."
+    },
+    {
+      "operation": "Public byte capture",
+      "at_utc": "2026-10-07T19:08:00Z",
+      "count": 3,
+      "details": "csv 1.4.0 reader source, deserializer source, and fix-to-release comparison JSON."
+    },
+    {
+      "operation": "Public byte capture",
+      "at_utc": "2026-10-07T19:08:18Z",
+      "count": 1,
+      "details": "docs.rs csv 1.4.0 release page."
+    },
+    {
+      "operation": "Local evidence inspection",
+      "details": "Read-only bounded symbol and line inspections of captured source files using rg, sed, and nl. No downloaded source was executed."
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "HydroShare Time Series",
+      "url": "https://help.hydroshare.org/hydroshare-resources/content-types/time-series/",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "Live documentation page captured as returned; no upstream version identifier exposed.",
+      "path": "sources/hydroshare-time-series.html",
+      "locator": "Time Series heading; supported ODM2 SQLite and CSV upload description."
+    },
+    {
+      "id": "S02",
+      "title": "HydroShare Time Series Metadata Elements",
+      "url": "https://help.hydroshare.org/hydroshare-resources/content-types/time-series/time-series-metadata-elements/",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "Live documentation page captured as returned; no upstream version identifier exposed.",
+      "path": "sources/hydroshare-time-series-metadata.html",
+      "locator": "Headings Site Information, Variable Information, Method Information, Processing Level Information, Time Series Result Information; WGS84 and UTC offset fields."
+    },
+    {
+      "id": "S03",
+      "title": "USGS Procedures for Processing, Approving, Publishing, and Auditing Time-Series Records for Water Data",
+      "url": "https://water.usgs.gov/osw/time-series-guidance/",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "Landing page reports modified 2025-03-20; captured 2026-10-07.",
+      "path": "sources/usgs-time-series-guidance.html",
+      "locator": "Time-Series Guidance index; stage/elevation and precipitation process/checklist links."
+    },
+    {
+      "id": "S04",
+      "title": "Process of Analyzing, Approving and Auditing Stage or Elevation Records",
+      "url": "https://water.usgs.gov/osw/time-series-guidance/SW2_Stage_or_Elevation/AAA_stage_elevation.pdf",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "USGS 2017 time-series guidance; file URL has no version suffix.",
+      "path": "sources/usgs-stage-process.pdf",
+      "locator": "Pages 1\u20133: field verification, backup data source, edits/reasons/timing, analyst state and separate approval."
+    },
+    {
+      "id": "S05",
+      "title": "Approval Guidance: Stage or Elevation Records",
+      "url": "https://water.usgs.gov/osw/time-series-guidance/SW2_Stage_or_Elevation/Approval_Guidance_stage_elevation.pdf",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "USGS time-series guidance checklist; file URL has no version suffix.",
+      "path": "sources/usgs-stage-approval.pdf",
+      "locator": "Pages 1\u20134: field notes, datum, edits, correction timing, estimates, approval summary, follow-up."
+    },
+    {
+      "id": "S06",
+      "title": "Process of Analyzing, Approving and Auditing Precipitation Records",
+      "url": "https://water.usgs.gov/osw/time-series-guidance/SW6_Precipitation/AAA_precip.pdf",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "USGS 2017 time-series guidance; file URL has no version suffix.",
+      "path": "sources/usgs-precip-process.pdf",
+      "locator": "Pages 1\u20133: permanent record scope, field-data verification, backup sources, missing/erroneous periods, station analysis."
+    },
+    {
+      "id": "S07",
+      "title": "Approval Guidance: Precipitation Records",
+      "url": "https://water.usgs.gov/osw/time-series-guidance/SW6_Precipitation/Approval_Guidance_precipitation.pdf",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "PDF states October 2017 and June 2020 versioning changes.",
+      "path": "sources/usgs-precip-approval.pdf",
+      "locator": "Pages 1\u20132, sections Calibration, Edits, Corrections, Estimates, Hyetographic Comparison; versioning section."
+    },
+    {
+      "id": "S08",
+      "title": "CoCoRaHS Data Quality Assurance and Quality Control",
+      "url": "https://media.cocorahs.org/docs/CoCoRaHS_QA_QC_April_2019.pdf",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "April 2019 document.",
+      "path": "sources/cocorahs-qa-qc-2019.pdf",
+      "locator": "PDF pages 2\u20134: volunteer entry issues, overflow/comment follow-up, sequenced automated QA flags."
+    },
+    {
+      "id": "S09",
+      "title": "PROV-O: The PROV Ontology",
+      "url": "https://www.w3.org/TR/prov-o/",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "W3C Recommendation served at the stable /TR/prov-o/ URL; bytes captured 2026-10-07.",
+      "path": "sources/prov-o.html",
+      "locator": "Section 3.1 Starting Point Terms and properties used/generatedBy/wasDerivedFrom/wasAssociatedWith."
+    },
+    {
+      "id": "S10",
+      "title": "Model for Tabular Data and Metadata on the Web",
+      "url": "https://www.w3.org/TR/tabular-data-model/",
+      "accessed_at_utc": "2026-10-07T19:04:24Z",
+      "version": "W3C Recommendation at stable /TR/tabular-data-model/ URL; bytes captured 2026-10-07.",
+      "path": "sources/w3c-tabular-data-model.html",
+      "locator": "Sections 4\u20136 tabular annotations/user-supplied metadata/validation; Sections 7\u20138 best-practice CSV and parsing dialect."
+    },
+    {
+      "id": "S11",
+      "title": "Appropriate Uses For SQLite",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "accessed_at_utc": "2026-10-07T19:04:24Z",
+      "version": "Official SQLite documentation page captured as returned; no upstream version identifier exposed.",
+      "path": "sources/sqlite-whentouse.html",
+      "locator": "Sections Application file format, local storage fit, and when client/server is preferable."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite Foreign Key Support",
+      "url": "https://www.sqlite.org/foreignkeys.html",
+      "accessed_at_utc": "2026-10-07T19:04:24Z",
+      "version": "Official SQLite documentation page captured as returned; no upstream version identifier exposed.",
+      "path": "sources/sqlite-foreignkeys.html",
+      "locator": "Section 2: enforcement disabled by default and must be enabled separately per connection."
+    },
+    {
+      "id": "S13",
+      "title": "Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "accessed_at_utc": "2026-10-07T19:04:24Z",
+      "version": "Official SQLite documentation page captured as returned; atomicity description qualified to rollback mode where stated.",
+      "path": "sources/sqlite-atomiccommit.html",
+      "locator": "Introduction and transaction commit sections: all transaction changes or none; document notes rollback-mode scope."
+    },
+    {
+      "id": "S14",
+      "title": "ODM2 Current Tables Index",
+      "url": "https://odm2.github.io/ODM2/schemas/ODM2_Current/tables/index.html",
+      "accessed_at_utc": "2026-10-07T19:00:13Z",
+      "version": "Generated Current-schema documentation snapshot; upstream page itself is mutable.",
+      "path": "sources/odm2-tables.html",
+      "locator": "Tables Actions, Results, Annotations, RelatedResults, ResultDerivationEquations, DataQuality."
+    },
+    {
+      "id": "S15",
+      "title": "csv 1.4.0 on docs.rs",
+      "url": "https://docs.rs/crate/csv/1.4.0",
+      "accessed_at_utc": "2026-10-07T19:08:18Z",
+      "version": "csv crate 1.4.0; page reports published 2025-10-17.",
+      "path": "sources/rust-csv-docs-1.4.0.html",
+      "locator": "Crate version and release date."
+    },
+    {
+      "id": "S16",
+      "title": "BurntSushi/rust-csv source at 1.4.0 release commit",
+      "url": "https://github.com/BurntSushi/rust-csv/tree/4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "accessed_at_utc": "2026-10-07T19:08:00Z",
+      "version": "Immutable commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; release tag 1.4.0 resolves to this commit.",
+      "path": "sources/rust-csv-reader-1.4.0.rs; sources/rust-csv-deserializer-1.4.0.rs; sources/rust-csv-release-1.4.0-commit.json",
+      "locator": "src/reader.rs: ReaderBuilder.flexible lines 232\u2013312; Reader.read_byte_record lines 1578\u20131613; read_byte_record_impl -> ReaderState.add_record call at line 1665; ReaderState.add_record lines 1880\u20131899; read_record_unequal_fails/read_record_unequal_ok/read_record_unequal_continue tests lines 2321\u20132400. src/deserializer.rs: deserialize_byte_buf lines 425\u2013431 and partially_invalid_utf8 test lines 1208\u20131230."
+    },
+    {
+      "id": "S17",
+      "title": "Rust csv byte-buffer deserialization fix commit",
+      "url": "https://github.com/BurntSushi/rust-csv/commit/9e644e66db0aa0b931758de1c2b7da555fb632b7",
+      "accessed_at_utc": "2026-10-07T18:59:44Z",
+      "version": "Immutable commit 9e644e66db0aa0b931758de1c2b7da555fb632b7.",
+      "path": "sources/rust-csv-deserializer-fix-9e644e6.rs; sources/rust-csv-fix-commit.json",
+      "locator": "src/deserializer.rs deserialize_byte_buf lines 412\u2013420; partially_invalid_utf8 regression test lines 1170\u20131192; commit message and patch in API JSON."
+    },
+    {
+      "id": "S18",
+      "title": "Rust csv fix-to-release ancestry comparison",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/compare/9e644e6...4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "accessed_at_utc": "2026-10-07T19:08:00Z",
+      "version": "GitHub compare response captured as JSON.",
+      "path": "sources/rust-csv-fix-1.4.0-compare.json",
+      "locator": "status ahead; ahead_by 102; merge_base_commit SHA equals fix commit."
+    },
+    {
+      "id": "S19",
+      "title": "csv 1.4.0 release commit resolution",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/1.4.0",
+      "accessed_at_utc": "2026-10-07T19:07:56Z",
+      "version": "Release commit 4a3997e91d668ea1d8595bdef15625a77cf2308a, dated 2025-10-17.",
+      "path": "sources/rust-csv-release-1.4.0-commit.json",
+      "locator": "Commit SHA and committer date fields."
+    }
+  ],
+  "validation_status": {
+    "application_built": false,
+    "product_tests_executed": false,
+    "benchmark_executed": false,
+    "public_infrastructure_operated": false,
+    "note": "Only source capture and read-only inspection were performed; validation scenarios in artifact.md are proposals."
+  }
+}

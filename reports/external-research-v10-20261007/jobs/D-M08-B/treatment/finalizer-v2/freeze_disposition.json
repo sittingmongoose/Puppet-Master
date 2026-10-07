@@ -1,0 +1,44 @@
+{
+  "case": "D-M08-B",
+  "version": "v2",
+  "arm": "treatment",
+  "disposition": "EXPIRED_INTERRUPTED_MISSING_FINAL",
+  "t3_status": "interrupted",
+  "native_status": "paused",
+  "native_identity": "01a117df-e536-7c51-9238-b79427ce9fae",
+  "native_terminal_complete": false,
+  "quiet": true,
+  "settled": true,
+  "files": {
+    "amendment.md": {
+      "exists": true,
+      "sha256": "d5a3d67d91c33bdddc2dd34cb4acc7801b026fc0c560c7dc5eade46ed452cb68",
+      "bytes": 4413
+    },
+    "change_dependency_check.md": {
+      "exists": false,
+      "sha256": null,
+      "bytes": 0
+    },
+    "final.md": {
+      "exists": false,
+      "sha256": null,
+      "bytes": 0
+    },
+    "timings.json": {
+      "exists": false,
+      "sha256": null,
+      "bytes": 0
+    }
+  },
+  "native_goal_raw": {
+    "objective_sha256": "0a271d8194b6d836eaf5d3bd4f551f570ee12265dbde5740f6214c83e42b091a",
+    "status": "paused",
+    "tokensUsed": 24317,
+    "tokenBudget": null,
+    "timeUsedSeconds": 247
+  },
+  "source_quality": "UNASSESSED",
+  "no_retry": true,
+  "frozen_at": "2026-10-07T20:04:47.269066+00:00"
+}

@@ -1,0 +1,614 @@
+[
+  {
+    "id": "S01",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/hydroshare-time-series.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/hydroshare-time-series.html",
+    "url": "https://help.hydroshare.org/hydroshare-resources/content-types/time-series/",
+    "declared_version": "Live documentation page captured as returned; no upstream version identifier exposed.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Time Series heading; supported ODM2 SQLite and CSV upload description.",
+    "sha256": "2ee1633d501fdbda2222cae689f2759b1fadd8090863473bcc5caf8e2e6ad4ba",
+    "bytes": 54250,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/hydroshare-time-series.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S02",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/hydroshare-time-series-metadata.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/hydroshare-time-series-metadata.html",
+    "url": "https://help.hydroshare.org/hydroshare-resources/content-types/time-series/time-series-metadata-elements/",
+    "declared_version": "Live documentation page captured as returned; no upstream version identifier exposed.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Headings Site Information, Variable Information, Method Information, Processing Level Information, Time Series Result Information; WGS84 and UTC offset fields.",
+    "sha256": "b09d3f0c17def021834a133999032d06726f835805579f8a7fc17c3c9ab07d57",
+    "bytes": 54019,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/hydroshare-time-series-metadata.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S03",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-time-series-guidance.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-time-series-guidance.html",
+    "url": "https://water.usgs.gov/osw/time-series-guidance/",
+    "declared_version": "Landing page reports modified 2025-03-20; captured 2026-10-07.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Time-Series Guidance index; stage/elevation and precipitation process/checklist links.",
+    "sha256": "9e82f7405edb5716b79fa579070303b726c8670c1f53393343ed47400bd3283a",
+    "bytes": 16978,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-time-series-guidance.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S04",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-stage-process.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-stage-process.pdf",
+    "url": "https://water.usgs.gov/osw/time-series-guidance/SW2_Stage_or_Elevation/AAA_stage_elevation.pdf",
+    "declared_version": "USGS 2017 time-series guidance; file URL has no version suffix.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Pages 1\u20133: field verification, backup data source, edits/reasons/timing, analyst state and separate approval.",
+    "sha256": "0ec40181e4af08cb54c76f0e920d3a7421b5c511e18029ee0c863d1737df044e",
+    "bytes": 43458,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-stage-process.pdf",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S05",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-stage-approval.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-stage-approval.pdf",
+    "url": "https://water.usgs.gov/osw/time-series-guidance/SW2_Stage_or_Elevation/Approval_Guidance_stage_elevation.pdf",
+    "declared_version": "USGS time-series guidance checklist; file URL has no version suffix.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Pages 1\u20134: field notes, datum, edits, correction timing, estimates, approval summary, follow-up.",
+    "sha256": "fbcc829232a44fcbf841b94b8a509d2a340f759b5073e4b0907e8b80833a6758",
+    "bytes": 22025,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-stage-approval.pdf",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S06",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-precip-process.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-precip-process.pdf",
+    "url": "https://water.usgs.gov/osw/time-series-guidance/SW6_Precipitation/AAA_precip.pdf",
+    "declared_version": "USGS 2017 time-series guidance; file URL has no version suffix.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Pages 1\u20133: permanent record scope, field-data verification, backup sources, missing/erroneous periods, station analysis.",
+    "sha256": "3606e976aaaa33e2594793baba7650563ec84b77d656bbaa54d732937bf586af",
+    "bytes": 36314,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-precip-process.pdf",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S07",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/usgs-precip-approval.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/usgs-precip-approval.pdf",
+    "url": "https://water.usgs.gov/osw/time-series-guidance/SW6_Precipitation/Approval_Guidance_precipitation.pdf",
+    "declared_version": "PDF states October 2017 and June 2020 versioning changes.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Pages 1\u20132, sections Calibration, Edits, Corrections, Estimates, Hyetographic Comparison; versioning section.",
+    "sha256": "9e626de759a254e54478ddcc95f0b38bdce33415e8795cdb47b7a794e1e33cf1",
+    "bytes": 99338,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/usgs-precip-approval.pdf",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S08",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/cocorahs-qa-qc-2019.pdf",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/cocorahs-qa-qc-2019.pdf",
+    "url": "https://media.cocorahs.org/docs/CoCoRaHS_QA_QC_April_2019.pdf",
+    "declared_version": "April 2019 document.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "PDF pages 2\u20134: volunteer entry issues, overflow/comment follow-up, sequenced automated QA flags.",
+    "sha256": "4a19f5e6ea93a6aec9b4806b8ff65d74007478f2efd6d85d80bc018a2f0569e9",
+    "bytes": 155775,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/cocorahs-qa-qc-2019.pdf",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S09",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/prov-o.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/prov-o.html",
+    "url": "https://www.w3.org/TR/prov-o/",
+    "declared_version": "W3C Recommendation served at the stable /TR/prov-o/ URL; bytes captured 2026-10-07.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Section 3.1 Starting Point Terms and properties used/generatedBy/wasDerivedFrom/wasAssociatedWith.",
+    "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555",
+    "bytes": 464179,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/prov-o.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S10",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/w3c-tabular-data-model.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/w3c-tabular-data-model.html",
+    "url": "https://www.w3.org/TR/tabular-data-model/",
+    "declared_version": "W3C Recommendation at stable /TR/tabular-data-model/ URL; bytes captured 2026-10-07.",
+    "declared_accessed_at_utc": "2026-10-07T19:04:24Z",
+    "declared_locator": "Sections 4\u20136 tabular annotations/user-supplied metadata/validation; Sections 7\u20138 best-practice CSV and parsing dialect.",
+    "sha256": "e55d28c7805c1573129336a8ae11c189e6ad48886993693799ce0d49b92feb93",
+    "bytes": 353203,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/w3c-tabular-data-model.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S11",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-whentouse.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/sqlite-whentouse.html",
+    "url": "https://www.sqlite.org/whentouse.html",
+    "declared_version": "Official SQLite documentation page captured as returned; no upstream version identifier exposed.",
+    "declared_accessed_at_utc": "2026-10-07T19:04:24Z",
+    "declared_locator": "Sections Application file format, local storage fit, and when client/server is preferable.",
+    "sha256": "d0850096c26e9c888acaf2d6e2ac029e86f66f51a87461b77b94f1639d309b79",
+    "bytes": 21223,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/sqlite-whentouse.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S12",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-foreignkeys.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/sqlite-foreignkeys.html",
+    "url": "https://www.sqlite.org/foreignkeys.html",
+    "declared_version": "Official SQLite documentation page captured as returned; no upstream version identifier exposed.",
+    "declared_accessed_at_utc": "2026-10-07T19:04:24Z",
+    "declared_locator": "Section 2: enforcement disabled by default and must be enabled separately per connection.",
+    "sha256": "f9cc6cefbdf18e07893b036365a2f3ca2a9a81fa41ed0849c7e4df214ccca8c0",
+    "bytes": 47276,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/sqlite-foreignkeys.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S13",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/sqlite-atomiccommit.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/sqlite-atomiccommit.html",
+    "url": "https://www.sqlite.org/atomiccommit.html",
+    "declared_version": "Official SQLite documentation page captured as returned; atomicity description qualified to rollback mode where stated.",
+    "declared_accessed_at_utc": "2026-10-07T19:04:24Z",
+    "declared_locator": "Introduction and transaction commit sections: all transaction changes or none; document notes rollback-mode scope.",
+    "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+    "bytes": 77968,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/sqlite-atomiccommit.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S14",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/odm2-tables.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/odm2-tables.html",
+    "url": "https://odm2.github.io/ODM2/schemas/ODM2_Current/tables/index.html",
+    "declared_version": "Generated Current-schema documentation snapshot; upstream page itself is mutable.",
+    "declared_accessed_at_utc": "2026-10-07T19:00:13Z",
+    "declared_locator": "Tables Actions, Results, Annotations, RelatedResults, ResultDerivationEquations, DataQuality.",
+    "sha256": "af3186959c1f0c8f17b2463dd6c54d3047ca681a399885a759649b03d3e319b5",
+    "bytes": 25182,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/odm2-tables.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S15",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-docs-1.4.0.html",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-docs-1.4.0.html",
+    "url": "https://docs.rs/crate/csv/1.4.0",
+    "declared_version": "csv crate 1.4.0; page reports published 2025-10-17.",
+    "declared_accessed_at_utc": "2026-10-07T19:08:18Z",
+    "declared_locator": "Crate version and release date.",
+    "sha256": "88aba29517f2b882f554e5e3fc5464a251c4b9daf02b88eb5c751245a9d0eec9",
+    "bytes": 76417,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-docs-1.4.0.html",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S16",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-reader-1.4.0.rs",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-reader-1.4.0.rs",
+    "url": "https://github.com/BurntSushi/rust-csv/tree/4a3997e91d668ea1d8595bdef15625a77cf2308a",
+    "declared_version": "Immutable commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; release tag 1.4.0 resolves to this commit.",
+    "declared_accessed_at_utc": "2026-10-07T19:08:00Z",
+    "declared_locator": "src/reader.rs: ReaderBuilder.flexible lines 232\u2013312; Reader.read_byte_record lines 1578\u20131613; read_byte_record_impl -> ReaderState.add_record call at line 1665; ReaderState.add_record lines 1880\u20131899; read_record_unequal_fails/read_record_unequal_ok/read_record_unequal_continue tests lines 2321\u20132400. src/deserializer.rs: deserialize_byte_buf lines 425\u2013431 and partially_invalid_utf8 test lines 1208\u20131230.",
+    "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+    "bytes": 90075,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-reader-1.4.0.rs",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S16",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-deserializer-1.4.0.rs",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-deserializer-1.4.0.rs",
+    "url": "https://github.com/BurntSushi/rust-csv/tree/4a3997e91d668ea1d8595bdef15625a77cf2308a",
+    "declared_version": "Immutable commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; release tag 1.4.0 resolves to this commit.",
+    "declared_accessed_at_utc": "2026-10-07T19:08:00Z",
+    "declared_locator": "src/reader.rs: ReaderBuilder.flexible lines 232\u2013312; Reader.read_byte_record lines 1578\u20131613; read_byte_record_impl -> ReaderState.add_record call at line 1665; ReaderState.add_record lines 1880\u20131899; read_record_unequal_fails/read_record_unequal_ok/read_record_unequal_continue tests lines 2321\u20132400. src/deserializer.rs: deserialize_byte_buf lines 425\u2013431 and partially_invalid_utf8 test lines 1208\u20131230.",
+    "sha256": "fcc3700130d22824ec3f5d2da24cb4bef48ac95402fe5d8112b9d71435fa8037",
+    "bytes": 34340,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-deserializer-1.4.0.rs",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S16",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-release-1.4.0-commit.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-release-1.4.0-commit.json",
+    "url": "https://github.com/BurntSushi/rust-csv/tree/4a3997e91d668ea1d8595bdef15625a77cf2308a",
+    "declared_version": "Immutable commit 4a3997e91d668ea1d8595bdef15625a77cf2308a; release tag 1.4.0 resolves to this commit.",
+    "declared_accessed_at_utc": "2026-10-07T19:08:00Z",
+    "declared_locator": "src/reader.rs: ReaderBuilder.flexible lines 232\u2013312; Reader.read_byte_record lines 1578\u20131613; read_byte_record_impl -> ReaderState.add_record call at line 1665; ReaderState.add_record lines 1880\u20131899; read_record_unequal_fails/read_record_unequal_ok/read_record_unequal_continue tests lines 2321\u20132400. src/deserializer.rs: deserialize_byte_buf lines 425\u2013431 and partially_invalid_utf8 test lines 1208\u20131230.",
+    "sha256": "8641863f5b2da3ff6cf49f5362261c22face01e9b760cd140d22b3bb98d6b453",
+    "bytes": 4853,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-release-1.4.0-commit.json",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S17",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-deserializer-fix-9e644e6.rs",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-deserializer-fix-9e644e6.rs",
+    "url": "https://github.com/BurntSushi/rust-csv/commit/9e644e66db0aa0b931758de1c2b7da555fb632b7",
+    "declared_version": "Immutable commit 9e644e66db0aa0b931758de1c2b7da555fb632b7.",
+    "declared_accessed_at_utc": "2026-10-07T18:59:44Z",
+    "declared_locator": "src/deserializer.rs deserialize_byte_buf lines 412\u2013420; partially_invalid_utf8 regression test lines 1170\u20131192; commit message and patch in API JSON.",
+    "sha256": "19f96d252fc99df1311a9a92a43ae981adcb672e86bbc67fcc8dba4fc04da406",
+    "bytes": 32869,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-deserializer-fix-9e644e6.rs",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S17",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-fix-commit.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-fix-commit.json",
+    "url": "https://github.com/BurntSushi/rust-csv/commit/9e644e66db0aa0b931758de1c2b7da555fb632b7",
+    "declared_version": "Immutable commit 9e644e66db0aa0b931758de1c2b7da555fb632b7.",
+    "declared_accessed_at_utc": "2026-10-07T18:59:44Z",
+    "declared_locator": "src/deserializer.rs deserialize_byte_buf lines 412\u2013420; partially_invalid_utf8 regression test lines 1170\u20131192; commit message and patch in API JSON.",
+    "sha256": "ed9115380d32ddfbf86b887be913c27a4843a14d1e9fb7c524a358a41c479050",
+    "bytes": 8263,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-fix-commit.json",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S18",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-fix-1.4.0-compare.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-fix-1.4.0-compare.json",
+    "url": "https://api.github.com/repos/BurntSushi/rust-csv/compare/9e644e6...4a3997e91d668ea1d8595bdef15625a77cf2308a",
+    "declared_version": "GitHub compare response captured as JSON.",
+    "declared_accessed_at_utc": "2026-10-07T19:08:00Z",
+    "declared_locator": "status ahead; ahead_by 102; merge_base_commit SHA equals fix commit.",
+    "sha256": "ffa2b42b45167a8f907bf5e122570326ca882186af37fadd1c55970e2a75f5bd",
+    "bytes": 794337,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-fix-1.4.0-compare.json",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "S19",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/rust-csv-release-1.4.0-commit.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/rust-csv-release-1.4.0-commit.json",
+    "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/1.4.0",
+    "declared_version": "Release commit 4a3997e91d668ea1d8595bdef15625a77cf2308a, dated 2025-10-17.",
+    "declared_accessed_at_utc": "2026-10-07T19:07:56Z",
+    "declared_locator": "Commit SHA and committer date fields.",
+    "sha256": "8641863f5b2da3ff6cf49f5362261c22face01e9b760cd140d22b3bb98d6b453",
+    "bytes": 4853,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/sources/rust-csv-release-1.4.0-commit.json",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C01",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/reader-flex.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/reader-flex.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "ReaderBuilder.flexible docs and setter, pinned lines 232-312",
+    "sha256": "7439ffd29dcd073f1e435e260cc10d3bee2381877b6ebf8968483484026a250b",
+    "bytes": 2897,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/reader-flex.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C02",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/reader-call.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/reader-call.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "read_byte_record caller path, pinned lines 1578-1613",
+    "sha256": "2fcc710d9d01f1a82499fba8304bff8e6b9e738f1743e6e5ec9892c534e06cdb",
+    "bytes": 834,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/reader-call.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C03",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/reader-state.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/reader-state.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "ReaderState.add_record width comparison, pinned lines 1880-1899",
+    "sha256": "35d69f5c4885414d279cef82aa2227146b3222532b16448a457fc17879bc6a74",
+    "bytes": 795,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/reader-state.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C04",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/reader-tests.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/reader-tests.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Unequal-width tests, pinned lines 2321-2400",
+    "sha256": "46c115cf3697e3d80a377af5ed1d9b77e3c05e9af12a601af7f01c828915bab4",
+    "bytes": 2608,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/reader-tests.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C05",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/deserializer-buf.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/deserializer-buf.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/deserializer.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "deserialize_byte_buf implementation, pinned lines 425-431",
+    "sha256": "ebc4ddae4e884db886dd2373ea796a73a55cb3130141c53dde5567743d0cc254",
+    "bytes": 221,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/deserializer-buf.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C06",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/deserializer-test.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/deserializer-test.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/deserializer.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "partially_invalid_utf8 regression test, pinned lines 1208-1230",
+    "sha256": "813371dff17017e478d17c465eb0f889a39f03aac40cbca3646a29d42458c5bb",
+    "bytes": 683,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/deserializer-test.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C07",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/fix-commit.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/fix-commit.json",
+    "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/9e644e66db0aa0b931758de1c2b7da555fb632b7",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Public GitHub commit response body",
+    "sha256": "f3f36887de8291a55da0596deeb9a91371076270931f50248b100e01dfb3b3fb",
+    "bytes": 8264,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/fix-commit.json",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C08",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/csv-core-manifest.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/csv-core-manifest.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/Cargo.toml",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Pinned csv-core package version 0.1.11",
+    "sha256": "569f0930c8c0dd5772f07601faa19d7aaa440e3670365dc339c70837cb23b738",
+    "bytes": 677,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/csv-core-manifest.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C09",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/core-line-counter.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/core-line-counter.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Pinned parser line-state definition and reader code around issue-linked counter",
+    "sha256": "b3a8c53b2ff26fb532069e37fe780e2daceb44150a91217a09b1fbfc5926cd02",
+    "bytes": 1111,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/core-line-counter.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C10",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/wrapper-position-update.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/wrapper-position-update.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Pinned wrapper updates position line from csv-core and adds record",
+    "sha256": "9096b0243bb887a71ca2588b9cf083618635ad8aff6092fdcb6e056e86045517",
+    "bytes": 2060,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/wrapper-position-update.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C11",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/wrapper-unequal-tests.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/wrapper-unequal-tests.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Pinned wrapper unequal-width regression tests",
+    "sha256": "4ce6e7d64b48deab01e6d3bbe70033057b9021e6d1319584d8520e76eeb16403",
+    "bytes": 2741,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/wrapper-unequal-tests.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C12",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/root-manifest.txt",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/root-manifest.txt",
+    "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/Cargo.toml",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Pinned package 1.4.0 and csv-core path/version dependency",
+    "sha256": "3d5b1b1bfd196823a17bef67d04a5808a0300df2e2b82b5868c4b2476e9c9a20",
+    "bytes": 730,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/root-manifest.txt",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C13",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/issue-395.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/issue-395.json",
+    "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/395",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Normalized public GitHub issue response; open CRLF Position::line report with reproducer",
+    "sha256": "1f4aeb9d001847961544741e4c09d5bca25a88b1014d5a772a9a8db66b65513a",
+    "bytes": 3532,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/issue-395.json",
+        "same_bytes": true
+      }
+    ]
+  },
+  {
+    "id": "C14",
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/integrated-methods/I-METHOD-01/treatment/review-v1/sources/admitted/issue-422.json",
+    "input_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/reviser-v1/sources/issue-422.json",
+    "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/422",
+    "declared_version": null,
+    "declared_accessed_at_utc": null,
+    "declared_locator": "Normalized public GitHub issue response; open mismatched-column line-count report",
+    "sha256": "5dd6024beb5b2bc1cf0c05816d254141f36d15c151c0f92ee8d994d1af353ba4",
+    "bytes": 1010,
+    "same_arm_originals": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/sources/issue-422.json",
+        "same_bytes": true
+      }
+    ]
+  }
+]

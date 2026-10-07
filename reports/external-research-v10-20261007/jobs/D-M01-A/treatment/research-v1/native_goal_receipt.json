@@ -1,0 +1,30 @@
+{
+  "activation_observed_at_utc": "2026-10-07 18:57:42 UTC",
+  "create_goal_response": {
+    "goal": {
+      "threadId": "01a117ba-02d4-7d62-96f5-ce090c2c38c3",
+      "objective": "Complete the bounded research stage for ER10 case D-M01-A treatment: read only the provided brief and primary SQLite source files, produce the required research intermediate draft in the specified stage directory, preserve exact native Goal lifecycle receipts, and record observed timing/usage within the six-minute deadline.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399462,
+      "updatedAt": 1791399462
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "get_goal_observed_at_utc": "2026-10-07 18:57:57 UTC",
+  "get_goal_response": {
+    "goal": {
+      "threadId": "01a117ba-02d4-7d62-96f5-ce090c2c38c3",
+      "objective": "Complete the bounded research stage for ER10 case D-M01-A treatment: read only the provided brief and primary SQLite source files, produce the required research intermediate draft in the specified stage directory, preserve exact native Goal lifecycle receipts, and record observed timing/usage within the six-minute deadline.",
+      "status": "active",
+      "tokensUsed": 1894,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791399462,
+      "updatedAt": 1791399462
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

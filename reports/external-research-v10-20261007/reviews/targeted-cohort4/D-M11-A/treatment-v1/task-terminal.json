@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-source-review-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-source-review-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-treatment-source-review-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A04eb9884-8c48-4dc5-9baf-df6c6433f168%3Adelegate-task%3Aer10-cohort4-D-M11-A-treatment-source-review-v1",
+  "status": "interrupted",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-treatment-source-review-v1:ordinal:1",
+  "latestTerminalStatus": "interrupted",
+  "latestTerminalSummary": "The full source review is written. It records four material defects and preserves the supported findings and uncertainties. I’m validating the artifacts now, then I’ll save the timing record and terminal Goal receipt.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-treatment-source-review-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:78c01af0-2a0f-4b08-a45c-beca961b3332",
+  "providerInstanceId": "codex_gmail",
+  "model": "gpt-6.1-sol",
+  "summary": "The full source review is written. It records four material defects and preserves the supported findings and uncertainties. I’m validating the artifacts now, then I’ll save the timing record and terminal Goal receipt.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A04eb9884-8c48-4dc5-9baf-df6c6433f168%253Adelegate-task%253Aer10-cohort4-D-M11-A-treatment-source-review-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A05aa57ba-4ce9-4719-bb0a-647eab764051%253Adelegate-task%253Aer10-targeted-cohort4-v1:78c01af0-2a0f-4b08-a45c-beca961b3332",
+  "waitTimedOut": false
+}

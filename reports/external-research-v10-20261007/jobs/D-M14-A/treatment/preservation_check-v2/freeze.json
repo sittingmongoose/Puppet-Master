@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-07T19:37:56.965500+00:00",
+  "T3_status": "interrupted",
+  "children_quiet": true,
+  "native_projection_status": "paused",
+  "native_terminal_update_get": "NOT_EXPOSED; complete terminal absent",
+  "stage_expiry": "2026-10-07T19:35:59.809677Z",
+  "grace_end": "2026-10-07T19:36:59.809677Z",
+  "late_cancel_annotation": "Next parent wake19:37:32Z; owned cancel19:37:40Z; no free extension granted",
+  "required_files": {
+    "preservation_check.md": {
+      "exists": false,
+      "sha256": null
+    },
+    "final.md": {
+      "exists": false,
+      "sha256": null
+    },
+    "timings.json": {
+      "exists": false,
+      "sha256": null
+    }
+  },
+  "files": {
+    "prospective-timing.json": {
+      "sha256": "571dc667ffea119dd9ff463752f5ded0e8974678def7665fdc5e6c2fe121961a",
+      "bytes": 279
+    },
+    "dispatch-receipt.json": {
+      "sha256": "1e1ef5e2475e31a5c56e3a0d0797b4768561816b0f8809d08cc002db4db26a04",
+      "bytes": 1061
+    },
+    "passive-active.json": {
+      "sha256": "56988cc1d6cd694cb6f400dd4240746e75139db4fef5d8d0e942eb346fa3e7af",
+      "bytes": 10952
+    },
+    "task-terminal.json": {
+      "sha256": "30130251cfb6df7c0638c3901cfed2d6d05c1cc65d8ac628ddd93bff9636accc",
+      "bytes": 2837
+    },
+    "passive-terminal-capture-cost.json": {
+      "sha256": "c4b16ee0d4a7e7222ece2a1af7a60ba5de5b8eb439b0d17acbce6ca60eb0e4c5",
+      "bytes": 1294
+    },
+    "passive-active-capture-cost.json": {
+      "sha256": "305850d97fe42742118c217d7e527ff4cf9f1c4d4b089f2a814a221b3b45d182",
+      "bytes": 1292
+    },
+    "dispatch.json": {
+      "sha256": "724be8cd61ebd2c2ac8dadc5a771350ec9dfd82ab6c1b7bf127695c4b7e3b82c",
+      "bytes": 1467
+    },
+    "INPUT_MAP.json": {
+      "sha256": "7d58f4a36601de80ad248e4021b2d0c011f64c821e86c25024cc7cd57e825f4f",
+      "bytes": 3791
+    },
+    "dispatch-request.json": {
+      "sha256": "8070ab5f1cc859b5fd8a52999eb9ea4c7ad65ed4857d7fbe16897777aa054dd6",
+      "bytes": 6132
+    },
+    "expiry-steer-receipt.json": {
+      "sha256": "fd2ac6982c3a3eafd1c4cc64a7f0ceb38efdd32473df8be56b050b4c814d8a96",
+      "bytes": 551
+    },
+    "passive-terminal.json": {
+      "sha256": "488cb335d78c2349d8a2cac2077851c62885cc44dd1f2311478a09e376a2beee",
+      "bytes": 10951
+    }
+  },
+  "science_grade": "UNASSESSED",
+  "no_retry_rescue": true
+}

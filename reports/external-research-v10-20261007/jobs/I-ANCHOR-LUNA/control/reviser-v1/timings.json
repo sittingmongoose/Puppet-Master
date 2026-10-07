@@ -1,0 +1,33 @@
+{
+  "task": "I-ANCHOR-LUNA control final reviser-v1",
+  "clock_basis": "UTC",
+  "original_arm": {
+    "researcher_requested_at": "2026-10-07T18:26:52.563000+00:00",
+    "absolute_deadline": "2026-10-07T19:11:52.563000+00:00",
+    "remaining_seconds_at_reviser_prep": 833.789603,
+    "budget_rule": "Whole-arm 2700 seconds includes startup, source setup, queue/retries/delivery. No reset or added time."
+  },
+  "native_goal": {
+    "threadId": "01a117ba-c8ac-7960-8cc2-4d5de52c32f9",
+    "native_start_createdAt_epoch_seconds": 1791399494,
+    "native_start_at_utc": "2026-10-07T18:58:14Z",
+    "first_useful_saved_finding_at_utc": "2026-10-07T19:03:54.426Z",
+    "first_useful_saved_finding": "F01 CouchDB conflict excerpt saved to sources/evidence/f01.txt.",
+    "final_ready_at_utc": "2026-10-07T19:12:03Z",
+    "final_ready_time_method": "First clock sample immediately after the successful artifact write; the file tool did not return a filesystem save timestamp.",
+    "native_terminal_at_utc": "2026-10-07T19:13:37.000Z",
+    "terminal_time_basis": "Native update_goal updatedAt when exposed; otherwise unavailable.",
+    "overrun_seconds_after_absolute_deadline": 104.437
+  },
+  "usage": {
+    "native_cumulative_tokensUsed": 170309,
+    "native_cumulative_timeUsedSeconds": 923,
+    "native_remainingTokens": null,
+    "native_completionBudgetReport": null,
+    "input_tokens": null,
+    "cache_tokens": null,
+    "output_tokens": null,
+    "reasoning_tokens": null,
+    "usage_exposure": "Native get_goal may expose only cumulative goal tokens/time; input/cache/output/reasoning counters are not exposed. Billing is unknown."
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "case_id": "D-M01-B",
+  "stage": "criticism-v1",
+  "dispatch_timestamp_utc": "2026-10-07T19:01:31.886715+00:00",
+  "hard_stage_deadline_utc": "2026-10-07T19:05:31.886715+00:00",
+  "whole_arm_deadline_utc": "2026-10-07T19:08:40.979833+00:00",
+  "time_allowance_seconds": 240,
+  "clock_observations": [
+    {
+      "observed_at_utc": "2026-10-07T19:01:45Z",
+      "event": "UTC clock sampled immediately before native Goal creation"
+    },
+    {
+      "observed_at_utc": "2026-10-07T19:02:49Z",
+      "event": "UTC clock sampled after input/source reads and SHA-256 checks"
+    },
+    {
+      "observed_at_utc": "2026-10-07T19:04:04Z",
+      "event": "native complete update and final get returned; critique and required stage receipts were already saved"
+    }
+  ],
+  "operations": [
+    {
+      "operation": "create_goal",
+      "request_started_at_utc": "2026-10-07T19:01:45Z",
+      "native_receipt_createdAt_epoch_seconds": 1791399705,
+      "result": "active",
+      "receipt_saved": true,
+      "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-B/control/criticism-v1/native_goal_receipt.json"
+    },
+    {
+      "operation": "get_goal initial",
+      "exact_wall_timestamp_utc": null,
+      "result": "active; same threadId as activation; tokensUsed 0; timeUsedSeconds 0",
+      "receipt_saved": true,
+      "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-B/control/criticism-v1/native_goal_receipt.json"
+    },
+    {
+      "operation": "read authorized brief, source manifest, source captures, predecessor draft; compare hashes",
+      "started_at_utc": null,
+      "completed_no_later_than_utc": "2026-10-07T19:02:49Z",
+      "result": "all listed files read; both source hashes and predecessor hash matched the declared values"
+    },
+    {
+      "operation": "author and save critique.md and initial timings.json",
+      "started_at_utc": "2026-10-07 19:03:38 UTC",
+      "result": "in progress at timing record creation"
+    },
+    {
+      "operation": "update_goal complete",
+      "request_started_at_utc": "2026-10-07T19:04:04Z",
+      "result": "complete",
+      "native_tokensUsed": 42524,
+      "native_timeUsedSeconds": 138,
+      "receipt_saved": true,
+      "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-B/control/criticism-v1/native_goal_terminal.json"
+    },
+    {
+      "operation": "get_goal final",
+      "exact_wall_timestamp_utc": null,
+      "completed_no_later_than_utc": "2026-10-07T19:04:04Z",
+      "result": "complete",
+      "same_threadId": true,
+      "receipt_saved": true,
+      "receipt_path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M01-B/control/criticism-v1/native_goal_terminal.json"
+    }
+  ],
+  "usage": {
+    "native_goal_tokensUsed_at_initial_get": 0,
+    "native_goal_timeUsedSeconds_at_initial_get": 0,
+    "native_goal_remainingTokens": null,
+    "model_token_usage": null,
+    "prompt_token_usage": null,
+    "completion_token_usage": null,
+    "local_source_bytes_read": null,
+    "elapsed_seconds_since_dispatch_at_last_observation": 77.113285,
+    "native_goal_tokensUsed_at_terminal_update": 42524,
+    "native_goal_timeUsedSeconds_at_terminal_update": 138,
+    "elapsed_seconds_since_dispatch_at_terminal_clock_sample": 152.113285,
+    "elapsed_seconds_since_goal_created_reported_by_native": 138
+  },
+  "stage_terminal_state": "complete",
+  "stage_terminal_sample_utc": "2026-10-07 19:04:04 UTC"
+}

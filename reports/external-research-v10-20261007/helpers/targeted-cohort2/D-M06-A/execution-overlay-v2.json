@@ -1,0 +1,61 @@
+{
+  "version": "M06-prospective-v2",
+  "authority": "ROOT capacity/consolidation grant 2026-10-07 after anchors quiet",
+  "originals": {
+    "case-card.json": "2c8b81389650986a5b578de3d60db7f1df270447593e1417a66617f715067667",
+    "INPUT_MAP.json": "c5976bcf963c85c3bd96016f96514daad37bf31f3eb1720ab80629df525a6edf",
+    "SEED_INPUT_MAP.json": "71552f7dfa1ac2d0547a16dc7f3e24171f230ccec42299dac2d060a08dc8d100"
+  },
+  "sources": [
+    {
+      "source_id": "jcs",
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.txt",
+      "version_or_capture": "RFC 8785 June 2020; exact RFC text",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-A/inputs/sources/jcs.txt",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "binding": {
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "thought": "max",
+      "mode": "yolo"
+    },
+    "account": "unchanged root-qualified installed ZCode account; account alias not independently exposed"
+  },
+  "carrier": "Exact owned scientific files plus passive installed GoalLoopDriver active/terminal state; no vendor backend claim",
+  "stages": {
+    "common": "seed-v2 fresh Goal maximum360s",
+    "control": "candidate-v2 one fresh Goal ordinary-check+final maximum540s",
+    "treatment": "candidate-v2 one fresh Goal oracle-selection+bounded-witness+reconcile+full-final maximum540s"
+  },
+  "whole_per_arm_seconds": 900,
+  "absolute_deadline": "common seed dispatch+900s, seed/startup/queue/failures/output/native terminal included; no reset",
+  "shared_seed_charge": "whole actual seed per cold arm; physical seed once and half-seed amortized separately",
+  "ordering": [
+    "control",
+    "treatment"
+  ],
+  "overlap_policy": "prefer declared sequential order, admit second arm while first still live only if original absolute deadline requires; save actual contention",
+  "sandbox": "qualified offline isolated single-process Python only; operations/oracles/expected outputs candidate-authored, not supplied by Sol",
+  "obligations": [
+    "Bind the accepted input domain and duplicate-name policy.",
+    "Check property ordering including non-BMP keys.",
+    "Check number serialization and prohibited numeric values.",
+    "Distinguish Unicode preservation from normalization.",
+    "Use controls that can discriminate a plausible wrong implementation.",
+    "Bind any later executed witness to the report and limit its applicability."
+  ],
+  "final_carrier": {
+    "control": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/control/candidate-v2/final.md",
+    "treatment": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-A/treatment/candidate-v2/final.md",
+    "required": "full final, sources.json, timings.json; method substeps report.md; candidate witness/fixtures/receipt when executed"
+  },
+  "review": "fresh ordinary Sol6.1 xhigh priority codex_gmail after paired exact finals and native terminal frozen/tasks quiet, no evaluator while counterpart live",
+  "provenance": "Pathmaps advisory, no firewall claim",
+  "failed_prior_attempts": [],
+  "at": "2026-10-07T19:41:34.262472+00:00"
+}

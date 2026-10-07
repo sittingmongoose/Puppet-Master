@@ -1,0 +1,47 @@
+{
+  "case": "D-M06-B",
+  "map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M06-B/common/seed-v2/INPUT_MAP.json",
+  "brief": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/brief.md",
+    "title": "D-M06-B: Affine raster coordinates and inverse applicability",
+    "sources_mode": "FROZEN_PUBLIC_PRIMARY_CORPUS",
+    "read_complete": true
+  },
+  "sources": [
+    {
+      "source_id": "geotransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/doc/source/tutorials/geotransforms_tut.rst",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256_observed": "5b9c3093776741a5b00f3bef76aa7515f021e4ddc62f87f8326f6e6d1c1a33cc",
+      "sha256_matches_map": true,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/geotransform.rst",
+      "kind": "public primary raw bytes",
+      "bytes": 1713,
+      "retrieval": "local capture read directly from mapped path; no network fetch performed",
+      "read_complete": true,
+      "limitations": "Tutorial prose only; defines the 6-coefficient affine convention and pixel/line corner-vs-center note. Does not define inversion or tolerance behavior."
+    },
+    {
+      "source_id": "gdaltransform",
+      "url": "https://raw.githubusercontent.com/OSGeo/gdal/v3.9.0/gcore/gdal_misc.cpp",
+      "version_or_capture": "GDAL 3.9.0",
+      "capture_date_utc": "2026-10-07",
+      "sha256_observed": "9a06b0186a184a8a93663572ffde094c8898e5bd3a25e44c8cadf4b2a8934e88",
+      "sha256_matches_map": true,
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M06-B/inputs/sources/gdaltransform.cpp",
+      "kind": "public primary raw bytes",
+      "bytes": 184782,
+      "retrieval": "local capture read directly from mapped path; no network fetch performed",
+      "read_complete": "partial: header/license and all geotransform-relevant sections (GDALLoadOziMapFile, GDALGCPsToGeoTransform-based fitting near lines 1636-1880, 2940-2990); non-geotransform utility functions not read line-by-line",
+      "limitations": "Defines GCP-based first-order geotransform fitting and composition (GDALComposeGeoTransforms) and calls GDALInvGeoTransform at line 2972, but the inversion body (GDALInvGeoTransform, GDALApplyGeoTransform) is declared/defined elsewhere in the release, not in this capture. No execution of this code was performed."
+    }
+  ],
+  "additional_primary_sources": [],
+  "observation_times_utc": {
+    "map_read": "2026-10-07T19:56Z (prior round, same dispatch)",
+    "source_checksums_and_read": "2026-10-07T19:56:57Z",
+    "brief_read": "2026-10-07T19:57:35Z",
+    "sources_json_written": "2026-10-07T19:57:35Z"
+  }
+}

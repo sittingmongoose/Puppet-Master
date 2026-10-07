@@ -1,0 +1,71 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "pathdoc",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/pathlib.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1eb64284f142028c3338da705d2a9e1c640bf115c189b27787301bf7ff3fc6de",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathdoc.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "pathcode",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/pathlib.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "dc14d8207519fb8bcdd9c7bae1d54da3ad1b339aa83d4979c16057cd552a3487",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathcode.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "pathscan",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_pathlib.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "1198a722bfbd6bd8f924f2b87b38b2d617d48358bf5498190682c077f6af5b1c",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M03-A/inputs/sources/pathscan.py",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "additional_candidate_public_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/expand-v1/sources/fnmatch-3.12.3.py",
+      "sha256": "6683da36e47af523f3f41e18ad244d837783e19e98911cc0b7415dea81494ebc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M03-A/treatment/expand-v1/sources/os-3.12.3.rst",
+      "sha256": "9a280ac22698e0947993ccab893cdb4d91db1cc482d45dcdc029da2a20bafd53"
+    }
+  ],
+  "candidates": [
+    {
+      "label": "Y",
+      "final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/frozen/Y/final.md",
+        "sha256": "8ac6613ecf6a968e36087df7fae672ebd3e903d2bca51ffc6329a126394165a9"
+      },
+      "method_required_intermediates": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/frozen/Y/intermediate-1.md",
+          "sha256": "d1c9e4e52587ba0ce1cb403a5ba8b09305b9aaabe4dcecb06b7233520ab1d050"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/frozen/Y/intermediate-2.md",
+          "sha256": "73b6dd40be5fd82c3ecf9605a6d32bda6d8e796d036d2f8fbab4ebdae64ace58"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/frozen/Y/intermediate-3.md",
+          "sha256": "61d8b963f93be944436ae0fc18e818c58d0c771b2313f90ad402ce5a2d445b32"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v1/frozen/Y/intermediate-4.md",
+          "sha256": "98e1fcbded2a4120d86814d898f589fb4c8c406e6b0869b9961cfe50b3e6e650"
+        }
+      ]
+    }
+  ],
+  "writable_review_directory": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/reviews/targeted/D-M03-A/source-review-v2-Y"
+}

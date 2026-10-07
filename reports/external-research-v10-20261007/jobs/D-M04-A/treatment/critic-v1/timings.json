@@ -1,0 +1,40 @@
+{
+  "schema": "pm.er10.critic-timings.v1",
+  "deadline_utc": "2026-10-07T19:09:47.014000+00:00",
+  "native_goal_created_at": "2026-10-07T19:02:32Z",
+  "first_useful_finding_recorded_at": "2026-10-07T19:04:20Z",
+  "final_artifact_at": "2026-10-07 19:11:09 UTC",
+  "clock_observation_for_final": {
+    "current_time": "2026-10-07 19:11:09 UTC"
+  },
+  "observed_goal_counters_before_work": {
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "remainingTokens": null,
+    "billing": null
+  },
+  "observed_goal_counters_preterminal": {
+    "tokensUsed": 51724,
+    "timeUsedSeconds": 517,
+    "remainingTokens": null,
+    "billing": null
+  },
+  "observed_goal_counters_terminal": {
+    "tokensUsed": 51724,
+    "timeUsedSeconds": 517,
+    "remainingTokens": null,
+    "billing": null
+  },
+  "warm_elapsed_seconds": {
+    "sqltransaction": 0.0008546729986846913,
+    "sqlwal": 0.00126226999964274,
+    "sqlpragma": 0.001752299998770468,
+    "sqlwalcode": 0.0020013189987366786
+  },
+  "supplemental_capture_bytes": 73030,
+  "tests_executed": 0,
+  "final_word_count": 724,
+  "deadline_met": false,
+  "deadline_overrun_seconds": 81.986,
+  "billing": null
+}

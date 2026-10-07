@@ -1,0 +1,421 @@
+{
+  "case_id": "I-METHOD-01",
+  "stage": "reviser-v1",
+  "created_at": "2026-10-07T19:34:16Z",
+  "input_boundary": "Exact input map, four predecessor files, and captured source bytes named in their source maps.",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/input-map.json",
+      "sha256": "da5795ee1bebc3d10e6d26c2a832b28df8b5a8d64b43ab1f1078123ae6308333",
+      "bytes": 1357
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/artifact.md",
+      "sha256": "c02dc05f249ddfa9718b6b8aa9aa670354c35e9516b4979be3c4e61c09709a6b",
+      "bytes": 24126
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/source-map.json",
+      "sha256": "d7fa5eb1c3d4d6963ef07e18988ebb56731fa52c0cbeb1a12959e42cff03ab68",
+      "bytes": 15455
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/artifact.md",
+      "sha256": "59eaf08c72c8d8f780a936588d714e6a7c5066663702ad1e96d9819ccfe8a03d",
+      "bytes": 13336
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/source-map.json",
+      "sha256": "8ad6e51261663a21f7fd8793f803065f2dfe92688151b6fba8bf050f83ac0a05",
+      "bytes": 6479
+    }
+  ],
+  "artifact": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/reviser-v1/artifact.md",
+    "sha256": "df93675a8edb23ebc7a698c5e201d4f9d2eaf8d2dffe32597b83ca2fed701e87",
+    "bytes": 29583
+  },
+  "capture_count": 30,
+  "capture_total_bytes": 8740102,
+  "captures": [
+    {
+      "source_id": "S01",
+      "stage": "research-v1",
+      "title": "CoCoRaHS observer guidance: editing observations and observation time",
+      "url": "https://www.cocorahs.org/Content.aspx?page=Hilbergstips",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/CoCoRaHS-observation-time-editing.html",
+      "linked_path": "sources/research-v1/CoCoRaHS-observation-time-editing.html",
+      "sha256": "533de4eec44c05b24fbd5a4e821944312caccdd1e5ee4f5b06ee8f0831e25098",
+      "bytes": 38704,
+      "locator": "Sections Editing Your Observations, Back to Basics - Observation Time, and Please Don’t Ignore Email About Your Observation; observation time vs entry time and interval since previous observation.",
+      "source_path": null
+    },
+    {
+      "source_id": "S02",
+      "stage": "research-v1",
+      "title": "CoCoRaHS Data Quality Assurance and Quality Control",
+      "url": "https://media.cocorahs.org/docs/CoCoRaHS_QA_QC_April_2019.pdf",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/CoCoRaHS-QA-QC-April-2019.pdf",
+      "linked_path": "sources/research-v1/CoCoRaHS-QA-QC-April-2019.pdf",
+      "sha256": "4a19f5e6ea93a6aec9b4806b8ff65d74007478f2efd6d85d80bc018a2f0569e9",
+      "bytes": 155775,
+      "locator": "PDF pages 2–4: common reporting errors, multi-day totals/snow fields, overflow comments, sequenced QA checks and flags. Page 4 describes NCEI/GHCN-D checks, used only as review-pattern examples.",
+      "source_path": null
+    },
+    {
+      "source_id": "S03",
+      "stage": "research-v1",
+      "title": "USGS procedures for processing, approving, publishing, and auditing time-series records",
+      "url": "https://water.usgs.gov/water-resources/memos/memo.php?id=1367",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/USGS-time-series-workflow-memo.html",
+      "linked_path": "sources/research-v1/USGS-time-series-workflow-memo.html",
+      "sha256": "1d74112e84b081de23972e5a37b74801a8f58e27395853f93cb7fc09c395342f",
+      "bytes": 20814,
+      "locator": "HTML lines 12–26: analyze/approve/audit policy, Operator/Analyst/Approver roles, working/analyzed/approved states, routine/non-routine audits.",
+      "source_path": null
+    },
+    {
+      "source_id": "S04",
+      "stage": "research-v1",
+      "title": "OGC SensorThings API Part 1: Sensing",
+      "url": "https://docs.ogc.org/is/18-088/18-088.pdf",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/OGC-SensorThings-1.1.pdf",
+      "linked_path": "sources/research-v1/OGC-SensorThings-1.1.pdf",
+      "sha256": "a764b693eb238aeed3c220b8b241ff37dd366209b4a991ffbc8ac6bfba786990",
+      "bytes": 3166281,
+      "locator": "PDF page 26, section 7.3, parsed lines 609–627: Observation, result, phenomenonTime/resultTime, FeatureOfInterest, ObservedProperty, Sensor, Thing and Datastream; entity relations in chapter 8.",
+      "source_path": null
+    },
+    {
+      "source_id": "S05",
+      "stage": "research-v1",
+      "title": "OGC SensorThings API Extension: STAplus",
+      "url": "https://docs.ogc.org/is/22-022r1/22-022r1.pdf",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/OGC-STAplus-1.0.pdf",
+      "linked_path": "sources/research-v1/OGC-STAplus-1.0.pdf",
+      "sha256": "21c12867e698774cf5f21c12b0b5d81e32ad66e60d6f9ce54e05744371eee86b",
+      "bytes": 2977803,
+      "locator": "PDF pages 8–9 and 14–15: citizen-science multi-owner data, ownership/licensing/relations/groups; pages 32–35, section 6: Party, licensing, ObservationGroup and relations. Only vocabulary is considered; its multi-user API is out of scope.",
+      "source_path": null
+    },
+    {
+      "source_id": "S06",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 source and regression test",
+      "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/src/rainfallqc/checks/gauge_checks.py",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-gauge_checks.py",
+      "linked_path": "sources/research-v1/RainfallQC-v1.0.2-gauge_checks.py",
+      "sha256": "5468587f530369ff6d6f30cbf7a954f6a4c200f2a4a45debf6fe684276f2b7b9",
+      "bytes": 9684,
+      "locator": "check_temporal_bias, lines 71–134",
+      "source_path": "src/rainfallqc/checks/gauge_checks.py"
+    },
+    {
+      "source_id": "S06",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 source and regression test",
+      "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/src/rainfallqc/qc_frameworks/inbuilt_qc_frameworks.py",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-inbuilt_qc_frameworks.py",
+      "linked_path": "sources/research-v1/RainfallQC-v1.0.2-inbuilt_qc_frameworks.py",
+      "sha256": "140fa84c87e1ad74f95bffce04ed8d8b51ef19f5059e5140862ec83c08ce026f",
+      "bytes": 4428,
+      "locator": "INTENSE_QC QC3/QC4 mapping, lines 6–10",
+      "source_path": "src/rainfallqc/qc_frameworks/inbuilt_qc_frameworks.py"
+    },
+    {
+      "source_id": "S06",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 source and regression test",
+      "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/src/rainfallqc/qc_frameworks/apply_qc_framework.py",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-apply_qc_framework.py",
+      "linked_path": "sources/research-v1/RainfallQC-v1.0.2-apply_qc_framework.py",
+      "sha256": "faa91ee45e838ed322f6ad60c88160ded85ede52b9d21b371f0b8c4b71805ad4",
+      "bytes": 2253,
+      "locator": "run_qc_framework, lines 11–70",
+      "source_path": "src/rainfallqc/qc_frameworks/apply_qc_framework.py"
+    },
+    {
+      "source_id": "S06",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 source and regression test",
+      "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/tests/unit/test_gauge_checks.py",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-test_gauge_checks.py",
+      "linked_path": "sources/research-v1/RainfallQC-v1.0.2-test_gauge_checks.py",
+      "sha256": "ed27a337654ee83642fc9bfa9f9df47a2972482e6809b1d41be8c1d7678629b8",
+      "bytes": 3081,
+      "locator": "test_check_day_of_week_bias and adjacent temporal-bias tests, lines 38–55",
+      "source_path": "tests/unit/test_gauge_checks.py"
+    },
+    {
+      "source_id": "S06",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 source and regression test",
+      "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/pyproject.toml",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-pyproject.toml",
+      "linked_path": "sources/research-v1/RainfallQC-v1.0.2-pyproject.toml",
+      "sha256": "94cd98ab4db6ece95a5256079a12264e2a78c292d885ead85bffe2f6ef5d6f90",
+      "bytes": 4082,
+      "locator": "GPLv3/Python/Polars/version metadata, lines 17–31 and 90–112",
+      "source_path": "pyproject.toml"
+    },
+    {
+      "source_id": "S06",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 source and regression test",
+      "url": "https://api.github.com/repos/NERC-CEH/RainfallQC/commits/150717eba097ccd771920181b13ce957950a8a59",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-commit.json",
+      "linked_path": "sources/research-v1/RainfallQC-v1.0.2-commit.json",
+      "sha256": "2b6d23ef56398080e957baf491c51b0c7103c2f7b3ca0efb0f0b82469fe853b1",
+      "bytes": 14529,
+      "locator": "sha, message, signature verification, and file patches",
+      "source_path": "GitHub API commit response"
+    },
+    {
+      "source_id": "S06",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 source and regression test",
+      "url": "https://api.github.com/repos/NERC-CEH/RainfallQC/contents/src/rainfallqc/qc_frameworks?ref=150717eba097ccd771920181b13ce957950a8a59",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-v1.0.2-qc_frameworks-contents.json",
+      "linked_path": "sources/research-v1/RainfallQC-v1.0.2-qc_frameworks-contents.json",
+      "sha256": "a563eaca101613b8d32c43175930c5ff454b69f7ba80e5aa8f41523ebc6f324b",
+      "bytes": 3780,
+      "locator": "Pinned framework file paths and blob identifiers",
+      "source_path": "GitHub API directory listing"
+    },
+    {
+      "source_id": "S07",
+      "stage": "research-v1",
+      "title": "RainfallQC issue #120: QC3/4 temporal bias with t-test",
+      "url": "https://github.com/NERC-CEH/RainfallQC/issues/120",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-issue-120.json",
+      "linked_path": "sources/research-v1/RainfallQC-issue-120.json",
+      "sha256": "19b5a7620a98e72d2a71c341367ac0afddd2b70f2bccbf4984a347a156a871b9",
+      "bytes": 4458,
+      "locator": "Issue title/body fields describe grouped means compared against the overall mean and a weekday-only-rain false-negative case.",
+      "source_path": null
+    },
+    {
+      "source_id": "S08",
+      "stage": "research-v1",
+      "title": "RainfallQC pull request #123: temporal-bias fix",
+      "url": "https://github.com/NERC-CEH/RainfallQC/pull/123",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-pr-123.json",
+      "linked_path": "sources/research-v1/RainfallQC-pr-123.json",
+      "sha256": "3bcb956695a92a7d013ece52a1219144a6d8983198bf811509b489c8191cba85",
+      "bytes": 19873,
+      "locator": "Conversation says To fix #120; files patch replaces aggregate-means test with per-group tests and changes weekday fixture expectation 0→1; PR API has merge metadata.",
+      "source_path": null
+    },
+    {
+      "source_id": "S08",
+      "stage": "research-v1",
+      "title": "RainfallQC pull request #123: temporal-bias fix",
+      "url": "https://github.com/NERC-CEH/RainfallQC/pull/123",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-pr-123-files.json",
+      "linked_path": "sources/research-v1/RainfallQC-pr-123-files.json",
+      "sha256": "089eec8032cdc9dce0f4654d3ff17bd9652aaeddfae2e6eee2a6f63b0cfa5028",
+      "bytes": 12810,
+      "locator": "Conversation says To fix #120; files patch replaces aggregate-means test with per-group tests and changes weekday fixture expectation 0→1; PR API has merge metadata.",
+      "source_path": null
+    },
+    {
+      "source_id": "S09",
+      "stage": "research-v1",
+      "title": "RainfallQC GitHub release v1.0.2",
+      "url": "https://github.com/NERC-CEH/RainfallQC/releases/tag/v1.0.2",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/RainfallQC-release-v1.0.2.html",
+      "linked_path": "sources/research-v1/RainfallQC-release-v1.0.2.html",
+      "sha256": "c156fee7b8f046a13504ce78af7844f7f65d9ddd7c40f5ee68fa24933f70858a",
+      "bytes": 199058,
+      "locator": "Release lines 150–175: signed tag commit, notes explicitly say QC3/QC4 temporal-bias fix and PR #123; commit metadata in S06.",
+      "source_path": null
+    },
+    {
+      "source_id": "S10",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 PyPI release metadata",
+      "url": "https://pypi.org/project/rainfallqc/1.0.2/",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/PyPI-rainfallqc-1.0.2.html",
+      "linked_path": "sources/research-v1/PyPI-rainfallqc-1.0.2.html",
+      "sha256": "32ed63159c77e21ee19ca1b9aa3213ccf0218eb59539560b132a8e68ef0e18ea",
+      "bytes": 3038,
+      "locator": "Release files; PyPI JSON info.version=1.0.2; wheel and source tar upload_time 2026-06-29T11:08:28/29; source tar SHA-256 reported upstream as 527beae0213e7b1f38e37a7cee66ba404c8af56fa02df287ef6298de5faaa468. Upstream digest is distinct from host hash of the local capture.",
+      "source_path": null
+    },
+    {
+      "source_id": "S10",
+      "stage": "research-v1",
+      "title": "RainfallQC v1.0.2 PyPI release metadata",
+      "url": "https://pypi.org/pypi/rainfallqc/1.0.2/json",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/PyPI-rainfallqc-1.0.2.json",
+      "linked_path": "sources/research-v1/PyPI-rainfallqc-1.0.2.json",
+      "sha256": "4b0372e9f9f92268082f7ca7477ce10170de9c20018ea548ad1ca7ca39f36777",
+      "bytes": 16090,
+      "locator": "Release files; PyPI JSON info.version=1.0.2; wheel and source tar upload_time 2026-06-29T11:08:28/29; source tar SHA-256 reported upstream as 527beae0213e7b1f38e37a7cee66ba404c8af56fa02df287ef6298de5faaa468. Upstream digest is distinct from host hash of the local capture.",
+      "source_path": null
+    },
+    {
+      "source_id": "S11",
+      "stage": "research-v1",
+      "title": "SQLite is Transactional",
+      "url": "https://sqlite.org/transactional.html",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/SQLite-transactional.html",
+      "linked_path": "sources/research-v1/SQLite-transactional.html",
+      "sha256": "3d6a66c925d32e66fb28872c0e0c32b1936d46f996995c1a30fe591173bc6266",
+      "bytes": 4609,
+      "locator": "Page lines 20–28: transaction changes are atomic/all-or-nothing across interruption; SQLite says behavior is tested by its regression harness.",
+      "source_path": null
+    },
+    {
+      "source_id": "S12",
+      "stage": "research-v1",
+      "title": "csv crate for Rust",
+      "url": "https://docs.rs/csv/1.4.0/csv/",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/Rust-csv-1.4.0-docs.html",
+      "linked_path": "sources/research-v1/Rust-csv-1.4.0-docs.html",
+      "sha256": "1cc252164664e59d42e7c87faa6716a12adeb918333c120b65b49e9bc2009bb9",
+      "bytes": 32781,
+      "locator": "Docs page lines 28–42, 123–149: Reader/Writer, ReaderBuilder, StringRecord/ByteRecord, Error and record positions.",
+      "source_path": null
+    },
+    {
+      "source_id": "S12",
+      "stage": "research-v1",
+      "title": "csv crate for Rust",
+      "url": "https://docs.rs/crate/csv/1.4.0/source/src/reader.rs",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/Rust-csv-1.4.0-reader-source.html",
+      "linked_path": "sources/research-v1/Rust-csv-1.4.0-reader-source.html",
+      "sha256": "42d99cbdd6798d5424810eb020734124c5677c44d88f673ecabb66e0780ceb91",
+      "bytes": 1188232,
+      "locator": "Docs page lines 28–42, 123–149: Reader/Writer, ReaderBuilder, StringRecord/ByteRecord, Error and record positions.",
+      "source_path": null
+    },
+    {
+      "source_id": "S12",
+      "stage": "research-v1",
+      "title": "csv crate for Rust",
+      "url": "https://docs.rs/crate/csv/1.4.0/source/src/byte_record.rs",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/research-v1/sources/Rust-csv-1.4.0-byte_record-source.html",
+      "linked_path": "sources/research-v1/Rust-csv-1.4.0-byte_record-source.html",
+      "sha256": "970dee44ed2780cf5931c92f1c2fe9c8167b8ebcb1274f89ed66afcb627f84f3",
+      "bytes": 694937,
+      "locator": "Docs page lines 28–42, 123–149: Reader/Writer, ReaderBuilder, StringRecord/ByteRecord, Error and record positions.",
+      "source_path": null
+    },
+    {
+      "source_id": "C01",
+      "stage": "critic-v1",
+      "title": "RainfallQC gauge_checks.py at immutable release commit",
+      "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/src/rainfallqc/checks/gauge_checks.py",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-gauge_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "linked_path": "sources/critic-v1/RainfallQC-gauge_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "sha256": "5468587f530369ff6d6f30cbf7a954f6a4c200f2a4a45debf6fe684276f2b7b9",
+      "bytes": 9684,
+      "locator": "check_temporal_bias"
+    },
+    {
+      "source_id": "C02",
+      "stage": "critic-v1",
+      "title": "RainfallQC qc_check decorator at immutable release commit",
+      "url": "https://raw.githubusercontent.com/NERC-CEH/RainfallQC/150717eba097ccd771920181b13ce957950a8a59/src/rainfallqc/core/all_qc_checks.py",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-all_qc_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "linked_path": "sources/critic-v1/RainfallQC-all_qc_checks-150717eba097ccd771920181b13ce957950a8a59.py",
+      "sha256": "374cb5b4ffe1b5d8d1d9108d3d461f7e57e4329a5955172101a3b940738350b2",
+      "bytes": 3172,
+      "locator": "qc_check / require_non_negative"
+    },
+    {
+      "source_id": "C03",
+      "stage": "critic-v1",
+      "title": "RainfallQC issue 120 API",
+      "url": "https://api.github.com/repos/NERC-CEH/RainfallQC/issues/120",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-issue-120.json",
+      "linked_path": "sources/critic-v1/RainfallQC-issue-120.json",
+      "sha256": "19b5a7620a98e72d2a71c341367ac0afddd2b70f2bccbf4984a347a156a871b9",
+      "bytes": 4458,
+      "locator": "issue body, state, timestamps"
+    },
+    {
+      "source_id": "C04",
+      "stage": "critic-v1",
+      "title": "RainfallQC PR 123 API",
+      "url": "https://api.github.com/repos/NERC-CEH/RainfallQC/pulls/123",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-pr-123.json",
+      "linked_path": "sources/critic-v1/RainfallQC-pr-123.json",
+      "sha256": "3bcb956695a92a7d013ece52a1219144a6d8983198bf811509b489c8191cba85",
+      "bytes": 19873,
+      "locator": "merged state and merge metadata"
+    },
+    {
+      "source_id": "C05",
+      "stage": "critic-v1",
+      "title": "RainfallQC PR 123 files API",
+      "url": "https://api.github.com/repos/NERC-CEH/RainfallQC/pulls/123/files?per_page=100",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-pr-123-files.json",
+      "linked_path": "sources/critic-v1/RainfallQC-pr-123-files.json",
+      "sha256": "089eec8032cdc9dce0f4654d3ff17bd9652aaeddfae2e6eee2a6f63b0cfa5028",
+      "bytes": 12810,
+      "locator": "implementation/test diff"
+    },
+    {
+      "source_id": "C06",
+      "stage": "critic-v1",
+      "title": "RainfallQC v1.0.2 release API",
+      "url": "https://api.github.com/repos/NERC-CEH/RainfallQC/releases/tags/v1.0.2",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/RainfallQC-release-v1.0.2.json",
+      "linked_path": "sources/critic-v1/RainfallQC-release-v1.0.2.json",
+      "sha256": "426b02de6199e06c89caec8bb258c1f67967e9f2868c55ba100be10390f7495c",
+      "bytes": 2443,
+      "locator": "tag target and release notes"
+    },
+    {
+      "source_id": "C07",
+      "stage": "critic-v1",
+      "title": "SQLite transactional guarantee",
+      "url": "https://sqlite.org/transactional.html",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/SQLite-transactional.html",
+      "linked_path": "sources/critic-v1/SQLite-transactional.html",
+      "sha256": "3d6a66c925d32e66fb28872c0e0c32b1936d46f996995c1a30fe591173bc6266",
+      "bytes": 4609,
+      "locator": "atomicity applies to SQLite transaction; not external files"
+    },
+    {
+      "source_id": "C08",
+      "stage": "critic-v1",
+      "title": "Rust csv 1.4.0 Reader documentation",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.Reader.html",
+      "original_capture": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/control/critic-v1/sources/Rust-csv-1.4.0-Reader.html",
+      "linked_path": "sources/critic-v1/Rust-csv-1.4.0-Reader.html",
+      "sha256": "43648959a0b102711ac4b073d93b81873282c8fe8fbb68721dbba89c80956418",
+      "bytes": 105953,
+      "locator": "configuration, errors, permissive parsing"
+    }
+  ],
+  "source_operations": [
+    "Read the exact input-map.json and the exact researcher artifact/source-map and critic artifact/source-map named by it.",
+    "Read and copy the captured files enumerated by those two source maps into this stage's sources/research-v1/ and sources/critic-v1/ directories; SHA-256 and byte counts are host-computed.",
+    "Inspected targeted captured text for RainfallQC implementation, decorator, framework mapping, caller, regression test, issue/PR/release and package metadata; also inspected relevant CoCoRaHS, SQLite, and Rust csv captured material.",
+    "No new web search/fetch, broad discovery, repository scan, code execution of captured sources, application build, import, benchmark, test, or acceptance check."
+  ],
+  "timing": {
+    "first_useful_finding_at": "2026-10-07T19:31:15Z",
+    "first_useful_finding": "The exact admitted evidence does not include a direct local-workbench or plotting-component comparison; this is an unresolved O1 choice, not evidence that alternatives do not exist.",
+    "complete_artifact_saved_at": "2026-10-07T19:33:47.806876Z",
+    "source_map_saved_at": "2026-10-07T19:35:02.374613Z"
+  },
+  "accounting": {
+    "distinct_native_model_counters": {
+      "input_tokens": null,
+      "cached_input_tokens": null,
+      "generated_tokens": null,
+      "reasoning_tokens": null,
+      "billing": null
+    },
+    "aggregate_goal_tokens_and_time": "Only the actual native Goal responses in native-receipts.jsonl; kept separate from distinct model counters.",
+    "token_budget_requested": false
+  },
+  "validation": {
+    "executed": "Bounded source inspection, exact captured-file copying, host hashing, and artifact/source-map creation only.",
+    "proposed": "See artifact.md; no application or acceptance validation was executed."
+  }
+}

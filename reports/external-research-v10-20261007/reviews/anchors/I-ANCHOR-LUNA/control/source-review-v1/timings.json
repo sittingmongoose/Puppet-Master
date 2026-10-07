@@ -1,0 +1,22 @@
+{
+  "review_started_utc": "2026-10-07T19:16:34+00:00",
+  "review_completed_utc": "2026-10-07T19:24:36.859805+00:00",
+  "elapsed_wall_seconds": 482.86,
+  "elapsed_basis": "First directly observed UTC clock at review start to artifact completion, including independent source inspection and output verification; not a native billing counter.",
+  "evaluation_allowance_seconds": 1800,
+  "within_allowance": true,
+  "source_retrieval_window": {
+    "first_start": "2026-10-07T19:17:18.717736+00:00",
+    "last_end": "2026-10-07T19:19:21.048856+00:00"
+  },
+  "cost_scope": "Independent review experiment allowance; not charged to or compared with candidate allowance in this review.",
+  "billing_status": "UNKNOWN",
+  "candidate_costs_timings_or_native_counters_read": false,
+  "requested_configuration": {
+    "provider": "codex_gmail",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "configuration_verification": "Model/effort per injected runtime; provider alias/service tier not independently inspected. No account/provider/global changes."
+}

@@ -1,0 +1,81 @@
+{
+  "brief": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/brief.md",
+  "source_manifest": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources.json",
+  "sources": [
+    {
+      "source_id": "pep706",
+      "url": "https://peps.python.org/pep-0706/",
+      "version_or_capture": "PEP 706 captured 2026-10-07; released code takes precedence for runtime behavior",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "6139a435b458b6091ea2bfebd2b1ba9a163633e62f55b33720870d558e01b71e",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/pep706.html",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarissue",
+      "url": "https://api.github.com/repos/python/cpython/issues/102950",
+      "version_or_capture": "CPython issue 102950 captured 2026-10-07",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "9ba5b6f74ea5ac74bfd12cc13f9fa3610fcae050617003563732e0fda4ee7a84",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarissue.json",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarpr",
+      "url": "https://api.github.com/repos/python/cpython/pulls/102953",
+      "version_or_capture": "CPython PR 102953 captured 2026-10-07; merge SHA recorded in source",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "63cb304e277da293006a1f650612d5a1b21fbccb7456dd9e734cf2c5d6fbe8e2",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarpr.json",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "5dd00cc68e88d9581551b1a457398c5b63d87ae1152fa03ef298743485d12cc8",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarold.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tardocold",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Doc/library/tarfile.rst",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "242eb30a709c00b4b16d173f3573b6e893e05b0c49d59618d5dc547bd60e7b99",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tardocold.rst",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "taroldtest",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.3/Lib/test/test_tarfile.py",
+      "version_or_capture": "CPython 3.12.3",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "134c5c8703e23f6dc16feaaa0d2cb77c93275f3360dd45e1b6c622d864113239",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/taroldtest.py",
+      "kind": "public primary raw bytes"
+    },
+    {
+      "source_id": "tarfix",
+      "url": "https://api.github.com/repos/python/cpython/commits/af530469954e8ad49f1e071ef31c844b9bfda414",
+      "version_or_capture": "CPython PEP 706 implementation merge commit af530469954e8ad49f1e071ef31c844b9bfda414; includes actual changed file metadata/patches",
+      "capture_date_utc": "2026-10-07",
+      "sha256": "789a86915c7035d138415e1f9c5e5552745730fb078a1a58615077f7e5a6939f",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/D-M13-A/inputs/sources/tarfix.json",
+      "kind": "public primary raw bytes"
+    }
+  ],
+  "question": "A package importer targeting CPython 3.12.3 is considering an explicit extraction filter. Investigate the PEP 706 implementation lead (issue 102950 / PR 102953), trace the applicable implementation branch, regression coverage, and release boundary, and propose a small importer-policy amendment. Do not audit every tarfile vulnerability.",
+  "obligations": [
+    "Separate issue, PR merge, and chosen-release availability.",
+    "Trace one consequential extraction-filter branch and its callers.",
+    "Find relevant regression coverage and state what it demonstrates.",
+    "Explain an applicable change to importer policy.",
+    "Preserve residual limitations and avoid universal safety claims.",
+    "Propose a bounded additional regression and stop when the decision is supported."
+  ],
+  "source_policy": "Both arms receive exact same listed frozen source bytes and source identity metadata. Additional primary-source checks are allowed under the same access policy and budget; record URLs, versions, capture hashes, and limitations. Large repositories/clones and arbitrary installers are not needed. Mutable docs are capture-pinned; released implementation files govern claims about the selected release.",
+  "predecessors": [],
+  "no_failed_original_inputs": true
+}

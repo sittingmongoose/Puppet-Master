@@ -1,0 +1,39 @@
+{
+  "stage": "D-M11-A/treatment/finalize-v1",
+  "provider": {
+    "providerInstanceId": "muse",
+    "driverKind": "acpRegistry",
+    "model": "muse-spark-1.3-contributor",
+    "options": {
+      "reasoning_effort": "max",
+      "mode": "default",
+      "approval_mode": "allowAll",
+      "auto_review": "off"
+    }
+  },
+  "native_goal_id": "goal-01a117c4-252d-70d1-ae21-0b3d945f599e",
+  "deadline_stage_utc": "2026-10-07T19:10:50.405748+00:00",
+  "deadline_arm_utc": "2026-10-07T19:17:17.016331+00:00",
+  "actual_start_utc": "2026-10-07T19:08:18+00:00",
+  "first_saved_finding_utc": "2026-10-07T19:09:00+00:00",
+  "terminal_utc": "2026-10-07T19:09:15+0000",
+  "source_operations": [
+    {
+      "op": "read frozen INPUT_MAP brief/manifest/predecessors",
+      "result": "ok"
+    },
+    {
+      "op": "grep/verify tarnew.py tarold.py tardocnew.rst tartest.py issue/pr JSON",
+      "result": "ok, bindings confirmed"
+    },
+    {
+      "op": "new public captures",
+      "result": "none; sources/ intentionally empty"
+    }
+  ],
+  "native_input_tokens": null,
+  "native_cache_tokens": null,
+  "native_generated_tokens": null,
+  "native_billing": "unknown",
+  "final_word_count": 808
+}

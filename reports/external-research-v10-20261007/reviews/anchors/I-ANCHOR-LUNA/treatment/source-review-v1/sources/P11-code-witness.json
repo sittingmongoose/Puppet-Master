@@ -1,0 +1,15 @@
+{
+  "retrieval_id": "P11",
+  "url": "https://raw.githubusercontent.com/apache/pouchdb/b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1/lib/index.js",
+  "version_identity": "b2882c1bd006bc2aaeb6fdc83ea632c9c923b9b1 (9.0.0 build)",
+  "response_body_sha256": "f7b620e711172b4d4814b234f3954c71d8a584e313ccc6b2a42b6f201ad0cc81",
+  "snippets": [
+    {
+      "original_lines": [
+        2393,
+        2398
+      ],
+      "excerpt": "2393:   _compact(opts, callback) {\n2394:     var changesOpts = {\n2395:       return_docs: false,\n2396:       last_seq: opts.last_seq || 0,\n2397:       since: opts.last_seq || 0\n2398:     };"
+    }
+  ]
+}

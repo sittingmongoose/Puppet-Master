@@ -1,0 +1,37 @@
+{
+  "objective": "D-M04-B independent source review",
+  "started_utc": "2026-10-07 19:15:22 UTC",
+  "authored_utc": "2026-10-07 19:20:39 UTC",
+  "finished_utc": "2026-10-07 19:21:10 UTC",
+  "elapsed_actual_seconds": 348,
+  "budget_seconds": 900,
+  "authored_before_terminal_complete": true,
+  "receipts": [
+    "goal-active.json",
+    "goal-terminal-update.json",
+    "goal-terminal-get.json"
+  ],
+  "artifact_validation": {
+    "review_json_valid": true,
+    "scope_counts": {
+      "Output1": 6,
+      "Output2": 6
+    },
+    "candidate_hashes_unchanged": true,
+    "mapped_and_added_source_hashes_match": true,
+    "arithmetic_checks_passed": 6,
+    "active_receipt_saved": true,
+    "review_files": {
+      "review.md": {
+        "sha256": "8ed09c26aae366351127ae57bbde88f43d08f14f488f3c41dd5c5a3798c555ad",
+        "bytes": 13080
+      },
+      "REVIEW.json": {
+        "sha256": "91eae7497740bba179844578b95645fdc8f9e7809927694c26837392fe63f88a",
+        "bytes": 49849
+      }
+    }
+  },
+  "candidate_edits": false,
+  "temporary_files_to_delete": "None; retained files are reviewer deliverables, reproducible arithmetic evidence and primary capture evidence."
+}

@@ -1,0 +1,219 @@
+{
+  "schema": "pm.er10.confirmation-prepared.v1",
+  "case_id": "C-03",
+  "domain_id": "B",
+  "repetition": 1,
+  "launch_order": "control-first",
+  "status": "READY_PREPARED_FROZEN_ONLY",
+  "creation_started_at_utc": "2026-10-07T19:43:18.152882+00:00",
+  "creation_recorded_at_utc": "2026-10-07T19:43:18.191698+00:00",
+  "root_lock_precedes_new_content": true,
+  "lock": {
+    "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/locks/confirmation-selection.json",
+    "sha256": "9ba0418ac83ed7355e73a6d49f0ab5bf0cb1888b34bcca6e1fdc61b75c541d1a",
+    "declared_locked_at": "2026-10-07T19:36:40.769702+00:00",
+    "filesystem_mtime_utc": "2026-10-07T19:36:40.771076+00:00",
+    "hash_observed_at_utc": "2026-10-07T19:41:04.953750+00:00",
+    "verified_again_at_utc": "2026-10-07T19:43:18.035653+00:00",
+    "lock_unchanged": true
+  },
+  "original_input_sha256s": {
+    "brief": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+    "plan": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9"
+  },
+  "input_bytes": 10241,
+  "files_frozen_so_far": {
+    "BRIEF.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/BRIEF.md",
+      "sha256": "2ef73187a614d42d74b8043b977d2f3ce3dbaee61123e5d92e0f81e1c73f40d4",
+      "bytes": 6493,
+      "filesystem_mtime_utc": "2026-10-07T19:43:18.153148+00:00",
+      "filesystem_birth_utc": "2026-10-07 19:43:18.151439147 +0000"
+    },
+    "PLAN.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/PLAN.md",
+      "sha256": "7c61a4d148cd8ab135b4e077fb3566daa5ce566cbe176f6f8e3cbe103aaf10a9",
+      "bytes": 3748,
+      "filesystem_mtime_utc": "2026-10-07T19:43:18.162927+00:00",
+      "filesystem_birth_utc": "2026-10-07 19:43:18.161439208 +0000"
+    },
+    "case-card.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/case-card.json",
+      "sha256": "3cefba2858e8430a11c5bcc48a359c96342af67421d09f2ff59ca183dd9af449",
+      "bytes": 11439,
+      "filesystem_mtime_utc": "2026-10-07T19:43:18.173402+00:00",
+      "filesystem_birth_utc": "2026-10-07 19:43:18.172439276 +0000"
+    },
+    "INPUT_MAP.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/C-03/INPUT_MAP.json",
+      "sha256": "b59c68fe5f6257b2191761b1df12be6162bcc9f907bf9a084b4af6531e07ad61",
+      "bytes": 7748,
+      "filesystem_mtime_utc": "2026-10-07T19:43:18.182501+00:00",
+      "filesystem_birth_utc": "2026-10-07 19:43:18.181439332 +0000"
+    }
+  },
+  "full_obligations": [
+    {
+      "id": "O1",
+      "requirement": "Start from the user-level problem with open public-primary discovery before narrowing to defects in the frozen plan; select useful sources rather than follow an assigned component/source list."
+    },
+    {
+      "id": "O2",
+      "requirement": "Compare at least two substantially different useful mechanisms; include competing components, relevant analogies outside direct competitors, consequential options and their trade-offs."
+    },
+    {
+      "id": "O3",
+      "requirement": "Verify consequential API/data semantics, units or coordinate conventions where relevant, exact version/release and applicability boundaries. Separate documented behavior, implementation evidence, inference and unvalidated proposal."
+    },
+    {
+      "id": "O4",
+      "requirement": "Inspect justified component implementation/code at an identifiable pinned version; investigate pertinent issue/fix/regression/release history, or explicitly justify equivalent implementation history and disclose remaining gaps. Do not infer applicability from a similarly titled issue."
+    },
+    {
+      "id": "O5",
+      "requirement": "Compare with the exact read-only frozen PLAN.md using its section IDs; disposition proposals as keep, amend, replace, defer or unresolved with governing evidence/conditions, including what the plan already covers."
+    },
+    {
+      "id": "O6",
+      "requirement": "Deliver complete proposed changes and decisions, useful optional opportunities, justified uncertainty, preservation of constraints/corrections/conditions and an observable validation proposal. Distinguish proposed checks from checks actually executed."
+    },
+    {
+      "id": "O7",
+      "requirement": "Keep a manageable full integrated planning scope, including ingest/provenance, identity, annotation/collaboration, retention/deletion, access, error/recovery and handoff/export behavior where consequential; no product build, WorkNodes or canonical writes."
+    }
+  ],
+  "output_contract": {
+    "version": "ER10-CONFIRMATION-FULL-INTEGRATED-OUTPUT-V1",
+    "same_scientific_scope_for_both_arms": true,
+    "stage_outputs": {
+      "artifact.md": "Complete source-grounded planning proposal: discovery/options, governing implementation/history evidence and conditions, exact plan comparison/proposed changes, decisions, optional leads, uncertainties and validation; critic stages also record checked/repaired claims and unresolved objections.",
+      "source-map.json": "Candidate-authored source identity map linking claims to exact public URLs, access timestamps, versions/commits/releases, paths/symbols/locators and immutable captured bytes under own sources/. Host computes SHA-256 identities; unknowns explicit.",
+      "preservation_check.md": "Compact check that the final retains all original brief obligations, user constraints, useful discoveries, governing conditions, options, corrections, already-covered dispositions, limitations and proposed-versus-executed validation; an honest omission remains an omission.",
+      "sources/": "Own-stage immutable public-primary captures, independently acquired per arm/repetition; exact own-arm predecessors may be read via supervisor-declared paths."
+    },
+    "native_final": "Concise exact artifact paths and actual native disposition; complete scientific work saved before native terminal, no substantive post-terminal work.",
+    "complete_native_artifact_fallback": "Only a prospectively declared supported export of the complete native-authored artifact with exact identity verified by supervisor; a short path summary is not an artifact.",
+    "quality_map": [
+      "full brief obligations",
+      "consequential claims and governing conditions",
+      "useful open discovery coverage",
+      "incorrect rejection/correction",
+      "preservation into final",
+      "proposed versus performed validation"
+    ],
+    "grading_boundary": "No source-count target, exhaustive recall answer list, supplied answer/evaluator key or scientific PASS inferred from preparation, file existence, hashes, lifecycle or renderer success.",
+    "separate_assessment_axes": [
+      "native lifecycle",
+      "usable complete deliverable",
+      "source correctness/full declared coverage",
+      "method/provenance eligibility",
+      "time/usage economics"
+    ],
+    "measurement_owner": "Root/supervisor records actual events, tool/usage evidence and host hashes; candidates do not engineer manual native receipt serialization.",
+    "measurement_fields": [
+      "dispatch",
+      "native start/active observation",
+      "first useful saved finding",
+      "usable complete proposal",
+      "native terminal",
+      "resource release",
+      "review/publication timestamps",
+      "end-to-end candidate latency",
+      "stage and nested occupied time",
+      "queue/service retry delay",
+      "host preparation/carrier work",
+      "output bytes",
+      "source operations",
+      "input tokens",
+      "cached input tokens",
+      "generated output tokens",
+      "reasoning subset",
+      "native Goal counters",
+      "billing"
+    ],
+    "measurement_rules": "Include failures, retries, waiting and delivery in each fixed arm allowance. Preserve unknown measurements as null with reasons; do not sum overlapping intervals or enclosing parent/child counters, infer account attribution, estimate unsupported dollars or reset clocks after failure."
+  },
+  "preparation": {
+    "designer": "Sol6.1 High as requested",
+    "requested_provider": "codex_gmail",
+    "requested_account": "sittingmongoose@gmail.com",
+    "actual_account_proof": null,
+    "account_proof_reason": "No runtime or account probe performed; requested route is not proof.",
+    "input_preparation_only": true,
+    "source_research_performed": false,
+    "subject_answers_or_evaluator_keys_supplied": false,
+    "candidate_outputs_reviews_history_costs_read": false,
+    "read_contract_refs": {
+      "packet/ER10_T3_EXECUTE_HANDOFF.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/packet/ER10_T3_EXECUTE_HANDOFF.md",
+        "sha256": "4c7ab3438c32b8fef5682f9cb718998792a233dda1b5a51fc9061778083e4787",
+        "candidate_input": false,
+        "purpose": "input/output or prospective carrier contract only; no candidate results read"
+      },
+      "cases/I-ANCHOR-LUNA/brief.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-ANCHOR-LUNA/brief.md",
+        "sha256": "0600bd0661196df8f728a2d861530f352251dc42008e9fd71ce532a6e30a0874",
+        "candidate_input": false,
+        "purpose": "input/output or prospective carrier contract only; no candidate results read"
+      },
+      "cases/I-METHOD-01/INPUTS.md": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01/INPUTS.md",
+        "sha256": "f33cd23399deb8d450426c6346b1f8cc7a0a5992e56df45e84889ebe96ebbce7",
+        "candidate_input": false,
+        "purpose": "input/output or prospective carrier contract only; no candidate results read"
+      },
+      "state/review-carrier-prospective-v2.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/state/review-carrier-prospective-v2.json",
+        "sha256": "6aa6da047427091780ae135e71f2caf36a9482b8b940a72d2eb03c3b095e73a9",
+        "candidate_input": false,
+        "purpose": "input/output or prospective carrier contract only; no candidate results read"
+      },
+      "helpers/passive-receipts/ROOT_ADMISSION_V2.json": {
+        "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/helpers/passive-receipts/ROOT_ADMISSION_V2.json",
+        "sha256": "6f0be4322b0292d7bef25b92f728435c89b29d650ca4c66a5e3f7b8ae700f4bb",
+        "candidate_input": false,
+        "purpose": "input/output or prospective carrier contract only; no candidate results read"
+      }
+    },
+    "own_goal_children_candidates_reviewers_launched": false,
+    "time": {
+      "measured_phase_started_at_utc": "2026-10-07T19:41:04.953750+00:00",
+      "artifact_generation_started_at_utc": "2026-10-07T19:43:18.035653+00:00",
+      "task_total_wall_seconds": null,
+      "reason": "First exact recorded clock was lock observation; earlier instruction/input location reads and all designer reasoning are not fully timed. State preserves measured lower bound and artifact generation duration."
+    },
+    "usage": {
+      "input_tokens": null,
+      "cached_input_tokens": null,
+      "generated_output_tokens": null,
+      "reasoning_tokens": null,
+      "billing_amount": null,
+      "reason": "Actual preparation usage/billing unavailable in this design carrier; preserve unknowns, do not infer zero cost or account attribution."
+    }
+  },
+  "missing_runtime_bindings": {
+    "actual_candidate_binding": null,
+    "actual_account_proof": null,
+    "supervisor_parentThreadId": null,
+    "dispatch_taskIds": null,
+    "childThreadIds": null,
+    "native_goalIds": null,
+    "actual_native_active_observations": null,
+    "actual_native_terminal_observations": null,
+    "pair_final_freeze": null,
+    "pair_quiet_proof": null,
+    "review_taskId": null,
+    "actual_review_binding": null,
+    "candidate_time_and_usage": null,
+    "scientific_review": null,
+    "reason": "Prepared inputs only; eventual root/supervisor must assign and prove runtime state before dispatch/scoring."
+  },
+  "ready_does_not_mean": [
+    "actual native Goal proof",
+    "actual account/binding proof",
+    "scientific PASS",
+    "comparative win",
+    "quota saving",
+    "dispatch authorization"
+  ]
+}

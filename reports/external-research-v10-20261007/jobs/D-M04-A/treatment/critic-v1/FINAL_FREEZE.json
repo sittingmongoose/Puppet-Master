@@ -1,0 +1,48 @@
+{
+  "files": {
+    "final.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/final.md",
+      "sha256": "7ac437336bc9c472c075177d46b1577f3735c12c50c75cf3ebe4cf78d4185993",
+      "bytes": 4992
+    },
+    "critic.md": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/critic.md",
+      "sha256": "13cfb6143dceb44665f79b63226c7386e06725f42c9a210d86fd7f6c72580821",
+      "bytes": 4237
+    },
+    "sources.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/sources.json",
+      "sha256": "efcb5f4a9b1316963445689ed066528127200c41c20e0adb40986ea6deb111b2",
+      "bytes": 5951
+    },
+    "timings.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/timings.json",
+      "sha256": "77966ac4443cd4ebb147bd44f00dc6762b5b5a13e47e967974ae999d2bd6ccbd",
+      "bytes": 1149
+    },
+    "native_goal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/native_goal_receipt.json",
+      "sha256": "3597ea1bfc8c10180fc24db1bffea1830c7cb992172eb1eb7c5e87705f53c22f",
+      "bytes": 1218
+    },
+    "native_terminal_receipt.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/native_terminal_receipt.json",
+      "sha256": "789d06bf8cfd4cf3a4027f0fcd2bf3693fe2162fb5fff46212760576bb644e23",
+      "bytes": 1597
+    },
+    "t3-terminal-observed.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-A/treatment/critic-v1/t3-terminal-observed.json",
+      "sha256": "1071be57e5e1966fc89bdd608d616d114ac6d90baf93ff72c72d964e03a9027e",
+      "bytes": 5017
+    }
+  },
+  "dispatch_at": "2026-10-07T19:01:46.626Z",
+  "terminal": "2026-10-07T19:12:07.963Z",
+  "dispatch_to_terminal_seconds": 621.337,
+  "cold_seed_seconds": 0,
+  "intervening_seed_queue_seconds": 0,
+  "cold_inclusive_seconds": 621.337,
+  "semantic_status": "UNASSESSED",
+  "native_terminal": "completed",
+  "exposure": "Maps advisory, no filesystem firewall"
+}

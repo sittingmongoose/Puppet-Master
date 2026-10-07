@@ -1,0 +1,34 @@
+{
+  "update_goal_receipt": {
+    "goal": {
+      "threadId": "01a117a7-d38c-7030-a585-4d1e70f0c353",
+      "objective": "Research Stage D-M01-A control: produce one complete bounded preliminary proposal grounded in the provided brief and listed SQLite primary sources, preserve source conditions and uncertainty, and save the required intermediate and native lifecycle receipts under the authorized stage directory.",
+      "status": "complete",
+      "tokensUsed": 49984,
+      "timeUsedSeconds": 194,
+      "createdAt": 1791398289,
+      "updatedAt": 1791398484
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "final_get_goal_receipt": {
+    "goal": {
+      "threadId": "01a117a7-d38c-7030-a585-4d1e70f0c353",
+      "objective": "Research Stage D-M01-A control: produce one complete bounded preliminary proposal grounded in the provided brief and listed SQLite primary sources, preserve source conditions and uncertainty, and save the required intermediate and native lifecycle receipts under the authorized stage directory.",
+      "status": "complete",
+      "tokensUsed": 49984,
+      "timeUsedSeconds": 194,
+      "createdAt": 1791398289,
+      "updatedAt": 1791398484
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "observed_clock_before_terminal_calls": {
+    "current_time": "2026-10-07 18:41:24 UTC"
+  },
+  "observed_clock_after_final_get": {
+    "current_time": "2026-10-07 18:41:24 UTC"
+  }
+}

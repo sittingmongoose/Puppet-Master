@@ -1,0 +1,75 @@
+{
+  "stage": "D-M14-A/treatment/semantic_findings-v2",
+  "at": "2026-10-07T19:30:59.633034+00:00",
+  "native_disposition": "complete",
+  "T3_status": "completed",
+  "T3_children_quiet": true,
+  "carrier": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/treatment/semantic_findings-v2/semantic_findings.md",
+  "files": {
+    "prospective-timing.json": {
+      "sha256": "8223a14debb456a2349227c37138496f2d8f44c2398aa07c1ade9eda8556208d",
+      "bytes": 279,
+      "mtime_utc": "2026-10-07T19:25:08.656942+00:00"
+    },
+    "dispatch-receipt.json": {
+      "sha256": "fd2c9e595740cc0055651bf445ba695873b9e2f70c56adb6cedd259ca3d50086",
+      "bytes": 1057,
+      "mtime_utc": "2026-10-07T19:25:27.959356+00:00"
+    },
+    "passive-active.json": {
+      "sha256": "cd6473d400b16d655d1c3d3e5ff3bb97ba315ce492e2751a51d4b4c45bfda3f0",
+      "bytes": 10940,
+      "mtime_utc": "2026-10-07T19:26:03.464151+00:00"
+    },
+    "task-terminal.json": {
+      "sha256": "f6216372afad242ddf39617d352b4202d8884c072b40b08a258f8820ec336c7f",
+      "bytes": 3846,
+      "mtime_utc": "2026-10-07T19:30:59.054663+00:00"
+    },
+    "passive-terminal-capture-cost.json": {
+      "sha256": "175b613d65132ec3083277b1545bd230e5a1b248086998d5d80d22094e005d84",
+      "bytes": 1289,
+      "mtime_utc": "2026-10-07T19:30:59.375983+00:00"
+    },
+    "passive-active-capture-cost.json": {
+      "sha256": "8f0377327b12d8ed7154755287f4fe5e78458ae8a88f850e737f301c92c492be",
+      "bytes": 1292,
+      "mtime_utc": "2026-10-07T19:26:03.464651+00:00"
+    },
+    "dispatch.json": {
+      "sha256": "12d4bd96655220c3ea2689fe15cc0cfe469bf99fc8d662139b70e3c492017800",
+      "bytes": 1461,
+      "mtime_utc": "2026-10-07T19:25:28.060980+00:00"
+    },
+    "INPUT_MAP.json": {
+      "sha256": "8a92b12d0b975d8844325e56776e0406dd4610abeb8748bf0a8a5c5b1a61e7fa",
+      "bytes": 3517,
+      "mtime_utc": "2026-10-07T19:25:08.656557+00:00"
+    },
+    "dispatch-request.json": {
+      "sha256": "4ce6cf5370026db1ebec9f1c73da869f6a710db6d259ad6ecfeabf271ddbaff7",
+      "bytes": 6090,
+      "mtime_utc": "2026-10-07T19:25:08.656800+00:00"
+    },
+    "timings.json": {
+      "sha256": "406ba6abb9b979a7e0db7b576ef983fd86c1861ca622815591c372f04939ec0a",
+      "bytes": 3538,
+      "mtime_utc": "2026-10-07T19:30:07.933145+00:00"
+    },
+    "semantic_findings.md": {
+      "sha256": "89a4b0802adab69cb3d475f74117f76d8f25d8574f6943e8d309921ac228e661",
+      "bytes": 18550,
+      "mtime_utc": "2026-10-07T19:29:33.047071+00:00"
+    },
+    "passive-terminal.json": {
+      "sha256": "73431f7e9bcd20adc0ce35bfb2294971a823931dd70d8ad1dcee7ef4ff4fbbb8",
+      "bytes": 10948,
+      "mtime_utc": "2026-10-07T19:30:59.375568+00:00"
+    },
+    "sources/rasterio_enums.py": {
+      "sha256": "4ed7dcb46b145673887b45815267fd88b9335700147ecc7d9061f7669a7e8f7b",
+      "bytes": 5550,
+      "mtime_utc": "2026-10-07T19:27:02.320585+00:00"
+    }
+  }
+}

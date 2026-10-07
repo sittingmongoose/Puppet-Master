@@ -1,0 +1,192 @@
+{
+  "case_id": "I-METHOD-01",
+  "stage": "treatment/critic-v1",
+  "objective": "Complete independent full-scope critique; do not author the final revision.",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/input-map.json",
+  "artifact": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/artifact.md",
+  "source_map": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/source-map.json",
+  "native_receipts": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/native-receipts.jsonl",
+  "timing": {
+    "dispatch_record_at": "2026-10-07T19:13:21.652733+00:00",
+    "prospective_stage_deadline": "2026-10-07T19:23:21.652733+00:00",
+    "arm_deadline": "2026-10-07T19:41:45.844115+00:00",
+    "native_goal_created_at_unix_seconds": 1791400489,
+    "first_useful_critique_finding_observed_at_utc": "2026-10-07T19:18:22Z",
+    "critique_content_complete_observed_at_utc": "2026-10-07T19:21:36Z",
+    "actual_t3_requested_at": null,
+    "queue_started_at": null,
+    "note": "T3 requestedAt/queue timestamps were not exposed in admitted dispatch config or native Goal responses. First-finding and completion times are clock observations, not guessed queue times."
+  },
+  "inputs": [
+    {
+      "name": "brief.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01/brief.md",
+      "sha256": "d47b145147b0b0e58ded1a585bd004014268471b5d7da66587028c5a242176f9"
+    },
+    {
+      "name": "plan.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/cases/I-METHOD-01/plan.md",
+      "sha256": "3e41046c9f0ea6e7ff7223d6ba1d949190e42b36e72914c2720c152bc316c822"
+    },
+    {
+      "name": "researcher artifact.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/artifact.md",
+      "sha256": "20797491f87fe9161244e9926049caf8f3e0625cafcfa4296a183452a0bb2118"
+    },
+    {
+      "name": "researcher source-map.json",
+      "path": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/research-v1/source-map.json",
+      "sha256": "0f6fee5a1f8b8f2a9a0aa7ba9b95b5d2ae4d4e06528dcc87e421de6298560375"
+    }
+  ],
+  "public_source_captures": [
+    {
+      "id": "C01",
+      "path": "sources/reader-flex.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "locator": "ReaderBuilder.flexible docs and setter, pinned lines 232-312",
+      "sha256": "7439ffd29dcd073f1e435e260cc10d3bee2381877b6ebf8968483484026a250b"
+    },
+    {
+      "id": "C02",
+      "path": "sources/reader-call.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "locator": "read_byte_record caller path, pinned lines 1578-1613",
+      "sha256": "2fcc710d9d01f1a82499fba8304bff8e6b9e738f1743e6e5ec9892c534e06cdb"
+    },
+    {
+      "id": "C03",
+      "path": "sources/reader-state.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "locator": "ReaderState.add_record width comparison, pinned lines 1880-1899",
+      "sha256": "35d69f5c4885414d279cef82aa2227146b3222532b16448a457fc17879bc6a74"
+    },
+    {
+      "id": "C04",
+      "path": "sources/reader-tests.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "locator": "Unequal-width tests, pinned lines 2321-2400",
+      "sha256": "46c115cf3697e3d80a377af5ed1d9b77e3c05e9af12a601af7f01c828915bab4"
+    },
+    {
+      "id": "C05",
+      "path": "sources/deserializer-buf.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/deserializer.rs",
+      "locator": "deserialize_byte_buf implementation, pinned lines 425-431",
+      "sha256": "ebc4ddae4e884db886dd2373ea796a73a55cb3130141c53dde5567743d0cc254"
+    },
+    {
+      "id": "C06",
+      "path": "sources/deserializer-test.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/deserializer.rs",
+      "locator": "partially_invalid_utf8 regression test, pinned lines 1208-1230",
+      "sha256": "813371dff17017e478d17c465eb0f889a39f03aac40cbca3646a29d42458c5bb"
+    },
+    {
+      "id": "C07",
+      "path": "sources/fix-commit.json",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/commits/9e644e66db0aa0b931758de1c2b7da555fb632b7",
+      "locator": "Public GitHub commit response body",
+      "sha256": "f3f36887de8291a55da0596deeb9a91371076270931f50248b100e01dfb3b3fb"
+    },
+    {
+      "id": "C08",
+      "path": "sources/csv-core-manifest.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/Cargo.toml",
+      "locator": "Pinned csv-core package version 0.1.11",
+      "sha256": "569f0930c8c0dd5772f07601faa19d7aaa440e3670365dc339c70837cb23b738"
+    },
+    {
+      "id": "C09",
+      "path": "sources/core-line-counter.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "locator": "Pinned parser line-state definition and reader code around issue-linked counter",
+      "sha256": "b3a8c53b2ff26fb532069e37fe780e2daceb44150a91217a09b1fbfc5926cd02"
+    },
+    {
+      "id": "C10",
+      "path": "sources/wrapper-position-update.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "locator": "Pinned wrapper updates position line from csv-core and adds record",
+      "sha256": "9096b0243bb887a71ca2588b9cf083618635ad8aff6092fdcb6e056e86045517"
+    },
+    {
+      "id": "C11",
+      "path": "sources/wrapper-unequal-tests.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "locator": "Pinned wrapper unequal-width regression tests",
+      "sha256": "4ce6e7d64b48deab01e6d3bbe70033057b9021e6d1319584d8520e76eeb16403"
+    },
+    {
+      "id": "C12",
+      "path": "sources/root-manifest.txt",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/4a3997e91d668ea1d8595bdef15625a77cf2308a/Cargo.toml",
+      "locator": "Pinned package 1.4.0 and csv-core path/version dependency",
+      "sha256": "3d5b1b1bfd196823a17bef67d04a5808a0300df2e2b82b5868c4b2476e9c9a20"
+    },
+    {
+      "id": "C13",
+      "path": "sources/issue-395.json",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/395",
+      "locator": "Normalized public GitHub issue response; open CRLF Position::line report with reproducer",
+      "sha256": "1f4aeb9d001847961544741e4c09d5bca25a88b1014d5a772a9a8db66b65513a"
+    },
+    {
+      "id": "C14",
+      "path": "sources/issue-422.json",
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/issues/422",
+      "locator": "Normalized public GitHub issue response; open mismatched-column line-count report",
+      "sha256": "5dd6024beb5b2bc1cf0c05816d254141f36d15c151c0f92ee8d994d1af353ba4"
+    }
+  ],
+  "independent_queries": {
+    "web_pages_opened": 5,
+    "web_search_queries": 3,
+    "web_find_queries": 5,
+    "github_public_fetch_requests": 31,
+    "release_ancestry_query": {
+      "url": "https://api.github.com/repos/BurntSushi/rust-csv/compare/9e644e6...4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "status": "ahead",
+      "ahead_by": 102,
+      "total_commits": 102,
+      "merge_base_sha": "9e644e66db0aa0b931758de1c2b7da555fb632b7"
+    },
+    "issue_search_discovery": "Web search returned rust-csv issues #395 and #422. Direct GitHub issue reads confirmed both open; #395 updated 2025-10-15, #422 opened 2026-01-27 and updated 2026-02-23."
+  },
+  "observed_operations": [
+    "Created a fresh native Goal and immediately verified active identity.",
+    "Read dispatch config, exact input map, complete brief, frozen plan, researcher draft, researcher source map, and enumerated researcher source files; verified the four admitted predecessor hashes.",
+    "Opened official SQLite foreign-key and atomic-commit documentation, W3C tabular-data model, USGS stage-process PDF, and CoCoRaHS QA/QC PDF through web research; searched GitHub issue history and read issues #395/#422.",
+    "Fetched pinned Rust csv 1.4.0 source, wrapper/caller/definition/tests, exact manifests, byte-buffer fix commit, and release ancestry through public GitHub read tools.",
+    "Captured 14 new source fragments/records under this directory; no source code was executed and no product tests were run.",
+    "Authored one complete critique; no final artifact rewrite."
+  ],
+  "native_goal": {
+    "thread_id": "01a117ca-02e9-7b32-99c0-aba445cfcede",
+    "objective": "Complete one independent full-scope critique of the researcher draft for I-METHOD-01 using the exact input map /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/I-METHOD-01/treatment/critic-v1/input-map.json. Read the mapped original brief, frozen plan, draft, source map, and captured public sources; independently verify consequential claims against primary sources and relevant pinned component/governing context. Assess O1–O6 and P1–P6 comprehensively, including useful discovery, mechanisms and alternatives, change/retain/already-covered/reject/uncertain dispositions, product constraints, source identity, uncertainty, and proposed versus executed validation. Produce one coherent evidence-linked critique for a fresh final reviser; do not rewrite the final artifact. Work only within the critic-v1 directory and preserve lifecycle receipts as instructed.",
+    "activation_status": "active",
+    "activation_tokens_used": 0,
+    "activation_time_used_seconds": 0,
+    "terminal_status": "complete",
+    "aggregate_goal_tokens": 141698,
+    "aggregate_goal_time_seconds": 449,
+    "input_tokens": null,
+    "cached_input_tokens": null,
+    "generated_output_tokens": null,
+    "reasoning_tokens": null,
+    "billing_amount": null,
+    "billing_currency": null,
+    "terminal_identity": "01a117ca-02e9-7b32-99c0-aba445cfcede",
+    "terminal_status_matches_identity": true,
+    "terminal_receipts_line_count": 4
+  },
+  "execution_status": {
+    "application_built": false,
+    "product_tests_executed": false,
+    "benchmark_executed": false,
+    "source_code_executed": false,
+    "third_parties_contacted": false,
+    "repository_or_canonical_files_changed": false,
+    "note": "Only read-only public research and files in critic-v1 were used. Validation items in artifact.md are proposals."
+  }
+}

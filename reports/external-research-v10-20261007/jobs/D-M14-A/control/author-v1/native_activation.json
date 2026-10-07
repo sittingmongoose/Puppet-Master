@@ -1,0 +1,18 @@
+{
+  "recoveredAt": "2026-10-07 19:06:49 UTC",
+  "createResponse": null,
+  "activeGetResponse": {
+    "goal": {
+      "threadId": "01a117c2-70e0-7471-957f-3ec80e706e29",
+      "objective": "Execute D-M14-A control author from /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/INPUT_MAP.json; write /home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M14-A/control/author-v1/report.md; bounded stage deadline 2026-10-07T19:18:09.395451+00:00; fresh native Goal and exact activation/terminal receipts.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 10,
+      "createdAt": 1791399998,
+      "updatedAt": 1791400009
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "captureNote": "The original create response was obtained in the prior call but could not be serialized because the runtime lacked btoa; no second Goal was created. The exact create response is therefore unavailable."
+}

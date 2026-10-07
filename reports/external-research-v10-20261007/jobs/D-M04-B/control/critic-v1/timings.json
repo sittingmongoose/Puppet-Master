@@ -1,0 +1,39 @@
+{
+  "schema": "er10-control-critic-timings.v1",
+  "deadline_utc": "2026-10-07T19:11:06.200000+00:00",
+  "deadline_status": "overrun; completion remained possible and required receipts are being preserved",
+  "goal_created_at_epoch": 1791400127,
+  "goal_thread_id": "01a117c3-e992-73c0-9329-761185acec7d",
+  "first_useful_finding_utc": null,
+  "first_useful_finding_note": "Not separately clocked at discovery; cannot truthfully assign an exact timestamp. Cold acquisitions completed 2026-10-07T19:09:17.990605+00:00 at latest; the source review and findings occurred afterward.",
+  "final_artifact_verified_at_utc": "2026-10-07 19:11:17 UTC",
+  "final_artifact_write_exact_time_utc": null,
+  "first_observed_goal_counters": {
+    "observed_at_utc": "2026-10-07 19:11:17 UTC",
+    "tokensUsed": 33900,
+    "timeUsedSeconds": 149,
+    "status": "active",
+    "billing_unknown": null
+  },
+  "task_execution": {
+    "source_cold_receipts": [
+      "cold-rasterresample.json",
+      "cold-rastermask.json",
+      "cold-rasterio.json",
+      "cold-geotransform.json"
+    ],
+    "proposed_fixtures_executed": false
+  },
+  "goal_terminal_counters": {
+    "observed_at_utc": "2026-10-07 19:11:53 UTC",
+    "tokensUsed": 42916,
+    "timeUsedSeconds": 185,
+    "status": "complete",
+    "billing_unknown": null
+  },
+  "goal_terminal_receipt": "/home/sittingmongoose/PM-Experiments/er10-20261007-5a126dd5/jobs/D-M04-B/control/critic-v1/native_terminal_receipt.json",
+  "createdAt_epoch": 1791400127,
+  "native_binding_freshness": "No separate binding-freshness field was exposed; native create/get reported the same threadId and createdAt.",
+  "critique_final_disposition_update_observed_at_utc": "2026-10-07 19:12:40 UTC",
+  "completion_note": "Native Goal was marked complete at 2026-10-07 19:11:53 UTC; a final explicit-unresolved/no-rejection wording correction to critique.md was saved afterward. No source claims changed."
+}

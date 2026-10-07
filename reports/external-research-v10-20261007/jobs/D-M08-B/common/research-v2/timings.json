@@ -1,0 +1,48 @@
+{
+  "stage": "D-M08-B/common/research-v2",
+  "boundary": {
+    "requestedAt": "2026-10-07T19:26:21.835Z",
+    "deadline": "2026-10-07T19:31:21.835Z",
+    "ceilingSeconds": 300
+  },
+  "observedAtUtc": "2026-10-07T19:27:38Z",
+  "sourceReads": {
+    "filesystemReadCalls": 2,
+    "filesRead": 7,
+    "files": [
+      "INPUT_MAP.json",
+      "boundary.json",
+      "brief.md",
+      "sources.json",
+      "rasterresample.rst",
+      "rastermask.rst",
+      "geotransform.rst"
+    ],
+    "retries": 0,
+    "toolOutputVolumeChars": null,
+    "sourceContentOutputVolumeChars": null,
+    "outputVolumeNote": "Exact transport output character count was not exposed; file and operation counts recorded."
+  },
+  "rawGoalCounters": {
+    "immediately_after_activation": {
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    "after_proposal_before_terminal": {
+      "tokensUsed": 30848,
+      "timeUsedSeconds": 123,
+      "updatedAtEpoch": 1791401326,
+      "updatedAtUtc": "2026-10-07T19:28:46Z"
+    }
+  },
+  "billing": null,
+  "inputTokens": null,
+  "cacheTokens": null,
+  "generatedTokens": null,
+  "proposal": {
+    "words": 529,
+    "characters": 3860,
+    "written_no_later_than_utc": "2026-10-07T19:28:46Z",
+    "elapsed_since_requestedAt_seconds_at_latest_goal_snapshot": 144.165
+  }
+}

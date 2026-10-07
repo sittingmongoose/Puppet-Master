@@ -1,0 +1,53 @@
+{
+  "stage": "D-M08-A/common/research-v2",
+  "boundary": {
+    "clock_basis": "actual T3 requestedAt immutable",
+    "requested_at_utc": "2026-10-07T19:12:21.135Z",
+    "hard_limit_seconds": 300,
+    "hard_deadline_utc": "2026-10-07T19:17:21.135Z",
+    "scientific_output_completed_utc": "2026-10-07T19:15:26.788290Z",
+    "elapsed_to_scientific_output_seconds": 185.653,
+    "remaining_at_scientific_output_seconds": 114.347,
+    "180_second_output_aim_met": false
+  },
+  "file_reads": {
+    "allowlisted_read_operations_total": 10,
+    "input_map": 1,
+    "boundary": 1,
+    "brief": 1,
+    "source_manifest": 1,
+    "frozen_sources": {
+      "httpsem": 4,
+      "httpcache": 2,
+      "total": 6
+    },
+    "io_failures": 0,
+    "io_retries": 0,
+    "corrective_extraction_retries": 1,
+    "source_capture_bytes_from_first_inventory": {
+      "httpsem_chars": 502907,
+      "httpcache_chars": 84474
+    }
+  },
+  "output_volume": {
+    "draft_words": 591,
+    "draft_chars": 4252,
+    "corrected_selected_excerpt_chars_estimate": 36824,
+    "inventory_output_original_tokens_reported_by_harness": 6692,
+    "overbroad_extraction_output_original_tokens_reported_by_harness": 249488,
+    "overbroad_extraction_clipped_by_harness": true,
+    "overbroad_extraction_scope": "Only the listed httpsem frozen source; a selector matched a table-of-contents heading and emitted excessive allowed-source text. Corrected extraction then selected relevant body sections."
+  },
+  "cost_unknowns": {
+    "billing": null,
+    "input_tokens": null,
+    "cache_tokens": null,
+    "generated_tokens": null
+  },
+  "raw_goal_counters_separate": {
+    "snapshot_status": "active",
+    "tokens_used": 56602,
+    "time_used_seconds": 169,
+    "snapshot_point": "post-scientific-output, pre-terminal"
+  }
+}
